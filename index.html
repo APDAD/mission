@@ -89,13 +89,6 @@ iframe{width:100%;height:calc(100vh - 200px);min-height:480px;border:1px solid v
   </div>
 
   <div class="panel on" id="p-todo">
-    <div class="dumpcard">
-      <h3>Empty your head</h3>
-      <p>Say everything on your mind. Big, small, messy. Claude sorts it and puts only what matters back here.</p>
-      <textarea id="dumpText" rows="3" placeholder="Talk it all out..."></textarea>
-      <button id="dumpBtn">Give it to Claude</button>
-      <div class="dumpok" id="dumpOk">Got it. It's mine now. Your list updates after the next sort.</div>
-    </div>
     <div class="addrow">
       <input id="newTodo" placeholder="Add one thing to do...">
       <button id="addBtn">Add</button>
@@ -104,6 +97,10 @@ iframe{width:100%;height:calc(100vh - 200px);min-height:480px;border:1px solid v
     <div id="lists"></div>
     <div id="machineWrap"></div>
     <button class="clear" id="clearBtn">Clear finished items</button>
+    <div class="machine" id="tomorrowWrap" style="display:none">
+      <h2>Tomorrow</h2>
+      <div class="hint" id="tomorrowBody"></div>
+    </div>
   </div>
 
   <div class="panel" id="p-nutridyn">
@@ -290,6 +287,7 @@ function showApp() {
   document.getElementById('today').textContent = d.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' });
   renderChips();
   loadTodos();
+  loadTomorrow();
 }
 function tryPin(p) {
   localStorage.setItem(PIN_KEY, p);
@@ -311,17 +309,16 @@ document.getElementById('pinGo').onclick = function () {
 document.getElementById('pinIn').addEventListener('keydown', function (e) {
   if (e.key === 'Enter') document.getElementById('pinGo').click();
 });
-document.getElementById('dumpBtn').onclick = function () {
-  var ta = document.getElementById('dumpText');
-  var text = ta.value.trim();
-  if (!text) return;
-  api('dump', { method: 'POST', body: JSON.stringify({ text: text }) }).then(function () {
-    ta.value = '';
-    var ok = document.getElementById('dumpOk');
-    ok.style.display = 'block';
-    setTimeout(function () { ok.style.display = 'none'; }, 6000);
-  });
-};
+function loadTomorrow() {
+  api('page/tomorrow').then(function (r) {
+    if (r.status === 404) return null;
+    return r.json();
+  }).then(function (d) {
+    if (!d || !d.html) return;
+    document.getElementById('tomorrowBody').innerHTML = d.html;
+    document.getElementById('tomorrowWrap').style.display = 'block';
+  }).catch(function () {});
+}
 document.getElementById('addBtn').onclick = addTodo;
 document.getElementById('newTodo').addEventListener('keydown', function (e) {
   if (e.key === 'Enter') addTodo();
