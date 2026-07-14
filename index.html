@@ -297,6 +297,26 @@ function areaOf(t) {
   return null;
 }
 
+function stepMain(text) {
+  var d = el('div', 'stepmain');
+  var re = /https?:\/\/[^\s]+/g, last = 0, m;
+  while ((m = re.exec(text))) {
+    var url = m[0].replace(/[.,;:!?)"'\]]+$/, '');
+    d.appendChild(document.createTextNode(text.slice(last, m.index)));
+    var a = document.createElement('a');
+    a.href = url;
+    a.target = '_blank';
+    a.rel = 'noopener';
+    a.title = url;
+    a.textContent = 'Open';
+    a.style.cssText = 'display:inline-block;background:var(--accent);color:#fff;border-radius:8px;padding:2px 10px;font-size:12px;font-weight:600;text-decoration:none;vertical-align:1px;margin:0 2px';
+    d.appendChild(a);
+    last = m.index + url.length;
+  }
+  d.appendChild(document.createTextNode(text.slice(last)));
+  return d;
+}
+
 function stepCard(t, n) {
   var isM = t.source === 'loop';
   var a = areaOf(t);
@@ -305,7 +325,7 @@ function stepCard(t, n) {
   if (!isM && a) num.style.background = a[2];
   var mid = el('div', 'steptxt');
   mid.appendChild(el('div', 'steplabel', isM ? 'From the machine' : (a ? a[1] : 'To do')));
-  mid.appendChild(el('div', 'stepmain', t.text));
+  mid.appendChild(stepMain(t.text));
   var tick = el('button', 'tick', '');
   tick.setAttribute('aria-label', 'Mark done');
   tick.onclick = function (e) {
