@@ -19,7 +19,7 @@ body{background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-
 h1{font-family:var(--serif);font-size:34px;font-weight:600;line-height:1.1}
 .date{color:var(--muted);font-size:13px;margin-top:3px}
 .tabs{display:flex;gap:8px;margin:16px 0 18px;position:sticky;top:0;background:var(--bg);padding:10px 0;z-index:5}
-.tab{flex:1;text-align:center;padding:12px 2px;border:1px solid var(--line);border-radius:999px;background:var(--card);font-size:12px;font-weight:600;letter-spacing:.05em;color:var(--muted);cursor:pointer;font-family:var(--sans)}
+.tab{flex:1;text-align:center;padding:12px 1px;border:1px solid var(--line);border-radius:999px;background:var(--card);font-size:11px;font-weight:600;letter-spacing:.03em;color:var(--muted);cursor:pointer;font-family:var(--sans);white-space:nowrap}
 .tab.on{background:var(--accent);border-color:var(--accent);color:#fff}
 .panel{display:none}.panel.on{display:block}
 .addrow{display:flex;gap:8px}
@@ -76,6 +76,7 @@ iframe{width:100%;height:calc(100vh - 200px);min-height:480px;border:1px solid v
   <div class="tabs">
     <button class="tab on" data-t="todo">TO-DO</button>
     <button class="tab" data-t="nutridyn">NUTRIDYN</button>
+    <button class="tab" data-t="map">MAP</button>
     <button class="tab" data-t="money">MONEY</button>
     <button class="tab" data-t="spc">SPC</button>
   </div>
@@ -97,6 +98,14 @@ iframe{width:100%;height:calc(100vh - 200px);min-height:480px;border:1px solid v
       <button class="reload" id="ndReload">Reload</button>
     </div>
     <iframe id="ndFrame" title="NutriDyn Territory Command"></iframe>
+  </div>
+
+  <div class="panel" id="p-map">
+    <div class="toprow">
+      <span class="small" id="mapUpdated"></span>
+      <button class="reload" id="mapReload">Reload</button>
+    </div>
+    <iframe id="mapFrame" title="Territory Map" allow="geolocation"></iframe>
   </div>
 
   <div class="panel" id="p-money">
@@ -221,22 +230,29 @@ function addTodo() {
   api('todos', { method: 'POST', body: JSON.stringify({ text: text, area: curArea }) }).then(loadTodos);
 }
 
-function loadNd(force) {
-  if (ndLoaded && !force) return;
-  var up = document.getElementById('ndUpdated');
+var pageLoaded = {};
+function loadPage(key, frameId, upId, missingMsg, force) {
+  if (pageLoaded[key] && !force) return;
+  var up = document.getElementById(upId);
   up.textContent = 'Loading...';
-  api('page/nutridyn').then(function (r) {
-    if (r.status === 404) { up.textContent = 'No dashboard pushed up yet. It arrives with the morning refresh.'; return null; }
+  api('page/' + key).then(function (r) {
+    if (r.status === 404) { up.textContent = missingMsg; return null; }
     return r.json();
   }).then(function (d) {
     if (!d) return;
     var html = d.html || '';
     if (html.indexOf('<head>') >= 0) html = html.replace('<head>', '<head><base target="_blank">');
     else html = '<base target="_blank">' + html;
-    document.getElementById('ndFrame').srcdoc = html;
-    ndLoaded = true;
+    document.getElementById(frameId).srcdoc = html;
+    pageLoaded[key] = true;
     up.textContent = 'Updated ' + new Date(d.updated_at).toLocaleString();
   }).catch(function () { up.textContent = 'Could not load it. Tap Reload.'; });
+}
+function loadNd(force) {
+  loadPage('nutridyn', 'ndFrame', 'ndUpdated', 'No dashboard pushed up yet. It arrives with the morning refresh.', force);
+}
+function loadMap(force) {
+  loadPage('map', 'mapFrame', 'mapUpdated', 'No map pushed up yet.', force);
 }
 
 function showTab(name) {
@@ -245,6 +261,7 @@ function showTab(name) {
   tabs.forEach(function (t) { t.classList.toggle('on', t.dataset.t === name); });
   panels.forEach(function (p) { p.classList.toggle('on', p.id === 'p-' + name); });
   if (name === 'nutridyn') loadNd(false);
+  if (name === 'map') loadMap(false);
 }
 
 function showGate() {
@@ -288,6 +305,7 @@ document.getElementById('clearBtn').onclick = function () {
   api('todos', { method: 'DELETE' }).then(loadTodos);
 };
 document.getElementById('ndReload').onclick = function () { loadNd(true); };
+document.getElementById('mapReload').onclick = function () { loadMap(true); };
 document.querySelectorAll('.tab').forEach(function (t) {
   t.onclick = function () { showTab(t.dataset.t); };
 });
