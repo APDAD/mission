@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#F1EFE8">
+<meta name="robots" content="noindex, nofollow">
+<title>Mission Control</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#F1EFE8;--card:#FBFAF6;--line:#E3E0D5;--ink:#2C2C2A;--muted:#6B6B66;--accent:#1D9E75;--gold:#EF9F27;--red:#C65545;--serif:'Cormorant Garamond',serif;--sans:'Inter',sans-serif}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+.wrap{max-width:820px;margin:0 auto;padding:18px 16px 90px}
+.kicker{letter-spacing:.18em;font-size:11px;color:var(--muted);text-transform:uppercase;font-weight:600}
+h1{font-family:var(--serif);font-size:34px;font-weight:600;line-height:1.1}
+.date{color:var(--muted);font-size:13px;margin-top:3px}
+.tabs{display:flex;gap:8px;margin:16px 0 18px;position:sticky;top:0;background:var(--bg);padding:10px 0;z-index:5}
+.tab{flex:1;text-align:center;padding:12px 2px;border:1px solid var(--line);border-radius:999px;background:var(--card);font-size:12px;font-weight:600;letter-spacing:.05em;color:var(--muted);cursor:pointer;font-family:var(--sans)}
+.tab.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.panel{display:none}.panel.on{display:block}
+.addrow{display:flex;gap:8px}
+.addrow input{flex:1;padding:14px;border:1px solid var(--line);border-radius:12px;background:var(--card);font:inherit;font-size:16px;color:var(--ink)}
+.addrow input::placeholder{color:var(--muted)}
+.addrow button{padding:0 22px;border:0;border-radius:12px;background:var(--accent);color:#fff;font-weight:600;font-size:15px;cursor:pointer;font-family:var(--sans)}
+.chips{display:flex;gap:8px;margin:10px 0 20px;flex-wrap:wrap}
+.chip{padding:8px 15px;border-radius:999px;border:1px solid var(--line);background:var(--card);font-size:13px;color:var(--muted);cursor:pointer;font-family:var(--sans)}
+.chip.on{color:#fff;border-color:transparent}
+.sec h2{font-family:var(--serif);font-size:21px;font-weight:600;margin:18px 0 8px;display:flex;align-items:center;gap:9px}
+.dot{width:9px;height:9px;border-radius:50%}
+.item{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px 14px;margin-bottom:8px}
+.tick{width:26px;height:26px;min-width:26px;border-radius:50%;border:2px solid #CFCBBD;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;cursor:pointer;background:none}
+.item.done .tick{background:var(--accent);border-color:var(--accent)}
+.item .txt{flex:1;font-size:15px;line-height:1.35;word-break:break-word}
+.item.done .txt{color:var(--muted);text-decoration:line-through}
+.del{border:0;background:none;color:#B8B4A6;font-size:19px;cursor:pointer;padding:4px 7px;line-height:1}
+.machine{margin-top:28px;border-top:1px dashed var(--line);padding-top:16px}
+.machine h2{font-family:var(--serif);font-size:20px;margin-bottom:8px;color:var(--muted)}
+.hint{color:var(--muted);font-size:13px;margin:10px 0;line-height:1.5}
+.bigcard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:14px}
+.bigcard h3{font-family:var(--serif);font-size:24px;font-weight:600;margin-bottom:5px}
+.bigcard p{color:var(--muted);font-size:14px;margin-bottom:16px;line-height:1.5}
+.gbtn{display:inline-block;background:var(--accent);color:#fff;padding:13px 22px;border-radius:12px;text-decoration:none;font-weight:600;font-size:15px}
+.badge{display:inline-block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-left:8px;vertical-align:middle}
+iframe{width:100%;height:calc(100vh - 200px);min-height:480px;border:1px solid var(--line);border-radius:16px;background:#fff}
+.toprow{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.small{font-size:12px;color:var(--muted)}
+.clear{margin-top:16px;background:none;border:1px solid var(--line);border-radius:10px;padding:10px 16px;color:var(--muted);cursor:pointer;font:inherit;font-size:13px;display:none}
+.reload{background:none;border:1px solid var(--line);border-radius:10px;padding:8px 14px;color:var(--muted);cursor:pointer;font:inherit;font-size:13px}
+#gate{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:50}
+.gatebox{text-align:center;padding:20px;width:100%;max-width:320px}
+.gatebox .kicker{margin-bottom:6px;display:block}
+.gatebox h1{font-size:40px;margin-bottom:22px}
+.gatebox input{width:100%;padding:16px;text-align:center;font-size:24px;letter-spacing:.4em;border:1px solid var(--line);border-radius:14px;background:var(--card);color:var(--ink);font-family:var(--sans)}
+.gatebox button{width:100%;margin-top:12px;padding:15px;border:0;border-radius:14px;background:var(--accent);color:#fff;font-weight:600;font-size:16px;cursor:pointer;font-family:var(--sans)}
+.gerr{color:var(--red);font-size:13px;margin-top:12px;display:none}
+</style>
+</head>
+<body>
+<div id="gate">
+  <div class="gatebox">
+    <span class="kicker">Asher Allen</span>
+    <h1>Mission Control</h1>
+    <input id="pinIn" type="password" inputmode="numeric" autocomplete="off" maxlength="8" placeholder="PIN">
+    <button id="pinGo">Enter</button>
+    <div class="gerr" id="gerr">That PIN is not right. Try again.</div>
+  </div>
+</div>
+<div class="wrap" id="app" style="display:none">
+  <span class="kicker">Asher Allen</span>
+  <h1>Mission Control</h1>
+  <div class="date" id="today"></div>
+  <div class="tabs">
+    <button class="tab on" data-t="todo">TO-DO</button>
+    <button class="tab" data-t="nutridyn">NUTRIDYN</button>
+    <button class="tab" data-t="money">MONEY</button>
+    <button class="tab" data-t="spc">SPC</button>
+  </div>
+
+  <div class="panel on" id="p-todo">
+    <div class="addrow">
+      <input id="newTodo" placeholder="Add something to do...">
+      <button id="addBtn">Add</button>
+    </div>
+    <div class="chips" id="chips"></div>
+    <div id="lists"></div>
+    <div id="machineWrap"></div>
+    <button class="clear" id="clearBtn">Clear finished items</button>
+  </div>
+
+  <div class="panel" id="p-nutridyn">
+    <div class="toprow">
+      <span class="small" id="ndUpdated"></span>
+      <button class="reload" id="ndReload">Reload</button>
+    </div>
+    <iframe id="ndFrame" title="NutriDyn Territory Command"></iframe>
+  </div>
+
+  <div class="panel" id="p-money">
+    <div class="bigcard">
+      <h3>Finance Command Center<span class="badge">Mac only</span></h3>
+      <p>Your full money picture. Net worth, accounts, the whole balance sheet. This one opens on your Mac.</p>
+      <a class="gbtn" href="http://localhost:3200" target="_blank" rel="noopener">Open it</a>
+    </div>
+    <div class="bigcard">
+      <h3>APEX.AI<span class="badge">Mac only</span></h3>
+      <p>Your portfolio, watchlist, and market signals. This one opens on your Mac too.</p>
+      <a class="gbtn" href="http://localhost:3300" target="_blank" rel="noopener">Open it</a>
+    </div>
+    <p class="hint">These two run on your computer, so the buttons work when you are at your Mac. On your phone, use the To-Do and NutriDyn tabs.</p>
+  </div>
+
+  <div class="panel" id="p-spc">
+    <div class="bigcard">
+      <h3>SPC Field Tool</h3>
+      <p>Super Therm, HPC, Rust Grip. The field tool works from anywhere, phone included.</p>
+      <a class="gbtn" href="https://dashboard.spcinfo.com/spc-field-tool.html" target="_blank" rel="noopener">Open the field tool</a>
+    </div>
+  </div>
+</div>
+<script>
+var API = 'https://fmpbojdgfumspswdwpwn.supabase.co/functions/v1/mission';
+var PIN_KEY = 'mc_pin';
+var AREAS = [
+  ['nutridyn', 'NutriDyn', '#1D9E75'],
+  ['spc', 'SPC', '#7A6C55'],
+  ['money', 'Money', '#EF9F27'],
+  ['life', 'Life', '#6B6B66']
+];
+var curArea = 'nutridyn';
+var todos = [];
+var ndLoaded = false;
+
+function pin() { return localStorage.getItem(PIN_KEY) || ''; }
+function api(p, o) {
+  o = o || {};
+  o.headers = Object.assign({ 'x-pin': pin(), 'Content-Type': 'application/json' }, o.headers || {});
+  return fetch(API + '/api/' + p, o).then(function (r) {
+    if (r.status === 401) { showGate(); throw new Error('pin'); }
+    return r;
+  });
+}
+function el(tag, cls, txt) {
+  var e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (txt !== undefined) e.textContent = txt;
+  return e;
+}
+
+function renderChips() {
+  var c = document.getElementById('chips');
+  c.innerHTML = '';
+  AREAS.forEach(function (a) {
+    var b = el('button', 'chip' + (curArea === a[0] ? ' on' : ''), a[1]);
+    if (curArea === a[0]) b.style.background = a[2];
+    b.onclick = function () { curArea = a[0]; renderChips(); };
+    c.appendChild(b);
+  });
+}
+
+function itemRow(t) {
+  var row = el('div', 'item' + (t.done ? ' done' : ''));
+  var tick = el('button', 'tick', t.done ? '✓' : '');
+  tick.onclick = function () {
+    api('todos/' + t.id, { method: 'PATCH', body: JSON.stringify({ done: !t.done }) }).then(loadTodos);
+  };
+  var tx = el('div', 'txt', t.text);
+  var del = el('button', 'del', '×');
+  del.onclick = function () {
+    api('todos/' + t.id, { method: 'DELETE' }).then(loadTodos);
+  };
+  row.appendChild(tick); row.appendChild(tx); row.appendChild(del);
+  return row;
+}
+
+function renderTodos() {
+  var lists = document.getElementById('lists');
+  var mw = document.getElementById('machineWrap');
+  lists.innerHTML = ''; mw.innerHTML = '';
+  var mine = todos.filter(function (t) { return t.source !== 'loop'; });
+  var loop = todos.filter(function (t) { return t.source === 'loop'; });
+  if (!mine.length && !loop.length) {
+    lists.appendChild(el('p', 'hint', 'Nothing here yet. Add your first one above.'));
+  }
+  AREAS.forEach(function (a) {
+    var group = mine.filter(function (t) { return t.area === a[0]; });
+    if (!group.length) return;
+    var sec = el('div', 'sec');
+    var h = el('h2', '', a[1]);
+    var d = el('span', 'dot'); d.style.background = a[2];
+    h.prepend(d);
+    sec.appendChild(h);
+    group.forEach(function (t) { sec.appendChild(itemRow(t)); });
+    lists.appendChild(sec);
+  });
+  if (loop.length) {
+    var m = el('div', 'machine');
+    m.appendChild(el('h2', '', 'From the machine'));
+    loop.forEach(function (t) { m.appendChild(itemRow(t)); });
+    mw.appendChild(m);
+  }
+  var anyDone = todos.some(function (t) { return t.done; });
+  document.getElementById('clearBtn').style.display = anyDone ? 'inline-block' : 'none';
+}
+
+function loadTodos() {
+  return api('todos').then(function (r) { return r.json(); }).then(function (d) {
+    todos = Array.isArray(d) ? d : [];
+    renderTodos();
+  });
+}
+
+function addTodo() {
+  var inp = document.getElementById('newTodo');
+  var text = inp.value.trim();
+  if (!text) return;
+  inp.value = '';
+  api('todos', { method: 'POST', body: JSON.stringify({ text: text, area: curArea }) }).then(loadTodos);
+}
+
+function loadNd(force) {
+  if (ndLoaded && !force) return;
+  var up = document.getElementById('ndUpdated');
+  up.textContent = 'Loading...';
+  api('page/nutridyn').then(function (r) {
+    if (r.status === 404) { up.textContent = 'No dashboard pushed up yet. It arrives with the morning refresh.'; return null; }
+    return r.json();
+  }).then(function (d) {
+    if (!d) return;
+    var html = d.html || '';
+    if (html.indexOf('<head>') >= 0) html = html.replace('<head>', '<head><base target="_blank">');
+    else html = '<base target="_blank">' + html;
+    document.getElementById('ndFrame').srcdoc = html;
+    ndLoaded = true;
+    up.textContent = 'Updated ' + new Date(d.updated_at).toLocaleString();
+  }).catch(function () { up.textContent = 'Could not load it. Tap Reload.'; });
+}
+
+function showTab(name) {
+  var tabs = document.querySelectorAll('.tab');
+  var panels = document.querySelectorAll('.panel');
+  tabs.forEach(function (t) { t.classList.toggle('on', t.dataset.t === name); });
+  panels.forEach(function (p) { p.classList.toggle('on', p.id === 'p-' + name); });
+  if (name === 'nutridyn') loadNd(false);
+}
+
+function showGate() {
+  localStorage.removeItem(PIN_KEY);
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('gate').style.display = 'flex';
+}
+function showApp() {
+  document.getElementById('gate').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  var d = new Date();
+  document.getElementById('today').textContent = d.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' });
+  renderChips();
+  loadTodos();
+}
+function tryPin(p) {
+  localStorage.setItem(PIN_KEY, p);
+  return fetch(API + '/api/verify', { method: 'POST', headers: { 'x-pin': p } }).then(function (r) {
+    if (r.ok) { showApp(); return true; }
+    localStorage.removeItem(PIN_KEY);
+    return false;
+  });
+}
+
+document.getElementById('pinGo').onclick = function () {
+  var v = document.getElementById('pinIn').value.trim();
+  if (!v) return;
+  tryPin(v).then(function (ok) {
+    document.getElementById('gerr').style.display = ok ? 'none' : 'block';
+    if (!ok) document.getElementById('pinIn').value = '';
+  });
+};
+document.getElementById('pinIn').addEventListener('keydown', function (e) {
+  if (e.key === 'Enter') document.getElementById('pinGo').click();
+});
+document.getElementById('addBtn').onclick = addTodo;
+document.getElementById('newTodo').addEventListener('keydown', function (e) {
+  if (e.key === 'Enter') addTodo();
+});
+document.getElementById('clearBtn').onclick = function () {
+  api('todos', { method: 'DELETE' }).then(loadTodos);
+};
+document.getElementById('ndReload').onclick = function () { loadNd(true); };
+document.querySelectorAll('.tab').forEach(function (t) {
+  t.onclick = function () { showTab(t.dataset.t); };
+});
+
+if (pin()) {
+  tryPin(pin()).then(function (ok) { if (!ok) showGate(); });
+} else {
+  showGate();
+}
+</script>
+</body>
+</html>
