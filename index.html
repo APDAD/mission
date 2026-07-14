@@ -221,7 +221,7 @@ function el(tag, cls, txt) {
 }
 
 /* Confetti: inline, no libraries. Brand colors, about 1.2s. */
-var confC = null, confX = null, confP = [], confOn = false;
+var confC = null, confX = null, confP = [], confOn = false, confKill = null, confEnds = 0;
 var CONF_COLORS = ['#1D9E75', '#EF9F27', '#2C2C2A', '#63BD9C', '#F4BA5E'];
 function confettiInit() {
   if (confC) return;
@@ -229,6 +229,11 @@ function confettiInit() {
   confC.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:60';
   document.body.appendChild(confC);
   confX = confC.getContext('2d');
+}
+function confettiClear() {
+  confP = [];
+  confOn = false;
+  if (confX) confX.clearRect(0, 0, confC.width, confC.height);
 }
 function burst(x, y) {
   confettiInit();
@@ -244,9 +249,16 @@ function burst(x, y) {
       c: CONF_COLORS[i % CONF_COLORS.length], t: 0, ttl: 72
     });
   }
+  /* Wall-clock backstop: if the tab throttles requestAnimationFrame mid-burst,
+     never leave a frozen frame painted. */
+  confEnds = Date.now() + 1400;
+  if (confKill) clearTimeout(confKill);
+  confKill = setTimeout(confettiClear, 1700);
   if (!confOn) { confOn = true; requestAnimationFrame(confTick); }
 }
 function confTick() {
+  if (!confOn) return;
+  if (Date.now() > confEnds) { confettiClear(); return; }
   confX.clearRect(0, 0, confC.width, confC.height);
   var alive = [];
   for (var i = 0; i < confP.length; i++) {
@@ -266,7 +278,7 @@ function confTick() {
   }
   confP = alive;
   if (confP.length) requestAnimationFrame(confTick);
-  else { confOn = false; confX.clearRect(0, 0, confC.width, confC.height); }
+  else confettiClear();
 }
 
 function renderChips() {
