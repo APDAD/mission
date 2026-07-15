@@ -47,18 +47,27 @@ h1{font-family:var(--serif);font-size:clamp(34px,3.4vw,50px);font-weight:600;lin
 .chip:hover{transform:translateY(-2px);border-color:var(--accent);color:var(--ink)}
 .chip.on{color:#fff;border-color:transparent}
 .flowhead{font-family:var(--serif);font-size:26px;font-weight:600;margin:4px 0 12px}
-.flow{display:flex;flex-wrap:wrap;align-items:stretch;gap:12px}
-.step{flex:1 1 260px;max-width:430px;display:flex;align-items:center;gap:13px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 14px 16px 16px;transition:transform .15s ease,box-shadow .15s ease}
+/* Serpentine flow: .flow stacks .frow (tiles + inline arrows) and .fdown (the
+   turn arrow under a row's last tile). Both get the same grid-template-columns
+   (set in JS from the live column count) so the ↓ lands in a real tile column. */
+.flow{display:flex;flex-direction:column;gap:12px}
+.frow{display:grid;align-items:stretch;gap:12px}
+.fdown{display:grid;gap:12px}
+.step{display:flex;align-items:center;gap:13px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 14px 16px 16px;transition:transform .15s ease,box-shadow .15s ease}
 .step:hover{transform:translateY(-3px);box-shadow:0 12px 26px rgba(44,44,42,.12)}
 .step.popping{animation:pop .3s ease}
 @keyframes pop{0%{transform:scale(1)}45%{transform:scale(1.05)}100%{transform:scale(1)}}
 .stepnum{width:42px;height:42px;min-width:42px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:700;font-size:24px;padding-top:2px}
 .step.mstep .stepnum{background:var(--gold)}
+/* FRIDAY ONLY items recede: today's work pops, Friday's does not. */
+.step.later{opacity:.55}
+.step.later .stepnum,.step.later.mstep .stepnum{background:#8A8A82}
+.step.later .steplabel,.step.later.mstep .steplabel{color:var(--muted)}
 .steptxt{flex:1;min-width:0}
 .steplabel{font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--muted);margin-bottom:3px}
 .step.mstep .steplabel{color:var(--gold)}
-.stepmain{font-size:15px;line-height:1.4;word-break:break-word}
-.fa{align-self:center;color:var(--gold);font-size:22px;line-height:1;user-select:none}
+.stepmain{font-size:15px;line-height:1.45;overflow-wrap:anywhere}
+.fa{display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:22px;line-height:1;user-select:none}
 .tick{width:34px;height:34px;min-width:34px;border-radius:50%;border:2px solid #CFCBBD;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;cursor:pointer;background:none;transition:transform .15s ease,border-color .15s ease,background .15s ease}
 .tick:hover{transform:scale(1.12);border-color:var(--accent)}
 .tick.mini{width:24px;height:24px;min-width:24px;font-size:12px;background:var(--accent);border-color:var(--accent)}
@@ -104,9 +113,9 @@ iframe{width:100%;height:calc(100vh - 150px);min-height:480px;border:1px solid v
   .tile{display:flex;align-items:baseline;gap:12px;padding:12px 16px}
   .tile .num{font-size:38px}
   .tile .tlabel{margin-top:0}
-  .flow{flex-direction:column}
-  .step{flex:none;max-width:none}
-  .fa{transform:rotate(90deg);align-self:center;margin:-3px 0}
+  /* 1 column: no side arrows exist, the ↓ between tiles carries the flow. */
+  .flow{gap:8px}
+  .fa{font-size:20px}
   iframe{height:calc(100vh - 170px)}
 }
 </style>
@@ -317,12 +326,16 @@ function stepMain(text) {
   return d;
 }
 
+/* FRIDAY ONLY items are on the board but not for today. */
+function isLater(t) { return (t.text || '').trim().indexOf('FRIDAY ONLY') === 0; }
+
 function stepCard(t, n) {
   var isM = t.source === 'loop';
+  var later = isLater(t);
   var a = areaOf(t);
-  var row = el('div', 'step' + (isM ? ' mstep' : ''));
+  var row = el('div', 'step' + (isM ? ' mstep' : '') + (later ? ' later' : ''));
   var num = el('div', 'stepnum', String(n));
-  if (!isM && a) num.style.background = a[2];
+  if (!isM && a && !later) num.style.background = a[2];
   var mid = el('div', 'steptxt');
   mid.appendChild(el('div', 'steplabel', isM ? 'From the machine' : (a ? a[1] : 'To do')));
   mid.appendChild(stepMain(t.text));
@@ -357,6 +370,69 @@ function doneRow(t) {
   return row;
 }
 
+/* Columns in the snake, by viewport. Must match the CSS breakpoints. */
+function flowCols() {
+  var w = window.innerWidth;
+  if (w < 700) return 1;
+  if (w <= 1100) return 2;
+  return 3;
+}
+/* N tiles with an arrow slot between each: 2N-1 columns. Tiles are equal width
+   (minmax(0,1fr) so long text cannot blow the column out); arrows take their
+   own width. The arrow columns are a FIXED width, not auto: .fdown and a short
+   final row hold no side arrows, and an auto column collapses to 0 there, which
+   shifts the tile columns out of alignment with the rows above. Fixed keeps the
+   geometry identical everywhere, so the ↓ lines up exactly on a tile. */
+var ARROW_COL = '22px';
+function gridTemplate(cols) {
+  var parts = [];
+  for (var i = 0; i < cols; i++) {
+    if (i) parts.push(ARROW_COL);
+    parts.push('minmax(0,1fr)');
+  }
+  return parts.join(' ');
+}
+
+/* Boustrophedon: row 1 runs left to right, row 2 right to left, and so on.
+   Even rows are reversed in DOM order rather than with direction:rtl, so text,
+   buttons and links inside a tile need no counter-flip and stay LTR. */
+function renderFlow(flow, ordered) {
+  var cols = flowCols();
+  var tpl = gridTemplate(cols);
+  for (var start = 0; start < ordered.length; start += cols) {
+    var ltr = (start / cols) % 2 === 0;
+    /* Pair each todo with its true sequence number BEFORE reversing, so the
+       badge always reads 1,2,3,4... through the snake regardless of direction. */
+    var slice = [];
+    for (var i = start; i < Math.min(start + cols, ordered.length); i++) slice.push({ t: ordered[i], n: i + 1 });
+    var visual = ltr ? slice : slice.slice().reverse();
+    /* A short R-to-L row must hug the RIGHT edge, because the row above hands
+       off with a ↓ over its rightmost column. Left-aligning it (the grid
+       default) would snap the eye across the page and break the snake.
+       L-to-R rows start at column 1, which auto-placement already does. */
+    var startCol = ltr ? 1 : (cols * 2 - 1) - (visual.length - 1) * 2;
+    var row = el('div', 'frow');
+    row.style.gridTemplateColumns = tpl;
+    visual.forEach(function (it, j) {
+      if (j) row.appendChild(el('div', 'fa', ltr ? '→' : '←'));
+      var card = stepCard(it.t, it.n);
+      if (j === 0) card.style.gridColumn = String(startCol); // rest auto-flow after it
+      row.appendChild(card);
+    });
+    flow.appendChild(row);
+    if (start + cols >= ordered.length) continue;
+    /* Turn arrow under the row's LAST tile: rightmost after an L-to-R row,
+       leftmost occupied column after an R-to-L row. That is where the eye
+       picks the snake back up on the next row. */
+    var down = el('div', 'fdown');
+    down.style.gridTemplateColumns = tpl;
+    var arrow = el('div', 'fa', '↓');
+    arrow.style.gridColumn = ltr ? String(startCol + (visual.length - 1) * 2) : String(startCol);
+    down.appendChild(arrow);
+    flow.appendChild(down);
+  }
+}
+
 function renderTodos() {
   var open = todos.filter(function (t) { return !t.done; });
   var doneL = todos.filter(function (t) { return t.done; });
@@ -374,10 +450,7 @@ function renderTodos() {
     em.appendChild(el('div', 'allclear-sub', 'Add one thing above and go.'));
     flow.appendChild(em);
   } else {
-    ordered.forEach(function (t, i) {
-      if (i > 0) flow.appendChild(el('div', 'fa', '➜'));
-      flow.appendChild(stepCard(t, i + 1));
-    });
+    renderFlow(flow, ordered);
   }
   var dw = document.getElementById('doneWrap');
   dw.innerHTML = '';
@@ -497,6 +570,16 @@ document.getElementById('mapReload').onclick = function () { loadMap(true); };
 document.getElementById('moneyReload').onclick = function () { loadMoney(true); };
 document.querySelectorAll('.tab').forEach(function (t) {
   t.onclick = function () { showTab(t.dataset.t); };
+});
+/* The snake is laid out in JS, so a breakpoint change needs a re-render.
+   Only when the column count actually changes: renderTodos() reuses cached
+   todos, so this costs nothing on the network. */
+var lastCols = flowCols();
+window.addEventListener('resize', function () {
+  var c = flowCols();
+  if (c === lastCols) return;
+  lastCols = c;
+  renderTodos();
 });
 
 if (pin()) {
