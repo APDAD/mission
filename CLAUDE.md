@@ -31,6 +31,14 @@ Base: $MISSION_API from ~/nutridyn-territory/dashboard-feed/mission.env, header 
   account's drafts folder; learned 2026-07-15), never folder links.
 - BOARD ORDER: the API returns tiles NEWEST-FIRST and the page renders in API order. To put
   a tile at the END of the snake, create it FIRST; the last tile posted shows first.
+- PATCH DOES NOT EDIT TILE TEXT. PATCH /api/todos/<id> with {"text":...} returns HTTP 200 and
+  echoes back the row, but the text is UNCHANGED on the server. Only {"done":true|false}
+  actually applies. To change wording you MUST DELETE and re-POST (which moves the tile to the
+  front of the snake, so re-post the whole affected run in order). This burned twice on
+  2026-07-15: once on the Amex tiles, then AGAIN an hour later when three "HOLD, do not send"
+  warnings were PATCHed onto bad-citation tiles, returned 200, and never appeared on his board,
+  while he was told they had. NEVER report a board change you have not re-read back from
+  GET /api/todos. A 200 from this API is not proof.
 - Tab panels fill the viewport (iframes calc(100vh - 150px)). Mobile 375px must stack clean
   with zero horizontal scroll. SPC cannot be iframed (their login blocks it); honest button.
 - The page must keep working inside nothing (it IS the top page) and its child iframes get
