@@ -25,7 +25,12 @@ Base: $MISSION_API from ~/nutridyn-territory/dashboard-feed/mission.env, header 
   turn arrow under each row's last tile, numbers always true order. Tiles starting
   "FRIDAY ONLY."/"LATER." render muted.
 - ONE ACTION PER TILE, ten-year-old wording, URLs render as green Open buttons. Email tiles
-  carry exact #drafts/<threadId> links, never folder links.
+  carry exact draft links in the ACCOUNT-PINNED form
+  https://mail.google.com/mail/?authuser=asher@nutri-dyn.com#drafts/<threadId> — never
+  /mail/u/0/ (u/0 is his PERSONAL Gmail in Chrome, so u/0 links dump him on the wrong
+  account's drafts folder; learned 2026-07-15), never folder links.
+- BOARD ORDER: the API returns tiles NEWEST-FIRST and the page renders in API order. To put
+  a tile at the END of the snake, create it FIRST; the last tile posted shows first.
 - Tab panels fill the viewport (iframes calc(100vh - 150px)). Mobile 375px must stack clean
   with zero horizontal scroll. SPC cannot be iframed (their login blocks it); honest button.
 - The page must keep working inside nothing (it IS the top page) and its child iframes get
