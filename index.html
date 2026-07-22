@@ -21,6 +21,9 @@ h1{font-family:var(--serif);font-size:clamp(34px,3.4vw,50px);font-weight:600;lin
 .hero{position:relative;border:1px solid var(--line);border-radius:18px;padding:20px 24px 18px;background:linear-gradient(115deg,rgba(29,158,117,.15),rgba(239,159,39,.13) 45%,rgba(29,158,117,.15) 85%);background-size:230% 230%;animation:drift 14s ease-in-out infinite;overflow:hidden}
 @keyframes drift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 .tabs{display:flex;gap:8px;margin:14px 0 16px;position:sticky;top:0;background:var(--bg);padding:10px 0;z-index:5}
+.subtabs{display:inline-flex;gap:6px;margin-right:auto}
+.subtab{padding:6px 14px;border:1px solid var(--line);border-radius:999px;background:var(--card);font-size:11px;font-weight:600;letter-spacing:.03em;color:var(--muted);cursor:pointer;font-family:var(--sans);transition:all .15s ease}
+.subtab.on{background:var(--ink);color:var(--paper,#F1EFE8);border-color:var(--ink)}
 .tab{flex:1;text-align:center;padding:13px 1px;border:1px solid var(--line);border-radius:999px;background:var(--card);font-size:11px;font-weight:600;letter-spacing:.03em;color:var(--muted);cursor:pointer;font-family:var(--sans);white-space:nowrap;transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease,color .15s ease}
 .tab:hover{transform:translateY(-2px);border-color:var(--accent);color:var(--ink);box-shadow:0 6px 14px rgba(44,44,42,.08)}
 .tab.on{background:var(--accent);border-color:var(--accent);color:#fff}
@@ -139,7 +142,6 @@ iframe{width:100%;height:calc(100vh - 150px);min-height:480px;border:1px solid v
   <div class="tabs">
     <button class="tab on" data-t="todo">TODAY</button>
     <button class="tab" data-t="nutridyn">NUTRIDYN</button>
-    <button class="tab" data-t="map">MAP</button>
     <button class="tab" data-t="money">MONEY</button>
     <button class="tab" data-t="spc">SPC</button>
   </div>
@@ -167,18 +169,17 @@ iframe{width:100%;height:calc(100vh - 150px);min-height:480px;border:1px solid v
 
   <div class="panel" id="p-nutridyn">
     <div class="toprow">
+      <span class="subtabs">
+        <button class="subtab on" data-s="nd">Territory</button>
+        <button class="subtab" data-s="map">Map</button>
+      </span>
       <span class="small" id="ndUpdated"></span>
+      <span class="small" id="mapUpdated" style="display:none"></span>
       <button class="reload" id="ndReload">Reload</button>
+      <button class="reload" id="mapReload" style="display:none">Reload</button>
     </div>
     <iframe id="ndFrame" title="NutriDyn Territory Command"></iframe>
-  </div>
-
-  <div class="panel" id="p-map">
-    <div class="toprow">
-      <span class="small" id="mapUpdated"></span>
-      <button class="reload" id="mapReload">Reload</button>
-    </div>
-    <iframe id="mapFrame" title="Territory Map" allow="geolocation"></iframe>
+    <iframe id="mapFrame" title="Territory Map" allow="geolocation" style="display:none"></iframe>
   </div>
 
   <div class="panel" id="p-money">
@@ -510,8 +511,20 @@ function showTab(name) {
   tabs.forEach(function (t) { t.classList.toggle('on', t.dataset.t === name); });
   panels.forEach(function (p) { p.classList.toggle('on', p.id === 'p-' + name); });
   if (name === 'nutridyn') loadNd(false);
-  if (name === 'map') loadMap(false);
   if (name === 'money') loadMoney(false);
+}
+
+// NutriDyn sub-views: Territory command and the map live on one tab (Asher, 2026-07-22)
+function showSub(which) {
+  document.querySelectorAll('.subtab').forEach(function (b) { b.classList.toggle('on', b.dataset.s === which); });
+  var isMap = which === 'map';
+  document.getElementById('ndFrame').style.display = isMap ? 'none' : '';
+  document.getElementById('mapFrame').style.display = isMap ? '' : 'none';
+  document.getElementById('ndUpdated').style.display = isMap ? 'none' : '';
+  document.getElementById('mapUpdated').style.display = isMap ? '' : 'none';
+  document.getElementById('ndReload').style.display = isMap ? 'none' : '';
+  document.getElementById('mapReload').style.display = isMap ? '' : 'none';
+  if (isMap) loadMap(false); else loadNd(false);
 }
 
 function showGate() {
@@ -567,6 +580,7 @@ document.getElementById('clearBtn').onclick = function () {
 };
 document.getElementById('ndReload').onclick = function () { loadNd(true); };
 document.getElementById('mapReload').onclick = function () { loadMap(true); };
+document.querySelectorAll('.subtab').forEach(function (b) { b.onclick = function () { showSub(b.dataset.s); }; });
 document.getElementById('moneyReload').onclick = function () { loadMoney(true); };
 document.querySelectorAll('.tab').forEach(function (t) {
   t.onclick = function () { showTab(t.dataset.t); };
