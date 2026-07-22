@@ -172,14 +172,18 @@ iframe{width:100%;height:calc(100vh - 150px);min-height:480px;border:1px solid v
       <span class="subtabs">
         <button class="subtab on" data-s="nd">Territory</button>
         <button class="subtab" data-s="map">Map</button>
+        <button class="subtab" data-s="radar">Radar</button>
       </span>
       <span class="small" id="ndUpdated"></span>
       <span class="small" id="mapUpdated" style="display:none"></span>
+      <span class="small" id="radarUpdated" style="display:none"></span>
       <button class="reload" id="ndReload">Reload</button>
       <button class="reload" id="mapReload" style="display:none">Reload</button>
+      <button class="reload" id="radarReload" style="display:none">Reload</button>
     </div>
     <iframe id="ndFrame" title="NutriDyn Territory Command"></iframe>
     <iframe id="mapFrame" title="Territory Map" allow="geolocation" style="display:none"></iframe>
+    <iframe id="radarFrame" title="Blast Radar" style="display:none"></iframe>
   </div>
 
   <div class="panel" id="p-money">
@@ -501,6 +505,9 @@ function loadNd(force) {
 function loadMap(force) {
   loadPage('map', 'mapFrame', 'mapUpdated', 'No map pushed up yet.', force);
 }
+function loadRadar(force) {
+  loadPage('radar', 'radarFrame', 'radarUpdated', 'No blast radar pushed up yet. It arrives with the morning run.', force);
+}
 function loadMoney(force) {
   loadPage('money', 'moneyFrame', 'moneyUpdated', 'No money page pushed yet.', force);
 }
@@ -514,17 +521,21 @@ function showTab(name) {
   if (name === 'money') loadMoney(false);
 }
 
-// NutriDyn sub-views: Territory command and the map live on one tab (Asher, 2026-07-22)
+// NutriDyn sub-views: Territory command, the map, and the blast radar share one tab
+// (Territory + Map, Asher 2026-07-22; Radar added the same day)
+var SUBS = { nd: 'nd', map: 'map', radar: 'radar' };
 function showSub(which) {
+  if (!SUBS[which]) which = 'nd';
   document.querySelectorAll('.subtab').forEach(function (b) { b.classList.toggle('on', b.dataset.s === which); });
-  var isMap = which === 'map';
-  document.getElementById('ndFrame').style.display = isMap ? 'none' : '';
-  document.getElementById('mapFrame').style.display = isMap ? '' : 'none';
-  document.getElementById('ndUpdated').style.display = isMap ? 'none' : '';
-  document.getElementById('mapUpdated').style.display = isMap ? '' : 'none';
-  document.getElementById('ndReload').style.display = isMap ? 'none' : '';
-  document.getElementById('mapReload').style.display = isMap ? '' : 'none';
-  if (isMap) loadMap(false); else loadNd(false);
+  Object.keys(SUBS).forEach(function (k) {
+    var on = k === which ? '' : 'none';
+    document.getElementById(k + 'Frame').style.display = on;
+    document.getElementById(k + 'Updated').style.display = on;
+    document.getElementById(k + 'Reload').style.display = on;
+  });
+  if (which === 'map') loadMap(false);
+  else if (which === 'radar') loadRadar(false);
+  else loadNd(false);
 }
 
 function showGate() {
@@ -580,6 +591,7 @@ document.getElementById('clearBtn').onclick = function () {
 };
 document.getElementById('ndReload').onclick = function () { loadNd(true); };
 document.getElementById('mapReload').onclick = function () { loadMap(true); };
+document.getElementById('radarReload').onclick = function () { loadRadar(true); };
 document.querySelectorAll('.subtab').forEach(function (b) { b.onclick = function () { showSub(b.dataset.s); }; });
 document.getElementById('moneyReload').onclick = function () { loadMoney(true); };
 document.querySelectorAll('.tab').forEach(function (t) {
