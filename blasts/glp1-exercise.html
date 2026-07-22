@@ -189,6 +189,12 @@
   .mechanism-table td:first-child { font-weight: 600; color: #2C2C2A; width: 30%; }
   .mechanism-table tr:last-child td { border-bottom: none; }
 
+  /* FEEDBACK - THE FEEDBACK LAW. Left-aligned like the other body sections, on white so it
+     reads as a real ask rather than a marketing panel. */
+  .feedback-section { background-color: #ffffff; padding: 44px 40px 40px; border-top: 1px solid #e6e2da; }
+  .feedback-section p { font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 15px; color: #3a3a37; line-height: 1.7; }
+  .feedback-section .eyebrow { font-size: 11px; }
+
   /* SIGNATURE - visual container matches his real campaigns; content is the canonical SIGNATURE LAW block */
   .signature-section { background-color: #f7f3ea; padding: 40px 40px 36px; text-align: center; } /* OF palette: paper-warm */
 
@@ -205,7 +211,7 @@
     .hero-headline { font-size: 32px; }
     .product-grid { display: block; }
     .product-img-col, .product-info-col { display: block; width: 100%; padding-right: 0; margin-bottom: 20px; }
-    .science-section, .product-section, .mechanism-section, .signature-section { padding: 36px 24px; }
+    .science-section, .product-section, .mechanism-section, .signature-section, .feedback-section { padding: 36px 24px; }
     .stat-number { font-size: 48px; }
     .mechanism-table td, .mechanism-table th { padding: 8px 8px; font-size: 12px; }
   }
@@ -305,6 +311,16 @@
     </tbody></table>
   </div>
 
+  <!-- FEEDBACK BLOCK (THE FEEDBACK LAW). Goes in EVERY blast, right before the signature.
+       Mechanism is REPLY on purpose: a fillable form cannot live inside an email, and a link to
+       a hosted form costs responses. Do not turn this into a button or a page. -->
+  <div class="feedback-section">
+    <p class="eyebrow">Building this with you</p>
+    <h2 class="section-heading">What should I fix next?</h2>
+    <p>I run this territory like a product, and you are the one using it. Tell me what is not working in your practice, what you wish NutriDyn made, or what you want covered at the next lunch and learn.</p>
+    <p style="margin-top:14px;"><strong>Just hit reply.</strong> It comes straight to me and I read every one.</p>
+  </div>
+
   <!-- SIGNATURE - canonical block (THE SIGNATURE LAW), fetched verbatim 2026-07-22 from
        https://apdad.github.io/mission/sig/signature.html and wrapped only in a centering
        table for layout. No plain-text sign-off above it: the block already carries his name. -->
@@ -328,7 +344,7 @@
             <a href="https://www.facebook.com/share/g/1CEhYGLGp2/?mibextid=wwXIfr" style="display:inline-block;padding:5px 10px;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:10px;font-weight:600;color:#ffffff;text-decoration:none;letter-spacing:0.5px;">Clinician Group</a>
           </td>
         </tr>
-      </tbody></table></td></tr><tr><td colspan="3" bgcolor="#1a4a3a" style="background-color:#1a4a3a;background-image:linear-gradient(90deg,#1a4a3a,#2d7a5e);padding:8px 20px;"><p style="margin:0;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:10px;color:#d6e5df;letter-spacing:0.5px;"> 📅  <strong style="color:#ffffff;">Book a Lunch &amp; Learn or Zoom:</strong>  Reply to this email or text 678.577.1003 </p></td></tr></tbody></table>
+      </tbody></table></td></tr><tr><td colspan="3" bgcolor="#1a4a3a" style="background-color:#1a4a3a;background-image:linear-gradient(90deg,#1a4a3a,#2d7a5e);padding:8px 20px;"><p style="margin:0;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:10px;color:#d6e5df;letter-spacing:0.5px;"> 📅  <strong style="color:#ffffff;">Book a Lunch &amp; Learn or Zoom:</strong>  Reply to this email or text 678.577.1003 </p><p style="margin:5px 0 0;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:10px;color:#d6e5df;letter-spacing:0.5px;"> 💬  <strong style="color:#ffffff;">What should we build next?</strong>  Reply with what your territory needs, what NutriDyn should make, or a seminar topic. I read every one. </p></td></tr></tbody></table>
     </td></tr></tbody></table>
   </div>
 
