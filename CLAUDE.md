@@ -8,6 +8,26 @@ https://apdad.github.io/mission/. All data lives behind a PIN-gated Supabase Edg
 data, balances, doctor names, or money.html (gitignored) to this repo. Verify git status
 before every commit. Commit + push after every change; Pages redeploys in ~60s.
 
+## THE ONE-SURFACE LAW (Asher's direct order, 2026-07-22 — the day he found a second to-do
+## list hiding on the NutriDyn tab, including a room request that had been blocking his
+## August 12 dinner since July 9)
+TODAY IS THE ONLY PLACE A TO-DO MAY LIVE. It holds his ENTIRE life: NutriDyn, money, SPC,
+family, everything. If he has to do it, it is a tile on TODAY, full stop.
+EVERY OTHER TAB IS INSIGHT ONLY. NutriDyn (with the Map folded in as a sub-view), Money, and
+SPC exist to show him the picture: numbers, accounts, trends, geography. They may NOT carry
+action cards, "moves", "needs", asks, or anything phrased as something for him to do. A loop
+that renders an action anywhere but TODAY has hidden it from him, which is worse than not
+writing it at all.
+BINDING ON EVERY LOOP: if you compute something he must act on, POST IT TO /api/todos. You may
+ALSO show its context on a tab, but the tab version is a read-only echo, never the only copy.
+nutridyn-command-refresh in particular: its "moves" and "needs" arrays must mirror board tiles,
+never replace them, and every move it renders must already exist on TODAY.
+NO TILE CAP while this law stands. The old 15-tile ceiling pushed real work onto other
+surfaces, which is exactly the failure this law exists to kill. Order does the work the cap
+used to do: most urgent and most time-bound at the top of the snake. Overflow to backlog.md
+only for things that are genuinely NOT his to do yet.
+MAP: not a tab. It lives inside NUTRIDYN as a Territory/Map sub-toggle (shipped 2026-07-22).
+
 ## THE API (function v3; code retrievable via Supabase get_edge_function)
 Base: $MISSION_API from ~/nutridyn-territory/dashboard-feed/mission.env, header x-pin.
 - /api/todos GET/POST/PATCH/:id/DELETE/:id (POST {text, area: nutridyn|spc|money|life,
