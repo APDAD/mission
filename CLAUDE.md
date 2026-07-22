@@ -28,6 +28,30 @@ used to do: most urgent and most time-bound at the top of the snake. Overflow to
 only for things that are genuinely NOT his to do yet.
 MAP: not a tab. It lives inside NUTRIDYN as a Territory/Map sub-toggle (shipped 2026-07-22).
 
+## THE DELIVERY LAW (Asher's direct order, 2026-07-22)
+"I will rarely look at folders. That's not my flow. I will look at HTML pages, my Mission
+Control, and what's on Claude Code. Mission Control is my base and source of truth. That's
+where I work from."
+A FILE PATH IS NOT A DELIVERABLE. If he has to open Finder, a folder, or a text editor to see
+your work, you have not delivered it — you have hidden it. This is the same failure as the
+hidden second to-do list, one layer up: the work exists, he just never sees it.
+THREE SURFACES, AND ONLY THREE:
+  1. MISSION CONTROL — every action lives here as a TODAY tile (see THE ONE-SURFACE LAW).
+  2. A LIVE HTML PAGE — anything he needs to LOOK at gets published to the mission repo and
+     served from https://apdad.github.io/mission/... , then linked from a tile. Existing
+     shelves: /study/ (annotated papers), /blasts/ (email previews), /handouts/ (patient PDFs),
+     /sig/ (signature assets). Add a shelf rather than leaving an artifact on disk only.
+  3. THE CLAUDE CODE CONVERSATION — what you say to him directly.
+WRITE SUMMARIES IN URLS, NOT PATHS. Never end a turn by telling him a thing is "at
+blasts/2026-07-22-foo.html". Publish it, then give him the link. Local files under
+~/nutridyn-territory are the machine's workspace and the machine's business.
+KEEP THE PUBLISHED COPY HONEST. When a page mirrors something that lives elsewhere (a Direct
+Mail message, a Gmail draft), generate it FROM that source, not from a parallel file that can
+drift, and say on the page which source it came from. A preview that silently disagrees with
+what will actually send is worse than no preview.
+The public-repo rule still binds absolutely: NO data, balances, doctor names, PHI, or money.
+Marketing copy and patient education are fine — he mass-mails them anyway. Check before adding.
+
 ## THE API (function v3; code retrievable via Supabase get_edge_function)
 Base: $MISSION_API from ~/nutridyn-territory/dashboard-feed/mission.env, header x-pin.
 - /api/todos GET/POST/PATCH/:id/DELETE/:id (POST {text, area: nutridyn|spc|money|life,
