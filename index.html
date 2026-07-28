@@ -76,6 +76,20 @@ h1{font-family:var(--serif);font-size:clamp(34px,3.4vw,50px);font-weight:600;lin
 .tick.mini{width:24px;height:24px;min-width:24px;font-size:12px;background:var(--accent);border-color:var(--accent)}
 .del{border:0;background:none;color:#B8B4A6;font-size:19px;cursor:pointer;padding:4px 7px;line-height:1;transition:color .15s ease,transform .15s ease}
 .del:hover{color:var(--red);transform:scale(1.15)}
+/* The answer box under machine tiles: how Asher talks back to the machine.
+   Voice-first: a real textarea (16px stops iOS zoom-on-focus), one gold send. */
+.ans{margin-top:10px}
+.ans-open{background:none;border:1px solid var(--gold);color:var(--gold);border-radius:999px;padding:6px 14px;font-family:var(--sans);font-size:12px;font-weight:600;cursor:pointer;transition:background .15s ease,color .15s ease,transform .15s ease}
+.ans-open:hover{background:var(--gold);color:#fff;transform:translateY(-1px)}
+.ans-in{width:100%;min-height:64px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--bg);font-family:var(--sans);font-size:16px;color:var(--ink);resize:vertical;margin-bottom:8px}
+.ans-in:focus{outline:none;border-color:var(--gold)}
+.ans-in::placeholder{color:var(--muted)}
+.ans-send{background:var(--gold);border:0;color:#fff;border-radius:10px;padding:9px 16px;font-family:var(--sans);font-size:13px;font-weight:600;cursor:pointer;transition:transform .15s ease,filter .15s ease}
+.ans-send:hover{transform:translateY(-1px);filter:brightness(1.06)}
+.ans-send:disabled{opacity:.6;cursor:default}
+.ans-said{font-size:13px;background:var(--bg);border-left:3px solid var(--gold);border-radius:0 10px 10px 0;padding:8px 12px;margin-bottom:6px;overflow-wrap:anywhere}
+.ans-note{font-size:12px;color:var(--muted);margin-bottom:6px}
+.ans-check{color:var(--accent);font-weight:600}
 .allclear{flex:1;text-align:center;background:var(--card);border:1px dashed var(--line);border-radius:18px;padding:38px 20px}
 .allclear-big{font-family:var(--serif);font-size:32px;font-weight:600;color:var(--accent)}
 .allclear-sub{color:var(--muted);font-size:14px;margin-top:4px}
@@ -334,6 +348,55 @@ function stepMain(text) {
 /* FRIDAY ONLY items are on the board but not for today. */
 function isLater(t) { return (t.text || '').trim().indexOf('FRIDAY ONLY') === 0; }
 
+/* THE ANSWER BOX. A machine tile is often a question; this is how Asher talks
+   back without leaving the board. POST /api/todos/:id/answer stores the reply,
+   the answer-watcher loop claims it (answer_seen_at) and executes. A changed
+   answer re-queues. States: no answer -> button; answered -> quote + status +
+   change; claimed -> the machine is working on it. */
+function answerForm(t) {
+  var box = el('div', 'ans');
+  var ta = document.createElement('textarea');
+  ta.className = 'ans-in';
+  ta.placeholder = 'Talk or type your answer...';
+  ta.value = t.answer || '';
+  var send = el('button', 'ans-send', 'Send to the machine');
+  send.onclick = function () {
+    var v = ta.value.trim();
+    if (!v) return;
+    send.disabled = true;
+    send.textContent = 'Sending...';
+    api('todos/' + t.id + '/answer', { method: 'POST', body: JSON.stringify({ answer: v }) })
+      .then(loadTodos)
+      .catch(function () { send.disabled = false; send.textContent = 'Send to the machine'; });
+  };
+  box.appendChild(ta);
+  box.appendChild(send);
+  setTimeout(function () { ta.focus(); }, 0);
+  return box;
+}
+function answerBox(t) {
+  var box = el('div', 'ans');
+  if (t.answer && t.answer_seen_at) {
+    var okd = el('div', 'ans-note');
+    okd.appendChild(el('span', 'ans-check', '✓ '));
+    okd.appendChild(document.createTextNode('The machine has your answer and is working on it.'));
+    box.appendChild(okd);
+    return box;
+  }
+  if (t.answer) {
+    box.appendChild(el('div', 'ans-said', '“' + t.answer + '”'));
+    box.appendChild(el('div', 'ans-note', 'Answer sent. The machine picks it up within the half hour.'));
+    var chg = el('button', 'ans-open', 'Change my answer');
+    chg.onclick = function () { box.replaceWith(answerForm(t)); };
+    box.appendChild(chg);
+    return box;
+  }
+  var open = el('button', 'ans-open', 'Answer the machine');
+  open.onclick = function () { box.replaceWith(answerForm(t)); };
+  box.appendChild(open);
+  return box;
+}
+
 function stepCard(t, n) {
   var isM = t.source === 'loop';
   var later = isLater(t);
@@ -344,6 +407,7 @@ function stepCard(t, n) {
   var mid = el('div', 'steptxt');
   mid.appendChild(el('div', 'steplabel', isM ? 'From the machine' : (a ? a[1] : 'To do')));
   mid.appendChild(stepMain(t.text));
+  if (isM) mid.appendChild(answerBox(t));
   var tick = el('button', 'tick', '');
   tick.setAttribute('aria-label', 'Mark done');
   tick.onclick = function (e) {
