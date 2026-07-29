@@ -202,10 +202,17 @@ iframe{width:100%;height:calc(100vh - 150px);min-height:480px;border:1px solid v
 
   <div class="panel" id="p-money">
     <div class="toprow">
+      <span class="subtabs">
+        <button class="subtab on" data-m="money">Money</button>
+        <button class="subtab" data-m="benefits">Card benefits</button>
+      </span>
       <span class="small" id="moneyUpdated"></span>
+      <span class="small" id="benefitsUpdated" style="display:none"></span>
       <button class="reload" id="moneyReload">Reload</button>
+      <button class="reload" id="benefitsReload" style="display:none">Reload</button>
     </div>
     <iframe id="moneyFrame" title="Money"></iframe>
+    <iframe id="benefitsFrame" title="Card Benefits" style="display:none"></iframe>
     <div class="linkrow">
       <a class="lbtn" href="http://localhost:3200" target="_blank" rel="noopener">Finance Command Center<span>opens only when running on your Mac</span></a>
       <a class="lbtn" href="http://localhost:3300" target="_blank" rel="noopener">APEX.AI<span>same</span></a>
@@ -575,6 +582,9 @@ function loadRadar(force) {
 function loadMoney(force) {
   loadPage('money', 'moneyFrame', 'moneyUpdated', 'No money page pushed yet.', force);
 }
+function loadBenefits(force) {
+  loadPage('benefits', 'benefitsFrame', 'benefitsUpdated', 'No card benefits page pushed yet. It arrives with the monthly sweep.', force);
+}
 
 function showTab(name) {
   var tabs = document.querySelectorAll('.tab');
@@ -582,7 +592,7 @@ function showTab(name) {
   tabs.forEach(function (t) { t.classList.toggle('on', t.dataset.t === name); });
   panels.forEach(function (p) { p.classList.toggle('on', p.id === 'p-' + name); });
   if (name === 'nutridyn') loadNd(false);
-  if (name === 'money') loadMoney(false);
+  if (name === 'money') showMoneySub(curMoneySub);
 }
 
 // NutriDyn sub-views: Territory command, the map, and the blast radar share one tab
@@ -590,7 +600,7 @@ function showTab(name) {
 var SUBS = { nd: 'nd', map: 'map', radar: 'radar' };
 function showSub(which) {
   if (!SUBS[which]) which = 'nd';
-  document.querySelectorAll('.subtab').forEach(function (b) { b.classList.toggle('on', b.dataset.s === which); });
+  document.querySelectorAll('#p-nutridyn .subtab').forEach(function (b) { b.classList.toggle('on', b.dataset.s === which); });
   Object.keys(SUBS).forEach(function (k) {
     var on = k === which ? '' : 'none';
     document.getElementById(k + 'Frame').style.display = on;
@@ -600,6 +610,24 @@ function showSub(which) {
   if (which === 'map') loadMap(false);
   else if (which === 'radar') loadRadar(false);
   else loadNd(false);
+}
+
+// Money sub-views: the money page and the card-benefits sweep share one tab.
+// Benefits is INSIGHT ONLY; every action it finds is also a TODAY tile.
+var MSUBS = { money: 'money', benefits: 'benefits' };
+var curMoneySub = 'money';
+function showMoneySub(which) {
+  if (!MSUBS[which]) which = 'money';
+  curMoneySub = which;
+  document.querySelectorAll('#p-money .subtab').forEach(function (b) { b.classList.toggle('on', b.dataset.m === which); });
+  Object.keys(MSUBS).forEach(function (k) {
+    var on = k === which ? '' : 'none';
+    document.getElementById(k + 'Frame').style.display = on;
+    document.getElementById(k + 'Updated').style.display = on;
+    document.getElementById(k + 'Reload').style.display = on;
+  });
+  if (which === 'benefits') loadBenefits(false);
+  else loadMoney(false);
 }
 
 function showGate() {
@@ -656,8 +684,10 @@ document.getElementById('clearBtn').onclick = function () {
 document.getElementById('ndReload').onclick = function () { loadNd(true); };
 document.getElementById('mapReload').onclick = function () { loadMap(true); };
 document.getElementById('radarReload').onclick = function () { loadRadar(true); };
-document.querySelectorAll('.subtab').forEach(function (b) { b.onclick = function () { showSub(b.dataset.s); }; });
+document.querySelectorAll('#p-nutridyn .subtab').forEach(function (b) { b.onclick = function () { showSub(b.dataset.s); }; });
 document.getElementById('moneyReload').onclick = function () { loadMoney(true); };
+document.getElementById('benefitsReload').onclick = function () { loadBenefits(true); };
+document.querySelectorAll('#p-money .subtab').forEach(function (b) { b.onclick = function () { showMoneySub(b.dataset.m); }; });
 document.querySelectorAll('.tab').forEach(function (t) {
   t.onclick = function () { showTab(t.dataset.t); };
 });
