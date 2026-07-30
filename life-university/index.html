@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Life University Desk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F1EFE8; --card:#FBFAF6; --ink:#2C2C2A; --muted:#6B6B66; --line:#E3E0D5;
+    --accent:#1D9E75; --gold:#EF9F27; --red:#C65545; --blue:#4A6FA5;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  body{
+    background:var(--bg); color:var(--ink); font-family:Inter,-apple-system,system-ui,sans-serif;
+    font-size:15px; line-height:1.55; padding:22px 18px 70px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:1180px; margin:0 auto; }
+
+  h1{ font-family:"Cormorant Garamond",Georgia,serif; font-size:44px; font-weight:700;
+      letter-spacing:-.5px; line-height:1.05; }
+  .sub{ color:var(--muted); font-size:15px; margin-top:6px; max-width:760px; }
+  h2{ font-family:"Cormorant Garamond",Georgia,serif; font-size:29px; font-weight:600;
+      margin:38px 0 14px; letter-spacing:-.2px; }
+  h3{ font-size:13px; font-weight:700; letter-spacing:.09em; text-transform:uppercase;
+      color:var(--muted); margin-bottom:9px; }
+
+  .card{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px 22px;
+         margin-bottom:14px; transition:transform .15s ease, box-shadow .15s ease; }
+  .card:hover{ transform:translateY(-2px); box-shadow:0 8px 22px rgba(44,44,42,.08); }
+
+  .hero{ background:linear-gradient(135deg,#1D9E75 0%,#2F7F6B 55%,#4A6FA5 100%);
+         color:#fff; border:none; padding:26px 26px 24px; }
+  .hero h1{ color:#fff; }
+  .hero .sub{ color:rgba(255,255,255,.9); }
+  .hero .stats{ display:flex; flex-wrap:wrap; gap:26px; margin-top:20px; }
+  .hero .stat .n{ font-family:"Cormorant Garamond",serif; font-size:38px; font-weight:700; line-height:1; }
+  .hero .stat .l{ font-size:11px; letter-spacing:.11em; text-transform:uppercase;
+                  color:rgba(255,255,255,.85); margin-top:4px; }
+
+  .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .grid3{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+
+  .row{ display:flex; gap:14px; align-items:flex-start; padding:11px 0; border-bottom:1px solid var(--line); }
+  .row:last-child{ border-bottom:none; }
+  .when{ flex:0 0 128px; font-weight:700; font-size:13px; }
+  .when .d{ display:block; font-weight:500; color:var(--muted); font-size:11.5px;
+            letter-spacing:.07em; text-transform:uppercase; }
+  .what{ flex:1; font-size:14px; }
+  .what b{ font-weight:600; }
+  .note{ display:block; color:var(--muted); font-size:12.5px; margin-top:3px; }
+
+  .flag{ display:inline-block; font-size:10.5px; font-weight:700; letter-spacing:.09em;
+         text-transform:uppercase; padding:2px 8px; border-radius:20px; margin-left:7px;
+         vertical-align:1px; }
+  .flag.now{ background:var(--red); color:#fff; }
+  .flag.soon{ background:var(--gold); color:#fff; }
+  .flag.dead{ background:#9A9A93; color:#fff; }
+  .flag.win{ background:var(--accent); color:#fff; }
+
+  .lead{ border-left:4px solid var(--accent); padding-left:15px; margin:14px 0; }
+  .lead.red{ border-left-color:var(--red); }
+  .lead.gold{ border-left-color:var(--gold); }
+  .lead .k{ font-size:11.5px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+            color:var(--accent); margin-bottom:4px; }
+  .lead.red .k{ color:var(--red); } .lead.gold .k{ color:var(--gold); }
+
+  .btn{ display:inline-block; background:var(--accent); color:#fff; text-decoration:none;
+        font-weight:600; font-size:13.5px; padding:9px 17px; border-radius:9px; margin:5px 7px 0 0; }
+  .btn:hover{ filter:brightness(1.08); }
+  .btn.ghost{ background:transparent; color:var(--accent); border:1.5px solid var(--accent); }
+
+  table{ width:100%; border-collapse:collapse; font-size:13.5px; }
+  th{ text-align:left; font-size:11px; letter-spacing:.09em; text-transform:uppercase;
+      color:var(--muted); padding:7px 9px; border-bottom:2px solid var(--line); }
+  td{ padding:8px 9px; border-bottom:1px solid var(--line); vertical-align:top; }
+  tr:last-child td{ border-bottom:none; }
+  .tbl-scroll{ overflow-x:auto; }
+
+  .thu{ background:#EEF3F9; border:1px solid #CFDCEB; border-radius:11px; padding:13px 15px; }
+  .thu .slot{ display:flex; justify-content:space-between; gap:12px; padding:6px 0;
+              border-bottom:1px dashed #CFDCEB; font-size:13.5px; }
+  .thu .slot:last-child{ border-bottom:none; }
+  .thu .rm{ color:var(--muted); font-size:12.5px; }
+
+  .big{ font-family:"Cormorant Garamond",serif; font-size:23px; font-weight:600; line-height:1.3; }
+  .foot{ color:var(--muted); font-size:12px; margin-top:34px; padding-top:14px;
+         border-top:1px solid var(--line); }
+
+  @media(max-width:820px){
+    .grid2,.grid3{ grid-template-columns:1fr; }
+    h1{ font-size:33px; } h2{ font-size:24px; }
+    .when{ flex:0 0 96px; }
+    body{ padding:16px 13px 60px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="card hero">
+    <h1>The Life University Desk</h1>
+    <p class="sub">One account, one job: every chiropractor who walks off that campus should already
+    be using foundation nutrition and already think of NutriDyn as the brand they grew up on.</p>
+    <div class="stats">
+      <div class="stat"><div class="n">~300</div><div class="l">DC grads / year</div></div>
+      <div class="stat"><div class="n">4</div><div class="l">Graduations / year</div></div>
+      <div class="stat"><div class="n">6</div><div class="l">Nutrition credit hrs<br>in the whole degree</div></div>
+      <div class="stat"><div class="n">114</div><div class="l">Student clubs</div></div>
+      <div class="stat"><div class="n">1,210</div><div class="l">DC students enrolled</div></div>
+    </div>
+  </div>
+
+  <!-- ============ NEXT 30 DAYS ============ -->
+  <h2>The next 30 days</h2>
+
+  <div class="card">
+    <div class="row">
+      <div class="when">FRI JUL 31<span class="d">Tomorrow</span></div>
+      <div class="what"><b>Chiro Games 2026</b> &mdash; 5:00 PM, Room C2, chiropractic building
+        <span class="flag now">Tomorrow</span>
+        <span class="note">You confirmed this twice, in March and again in June. Runs into
+        Saturday. There is nothing in your email about what you are bringing or doing, so treat it
+        as a show-up-and-be-present night unless you decide otherwise.</span></div>
+    </div>
+    <div class="row">
+      <div class="when">TUE&ndash;WED AUG 4&ndash;5<span class="d">Campus dark</span></div>
+      <div class="what"><b>DC Assessment Day / OSCE</b> &mdash; the entire DC student body is tied up
+        <span class="flag dead">Do not schedule</span>
+        <span class="note">This matters for Aug 6: they will be fried two days before you walk in.</span></div>
+    </div>
+    <div class="row">
+      <div class="when">THU AUG 6<span class="d">11:00&ndash;1:00</span></div>
+      <div class="what"><b>AK Club test kit handover</b> &mdash; Mod 7B
+        <span class="flag soon">Deliverable ready</span>
+        <span class="note">Two kits. The handover card and your run-of-show are built and printable
+        below. <b>The kits have never been confirmed as shipped</b> &mdash; that is the one thing
+        that can sink this date.</span></div>
+    </div>
+    <div class="row">
+      <div class="when">FRI AUG 7<span class="d">10:00&ndash;1:00</span></div>
+      <div class="what"><b>NutriDyn taste test at Socrates</b>
+        <span class="note">Stacked day: the student leading the club relaunch meets the Senior
+        Director of Student Engagement about the club application that same morning, and
+        Advancement meets you and Rod afterward.</span></div>
+    </div>
+    <div class="row">
+      <div class="when">FRI AUG 28<span class="d">Hard deadline</span></div>
+      <div class="what"><b>LVE26 booth staff registration + attendee-bag inserts due</b>
+        <span class="flag soon">4 weeks</span>
+        <span class="note">Booth #310 is confirmed and the balance is $0. Staff must be entered in
+        the portal and inserts physically in-hand at Life U by this date.</span></div>
+    </div>
+  </div>
+
+  <!-- ============ THURSDAY ============ -->
+  <h2>Thursday is the entire campus</h2>
+  <div class="grid2">
+    <div class="card">
+      <p style="margin-bottom:12px;">Every club worth having meets on Thursday, and three of them
+      overlap within a few minutes' walk. <b>One Thursday, worked properly, is worth four separate
+      campus trips.</b></p>
+      <div class="thu">
+        <div class="slot"><span><b>Applied Kinesiology</b> 11:00&ndash;1:00</span><span class="rm">Mod 7B</span></div>
+        <div class="slot"><span><b>ICPA Family Wellness</b> 11:30&ndash;12:45</span><span class="rm">CCE 154</span></div>
+        <div class="slot"><span><b>Pediatric Experience</b> 12:00&ndash;1:00</span><span class="rm">109 CGUS</span></div>
+        <div class="slot"><span><b>Sports Chiropractic</b> 5:00&ndash;6:30 PM</span><span class="rm">Mod 7A</span></div>
+      </div>
+      <p style="margin-top:12px; font-size:13.5px; color:var(--muted);">All-campus Assembly is also
+      Thursday. Club Day is Thursday of Week 1, every quarter.</p>
+    </div>
+    <div class="card">
+      <h3>The two easiest wins nobody is working</h3>
+      <div class="lead">
+        <div class="k">Functional Health Club</div>
+        <p style="font-size:14px;">Founded August 2024. No Instagram, no incumbent sponsor,
+        explicitly runs on guest speakers and lunch-and-learns.</p>
+      </div>
+      <div class="lead">
+        <div class="k">Functional Nutrition Club</div>
+        <p style="font-size:14px;">Founded July 2024. Same story. The name alone says the door
+        is open.</p>
+      </div>
+      <p style="font-size:13.5px; color:var(--muted); margin-top:10px;">Both are young enough to have
+      no relationship with any supplement brand yet. Both have public faculty advisors, which is the
+      real way in. This is lower-hanging fruit than anything else on campus.</p>
+    </div>
+  </div>
+
+  <!-- ============ THE GAP ============ -->
+  <h2>Why this account is winnable</h2>
+  <div class="card">
+    <p class="big">The DC degree requires exactly two nutrition courses. Six credit hours. Students
+    finish all of it by quarter&nbsp;5 and do not touch a patient until quarter&nbsp;9.</p>
+    <p style="margin-top:14px;">PUBH 8500 (Basic Nutrition, quarter 3) and PUBH 8505 (Nutrition and
+    Health, quarter 5). That is the entire required nutrition curriculum across a fourteen-quarter
+    program. There is a <b>four-quarter hole</b> between the last nutrition class a student takes and
+    the first patient they counsel, and nobody fills it.</p>
+    <div class="lead gold" style="margin-top:16px;">
+      <div class="k">The reframe</div>
+      <p><b>NutriDyn's product at Life University is not supplements. It is the missing four
+      quarters.</b> Fill that gap with genuinely good teaching and the brand comes along for free,
+      for a whole career. That is also the only approach the administration will tolerate, since
+      supplement brands are not permitted to be named inside the curriculum.</p>
+    </div>
+  </div>
+
+  <!-- ============ THE PLAYS ============ -->
+  <h2>The four plays, ranked</h2>
+  <div class="grid2">
+    <div class="card">
+      <h3>1 &middot; Nutrition CE through Life U</h3>
+      <p><b>This is the biggest one and it has a clock on it.</b></p>
+      <p style="margin-top:8px;">Life University will apply for state CE approval on a sponsor's
+      behalf &mdash; their own words: <i>"Are you interested in having Life University apply for
+      continuing education for your seminar? Email us at Postgrad@life.edu."</i></p>
+      <p style="margin-top:8px;">Because they are CCE-accredited, they hold automatic blanket
+      CE-provider approval in Georgia. A course routed through them inherits it. Georgia lists
+      nutrition as a qualifying clinical-science topic.</p>
+      <div class="lead red" style="margin-top:12px;">
+        <div class="k">Two facts that make this urgent</div>
+        <p>There is <b>zero nutrition CE on Life U's entire 2026&ndash;27 calendar</b>. And every
+        Georgia DC license expires <b>December 31, 2026</b>, with 40 hours required per renewal.
+        Real deadline, real gap, and you already have the relationship.</p>
+      </div>
+    </div>
+    <div class="card">
+      <h3>2 &middot; Own the clubs</h3>
+      <p>AK Club is the beachhead and is already moving. Functional Health and Functional Nutrition
+      are the follow-ons. The format proves itself once, then repeats.</p>
+      <p style="margin-top:10px;"><b>The administrative key:</b> Life U maintains a pre-approved
+      guest speaker list, refreshed at least annually, split into technique and non-technique clubs.
+      An outside presenter has to be on it. The process is not published anywhere.
+      <b>Getting on that list converts one-off visits into standing access</b> and is the highest
+      leverage piece of paperwork on this whole account.</p>
+      <h3 style="margin-top:16px;">3 &middot; The clinic gateway</h3>
+      <p>Quarter-9 students entering C-HOP is the moment nutrition stops being coursework. The next
+      Clinic Gateway Celebration is <b>Oct 14, 2026</b>.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>4 &middot; Fix the scholarship number, not the aim</h3>
+    <div class="tbl-scroll">
+    <table>
+      <thead><tr><th>Sponsor</th><th>Amount</th><th>Targets</th><th>Pool it actually reaches</th></tr></thead>
+      <tbody>
+        <tr><td><b>NutriDyn Student Club Scholarship</b></td><td><b>$1,500</b></td>
+            <td>Returning student, any program</td><td><b>All ~1,210 DC students</b></td></tr>
+        <tr><td>Standard Process</td><td>$5,000</td><td>Nutrition majors / Clinical Nutrition</td>
+            <td>Life U conferred <b>7</b> nutrition degrees in 2023&ndash;24</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="lead" style="margin-top:14px;">
+      <div class="k">The read</div>
+      <p>Standard Process is outspending you 3.3 to 1 and pointing it at a pool of about seven
+      people a year. Your money is aimed at the right room and is simply too small to be felt.
+      <b>The targeting is already correct. Only the number is wrong.</b> This is the cheapest
+      strategic win available.</p>
+    </div>
+  </div>
+
+  <!-- ============ CALENDAR ============ -->
+  <h2>The academic clock</h2>
+  <div class="card">
+    <p style="margin-bottom:12px; color:var(--muted); font-size:13.5px;">Life U runs on quarters, so
+    a class graduates every three months. Club activity dies during finals and breaks.</p>
+    <div class="tbl-scroll">
+    <table>
+      <thead><tr><th>Quarter</th><th>Classes begin</th><th>Finals</th><th>Graduation</th><th>Club Day</th></tr></thead>
+      <tbody>
+        <tr><td>Summer 2026 <span class="flag win">Now</span></td><td>Jul 13</td><td>Sep 21&ndash;25</td><td>Fri Sep 25</td><td>&mdash;</td></tr>
+        <tr><td><b>Fall 2026</b></td><td><b>Mon Oct 5</b></td><td>Dec 14&ndash;18</td><td>Fri Dec 18</td><td>Thu Oct 8</td></tr>
+        <tr><td>Winter 2027</td><td>Mon Jan 11</td><td>Mar 22&ndash;26</td><td>Fri Mar 26</td><td>Thu Jan 14</td></tr>
+        <tr><td>Spring 2027</td><td>Mon Apr 5</td><td>Jun 14&ndash;18</td><td>Thu Jun 17</td><td>Thu Apr 8</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p style="margin-top:12px; font-size:13px; color:var(--muted);">Club Day is verified as "Thursday
+    of Week 1" by Life U; the specific dates are arithmetic and should be confirmed with Student
+    Engagement before money is committed. <b>Clinic Gateway Celebrations:</b> Oct 14 2026,
+    Jan 19 2027, Apr 13 2027. <b>Dead zones:</b> OSCE Aug 4&ndash;5 and Oct 27&ndash;28, plus the
+    three-week winter break Dec 19&ndash;Jan 11.</p>
+  </div>
+
+  <!-- ============ WATCH ITEMS ============ -->
+  <h2>Things you should know</h2>
+  <div class="grid3">
+    <div class="card">
+      <h3 style="color:var(--red);">Enrollment is falling hard</h3>
+      <p>New DC enrollment is down roughly <b>57% from its 2021&ndash;22 peak</b>. Fall intake went
+      from 222 to 135. Degrees conferred fell from 443 to 304.</p>
+      <p style="margin-top:9px;"><b>Why it matters to you:</b> a school under real enrollment
+      pressure values a funding partner far more than one that is full. This is the best window
+      you will get to ask for something structural.</p>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--red);">Leadership is in flux</h3>
+      <p>Robert Scott has resigned as president; Brian McAulay is interim. Re-confirm any title
+      before you write to someone senior, because the org chart on file is from the Fall 2024
+      FactBook.</p>
+      <p style="margin-top:9px;">There is also a significant personal situation inside Advancement
+      affecting your warmest relationship there. It is on your board rather than this page.</p>
+    </div>
+    <div class="card">
+      <h3>Competitors are already on campus</h3>
+      <p>The Wellness Way, MaxLiving, AlignLife, Integrity Doctors and 100% Chiropractic all run
+      student clubs at Life U.</p>
+      <p style="margin-top:9px;">They are selling practice models, not nutrition, so they are not
+      head-on competition &mdash; but they are competing for the same student attention and they
+      got there first.</p>
+    </div>
+  </div>
+
+  <!-- ============ DELIVERABLES ============ -->
+  <h2>Built and ready to print</h2>
+  <div class="card">
+    <div class="grid2">
+      <div>
+        <h3>For August 6</h3>
+        <p class="big" style="font-size:19px;">AK Test Kit Quick Start</p>
+        <p style="margin-top:6px;">Four pages. The 108&nbsp;&rarr;&nbsp;22&nbsp;&rarr;&nbsp;12&nbsp;&rarr;&nbsp;1
+        collapse, the five-step method, all twelve mechanisms with the sentence you say out loud,
+        and a private run-of-show for you on the last page.</p>
+        <a class="btn" href="ak-kit-handover.pdf">Open the handover packet</a>
+      </div>
+      <div>
+        <h3>The reference</h3>
+        <p class="big" style="font-size:19px;">The Chemical Leg</p>
+        <p style="margin-top:6px;">Nineteen pages. Every reflex point, the biochemistry under each
+        recommendation, dosing and endpoints, drug interactions, and an honest evidence page with
+        32 citations.</p>
+        <a class="btn ghost" href="ak-field-guide.pdf">Open the field guide</a>
+      </div>
+    </div>
+  </div>
+
+  <p class="foot">
+    Life University desk &middot; last swept 2026-07-30. Calendar pulled from Life U's own registrar
+    feed; club data from engage.life.edu; CE rules from Georgia Rule 100-5; enrollment from Life U's
+    Spring 2026 enrollment report and 2024 FactBook. Club Day dates are derived from Life U's stated
+    Week-1-Thursday rule, not published individually. Contact roster and email threads are kept off
+    this page on purpose &mdash; they live in the desk repo.
+  </p>
+
+</div>
+</body>
+</html>
