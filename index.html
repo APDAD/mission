@@ -62,6 +62,14 @@ h1{font-family:var(--serif);font-size:clamp(34px,3.4vw,50px);font-weight:600;lin
 @keyframes pop{0%{transform:scale(1)}45%{transform:scale(1.05)}100%{transform:scale(1)}}
 .stepnum{width:42px;height:42px;min-width:42px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:700;font-size:24px;padding-top:2px}
 .step.mstep .stepnum{background:var(--gold)}
+/* Machine tiles read as a different voice: warm gold-tinted card with a gold
+   spine, so a reply from the machine never blends into Asher's own to-dos
+   (his ask, 2026-07-30: "responses should look different"). */
+.step.mstep{background:#FCF6E8;border-color:#F0DCAE;border-left:5px solid var(--gold)}
+.step.mstep:hover{box-shadow:0 12px 26px rgba(239,159,39,.18)}
+/* A tile whose answer the machine has claimed glows green at the spine:
+   proof it was heard, visible from across the room. */
+.step.mstep.heard{border-left-color:var(--accent);background:#F0F7F1;border-color:#CFE5D6}
 /* FRIDAY ONLY items recede: today's work pops, Friday's does not. */
 .step.later{opacity:.55}
 .step.later .stepnum,.step.later.mstep .stepnum{background:#8A8A82}
@@ -408,7 +416,8 @@ function stepCard(t, n) {
   var isM = t.source === 'loop';
   var later = isLater(t);
   var a = areaOf(t);
-  var row = el('div', 'step' + (isM ? ' mstep' : '') + (later ? ' later' : ''));
+  var heard = isM && t.answer && t.answer_seen_at;
+  var row = el('div', 'step' + (isM ? ' mstep' : '') + (later ? ' later' : '') + (heard ? ' heard' : ''));
   var num = el('div', 'stepnum', String(n));
   if (!isM && a && !later) num.style.background = a[2];
   var mid = el('div', 'steptxt');
