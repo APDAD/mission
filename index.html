@@ -360,8 +360,12 @@ function stepMain(text) {
   return d;
 }
 
-/* FRIDAY ONLY items are on the board but not for today. */
-function isLater(t) { return (t.text || '').trim().indexOf('FRIDAY ONLY') === 0; }
+/* FRIDAY ONLY / LATER items are on the board but not for today. Both prefixes mute,
+   per the DESIGN LAWS in CLAUDE.md; only FRIDAY ONLY was implemented until 2026-08-03. */
+function isLater(t) {
+  var s = (t.text || '').trim();
+  return s.indexOf('FRIDAY ONLY') === 0 || s.indexOf('LATER.') === 0;
+}
 
 /* THE ANSWER BOX. A machine tile is often a question; this is how Asher talks
    back without leaving the board. POST /api/todos/:id/answer stores the reply,
