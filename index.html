@@ -114,8 +114,11 @@ h1{font-family:var(--serif);font-size:clamp(34px,3.4vw,50px);font-weight:600;lin
 .gbtn{display:inline-block;background:var(--accent);color:#fff;padding:14px 24px;border-radius:12px;text-decoration:none;font-weight:600;font-size:15px;transition:transform .15s ease,filter .15s ease}
 .gbtn:hover{transform:translateY(-2px);filter:brightness(1.08)}
 iframe{width:100%;height:calc(100vh - 150px);min-height:480px;border:1px solid var(--line);border-radius:16px;background:#fff}
-.toprow{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-.small{font-size:12px;color:var(--muted)}
+.toprow{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;gap:8px}
+.small{font-size:12px;color:var(--muted);white-space:nowrap}
+/* Phone: the "Updated <full timestamp>" text wrapped to three lines and crowded the
+   sub-tabs, so it is dropped on narrow screens. Reload still confirms freshness. */
+@media(max-width:520px){.toprow .small{display:none}}
 .linkrow{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
 .lbtn{flex:1 1 240px;display:block;text-align:center;border:1px solid var(--line);background:var(--card);border-radius:12px;padding:12px 14px;text-decoration:none;color:var(--ink);font-size:13px;font-weight:500;transition:transform .15s ease,border-color .15s ease,box-shadow .15s ease}
 .lbtn:hover{transform:translateY(-2px);border-color:var(--accent);box-shadow:0 8px 18px rgba(44,44,42,.08)}
