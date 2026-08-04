@@ -118,40 +118,48 @@
 
   <div class="card">
     <div class="row">
-      <div class="when">FRI JUL 31<span class="d">Tomorrow</span></div>
-      <div class="what"><b>Chiro Games 2026</b> &mdash; 5:00 PM, Room C2, chiropractic building
-        <span class="flag now">Tomorrow</span>
-        <span class="note">You confirmed this twice, in March and again in June. Runs into
-        Saturday. There is nothing in your email about what you are bringing or doing, so treat it
-        as a show-up-and-be-present night unless you decide otherwise.</span></div>
+      <div class="when">TUE&ndash;WED AUG 4&ndash;5<span class="d">Happening now</span></div>
+      <div class="what"><b>DC Assessment Day / OSCE</b> &mdash; the entire DC student body is being examined
+        <span class="flag dead">Campus dark</span>
+        <span class="note">Nothing lands on campus today or tomorrow. This is exactly why Thursday
+        needs to be short.</span></div>
     </div>
     <div class="row">
-      <div class="when">TUE&ndash;WED AUG 4&ndash;5<span class="d">Campus dark</span></div>
-      <div class="what"><b>DC Assessment Day / OSCE</b> &mdash; the entire DC student body is tied up
-        <span class="flag dead">Do not schedule</span>
-        <span class="note">This matters for Aug 6: they will be fried two days before you walk in.</span></div>
-    </div>
-    <div class="row">
-      <div class="when">THU AUG 6<span class="d">11:00&ndash;1:00</span></div>
+      <div class="when">THU AUG 6<span class="d">11:00&ndash;1:00 &middot; 2 days</span></div>
       <div class="what"><b>AK Club test kit handover</b> &mdash; Mod 7B
-        <span class="flag soon">Deliverable ready</span>
-        <span class="note">Two kits. The handover card and your run-of-show are built and printable
-        below. <b>The kits have never been confirmed as shipped</b> &mdash; that is the one thing
-        that can sink this date.</span></div>
+        <span class="flag now">Print the packet</span>
+        <span class="note">Two kits, in hand. The handover card and your private run-of-show are
+        built and printable below. They walk in straight off two days of OSCE, so the plan is twenty
+        minutes: open the kit, say the collapse, run the gallbladder example, put it in their hands,
+        get names.</span></div>
     </div>
     <div class="row">
       <div class="when">FRI AUG 7<span class="d">10:00&ndash;1:00</span></div>
       <div class="what"><b>NutriDyn taste test at Socrates</b>
-        <span class="note">Stacked day: the student leading the club relaunch meets the Senior
-        Director of Student Engagement about the club application that same morning, and
-        Advancement meets you and Rod afterward.</span></div>
+        <span class="flag soon">Tomorrow +2</span>
+        <span class="note">Your biggest day of the month and it is stacked. The student leading the
+        club relaunch meets the Senior Director of Student Engagement about the club application that
+        same morning, and Advancement meets you and Rod afterward. Two campus doors and the money
+        conversation, all before 2pm.</span></div>
     </div>
     <div class="row">
       <div class="when">FRI AUG 28<span class="d">Hard deadline</span></div>
       <div class="what"><b>LVE26 booth staff registration + attendee-bag inserts due</b>
-        <span class="flag soon">4 weeks</span>
+        <span class="flag soon">24 days</span>
         <span class="note">Booth #310 is confirmed and the balance is $0. Staff must be entered in
         the portal and inserts physically in-hand at Life U by this date.</span></div>
+    </div>
+    <div class="row">
+      <div class="when">WED&ndash;SAT SEP 16&ndash;19<span class="d">The big one</span></div>
+      <div class="what"><b>Life Vision Extravaganza 2026</b> &mdash; Renaissance Atlanta Waverly
+        <span class="note">Booth #310. 23 CE hours, 1,700+ attendees, move-in Wednesday 8pm and
+        check-in Thursday 6am. The Reunion Celebration rides the same weekend on Saturday.</span></div>
+    </div>
+    <div class="row">
+      <div class="when">FRI SEP 25<span class="d">A class walks</span></div>
+      <div class="what"><b>Summer graduation</b>
+        <span class="note">One of four graduations a year. Every one of these is a cohort leaving
+        campus with or without a nutrition habit.</span></div>
     </div>
   </div>
 
@@ -339,7 +347,8 @@
   </div>
 
   <p class="foot">
-    Life University desk &middot; last swept 2026-07-30. Calendar pulled from Life U's own registrar
+    <span id="freshness"></span>
+    Life University desk &middot; last swept 2026-08-04. Calendar pulled from Life U's own registrar
     feed; club data from engage.life.edu; CE rules from Georgia Rule 100-5; enrollment from Life U's
     Spring 2026 enrollment report and 2024 FactBook. Club Day dates are derived from Life U's stated
     Week-1-Thursday rule, not published individually. Contact roster and email threads are kept off
@@ -347,5 +356,24 @@
   </p>
 
 </div>
+
+<script>
+  // This page went stale once (it showed a past date as "Tomorrow" for four days). It now
+  // reports its own age so that can never happen quietly again.
+  (function () {
+    var SWEPT = '2026-08-04';
+    var days = Math.floor((Date.now() - new Date(SWEPT + 'T12:00:00').getTime()) / 86400000);
+    if (days < 8) return;
+    var b = document.createElement('div');
+    b.style.cssText =
+      'background:#C65545;color:#fff;border-radius:12px;padding:13px 17px;margin-bottom:14px;' +
+      'font-weight:600;font-size:14.5px;line-height:1.45;';
+    b.textContent =
+      'Heads up: this page was last swept ' + days + ' days ago (' + SWEPT + '), so the dates ' +
+      'below may have passed. Ask Claude to run the Life University desk sweep.';
+    var w = document.querySelector('.wrap');
+    w.insertBefore(b, w.firstChild);
+  })();
+</script>
 </body>
 </html>
