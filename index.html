@@ -127,6 +127,36 @@ iframe{width:100%;height:calc(100vh - 150px);min-height:480px;border:1px solid v
 .clear:hover{border-color:var(--red);color:var(--red)}
 .reload{background:none;border:1px solid var(--line);border-radius:10px;padding:8px 14px;color:var(--muted);cursor:pointer;font:inherit;font-size:13px;transition:border-color .15s ease,color .15s ease,transform .15s ease}
 .reload:hover{border-color:var(--accent);color:var(--ink);transform:translateY(-1px)}
+/* Hero right rail: the one refresh that refreshes EVERYTHING (Asher 2026-08-03: the
+   home-screen app went stale and his workaround was Safari-refresh-and-return). */
+.hero-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.refbtn{border:1px solid var(--line);background:var(--card);border-radius:999px;width:42px;height:42px;font-size:20px;color:var(--muted);cursor:pointer;line-height:1;transition:border-color .15s ease,color .15s ease}
+.refbtn:hover{border-color:var(--accent);color:var(--accent)}
+.refbtn.spin{animation:spin .8s linear infinite;color:var(--accent);border-color:var(--accent)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.stamp{font-size:11px;color:var(--muted);margin-top:6px;text-align:right;white-space:nowrap}
+.greet{font-family:var(--serif);font-size:17px;font-style:italic;color:var(--ink);margin-top:8px}
+.prog{height:6px;background:rgba(44,44,42,.08);border-radius:999px;margin-top:12px;overflow:hidden;display:none}
+.prog b{display:block;height:100%;background:linear-gradient(90deg,var(--accent),#63BD9C);border-radius:999px;transition:width .5s ease}
+/* THE EMPIRE STRIP: every domain surfaces on TODAY (Asher 2026-08-03: "whatever is in
+   SPC, financial, card benefits, NutriDyn, the map, radar — it needs to be on TODAY in
+   some way or form, because that's my source of truth"). Cards show live digest lines
+   pulled from each domain's pushed page; one tap opens the deep view. */
+.empire{margin-top:30px;border-top:1px dashed var(--line);padding-top:18px}
+.emp-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px;gap:10px}
+.emp-title{font-family:var(--serif);font-size:26px;font-weight:600}
+.emp-sub{font-size:12px;color:var(--muted);white-space:nowrap}
+.emp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.emp{position:relative;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px 14px;cursor:pointer;text-align:left;font-family:var(--sans);overflow:hidden;transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease}
+.emp:hover{transform:translateY(-3px);box-shadow:0 12px 26px rgba(44,44,42,.10)}
+.emp:before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--ec,var(--ink))}
+.emp-name{font-family:var(--serif);font-size:21px;font-weight:600;color:var(--ink)}
+.emp-go{position:absolute;top:13px;right:14px;color:var(--gold);font-size:17px}
+.emp-desc{font-size:12px;color:var(--muted);margin-top:2px}
+.emp-lines{margin-top:9px}
+.emp-line{font-size:12.5px;color:var(--ink);padding:4px 0 3px;border-top:1px dashed var(--line);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.emp-stamp{margin-top:8px;font-size:11px;color:var(--muted)}
+.emp-stamp.fresh{color:var(--accent);font-weight:600}
 #gate{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:50}
 .gatebox{text-align:center;padding:20px;width:100%;max-width:320px}
 .gatebox .kicker{margin-bottom:6px;display:block}
@@ -137,6 +167,10 @@ iframe{width:100%;height:calc(100vh - 150px);min-height:480px;border:1px solid v
 .gerr{color:var(--red);font-size:13px;margin-top:12px;display:none}
 @media (max-width:700px){
   .hero{padding:16px 16px 14px}
+  .emp-grid{grid-template-columns:1fr 1fr}
+  .emp{padding:13px 14px 12px}
+  .emp-name{font-size:18px}
+  .greet{font-size:15px}
   .tiles{grid-template-columns:1fr;gap:8px}
   .tile{display:flex;align-items:baseline;gap:12px;padding:12px 16px}
   .tile .num{font-size:38px}
@@ -160,14 +194,24 @@ iframe{width:100%;height:calc(100vh - 150px);min-height:480px;border:1px solid v
 </div>
 <div class="wrap" id="app" style="display:none">
   <div class="hero">
-    <span class="kicker">Asher Allen</span>
-    <h1>Mission Control</h1>
-    <div class="date" id="today"></div>
+    <div class="hero-top">
+      <div>
+        <span class="kicker">Asher Allen</span>
+        <h1>Mission Control</h1>
+        <div class="date" id="today"></div>
+      </div>
+      <div>
+        <button class="refbtn" id="refreshBtn" title="Refresh everything" aria-label="Refresh everything">&#8635;</button>
+        <div class="stamp" id="stamp"></div>
+      </div>
+    </div>
+    <div class="greet" id="greet"></div>
+    <div class="prog" id="prog"><b id="progBar" style="width:0%"></b></div>
   </div>
   <div class="tabs">
     <button class="tab on" data-t="todo">TODAY</button>
     <button class="tab" data-t="nutridyn">NUTRIDYN</button>
-    <button class="tab" data-t="money">MONEY</button>
+    <button class="tab" data-t="money">FINANCES</button>
     <button class="tab" data-t="spc">SPC</button>
   </div>
 
@@ -186,6 +230,13 @@ iframe{width:100%;height:calc(100vh - 150px);min-height:480px;border:1px solid v
     <div class="flow" id="flow"></div>
     <div id="doneWrap"></div>
     <button class="clear" id="clearBtn">Clear finished items</button>
+    <div class="empire">
+      <div class="emp-head">
+        <div class="emp-title">The whole empire</div>
+        <div class="emp-sub">Live from every corner &middot; one tap deep</div>
+      </div>
+      <div class="emp-grid" id="empGrid"></div>
+    </div>
     <div class="machine" id="tomorrowWrap" style="display:none">
       <h2>Tomorrow</h2>
       <div class="hint" id="tomorrowBody"></div>
@@ -214,7 +265,7 @@ iframe{width:100%;height:calc(100vh - 150px);min-height:480px;border:1px solid v
   <div class="panel" id="p-money">
     <div class="toprow">
       <span class="subtabs">
-        <button class="subtab on" data-m="money">Money</button>
+        <button class="subtab on" data-m="money">Overview</button>
         <button class="subtab" data-m="benefits">Card benefits</button>
       </span>
       <span class="small" id="moneyUpdated"></span>
@@ -244,7 +295,7 @@ var PIN_KEY = 'mc_pin';
 var AREAS = [
   ['nutridyn', 'NutriDyn', '#1D9E75'],
   ['spc', 'SPC', '#7A6C55'],
-  ['money', 'Money', '#EF9F27'],
+  ['money', 'Finances', '#EF9F27'],
   ['life', 'Life', '#6B6B66']
 ];
 var curArea = 'nutridyn';
@@ -551,6 +602,7 @@ function renderTodos() {
     doneL.forEach(function (t) { dw.appendChild(doneRow(t)); });
   }
   document.getElementById('clearBtn').style.display = doneL.length ? 'inline-block' : 'none';
+  renderProgress();
 }
 
 function loadTodos() {
@@ -568,16 +620,28 @@ function addTodo() {
   api('todos', { method: 'POST', body: JSON.stringify({ text: text, area: curArea }) }).then(loadTodos);
 }
 
-var pageLoaded = {};
+/* One shared page cache: the empire strip and the tab iframes read from the same
+   fetch, so opening a tab after the strip warmed it is instant, and one refresh
+   genuinely refreshes everything. */
+var pageCache = {};   // key -> {html, updated_at}
+var pageLoaded = {};  // key -> iframe has current cache content
+function fetchPage(key, force) {
+  if (pageCache[key] && !force) return Promise.resolve(pageCache[key]);
+  return api('page/' + key).then(function (r) {
+    if (r.status === 404) return null;
+    return r.json();
+  }).then(function (d) {
+    if (!d) return null;
+    pageCache[key] = d;
+    return d;
+  });
+}
 function loadPage(key, frameId, upId, missingMsg, force) {
   if (pageLoaded[key] && !force) return;
   var up = document.getElementById(upId);
   up.textContent = 'Loading...';
-  api('page/' + key).then(function (r) {
-    if (r.status === 404) { up.textContent = missingMsg; return null; }
-    return r.json();
-  }).then(function (d) {
-    if (!d) return;
+  fetchPage(key, force).then(function (d) {
+    if (!d) { up.textContent = missingMsg; return; }
     var html = d.html || '';
     if (html.indexOf('<head>') >= 0) html = html.replace('<head>', '<head><base target="_blank">');
     else html = '<base target="_blank">' + html;
@@ -646,6 +710,154 @@ function showMoneySub(which) {
   else loadMoney(false);
 }
 
+/* THE EMPIRE STRIP. Each card belongs to a domain; cards with a page key pull
+   live digest lines out of that domain's pushed page. Loops can mark the exact
+   lines to surface with data-digest="..." attributes; until they do, the first
+   real headings of the page stand in. Tapping a card opens the deep view. */
+var EMPIRE = [
+  { name: 'NutriDyn', desc: 'Territory command', color: '#1D9E75', page: 'nutridyn',
+    go: function () { showTab('nutridyn'); showSub('nd'); } },
+  { name: 'Radar', desc: 'Who opened, who clicked', color: '#EF9F27', page: 'radar',
+    go: function () { showTab('nutridyn'); showSub('radar'); } },
+  { name: 'Map', desc: 'Where the doctors are', color: '#63BD9C',
+    go: function () { showTab('nutridyn'); showSub('map'); } },
+  { name: 'Finances', desc: 'Cash, debts, portfolio', color: '#EF9F27', page: 'money',
+    go: function () { showTab('money'); showMoneySub('money'); } },
+  { name: 'Card benefits', desc: 'Credits worth clipping', color: '#F4BA5E', page: 'benefits',
+    go: function () { showTab('money'); showMoneySub('benefits'); } },
+  { name: 'SPC', desc: 'Field tool, one tap', color: '#7A6C55',
+    href: 'https://dashboard.spcinfo.com/spc-field-tool.html' }
+];
+function relTime(ts) {
+  var m = Math.round((Date.now() - new Date(ts).getTime()) / 60000);
+  if (isNaN(m)) return '';
+  if (m < 2) return 'just now';
+  if (m < 60) return m + 'm ago';
+  var h = Math.round(m / 60);
+  if (h < 24) return h + 'h ago';
+  return Math.round(h / 24) + 'd ago';
+}
+function digestLines(html) {
+  try {
+    var doc = new DOMParser().parseFromString(html, 'text/html');
+    var out = [], seen = {};
+    doc.querySelectorAll('[data-digest]').forEach(function (n) {
+      var v = (n.getAttribute('data-digest') || '').trim();
+      if (v && !seen[v]) { seen[v] = 1; out.push(v); }
+    });
+    if (!out.length) {
+      var hs = doc.querySelectorAll('h1,h2,h3');
+      for (var i = 0; i < hs.length && out.length < 3; i++) {
+        var t = (hs[i].textContent || '').trim().replace(/\s+/g, ' ');
+        if (t.length >= 4 && t.length <= 70 && !seen[t]) { seen[t] = 1; out.push(t); }
+      }
+    }
+    return out.slice(0, 3);
+  } catch (e) { return []; }
+}
+function renderEmpire() {
+  var g = document.getElementById('empGrid');
+  g.innerHTML = '';
+  EMPIRE.forEach(function (c) {
+    var card = el('button', 'emp');
+    card.style.setProperty('--ec', c.color);
+    card.appendChild(el('span', 'emp-go', '→'));
+    card.appendChild(el('div', 'emp-name', c.name));
+    card.appendChild(el('div', 'emp-desc', c.desc));
+    var lines = el('div', 'emp-lines');
+    var stamp = el('div', 'emp-stamp', c.page ? 'Loading…' : '');
+    card.appendChild(lines);
+    card.appendChild(stamp);
+    card.onclick = function () {
+      if (c.href) { window.open(c.href, '_blank', 'noopener'); return; }
+      c.go();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+    g.appendChild(card);
+    if (c.page) {
+      fetchPage(c.page).then(function (d) {
+        lines.innerHTML = '';
+        if (!d) { stamp.textContent = 'Nothing pushed yet'; return; }
+        digestLines(d.html || '').forEach(function (t) { lines.appendChild(el('div', 'emp-line', t)); });
+        var rel = relTime(d.updated_at);
+        stamp.textContent = rel ? 'Updated ' + rel : '';
+        if (/just now|m ago/.test(stamp.textContent)) stamp.className = 'emp-stamp fresh';
+      }).catch(function () { stamp.textContent = 'Tap to open'; });
+    }
+  });
+}
+
+/* ONE REFRESH REFRESHES EVERYTHING (Asher 2026-08-03). Also fires on its own:
+   every time the home-screen app comes back to the front (visibilitychange /
+   pageshow from iOS bfcache) and every 5 minutes while visible. He never has
+   to Safari-refresh again. */
+var lastRefresh = 0;
+function stampNow() {
+  document.getElementById('stamp').textContent =
+    'Fresh as of ' + new Date().toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' });
+}
+function refreshAll(manual) {
+  var btn = document.getElementById('refreshBtn');
+  btn.classList.add('spin');
+  lastRefresh = Date.now();
+  pageCache = {};
+  var jobs = [loadTodos(), Promise.resolve(loadTomorrow())];
+  Object.keys(pageLoaded).forEach(function (k) {
+    if (!pageLoaded[k]) return;
+    pageLoaded[k] = false;
+  });
+  // reload whichever iframe views were already open, from the fresh cache
+  if (document.getElementById('ndFrame').srcdoc) loadNd(true);
+  if (document.getElementById('mapFrame').srcdoc) loadMap(true);
+  if (document.getElementById('radarFrame').srcdoc) loadRadar(true);
+  if (document.getElementById('moneyFrame').srcdoc) loadMoney(true);
+  if (document.getElementById('benefitsFrame').srcdoc) loadBenefits(true);
+  renderEmpire();
+  Promise.all(jobs).catch(function () {}).then(function () {
+    stampNow();
+    setTimeout(function () { btn.classList.remove('spin'); }, 500);
+  });
+}
+document.addEventListener('visibilitychange', function () {
+  if (document.visibilityState === 'visible' && Date.now() - lastRefresh > 60000 && pin()) refreshAll(false);
+});
+window.addEventListener('pageshow', function (e) {
+  if (e.persisted && Date.now() - lastRefresh > 60000 && pin()) refreshAll(false);
+});
+setInterval(function () {
+  if (document.visibilityState === 'visible' && pin() && Date.now() - lastRefresh > 240000) {
+    lastRefresh = Date.now();
+    loadTodos().then(stampNow).catch(function () {});
+  }
+}, 300000);
+
+/* The greeting: time-aware, one line that makes the board feel like a cockpit,
+   stable for the day (seeded by date) so it doesn't churn on every refresh. */
+var GREETS = [
+  'The machine ran while you were out. Your move.',
+  'Everything below is already verified. Just execute.',
+  'One board. The whole empire. Go.',
+  'Doctors are reading your words right now.',
+  'Small hour, full send.',
+  'The snake knows the order. Trust it.',
+  'Built overnight. Reviewed by you. Sent by you.',
+  'Territory does not sleep. Luckily, neither does the machine.'
+];
+function greet() {
+  var h = new Date().getHours();
+  var part = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
+  var day = Math.floor(Date.now() / 86400000);
+  document.getElementById('greet').textContent = part + ', Asher. ' + GREETS[day % GREETS.length];
+}
+function renderProgress() {
+  var open = todos.filter(function (t) { return !t.done && !isLater(t); }).length;
+  var done = todos.filter(function (t) { return t.done; }).length;
+  var wrap = document.getElementById('prog');
+  if (open + done === 0) { wrap.style.display = 'none'; return; }
+  wrap.style.display = 'block';
+  document.getElementById('progBar').style.width = Math.round(done / (open + done) * 100) + '%';
+}
+
 function showGate() {
   localStorage.removeItem(PIN_KEY);
   document.getElementById('app').style.display = 'none';
@@ -656,9 +868,13 @@ function showApp() {
   document.getElementById('app').style.display = 'block';
   var d = new Date();
   document.getElementById('today').textContent = d.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' });
+  greet();
   renderChips();
-  loadTodos();
+  loadTodos().then(stampNow).catch(function () {});
   loadTomorrow();
+  renderEmpire();
+  lastRefresh = Date.now();
+  document.getElementById('refreshBtn').onclick = function () { refreshAll(true); };
 }
 function tryPin(p) {
   localStorage.setItem(PIN_KEY, p);
