@@ -45,6 +45,16 @@ h1{font-family:var(--serif);font-size:clamp(34px,3.4vw,50px);font-weight:600;lin
 .addrow input::placeholder{color:var(--muted)}
 .addrow button{padding:0 26px;border:0;border-radius:14px;background:var(--accent);color:#fff;font-weight:600;font-size:15px;cursor:pointer;font-family:var(--sans);transition:transform .15s ease,filter .15s ease}
 .addrow button:hover{transform:translateY(-2px);filter:brightness(1.08)}
+/* THE ASK ROW (Asher 2026-08-04: "every tile and every action item I should be able to ask
+   a question... that's where I want to interact"). Gold = the machine's color. Questions
+   enter the same answers pipeline the tiles use; the answer-reader loop picks them up. */
+.askrow{display:flex;gap:8px;margin-top:8px}
+.askrow input{flex:1;padding:15px 16px;border:1px solid var(--line);border-radius:14px;background:var(--card);font:inherit;font-size:16px;color:var(--ink);transition:border-color .15s ease}
+.askrow input:focus{outline:none;border-color:var(--gold)}
+.askrow input::placeholder{color:var(--muted)}
+.askrow button{padding:0 26px;border:0;border-radius:14px;background:var(--gold);color:#fff;font-weight:600;font-size:15px;cursor:pointer;font-family:var(--sans);transition:transform .15s ease,filter .15s ease}
+.askrow button:hover{transform:translateY(-2px);filter:brightness(1.08)}
+.askrow button:disabled{opacity:.6;cursor:default;transform:none}
 .chips{display:flex;gap:8px;margin:10px 0 18px;flex-wrap:wrap}
 .chip{padding:8px 15px;border-radius:999px;border:1px solid var(--line);background:var(--card);font-size:13px;color:var(--muted);cursor:pointer;font-family:var(--sans);transition:transform .15s ease,border-color .15s ease,color .15s ease}
 .chip:hover{transform:translateY(-2px);border-color:var(--accent);color:var(--ink)}
@@ -224,6 +234,10 @@ iframe{width:100%;height:calc(100vh - 150px);min-height:480px;border:1px solid v
     <div class="addrow">
       <input id="newTodo" placeholder="Add one thing to do...">
       <button id="addBtn">Add</button>
+    </div>
+    <div class="askrow">
+      <input id="newAsk" placeholder="Ask the machine anything...">
+      <button id="askBtn">Ask</button>
     </div>
     <div class="chips" id="chips"></div>
     <div class="flowhead">The flow</div>
@@ -421,16 +435,20 @@ function isLater(t) {
   return s.indexOf('FRIDAY ONLY') === 0 || s.indexOf('LATER.') === 0;
 }
 
-/* THE ANSWER BOX. A machine tile is often a question; this is how Asher talks
-   back without leaving the board. POST /api/todos/:id/answer stores the reply,
-   the answer-watcher loop claims it (answer_seen_at) and executes. A changed
-   answer re-queues. States: no answer -> button; answered -> quote + status +
-   change; claimed -> the machine is working on it. */
+/* THE ANSWER BOX — on EVERY tile since 2026-08-04 (Asher: "every tile and every
+   action item I should be able to ask a question"). On machine tiles it answers;
+   on his own tiles it asks or tells the machine something about that item. Same
+   pipe either way: POST /api/todos/:id/answer stores the reply, the answer-reader
+   loop claims it (answer_seen_at) and executes. A changed answer re-queues.
+   States: no answer -> button; answered -> quote + status + change; claimed ->
+   the machine is working on it. Tiles starting with the ❓ prefix are free-form
+   questions from the ask row; their copy reads question-shaped. */
+function isQuestion(t) { return (t.text || '').trim().indexOf('❓') === 0; }
 function answerForm(t) {
   var box = el('div', 'ans');
   var ta = document.createElement('textarea');
   ta.className = 'ans-in';
-  ta.placeholder = 'Talk or type your answer...';
+  ta.placeholder = t.source === 'loop' ? 'Talk or type your answer...' : 'Ask or tell the machine anything about this...';
   ta.value = t.answer || '';
   var send = el('button', 'ans-send', 'Send to the machine');
   send.onclick = function () {
@@ -449,22 +467,27 @@ function answerForm(t) {
 }
 function answerBox(t) {
   var box = el('div', 'ans');
+  var q = isQuestion(t);
   if (t.answer && t.answer_seen_at) {
     var okd = el('div', 'ans-note');
     okd.appendChild(el('span', 'ans-check', '✓ '));
-    okd.appendChild(document.createTextNode('The machine has your answer and is working on it.'));
+    okd.appendChild(document.createTextNode(q ? 'The machine is on it. The answer lands on this board.' : 'The machine has your answer and is working on it.'));
     box.appendChild(okd);
     return box;
   }
   if (t.answer) {
-    box.appendChild(el('div', 'ans-said', '“' + t.answer + '”'));
-    box.appendChild(el('div', 'ans-note', 'Answer sent. The machine picks it up within the half hour.'));
-    var chg = el('button', 'ans-open', 'Change my answer');
+    /* A question tile's answer IS its text — quoting it back would print it twice.
+       But if he CHANGED the question (text can't be patched), the new wording rules,
+       so show it. The reader reads the answer field verbatim either way. */
+    var dup = q && (t.text || '').replace(/^\s*❓\s*/, '').trim() === (t.answer || '').trim();
+    if (!dup) box.appendChild(el('div', 'ans-said', '“' + t.answer + '”'));
+    box.appendChild(el('div', 'ans-note', q ? 'Question sent. The machine answers on this board within the half hour.' : 'Sent. The machine picks it up within the half hour.'));
+    var chg = el('button', 'ans-open', q ? 'Change my question' : 'Change my answer');
     chg.onclick = function () { box.replaceWith(answerForm(t)); };
     box.appendChild(chg);
     return box;
   }
-  var open = el('button', 'ans-open', 'Answer the machine');
+  var open = el('button', 'ans-open', t.source === 'loop' ? 'Answer the machine' : 'Ask the machine about this');
   open.onclick = function () { box.replaceWith(answerForm(t)); };
   box.appendChild(open);
   return box;
@@ -474,14 +497,14 @@ function stepCard(t, n) {
   var isM = t.source === 'loop';
   var later = isLater(t);
   var a = areaOf(t);
-  var heard = isM && t.answer && t.answer_seen_at;
+  var heard = !!(t.answer && t.answer_seen_at);
   var row = el('div', 'step' + (isM ? ' mstep' : '') + (later ? ' later' : '') + (heard ? ' heard' : ''));
   var num = el('div', 'stepnum', String(n));
   if (!isM && a && !later) num.style.background = a[2];
   var mid = el('div', 'steptxt');
-  mid.appendChild(el('div', 'steplabel', isM ? 'From the machine' : (a ? a[1] : 'To do')));
+  mid.appendChild(el('div', 'steplabel', isM ? 'From the machine' : (isQuestion(t) ? 'Your question' : (a ? a[1] : 'To do'))));
   mid.appendChild(stepMain(t.text));
-  if (isM) mid.appendChild(answerBox(t));
+  mid.appendChild(answerBox(t));
   var tick = el('button', 'tick', '');
   tick.setAttribute('aria-label', 'Mark done');
   tick.onclick = function (e) {
@@ -618,6 +641,38 @@ function addTodo() {
   if (!text) return;
   inp.value = '';
   api('todos', { method: 'POST', body: JSON.stringify({ text: text, area: curArea }) }).then(loadTodos);
+}
+
+/* ASK THE MACHINE (2026-08-04). A question becomes a ❓ tile whose answer field
+   carries the full question verbatim — that puts it straight into /api/answers,
+   which the answer-reader loop already polls. The ANSWER FIELD IS AUTHORITATIVE:
+   tile text truncates server-side at 500 chars, the answer does not get cut by
+   this client, and the reader reads the answer, not the tile. The reader replies
+   with a tile on this board and deletes the ❓ tile. */
+function askMachine() {
+  var inp = document.getElementById('newAsk');
+  var q = inp.value.trim();
+  if (!q) return;
+  var btn = document.getElementById('askBtn');
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+  api('todos', { method: 'POST', body: JSON.stringify({ text: '❓ ' + q, area: 'life', source: 'asher' }) })
+    .then(function (r) { return r.json(); })
+    .then(function (rows) {
+      var row = rows && rows[0];
+      if (!row || !row.id) throw new Error('post failed');
+      return api('todos/' + row.id + '/answer', { method: 'POST', body: JSON.stringify({ answer: q }) });
+    })
+    .then(function () {
+      inp.value = '';
+      btn.disabled = false;
+      btn.textContent = 'Ask';
+      loadTodos();
+    })
+    .catch(function () {
+      btn.disabled = false;
+      btn.textContent = 'Ask';
+    });
 }
 
 /* One shared page cache: the empire strip and the tab iframes read from the same
@@ -909,6 +964,10 @@ function loadTomorrow() {
 document.getElementById('addBtn').onclick = addTodo;
 document.getElementById('newTodo').addEventListener('keydown', function (e) {
   if (e.key === 'Enter') addTodo();
+});
+document.getElementById('askBtn').onclick = askMachine;
+document.getElementById('newAsk').addEventListener('keydown', function (e) {
+  if (e.key === 'Enter') askMachine();
 });
 document.getElementById('clearBtn').onclick = function () {
   api('todos', { method: 'DELETE' }).then(loadTodos);

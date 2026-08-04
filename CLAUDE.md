@@ -52,6 +52,25 @@ what will actually send is worse than no preview.
 The public-repo rule still binds absolutely: NO data, balances, doctor names, PHI, or money.
 Marketing copy and patient education are fine — he mass-mails them anyway. Check before adding.
 
+## THE ASK LAW (Asher's direct order, 2026-08-04: "every tile and every action item I should
+## be able to ask a question... that's where I want to interact")
+THE BOARD IS A TWO-WAY SURFACE. Two mechanisms, both riding the existing answers pipeline —
+no new API, no new reader:
+1. EVERY TILE HAS AN ANSWER BOX, machine tiles and his own alike. Machine tiles say "Answer
+   the machine"; his tiles say "Ask the machine about this". Both POST /api/todos/:id/answer,
+   the answer-reader loop claims and executes, and the claimed state glows green on ANY tile.
+2. THE ASK ROW (gold, under the add row on TODAY): free-form questions. A question becomes a
+   ❓-prefixed tile (source asher, area life) whose ANSWER FIELD carries the question verbatim,
+   which drops it straight into /api/answers. THE ANSWER FIELD IS AUTHORITATIVE: tile text
+   truncates at 500 server-side, the answer does not; the reader reads the answer, never the
+   tile text. The reader replies WITH A TILE ON THE BOARD (pre-decided, per THE PRE-DECIDED
+   LAW in the territory constitution) and deletes the ❓ tile. Question-tile copy is
+   question-shaped ("Your question" label, "Change my question").
+NO MODEL PICKER, deliberately: one "machine" identity on the board; model routing stays
+machine-side per the tiering laws. Do not add a Fable/Opus dropdown without a new order.
+Latency honesty: the board promises "within the half hour"; the reader runs every ~5 minutes
+inside the awake window. Never promise chat-speed on the board.
+
 ## THE API (function v3; code retrievable via Supabase get_edge_function)
 Base: $MISSION_API from ~/nutridyn-territory/dashboard-feed/mission.env, header x-pin.
 - /api/todos GET/POST/PATCH/:id/DELETE/:id (POST {text, area: nutridyn|spc|money|life,
@@ -64,10 +83,28 @@ Base: $MISSION_API from ~/nutridyn-territory/dashboard-feed/mission.env, header 
 - Atelier brand only: paper #F1EFE8, card #FBFAF6, ink #2C2C2A, green #1D9E75, gold #EF9F27,
   Cormorant Garamond + Inter. Never dark/generic SaaS. Fun and alive: hover lifts, the
   animated hero gradient, CONFETTI on todo completion (inline canvas, no libraries).
-- TODAY tab is the default and the heart: 3 big count tiles, then THE SERPENTINE SNAKE:
-  numbered tiles, 3/2/1 columns by viewport, direction alternates per row with gold arrows,
-  turn arrow under each row's last tile, numbers always true order. Tiles starting
-  "FRIDAY ONLY."/"LATER." render muted.
+- TODAY tab is the default and the heart: hero (greeting + progress bar + THE REFRESH),
+  3 big count tiles, then THE SERPENTINE SNAKE: numbered tiles, 3/2/1 columns by viewport,
+  direction alternates per row with gold arrows, turn arrow under each row's last tile,
+  numbers always true order. Tiles starting "FRIDAY ONLY."/"LATER." render muted. Below the
+  snake: THE EMPIRE STRIP (2026-08-03, Asher: "whatever is in SPC, financial, card benefits,
+  NutriDyn, the map, radar — it needs to be on TODAY in some way or form; that's my source
+  of truth") — six cards (NutriDyn/Radar/Map/Finances/Card benefits/SPC) showing live digest
+  lines pulled from each domain's pushed page plus an updated-ago stamp; one tap opens the
+  deep view. LOOPS: mark the 2-3 lines worth surfacing with data-digest="..." attributes on
+  any element in your pushed page; without them the strip falls back to the page's first
+  h1-h3 headings. The strip also exposes feed staleness (an "Updated 20d ago" card is a
+  loop bug on display) — never suppress the stamp.
+- THE REFRESH SYSTEM (2026-08-03; he saved the site to his iPhone home screen and the only
+  way to freshen it was Safari-refresh-and-return): the hero's ↻ button refreshes EVERYTHING
+  (todos, tomorrow, empire digests, any open tab iframes) from one tap; the app also
+  auto-refreshes when it returns to the foreground (visibilitychange + pageshow, >60s since
+  last) and re-pulls todos every ~5 minutes while visible. The "Fresh as of h:mm" stamp under
+  the button is the proof. Never remove the auto-refresh paths; they are why the home-screen
+  app can be trusted.
+- TAB NAMES: the money tab is labeled FINANCES (his rename, 2026-08-03); its internal key,
+  area value, and /api/page/money stay 'money' for API compatibility. Sub-tab label
+  "Overview". The add-chip reads "Finances".
 - ONE ACTION PER TILE, ten-year-old wording, URLs render as green Open buttons. Email tiles
   carry exact draft links in the ACCOUNT-PINNED form
   https://mail.google.com/mail/?authuser=asher@nutri-dyn.com#drafts/<threadId> — never
