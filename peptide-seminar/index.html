@@ -67,6 +67,13 @@
 
   .speaker{ display:flex; gap:26px; align-items:flex-start; }
   .speaker .body{ flex:1; }
+  /* Source is his podcast cover art (the only high-res image he publishes). Cropped in CSS to
+     his portrait so none of the show branding, mic or logo appears. */
+  .shot{ width:210px; height:265px; overflow:hidden; position:relative; flex-shrink:0;
+         border-radius:12px; border:1px solid var(--line); background:#0A0F18; }
+  .shot img{ position:absolute; width:640px; height:640px; left:-238px; top:-26px; }
+  @media(max-width:760px){ .shot{ width:170px; height:214px; }
+    .shot img{ width:518px; height:518px; left:-193px; top:-21px; } }
   .cred{ display:flex; flex-wrap:wrap; gap:7px; margin-top:14px; }
   .cred span{ background:var(--panel); border:1px solid var(--line); border-radius:20px;
               padding:5px 12px; font-size:12px; color:#C7D0DE; }
@@ -115,8 +122,8 @@
 
     <a class="cta" href="mailto:asher@nutri-dyn.com?subject=SEAT%20REQUEST%3A%20Peptide%20Seminar%20Aug%2029&body=Save%20me%20a%20seat%20for%20August%2029.%0A%0AName%3A%20%0APractice%3A%20%0ACity%3A%20%0ACell%3A%20%0A%0AHow%20many%20of%20your%20patients%20are%20currently%20on%20a%20GLP-1%3F%20%0A%0AWhat%20is%20the%20one%20peptide%20question%20you%20want%20answered%20that%20day%3F%20%0A%0A%28Bringing%20anyone%3F%20List%20them%20here%20so%20we%20count%20lunch%20correctly.%29%0A">Save my seat</a>
     <a class="cta ghost" href="#what">What is actually covered</a>
-    <div class="seats">Room 152 holds a fixed number of people and the first 20 registrations get the
-    protocol kit. When it is full, it is full.</div>
+    <div class="seats">Room 152 seats about 120, so there is room for your whole staff.
+    The protocol kit is the part that runs out: first 20 registrations, by timestamp.</div>
   </div>
 
   <section>
@@ -210,23 +217,29 @@
   <section>
     <h2>Who is teaching</h2>
     <div class="speaker">
+      <div class="shot"><img src="chalmers.jpg" alt="Dr. Matt Chalmers"></div>
       <div class="body">
         <h3 style="font-size:27px; font-weight:700;">Dr. Matt Chalmers</h3>
         <p style="color:var(--muted); font-size:15px; margin-bottom:12px;">DC, CCCN, CCSP, QRA-M,
         NLP-M &middot; Founder, Pillars of Wellness &middot; Frisco, Texas</p>
         <p style="font-size:15.5px; color:#D6DDE8;">A spinal injury in high school, and a recovery
-        through natural care, set the whole direction of his career. Seventeen years in practice.
+        through natural care, set the whole direction of his career. Nearly two decades in practice.
         His patient list runs to professional athletes, executives and public figures, and medical
         doctors refer to him when their own protocols stop working.</p>
-        <p style="font-size:15.5px; color:#D6DDE8; margin-top:12px;">He formulated the detox product
-        that became the flagship of a sixty-five million dollar company, helped bring a sublingual
-        cannabis strip to market as an opioid alternative, and gave the TEDx talk on it. He is not a
-        peptide salesman. He is a clinician who got tired of watching patients get blamed for
-        symptoms that were actually shopping lists.</p>
+        <p style="font-size:15.5px; color:#D6DDE8; margin-top:12px;">He is quoted as an expert
+        source in <i>Psychology Today</i>, he is the doctor a Frisco pediatrician wrote about at
+        length in her own book, <i>How the Chiropractor Saved My Life</i>, and about thirty-one
+        thousand people follow his clinical content on Instagram. He is not a peptide salesman. He is
+        a clinician who got tired of watching patients get blamed for symptoms that were actually
+        shopping lists.</p>
         <div class="cred">
-          <span>TEDx speaker</span><span>Amazon bestselling author, <i>Pillars of Wellness</i></span>
-          <span>~300 episodes, The Dr. Chalmers Show</span><span>Clinical Chiropractic Neurologist</span>
-          <span>Certified Chiropractic Sports Practitioner</span><span>17 years in practice</span>
+          <span>31,000 followers on Instagram</span><span>TEDx speaker</span>
+          <span>Author, <i>Pillars of Wellness</i></span>
+          <span>291 episodes, The Dr. Chalmers Show</span>
+          <span>Quoted in <i>Psychology Today</i></span>
+          <span>Clinical Chiropractic Neurologist</span>
+          <span>Certified Chiropractic Sports Practitioner</span>
+          <span>Nearly two decades in practice</span>
         </div>
       </div>
     </div>
@@ -245,7 +258,8 @@
         <li><b>The deficiency lookup table, printed.</b> The one page from this deck you will
         actually keep.</li>
       </ul>
-      <p style="margin-top:16px; font-weight:600;">Registration order decides it. Nothing else does.</p>
+      <p style="margin-top:16px; font-weight:600;">Registration order decides it. Nothing else does,
+      and there are only twenty.</p>
     </div>
   </section>
 
@@ -255,7 +269,7 @@
     the doctor who explains it or the doctor who refers it out.</p>
     <a class="cta" href="mailto:asher@nutri-dyn.com?subject=SEAT%20REQUEST%3A%20Peptide%20Seminar%20Aug%2029&body=Save%20me%20a%20seat%20for%20August%2029.%0A%0AName%3A%20%0APractice%3A%20%0ACity%3A%20%0ACell%3A%20%0A%0AHow%20many%20of%20your%20patients%20are%20currently%20on%20a%20GLP-1%3F%20%0A%0AWhat%20is%20the%20one%20peptide%20question%20you%20want%20answered%20that%20day%3F%20%0A%0A%28Bringing%20anyone%3F%20List%20them%20here%20so%20we%20count%20lunch%20correctly.%29%0A">Save my seat</a>
     <div class="seats">Saturday August 29 &middot; 12:00 to 4:00 PM &middot; RCCE Room 152, Life
-    University, 1269 Barclay Circle, Marietta GA 30060</div>
+    University, 1269 Barclay Circle, Marietta GA 30060 &middot; Bring your staff, the room seats 120</div>
   </div>
 
   <p class="foot">
