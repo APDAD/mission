@@ -1,233 +1,165 @@
 <!--
-  CINEMA STYLE MOCKUP - vitamin D blast re-skinned in the jw.org language.
-  Ordered by Asher 2026-08-05: "I want my future emails to look like this...
-  this will be my known style." Reference: jw.org Good News series page,
-  sampled live the same day (see style-cinema/CINEMA-STYLE.md for tokens).
-
-  This file is the mockup he approves BEFORE the style becomes the canonical
-  template (his standing rule: show a mockup before committing a redesign).
-  Content is lifted VERBATIM from 2026-08-03-vitamin-d-cardiometabolic.html
-  (already citation-verified) with only the WE-voice pass applied, which that
-  file still needed anyway per QUEUE.md.
-
-  Hero is a BAKED IMAGE (living GIF, ping-pong light drift, frame 1 = complete
-  composition for Outlook). Display serif never has to render in any client.
-  Hosted: https://apdad.github.io/mission/blasts/assets/hero-vitamin-d.gif
+  CINEMA STYLE MOCKUP v2 - vitamin D blast in the jw.org language.
+  Ordered by Asher 2026-08-05 ("this will be my known style"); v2 folds in the
+  three-lens adversarial review (workflow wf_501eee48-1a3):
+  - EVERYTHING identity-carrying is INLINE; the <style> block holds only the
+    mobile media query, the MSO font override, and Gmail dark-mode re-asserts.
+    A client that strips <style> now loses nothing that matters.
+  - Outlook: attribute-width centered table shell (no div max-width), buttons
+    as td bgcolor + padded cells, hairline rules as centered tables.
+  - Numbers section is the baked email-in-a-picture (THE EMAIL-IN-A-PICTURE
+    LAW: the picture IS the findings section, never both).
+  - Trio band carries three findings (no reading-time badge), handout-attached
+    line lives in the letter, video slot is a comment that can never render,
+    canonical signature pasted in so Asher approves the REAL email.
+  Spec: style-cinema/CINEMA-STYLE.md. Hero + numbers sources in style-cinema/.
 -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="color-scheme" content="light"/>
+<meta name="supported-color-schemes" content="light"/>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=Source+Sans+3:wght@300;400;600&display=swap');
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { background-color:#000000; -webkit-text-size-adjust:100%;
-         font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif; color:#2C2921; }
-  .wrap { max-width:640px; margin:0 auto; background-color:#000000; }
-
-  /* type */
-  .serif { font-family:'Cinzel',Georgia,'Times New Roman',serif; }
-  .kicker { font-size:12px; font-weight:400; letter-spacing:5px; text-transform:uppercase;
-            color:#C8A063; text-align:center; }
-  .kicker.on-paper { color:#814800; }
-  h2.display { font-family:'Cinzel',Georgia,serif; font-weight:400; font-size:30px;
-               line-height:1.25; letter-spacing:2px; text-transform:uppercase;
-               color:#2C2921; text-align:center; margin:14px 0 0; }
-  .rule { width:56px; height:1px; background-color:#C8A063; margin:26px auto; font-size:0; line-height:0; }
-  .body-copy { font-size:16px; font-weight:400; line-height:1.7; color:#3A362E; }
-  .body-copy p { margin:0 0 18px; }
-  .body-copy a { color:#814800; }
-
-  /* section paddings */
-  .pad { padding:52px 48px; }
-
-  /* dark trio band */
-  .trio-num { font-family:'Cinzel',Georgia,serif; font-weight:500; font-size:34px;
-              color:#DCC38F; text-align:center; }
-  .trio-label { font-size:12px; letter-spacing:3px; text-transform:uppercase;
-                color:#B8B2A8; text-align:center; padding-top:8px; line-height:1.6; }
-
-  /* pull quote */
-  .quote { font-family:'Cinzel',Georgia,serif; font-weight:400; font-size:21px;
-           line-height:1.5; letter-spacing:1px; color:#2C2921; text-align:center; }
-
-  /* buttons - flat, square, one gold */
-  .btn-solid { display:inline-block; background-color:#C8A063; color:#14110E !important;
-               font-family:'Source Sans 3',Helvetica,Arial,sans-serif; font-size:14px;
-               font-weight:600; letter-spacing:2.5px; text-transform:uppercase;
-               text-decoration:none; padding:16px 34px; }
-  .btn-ghost { display:inline-block; border:1px solid #C8A063; color:#C8A063 !important;
-               font-family:'Source Sans 3',Helvetica,Arial,sans-serif; font-size:14px;
-               font-weight:400; letter-spacing:2.5px; text-transform:uppercase;
-               text-decoration:none; padding:15px 33px; }
-
-  /* numbers list on paper - space and hairlines, no cards */
-  .num-row td { padding:16px 0; border-bottom:1px solid #DAD3C4; font-size:15px;
-                line-height:1.55; color:#3A362E; vertical-align:top; }
-  .num-row td.m { font-weight:600; color:#2C2921; width:170px; padding-right:18px; }
-
+  /* Progressive enhancement only. Every load-bearing style is inline. */
   @media only screen and (max-width:480px) {
-    .pad { padding:40px 24px !important; }
-    h2.display { font-size:24px !important; }
-    .trio-cell { display:block !important; width:100% !important; padding:18px 0 !important; }
+    .pad { padding-left:24px !important; padding-right:24px !important; }
+    .h-display { font-size:24px !important; }
+    .trio-cell { display:block !important; width:100% !important; padding:16px 0 !important; }
+    .btn-cell { display:block !important; margin:0 auto 12px !important; }
   }
+  /* Gmail dark mode: re-assert the bands and kickers it likes to repaint */
+  [data-ogsc] .kick-paper { color:#a05a00 !important; }
+  [data-ogsb] .band-dark { background-color:#14110E !important; }
+  [data-ogsb] .band-paper { background-color:#F0EEEA !important; }
 </style>
+<!--[if mso]><style>
+  body, table, td, p, a, div { font-family: Helvetica, Arial, sans-serif !important; }
+  .serif, .h-display { font-family: Georgia, 'Times New Roman', serif !important; }
+</style><![endif]-->
 
-<div class="wrap">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#000000" style="background-color:#000000;"><tr><td align="center">
+<table role="presentation" width="640" align="center" cellpadding="0" cellspacing="0" border="0" style="width:640px; max-width:640px;">
 
   <!-- ============ HERO: baked living image ============ -->
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
-    <td bgcolor="#000000" style="font-size:0; line-height:0;">
-      <img src="https://apdad.github.io/mission/blasts/assets/hero-vitamin-d.gif"
-           alt="The Sunshine Vitamin, Reconsidered - what 40 years of cardiometabolic data actually show"
-           width="640" style="width:100%; max-width:640px; height:auto; display:block;"/>
-    </td>
-  </tr></table>
+  <tr><td bgcolor="#000000" style="background-color:#000000; font-size:0; line-height:0;">
+    <img src="https://apdad.github.io/mission/blasts/assets/hero-vitamin-d.gif"
+         alt="THE SUNSHINE VITAMIN, RECONSIDERED. What 40 years of cardiometabolic data actually show."
+         width="640"
+         style="width:100%; max-width:640px; height:auto; display:block; color:#DCC38F; font-family:Georgia,'Times New Roman',serif; font-size:22px; line-height:1.5; text-align:center;"/>
+  </td></tr>
 
-  <!-- ============ DARK TRIO BAND (jw.org feature row) ============ -->
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
-    <td bgcolor="#14110E" class="pad" style="background-color:#14110E; padding:44px 48px;">
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
-        <td class="trio-cell" width="33%" align="center" style="padding:0 10px;">
-          <div class="trio-num">45</div>
-          <div class="trio-label">Randomized trials,<br>one meta-analysis</div>
-        </td>
-        <td class="trio-cell" width="33%" align="center" style="padding:0 10px;">
-          <div class="trio-num">&lt;20</div>
-          <div class="trio-label">ng/mL, where the<br>benefit concentrated</div>
-        </td>
-        <td class="trio-cell" width="33%" align="center" style="padding:0 10px;">
-          <div class="trio-num">2 min</div>
-          <div class="trio-label">The read, and the<br>handout is attached</div>
-        </td>
-      </tr></table>
-    </td>
-  </tr></table>
+  <!-- ============ DARK TRIO BAND: three findings ============ -->
+  <tr><td bgcolor="#14110E" class="pad band-dark" style="background-color:#14110E; padding:44px 40px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
+      <td class="trio-cell" width="33%" align="center" valign="top" style="padding:0 8px;">
+        <div class="serif" style="font-family:'Cinzel',Georgia,serif; font-weight:500; font-size:34px; color:#DCC38F; text-align:center;">45</div>
+        <div style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif; font-size:12px; letter-spacing:3px; text-transform:uppercase; color:#B8B2A8; text-align:center; padding-top:8px; line-height:1.6;">Randomized<br>trials</div>
+      </td>
+      <td class="trio-cell" width="33%" align="center" valign="top" style="padding:0 8px;">
+        <div class="serif" style="font-family:'Cinzel',Georgia,serif; font-weight:500; font-size:34px; color:#DCC38F; text-align:center;">&lt;20</div>
+        <div style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif; font-size:12px; letter-spacing:3px; text-transform:uppercase; color:#B8B2A8; text-align:center; padding-top:8px; line-height:1.6;">ng/mL, where<br>benefit lived</div>
+      </td>
+      <td class="trio-cell" width="33%" align="center" valign="top" style="padding:0 8px;">
+        <div class="serif" style="font-family:'Cinzel',Georgia,serif; font-weight:500; font-size:34px; color:#DCC38F; text-align:center;">&minus;5.3</div>
+        <div style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif; font-size:12px; letter-spacing:3px; text-transform:uppercase; color:#B8B2A8; text-align:center; padding-top:8px; line-height:1.6;">mg/dL LDL, the<br>largest lipid move</div>
+      </td>
+    </tr></table>
+  </td></tr>
 
-  <!-- ============ THE LETTER (warm paper, jw.org episodes zone) ============ -->
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
-    <td bgcolor="#F0EEEA" class="pad" style="background-color:#F0EEEA;">
-      <div class="kicker on-paper">What They Found</div>
-      <h2 class="display">Everyone Moved a Little.<br>The Deficient Ones Moved.</h2>
-      <div class="rule"></div>
-      <div class="body-copy">
-        <p>Hope you are well. Quick one worth two minutes.</p>
-        <p>A new meta-analysis pooled <strong>45 randomized trials</strong> on vitamin D and
-        cardiometabolic markers. Across all of them the movement was modest. LDL down about
-        5 mg/dL, systolic pressure down about 2.8 mmHg, fasting glucose down about 2 mg/dL,
-        A1c down about 0.16 percent.</p>
-        <p>Here is the part we would want you to hear from us. The glucose and A1c benefits
-        showed up in patients who <strong>started below 20 ng/mL</strong>. The ones who already
-        had a decent level barely moved, and the authors say plainly that the clinical
-        significance is still uncertain.</p>
-      </div>
+  <!-- ============ THE LETTER (warm paper) ============ -->
+  <tr><td bgcolor="#F0EEEA" class="pad band-paper" style="background-color:#F0EEEA; padding:52px 48px;">
+    <div class="kick-paper" style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif; font-size:12px; letter-spacing:5px; text-transform:uppercase; color:#814800; text-align:center;">What They Found</div>
+    <h2 class="h-display" style="font-family:'Cinzel',Georgia,serif; font-weight:400; font-size:30px; line-height:1.25; letter-spacing:2px; text-transform:uppercase; color:#2C2921; text-align:center; margin:14px 0 0;">Everyone Moved a Little.<br>The Deficient Ones Moved.</h2>
+    <table role="presentation" align="center" cellpadding="0" cellspacing="0" style="margin:26px auto;"><tr><td width="56" height="1" bgcolor="#C8A063" style="font-size:1px; line-height:1px;">&#8202;</td></tr></table>
+    <div style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif; font-size:16px; font-weight:400; line-height:1.7; color:#3A362E; text-align:left;">
+      <p style="margin:0 0 18px;">Hope you are well. Quick one worth two minutes.</p>
+      <p style="margin:0 0 18px;">A new meta-analysis pooled <strong>45 randomized trials</strong> on vitamin D and
+      cardiometabolic markers. Across all of them the movement was modest. LDL down about
+      5 mg/dL, systolic pressure down about 2.8 mmHg, fasting glucose down about 2 mg/dL,
+      A1c down about 0.16 percent.</p>
+      <p style="margin:0 0 18px;">Here is the part we would want you to hear from us. The glucose and A1c benefits
+      showed up in patients who <strong>started below 20 ng/mL</strong>. The ones who already
+      had a decent level barely moved, and the authors say plainly that the clinical
+      significance is still uncertain.</p>
+    </div>
+    <table role="presentation" align="center" cellpadding="0" cellspacing="0" style="margin:34px auto;"><tr><td width="56" height="1" bgcolor="#C8A063" style="font-size:1px; line-height:1px;">&#8202;</td></tr></table>
+    <div class="serif" style="font-family:'Cinzel',Georgia,serif; font-weight:400; font-size:21px; line-height:1.5; letter-spacing:1px; color:#2C2921; text-align:center;">Repletion and supplementation<br>are not the same conversation.</div>
+    <table role="presentation" align="center" cellpadding="0" cellspacing="0" style="margin:34px auto;"><tr><td width="56" height="1" bgcolor="#C8A063" style="font-size:1px; line-height:1px;">&#8202;</td></tr></table>
+    <div style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif; font-size:16px; font-weight:400; line-height:1.7; color:#3A362E; text-align:left;">
+      <p style="margin:0 0 18px;">So if you are pulling a level before you recommend, this is the paper that backs how
+      you already practice. And if you are not, it is a reasonable argument for starting.</p>
+      <p style="margin:0 0 18px;">Read the full study here:
+      <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC13413152/" style="color:#814800;">the vitamin D meta-analysis
+      in the Asia Pacific Journal of Clinical Nutrition</a>. Open access, no paywall.</p>
+      <p style="margin:0;"><strong>The patient handout is attached to this email.</strong> Print it and hand it
+      off; it does the explaining for you.</p>
+    </div>
+  </td></tr>
 
-      <div class="rule" style="margin:34px auto;"></div>
-      <div class="quote">Repletion and supplementation<br>are not the same conversation.</div>
-      <div class="rule" style="margin:34px auto;"></div>
+  <!-- ============ THE NUMBERS: email-in-a-picture ============ -->
+  <tr><td bgcolor="#F0EEEA" class="band-paper" style="background-color:#F0EEEA; padding:0 48px 20px; font-size:0; line-height:0;">
+    <img src="https://apdad.github.io/mission/blasts/assets/numbers-vitamin-d.jpg"
+         alt="What moved, and in whom: LDL down 5.3 mg/dL and systolic pressure down 2.8 mmHg, both concentrated in adults 55 and older. Fasting glucose down 2.0 mg/dL in adults under 55. HbA1c down 0.16 percent in patients starting below 20 ng/mL. 45 randomized trials, Abumweis et al. 2026."
+         width="544"
+         style="width:100%; max-width:544px; height:auto; display:block; margin:0 auto; color:#3A362E; font-family:Helvetica,Arial,sans-serif; font-size:14px; line-height:1.6;"/>
+  </td></tr>
 
-      <div class="body-copy">
-        <p>So if you are pulling a level before you recommend, this is the paper that backs how
-        you already practice. And if you are not, it is a reasonable argument for starting.</p>
-        <p>Read the full study here:
-        <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC13413152/">the vitamin D meta-analysis
-        in the Asia Pacific Journal of Clinical Nutrition</a>. Open access, no paywall.</p>
-      </div>
-    </td>
-  </tr></table>
+  <!-- ============ VIDEO SLOT ============
+       SLOT (machine work, THE VIDEO LAW): when a matched NutriDyn/Dropbox video
+       exists, the machine builds the thumbnail with the play badge baked into
+       the pixels, wraps it in an <a> to the dl=0 Dropbox link (st= stripped,
+       curl-verified 200), captions it with the speaker's real title and honest
+       duration, and places the band here on #14110E. When no video matches,
+       this band DOES NOT EXIST. Never a visible placeholder. -->
 
-  <!-- ============ THE NUMBERS (paper, hairlines not cards) ============ -->
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
-    <td bgcolor="#F0EEEA" style="background-color:#F0EEEA; padding:0 48px 52px;">
-      <div class="kicker on-paper">The Numbers</div>
-      <h2 class="display" style="font-size:24px;">What Moved, and in Whom</h2>
-      <div class="rule"></div>
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
-        <tr class="num-row"><td class="m">LDL cholesterol</td>
-          <td>Down about 5.3 mg/dL. Reduction concentrated in adults 55 and older.</td></tr>
-        <tr class="num-row"><td class="m">Systolic pressure</td>
-          <td>Down about 2.8 mmHg. Also concentrated in adults 55 and older.</td></tr>
-        <tr class="num-row"><td class="m">Fasting glucose</td>
-          <td>Down about 2.0 mg/dL. Concentrated in adults under 55.</td></tr>
-        <tr class="num-row"><td class="m">HbA1c</td>
-          <td>Down about 0.16 percent, in patients starting below 20 ng/mL.</td></tr>
-      </table>
-      <p style="font-size:13px; line-height:1.6; color:#7A7468; margin-top:18px;">
-        Abumweis S, Alqadi S, Al Tarteer A, et al., Asia Pacific Journal of Clinical Nutrition,
-        2026;35(4):631-643. These are the study&rsquo;s findings on vitamin D as a nutrient. They
-        are not claims about any product, and the authors describe the clinical significance as
-        uncertain.</p>
-    </td>
-  </tr></table>
+  <!-- ============ PRODUCT (stone band) ============ -->
+  <tr><td bgcolor="#D5D0C6" align="center" class="pad" style="background-color:#D5D0C6; padding:52px 48px;">
+    <div style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif; font-size:12px; letter-spacing:5px; text-transform:uppercase; color:#814800; text-align:center;">Practitioner Exclusive</div>
+    <h2 class="h-display" style="font-family:'Cinzel',Georgia,serif; font-weight:400; font-size:26px; line-height:1.25; letter-spacing:2px; text-transform:uppercase; color:#2C2921; text-align:center; margin:14px 0 0;">D3 10,000 with K2</h2>
+    <table role="presentation" align="center" cellpadding="0" cellspacing="0" style="margin:26px auto;"><tr><td width="56" height="1" bgcolor="#C8A063" style="font-size:1px; line-height:1px;">&#8202;</td></tr></table>
+    <img src="https://apdad.github.io/mission/blasts/assets/d3-10000-k2.png"
+         alt="NutriDyn D3 10,000 with K2 bottle" width="180"
+         style="display:block; width:180px; height:auto; margin:0 auto; color:#2C2921; font-family:Helvetica,Arial,sans-serif; font-size:14px;"/>
+    <div style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif; font-size:16px; font-weight:400; line-height:1.7; color:#3A362E; max-width:440px; margin:26px auto 0; text-align:left;">
+      A therapeutic-dose D3 paired with K2, formulated to support healthy vitamin D status and
+      normal calcium utilization and bone metabolism. It is what most of our practices reach
+      for when they are correcting a level rather than maintaining one.</div>
+    <table role="presentation" align="center" cellpadding="0" cellspacing="0" style="margin-top:30px;"><tr>
+      <td class="btn-cell" bgcolor="#C8A063" style="background-color:#C8A063; padding:16px 34px;">
+        <a href="https://nutridyn.com/d3-10-000-with-k2"
+           style="display:block; color:#14110E; font-family:'Source Sans 3',Helvetica,Arial,sans-serif; font-size:14px; font-weight:600; letter-spacing:2.5px; text-transform:uppercase; text-decoration:none;">Place Your Order</a>
+      </td>
+      <td width="12" style="font-size:0; line-height:0;">&nbsp;</td>
+      <td class="btn-cell" style="border:1px solid #C8A063; padding:15px 33px;">
+        <a href="mailto:asher@nutri-dyn.com?subject=Send%20me%20the%20D3%20sample&body=Asher%2C%0A%0ASend%20a%20D3%2010%2C000%20with%20K2%20sample%20to%20the%20office.%20Ship%20to%3A%0A%0A%0AAlso%2C%20the%20thing%20I%20wish%20NutriDyn%20made%20is%3A%0A%0A"
+           style="display:block; color:#7A5A22; font-family:'Source Sans 3',Helvetica,Arial,sans-serif; font-size:14px; font-weight:400; letter-spacing:2.5px; text-transform:uppercase; text-decoration:none;">Email Asher</a>
+      </td>
+    </tr></table>
+  </td></tr>
 
-  <!-- ============ VIDEO SLOT (dark band) ============ -->
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
-    <td bgcolor="#14110E" align="center" style="background-color:#14110E; padding:46px 48px;">
-      <div class="kicker">Watch</div>
-      <!-- SLOT: Direct Mail video block goes here when a matched Dropbox/NutriDyn
-           video exists for the topic. Delete this whole band if none does. -->
-      <p style="font-size:14px; color:#B8B2A8; letter-spacing:1px; margin-top:12px;">
-        [ Direct Mail video block: paste here in the app ]</p>
-    </td>
-  </tr></table>
+  <!-- ============ FEEDBACK (THE FEEDBACK LAW) ============ -->
+  <tr><td bgcolor="#F0EEEA" align="center" class="pad band-paper" style="background-color:#F0EEEA; padding:52px 48px 40px;">
+    <div class="kick-paper" style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif; font-size:12px; letter-spacing:5px; text-transform:uppercase; color:#814800; text-align:center;">Building This With You</div>
+    <h2 class="h-display" style="font-family:'Cinzel',Georgia,serif; font-weight:400; font-size:22px; line-height:1.25; letter-spacing:2px; text-transform:uppercase; color:#2C2921; text-align:center; margin:14px 0 0;">What Should We Fix Next?</h2>
+    <table role="presentation" align="center" cellpadding="0" cellspacing="0" style="margin:26px auto;"><tr><td width="56" height="1" bgcolor="#C8A063" style="font-size:1px; line-height:1px;">&#8202;</td></tr></table>
+    <div style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif; font-size:16px; font-weight:400; line-height:1.7; color:#3A362E; max-width:460px; margin:0 auto; text-align:left;">
+      We run this territory like a product, and you are the one using it. Tell us what is not
+      working in your practice, what you wish NutriDyn made, or what you want covered at the
+      next lunch and learn. <strong>Just hit reply.</strong> It comes straight to Asher and he
+      reads every one.</div>
+  </td></tr>
 
-  <!-- ============ PRODUCT (stone band, jw.org CTA zone) ============ -->
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
-    <td bgcolor="#D5D0C6" align="center" class="pad" style="background-color:#D5D0C6;">
-      <div class="kicker" style="color:#814800;">Practitioner Exclusive</div>
-      <h2 class="display" style="font-size:26px;">D3 10,000 with K2</h2>
-      <div class="rule"></div>
-      <table role="presentation" cellpadding="0" cellspacing="0" align="center"><tr>
-        <td style="padding:6px 0 0;">
-          <!-- Transparent PNG hosted on our own shelf: nutridyn.com re-platformed
-               2026-08-05 and killed every cdn/shop URL, so product images are
-               self-hosted from now on. -->
-          <img src="https://apdad.github.io/mission/blasts/assets/d3-10000-k2.png"
-               alt="NutriDyn D3 10,000 with K2" width="180"
-               style="display:block; width:180px; height:auto;"/>
-        </td>
-      </tr></table>
-      <p class="body-copy" style="max-width:440px; margin:26px auto 0; text-align:center; color:#3A362E;">
-        A therapeutic-dose D3 paired with K2, formulated to support healthy vitamin D status and
-        normal calcium utilization and bone metabolism. It is what most of our practices reach
-        for when they are correcting a level rather than maintaining one.</p>
-      <table role="presentation" cellpadding="0" cellspacing="0" align="center" style="margin-top:30px;"><tr>
-        <td style="padding:6px;"><a class="btn-solid" bgcolor="#C8A063"
-          href="https://nutridyn.com/d3-10-000-with-k2">Place Your Order</a></td>
-        <td style="padding:6px;"><a class="btn-ghost"
-          href="mailto:asher@nutri-dyn.com?subject=Send%20me%20the%20D3%20sample&body=Asher%2C%0A%0ASend%20a%20D3%2010%2C000%20with%20K2%20sample%20to%20the%20office.%20Ship%20to%3A%0A%0A%0AAlso%2C%20the%20thing%20I%20wish%20NutriDyn%20made%20is%3A%0A%0A">Email Asher</a></td>
-      </tr></table>
-    </td>
-  </tr></table>
-
-  <!-- ============ FEEDBACK (THE FEEDBACK LAW, paper) ============ -->
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
-    <td bgcolor="#F0EEEA" align="center" class="pad" style="background-color:#F0EEEA;">
-      <div class="kicker on-paper">Building This With You</div>
-      <h2 class="display" style="font-size:22px;">What Should We Fix Next?</h2>
-      <div class="rule"></div>
-      <p class="body-copy" style="max-width:460px; margin:0 auto; text-align:center;">
-        We run this territory like a product, and you are the one using it. Tell us what is not
-        working in your practice, what you wish NutriDyn made, or what you want covered at the
-        next lunch and learn. <strong>Just hit reply.</strong> It comes straight to Asher and he
-        reads every one.</p>
-    </td>
-  </tr></table>
-
-  <!-- ============ SIGNATURE SLOT ============ -->
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
-    <td bgcolor="#F0EEEA" style="background-color:#F0EEEA; padding:0 48px 44px;">
-      <!-- SLOT: paste the canonical signature block from
-           https://apdad.github.io/mission/sig/signature.html (THE SIGNATURE LAW).
-           No plain-text sign-off above it. -->
-    </td>
-  </tr></table>
+  <!-- ============ SIGNATURE (canonical block, THE SIGNATURE LAW) ============ -->
+  <tr><td bgcolor="#F0EEEA" class="band-paper" style="background-color:#F0EEEA; padding:0 30px 44px;">
+    <table role="presentation" align="center" cellpadding="0" cellspacing="0"><tr><td><table cellpadding="0" cellspacing="0" border="0" style="max-width:580px;background-color:#ffffff;border-radius:2px;"><tr><td width="6" bgcolor="#1a4a3a" style="width:6px;background-color:#1a4a3a;background-image:linear-gradient(180deg,#1a4a3a 0%,#2d7a5e 100%);font-size:0;line-height:0;">&nbsp;</td><td width="110" style="width:110px;padding:20px 0 20px 20px;vertical-align:top;"><img src="https://apdad.github.io/mission/sig/asher-allen.jpg" width="90" height="90" style="border-radius:50%;display:block;border:3px solid #2d7a5e;width:90px;height:90px;" alt="Asher Allen" /></td><td style="padding:20px 20px 20px 16px;vertical-align:top;"><div style="font-family:Georgia,'Playfair Display',serif;font-size:18px;font-weight:600;color:#1a1a1a;letter-spacing:0.3px;line-height:1.2;"> Asher Allen </div><div style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;color:#2d7a5e;letter-spacing:1.8px;text-transform:uppercase;margin-top:3px;"> M.S. Human Nutrition </div><div style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:12px;font-weight:600;color:#1a1a1a;letter-spacing:0.3px;margin-top:2px;"> NutriDyn </div><table cellpadding="0" cellspacing="0" border="0" width="40" style="margin:10px 0;"><tr><td height="2" bgcolor="#2d7a5e" style="height:2px;line-height:2px;font-size:0;background-color:#2d7a5e;background-image:linear-gradient(90deg,#2d7a5e,#a8d5c2);border-radius:2px;">&nbsp;</td></tr></table><table cellpadding="0" cellspacing="0" border="0"><tr><td style="padding:2px 0;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;"><span style="font-size:11px;color:#555555;">&#128241;</span><a href="tel:6785771003" style="font-size:12px;color:#333333;text-decoration:none;margin-left:6px;">678.577.1003</a></td></tr><tr><td style="padding:2px 0;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;"><span style="font-size:11px;color:#555555;">&#9993;</span><a href="mailto:asher@nutri-dyn.com" style="font-size:12px;color:#2d7a5e;text-decoration:none;margin-left:6px;">asher@nutri-dyn.com</a></td></tr><tr><td style="padding:2px 0;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;"><span style="font-size:11px;color:#555555;">&#127760;</span><a href="https://nutridyn.com" style="font-size:12px;color:#2d7a5e;text-decoration:none;margin-left:6px;">nutridyn.com</a></td></tr></table><table cellpadding="0" cellspacing="0" border="0" role="presentation" style="margin-top:12px;"> <tr> <td bgcolor="#0077b5" style="background-color:#0077b5;border-radius:3px;"> <a href="https://www.linkedin.com/in/asherallen" style="display:inline-block;padding:5px 10px;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:10px;font-weight:600;color:#ffffff;text-decoration:none;letter-spacing:0.5px;">LinkedIn</a> </td> <td width="6" style="width:6px;font-size:0;line-height:0;">&nbsp;</td> <td bgcolor="#c13584" style="background-color:#c13584;background-image:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);border-radius:3px;"> <a href="https://instagram.com/asherallen21" style="display:inline-block;padding:5px 10px;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:10px;font-weight:600;color:#ffffff;text-decoration:none;letter-spacing:0.5px;">Instagram</a> </td> <td width="6" style="width:6px;font-size:0;line-height:0;">&nbsp;</td> <td bgcolor="#000000" style="background-color:#000000;border-radius:3px;"> <a href="https://twitter.com/asherallen" style="display:inline-block;padding:5px 10px;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:10px;font-weight:600;color:#ffffff;text-decoration:none;letter-spacing:0.5px;">X</a> </td> <td width="6" style="width:6px;font-size:0;line-height:0;">&nbsp;</td> <td bgcolor="#1877f2" style="background-color:#1877f2;border-radius:3px;"> <a href="https://www.facebook.com/share/g/1CEhYGLGp2/?mibextid=wwXIfr" style="display:inline-block;padding:5px 10px;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:10px;font-weight:600;color:#ffffff;text-decoration:none;letter-spacing:0.5px;">Clinician Group</a> </td> </tr> </table></td></tr><tr><td colspan="3" bgcolor="#1a4a3a" style="background-color:#1a4a3a;background-image:linear-gradient(90deg,#1a4a3a,#2d7a5e);padding:8px 20px;"><p style="margin:0;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:10px;color:#d6e5df;letter-spacing:0.5px;"> &#128197; &nbsp;<strong style="color:#ffffff;">Book a Lunch &amp; Learn or Zoom:</strong> &nbsp;Reply to this email or text 678.577.1003 </p><p style="margin:5px 0 0;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:10px;color:#d6e5df;letter-spacing:0.5px;"> &#128172; &nbsp;<strong style="color:#ffffff;">What should we build next?</strong> &nbsp;Reply with what your territory needs, what NutriDyn should make, or a seminar topic. I read every one. </p></td></tr></table></td></tr></table></td></tr></table>
+  </td></tr>
 
   <!-- ============ FOOTER (black, merge tags) ============ -->
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
-    <td bgcolor="#000000" align="center" style="background-color:#000000; padding:38px 48px;">
-      <p style="font-size:12px; line-height:2; color:#8A857C; letter-spacing:1px;">
-        <a href="[unsubscribe url]" style="color:#B8B2A8;">Unsubscribe</a> &nbsp;&middot;&nbsp;
-        <a href="[email preferences url]" style="color:#B8B2A8;">Email Preferences</a> &nbsp;&middot;&nbsp;
-        <a href="[web version url]" style="color:#B8B2A8;">View Online</a></p>
-    </td>
-  </tr></table>
+  <tr><td bgcolor="#000000" align="center" style="background-color:#000000; padding:38px 48px;">
+    <p style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif; font-size:12px; line-height:2; color:#8A857C; letter-spacing:1px; margin:0;">
+      <a href="[unsubscribe url]" style="color:#B8B2A8;">Unsubscribe</a> &nbsp;&middot;&nbsp;
+      <a href="[email preferences url]" style="color:#B8B2A8;">Email Preferences</a> &nbsp;&middot;&nbsp;
+      <a href="[web version url]" style="color:#B8B2A8;">View Online</a></p>
+  </td></tr>
 
-</div>
+</table>
+</td></tr></table>
