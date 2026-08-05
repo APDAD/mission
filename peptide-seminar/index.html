@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Peptide Protocol — Aug 29, Life University</title>
+<meta name="description" content="Dr. Matt Chalmers on the nutritional protocol behind 17 peptides. Free, Saturday August 29, Life University, Marietta GA.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0E1420; --panel:#151E2E; --line:#25324A; --ink:#F3F1EC; --muted:#9DA9BC;
+    --accent:#1D9E75; --gold:#EF9F27; --red:#E0685C;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  body{ background:var(--bg); color:var(--ink); font-family:Inter,-apple-system,system-ui,sans-serif;
+        font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased; }
+  .wrap{ max-width:940px; margin:0 auto; padding:0 20px; }
+  h1,h2,h3,.ser{ font-family:"Cormorant Garamond",Georgia,serif; }
+
+  .hero{ padding:54px 0 44px; border-bottom:1px solid var(--line); }
+  .kicker{ font-size:12px; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
+           color:var(--gold); margin-bottom:16px; }
+  h1{ font-size:60px; font-weight:700; line-height:1.02; letter-spacing:-1.2px; }
+  h1 .q{ display:block; color:var(--muted); font-weight:600; font-size:40px; margin-top:10px;
+         letter-spacing:-.6px; }
+  .lede{ font-size:19px; color:#D6DDE8; margin-top:22px; max-width:660px; }
+  .lede b{ color:#fff; font-weight:600; }
+
+  .facts{ display:flex; flex-wrap:wrap; gap:0; margin-top:32px; border:1px solid var(--line);
+          border-radius:12px; overflow:hidden; }
+  .facts div{ flex:1 1 160px; padding:16px 18px; border-right:1px solid var(--line); }
+  .facts div:last-child{ border-right:none; }
+  .facts .k{ font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); }
+  .facts .v{ font-size:17px; font-weight:700; margin-top:4px; }
+  .facts .v small{ display:block; font-size:12.5px; font-weight:500; color:var(--muted); margin-top:2px; }
+
+  .cta{ display:inline-block; background:var(--accent); color:#fff; text-decoration:none;
+        font-weight:700; font-size:17px; padding:16px 30px; border-radius:10px; margin-top:26px; }
+  .cta:hover{ filter:brightness(1.1); }
+  .cta.ghost{ background:transparent; border:2px solid var(--line); color:var(--ink); margin-left:8px; }
+  .seats{ font-size:13.5px; color:var(--gold); margin-top:14px; font-weight:600; }
+
+  section{ padding:46px 0; border-bottom:1px solid var(--line); }
+  h2{ font-size:36px; font-weight:700; letter-spacing:-.5px; margin-bottom:8px; }
+  .sub{ color:var(--muted); font-size:16px; margin-bottom:24px; max-width:660px; }
+
+  .case{ background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--red);
+         border-radius:12px; padding:26px 28px; }
+  .case p{ font-size:18px; }
+  .case .punch{ font-size:23px; font-weight:600; margin-top:14px; font-family:"Cormorant Garamond",serif; }
+
+  .grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .card{ background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:20px 22px; }
+  .card h3{ font-size:21px; font-weight:700; margin-bottom:6px; }
+  .card p{ font-size:14.5px; color:#C7D0DE; }
+
+  .fam{ display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin-top:6px; }
+  .fam div{ background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:14px 12px; }
+  .fam .n{ font-size:10.5px; letter-spacing:.11em; text-transform:uppercase; color:var(--gold);
+           font-weight:700; margin-bottom:6px; }
+  .fam .p{ font-size:12.5px; color:#C7D0DE; line-height:1.45; }
+
+  ul{ margin:10px 0 0 20px; } li{ margin-bottom:9px; font-size:15.5px; color:#D6DDE8; }
+  li b{ color:#fff; }
+
+  .speaker{ display:flex; gap:26px; align-items:flex-start; }
+  .speaker .body{ flex:1; }
+  .cred{ display:flex; flex-wrap:wrap; gap:7px; margin-top:14px; }
+  .cred span{ background:var(--panel); border:1px solid var(--line); border-radius:20px;
+              padding:5px 12px; font-size:12px; color:#C7D0DE; }
+
+  .perk{ background:linear-gradient(135deg,#1D9E75 0%,#17795A 100%); border-radius:14px;
+         padding:28px 30px; }
+  .perk h2{ color:#fff; margin-bottom:6px; }
+  .perk p{ color:rgba(255,255,255,.93); font-size:16px; }
+  .perk ul li{ color:rgba(255,255,255,.93); }
+  .perk ul li b{ color:#fff; }
+
+  .final{ text-align:center; padding:56px 0; }
+  .final h2{ font-size:42px; }
+
+  .foot{ padding:26px 0 60px; color:var(--muted); font-size:12.5px; line-height:1.6; }
+
+  @media(max-width:760px){
+    h1{ font-size:38px; } h1 .q{ font-size:25px; } h2{ font-size:28px; }
+    .grid{ grid-template-columns:1fr; } .fam{ grid-template-columns:1fr 1fr; }
+    .facts div{ flex:1 1 50%; border-bottom:1px solid var(--line); }
+    .speaker{ flex-direction:column; gap:16px; }
+    .cta{ display:block; text-align:center; margin-left:0; }
+    .cta.ghost{ margin-left:0; margin-top:10px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="hero">
+    <div class="kicker">Free clinical seminar &middot; Life University &middot; Saturday August 29</div>
+    <h1>Her doctor is thrilled.<span class="q">She feels worse than before she started.</span></h1>
+    <p class="lede">Forty-eight years old. Six months on a GLP-1. Down twenty-two pounds. Her chart
+    looks like a win. She is exhausted by three in the afternoon, her hair is thinning, she has lost
+    muscle she cannot get back, and she says the thing nobody writes down: <b>"I feel nothing."</b></p>
+    <p class="lede" style="margin-top:14px;">She is going to walk into somebody's office and ask what
+    is happening to her. <b>The only question is whether that doctor knows the answer.</b></p>
+
+    <div class="facts">
+      <div><div class="k">Date</div><div class="v">Sat Aug 29<small>12:00 to 4:00 PM</small></div></div>
+      <div><div class="k">Where</div><div class="v">Life University<small>RCCE Room 152, Marietta</small></div></div>
+      <div><div class="k">Speaker</div><div class="v">Dr. Matt Chalmers<small>DC, CCCN, CCSP</small></div></div>
+      <div><div class="k">Cost</div><div class="v">Free<small>NutriDyn covers everything</small></div></div>
+    </div>
+
+    <a class="cta" href="mailto:asher@nutri-dyn.com?subject=SEAT%20REQUEST%3A%20Peptide%20Seminar%20Aug%2029&body=Save%20me%20a%20seat%20for%20August%2029.%0A%0AName%3A%20%0APractice%3A%20%0ACity%3A%20%0ACell%3A%20%0A%0AHow%20many%20of%20your%20patients%20are%20currently%20on%20a%20GLP-1%3F%20%0A%0AWhat%20is%20the%20one%20peptide%20question%20you%20want%20answered%20that%20day%3F%20%0A%0A%28Bringing%20anyone%3F%20List%20them%20here%20so%20we%20count%20lunch%20correctly.%29%0A">Save my seat</a>
+    <a class="cta ghost" href="#what">What is actually covered</a>
+    <div class="seats">Room 152 holds a fixed number of people and the first 20 registrations get the
+    protocol kit. When it is full, it is full.</div>
+  </div>
+
+  <section>
+    <div class="case">
+      <p>Every practitioner reading this has that patient. Probably several. They did not get the
+      prescription from you, they got it from a telehealth portal or a weight-loss clinic or their
+      primary, and now they are sitting in your office describing symptoms that the prescriber told
+      them were normal.</p>
+      <p class="punch">Here is what almost nobody in that chain knows: most of what looks like a side
+      effect is a nutrient deficiency wearing a costume.</p>
+      <p style="margin-top:14px;">A peptide is a command. It tells the body to run a biochemical
+      sequence. That sequence cannot run without raw material. When the raw material is not there,
+      the body does not stop, it improvises, and the patient feels every bit of it. Fatigue is not
+      the medication. It is ferritin, magnesium, and B12. Hair loss is not the medication. It is
+      protein collapse and zinc. Flat mood is not the medication. It is the B6 to serotonin to
+      dopamine chain running dry.</p>
+      <p style="margin-top:14px;"><b>That is a nutrition problem. Which means it is your problem, and
+      you are allowed to solve it.</b></p>
+    </div>
+  </section>
+
+  <section id="what">
+    <h2>Seventeen peptides. One framework.</h2>
+    <p class="sub">Dr. Chalmers walks the whole landscape, organ by organ, and ends every section with
+    the specific nutrient gap and the specific protocol. You leave with something you can use Monday
+    morning, not a set of notes you will never reread.</p>
+
+    <div class="fam">
+      <div><div class="n">Metabolic</div><div class="p">Semaglutide, tirzepatide and the newer triple agonists</div></div>
+      <div><div class="n">GH secretagogues</div><div class="p">CJC-1295, ipamorelin, sermorelin, tesamorelin</div></div>
+      <div><div class="n">Repair</div><div class="p">BPC-157, TB-500, KPV</div></div>
+      <div><div class="n">Energy &amp; skin</div><div class="p">MOTS-c, GHK-Cu</div></div>
+      <div><div class="n">Immune &amp; cognitive</div><div class="p">Thymosin alpha-1, PT-141, Semax, Selank</div></div>
+    </div>
+
+    <div class="grid" style="margin-top:22px;">
+      <div class="card">
+        <h3>Is it the peptide or is it a deficiency?</h3>
+        <p>The clinical lookup table. Twelve nutrients, the exact patient complaints each one
+        produces, and what to do about it. This single table changes how you hear a patient
+        describe their week.</p>
+      </div>
+      <div class="card">
+        <h3>Three real cases, worked all the way through</h3>
+        <p>The woman losing weight and falling apart. The man down thirty-one pounds with new joint
+        pain and gallstones. The guy on TRT eating 180g of protein and still losing muscle. You will
+        recognize all three.</p>
+      </div>
+      <div class="card">
+        <h3>The protein myth</h3>
+        <p>Why the standard grams-per-kilogram number is built on low-testosterone baseline science,
+        and why the timing of the leucine signal matters more than the total you were told to chase.</p>
+      </div>
+      <div class="card">
+        <h3>What rapid fat loss actually releases</h3>
+        <p>Adipose tissue banks toxins for years. Fast weight loss opens the vault. The liver has to
+        run two phases to clear it, and each phase has its own cofactor list.</p>
+      </div>
+    </div>
+
+    <p style="margin-top:22px; font-size:15.5px; color:#D6DDE8;">There are also five open floor
+    discussions built into the day. <b>You are not being lectured at for four hours.</b> Half the
+    value in a room like this is the practitioner two seats over telling you what they have already
+    seen.</p>
+  </section>
+
+  <section>
+    <h2>Why this year, and why now</h2>
+    <p class="sub">The ground under peptides is moving faster than at any point in the last decade,
+    and the practitioners who understand the nutritional layer are the ones who will still be
+    standing when it settles.</p>
+    <ul>
+      <li><b>Compounded semaglutide and tirzepatide are gone.</b> The shortage ended, the compounding
+      window closed, and patients who were paying a couple hundred a month are now facing brand
+      pricing or nothing.</li>
+      <li><b>The federal picture is shifting again.</b> In July an FDA advisory committee voted to
+      recommend several peptides, including BPC-157, for the compounding list. That vote is advisory
+      and nothing has changed in law yet, but the direction is unmistakable and the rulemaking is
+      already in motion.</li>
+      <li><b>Georgia is enforcing.</b> The state medical board has been running unannounced
+      inspections and told a House study committee in June it has hundreds of open investigations,
+      with new registration legislation being requested. Knowing exactly where your scope begins and
+      ends has never mattered more.</li>
+    </ul>
+    <p style="margin-top:18px; font-size:15.5px; color:#D6DDE8;"><b>This seminar sits on the right side
+    of that line by design.</b> It is not about prescribing anything. It is about the nutritional
+    protocol that determines whether a patient thrives on a peptide or quits it, which is squarely
+    what a chiropractor in Georgia is licensed to recommend.</p>
+  </section>
+
+  <section>
+    <h2>Who is teaching</h2>
+    <div class="speaker">
+      <div class="body">
+        <h3 style="font-size:27px; font-weight:700;">Dr. Matt Chalmers</h3>
+        <p style="color:var(--muted); font-size:15px; margin-bottom:12px;">DC, CCCN, CCSP, QRA-M,
+        NLP-M &middot; Founder, Pillars of Wellness &middot; Frisco, Texas</p>
+        <p style="font-size:15.5px; color:#D6DDE8;">A spinal injury in high school, and a recovery
+        through natural care, set the whole direction of his career. Seventeen years in practice.
+        His patient list runs to professional athletes, executives and public figures, and medical
+        doctors refer to him when their own protocols stop working.</p>
+        <p style="font-size:15.5px; color:#D6DDE8; margin-top:12px;">He formulated the detox product
+        that became the flagship of a sixty-five million dollar company, helped bring a sublingual
+        cannabis strip to market as an opioid alternative, and gave the TEDx talk on it. He is not a
+        peptide salesman. He is a clinician who got tired of watching patients get blamed for
+        symptoms that were actually shopping lists.</p>
+        <div class="cred">
+          <span>TEDx speaker</span><span>Amazon bestselling author, <i>Pillars of Wellness</i></span>
+          <span>~300 episodes, The Dr. Chalmers Show</span><span>Clinical Chiropractic Neurologist</span>
+          <span>Certified Chiropractic Sports Practitioner</span><span>17 years in practice</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="perk">
+      <h2>The first twenty get the kit</h2>
+      <p>Not a raffle. Not a chance at something. Twenty people register and twenty people walk out
+      with a box.</p>
+      <ul style="margin-top:14px;">
+        <li><b>The actual protocol, in product.</b> Physical samples of the core stack Dr. Chalmers
+        builds the entire day around, so you have felt and tasted what you are about to recommend.</li>
+        <li><b>A patient handout with your practice on it.</b> Plain language, for the patient who is
+        on a GLP-1 and scared. You hand it across the desk on Monday.</li>
+        <li><b>The deficiency lookup table, printed.</b> The one page from this deck you will
+        actually keep.</li>
+      </ul>
+      <p style="margin-top:16px; font-weight:600;">Registration order decides it. Nothing else does.</p>
+    </div>
+  </section>
+
+  <div class="final">
+    <h2>You are going to see these patients either way.</h2>
+    <p class="sub" style="margin:12px auto 0; text-align:center;">The only decision is whether you are
+    the doctor who explains it or the doctor who refers it out.</p>
+    <a class="cta" href="mailto:asher@nutri-dyn.com?subject=SEAT%20REQUEST%3A%20Peptide%20Seminar%20Aug%2029&body=Save%20me%20a%20seat%20for%20August%2029.%0A%0AName%3A%20%0APractice%3A%20%0ACity%3A%20%0ACell%3A%20%0A%0AHow%20many%20of%20your%20patients%20are%20currently%20on%20a%20GLP-1%3F%20%0A%0AWhat%20is%20the%20one%20peptide%20question%20you%20want%20answered%20that%20day%3F%20%0A%0A%28Bringing%20anyone%3F%20List%20them%20here%20so%20we%20count%20lunch%20correctly.%29%0A">Save my seat</a>
+    <div class="seats">Saturday August 29 &middot; 12:00 to 4:00 PM &middot; RCCE Room 152, Life
+    University, 1269 Barclay Circle, Marietta GA 30060</div>
+  </div>
+
+  <p class="foot">
+    Hosted and paid for by NutriDyn. Questions: Asher Allen, asher@nutri-dyn.com, 678.577.1003.
+    <br><br>
+    This program is educational and is intended for licensed practitioners and chiropractic students.
+    It does not teach prescribing, compounding, or administration of any peptide, and nothing in it
+    should be read as encouraging practice outside your license. Practitioners are responsible for
+    their own scope under state law. Dietary supplements are not intended to diagnose, treat, cure or
+    prevent any disease, and these statements have not been evaluated by the FDA. Regulatory
+    statements above are current as of August 2026 and are summarized for context, not as legal or
+    compliance advice.
+  </p>
+
+</div>
+</body>
+</html>
