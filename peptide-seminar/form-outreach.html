@@ -35,7 +35,7 @@ footer{text-align:center;color:var(--dim);font-size:13.5px;padding:0 22px 60px;l
 <p>27 Georgia practices that publish no email address.<br>These are the ones a blast cannot reach.</p>
 </header>
 <div class=bar>
-<input id=phone placeholder="Your phone (added to every message)">
+<input id=phone placeholder="Your phone (added to every message)" value="678.577.1003">
 <span id=prog>0 of 27 sent</span>
 </div>
 <main>
@@ -505,7 +505,7 @@ var K='pepforms-done', P='pepforms-phone';
 var done=JSON.parse(localStorage.getItem(K)||'[]');
 var cards=[].slice.call(document.querySelectorAll('.card'));
 var phone=document.getElementById('phone'), prog=document.getElementById('prog');
-phone.value=localStorage.getItem(P)||'';
+phone.value=localStorage.getItem(P)||'678.577.1003';
 
 function withPhone(t){
   var p=phone.value.trim();
