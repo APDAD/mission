@@ -172,6 +172,19 @@ h1{font-family:var(--serif);font-size:clamp(34px,3.4vw,50px);font-weight:600;lin
 .bigcard p{color:var(--muted);font-size:14px;margin-bottom:16px;line-height:1.5}
 .gbtn{display:inline-block;background:var(--accent);color:#fff;padding:14px 24px;border-radius:12px;text-decoration:none;font-weight:600;font-size:15px;transition:transform .15s ease,filter .15s ease}
 .gbtn:hover{transform:translateY(-2px);filter:brightness(1.08)}
+/* A 21px BUTTON IS NOT A TAP TARGET (2026-08-11, measured at a REAL 375x812 iPhone
+   viewport). The hoist shipped earlier today put a button on 76 tiles and every one
+   rendered 45x21 against a 44px minimum — the single gesture THE PRE-DECIDED LAW
+   leaves him was the hardest thing on his own board, and he works it from his phone.
+   The card-width proxy the earlier fires fell back on cannot produce this finding:
+   the px are identical, only a real touch viewport makes the question askable.
+   Gated on (pointer:coarse), verified matching here and false on his Mac, so the
+   desktop stays exactly as it was. */
+.gobtn{display:inline-block;background:var(--accent);color:#fff;border-radius:8px;padding:2px 10px;font-size:12px;font-weight:600;text-decoration:none;vertical-align:1px;margin:0 2px}
+@media (pointer:coarse){
+  .gobtn{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;font-size:13.5px;border-radius:12px;margin:3px 3px}
+  .hint a{display:inline-flex;align-items:center;min-height:44px}
+}
 iframe{width:100%;height:calc(100vh - 150px);min-height:480px;border:1px solid var(--line);border-radius:16px;background:#fff}
 .toprow{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;gap:8px}
 .small{font-size:12px;color:var(--muted);white-space:nowrap}
@@ -506,7 +519,10 @@ function linkBtn(url) {
   a.rel = 'noopener';
   a.title = url;
   a.textContent = url.indexOf('sms:') === 0 ? 'Text' : url.indexOf('tel:') === 0 ? 'Call' : 'Open';
-  a.style.cssText = 'display:inline-block;background:var(--accent);color:#fff;border-radius:8px;padding:2px 10px;font-size:12px;font-weight:600;text-decoration:none;vertical-align:1px;margin:0 2px';
+  /* The styling moved to the .gobtn class so the coarse-pointer rule can reach it —
+     an inline cssText beats every stylesheet rule, so the phone fix was unreachable
+     while these lived here. */
+  a.className = 'gobtn';
   return a;
 }
 
