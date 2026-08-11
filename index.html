@@ -510,15 +510,35 @@ function linkBtn(url) {
   return a;
 }
 
+/* A URL inside “curly quotes” is VERBATIM CONTENT, NOT NAVIGATION (2026-08-11). The
+   paste-ready text tiles quote the exact words he sends, and those words carry the
+   registration link. Linkifying it deletes the URL he is supposed to COPY, and the
+   hoist below would put a headline button aimed at the register page on a tile whose
+   action is "send these two texts". Quoted passages render as plain, copyable text. */
+function quotedRanges(text) {
+  var r = [], re = /“[^”]*”/g, m;
+  while ((m = re.exec(text))) r.push([m.index, m.index + m[0].length]);
+  return r;
+}
+function inQuoted(ranges, i) {
+  for (var k = 0; k < ranges.length; k++) if (i >= ranges[k][0] && i < ranges[k][1]) return true;
+  return false;
+}
+/* Smart quotes and the ellipsis belong in the trailing strip: a link that ends a
+   quoted passage otherwise renders with ” glued onto the href, which is a dead button
+   that looks alive — the exact class this board keeps getting bitten by. */
+var URL_TAIL = /[.,;:!?)"'\]”’…]+$/;
+
 function stepMain(text) {
   var d = el('div', 'stepmain');
   /* sms: and tel: are buttons too (2026-08-11, his order on the Chris Maier tile: "cant you
      add this to his text and just have it there for me to press send?"). An sms: link with a
      body opens Messages on his iPhone with the whole message already typed, so the only
      gesture left is Send — the machine never types into a thread. */
-  var re = /(?:https?:\/\/|sms:|tel:)[^\s]+/g, last = 0, m;
+  var re = /(?:https?:\/\/|sms:|tel:)[^\s]+/g, last = 0, m, qr = quotedRanges(text);
   while ((m = re.exec(text))) {
-    var url = m[0].replace(/[.,;:!?)"'\]]+$/, '');
+    if (inQuoted(qr, m.index)) continue;
+    var url = m[0].replace(URL_TAIL, '');
     d.appendChild(document.createTextNode(text.slice(last, m.index)));
     d.appendChild(linkBtn(url));
     last = m.index + url.length;
@@ -622,8 +642,12 @@ function stepCard(t, n) {
        75 of 121 open tiles had their ONLY button out of sight, which quietly guts THE
        PRE-DECIDED LAW — every tile is a button, and a button one tap away is not one.
        Hoist the first link of any scheme up into the headline. */
-    var pressUrl = (parts.rest.match(/(?:https?:\/\/|sms:|tel:)[^\s]+/) || [])[0];
-    if (pressUrl) { pressUrl = pressUrl.replace(/[.,;:!?)"'\]]+$/, ''); }
+    var pressUrl = null, qr2 = quotedRanges(parts.rest), hre = /(?:https?:\/\/|sms:|tel:)[^\s]+/g, hm;
+    while ((hm = hre.exec(parts.rest))) {
+      if (inQuoted(qr2, hm.index)) continue;
+      pressUrl = hm[0].replace(URL_TAIL, '');
+      break;
+    }
     if (pressUrl && parts.head.indexOf(pressUrl) < 0) { hl.appendChild(linkBtn(pressUrl)); }
     mid.appendChild(hl);
     var more = el('div', 'stepmore');
