@@ -60,6 +60,55 @@ h1{font-family:var(--serif);font-size:clamp(34px,3.4vw,50px);font-weight:600;lin
 .chip:hover{transform:translateY(-2px);border-color:var(--accent);color:var(--ink)}
 .chip.on{color:#fff;border-color:transparent}
 .flowhead{font-family:var(--serif);font-size:26px;font-weight:600;margin:4px 0 12px}
+/* THE DAILY RUN (council build 2026-08-11): the board deals a winnable day — a short
+   run of the most urgent, most money tiles — and holds the rest safe below. Nothing
+   is ever hidden-and-lost: the fold shows its true count and opens with one tap
+   (Asher's law: don't throw away tasks; the fix is how they are HELD). */
+.runhead{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin:4px 0 12px}
+.runtitle{font-family:var(--serif);font-size:26px;font-weight:600}
+.runsub{font-size:12px;color:var(--muted)}
+.runbtn{border:0;background:var(--gold);color:#fff;border-radius:999px;padding:9px 18px;font-family:var(--sans);font-size:13px;font-weight:600;cursor:pointer;transition:transform .15s ease,filter .15s ease}
+.runbtn:hover{transform:translateY(-2px);filter:brightness(1.06)}
+.needword{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 14px}
+.nw-chip{border:1px solid var(--gold);background:#FCF6E8;color:#8a6516;border-radius:999px;padding:7px 14px;font-size:12px;font-weight:600;cursor:pointer;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;transition:transform .15s ease}
+.nw-chip:hover{transform:translateY(-2px)}
+.searchrow{margin:0 0 14px}
+.searchrow input{width:100%;padding:11px 14px;border:1px solid var(--line);border-radius:12px;background:var(--card);font:inherit;font-size:15px;color:var(--ink)}
+.searchrow input:focus{outline:none;border-color:var(--accent)}
+/* Tiles collapse to a headline; the wall of words is one tap away, not in your face. */
+.step .stepmore{display:none}
+.step.open .stepmore{display:block}
+.step .headline{font-size:15px;line-height:1.45;font-weight:500;overflow-wrap:anywhere}
+.step .expand{border:0;background:none;color:var(--accent);font-size:12px;font-weight:600;cursor:pointer;padding:2px 0;font-family:var(--sans)}
+/* Gold sends: the verb that pays gets the warm edge. */
+.step.sendtile{border-left:5px solid var(--gold)}
+/* The rest of the board: compact held-safe rows inside a fold. */
+.fold{margin-top:26px;border:1px dashed var(--line);border-radius:16px;background:var(--card)}
+.fold summary{list-style:none;cursor:pointer;padding:16px 20px;display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.fold summary::-webkit-details-marker{display:none}
+.foldtitle{font-family:var(--serif);font-size:20px;font-weight:600}
+.foldsub{font-size:12px;color:var(--muted)}
+.fold .foldbody{padding:0 14px 14px}
+.rrow{display:flex;align-items:flex-start;gap:10px;border-top:1px dashed var(--line);padding:11px 6px}
+.rrow .rtxt{flex:1;min-width:0;font-size:13.5px;line-height:1.45;overflow-wrap:anywhere;cursor:pointer}
+.rrow .rlabel{font-size:9px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+.rrow.mrow .rlabel{color:var(--gold)}
+/* Focus mode: one card at a time. Done or Next, nothing else on screen. */
+#runmode{position:fixed;inset:0;background:var(--bg);z-index:70;display:none;flex-direction:column;align-items:center;justify-content:center;padding:22px}
+#runmode.on{display:flex}
+.rm-kicker{letter-spacing:.18em;font-size:11px;color:var(--muted);text-transform:uppercase;font-weight:600;margin-bottom:14px}
+.rm-card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:30px 28px;max-width:640px;width:100%;box-shadow:0 18px 44px rgba(44,44,42,.12)}
+.rm-num{font-family:var(--serif);font-size:15px;color:var(--muted);margin-bottom:10px}
+.rm-text{font-size:18px;line-height:1.55;overflow-wrap:anywhere}
+.rm-actions{display:flex;gap:10px;margin-top:26px;flex-wrap:wrap}
+.rm-done{flex:2;border:0;background:var(--accent);color:#fff;border-radius:14px;padding:16px;font-size:16px;font-weight:600;cursor:pointer;font-family:var(--sans)}
+.rm-skip{flex:1;border:1px solid var(--line);background:var(--card);color:var(--muted);border-radius:14px;padding:16px;font-size:14px;cursor:pointer;font-family:var(--sans)}
+.rm-exit{position:absolute;top:18px;right:20px;border:0;background:none;font-size:26px;color:var(--muted);cursor:pointer}
+/* DAY WON: the end-of-level screen. Celebration, never obligation. */
+.daywon{text-align:center;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:44px 20px;margin-bottom:14px}
+.daywon-big{font-family:var(--serif);font-size:42px;font-weight:700;color:var(--accent)}
+.daywon-sub{color:var(--muted);font-size:14px;margin-top:6px}
+.kudos{font-size:13px;color:var(--accent);font-weight:600;margin-top:8px}
 /* Serpentine flow: .flow stacks .frow (tiles + inline arrows) and .fdown (the
    turn arrow under a row's last tile). Both get the same grid-template-columns
    (set in JS from the live column count) so the ↓ lands in a real tile column. */
@@ -185,10 +234,16 @@ iframe{width:100%;height:calc(100vh - 150px);min-height:480px;border:1px solid v
   .tile{display:flex;align-items:baseline;gap:12px;padding:12px 16px}
   .tile .num{font-size:38px}
   .tile .tlabel{margin-top:0}
-  /* 1 column: no side arrows exist, the ↓ between tiles carries the flow. */
+  /* 1 column: no arrows at all — the run is short and the eye needs no map. */
   .flow{gap:8px}
-  .fa{font-size:20px}
+  .fa{display:none}
   iframe{height:calc(100vh - 170px)}
+  /* Thumb zone: bigger kill targets, add-row docked to the bottom where the
+     thumb lives, safe-area padded for the home indicator. */
+  .tick{width:44px;height:44px;min-width:44px;font-size:18px}
+  .addrow{position:fixed;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:40;box-shadow:0 -6px 24px rgba(44,44,42,.14);border-radius:16px;background:var(--bg);padding:8px}
+  .wrap{padding-bottom:110px}
+  .rm-card{padding:22px 18px}
 }
 </style>
 </head>
@@ -227,9 +282,9 @@ iframe{width:100%;height:calc(100vh - 150px);min-height:480px;border:1px solid v
 
   <div class="panel on" id="p-todo">
     <div class="tiles">
-      <div class="tile"><div class="num" id="tOpen">0</div><div class="tlabel">things to do today</div></div>
+      <div class="tile"><div class="num" id="tOpen">0</div><div class="tlabel">in today&rsquo;s run</div></div>
       <div class="tile t-green"><div class="num" id="tDone">0</div><div class="tlabel">crushed today</div></div>
-      <div class="tile t-gold"><div class="num" id="tMachine">0</div><div class="tlabel">from the machine</div></div>
+      <div class="tile t-gold"><div class="num" id="tMachine">0</div><div class="tlabel">need your word</div></div>
     </div>
     <div class="addrow">
       <input id="newTodo" placeholder="Add one thing to do...">
@@ -240,8 +295,31 @@ iframe{width:100%;height:calc(100vh - 150px);min-height:480px;border:1px solid v
       <button id="askBtn">Ask</button>
     </div>
     <div class="chips" id="chips"></div>
-    <div class="flowhead">The flow</div>
+    <div class="searchrow"><input id="boardSearch" placeholder="Search the whole board..." autocomplete="off"></div>
+    <div class="needword" id="needword"></div>
+    <div id="daywonWrap"></div>
+    <div class="runhead">
+      <div>
+        <div class="runtitle">Today&rsquo;s run</div>
+        <div class="runsub" id="runsub"></div>
+      </div>
+      <button class="runbtn" id="runIt">Run it &rarr;</button>
+    </div>
     <div class="flow" id="flow"></div>
+    <details class="fold" id="restFold">
+      <summary>
+        <span class="foldtitle">The rest of the board</span>
+        <span class="foldsub" id="restSub"></span>
+      </summary>
+      <div class="foldbody" id="restBody"></div>
+    </details>
+    <details class="fold" id="laterFold" style="margin-top:12px">
+      <summary>
+        <span class="foldtitle">Later &mdash; parked on purpose</span>
+        <span class="foldsub" id="laterSub"></span>
+      </summary>
+      <div class="foldbody" id="laterBody"></div>
+    </details>
     <div id="doneWrap"></div>
     <button class="clear" id="clearBtn">Clear finished items</button>
     <div class="empire">
@@ -292,6 +370,19 @@ iframe{width:100%;height:calc(100vh - 150px);min-height:480px;border:1px solid v
     <div class="linkrow">
       <a class="lbtn" href="http://localhost:3200" target="_blank" rel="noopener">Finance Command Center<span>opens only when running on your Mac</span></a>
       <a class="lbtn" href="http://localhost:3300" target="_blank" rel="noopener">APEX.AI<span>same</span></a>
+    </div>
+  </div>
+
+  <div id="runmode">
+    <button class="rm-exit" id="rmExit" aria-label="Exit run mode">&times;</button>
+    <div class="rm-kicker" id="rmKicker"></div>
+    <div class="rm-card">
+      <div class="rm-num" id="rmNum"></div>
+      <div class="rm-text" id="rmText"></div>
+      <div class="rm-actions">
+        <button class="rm-done" id="rmDone">Done. Next &rarr;</button>
+        <button class="rm-skip" id="rmSkip">Skip for now</button>
+      </div>
     </div>
   </div>
 
@@ -493,17 +584,42 @@ function answerBox(t) {
   return box;
 }
 
+/* A send-class verb is the verb that pays; those tiles wear the gold edge. */
+function isSendTile(t) { return /^(NutriDyn: )?(send|review and send|reply|text|blast)/i.test((t.text || '').trim()); }
+/* The machine asked and he has not answered: the board's highest-value taps. */
+function needsWord(t) { return t.source === 'loop' && !t.answer && /\?/.test(t.text || ''); }
+/* Headline = the first sentence; the rest folds behind one tap so a thorough
+   machine tile never reads as a wall (council 2026-08-11: collapse-to-headline). */
+function splitHead(text) {
+  var m = (text || '').match(/^[\s\S]{10,160}?[.!?](?=\s|$)/);
+  var head = m ? m[0] : (text || '').slice(0, 140);
+  return { head: head, rest: (text || '').slice(head.length).trim() };
+}
 function stepCard(t, n) {
   var isM = t.source === 'loop';
   var later = isLater(t);
   var a = areaOf(t);
   var heard = !!(t.answer && t.answer_seen_at);
-  var row = el('div', 'step' + (isM ? ' mstep' : '') + (later ? ' later' : '') + (heard ? ' heard' : ''));
+  var row = el('div', 'step' + (isM ? ' mstep' : '') + (later ? ' later' : '') + (heard ? ' heard' : '') + (isSendTile(t) ? ' sendtile' : ''));
   var num = el('div', 'stepnum', String(n));
   if (!isM && a && !later) num.style.background = a[2];
   var mid = el('div', 'steptxt');
   mid.appendChild(el('div', 'steplabel', isM ? 'From the machine' : (isQuestion(t) ? 'Your question' : (a ? a[1] : 'To do'))));
-  mid.appendChild(stepMain(t.text));
+  var parts = splitHead(t.text);
+  if (parts.rest) {
+    mid.appendChild(stepMainInto(el('div', 'headline'), parts.head));
+    var more = el('div', 'stepmore');
+    stepMainInto(more, parts.rest);
+    mid.appendChild(more);
+    var ex = el('button', 'expand', 'the whole story ▾');
+    ex.onclick = function () {
+      var open = row.classList.toggle('open');
+      ex.textContent = open ? 'less ▴' : 'the whole story ▾';
+    };
+    mid.appendChild(ex);
+  } else {
+    mid.appendChild(stepMain(t.text));
+  }
   mid.appendChild(answerBox(t));
   var tick = el('button', 'tick', '');
   tick.setAttribute('aria-label', 'Mark done');
@@ -518,6 +634,13 @@ function stepCard(t, n) {
   };
   row.appendChild(num); row.appendChild(mid); row.appendChild(tick); row.appendChild(del);
   return row;
+}
+/* stepMain writes into a fresh div; this variant writes the linkified text into
+   an existing node so headline and fold both keep their green Open buttons. */
+function stepMainInto(node, text) {
+  var built = stepMain(text);
+  while (built.firstChild) node.appendChild(built.firstChild);
+  return node;
 }
 
 function doneRow(t) {
@@ -599,25 +722,122 @@ function renderFlow(flow, ordered) {
   }
 }
 
+/* THE RUN SELECTOR (council 2026-08-11, bound by the NOTHING-IS-THROWN-AWAY law):
+   score every open tile, deal the top handful as today's winnable run, hold
+   everything else — sorted, searchable, counted honestly — one tap below.
+   NutriDyn revenue outranks all but legal/deadline (Asher: "blowing this out
+   the water"). */
+var RUN_SIZE = 7;
+function scoreTile(t) {
+  var s = 0, x = t.text || '';
+  if (t.source !== 'loop') s += 18;
+  if (/^(NutriDyn: )?(send|review and send|reply|answer|text|sign|pay|call|approve|decide)/i.test(x.trim())) s += 22;
+  if (/\b(today|tonight|this morning|this afternoon|by \d|deadline|before (thu|fri|mon|tue|wed|sat|sun|tomorrow))\b/i.test(x)) s += 30;
+  if (/\btomorrow\b/i.test(x)) s += 18;
+  if (/legal|IRS\b|lis pendens|tax sale|court|returned-payment|late mark/i.test(x)) s += 28;
+  if (t.area === 'nutridyn') s += 15;
+  if (isSendTile(t)) s += 10;
+  if (needsWord(t)) s += 12;
+  return s;
+}
+/* LATER tiles with a real date wake up on their day (council: "make LATER honest"). */
+var MONTHS = { jan:0,feb:1,mar:2,apr:3,may:4,jun:5,jul:6,aug:7,sep:8,oct:9,nov:10,dec:11 };
+function laterIsDue(t) {
+  var m = (t.text || '').match(/\b(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\.?\s+(\d{1,2})\b/i);
+  if (!m) return false;
+  var now = new Date();
+  var due = new Date(now.getFullYear(), MONTHS[m[1].toLowerCase().slice(0,3)], Number(m[2]));
+  if (due < now && (now - due) > 180 * 86400000) due.setFullYear(due.getFullYear() + 1);
+  return due <= now;
+}
+var searchTerm = '';
+function restRow(t) {
+  var row = el('div', 'rrow' + (t.source === 'loop' ? ' mrow' : ''));
+  var tick = el('button', 'tick mini', '');
+  tick.setAttribute('aria-label', 'Mark done');
+  tick.style.background = 'none';
+  tick.onclick = function (e) {
+    burst(e.clientX || window.innerWidth / 2, e.clientY || 200);
+    api('todos/' + t.id, { method: 'PATCH', body: JSON.stringify({ done: true }) }).then(loadTodos);
+  };
+  var mid = el('div', 'rtxt');
+  mid.appendChild(el('div', 'rlabel', t.source === 'loop' ? 'machine' : (areaOf(t) ? areaOf(t)[1] : 'to do')));
+  stepMainInto(mid, splitHead(t.text).head);
+  mid.onclick = function () { mid.innerHTML = ''; stepMainInto(mid, t.text); };
+  row.appendChild(tick); row.appendChild(mid);
+  return row;
+}
 function renderTodos() {
   var open = todos.filter(function (t) { return !t.done; });
   var doneL = todos.filter(function (t) { return t.done; });
-  var mOpen = open.filter(function (t) { return t.source === 'loop'; });
-  var meOpen = open.filter(function (t) { return t.source !== 'loop'; });
-  document.getElementById('tOpen').textContent = open.length;
+  var q = searchTerm.toLowerCase();
+  if (q) open = open.filter(function (t) { return (t.text || '').toLowerCase().indexOf(q) >= 0; });
+
+  var later = open.filter(function (t) { return isLater(t) && !laterIsDue(t); });
+  var pool = open.filter(function (t) { return !isLater(t) || laterIsDue(t); })
+    .sort(function (a, b) { return scoreTile(b) - scoreTile(a); });
+  var run = pool.slice(0, RUN_SIZE);
+  var rest = pool.slice(RUN_SIZE);
+  var word = open.filter(needsWord);
+
+  document.getElementById('tOpen').textContent = run.length;
   document.getElementById('tDone').textContent = doneL.length;
-  document.getElementById('tMachine').textContent = mOpen.length;
+  document.getElementById('tMachine').textContent = word.length;
+
+  // Need-your-word strip: one tap scrolls to the tile that is waiting on him.
+  var nw = document.getElementById('needword');
+  nw.innerHTML = '';
+  word.slice(0, 4).forEach(function (t) {
+    var c = el('button', 'nw-chip', '❓ ' + splitHead(t.text).head.slice(0, 60));
+    c.onclick = function () {
+      var target = document.querySelector('[data-tid="' + t.id + '"]');
+      if (target) { target.scrollIntoView({ behavior: 'smooth', block: 'center' }); target.classList.add('popping'); }
+    };
+    nw.appendChild(c);
+  });
+
+  document.getElementById('runsub').textContent = run.length
+    ? run.filter(isSendTile).length + ' of these are money. Finish ' + run.length + ' and the day is won.'
+    : '';
+  runList = run;
+
   var flow = document.getElementById('flow');
   flow.innerHTML = '';
-  var ordered = mOpen.concat(meOpen);
-  if (!ordered.length) {
-    var em = el('div', 'allclear');
-    em.appendChild(el('div', 'allclear-big', doneL.length ? 'All crushed.' : 'The board is clear.'));
-    em.appendChild(el('div', 'allclear-sub', 'Add one thing above and go.'));
-    flow.appendChild(em);
+  var dwWrap = document.getElementById('daywonWrap');
+  dwWrap.innerHTML = '';
+  if (!run.length && !q) {
+    var won = el('div', 'daywon');
+    won.appendChild(el('div', 'daywon-big', doneL.length ? 'DAY WON.' : 'The board is clear.'));
+    won.appendChild(el('div', 'daywon-sub', doneL.length
+      ? doneL.length + ' crushed. ' + (rest.length ? 'The machine holds ' + rest.length + ' for their day — none lost.' : 'Nothing is waiting.')
+      : 'Add one thing above and go.'));
+    dwWrap.appendChild(won);
+    var today = new Date().toDateString();
+    if (doneL.length && localStorage.getItem('mc_won') !== today) {
+      localStorage.setItem('mc_won', today);
+      burst(window.innerWidth / 2, 220);
+    }
+    document.getElementById('runIt').style.display = 'none';
   } else {
-    renderFlow(flow, ordered);
+    document.getElementById('runIt').style.display = run.length ? 'inline-block' : 'none';
+    renderFlow(flow, run);
+    flow.querySelectorAll('.step').forEach(function (n, i) { if (run[i]) n.setAttribute('data-tid', run[i].id); });
   }
+
+  var rb = document.getElementById('restBody');
+  rb.innerHTML = '';
+  rest.forEach(function (t) { rb.appendChild(restRow(t)); });
+  document.getElementById('restSub').textContent = rest.length
+    ? rest.length + ' held safe — sorted, nothing lost' : 'empty';
+  document.getElementById('restFold').style.display = rest.length || q ? 'block' : 'none';
+  if (q) document.getElementById('restFold').setAttribute('open', '');
+
+  var lb = document.getElementById('laterBody');
+  lb.innerHTML = '';
+  later.forEach(function (t) { lb.appendChild(restRow(t)); });
+  document.getElementById('laterSub').textContent = later.length ? later.length + ' waiting for their day' : 'empty';
+  document.getElementById('laterFold').style.display = later.length ? 'block' : 'none';
+
   var dw = document.getElementById('doneWrap');
   dw.innerHTML = '';
   if (doneL.length) {
@@ -626,6 +846,29 @@ function renderTodos() {
   }
   document.getElementById('clearBtn').style.display = doneL.length ? 'inline-block' : 'none';
   renderProgress();
+}
+
+/* RUN MODE: the game he asked for — one card, one decision, next. */
+var runList = [], runIdx = 0;
+function showRunCard() {
+  var rm = document.getElementById('runmode');
+  var live = runList.filter(function (t) { return !t.done; });
+  if (runIdx >= live.length) { rm.classList.remove('on'); loadTodos(); return; }
+  var t = live[runIdx];
+  rm.classList.add('on');
+  document.getElementById('rmKicker').textContent = 'TODAY’S RUN';
+  document.getElementById('rmNum').textContent = (runIdx + 1) + ' of ' + live.length + (isSendTile(t) ? '  ·  money move' : '');
+  var body = document.getElementById('rmText');
+  body.innerHTML = '';
+  stepMainInto(body, t.text);
+  document.getElementById('rmDone').onclick = function (e) {
+    burst(e.clientX || window.innerWidth / 2, e.clientY || 300);
+    api('todos/' + t.id, { method: 'PATCH', body: JSON.stringify({ done: true }) }).then(function () {
+      t.done = true;
+      showRunCard();
+    });
+  };
+  document.getElementById('rmSkip').onclick = function () { runIdx++; showRunCard(); };
 }
 
 function loadTodos() {
@@ -969,6 +1212,15 @@ document.getElementById('askBtn').onclick = askMachine;
 document.getElementById('newAsk').addEventListener('keydown', function (e) {
   if (e.key === 'Enter') askMachine();
 });
+document.getElementById('boardSearch').addEventListener('input', function (e) {
+  searchTerm = e.target.value.trim();
+  renderTodos();
+});
+document.getElementById('runIt').onclick = function () { runIdx = 0; showRunCard(); };
+document.getElementById('rmExit').onclick = function () {
+  document.getElementById('runmode').classList.remove('on');
+  loadTodos();
+};
 document.getElementById('clearBtn').onclick = function () {
   api('todos', { method: 'DELETE' }).then(loadTodos);
 };
