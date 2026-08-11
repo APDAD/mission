@@ -177,3 +177,40 @@ it there for me to press send?"). An `sms:+1NUMBER&body=<urlencoded>` link opens
 whole message already typed, so the only gesture left is Send — which is the press-send button he
 asked for WITHOUT the machine ever typing into a text thread. Render it with NO `target=_blank`
 (iOS needs the same-tab hand-off) and label it Text; `tel:` labels Call.
+
+- A PROXY REPRODUCES THE MEASUREMENT AND DELETES THE QUESTION — AND THE SECOND BROWSER SURFACE WAS
+  NEVER TESTED (added 2026-08-11 by mission-answer-reader, empty queue, finishing the check the
+  15:45 fire honestly said it could not finish). That fire shipped the button hoist, found that
+  claude-in-chrome's `resize_window` REPORTS SUCCESS AND DOES NOT MOVE THE VIEWPORT (innerWidth
+  stayed 1501 at two widths, a real control), correctly refused to claim a phone pass, and fell back
+  to a labelled proxy: 390px CARD WIDTH on a desktop viewport. It reported 4 buttons, none zero-box,
+  0px overflow. All true, and it missed the defect entirely.
+  THIS SESSION HAS A SECOND BROWSER. `mcp__Claude_Browser__resize_window preset:mobile` really
+  emulates: verified 375x812, Android UA, maxTouchPoints 5, `(pointer:coarse)` TRUE and
+  `(pointer:fine)` FALSE. One tool was blind and the other was not, and no run had enumerated the
+  surfaces before pleading the limit. FOUR NEGATIVE READERS IS NOT AN EXHAUSTED INVENTORY, applied
+  to TOOL SURFACES rather than to mail channels or python packages — third shape, same law.
+  WHAT THE PROXY COULD NOT SEE, and this is the part that generalizes. At 375px real, every hoisted
+  headline button measured 45x21 and the .hint links 16px tall, against a 44px minimum. The proxy
+  measured THE SAME PIXELS — 45x21 is 45x21 at any window size — so it was not that the proxy got a
+  wrong number. IT GOT THE RIGHT NUMBER AND NOBODY ASKED WHETHER IT WAS A THUMB TARGET, because on a
+  desktop viewport a mouse hits 21px perfectly and the question never forms. A PROXY DOES NOT WEAKEN
+  A CHECK, IT NARROWS THE QUESTION SET, silently, and the checks that survive all pass — which is
+  why the proxy run reported clean. Sibling of A DETECTOR THAT CANNOT FIRE (there the sensor is dead,
+  here the sensor is fine and the QUESTION is missing) and of A LIVE BUTTON IS NOT A CORRECT BUTTON
+  (liveness, aim, and now ERGONOMICS are three different properties of one anchor).
+  THE COST WAS THE WHOLE POINT OF THE FEATURE: the hoist put a button on 76 tiles that morning
+  precisely so THE PRE-DECIDED LAW's one irreducible gesture would always be reachable, and that
+  gesture was 21px tall on the phone he reads the board from. The machine did everything on both
+  sides of the click and then made the click hard.
+  THE RULE: (1) before pleading that a viewport, a device or a rendering cannot be checked, enumerate
+  the browser surfaces this session actually has and try each — name them out loud, per "any inbox I
+  can read" is an inventory claim; (2) a proxy measurement may never close a check whose subject is
+  the real device — say what the proxy cannot ask, not just what it could not measure; (3) verify any
+  responsive fix with a control that MUST disagree (here 1280px/pointer:fine still renders 45x21 and
+  16px, proving the rule is scoped and his Mac is untouched — a mobile-only pass would have proven
+  only that CSS loaded).
+  MECHANIC, verified live: an inline `cssText` beats every stylesheet rule, so the phone fix was
+  literally unreachable while linkBtn styled itself inline; moving it to a `.gobtn` class was the
+  precondition for the media query. `display:inline-flex;align-items:center;min-height:44px` gives a
+  full 44px target while staying in the text flow, which padding alone cannot do at 12px.
