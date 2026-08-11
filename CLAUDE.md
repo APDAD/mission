@@ -83,10 +83,20 @@ Base: $MISSION_API from ~/nutridyn-territory/dashboard-feed/mission.env, header 
 - Atelier brand only: paper #F1EFE8, card #FBFAF6, ink #2C2C2A, green #1D9E75, gold #EF9F27,
   Cormorant Garamond + Inter. Never dark/generic SaaS. Fun and alive: hover lifts, the
   animated hero gradient, CONFETTI on todo completion (inline canvas, no libraries).
-- TODAY tab is the default and the heart: hero (greeting + progress bar + THE REFRESH),
-  3 big count tiles, then THE SERPENTINE SNAKE: numbered tiles, 3/2/1 columns by viewport,
-  direction alternates per row with gold arrows, turn arrow under each row's last tile,
-  numbers always true order. Tiles starting "FRIDAY ONLY."/"LATER." render muted. Below the
+- TODAY tab is the default and the heart (COUNCIL REBUILD 2026-08-11, 9-agent review, 31/32
+  proposals survived adversarial verification): hero (greeting + progress + THE REFRESH),
+  3 HONEST counts (in today's run / crushed / need your word — never a scare-count), add+ask
+  rows, search, the NEED-YOUR-WORD chip strip, then TODAY'S RUN: the top ~7 tiles by
+  client-side score (deadline words, action verbs, NutriDyn revenue weighting per his
+  "blowing this out the water" order, legal/deadline overrides) rendered as THE SERPENTINE
+  SNAKE (numbered, gold arrows, send-class tiles wear a gold left edge), with a RUN IT
+  focus mode dealing one card at a time (Done/Skip). Below the run: THE REST OF THE BOARD, a
+  counted, sorted, searchable fold ("N held safe — nothing lost", the NOTHING-IS-THROWN-AWAY
+  law in UI form) and the LATER drawer whose tiles auto-wake when a date in their text
+  arrives. Long tiles collapse to their first sentence with "the whole story" one tap away —
+  loops write headlines that stand alone. When the run empties: DAY WON end-state, one
+  confetti per day, with the honest held-safe count. Tiles starting "FRIDAY ONLY."/"LATER."
+  render muted inside their drawer. Below the
   snake: THE EMPIRE STRIP (2026-08-03, Asher: "whatever is in SPC, financial, card benefits,
   NutriDyn, the map, radar — it needs to be on TODAY in some way or form; that's my source
   of truth") — six cards (NutriDyn/Radar/Map/Finances/Card benefits/SPC) showing live digest
@@ -120,6 +130,11 @@ Base: $MISSION_API from ~/nutridyn-territory/dashboard-feed/mission.env, header 
   warnings were PATCHed onto bad-citation tiles, returned 200, and never appeared on his board,
   while he was told they had. NEVER report a board change you have not re-read back from
   GET /api/todos. A 200 from this API is not proof.
+- TILE LENGTH: the API truncates todo text at 2000 chars (raised from 500 on 2026-08-06,
+  Edge Function v5, after the 500 cap chopped a bill-watch tile mid-word on Asher's screen
+  and a sweep found four more victims — silently, at exactly 500, no error). Discipline
+  unchanged: a tile is ONE ACTION AND A LINK; long detail belongs in a draft or page. After
+  posting, re-read and check len(text) — the cap is still silent, just far away now.
 - Tab panels fill the viewport (iframes calc(100vh - 150px)). Mobile 375px must stack clean
   with zero horizontal scroll. SPC cannot be iframed (their login blocks it); honest button.
 - The page must keep working inside nothing (it IS the top page) and its child iframes get
@@ -134,3 +149,14 @@ todo state via the API). A broken page push blanks his whole dashboard; validate
 Loops in ~/.claude/scheduled-tasks/ push pages and tiles (see ~/nutridyn-territory/CLAUDE.md
 for the Board Law, Heartbeat Law, and truth hierarchy). The Board Truth Sweep deletes tiles
 whose Gmail action provably happened. Day-close (1:45pm) stages tomorrow.
+
+## KEEP THE PUBLISHED INSTRUCTIONS HONEST TOO (2026-08-10, mission-answer-reader)
+A page here does not only MIRROR things, it INSTRUCTS him, and nothing audits those sentences.
+peptide-seminar/campaign.html told him to count the room by searching his inbox for "SEAT
+REQUEST" — twice, once as a gate on a doctor-facing blast. The register form POSTs to the
+Supabase registration list and emails him NOTHING; that subject exists only on the page's mailto
+fallback, which no real registrant has ever used. The instruction returned ZERO while two people
+were registered. RULE: every imperative sentence on a page here (count / search / check / reply
+to) is a detector, and it must be tested against the instrument before it ships and whenever the
+page is touched. Naming a channel is a claim. Also: `grep` over raw HTML counterfeits absence
+(`&nbsp;` inside a tag hides the phrase) — strip tags and unescape before searching a page.
