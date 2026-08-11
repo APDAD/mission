@@ -499,6 +499,17 @@ function areaOf(t) {
   return null;
 }
 
+function linkBtn(url) {
+  var a = document.createElement('a');
+  a.href = url;
+  if (url.indexOf('sms:') !== 0 && url.indexOf('tel:') !== 0) { a.target = '_blank'; }
+  a.rel = 'noopener';
+  a.title = url;
+  a.textContent = url.indexOf('sms:') === 0 ? 'Text' : url.indexOf('tel:') === 0 ? 'Call' : 'Open';
+  a.style.cssText = 'display:inline-block;background:var(--accent);color:#fff;border-radius:8px;padding:2px 10px;font-size:12px;font-weight:600;text-decoration:none;vertical-align:1px;margin:0 2px';
+  return a;
+}
+
 function stepMain(text) {
   var d = el('div', 'stepmain');
   /* sms: and tel: are buttons too (2026-08-11, his order on the Chris Maier tile: "cant you
@@ -509,14 +520,7 @@ function stepMain(text) {
   while ((m = re.exec(text))) {
     var url = m[0].replace(/[.,;:!?)"'\]]+$/, '');
     d.appendChild(document.createTextNode(text.slice(last, m.index)));
-    var a = document.createElement('a');
-    a.href = url;
-    if (url.indexOf('sms:') !== 0 && url.indexOf('tel:') !== 0) { a.target = '_blank'; }
-    a.rel = 'noopener';
-    a.title = url;
-    a.textContent = url.indexOf('sms:') === 0 ? 'Text' : url.indexOf('tel:') === 0 ? 'Call' : 'Open';
-    a.style.cssText = 'display:inline-block;background:var(--accent);color:#fff;border-radius:8px;padding:2px 10px;font-size:12px;font-weight:600;text-decoration:none;vertical-align:1px;margin:0 2px';
-    d.appendChild(a);
+    d.appendChild(linkBtn(url));
     last = m.index + url.length;
   }
   d.appendChild(document.createTextNode(text.slice(last)));
@@ -611,7 +615,13 @@ function stepCard(t, n) {
   mid.appendChild(el('div', 'steplabel', isM ? 'From the machine' : (isQuestion(t) ? 'Your question' : (a ? a[1] : 'To do'))));
   var parts = splitHead(t.text);
   if (parts.rest) {
-    mid.appendChild(stepMainInto(el('div', 'headline'), parts.head));
+    var hl = stepMainInto(el('div', 'headline'), parts.head);
+    /* A press-send button NEVER hides behind the fold (2026-08-11). The headline is
+       capped at 160 chars and an sms: link carrying a whole message is far longer, so
+       without this hoist the one gesture he asked for sits one tap out of sight. */
+    var pressUrl = (parts.rest.match(/(?:sms:|tel:)[^\s]+/) || [])[0];
+    if (pressUrl && parts.head.indexOf(pressUrl) < 0) { hl.appendChild(linkBtn(pressUrl)); }
+    mid.appendChild(hl);
     var more = el('div', 'stepmore');
     stepMainInto(more, parts.rest);
     mid.appendChild(more);
