@@ -616,10 +616,14 @@ function stepCard(t, n) {
   var parts = splitHead(t.text);
   if (parts.rest) {
     var hl = stepMainInto(el('div', 'headline'), parts.head);
-    /* A press-send button NEVER hides behind the fold (2026-08-11). The headline is
-       capped at 160 chars and an sms: link carrying a whole message is far longer, so
-       without this hoist the one gesture he asked for sits one tap out of sight. */
-    var pressUrl = (parts.rest.match(/(?:sms:|tel:)[^\s]+/) || [])[0];
+    /* THE BUTTON NEVER HIDES BEHIND THE FOLD (2026-08-11). The headline is capped at
+       160 chars, so on any thorough tile the link lands in .stepmore, which is
+       display:none until he taps "the whole story". Measured the day the fold shipped:
+       75 of 121 open tiles had their ONLY button out of sight, which quietly guts THE
+       PRE-DECIDED LAW — every tile is a button, and a button one tap away is not one.
+       Hoist the first link of any scheme up into the headline. */
+    var pressUrl = (parts.rest.match(/(?:https?:\/\/|sms:|tel:)[^\s]+/) || [])[0];
+    if (pressUrl) { pressUrl = pressUrl.replace(/[.,;:!?)"'\]]+$/, ''); }
     if (pressUrl && parts.head.indexOf(pressUrl) < 0) { hl.appendChild(linkBtn(pressUrl)); }
     mid.appendChild(hl);
     var more = el('div', 'stepmore');
