@@ -160,3 +160,20 @@ were registered. RULE: every imperative sentence on a page here (count / search 
 to) is a detector, and it must be tested against the instrument before it ships and whenever the
 page is touched. Naming a channel is a claim. Also: `grep` over raw HTML counterfeits absence
 (`&nbsp;` inside a tag hides the phrase) — strip tags and unescape before searching a page.
+
+## A FOLD IS A FILTER, AND A BUTTON BEHIND ONE IS NOT A BUTTON (2026-08-11, mission-answer-reader)
+The collapse-to-headline fold shipped the same day it was measured, and on its first audit
+**75 of 121 open tiles had their ONLY button inside `.stepmore`, which is `display:none`** until
+he taps "the whole story". Every one of those tiles read as compliant with THE PRE-DECIDED LAW —
+the link was in the text, the deep link was live, the sweeps that regex tile text all passed —
+and the gesture he actually has to make was one tap out of sight. A renderer silently bounds what
+a tile can ASK FOR, and no check that reads tile TEXT can see that boundary.
+FIXED: `stepCard` hoists the first link of any scheme (`https?:`, `sms:`, `tel:`) up into the
+headline. THE RULE: any change to how a tile renders must be re-checked against the question "can
+he still reach the one gesture without opening anything", measured on the live board, not reasoned
+about. Count buttons that have a non-zero bounding box, never buttons that exist in the DOM.
+SMS AND TEL ARE FIRST-CLASS (his order, 2026-08-11: "cant you add this to his text and just have
+it there for me to press send?"). An `sms:+1NUMBER&body=<urlencoded>` link opens Messages with the
+whole message already typed, so the only gesture left is Send — which is the press-send button he
+asked for WITHOUT the machine ever typing into a text thread. Render it with NO `target=_blank`
+(iOS needs the same-tab hand-off) and label it Text; `tel:` labels Call.
