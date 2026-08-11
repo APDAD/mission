@@ -501,16 +501,20 @@ function areaOf(t) {
 
 function stepMain(text) {
   var d = el('div', 'stepmain');
-  var re = /https?:\/\/[^\s]+/g, last = 0, m;
+  /* sms: and tel: are buttons too (2026-08-11, his order on the Chris Maier tile: "cant you
+     add this to his text and just have it there for me to press send?"). An sms: link with a
+     body opens Messages on his iPhone with the whole message already typed, so the only
+     gesture left is Send — the machine never types into a thread. */
+  var re = /(?:https?:\/\/|sms:|tel:)[^\s]+/g, last = 0, m;
   while ((m = re.exec(text))) {
     var url = m[0].replace(/[.,;:!?)"'\]]+$/, '');
     d.appendChild(document.createTextNode(text.slice(last, m.index)));
     var a = document.createElement('a');
     a.href = url;
-    a.target = '_blank';
+    if (url.indexOf('sms:') !== 0 && url.indexOf('tel:') !== 0) { a.target = '_blank'; }
     a.rel = 'noopener';
     a.title = url;
-    a.textContent = 'Open';
+    a.textContent = url.indexOf('sms:') === 0 ? 'Text' : url.indexOf('tel:') === 0 ? 'Call' : 'Open';
     a.style.cssText = 'display:inline-block;background:var(--accent);color:#fff;border-radius:8px;padding:2px 10px;font-size:12px;font-weight:600;text-decoration:none;vertical-align:1px;margin:0 2px';
     d.appendChild(a);
     last = m.index + url.length;
