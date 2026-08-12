@@ -82,6 +82,15 @@ h1{font-family:var(--serif);font-size:clamp(34px,3.4vw,50px);font-weight:600;lin
 .step .expand{border:0;background:none;color:var(--accent);font-size:12px;font-weight:600;cursor:pointer;padding:2px 0;font-family:var(--sans)}
 /* Gold sends: the verb that pays gets the warm edge. */
 .step.sendtile{border-left:5px solid var(--gold)}
+/* Long machine tiles render as a scannable brief, never a wall (Asher 2026-08-12:
+   "all that mumble jumbo... make it easier and more fun to read"). */
+.tbul{list-style:none;margin:6px 0 0;padding:0}
+.tbul li{position:relative;padding:5px 0 5px 18px;font-size:14px;line-height:1.5;overflow-wrap:anywhere;border-top:1px dashed rgba(227,224,213,.7)}
+.tbul li:first-child{border-top:0}
+.tbul li:before{content:'';position:absolute;left:2px;top:13px;width:7px;height:7px;border-radius:50%;background:var(--gold)}
+.tbul li strong{font-weight:600;color:var(--ink)}
+.runmeter{font-size:13px;color:var(--muted);margin-top:8px}
+.runmeter b{color:var(--accent);font-weight:700}
 /* The rest of the board: compact held-safe rows inside a fold. */
 .fold{margin-top:26px;border:1px dashed var(--line);border-radius:16px;background:var(--card)}
 .fold summary{list-style:none;cursor:pointer;padding:16px 20px;display:flex;align-items:baseline;justify-content:space-between;gap:10px}
@@ -667,7 +676,7 @@ function stepCard(t, n) {
     if (pressUrl && parts.head.indexOf(pressUrl) < 0) { hl.appendChild(linkBtn(pressUrl)); }
     mid.appendChild(hl);
     var more = el('div', 'stepmore');
-    stepMainInto(more, parts.rest);
+    renderRich(more, parts.rest);
     mid.appendChild(more);
     var ex = el('button', 'expand', 'the whole story ▾');
     ex.onclick = function () {
@@ -698,6 +707,39 @@ function stepCard(t, n) {
 function stepMainInto(node, text) {
   var built = stepMain(text);
   while (built.firstChild) node.appendChild(built.firstChild);
+  return node;
+}
+/* THE BRIEF RENDERER (Asher 2026-08-12): long text becomes bullets. Loops can
+   mark real bullets with "•" or " | "; anything else long gets sentence-split.
+   A CAPS lead-in ("STRICKLAND:", "SEND AS IS:") becomes the bullet's bold head. */
+function renderRich(node, text) {
+  var parts;
+  if (text.indexOf('•') >= 0) parts = text.split('•');
+  else if (text.indexOf(' | ') >= 0) parts = text.split(' | ');
+  else if (text.length > 240) {
+    parts = [];
+    var sentences = text.match(/[^.!?]+[.!?]+(?:\s|$)|[^.!?]+$/g) || [text];
+    var cur = '';
+    sentences.forEach(function (s) {
+      var capsLead = /^\s*[A-Z][A-Z0-9 .'&-]{2,}[:,]/.test(s);
+      if (cur && (capsLead || (cur + s).length > 150)) { parts.push(cur); cur = s; }
+      else cur += s;
+    });
+    if (cur) parts.push(cur);
+  } else return stepMainInto(node, text);
+  parts = parts.map(function (p) { return p.trim(); }).filter(Boolean);
+  if (parts.length < 2) return stepMainInto(node, text);
+  var ul = el('ul', 'tbul');
+  parts.forEach(function (p) {
+    var li = document.createElement('li');
+    var m = p.match(/^([A-Z][A-Z0-9 .'&-]{2,}[:,])\s*([\s\S]*)$/);
+    if (m) {
+      li.appendChild(el('strong', '', m[1].replace(/[:,]$/, '') + ' — '));
+      stepMainInto(li, m[2]);
+    } else stepMainInto(li, p);
+    ul.appendChild(li);
+  });
+  node.appendChild(ul);
   return node;
 }
 
@@ -821,7 +863,7 @@ function restRow(t) {
   var mid = el('div', 'rtxt');
   mid.appendChild(el('div', 'rlabel', t.source === 'loop' ? 'machine' : (areaOf(t) ? areaOf(t)[1] : 'to do')));
   stepMainInto(mid, splitHead(t.text).head);
-  mid.onclick = function () { mid.innerHTML = ''; stepMainInto(mid, t.text); };
+  mid.onclick = function () { mid.innerHTML = ''; renderRich(mid, t.text); };
   row.appendChild(tick); row.appendChild(mid);
   return row;
 }
@@ -829,18 +871,43 @@ function renderTodos() {
   var open = todos.filter(function (t) { return !t.done; });
   var doneL = todos.filter(function (t) { return t.done; });
   var q = searchTerm.toLowerCase();
-  if (q) open = open.filter(function (t) { return (t.text || '').toLowerCase().indexOf(q) >= 0; });
-
   var later = open.filter(function (t) { return isLater(t) && !laterIsDue(t); });
   var pool = open.filter(function (t) { return !isLater(t) || laterIsDue(t); })
     .sort(function (a, b) { return scoreTile(b) - scoreTile(a); });
-  var run = pool.slice(0, RUN_SIZE);
-  var rest = pool.slice(RUN_SIZE);
+
+  /* THE DEALT RUN (Asher 2026-08-12: "seven in today's run... it doesn't change...
+     it should say how much did you do today and make me feel good about it").
+     The run is dealt ONCE per day and counts DOWN as he kills it. Finishing the
+     deal wins the day even while the machine still holds the rest. Only a real
+     emergency (score >= 65) deals itself in late — visibly, never silently. */
+  var dealKey = 'mc_run_' + new Date().toDateString();
+  var dealt = [];
+  try { dealt = JSON.parse(localStorage.getItem(dealKey) || '[]'); } catch (e) { dealt = []; }
+  if (!dealt.length) {
+    dealt = pool.slice(0, RUN_SIZE).map(function (t) { return t.id; });
+  } else {
+    pool.forEach(function (t) {
+      if (dealt.indexOf(t.id) < 0 && scoreTile(t) >= 65) dealt.push(t.id);
+    });
+  }
+  if (dealt.length) localStorage.setItem(dealKey, JSON.stringify(dealt));
+  var dealtSet = {};
+  dealt.forEach(function (id) { dealtSet[id] = 1; });
+  var run = pool.filter(function (t) { return dealtSet[t.id]; });
+  var rest = pool.filter(function (t) { return !dealtSet[t.id]; });
+  var killed = dealt.length - run.length;
+  window._runStat = { dealt: dealt.length, left: run.length, killed: killed };
   var word = open.filter(needsWord);
 
   document.getElementById('tOpen').textContent = run.length;
   document.getElementById('tDone').textContent = doneL.length;
   document.getElementById('tMachine').textContent = word.length;
+
+  // Search filters what renders, never what counts.
+  if (q) {
+    var matches = function (t) { return (t.text || '').toLowerCase().indexOf(q) >= 0; };
+    run = run.filter(matches); rest = rest.filter(matches); later = later.filter(matches);
+  }
 
   // Need-your-word strip: one tap scrolls to the tile that is waiting on him.
   var nw = document.getElementById('needword');
@@ -854,9 +921,14 @@ function renderTodos() {
     nw.appendChild(c);
   });
 
-  document.getElementById('runsub').textContent = run.length
-    ? run.filter(isSendTile).length + ' of these are money. Finish ' + run.length + ' and the day is won.'
-    : '';
+  /* The countdown talks back: progress first, praise that scales, never guilt. */
+  var money = run.filter(isSendTile).length;
+  var praise = killed >= 6 ? ' Unstoppable.' : killed >= 3 ? ' You are cooking.' : killed >= 1 ? ' Rolling.' : '';
+  document.getElementById('runsub').textContent =
+    run.length === 0 ? '' :
+    killed > 0
+      ? killed + ' down, ' + run.length + ' to go.' + (money ? ' ' + money + ' of the rest are money.' : '') + praise
+      : run.length + ' dealt. ' + money + ' are money. Finish them and the day is WON.';
   runList = run;
 
   var flow = document.getElementById('flow');
@@ -865,13 +937,13 @@ function renderTodos() {
   dwWrap.innerHTML = '';
   if (!run.length && !q) {
     var won = el('div', 'daywon');
-    won.appendChild(el('div', 'daywon-big', doneL.length ? 'DAY WON.' : 'The board is clear.'));
-    won.appendChild(el('div', 'daywon-sub', doneL.length
-      ? doneL.length + ' crushed. ' + (rest.length ? 'The machine holds ' + rest.length + ' for their day — none lost.' : 'Nothing is waiting.')
+    won.appendChild(el('div', 'daywon-big', killed > 0 ? 'DAY WON.' : 'The board is clear.'));
+    won.appendChild(el('div', 'daywon-sub', killed > 0
+      ? 'You crushed all ' + killed + ' dealt today.' + (rest.length ? ' The machine holds ' + rest.length + ' for their day — none lost.' : ' Nothing is waiting.')
       : 'Add one thing above and go.'));
     dwWrap.appendChild(won);
     var today = new Date().toDateString();
-    if (doneL.length && localStorage.getItem('mc_won') !== today) {
+    if (killed > 0 && localStorage.getItem('mc_won') !== today) {
       localStorage.setItem('mc_won', today);
       burst(window.innerWidth / 2, 220);
     }
@@ -918,7 +990,7 @@ function showRunCard() {
   document.getElementById('rmNum').textContent = (runIdx + 1) + ' of ' + live.length + (isSendTile(t) ? '  ·  money move' : '');
   var body = document.getElementById('rmText');
   body.innerHTML = '';
-  stepMainInto(body, t.text);
+  renderRich(body, t.text);
   document.getElementById('rmDone').onclick = function (e) {
     burst(e.clientX || window.innerWidth / 2, e.clientY || 300);
     api('todos/' + t.id, { method: 'PATCH', body: JSON.stringify({ done: true }) }).then(function () {
@@ -1205,13 +1277,15 @@ function greet() {
   var day = Math.floor(Date.now() / 86400000);
   document.getElementById('greet').textContent = part + ', Asher. ' + GREETS[day % GREETS.length];
 }
+/* The hero bar measures THE RUN, not the ocean: it fills as the deal empties,
+   so it can actually reach full (Asher 2026-08-12: the old global bar never
+   moved against 100+ held tiles and read as failure). */
 function renderProgress() {
-  var open = todos.filter(function (t) { return !t.done && !isLater(t); }).length;
-  var done = todos.filter(function (t) { return t.done; }).length;
+  var s = window._runStat || { dealt: 0, killed: 0 };
   var wrap = document.getElementById('prog');
-  if (open + done === 0) { wrap.style.display = 'none'; return; }
+  if (!s.dealt) { wrap.style.display = 'none'; return; }
   wrap.style.display = 'block';
-  document.getElementById('progBar').style.width = Math.round(done / (open + done) * 100) + '%';
+  document.getElementById('progBar').style.width = Math.round(s.killed / s.dealt * 100) + '%';
 }
 
 function showGate() {
