@@ -94,8 +94,20 @@ Base: $MISSION_API from ~/nutridyn-territory/dashboard-feed/mission.env, header 
   counted, sorted, searchable fold ("N held safe — nothing lost", the NOTHING-IS-THROWN-AWAY
   law in UI form) and the LATER drawer whose tiles auto-wake when a date in their text
   arrives. Long tiles collapse to their first sentence with "the whole story" one tap away —
-  loops write headlines that stand alone. When the run empties: DAY WON end-state, one
-  confetti per day, with the honest held-safe count. Tiles starting "FRIDAY ONLY."/"LATER."
+  loops write headlines that stand alone. THE RUN IS DEALT, NOT REFILLED
+  (Asher 2026-08-12: "seven in today's run... it doesn't change... make me feel good"):
+  the run is dealt ONCE per day (localStorage, date-keyed ids) and COUNTS DOWN as he kills
+  it; the hero bar measures the run, not the ocean, so it can reach full; only a score>=65
+  emergency deals itself in late. The countdown talks back ("N down, M to go") with a praise
+  ladder that celebrates and never guilts (Rolling / You are cooking / Unstoppable). When
+  the DEAL empties: DAY WON end-state ("You crushed all N dealt today"), one confetti per
+  day, honest held-safe count — winning the day never requires emptying the ocean.
+  THE BRIEF RENDERER (same day, "all that mumble jumbo"): any long tile body renders as
+  gold-dot bullets — loops can mark real bullets with "•" or " | "; otherwise sentences
+  group into bullets and a CAPS lead-in ("STRICKLAND:") becomes the bullet's bold head.
+  URLs are shielded (\x01-fenced) from the sentence splitter so Open buttons never split at
+  their dots — caught live 2026-08-12 when com#drafts fragments leaked as text. Note the
+  shell caches: a JS change reaches his phone on next app relaunch, not on data refresh. Tiles starting "FRIDAY ONLY."/"LATER."
   render muted inside their drawer. Below the
   snake: THE EMPIRE STRIP (2026-08-03, Asher: "whatever is in SPC, financial, card benefits,
   NutriDyn, the map, radar — it needs to be on TODAY in some way or form; that's my source
