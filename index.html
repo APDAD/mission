@@ -299,6 +299,7 @@ iframe{width:100%;height:calc(100vh - 150px);min-height:480px;border:1px solid v
     <button class="tab on" data-t="todo">TODAY</button>
     <button class="tab" data-t="nutridyn">NUTRIDYN</button>
     <button class="tab" data-t="money">FINANCES</button>
+    <button class="tab" data-t="life">LIFE</button>
     <button class="tab" data-t="spc">SPC</button>
   </div>
 
@@ -363,17 +364,21 @@ iframe{width:100%;height:calc(100vh - 150px);min-height:480px;border:1px solid v
         <button class="subtab on" data-s="nd">Territory</button>
         <button class="subtab" data-s="map">Map</button>
         <button class="subtab" data-s="radar">Radar</button>
+        <button class="subtab" data-s="lifeu">Life U</button>
       </span>
       <span class="small" id="ndUpdated"></span>
       <span class="small" id="mapUpdated" style="display:none"></span>
       <span class="small" id="radarUpdated" style="display:none"></span>
+      <span class="small" id="lifeuUpdated" style="display:none"></span>
       <button class="reload" id="ndReload">Reload</button>
       <button class="reload" id="mapReload" style="display:none">Reload</button>
       <button class="reload" id="radarReload" style="display:none">Reload</button>
+      <button class="reload" id="lifeuReload" style="display:none">Reload</button>
     </div>
     <iframe id="ndFrame" title="NutriDyn Territory Command"></iframe>
     <iframe id="mapFrame" title="Territory Map" allow="geolocation" style="display:none"></iframe>
     <iframe id="radarFrame" title="Blast Radar" style="display:none"></iframe>
+    <iframe id="lifeuFrame" title="Life University" style="display:none"></iframe>
   </div>
 
   <div class="panel" id="p-money">
@@ -381,14 +386,18 @@ iframe{width:100%;height:calc(100vh - 150px);min-height:480px;border:1px solid v
       <span class="subtabs">
         <button class="subtab on" data-m="money">Overview</button>
         <button class="subtab" data-m="benefits">Card benefits</button>
+        <button class="subtab" data-m="tax">Tax</button>
       </span>
       <span class="small" id="moneyUpdated"></span>
       <span class="small" id="benefitsUpdated" style="display:none"></span>
+      <span class="small" id="taxUpdated" style="display:none"></span>
       <button class="reload" id="moneyReload">Reload</button>
       <button class="reload" id="benefitsReload" style="display:none">Reload</button>
+      <button class="reload" id="taxReload" style="display:none">Reload</button>
     </div>
     <iframe id="moneyFrame" title="Money"></iframe>
     <iframe id="benefitsFrame" title="Card Benefits" style="display:none"></iframe>
+    <iframe id="taxFrame" title="Tax" style="display:none"></iframe>
     <div class="linkrow">
       <a class="lbtn" href="http://localhost:3200" target="_blank" rel="noopener">Finance Command Center<span>opens only when running on your Mac</span></a>
       <a class="lbtn" href="http://localhost:3300" target="_blank" rel="noopener">APEX.AI<span>same</span></a>
@@ -408,7 +417,32 @@ iframe{width:100%;height:calc(100vh - 150px);min-height:480px;border:1px solid v
     </div>
   </div>
 
+  <div class="panel" id="p-life">
+    <div class="toprow">
+      <span class="subtabs">
+        <button class="subtab on" data-l="travel">Travel</button>
+        <button class="subtab" data-l="of">OpenFunctional</button>
+        <button class="subtab" data-l="fleet">The Machine</button>
+      </span>
+      <span class="small" id="travelUpdated"></span>
+      <span class="small" id="ofUpdated" style="display:none"></span>
+      <span class="small" id="fleetUpdated" style="display:none"></span>
+      <button class="reload" id="travelReload">Reload</button>
+      <button class="reload" id="ofReload" style="display:none">Reload</button>
+      <button class="reload" id="fleetReload" style="display:none">Reload</button>
+    </div>
+    <iframe id="travelFrame" title="Travel"></iframe>
+    <iframe id="ofFrame" title="OpenFunctional" style="display:none"></iframe>
+    <iframe id="fleetFrame" title="The Machine" style="display:none"></iframe>
+  </div>
+
   <div class="panel" id="p-spc">
+    <div class="toprow">
+      <span class="subtabs"></span>
+      <span class="small" id="spcUpdated"></span>
+      <button class="reload" id="spcReload">Reload</button>
+    </div>
+    <iframe id="spcFrame" title="SPC Machine"></iframe>
     <div class="bigcard">
       <h3>SPC Field Tool</h3>
       <p>Super Therm, HPC, Rust Grip. The field tool works from anywhere, phone included. SPC needs its own login and will not run inside a frame, so one tap opens it.</p>
@@ -1102,6 +1136,24 @@ function loadMoney(force) {
 function loadBenefits(force) {
   loadPage('benefits', 'benefitsFrame', 'benefitsUpdated', 'No card benefits page pushed yet. It arrives with the monthly sweep.', force);
 }
+function loadTax(force) {
+  loadPage('tax', 'taxFrame', 'taxUpdated', 'No tax page pushed yet.', force);
+}
+function loadLifeu(force) {
+  loadPage('lifeu', 'lifeuFrame', 'lifeuUpdated', 'No Life U page pushed yet.', force);
+}
+function loadTravel(force) {
+  loadPage('travel', 'travelFrame', 'travelUpdated', 'No travel page pushed yet.', force);
+}
+function loadOf(force) {
+  loadPage('of', 'ofFrame', 'ofUpdated', 'No OpenFunctional page pushed yet.', force);
+}
+function loadFleet(force) {
+  loadPage('fleet', 'fleetFrame', 'fleetUpdated', 'No fleet page pushed yet.', force);
+}
+function loadSpc(force) {
+  loadPage('spc', 'spcFrame', 'spcUpdated', 'No SPC page pushed yet.', force);
+}
 
 function showTab(name) {
   var tabs = document.querySelectorAll('.tab');
@@ -1110,11 +1162,13 @@ function showTab(name) {
   panels.forEach(function (p) { p.classList.toggle('on', p.id === 'p-' + name); });
   if (name === 'nutridyn') loadNd(false);
   if (name === 'money') showMoneySub(curMoneySub);
+  if (name === 'life') showLifeSub(curLifeSub);
+  if (name === 'spc') loadSpc(false);
 }
 
 // NutriDyn sub-views: Territory command, the map, and the blast radar share one tab
 // (Territory + Map, Asher 2026-07-22; Radar added the same day)
-var SUBS = { nd: 'nd', map: 'map', radar: 'radar' };
+var SUBS = { nd: 'nd', map: 'map', radar: 'radar', lifeu: 'lifeu' };
 function showSub(which) {
   if (!SUBS[which]) which = 'nd';
   document.querySelectorAll('#p-nutridyn .subtab').forEach(function (b) { b.classList.toggle('on', b.dataset.s === which); });
@@ -1126,12 +1180,13 @@ function showSub(which) {
   });
   if (which === 'map') loadMap(false);
   else if (which === 'radar') loadRadar(false);
+  else if (which === 'lifeu') loadLifeu(false);
   else loadNd(false);
 }
 
 // Money sub-views: the money page and the card-benefits sweep share one tab.
 // Benefits is INSIGHT ONLY; every action it finds is also a TODAY tile.
-var MSUBS = { money: 'money', benefits: 'benefits' };
+var MSUBS = { money: 'money', benefits: 'benefits', tax: 'tax' };
 var curMoneySub = 'money';
 function showMoneySub(which) {
   if (!MSUBS[which]) which = 'money';
@@ -1144,7 +1199,27 @@ function showMoneySub(which) {
     document.getElementById(k + 'Reload').style.display = on;
   });
   if (which === 'benefits') loadBenefits(false);
+  else if (which === 'tax') loadTax(false);
   else loadMoney(false);
+}
+
+// Life sub-views: travel, OpenFunctional, and the machine's own health share one tab.
+// All three are INSIGHT ONLY; anything to act on is a TODAY tile.
+var LSUBS = { travel: 'travel', of: 'of', fleet: 'fleet' };
+var curLifeSub = 'travel';
+function showLifeSub(which) {
+  if (!LSUBS[which]) which = 'travel';
+  curLifeSub = which;
+  document.querySelectorAll('#p-life .subtab').forEach(function (b) { b.classList.toggle('on', b.dataset.l === which); });
+  Object.keys(LSUBS).forEach(function (k) {
+    var on = k === which ? '' : 'none';
+    document.getElementById(k + 'Frame').style.display = on;
+    document.getElementById(k + 'Updated').style.display = on;
+    document.getElementById(k + 'Reload').style.display = on;
+  });
+  if (which === 'of') loadOf(false);
+  else if (which === 'fleet') loadFleet(false);
+  else loadTravel(false);
 }
 
 /* THE EMPIRE STRIP. Each card belongs to a domain; cards with a page key pull
@@ -1162,8 +1237,18 @@ var EMPIRE = [
     go: function () { showTab('money'); showMoneySub('money'); } },
   { name: 'Card benefits', desc: 'Credits worth clipping', color: '#F4BA5E', page: 'benefits',
     go: function () { showTab('money'); showMoneySub('benefits'); } },
-  { name: 'SPC', desc: 'Field tool, one tap', color: '#7A6C55',
-    href: 'https://dashboard.spcinfo.com/spc-field-tool.html' }
+  { name: 'Tax', desc: 'The wall, the order, the dates', color: '#C65545', page: 'tax',
+    go: function () { showTab('money'); showMoneySub('tax'); } },
+  { name: 'Travel', desc: 'Trips, points, deadlines', color: '#63BD9C', page: 'travel',
+    go: function () { showTab('life'); showLifeSub('travel'); } },
+  { name: 'Life U', desc: 'The campus account', color: '#1D9E75', page: 'lifeu',
+    go: function () { showTab('nutridyn'); showSub('lifeu'); } },
+  { name: 'OpenFunctional', desc: 'The software bet', color: '#EF9F27', page: 'of',
+    go: function () { showTab('life'); showLifeSub('of'); } },
+  { name: 'The Machine', desc: 'Loops, health, what broke', color: '#2C2C2A', page: 'fleet',
+    go: function () { showTab('life'); showLifeSub('fleet'); } },
+  { name: 'SPC', desc: 'Blasts, leads, the plays', color: '#7A6C55', page: 'spc',
+    go: function () { showTab('spc'); } }
 ];
 function relTime(ts) {
   var m = Math.round((Date.now() - new Date(ts).getTime()) / 60000);
@@ -1249,6 +1334,12 @@ function refreshAll(manual) {
   if (document.getElementById('radarFrame').srcdoc) loadRadar(true);
   if (document.getElementById('moneyFrame').srcdoc) loadMoney(true);
   if (document.getElementById('benefitsFrame').srcdoc) loadBenefits(true);
+  if (document.getElementById('taxFrame').srcdoc) loadTax(true);
+  if (document.getElementById('lifeuFrame').srcdoc) loadLifeu(true);
+  if (document.getElementById('travelFrame').srcdoc) loadTravel(true);
+  if (document.getElementById('ofFrame').srcdoc) loadOf(true);
+  if (document.getElementById('fleetFrame').srcdoc) loadFleet(true);
+  if (document.getElementById('spcFrame').srcdoc) loadSpc(true);
   renderEmpire();
   Promise.all(jobs).catch(function () {}).then(function () {
     stampNow();
@@ -1369,9 +1460,16 @@ document.getElementById('ndReload').onclick = function () { loadNd(true); };
 document.getElementById('mapReload').onclick = function () { loadMap(true); };
 document.getElementById('radarReload').onclick = function () { loadRadar(true); };
 document.querySelectorAll('#p-nutridyn .subtab').forEach(function (b) { b.onclick = function () { showSub(b.dataset.s); }; });
+document.getElementById('lifeuReload').onclick = function () { loadLifeu(true); };
 document.getElementById('moneyReload').onclick = function () { loadMoney(true); };
 document.getElementById('benefitsReload').onclick = function () { loadBenefits(true); };
+document.getElementById('taxReload').onclick = function () { loadTax(true); };
 document.querySelectorAll('#p-money .subtab').forEach(function (b) { b.onclick = function () { showMoneySub(b.dataset.m); }; });
+document.getElementById('travelReload').onclick = function () { loadTravel(true); };
+document.getElementById('ofReload').onclick = function () { loadOf(true); };
+document.getElementById('fleetReload').onclick = function () { loadFleet(true); };
+document.getElementById('spcReload').onclick = function () { loadSpc(true); };
+document.querySelectorAll('#p-life .subtab').forEach(function (b) { b.onclick = function () { showLifeSub(b.dataset.l); }; });
 document.querySelectorAll('.tab').forEach(function (t) {
   t.onclick = function () { showTab(t.dataset.t); };
 });
