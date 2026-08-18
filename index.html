@@ -352,6 +352,10 @@ iframe{width:100%;height:calc(100vh - 150px);min-height:480px;border:1px solid v
       </div>
       <div class="emp-grid" id="empGrid"></div>
     </div>
+    <div class="machine" id="awayWrap" style="display:none">
+      <h2>Since you were gone</h2>
+      <div class="hint" id="awayBody"></div>
+    </div>
     <div class="machine" id="tomorrowWrap" style="display:none">
       <h2>Tomorrow</h2>
       <div class="hint" id="tomorrowBody"></div>
@@ -1434,6 +1438,19 @@ function loadTomorrow() {
     if (!d || !d.html) return;
     document.getElementById('tomorrowBody').innerHTML = d.html;
     document.getElementById('tomorrowWrap').style.display = 'block';
+  }).catch(function () {});
+  /* SINCE YOU WERE GONE (Asher 2026-08-18: "I may leave for days and come back not
+     knowing anything we talked about... my source of truth is mission control").
+     Sessions and day-close keep /api/page/sinceyouleft current; chat evaporates,
+     the board remembers. Hidden when stale (>7 days) rather than showing rot. */
+  api('page/sinceyouleft').then(function (r) {
+    if (r.status === 404) return null;
+    return r.json();
+  }).then(function (d) {
+    if (!d || !d.html) return;
+    if (Date.now() - new Date(d.updated_at).getTime() > 7 * 86400000) return;
+    document.getElementById('awayBody').innerHTML = d.html;
+    document.getElementById('awayWrap').style.display = 'block';
   }).catch(function () {});
 }
 document.getElementById('addBtn').onclick = addTodo;
