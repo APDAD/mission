@@ -937,6 +937,14 @@ function renderTodos() {
       if (dealt.indexOf(t.id) < 0 && scoreTile(t) >= 65) dealt.push(t.id);
     });
   }
+  /* HIS OWN SAME-DAY ADDS ALWAYS JOIN THE RUN (2026-08-18): if he typed it today,
+     he means today — it never disappears into the fold. Machine tiles still wait
+     their turn unless they are emergencies. */
+  var todayStr = new Date().toDateString();
+  pool.forEach(function (t) {
+    if (t.source !== 'loop' && dealt.indexOf(t.id) < 0 &&
+        new Date(t.created_at).toDateString() === todayStr) dealt.push(t.id);
+  });
   if (dealt.length) localStorage.setItem(dealKey, JSON.stringify(dealt));
   var dealtSet = {};
   dealt.forEach(function (id) { dealtSet[id] = 1; });
