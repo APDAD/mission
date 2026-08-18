@@ -71,6 +71,23 @@ machine-side per the tiering laws. Do not add a Fable/Opus dropdown without a ne
 Latency honesty: the board promises "within the half hour"; the reader runs every ~5 minutes
 inside the awake window. Never promise chat-speed on the board.
 
+## THE CHAT-EVAPORATES LAW (Asher's direct order 2026-08-18: "there is a lot on my claude
+## code and chat... I may leave for days and come back not knowing anything we talked about...
+## my source of truth is mission control")
+CHAT IS A WORKING SURFACE, NOT A RECORD. He forgets every conversation; the board must not.
+Before any substantive session ends its turn:
+1. EVERY OPEN QUESTION the machine asked him in chat becomes a machine tile (its "?" puts it
+   in the need-your-word strip). An unanswered chat question is a dropped ball by definition.
+2. EVERY DECISION-IN-WAITING, promise, or "when you say X I'll do Y" becomes a tile.
+3. WHAT CHANGED goes to /api/page/sinceyouleft — a short, newest-first digest in plain
+   ten-year-old words. TODAY renders it as "Since you were gone" (hidden when >7 days
+   stale). Day-close refreshes it; any session that ships something substantial rewrites it
+   the same turn. It is a digest, never a second to-do list: actions still live as tiles.
+4. If the full picture lives on another tab or page, TODAY carries a tile or digest line
+   POINTING there (his words: "todays page should have a tile telling me to go there").
+The test: if he vanished for a week right now and read only TODAY, would he know everything
+he needs? If no, the turn is not finished.
+
 ## THE API (function v3; code retrievable via Supabase get_edge_function)
 Base: $MISSION_API from ~/nutridyn-territory/dashboard-feed/mission.env, header x-pin.
 - /api/todos GET/POST/PATCH/:id/DELETE/:id (POST {text, area: nutridyn|spc|money|life,
