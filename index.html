@@ -169,9 +169,6 @@ h1{font-family:var(--serif);font-size:clamp(34px,3.4vw,50px);font-weight:600;lin
 .allclear{flex:1;text-align:center;background:var(--card);border:1px dashed var(--line);border-radius:18px;padding:38px 20px}
 .allclear-big{font-family:var(--serif);font-size:32px;font-weight:600;color:var(--accent)}
 .allclear-sub{color:var(--muted);font-size:14px;margin-top:4px}
-.crushhead{font-family:var(--serif);font-size:22px;font-weight:600;margin:26px 0 10px;color:var(--muted)}
-.done-row{display:flex;align-items:center;gap:10px;border:1px dashed var(--line);border-radius:12px;padding:8px 12px;margin-bottom:6px;opacity:.8}
-.done-row .txt{flex:1;font-size:13px;color:var(--muted);text-decoration:line-through;word-break:break-word}
 .machine{margin-top:28px;border-top:1px dashed var(--line);padding-top:16px}
 .machine h2{font-family:var(--serif);font-size:20px;margin-bottom:8px;color:var(--muted)}
 .hint{color:var(--muted);font-size:13px;margin:10px 0;line-height:1.5}
@@ -287,9 +284,10 @@ iframe{width:100%;height:calc(100vh - 150px);min-height:480px;border:1px solid v
         <h1>Mission Control</h1>
         <div class="date" id="today"></div>
       </div>
-      <div>
+      <div style="text-align:right">
         <button class="refbtn" id="refreshBtn" title="Refresh everything" aria-label="Refresh everything">&#8635;</button>
         <div class="stamp" id="stamp"></div>
+        <div id="spark" style="margin-top:8px" title="Wins this week"></div>
       </div>
     </div>
     <div class="greet" id="greet"></div>
@@ -343,8 +341,6 @@ iframe{width:100%;height:calc(100vh - 150px);min-height:480px;border:1px solid v
       </summary>
       <div class="foldbody" id="laterBody"></div>
     </details>
-    <div id="doneWrap"></div>
-    <button class="clear" id="clearBtn">Clear finished items</button>
     <div class="empire">
       <div class="emp-head">
         <div class="emp-title">The whole empire</div>
@@ -790,22 +786,6 @@ function renderRich(node, text) {
   return node;
 }
 
-function doneRow(t) {
-  var row = el('div', 'done-row');
-  var tick = el('button', 'tick mini', '✓');
-  tick.setAttribute('aria-label', 'Mark not done');
-  tick.onclick = function () {
-    api('todos/' + t.id, { method: 'PATCH', body: JSON.stringify({ done: false }) }).then(loadTodos);
-  };
-  var tx = el('div', 'txt', t.text);
-  var del = el('button', 'del', '×');
-  del.onclick = function () {
-    api('todos/' + t.id, { method: 'DELETE' }).then(loadTodos);
-  };
-  row.appendChild(tick); row.appendChild(tx); row.appendChild(del);
-  return row;
-}
-
 /* Columns in the snake, by viewport. Must match the CSS breakpoints. */
 function flowCols() {
   var w = window.innerWidth;
@@ -877,6 +857,7 @@ function renderFlow(flow, ordered) {
 var RUN_SIZE = 7;
 function scoreTile(t) {
   var s = 0, x = t.text || '';
+  if (/^VITAL [123]:/.test(x)) s += 100;
   if (t.source !== 'loop') s += 18;
   if (/^(NutriDyn: )?(send|review and send|reply|answer|text|sign|pay|call|approve|decide)/i.test(x.trim())) s += 22;
   if (/\b(today|tonight|this morning|this afternoon|by \d|deadline|before (thu|fri|mon|tue|wed|sat|sun|tomorrow))\b/i.test(x)) s += 30;
@@ -986,6 +967,16 @@ function renderTodos() {
       : run.length + ' dealt. ' + money + ' are money. Finish them and the day is WON.';
   runList = run;
 
+  /* Run It button reflects the VITAL state: three picked -> walk them. */
+  var vt = todos.filter(function (t) { return !t.done && /^VITAL [123]:/.test(t.text); });
+  var runBtn = document.getElementById('runIt');
+  if (vt.length) {
+    runBtn.textContent = 'Run the vital ' + vt.length + ' →';
+    localStorage.removeItem('mc_vital_pending');
+  } else if (!localStorage.getItem('mc_vital_pending')) {
+    runBtn.textContent = 'Run it →';
+  }
+
   var flow = document.getElementById('flow');
   flow.innerHTML = '';
   var dwWrap = document.getElementById('daywonWrap');
@@ -1023,14 +1014,38 @@ function renderTodos() {
   document.getElementById('laterSub').textContent = later.length ? later.length + ' waiting for their day' : 'empty';
   document.getElementById('laterFold').style.display = later.length ? 'block' : 'none';
 
-  var dw = document.getElementById('doneWrap');
-  dw.innerHTML = '';
-  if (doneL.length) {
-    dw.appendChild(el('h2', 'crushhead', 'Crushed today'));
-    doneL.forEach(function (t) { dw.appendChild(doneRow(t)); });
-  }
-  document.getElementById('clearBtn').style.display = doneL.length ? 'inline-block' : 'none';
+  /* "Crushed today" list REMOVED (Asher 2026-08-19: "I don't need this section").
+     The count tile + countdown celebrate the wins; the corpses stay off the page.
+     Done rows still exist server-side; day-close sweeps them. */
+  renderHistory(killed);
   renderProgress();
+}
+
+/* THE WINS SPARKLINE: seven days of kills as bars in the hero — real data only,
+   accumulated locally per device from the dealt-run counter (Asher 2026-08-19:
+   "incorporate visuals where you see fit"). Gold bar = today. */
+function renderHistory(killedToday) {
+  var hist = {};
+  try { hist = JSON.parse(localStorage.getItem('mc_hist') || '{}'); } catch (e) { hist = {}; }
+  var today = new Date().toDateString();
+  if ((hist[today] || 0) < killedToday) { hist[today] = killedToday; localStorage.setItem('mc_hist', JSON.stringify(hist)); }
+  var el7 = document.getElementById('spark');
+  if (!el7) return;
+  var days = [], max = 1;
+  for (var i = 6; i >= 0; i--) {
+    var d = new Date(Date.now() - i * 86400000);
+    var v = hist[d.toDateString()] || 0;
+    days.push({ v: v, today: i === 0, label: 'SMTWTFS'[d.getDay()] });
+    if (v > max) max = v;
+  }
+  var w = 16, gap = 6, H = 30, svg = '';
+  days.forEach(function (d, i) {
+    var h = Math.max(2, Math.round(d.v / max * (H - 12)));
+    svg += '<rect x="' + (i * (w + gap)) + '" y="' + (H - 10 - h) + '" width="' + w + '" height="' + h +
+      '" rx="2.5" fill="' + (d.today ? '#EF9F27' : d.v ? '#1D9E75' : 'rgba(44,44,42,.12)') + '"/>' +
+      '<text x="' + (i * (w + gap) + w / 2) + '" y="' + H + '" text-anchor="middle" font-size="7" font-family="Inter,Helvetica" fill="#6B6B66">' + d.label + '</text>';
+  });
+  el7.innerHTML = '<svg width="' + (7 * (w + gap) - gap) + '" height="' + H + '" aria-label="Wins this week">' + svg + '</svg>';
 }
 
 /* RUN MODE: the game he asked for — one card, one decision, next. */
@@ -1473,13 +1488,42 @@ document.getElementById('boardSearch').addEventListener('input', function (e) {
   searchTerm = e.target.value.trim();
   renderTodos();
 });
-document.getElementById('runIt').onclick = function () { runIdx = 0; showRunCard(); };
+/* RUN IT v2 (Asher 2026-08-19: "when I hit run it... pick the three things that
+   are most important that I can do, that you have exhausted everything to try
+   to do yourself first... had another agent check you... then come to a final
+   conclusion"). One tap = the machine runs the adversarial gauntlet over the
+   WHOLE board and comes back with THE VITAL THREE. When those three tiles are
+   on the board, this button walks exactly them, one card at a time. */
+function vitalTiles() {
+  return todos.filter(function (t) { return !t.done && /^VITAL [123]:/.test(t.text); });
+}
+document.getElementById('runIt').onclick = function () {
+  var v = vitalTiles();
+  if (v.length) { runList = v; runIdx = 0; showRunCard(); return; }
+  var btn = document.getElementById('runIt');
+  var pending = Number(localStorage.getItem('mc_vital_pending') || 0);
+  if (pending && Date.now() - pending < 30 * 60000) { btn.textContent = 'Still picking… ~15 min'; return; }
+  btn.disabled = true;
+  btn.textContent = 'Asking the machine…';
+  var ask = 'RUN IT, his tap at ' + new Date().toLocaleString() + '. Read the ENTIRE board and draft pile. For every open item, EXHAUST every machine route first: do it or prep it to one gesture. Run the adversarial gauntlet per THE VITAL THREE law in your SKILL (agent A claims what the machine can still take, agent B attacks A, resolve to a final conclusion). Then delete any stale VITAL tiles and post exactly three new tiles prefixed VITAL 1: VITAL 2: VITAL 3: — the most important things ONLY Asher can do, each one gesture, link last.';
+  api('todos', { method: 'POST', body: JSON.stringify({ text: '❓ 🎯 RUN IT — pick my vital three', area: 'life', source: 'asher' }) })
+    .then(function (r) { return r.json(); })
+    .then(function (rows) {
+      var row = rows && rows[0];
+      if (!row || !row.id) throw new Error('post failed');
+      return api('todos/' + row.id + '/answer', { method: 'POST', body: JSON.stringify({ answer: ask }) });
+    })
+    .then(function () {
+      localStorage.setItem('mc_vital_pending', String(Date.now()));
+      btn.textContent = 'Machine is picking… ~15 min';
+      setTimeout(function () { btn.disabled = false; }, 3000);
+      loadTodos();
+    })
+    .catch(function () { btn.disabled = false; btn.textContent = 'Run it →'; });
+};
 document.getElementById('rmExit').onclick = function () {
   document.getElementById('runmode').classList.remove('on');
   loadTodos();
-};
-document.getElementById('clearBtn').onclick = function () {
-  api('todos', { method: 'DELETE' }).then(loadTodos);
 };
 document.getElementById('ndReload').onclick = function () { loadNd(true); };
 document.getElementById('mapReload').onclick = function () { loadMap(true); };
