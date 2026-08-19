@@ -106,8 +106,14 @@ Base: $MISSION_API from ~/nutridyn-territory/dashboard-feed/mission.env, header 
   rows, search, the NEED-YOUR-WORD chip strip, then TODAY'S RUN: the top ~7 tiles by
   client-side score (deadline words, action verbs, NutriDyn revenue weighting per his
   "blowing this out the water" order, legal/deadline overrides) rendered as THE SERPENTINE
-  SNAKE (numbered, gold arrows, send-class tiles wear a gold left edge), with a RUN IT
-  focus mode dealing one card at a time (Done/Skip). Below the run: THE REST OF THE BOARD, a
+  SNAKE (numbered, gold arrows, send-class tiles wear a gold left edge), with RUN IT v2
+  (Asher 2026-08-19): the button asks the machine for THE VITAL THREE — it must exhaust
+  every machine route over the whole board first, survive an adversarial gauntlet (agent A
+  claims "the machine can still do this", agent B attacks A, final conclusion — the law
+  lives in mission-answer-reader's SKILL), then post VITAL 1/2/3 tiles: the only gestures
+  truly his. VITAL scores +100, the button becomes "Run the vital 3" and walks exactly
+  those, one card at a time (Done/Skip). Latency honesty: the pick takes ~15 min via the
+  answers pipeline; the button says so and never pretends to be instant. Below the run: THE REST OF THE BOARD, a
   counted, sorted, searchable fold ("N held safe — nothing lost", the NOTHING-IS-THROWN-AWAY
   law in UI form) and the LATER drawer whose tiles auto-wake when a date in their text
   arrives. Long tiles collapse to their first sentence with "the whole story" one tap away —
@@ -116,7 +122,14 @@ Base: $MISSION_API from ~/nutridyn-territory/dashboard-feed/mission.env, header 
   the run is dealt ONCE per day (localStorage, date-keyed ids) and COUNTS DOWN as he kills
   it; the hero bar measures the run, not the ocean, so it can reach full; only a score>=65
   emergency deals itself in late. The countdown talks back ("N down, M to go") with a praise
-  ladder that celebrates and never guilts (Rolling / You are cooking / Unstoppable). When
+  ladder that celebrates and never guilts (Rolling / You are cooking / Unstoppable). CRUSHED TODAY IS A NUMBER, NOT A LIST (Asher
+  2026-08-19: "I don't need this section"): the strikethrough done-list is gone; the count
+  tile, countdown and praise carry the wins, day-close sweeps done rows server-side. THE
+  WINS SPARKLINE: 7-day kill history as inline-SVG bars in the hero right rail (real local
+  data only, gold = today) — the template for THE VISUAL MANDATE (same day: "graphs and
+  charts where you see fit, don't do it just to do it"): pages render inline-SVG Atelier
+  charts ONLY over number series their loops already compute; one good chart beats five.
+  When
   the DEAL empties: DAY WON end-state ("You crushed all N dealt today"), one confetti per
   day, honest held-safe count — winning the day never requires emptying the ocean.
   THE BRIEF RENDERER (same day, "all that mumble jumbo"): any long tile body renders as
