@@ -88,10 +88,16 @@ Before any substantive session ends its turn:
 The test: if he vanished for a week right now and read only TODAY, would he know everything
 he needs? If no, the turn is not finished.
 
-## THE API (function v3; code retrievable via Supabase get_edge_function)
+## THE API (function v6; code retrievable via Supabase get_edge_function)
 Base: $MISSION_API from ~/nutridyn-territory/dashboard-feed/mission.env, header x-pin.
 - /api/todos GET/POST/PATCH/:id/DELETE/:id (POST {text, area: nutridyn|spc|money|life,
   source: asher|loop}); DELETE /api/todos clears done
+- DONE_AT IS THE KILL TIME AND IT NEVER LIES (fn v6, 2026-08-24). PATCH {done:true} stamps
+  done_at ONLY on the false->true transition — a re-tick of an already-done row keeps its
+  original kill time; {done:false} nulls it. The shell's CRUSHED TODAY counts done rows with
+  done_at >= LOCAL midnight, nothing else. Why: Asher opened Monday 8/24 to "19 crushed"
+  before doing anything — 18 were Friday-to-Sunday kills waiting for day-close. A done count
+  with no date dimension is a lie about today; do not regress either half of this.
 - /api/page/<key> GET/POST (text/html body) - keys: nutridyn, map, money, tomorrow
 - /api/dump(s) - legacy brain dumps (UI box removed; API kept)
 - PIN auth: SHA-256 in mission_config, 10 fails = 15-min lockout. Never weaken.

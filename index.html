@@ -935,8 +935,14 @@ function renderTodos() {
   window._runStat = { dealt: dealt.length, left: run.length, killed: killed };
   var word = open.filter(needsWord);
 
+  /* CRUSHED TODAY means TODAY (Asher 2026-08-24: opened Monday to "19 crushed" that were
+     Friday-to-Sunday kills still waiting for day-close). done_at is stamped server-side on
+     the false->true transition only (fn v6); a done row with no done_at or an older done_at
+     is a previous day's kill and never counts here. */
+  var dayStart = new Date(); dayStart.setHours(0, 0, 0, 0);
+  var doneToday = doneL.filter(function (t) { return t.done_at && new Date(t.done_at) >= dayStart; });
   document.getElementById('tOpen').textContent = run.length;
-  document.getElementById('tDone').textContent = doneL.length;
+  document.getElementById('tDone').textContent = doneToday.length;
   document.getElementById('tMachine').textContent = word.length;
 
   // Search filters what renders, never what counts.
