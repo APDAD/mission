@@ -89,6 +89,9 @@ h1{font-family:var(--serif);font-size:clamp(34px,3.4vw,50px);font-weight:600;lin
 .tbul li:first-child{border-top:0}
 .tbul li:before{content:'';position:absolute;left:2px;top:13px;width:7px;height:7px;border-radius:50%;background:var(--gold)}
 .tbul li strong{font-weight:600;color:var(--ink)}
+.tpara{font-size:14px;line-height:1.6;overflow-wrap:anywhere;padding:5px 0;border-top:1px dashed rgba(227,224,213,.7)}
+.tpara:first-child{border-top:0}
+.tpara strong{font-weight:600;color:var(--ink)}
 .runmeter{font-size:13px;color:var(--muted);margin-top:8px}
 .runmeter b{color:var(--accent);font-weight:700}
 /* The rest of the board: compact held-safe rows inside a fold. */
@@ -743,46 +746,46 @@ function stepMainInto(node, text) {
   while (built.firstChild) node.appendChild(built.firstChild);
   return node;
 }
-/* THE BRIEF RENDERER (Asher 2026-08-12): long text becomes bullets. Loops can
-   mark real bullets with "•" or " | "; anything else long gets sentence-split.
-   A CAPS lead-in ("STRICKLAND:", "SEND AS IS:") becomes the bullet's bold head. */
+/* THE BRIEF RENDERER v2 (Asher 2026-08-24: "if there's a little backstory, give me
+   one unified bullet - don't give me one story that goes across multiple bullet
+   points... one open button each card"). Bullets appear ONLY where the writing
+   loop marked them deliberately ("•" or " | "). Everything else renders as
+   UNIFIED paragraphs split on blank lines - the machine never chops a story into
+   fragments again (the sentence-splitter mangled "$563K" and "fidelity.com" into
+   confetti on his screen, caught live 2026-08-24). */
 function renderRich(node, text) {
-  /* URLs carry dots; shield them from the sentence-splitter or an Open button
-     gets cut in half across two bullets (caught live 2026-08-12). */
-  var urls = [];
-  text = text.replace(/(?:https?:\/\/|sms:|tel:)[^\s]+/g, function (u) {
-    urls.push(u); return '' + (urls.length - 1) + '';
-  });
-  var unshield = function (s) {
-    return s.replace(/(\d+)/g, function (_, i) { return urls[Number(i)]; });
+  var boldLead = function (container, p) {
+    var m = p.match(/^([A-Z][A-Z0-9 .'&$-]{2,}[:,])\s*([\s\S]+)$/);
+    if (m) {
+      container.appendChild(el('strong', '', m[1].replace(/[:,]$/, '') + ' — '));
+      stepMainInto(container, m[2]);
+    } else stepMainInto(container, p);
   };
-  var parts;
+  var parts = null;
   if (text.indexOf('•') >= 0) parts = text.split('•');
   else if (text.indexOf(' | ') >= 0) parts = text.split(' | ');
-  else if (text.length > 240) {
-    parts = [];
-    var sentences = text.match(/[^.!?]+[.!?]+(?:\s|$)|[^.!?]+$/g) || [text];
-    var cur = '';
-    sentences.forEach(function (s) {
-      var capsLead = /^\s*[A-Z][A-Z0-9 .'&-]{2,}[:,]/.test(s);
-      if (cur && (capsLead || (cur + s).length > 150)) { parts.push(cur); cur = s; }
-      else cur += s;
-    });
-    if (cur) parts.push(cur);
-  } else return stepMainInto(node, text);
-  parts = parts.map(function (p) { return p.trim(); }).filter(Boolean);
-  if (parts.length < 2) return stepMainInto(node, unshield(text));
-  var ul = el('ul', 'tbul');
-  parts.forEach(function (p) {
-    var li = document.createElement('li');
-    var m = p.match(/^([A-Z][A-Z0-9 .'&-]{2,}[:,])\s*([\s\S]*)$/);
-    if (m) {
-      li.appendChild(el('strong', '', m[1].replace(/[:,]$/, '') + ' — '));
-      stepMainInto(li, unshield(m[2]));
-    } else stepMainInto(li, unshield(p));
-    ul.appendChild(li);
+  if (parts) {
+    parts = parts.map(function (p) { return p.trim(); }).filter(Boolean);
+    if (parts.length >= 2) {
+      var pre = parts.shift();
+      if (pre) { var lead = el('div', 'tpara'); boldLead(lead, pre); node.appendChild(lead); }
+      var ul = el('ul', 'tbul');
+      parts.forEach(function (p) {
+        var li = document.createElement('li');
+        boldLead(li, p);
+        ul.appendChild(li);
+      });
+      node.appendChild(ul);
+      return node;
+    }
+  }
+  var paras = text.split(/\n\s*\n/).map(function (p) { return p.trim(); }).filter(Boolean);
+  if (paras.length < 2) return stepMainInto(node, text);
+  paras.forEach(function (p) {
+    var d = el('div', 'tpara');
+    boldLead(d, p);
+    node.appendChild(d);
   });
-  node.appendChild(ul);
   return node;
 }
 
