@@ -1,0 +1,57 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Private Label Intake | NutriDyn with Asher Allen</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F1EFE8;--card:#FBFAF6;--ink:#2C2C2A;--muted:#6B6B66;--line:#e6e2da;--green:#1D9E75;--gold:#EF9F27}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:Inter,-apple-system,sans-serif;font-size:15px;line-height:1.6;padding:34px 18px 70px}
+.wrap{max-width:640px;margin:0 auto}
+.kicker{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--green);font-weight:700}
+h1{font-family:'Cormorant Garamond',Georgia,serif;font-size:38px;font-weight:600;line-height:1.12;margin-top:6px}
+.sub{color:var(--muted);font-size:14.5px;margin-top:10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-top:18px}
+label{display:block;font-weight:600;font-size:13px;margin:14px 0 4px}
+label span{font-weight:400;color:var(--muted)}
+input,textarea{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;font-family:Inter,sans-serif;font-size:15px;color:var(--ink)}
+input:focus,textarea:focus{outline:none;border-color:var(--green)}
+textarea{min-height:70px;resize:vertical}
+.btn{display:block;width:100%;text-align:center;background:var(--green);color:#fff;border:0;border-radius:12px;padding:15px;font-size:16px;font-weight:600;font-family:Inter,sans-serif;cursor:pointer;margin-top:20px;text-decoration:none}
+.hint{font-size:12.5px;color:var(--muted);margin-top:10px}
+.steps{margin-top:16px;font-size:13.5px;color:var(--muted)}
+.steps b{color:var(--ink)}
+</style></head><body><div class="wrap">
+<div class="kicker">Your brand. Our formulas.</div>
+<h1>Put your name on the bottle.</h1>
+<div class="sub">The practices whose patients stay loyal put their own brand on the shelf. This page takes five minutes and starts your private label with NutriDyn. Answer what you can; Nina and Asher handle everything else, including the label design.</div>
+
+<div class="card"><form id="f">
+<label>Practice / brand name</label><input id="brand" placeholder="e.g., Lake Pointe Wellness">
+<label>Your name and best email</label><input id="who" placeholder="Dr. ____ , you@practice.com">
+<label>Which products do you want under your label? <span>(names or descriptions are fine; ask Asher for the catalog)</span></label><textarea id="prods" placeholder="e.g., Fruits &amp; Greens Berry, a probiotic, a vitamin D..."></textarea>
+<label>What should each be CALLED under your brand? <span>(Nina's first question)</span></label><textarea id="names" placeholder="e.g., 'Lake Pointe Daily Greens'"></textarea>
+<label>Label color scheme <span>(Nina's second question: your brand colors, or 'match my logo')</span></label><input id="colors" placeholder="e.g., forest green + cream, logo attached">
+<label>Do you have a logo file? <span>(yes/no; if yes you'll email it after this form)</span></label><input id="logo" placeholder="yes / no / need one designed">
+<label>Ship-to address</label><input id="ship" placeholder="street, city, state, zip">
+<label>Anything else? <span>(quantities in mind, timeline, questions)</span></label><textarea id="notes"></textarea>
+<a class="btn" id="send" href="#">Send this to Nina &amp; Asher</a>
+<div class="hint">The button opens an email to nina@nutri-dyn.com (NutriDyn's Private Label Coordinator) with Asher copied, everything pre-filled. Just press send, and attach your logo if you have one. Nina replies with the private label flyer, the agreement, and a designer proof.</div>
+</form>
+<div class="steps"><b>What happens next:</b> 1) Nina sends the flyer + agreement. 2) A designer builds your label proof. 3) You approve. 4) Your product ships with your name on it. Asher walks with you the whole way: 678.577.1003.</div>
+</div>
+<script>
+document.getElementById('send').addEventListener('click',function(e){
+e.preventDefault();
+function v(id){return (document.getElementById(id).value||'(blank)').trim()}
+var body='Hi Nina,%0A%0AI would like to start private labeling. Asher sent me.%0A%0A'+
+'Practice/brand: '+encodeURIComponent(v('brand'))+'%0A'+
+'Contact: '+encodeURIComponent(v('who'))+'%0A'+
+'Products to label: '+encodeURIComponent(v('prods'))+'%0A'+
+'Product names under my brand: '+encodeURIComponent(v('names'))+'%0A'+
+'Label colors: '+encodeURIComponent(v('colors'))+'%0A'+
+'Logo file: '+encodeURIComponent(v('logo'))+'%0A'+
+'Ship to: '+encodeURIComponent(v('ship'))+'%0A'+
+'Notes: '+encodeURIComponent(v('notes'))+'%0A%0AThank you!';
+window.location.href='mailto:nina@nutri-dyn.com?cc=asher@nutri-dyn.com&subject='+encodeURIComponent('Private Label Intake: '+v('brand'))+'&body='+body;
+});
+</script>
+</div></body></html>
