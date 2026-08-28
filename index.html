@@ -369,23 +369,27 @@ iframe{width:100%;height:calc(100vh - 150px);min-height:480px;border:1px solid v
         <button class="subtab" data-s="radar">Radar</button>
         <button class="subtab" data-s="kpi">KPIs</button>
         <button class="subtab" data-s="lifeu">Life U</button>
+        <button class="subtab" data-s="room">Room</button>
       </span>
       <span class="small" id="ndUpdated"></span>
       <span class="small" id="mapUpdated" style="display:none"></span>
       <span class="small" id="radarUpdated" style="display:none"></span>
       <span class="small" id="kpiUpdated" style="display:none"></span>
       <span class="small" id="lifeuUpdated" style="display:none"></span>
+      <span class="small" id="roomUpdated" style="display:none"></span>
       <button class="reload" id="ndReload">Reload</button>
       <button class="reload" id="mapReload" style="display:none">Reload</button>
       <button class="reload" id="radarReload" style="display:none">Reload</button>
       <button class="reload" id="kpiReload" style="display:none">Reload</button>
       <button class="reload" id="lifeuReload" style="display:none">Reload</button>
+      <button class="reload" id="roomReload" style="display:none">Reload</button>
     </div>
     <iframe id="ndFrame" title="NutriDyn Territory Command"></iframe>
     <iframe id="mapFrame" title="Territory Map" allow="geolocation" style="display:none"></iframe>
     <iframe id="radarFrame" title="Blast Radar" style="display:none"></iframe>
     <iframe id="kpiFrame" title="Territory KPIs" style="display:none"></iframe>
     <iframe id="lifeuFrame" title="Life University" style="display:none"></iframe>
+    <iframe id="roomFrame" title="Who is in the room" style="display:none"></iframe>
   </div>
 
   <div class="panel" id="p-money">
@@ -1185,6 +1189,9 @@ function loadTax(force) {
 function loadLifeu(force) {
   loadPage('lifeu', 'lifeuFrame', 'lifeuUpdated', 'No Life U page pushed yet.', force);
 }
+function loadRoom(force) {
+  loadPage('seminar-room', 'roomFrame', 'roomUpdated', 'No room brief pushed yet.', force);
+}
 function loadTravel(force) {
   loadPage('travel', 'travelFrame', 'travelUpdated', 'No travel page pushed yet.', force);
 }
@@ -1211,7 +1218,7 @@ function showTab(name) {
 
 // NutriDyn sub-views: Territory command, the map, and the blast radar share one tab
 // (Territory + Map, Asher 2026-07-22; Radar added the same day)
-var SUBS = { nd: 'nd', map: 'map', radar: 'radar', kpi: 'kpi', lifeu: 'lifeu' };
+var SUBS = { nd: 'nd', map: 'map', radar: 'radar', kpi: 'kpi', lifeu: 'lifeu', room: 'room' };
 function showSub(which) {
   if (!SUBS[which]) which = 'nd';
   document.querySelectorAll('#p-nutridyn .subtab').forEach(function (b) { b.classList.toggle('on', b.dataset.s === which); });
@@ -1225,6 +1232,7 @@ function showSub(which) {
   else if (which === 'radar') loadRadar(false);
   else if (which === 'kpi') loadKpi(false);
   else if (which === 'lifeu') loadLifeu(false);
+  else if (which === 'room') loadRoom(false);
   else loadNd(false);
 }
 
@@ -1546,6 +1554,7 @@ document.getElementById('ndReload').onclick = function () { loadNd(true); };
 document.getElementById('mapReload').onclick = function () { loadMap(true); };
 document.getElementById('radarReload').onclick = function () { loadRadar(true); };
 document.getElementById('kpiReload').onclick = function () { loadKpi(true); };
+document.getElementById('roomReload').onclick = function () { loadRoom(true); };
 document.querySelectorAll('#p-nutridyn .subtab').forEach(function (b) { b.onclick = function () { showSub(b.dataset.s); }; });
 document.getElementById('lifeuReload').onclick = function () { loadLifeu(true); };
 document.getElementById('moneyReload').onclick = function () { loadMoney(true); };
