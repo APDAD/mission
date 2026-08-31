@@ -1457,7 +1457,24 @@ function showApp() {
   renderEmpire();
   lastRefresh = Date.now();
   document.getElementById('refreshBtn').onclick = function () { refreshAll(true); };
+  goHash();
 }
+
+/* Deep links (Asher's order 2026-08-31: a tile's Open button must land him on the exact
+   tab/sub-view where a machine message lives). #go/<tab> or #go/<tab>/<sub>, e.g.
+   #go/life/travel, #go/nutridyn/radar, #go/money/benefits. Applied after PIN unlock and on
+   every hash change, so links work cold and while the app is open. */
+function goHash() {
+  var m = location.hash.match(/^#go\/([a-z]+)(?:\/([a-z]+))?$/);
+  if (!m) return;
+  showTab(m[1]);
+  if (m[2]) {
+    if (m[1] === 'nutridyn') showSub(m[2]);
+    else if (m[1] === 'money') showMoneySub(m[2]);
+    else if (m[1] === 'life') showLifeSub(m[2]);
+  }
+}
+window.addEventListener('hashchange', goHash);
 function tryPin(p) {
   localStorage.setItem(PIN_KEY, p);
   return fetch(API + '/api/verify', { method: 'POST', headers: { 'x-pin': p } }).then(function (r) {
