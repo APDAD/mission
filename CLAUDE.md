@@ -262,3 +262,11 @@ asked for WITHOUT the machine ever typing into a text thread. Render it with NO 
   literally unreachable while linkBtn styled itself inline; moving it to a `.gobtn` class was the
   precondition for the media query. `display:inline-flex;align-items:center;min-height:44px` gives a
   full 44px target while staying in the text flow, which padding alone cannot do at 12px.
+
+## DEEP LINKS + THE POINTER-TILE PATTERN (Asher's order 2026-08-31)
+index.html routes #go/<tab> and #go/<tab>/<sub> (nutridyn->showSub, money->showMoneySub,
+life->showLifeSub) after PIN unlock and on hashchange. This exists so a TODAY tile can be the
+POINTER to a machine message that lives on another tab: the tile leads with the decision, names
+the tab in words ("your LIFE tab, Travel view"), and its Open button is the #go link. Machine
+reports NEVER ride email (full law in ~/nutridyn-territory/CLAUDE.md). When adding a new
+sub-view, extend goHash's dispatch or its links silently no-op.
