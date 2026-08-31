@@ -270,3 +270,28 @@ POINTER to a machine message that lives on another tab: the tile leads with the 
 the tab in words ("your LIFE tab, Travel view"), and its Open button is the #go link. Machine
 reports NEVER ride email (full law in ~/nutridyn-territory/CLAUDE.md). When adding a new
 sub-view, extend goHash's dispatch or its links silently no-op.
+
+## THE VISUAL LAW — IN ALL THINGS MISSION CONTROL (Asher's order 2026-08-31, on seeing the
+## Brazil packet as paragraphs: "This is not fun to look at... not just words, but bullet
+## points, graphs, make it very visually pleasing. I don't wanna just have words." Scope, his
+## words: "in all things mission control.")
+NO PUSHED PAGE SHIPS A WALL OF PARAGRAPHS. Every page and every major section is built from
+the Atelier component kit, reference implementation = the Brazil GO packet at the top of the
+travel page (source: ~/travel-agent/brazil-go-packet.html):
+- A KICKER + CARVED HEADLINE band (deep green #14664D with ivory Cormorant type) when a
+  section is a decision or a launch; plain serif h2 otherwise.
+- STAT TILES for the 2-5 numbers that decide the section (big Cormorant number, small
+  uppercase Inter label, #F1EFE8 tiles; gold #F6ECD6/#814800 tile reserved for a deadline).
+- CARDS in an auto-fit grid for parallel facts (flights, venues, steps); numbered cards with a
+  green left edge for HIS steps, each one a real link.
+- ONE INLINE-SVG CHART where a number story earns it (comparison bar, stacked budget bar,
+  timeline strip) — direct labels on every mark, recessive grid, no chart for its own sake
+  (THE VISUAL MANDATE still governs); palette green #1D9E75/#177A5B + neutral #D5D0C6, gold
+  only with a visible label (validated 2026-08-31: green/gold pass CVD checks, gold fails
+  bare contrast).
+- Body text only for what genuinely is prose, in short labeled runs, never a screenful.
+Charts and layout are verified RENDERED (load the live page, look, fix collisions) — the first
+build of the Brazil packet shipped a label collision that only an eyeball caught. Mobile 375px
+zero horizontal overflow stands. Every page-owning loop (mission-life-refresh,
+nutridyn-command-refresh, directmail-radar, card-benefits-sweep, day-close) carries this law in
+its own SKILL.md; a rebuild that flattens a designed section back to paragraphs is a defect.
