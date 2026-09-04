@@ -328,6 +328,7 @@ iframe{width:100%;height:calc(100vh - 150px);min-height:480px;border:1px solid v
         <div class="runsub" id="runsub"></div>
       </div>
       <button class="runbtn" id="runIt">Run it &rarr;</button>
+      <button class="runbtn" id="dealNext10" style="display:none;background:var(--card);color:var(--accent);border:1px solid var(--accent);margin-left:8px">Next 10 &rarr;</button>
     </div>
     <div class="flow" id="flow"></div>
     <details class="fold" id="restFold">
@@ -866,6 +867,7 @@ function renderFlow(flow, ordered) {
    NutriDyn revenue outranks all but legal/deadline (Asher: "blowing this out
    the water"). */
 var RUN_SIZE = 7;
+var NEXT_BATCH = 10; // "Next 10" button (Asher 2026-09-04: a high-energy day should let him keep pulling batches)
 function scoreTile(t) {
   var s = 0, x = t.text || '';
   if (/^VITAL [123]:/.test(x)) s += 100;
@@ -906,13 +908,20 @@ function restRow(t) {
   row.appendChild(tick); row.appendChild(mid);
   return row;
 }
-function renderTodos() {
+/* Shared by renderTodos() and the Next-10 button: open tiles minus LATER-not-due,
+   scored and sorted. Kept as one function so both readers agree on the ranking. */
+function computePool() {
   var open = todos.filter(function (t) { return !t.done; });
-  var doneL = todos.filter(function (t) { return t.done; });
-  var q = searchTerm.toLowerCase();
   var later = open.filter(function (t) { return isLater(t) && !laterIsDue(t); });
   var pool = open.filter(function (t) { return !isLater(t) || laterIsDue(t); })
     .sort(function (a, b) { return scoreTile(b) - scoreTile(a); });
+  return { pool: pool, later: later };
+}
+function renderTodos() {
+  var doneL = todos.filter(function (t) { return t.done; });
+  var q = searchTerm.toLowerCase();
+  var cp = computePool();
+  var pool = cp.pool, later = cp.later;
 
   /* THE DEALT RUN (Asher 2026-08-12: "seven in today's run... it doesn't change...
      it should say how much did you do today and make me feel good about it").
@@ -1024,6 +1033,16 @@ function renderTodos() {
     ? rest.length + ' held safe — sorted, nothing lost' : 'empty';
   document.getElementById('restFold').style.display = rest.length || q ? 'block' : 'none';
   if (q) document.getElementById('restFold').setAttribute('open', '');
+
+  /* NEXT 10 (Asher 2026-09-04, dictated: "there's no way to refresh the tile and get
+     the next set of ten... a button that says next ten so if I have the energy I just
+     knock this stuff out"). Purely additive to the localStorage dealt-run — never
+     touches the server, never re-scores, always available while anything is held. */
+  var dn = document.getElementById('dealNext10');
+  if (dn) {
+    dn.style.display = rest.length && !q ? 'inline-block' : 'none';
+    dn.textContent = 'Next ' + Math.min(NEXT_BATCH, rest.length) + ' \u2192';
+  }
 
   var lb = document.getElementById('laterBody');
   lb.innerHTML = '';
@@ -1539,6 +1558,21 @@ document.getElementById('boardSearch').addEventListener('input', function (e) {
 function vitalTiles() {
   return todos.filter(function (t) { return !t.done && /^VITAL [123]:/.test(t.text); });
 }
+document.getElementById('dealNext10').onclick = function () {
+  var cp = computePool();
+  var dealKey = 'mc_run_' + new Date().toDateString();
+  var dealt = [];
+  try { dealt = JSON.parse(localStorage.getItem(dealKey) || '[]'); } catch (e) { dealt = []; }
+  var dealtSet = {};
+  dealt.forEach(function (id) { dealtSet[id] = 1; });
+  var next = cp.pool.filter(function (t) { return !dealtSet[t.id]; }).slice(0, NEXT_BATCH);
+  next.forEach(function (t) { dealt.push(t.id); });
+  localStorage.setItem(dealKey, JSON.stringify(dealt));
+  var btn = document.getElementById('dealNext10');
+  var r = btn.getBoundingClientRect();
+  burst(r.left + r.width / 2, r.top + r.height / 2);
+  renderTodos();
+};
 document.getElementById('runIt').onclick = function () {
   var v = vitalTiles();
   if (v.length) { runList = v; runIdx = 0; showRunCard(); return; }
