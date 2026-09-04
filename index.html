@@ -915,13 +915,13 @@ function computePool() {
   var later = open.filter(function (t) { return isLater(t) && !laterIsDue(t); });
   var pool = open.filter(function (t) { return !isLater(t) || laterIsDue(t); })
     .sort(function (a, b) { return scoreTile(b) - scoreTile(a); });
-  return { pool: pool, later: later };
+  return { open: open, pool: pool, later: later };
 }
 function renderTodos() {
   var doneL = todos.filter(function (t) { return t.done; });
   var q = searchTerm.toLowerCase();
   var cp = computePool();
-  var pool = cp.pool, later = cp.later;
+  var open = cp.open, pool = cp.pool, later = cp.later;
 
   /* THE DEALT RUN (Asher 2026-08-12: "seven in today's run... it doesn't change...
      it should say how much did you do today and make me feel good about it").
