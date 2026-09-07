@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Market Scan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#F1EFE8;--card:#FBFAF6;--line:#E3E0D5;--ink:#2C2C2A;--muted:#6B6B66;--accent:#1D9E75;--deep:#14664D;--gold:#EF9F27;--goldbg:#F6ECD6;--goldink:#814800;--red:#C65545;--serif:'Cormorant Garamond',serif;--sans:'Inter',sans-serif}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1100px;margin:0 auto;padding:22px 18px 60px}
+.kicker{letter-spacing:.18em;font-size:11px;color:var(--muted);text-transform:uppercase;font-weight:600}
+h1{font-family:var(--serif);font-size:clamp(30px,4vw,44px);font-weight:600;line-height:1.1;margin-top:2px}
+.date{color:var(--muted);font-size:13px;margin-top:6px;line-height:1.6;max-width:820px}
+.band{background:var(--deep);border-radius:18px;padding:24px 26px;margin:20px 0 16px}
+.band .bk{letter-spacing:.18em;font-size:11px;text-transform:uppercase;font-weight:600;color:#9FD9C2}
+.band h2{font-family:var(--serif);font-size:clamp(24px,3.4vw,36px);font-weight:600;color:#F4F1E8;line-height:1.15;margin-top:6px}
+.band p{color:#CFE4DA;font-size:14px;line-height:1.6;margin-top:10px;max-width:720px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:16px 0}
+.stat{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:16px 14px}
+.stat .n{font-family:var(--serif);font-weight:700;font-size:clamp(26px,3.6vw,38px);line-height:1;color:var(--deep)}
+.stat .l{letter-spacing:.1em;font-size:10px;text-transform:uppercase;color:var(--muted);font-weight:600;margin-top:8px;line-height:1.45}
+.stat.gold{background:var(--goldbg);border-color:#E8D5A8}
+.stat.gold .n{color:var(--goldink)}
+.stat.gold .l{color:#8A6A2F}
+.stat.red .n{color:var(--red)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;margin-top:6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px}
+.card h2{font-family:var(--serif);font-size:23px;font-weight:600;margin:0 0 10px;line-height:1.2}
+.row{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px dashed var(--line);font-size:14px;line-height:1.5}
+.row:last-of-type{border-bottom:0}
+.row .v{font-family:var(--serif);font-weight:700;font-size:19px;white-space:nowrap;color:var(--accent);text-align:right}
+.row .v.gold{color:var(--goldink)}.row .v.red{color:var(--red)}.row .v.mut{color:var(--muted);font-size:16px}
+.note{color:var(--muted);font-size:13px;line-height:1.6;margin-top:10px}
+.chartbox{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin-top:16px;overflow-x:auto}
+.chartbox h2{font-family:var(--serif);font-size:23px;font-weight:600;margin:0 0 4px}
+.chartbox .cap{color:var(--muted);font-size:13px;line-height:1.6;margin-bottom:14px;max-width:760px}
+svg{display:block;width:100%;height:auto;min-width:0}
+.foot{margin-top:28px;padding-top:14px;border-top:1px dashed var(--line);color:var(--muted);font-size:12px;line-height:1.7}
+@media (max-width:520px){.stats{grid-template-columns:repeat(auto-fit,minmax(132px,1fr))}.cards{grid-template-columns:1fr}.card{min-width:0}.v{white-space:normal}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="kicker">OpenFunctional &middot; Market Scan</div>
+<h1>Two reports told you the peptide lane was empty. It is not.</h1>
+<div class="date">Monday Sep 7, 2026. Seventh scan. The Aug 17 and Aug 24 reports both closed their peptide section with a version of &ldquo;still zero competitor tooling.&rdquo; That was wrong when it was written. There is a peptide practitioner platform with 109 peptide profiles, 87 protocols, six clinical calculators and its own AI, already carrying 412 providers. There is a $499 a month operating system that sells the whole peptide clinic: records, storefront, CRM, telehealth and compliance in one app, with a checkout a patient cannot complete until a clinician authorises it. Separately, this scan&rsquo;s own Reddit source died this week and reported success while returning nothing. Both are below.</div>
+
+<div class="band">
+<div class="bk">The decision</div>
+<h2>Ship the dated legal-status field on every peptide. It is the only ground the competition has not taken.</h2>
+<p>They have the dosing. They have the reconstitution maths, the interaction checker, the cost calculator and the protocol builder. What nobody ships is what the law permits today. The status of these compounds changed four times this year and the FDA has sent more than fifty warning letters to compounders, sellers and clinics since late 2024. A doctor reading any competitor&rsquo;s protocol builder gets a dose. They do not get &ldquo;this is not legally compoundable right now, and here is the date that could change.&rdquo; That sentence, with a date on it, is a small build and it is the thing that protects the licence of the doctor Asher just sold to.</p>
+</div>
+
+<div class="stats">
+<div class="stat"><div class="n">109</div><div class="l">Peptide profiles on the competitor</div></div>
+<div class="stat"><div class="n">412</div><div class="l">Providers already on it</div></div>
+<div class="stat gold"><div class="n">$499</div><div class="l">A month for the whole peptide clinic stack</div></div>
+<div class="stat red"><div class="n">50+</div><div class="l">FDA warning letters since late 2024</div></div>
+<div class="stat"><div class="n">Feb 2027</div><div class="l">Next FDA committee vote. Nothing is legal before it</div></div>
+</div>
+
+<div class="cards">
+
+<div class="card">
+<h2>Who showed up in the peptide lane</h2>
+<div class="row"><span>Peptide Education Hub. 109 profiles, 87 protocols, dosage and reconstitution and interaction and cost calculators, a protocol builder, its own &ldquo;Dr. Peptide AI&rdquo;</span><span class="v mut">412 docs</span></div>
+<div class="row"><span>LUKE Health. Records, storefront, CRM, telehealth and compliance in one app. Patients cannot check out until a clinician authorises the purchase</span><span class="v gold">$499/mo</span></div>
+<div class="row"><span>What a peptide clinic pays today across four to six disconnected systems, by LUKE&rsquo;s own accounting</span><span class="v red">$2,500 to $4,200</span></div>
+<div class="note">The rest of the field, priced by the same comparison: OptiMantra $99, Healthie $159, Pabau about $199, Cerbo about $250. This tells you what a doctor in the territory thinks software costs, which is useful the next time one asks.</div>
+</div>
+
+<div class="card">
+<h2>What the law now says out loud</h2>
+<div class="row"><span>California requires a disclaimer on any AI-written patient message about clinical information, and exempts anything a licensed provider read and reviewed</span><span class="v mut">AB 3030</span></div>
+<div class="row"><span>States requiring every party to consent before an AI listens to a visit</span><span class="v">13</span></div>
+<div class="row"><span>Chiropractic associations in California and Kansas published the same warning in May: AI will insert an exam finding, a spinal level or a patient statement that never happened</span><span class="v mut">May 2026</span></div>
+<div class="note">The exemption is the product. Build the review-and-sign checkpoint and the disclaimer requirement switches off. Skip it and every AI line OpenFunctional puts in front of a California patient carries a legal obligation the doctor did not know they took on. And when it goes wrong, the malpractice default is unchanged: the person who signed the note owns every word of it.</div>
+</div>
+
+<div class="card">
+<h2>The buyer wrote to you this week</h2>
+<div class="note" style="margin-top:0">A chiropractor, one year in, posted on Sep 4:</div>
+<div class="row"><span><em>&ldquo;I&rsquo;m so burnt out to the point where I was considering leaving the profession... I&rsquo;m already in a functional medicine practice and that&rsquo;s how I love to help patients... I did a free weekend seminar with Dr. Z&rsquo;s Functional Medicine Academy which I really enjoyed, but her program is pretty steep for me right now.&rdquo;</em></span><span class="v mut">Sep 4</span></div>
+<div class="note">Three facts in one post. Already practising functional medicine. Actively shopping. Named LabDX&rsquo;s parent as the thing they liked and cannot afford. The last report treated that company as a competitor to out-feature. The better read is that its price leaves a segment on the table, and that segment is the young doctor in Asher&rsquo;s territory. This is a pricing decision, which is Asher&rsquo;s, not a build.</div>
+</div>
+
+<div class="card">
+<h2>The gap nobody has filled</h2>
+<div class="row"><span>Credit hours of nutrition coursework New Jersey requires before a chiropractor may dispense supplements</span><span class="v">45</span></div>
+<div class="row"><span>New York, without a separate nutrition licence: counselling only inside a spinal treatment plan</span><span class="v mut">Restricted</span></div>
+<div class="note">Every protocol generator in this market, OpenFunctional included, writes the same recommendation for a chiropractor in Newark and one in Albany. A generator that knows the licence and the state and refuses to write past it is the one feature a competitor cannot copy in a fortnight, because it needs legal work per state rather than a change to a prompt.</div>
+</div>
+
+<div class="card">
+<h2>This scan&rsquo;s own source died, and said it was fine</h2>
+<div class="row"><span>Reddit fetches this morning that returned HTTP 200</span><span class="v">81</span></div>
+<div class="row"><span>Posts they contained</span><span class="v red">0</span></div>
+<div class="note">Reddit announced on June 30 that the old site would need a login, and it landed. Every request quietly redirected to a login page, which is a valid 351KB page, so the scraper&rsquo;s own health check passed and it logged eighty one successes with nothing in them. A run that collects nothing looked exactly like a run where nobody posted. A working replacement through Reddit&rsquo;s RSS feeds was written and produced this report&rsquo;s practitioner quotes, but it is throttled hard and carries no score or comment counts. Two fixes belong in the scan before next Monday: swap in the new fetch, and make an empty sweep fail loudly instead of passing green.</div>
+</div>
+
+<div class="card">
+<h2>Also worth knowing</h2>
+<div class="row"><span>AI supplement adverts produced per day by one firm, at $10 each, aimed at older American women</span><span class="v red">1,200</span></div>
+<div class="row"><span>IFM stood up the first real certifying board for the field this year. Pilot exam ran in April</span><span class="v mut">FMCP</span></div>
+<div class="row"><span>Both major chiropractic records systems still cannot report payer mix. One doctor was told to export to Excel</span><span class="v mut">Jane, ChiroTouch</span></div>
+<div class="row"><span>Life West is on probation from both its accreditors, escalated to September, and is reportedly about a year from running out of money</span><span class="v red">Territory</span></div>
+<div class="note">The advert number is the counterweight to last week&rsquo;s worry that &ldquo;we do not profit from what we recommend&rdquo; had become a selling point against the dispensary. The supplement advice a patient meets online is now, at the margin, made by a machine imitating a clinician. A named practitioner who has seen that patient&rsquo;s labs and signs the recommendation is the scarce thing in the room. That is true, and Asher can say it out loud.</div>
+</div>
+
+</div>
+
+<div class="chartbox">
+<h2>What to build, in order</h2>
+<div class="cap">Four recommendations out of this scan. The first is small and urgent. The last is not a build at all.</div>
+<div class="row"><span><strong>A. The dated legal-status field on every peptide.</strong> What it permits today, what it does not, when it last changed, when it could change next. For the six the FDA committee recommended in July, it has to say that a favourable vote is not authorisation and the rulemaking has not started.</span><span class="v">Small</span></div>
+<div class="row"><span><strong>B. Provenance and a review stamp on every generated clinical line.</strong> Each sentence traces to what produced it: the intake answer, the lab value with its range, the cited study. Then an explicit checkpoint where the provider marks it reviewed. Where that stamp is missing, the patient-facing version carries the California disclaimer and the human-contact line automatically.</span><span class="v">Medium</span></div>
+<div class="row"><span><strong>C. The scope and state guard on protocol generation.</strong> The generator knows the licence and the state and will not write past either. Peptides gated on prescriptive authority.</span><span class="v">Medium</span></div>
+<div class="row"><span><strong>D. An entry price for the doctor one year in.</strong> Packaging, not code, and Asher&rsquo;s call rather than the machine&rsquo;s. Raised because a real person posted the need this week and named the competitor that priced them out.</span><span class="v mut">Your call</span></div>
+</div>
+
+<div class="foot">
+Sources this run: Reddit through its RSS feeds after the old route closed, reaching r/Chiropractic, r/dietetics, r/healthIT, r/ehr and r/Naturopathy; fourteen open web searches; no Facebook import, for the seventh run running, so that source has still never carried a post. Twenty three usable items, above the honesty threshold. Nothing here was scraped from Facebook and no patient information appears anywhere in it. Every practitioner quote is from a practitioner. The full report with all links is in the market-scan repository at reports/2026-09-07.md.
+</div>
+</div>
+</body>
+</html>

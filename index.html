@@ -434,17 +434,21 @@ iframe{width:100%;height:calc(100vh - 150px);min-height:480px;border:1px solid v
       <span class="subtabs">
         <button class="subtab on" data-l="travel">Travel</button>
         <button class="subtab" data-l="of">OpenFunctional</button>
+        <button class="subtab" data-l="market">Market Scan</button>
         <button class="subtab" data-l="fleet">The Machine</button>
       </span>
       <span class="small" id="travelUpdated"></span>
       <span class="small" id="ofUpdated" style="display:none"></span>
+      <span class="small" id="marketUpdated" style="display:none"></span>
       <span class="small" id="fleetUpdated" style="display:none"></span>
       <button class="reload" id="travelReload">Reload</button>
       <button class="reload" id="ofReload" style="display:none">Reload</button>
+      <button class="reload" id="marketReload" style="display:none">Reload</button>
       <button class="reload" id="fleetReload" style="display:none">Reload</button>
     </div>
     <iframe id="travelFrame" title="Travel"></iframe>
     <iframe id="ofFrame" title="OpenFunctional" style="display:none"></iframe>
+    <iframe id="marketFrame" title="Market Scan" style="display:none"></iframe>
     <iframe id="fleetFrame" title="The Machine" style="display:none"></iframe>
   </div>
 
@@ -1217,6 +1221,9 @@ function loadTravel(force) {
 function loadOf(force) {
   loadPage('of', 'ofFrame', 'ofUpdated', 'No OpenFunctional page pushed yet.', force);
 }
+function loadMarket(force) {
+  loadPage('market', 'marketFrame', 'marketUpdated', 'No market scan pushed yet. It arrives with the Monday scan.', force);
+}
 function loadFleet(force) {
   loadPage('fleet', 'fleetFrame', 'fleetUpdated', 'No fleet page pushed yet.', force);
 }
@@ -1276,7 +1283,7 @@ function showMoneySub(which) {
 
 // Life sub-views: travel, OpenFunctional, and the machine's own health share one tab.
 // All three are INSIGHT ONLY; anything to act on is a TODAY tile.
-var LSUBS = { travel: 'travel', of: 'of', fleet: 'fleet' };
+var LSUBS = { travel: 'travel', of: 'of', market: 'market', fleet: 'fleet' };
 var curLifeSub = 'travel';
 function showLifeSub(which) {
   if (!LSUBS[which]) which = 'travel';
@@ -1289,6 +1296,7 @@ function showLifeSub(which) {
     document.getElementById(k + 'Reload').style.display = on;
   });
   if (which === 'of') loadOf(false);
+  else if (which === 'market') loadMarket(false);
   else if (which === 'fleet') loadFleet(false);
   else loadTravel(false);
 }
@@ -1614,6 +1622,7 @@ document.getElementById('taxReload').onclick = function () { loadTax(true); };
 document.querySelectorAll('#p-money .subtab').forEach(function (b) { b.onclick = function () { showMoneySub(b.dataset.m); }; });
 document.getElementById('travelReload').onclick = function () { loadTravel(true); };
 document.getElementById('ofReload').onclick = function () { loadOf(true); };
+document.getElementById('marketReload').onclick = function () { loadMarket(true); };
 document.getElementById('fleetReload').onclick = function () { loadFleet(true); };
 document.getElementById('spcReload').onclick = function () { loadSpc(true); };
 document.querySelectorAll('#p-life .subtab').forEach(function (b) { b.onclick = function () { showLifeSub(b.dataset.l); }; });
