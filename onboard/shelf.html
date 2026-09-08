@@ -1,0 +1,70 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Shelf Swap | NutriDyn with Asher Allen</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F1EFE8;--card:#FBFAF6;--ink:#2C2C2A;--muted:#6B6B66;--line:#e6e2da;--green:#1D9E75;--gold:#EF9F27}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:Inter,-apple-system,sans-serif;font-size:15px;line-height:1.6;padding:34px 18px 70px}
+.wrap{max-width:640px;margin:0 auto}
+.kicker{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--green);font-weight:700}
+h1{font-family:'Cormorant Garamond',Georgia,serif;font-size:38px;font-weight:600;line-height:1.12;margin-top:6px}
+.sub{color:var(--muted);font-size:14.5px;margin-top:10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-top:18px}
+label{display:block;font-weight:600;font-size:13px;margin:14px 0 4px}
+label span{font-weight:400;color:var(--muted)}
+input,textarea,select{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;font-family:Inter,sans-serif;font-size:15px;color:var(--ink)}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--green)}
+textarea{min-height:90px;resize:vertical}
+.btn{display:block;width:100%;text-align:center;background:var(--green);color:#fff;border:0;border-radius:12px;padding:15px;font-size:16px;font-weight:600;font-family:Inter,sans-serif;cursor:pointer;margin-top:20px;text-decoration:none}
+.hint{font-size:12.5px;color:var(--muted);margin-top:10px}
+.steps{margin-top:16px;font-size:13.5px;color:var(--muted)}
+.steps b{color:var(--ink)}
+.three{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.three div{flex:1;min-width:150px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:12.5px;color:var(--muted)}
+.three b{display:block;font-family:'Cormorant Garamond',Georgia,serif;font-size:22px;color:var(--green);font-weight:700}
+</style></head><body><div class="wrap">
+<div class="kicker">One shelf. One conversation.</div>
+<h1>Tell us what is on your shelf today.</h1>
+<div class="sub">The practices that switch cleanly do it one product at a time, with the match already worked out for them. Type or paste what you stock now. Within one business day you get a side by side from Asher: the identical NutriDyn product where one exists, the closest match where it does not, the gap you named, and the price on each line. No meeting required to get it.</div>
+
+<div class="three">
+<div><b>1</b>You list the shelf, two minutes.</div>
+<div><b>2</b>Asher sends the side by side, one business day.</div>
+<div><b>3</b>You pick the first three. Samples or a first order, your call.</div>
+</div>
+
+<div class="card"><form id="f">
+<label>Practice name</label><input id="practice" placeholder="e.g., Lake Pointe Wellness">
+<label>Your name, best email, and a cell for texts</label><input id="who" placeholder="Dr. ____ , you@practice.com, 404-___-____">
+<label>What is on your shelf right now? <span>(brand and product, one per line, or paste your order sheet. Rough is fine.)</span></label><textarea id="shelf" placeholder="e.g.&#10;Metagenics UltraFlora Balance&#10;Designs for Health Omega 3&#10;Thorne D3/K2&#10;..."></textarea>
+<label>The three conditions you treat most</label><input id="conditions" placeholder="e.g., gut, thyroid, joint pain">
+<label>Anything you wish you had and cannot get from your current lines? <span>(a strain, a form, a dose, a delivery format)</span></label><textarea id="gaps" placeholder="e.g., a spore probiotic my patients tolerate, a liquid D for kids"></textarea>
+<label>What would you like back first?</label>
+<select id="want">
+<option>Samples of the top three matches</option>
+<option>A first order with the new account discount</option>
+<option>The side by side only, I will read it first</option>
+<option>A 20 minute call to walk the shelf together</option>
+</select>
+<label>Ship-to address <span>(for samples)</span></label><input id="ship" placeholder="street, city, state, zip">
+<a class="btn" id="send" href="#">Send my shelf to Asher</a>
+<div class="hint">The button opens an email to asher@nutri-dyn.com with everything pre-filled. Press send. Asher Allen, M.S. Human Nutrition, NutriDyn, 678.577.1003.</div>
+</form>
+<div class="steps"><b>What happens next:</b> 1) You get the side by side within one business day. 2) You pick three. 3) Samples ship, or your first order goes in with the new account discount and your portal is switched on the same week. 4) At day 45 Asher walks your staff through reordering so it never depends on anyone remembering.</div>
+</div>
+<script>
+document.getElementById('send').addEventListener('click',function(e){
+e.preventDefault();
+function v(id){return (document.getElementById(id).value||'(blank)').trim()}
+var body='Hi Asher,%0A%0AHere is what is on my shelf today.%0A%0A'+
+'Practice: '+encodeURIComponent(v('practice'))+'%0A'+
+'Contact: '+encodeURIComponent(v('who'))+'%0A%0A'+
+'ON THE SHELF NOW:%0A'+encodeURIComponent(v('shelf'))+'%0A%0A'+
+'Top conditions: '+encodeURIComponent(v('conditions'))+'%0A'+
+'Gaps I wish I could fill: '+encodeURIComponent(v('gaps'))+'%0A'+
+'What I want back first: '+encodeURIComponent(v('want'))+'%0A'+
+'Ship to: '+encodeURIComponent(v('ship'))+'%0A%0AThank you!';
+window.location.href='mailto:asher@nutri-dyn.com?subject='+encodeURIComponent('Shelf Swap: '+v('practice'))+'&body='+body;
+});
+</script>
+</div></body></html>
