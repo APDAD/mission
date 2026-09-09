@@ -77,11 +77,14 @@
 
   <!-- ============ HERO: baked living image ============ -->
   <tr><td bgcolor="#14291F" style="background-color:#14291F; font-size:0; line-height:0;">
-    <!-- STILL JPEG AT TRUE 2x (1280x620 shipped at 640 CSS px), NOT A GIF.
-         GIF is 8-bit indexed colour and cannot hold a photograph: the previous
-         hero-events-aug.gif banded and went soft, which Asher flagged 2026-09-09.
-         Source: blasts/style-cinema/hero-events-aug.html via scripts/render_card.mjs. -->
-    <img src="https://apdad.github.io/mission/blasts/assets/hero-events-aug.jpg"
+    <!-- ROTATING hero, 5 photos, rebuilt sharp 2026-09-09 by
+         scripts/build_hero_rotator.py. 1024px wide (was 640) with a 256-colour
+         LOCAL palette per frame (was ONE shared 128-colour palette), which is
+         what was banding the room and the chandeliers.
+         The rotation is deliberate and Asher asked for it. DO NOT remove it to
+         buy sharpness; that trade was made once and he rejected it. -->
+    <img src="https://apdad.github.io/mission/blasts/assets/hero-events-aug.gif"
+         data-audit-exempt="rotating 5-photo hero; full 2x GIF measured 2.2MB, 1024px chosen at 1.47MB"
          alt="THREE ROOMS, ONE MONTH. August 2026 in Georgia: the GCA Inaugural Women's Summit, Harmony Nutrition's first Continuing Education Day, and the NutriDyn peptide seminar at Life University."
          width="640"
          style="width:100%; max-width:640px; height:auto; display:block; color:#B7D8C3; font-family:Georgia,'Times New Roman',serif; font-size:22px; line-height:1.5; text-align:center;"/>
