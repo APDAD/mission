@@ -77,7 +77,11 @@
 
   <!-- ============ HERO: baked living image ============ -->
   <tr><td bgcolor="#14291F" style="background-color:#14291F; font-size:0; line-height:0;">
-    <img src="https://apdad.github.io/mission/blasts/assets/hero-events-aug.gif"
+    <!-- STILL JPEG AT TRUE 2x (1280x620 shipped at 640 CSS px), NOT A GIF.
+         GIF is 8-bit indexed colour and cannot hold a photograph: the previous
+         hero-events-aug.gif banded and went soft, which Asher flagged 2026-09-09.
+         Source: blasts/style-cinema/hero-events-aug.html via scripts/render_card.mjs. -->
+    <img src="https://apdad.github.io/mission/blasts/assets/hero-events-aug.jpg"
          alt="THREE ROOMS, ONE MONTH. August 2026 in Georgia: the GCA Inaugural Women's Summit, Harmony Nutrition's first Continuing Education Day, and the NutriDyn peptide seminar at Life University."
          width="640"
          style="width:100%; max-width:640px; height:auto; display:block; color:#B7D8C3; font-family:Georgia,'Times New Roman',serif; font-size:22px; line-height:1.5; text-align:center;"/>
