@@ -1,0 +1,241 @@
+<!--
+  TEMPLATE-CINEMA-BASE - the UNCOLOURED build source. Do not read this for design;
+  read TEMPLATE-CINEMA.html, which is this file already run through the restyler.
+
+  WHY BOTH EXIST: scripts/restyle_blast.py maps colour BY EXACT HEX from the original
+  green set (#4FA877 / #2D6145 / #3A7C58 / #14291F ...). Once a file has been restyled
+  those hexes are gone, so restyling it a second time with a different accent is a no-op.
+  So the machine builds every new blast from THIS file, then restyles it once to the
+  topic's colour. scripts/build_blast.py does both steps.
+-->
+<!--
+  ============================================================================
+  TEMPLATE-CINEMA v2 - the canonical blast skeleton from 2026-08-05 forward.
+  Derived from the browser-verified, adversarially-reviewed mockup
+  blasts/2026-08-05-vitamin-d-cinema-mockup.html (workflow wf_501eee48-1a3:
+  law + email-client + identity lenses, all fixes folded in).
+  Spec and tokens: style-cinema/CINEMA-STYLE.md. THE CINEMA LAW in ../CLAUDE.md
+  governs. TEMPLATE-DIRECTMAIL.html is RETIRED for new sends.
+
+  HOW TO USE:
+  1. Copy to blasts/YYYY-MM-DD-<slug>.html; replace every vitamin-D-specific
+     value (hero gif, trio findings, letter copy, numbers image, product,
+     buttons, alt texts). All styles are INLINE by design - keep it that way;
+     the <style> block is progressive enhancement only.
+  2. HERO: copy style-cinema/hero-vitamin-d.html, rewrite the lockup, then
+       node scripts/render_card.mjs blasts/style-cinema/hero-<slug>.html /tmp/f --frames 12 1200 675
+       python3 scripts/make_gif.py /tmp/f blasts/style-cinema/hero-<slug>.gif 160 640
+     Host at mission/blasts/assets/ (commit, push, curl-verify 200). Frame 1
+     must be the complete composition (Outlook freezes GIFs).
+  3. NUMBERS: the findings section is a BAKED IMAGE (email-in-a-picture law:
+     the picture IS the table, never both). Copy style-cinema/numbers-vitamin-d.html,
+     re-verify every number against the paper THAT DAY, render with height 0
+     (full page), host it, and write the numbers into the img alt text.
+  4. VIDEO: per-send choice (spec): living hero gif / real-footage loop /
+     still + play. The band is machine work per THE VIDEO LAW; no band when no
+     matched video exists. Never a visible placeholder.
+  5. Product images SELF-HOSTED at mission/blasts/assets/ (nutridyn.com
+     re-platformed 2026-08-05; cdn/shop URLs are dead).
+  6. Signature: the canonical block VERBATIM from
+     https://apdad.github.io/mission/sig/signature.html - fetch it fresh, never
+     retype it. It keeps its own green; the one-accent rule governs the body.
+  7. Two CTAs only. WE-voice. Handout attached, said in the letter. All laws.
+  ============================================================================
+-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="color-scheme" content="light"/>
+<meta name="supported-color-schemes" content="light"/>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=Source+Sans+3:wght@300;400;600&display=swap');
+  /* Progressive enhancement only. Every load-bearing style is inline. */
+  @media only screen and (max-width:480px) {
+    .pad { padding-left:24px !important; padding-right:24px !important; }
+    .h-display { font-size:24px !important; }
+    .trio-cell { display:block !important; width:100% !important; padding:16px 0 !important; }
+    .btn-cell { display:block !important; margin:0 auto 12px !important; }
+  }
+  /* Gmail dark mode: re-assert the bands and kickers it likes to repaint */
+  [data-ogsc] .kick-paper { color:#0f7a56 !important; }
+  [data-ogsb] .band-dark { background-color:#14291F !important; }
+  [data-ogsb] .band-paper { background-color:#F1EFE8 !important; }
+</style>
+<!--[if mso]><style>
+  body, table, td, p, a, div { font-family: Helvetica, Arial, sans-serif !important; }
+  .serif, .h-display { font-family: Georgia, 'Times New Roman', serif !important; }
+</style><![endif]-->
+
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#F1EFE8" style="background-color:#F1EFE8;"><tr><td align="center">
+<!--[if mso]><table role="presentation" width="640" align="center" cellpadding="0" cellspacing="0" border="0"><tr><td><![endif]-->
+<table role="presentation" width="100%" align="center" cellpadding="0" cellspacing="0" border="0" style="width:100%; max-width:640px;">
+
+  <!-- ============ MASTHEAD: NutriDyn logo (Asher's standard, 2026-09-08) ============ -->
+  <tr><td bgcolor="#F1EFE8" align="center" class="band-paper" style="background-color:#F1EFE8; padding:26px 48px 22px; font-size:0; line-height:0;">
+    <img src="https://apdad.github.io/mission/blasts/assets/nutridyn-logo-ink.png" alt="NutriDyn" width="212"
+         style="width:212px; max-width:60%; height:auto; display:block; margin:0 auto;"/>
+  </td></tr>
+
+
+  <!-- ============ HERO: baked living image ============ -->
+  <tr><td bgcolor="#14291F" style="background-color:#14291F; font-size:0; line-height:0;">
+    <img src="https://apdad.github.io/mission/blasts/assets/hero-events-aug.gif"
+         alt="THREE ROOMS, ONE MONTH. August 2026 in Georgia: the GCA Inaugural Women's Summit, Harmony Nutrition's first Continuing Education Day, and the NutriDyn peptide seminar at Life University."
+         width="640"
+         style="width:100%; max-width:640px; height:auto; display:block; color:#B7D8C3; font-family:Georgia,'Times New Roman',serif; font-size:22px; line-height:1.5; text-align:center;"/>
+  </td></tr>
+
+  <!-- ============ DARK TRIO BAND: three findings ============ -->
+  <tr><td bgcolor="#14291F" class="pad band-dark" style="background-color:#14291F; padding:44px 40px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
+      <td class="trio-cell" width="33%" align="center" valign="top" style="padding:0 8px;">
+        <div class="serif" style="font-family:'Cinzel',Georgia,serif; font-weight:500; font-size:34px; color:#B7D8C3; text-align:center;">3</div>
+        <div style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif; font-size:12px; letter-spacing:3px; text-transform:uppercase; color:#B7D8C3; text-align:center; padding-top:8px; line-height:1.6;">Rooms in<br>17 days</div>
+      </td>
+      <td class="trio-cell" width="33%" align="center" valign="top" style="padding:0 8px;">
+        <div class="serif" style="font-family:'Cinzel',Georgia,serif; font-weight:500; font-size:34px; color:#B7D8C3; text-align:center;">4</div>
+        <div style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif; font-size:12px; letter-spacing:3px; text-transform:uppercase; color:#B7D8C3; text-align:center; padding-top:8px; line-height:1.6;">Practices started<br>an account</div>
+      </td>
+      <td class="trio-cell" width="33%" align="center" valign="top" style="padding:0 8px;">
+        <div class="serif" style="font-family:'Cinzel',Georgia,serif; font-weight:500; font-size:34px; color:#B7D8C3; text-align:center;">3</div>
+        <div style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif; font-size:12px; letter-spacing:3px; text-transform:uppercase; color:#B7D8C3; text-align:center; padding-top:8px; line-height:1.6;">More events<br>before October</div>
+      </td>
+    </tr></table>
+  </td></tr>
+
+  <tr><td bgcolor="#F1EFE8" class="pad band-paper" style="background-color:#F1EFE8; padding:52px 48px;">
+    <div style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:5px;text-transform:uppercase;color:#2D6145;text-align:center;">What August Looked Like</div><h2 class="h-display" style="font-family:'Cinzel',Georgia,serif;font-weight:400;font-size:27px;line-height:1.25;letter-spacing:2px;text-transform:uppercase;color:#2C2921;text-align:center;margin:14px 0 0;">We Were In Three Rooms.<br>Here Is What Happened In Them.</h2><table role="presentation" align="center" cellpadding="0" cellspacing="0" style="margin:30px auto;"><tr><td width="56" height="1" bgcolor="#4FA877" style="font-size:1px;line-height:1px;">&#8202;</td></tr></table><div style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:1.7;color:#3A362E;text-align:left;"><p style="margin:0 0 18px;">Hope you are well. This one is not research. It is a look at where we actually were last month, because the best way to know whether a company is worth working with is to see whether it shows up.</p><p style="margin:0 0 18px;">Three events in seventeen days. A women's summit, a continuing education day for dietitians, and a four hour peptide seminar. Photos are below, and the practical takeaway from the first one is attached to this email.</p></div>
+  </td></tr>
+
+  <tr><td bgcolor="#F1EFE8" class="pad band-paper" style="background-color:#F1EFE8; padding:52px 48px;">
+    <div style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:5px;text-transform:uppercase;color:#2D6145;text-align:center;">Thursday, August 13 &middot; Georgia Chiropractic Association</div><h2 class="h-display" style="font-family:'Cinzel',Georgia,serif;font-weight:400;font-size:27px;line-height:1.25;letter-spacing:2px;text-transform:uppercase;color:#2C2921;text-align:center;margin:14px 0 0;">The Inaugural<br>GCA Women's Summit</h2><table role="presentation" align="center" cellpadding="0" cellspacing="0" style="margin:30px auto;"><tr><td width="56" height="1" bgcolor="#4FA877" style="font-size:1px;line-height:1px;">&#8202;</td></tr></table><div style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:1.7;color:#3A362E;text-align:left;"><p style="margin:0 0 18px;">The GCA ran its first ever Women's Summit and NutriDyn was a supporting sponsor. <strong>Dr. Deb Schreibman</strong> spoke on the integrated female practitioner, and later sat on the panel.</p><p style="margin:0 0 18px;">What made her talk land was not a product. It was a system. She showed the room how she screens a new female patient in the first few minutes of an intake, and what she does with each answer.</p><p style="margin:0 0 18px;">She also spoke openly about <strong>private labeling with NutriDyn</strong>, her own practice name on the bottle. She was direct about what it did for her. The practice took off, and the refill comes back to her instead of going to a shelf somewhere else. That was the part the room leaned in for.</p><p style="margin:0 0 18px;">One doctor in that room emailed us five days later and asked us to set her practice up. That is the whole reason we sponsor these.</p></div>
+  </td></tr>
+
+  <tr><td bgcolor="#F1EFE8" class="band-paper" style="background-color:#F1EFE8; padding:0 48px 8px; font-size:0; line-height:0;">
+    <img src="https://apdad.github.io/mission/blasts/assets/photos-gca-summit.jpg" alt="Four photos from the GCA Inaugural Women's Summit on Thursday August 13, 2026: Dr. Deb Schreibman speaking, the practitioner panel, the NutriDyn table, and the room during the session." width="544" style="width:100%; max-width:544px; height:auto; display:block; margin:0 auto; color:#3A362E; font-family:Helvetica,Arial,sans-serif; font-size:14px; line-height:1.6;"/>
+  </td></tr>
+
+  <tr><td bgcolor="#F1EFE8" class="band-paper" style="background-color:#F1EFE8; padding:0 48px 8px; font-size:0; line-height:0;">
+    <img src="https://apdad.github.io/mission/blasts/assets/photos-gca-detail.jpg" alt="Details from the GCA Women's Summit: the attendee program listing NutriDyn as a supporting sponsor, a practitioner reading a NutriDyn label, and the NutriDyn table during the break." width="544" style="width:100%; max-width:544px; height:auto; display:block; margin:0 auto; color:#3A362E; font-family:Helvetica,Arial,sans-serif; font-size:14px; line-height:1.6;"/>
+  </td></tr>
+
+  <tr><td bgcolor="#F1EFE8" class="pad band-paper" style="background-color:#F1EFE8; padding:40px 48px 46px;">
+    <div style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:5px;text-transform:uppercase;color:#2D6145;text-align:center;">The Takeaway, Attached</div><h2 class="h-display" style="font-family:'Cinzel',Georgia,serif;font-weight:400;font-size:27px;line-height:1.25;letter-spacing:2px;text-transform:uppercase;color:#2C2921;text-align:center;margin:14px 0 0;">Dr. Deb's Patient Check-In<br>And The Doctor's Key</h2><table role="presentation" align="center" cellpadding="0" cellspacing="0" style="margin:30px auto;"><tr><td width="56" height="1" bgcolor="#4FA877" style="font-size:1px;line-height:1px;">&#8202;</td></tr></table><div style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:1.7;color:#3A362E;text-align:left;"><p style="margin:0 0 18px;">Here they are, side by side. On the left, the twelve question check-in your front desk hands a woman on a clipboard while she waits. On the right, the single page that tells you what her answers mean and what to do with her on Friday morning.</p><p style="margin:0 0 18px;"><strong>Both are attached to this email as PDFs.</strong> They are built to be self explanatory, so photocopy them and use them as they are. If you would rather walk through them with us before you put one in front of a patient, say so in a reply and we will go through them together.</p></div>
+  </td></tr>
+
+  <tr><td bgcolor="#F1EFE8" class="band-paper" style="background-color:#F1EFE8; padding:0 48px 8px; font-size:0; line-height:0;">
+    <img src="https://apdad.github.io/mission/blasts/assets/handouts-drdeb.jpg" alt="The two Dr. Deb Schreibman handouts side by side, both attached to this email as PDFs. Left: the 60-second women's health check-in, twelve yes or no questions in four boxes covering stress and sleep, energy and blood sugar, hormones and thyroid, and gut and inflammation, with a plan box at the bottom. Right: Start Friday, one patient, three steps, the take-home companion from the GCA Women's Summit covering screen, reset and restock, with the foundation list of magnesium glycinate, vitamin D3 with K2, omega-3 EPA and DHA, and 30 grams of protein at breakfast." width="544" style="width:100%; max-width:544px; height:auto; display:block; margin:0 auto; color:#3A362E; font-family:Helvetica,Arial,sans-serif; font-size:14px; line-height:1.6;"/>
+  </td></tr>
+
+  <tr><td bgcolor="#F1EFE8" class="pad band-paper" style="background-color:#F1EFE8; padding:52px 48px;">
+    <div style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:5px;text-transform:uppercase;color:#2D6145;text-align:center;">Friday, August 28 &middot; Harmony Nutrition</div><h2 class="h-display" style="font-family:'Cinzel',Georgia,serif;font-weight:400;font-size:27px;line-height:1.25;letter-spacing:2px;text-transform:uppercase;color:#2C2921;text-align:center;margin:14px 0 0;">A Room Full Of<br>Registered Dietitians</h2><table role="presentation" align="center" cellpadding="0" cellspacing="0" style="margin:30px auto;"><tr><td width="56" height="1" bgcolor="#4FA877" style="font-size:1px;line-height:1px;">&#8202;</td></tr></table><div style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:1.7;color:#3A362E;text-align:left;"><p style="margin:0 0 18px;">Harmony Nutrition ran their first annual Continuing Education Day, and we spent it with a profession that does not usually get sold to well. Registered dietitians are careful, evidence first, and unimpressed by a pitch.</p><p style="margin:0 0 18px;">We answered questions about formulation, sourcing and what practitioner exclusive actually means, and we let the talks do the teaching. <strong>Shayna Komar, RD</strong> gave the integrative oncology session.</p><p style="margin:0 0 18px;">Three practitioners from that day started an account with us afterward. Not because a rep chased them, but because the answers held up.</p></div>
+  </td></tr>
+
+  <tr><td bgcolor="#F1EFE8" class="band-paper" style="background-color:#F1EFE8; padding:0 48px 8px; font-size:0; line-height:0;">
+    <img src="https://apdad.github.io/mission/blasts/assets/photos-harmony.jpg" alt="Two photos from Harmony Nutrition's first Continuing Education Day on Friday August 28, 2026: the full group in front of the integrative oncology session, and the NutriDyn team at the banner." width="544" style="width:100%; max-width:544px; height:auto; display:block; margin:0 auto; color:#3A362E; font-family:Helvetica,Arial,sans-serif; font-size:14px; line-height:1.6;"/>
+  </td></tr>
+
+  <tr><td bgcolor="#F1EFE8" class="pad band-paper" style="background-color:#F1EFE8; padding:52px 48px;">
+    <div style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:5px;text-transform:uppercase;color:#2D6145;text-align:center;">Saturday, August 29 &middot; Life University</div><h2 class="h-display" style="font-family:'Cinzel',Georgia,serif;font-weight:400;font-size:27px;line-height:1.25;letter-spacing:2px;text-transform:uppercase;color:#2C2921;text-align:center;margin:14px 0 0;">Four Hours On Peptides,<br>Nothing Held Back</h2><table role="presentation" align="center" cellpadding="0" cellspacing="0" style="margin:30px auto;"><tr><td width="56" height="1" bgcolor="#4FA877" style="font-size:1px;line-height:1px;">&#8202;</td></tr></table><div style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:1.7;color:#3A362E;text-align:left;"><p style="margin:0 0 18px;">We brought <strong>Dr. Matt Chalmers</strong> in from Texas and gave him four hours in room 152 at Life University. Peptides, GLP-1 agonists, and the nutritional support that decides whether a patient tolerates any of it.</p><p style="margin:0 0 18px;">The honest version, which is why we ran it: most of what gets charted as a side effect is a nutrient gap wearing a costume. He covered how to apply peptides in an office, and just as usefully, how to support a patient well if you decide peptides are not for your practice.</p><p style="margin:0 0 18px;">One attendee sent a clinical question about a patient on a biologic that same weekend. Dr. Chalmers answered it directly. That is the level the room ran at.</p><p style="margin:0 0 18px;"><strong>If you could not be there, you still get the material.</strong> We put the seminar companion pages online and left them open. No login, no form. <a href="https://openfunctional.com/peptides" style="color:#2D6145;font-weight:600;text-decoration:underline;">Read the peptide seminar companion pages</a>.</p></div>
+  </td></tr>
+
+  <tr><td bgcolor="#F1EFE8" class="band-paper" style="background-color:#F1EFE8; padding:0 48px 8px; font-size:0; line-height:0;">
+    <img src="https://apdad.github.io/mission/blasts/assets/chalmers-room.jpg" alt="Dr. Matt Chalmers DC standing at the front of room 152 at Life University on Saturday August 29, 2026, with his opening slide on the screen behind him reading Peptides, GLP-1 Agonists and Nutritional Support, How to Maximize Results and Minimize Side Effects, and the NutriDyn product table set up in front of him." width="544" style="width:100%; max-width:544px; height:auto; display:block; margin:0 auto; color:#3A362E; font-family:Helvetica,Arial,sans-serif; font-size:14px; line-height:1.6;"/>
+  </td></tr>
+
+  <tr><td bgcolor="#D5D0C6" align="center" class="pad" style="background-color:#D5D0C6; padding:52px 48px;">
+    <div style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:5px;text-transform:uppercase;color:#2D6145;text-align:center;">He Asked Us About Coming Back</div><h2 class="h-display" style="font-family:'Cinzel',Georgia,serif;font-weight:400;font-size:27px;line-height:1.25;letter-spacing:2px;text-transform:uppercase;color:#2C2921;text-align:center;margin:14px 0 0;">Dr. Chalmers Wants To<br>Come Back To Atlanta</h2><table role="presentation" align="center" cellpadding="0" cellspacing="0" style="margin:30px auto;"><tr><td width="56" height="1" bgcolor="#4FA877" style="font-size:1px;line-height:1px;">&#8202;</td></tr></table><div style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:1.7;color:#3A362E;text-align:left;"><p style="margin:0 0 18px;">He wants to come back to Atlanta and we want him back. We do not have the weekend yet, so we are not announcing one. What we are doing first is building the list, because a room is only worth running if the right practices are in it.</p><p style="margin:0 0 18px;">Reply and tell us to put you on it. You will hear the date before it goes out to anyone else, and we will build the day around what the list asks for.</p></div><table role="presentation" align="center" cellpadding="0" cellspacing="0" style="margin-top:26px;"><tr>
+      <td class="btn-cell" bgcolor="#4FA877" style="background-color:#4FA877; padding:16px 34px;">
+        <a href="https://nutridyn.com" style="display:block; color:#14291F; font-family:'Source Sans 3',Helvetica,Arial,sans-serif; font-size:14px; font-weight:600; letter-spacing:2.5px; text-transform:uppercase; text-decoration:none;">Place Your Order</a>
+      </td>
+      <td width="12" style="font-size:0; line-height:0;">&nbsp;</td>
+      <td class="btn-cell" style="border:1px solid #4FA877; padding:15px 33px;">
+        <a href="mailto:asher@nutri-dyn.com?subject=Put%20me%20on%20the%20list%20for%20Dr.%20Chalmers&body=Asher%2C%0A%0APut%20me%20on%20the%20list%20for%20the%20next%20Dr.%20Chalmers%20day%20in%20Atlanta.%0A%0APractice%3A%0ACity%3A%0A%0AWhat%20I%20want%20him%20to%20cover%3A%0A%0AThe%20association%20or%20society%20you%20should%20be%20showing%20up%20for%20is%3A%0A%0AAlso%2C%20the%20thing%20I%20wish%20NutriDyn%20made%20is%3A%0A%0A" style="display:block; color:#2D6145; font-family:'Source Sans 3',Helvetica,Arial,sans-serif; font-size:14px; font-weight:400; letter-spacing:2.5px; text-transform:uppercase; text-decoration:none;">Email Asher</a>
+      </td>
+    </tr></table>
+  </td></tr>
+
+  <tr><td bgcolor="#F1EFE8" class="pad band-paper" style="background-color:#F1EFE8; padding:50px 48px 26px;">
+    <div style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:5px;text-transform:uppercase;color:#2D6145;text-align:center;">Where To Find Us Next</div><h2 class="h-display" style="font-family:'Cinzel',Georgia,serif;font-weight:400;font-size:27px;line-height:1.25;letter-spacing:2px;text-transform:uppercase;color:#2C2921;text-align:center;margin:14px 0 0;">Thursday Night, Then<br>Three More In September</h2><table role="presentation" align="center" cellpadding="0" cellspacing="0" style="margin:30px auto;"><tr><td width="56" height="1" bgcolor="#4FA877" style="font-size:1px;line-height:1px;">&#8202;</td></tr></table><div style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:1.7;color:#3A362E;text-align:left;"><p style="margin:0 0 18px;">First stop is the GCA Fall Social. Free, open to members and non-members alike, and NutriDyn is one of the sponsors. Tap the flyer to register with the GCA.</p></div>
+  </td></tr>
+
+  <tr><td bgcolor="#F1EFE8" class="band-paper" style="background-color:#F1EFE8; padding:0 48px 10px; font-size:0; line-height:0;">
+    <a href="https://gachiro.ce21.com/item/gca-2026-fall-social-147318" style="text-decoration:none;"><img src="https://apdad.github.io/mission/blasts/assets/gca-fall-social.jpg" width="544"
+         alt="GCA Fall Social, Thursday September 10, 6:00 to 8:00 PM, Voodoo Brewing Co, 1010 Mansell Rd, Roswell GA 30076. Members, non-members and GCA Partners welcome. NutriDyn is a sponsor. Tap to register."
+         style="width:100%; max-width:544px; height:auto; display:block; margin:0 auto; border:0; color:#3A362E; font-family:Helvetica,Arial,sans-serif; font-size:14px; line-height:1.6;"/></a>
+  </td></tr>
+
+  <tr><td bgcolor="#F1EFE8" class="pad band-paper" style="background-color:#F1EFE8; padding:16px 48px 50px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:4px 0 0;"><tr><td width="104" valign="top" style="padding:13px 12px 13px 0;border-top:1px solid #DCD8CC;"><div style="font-family:'Cinzel',Georgia,serif;font-size:19px;color:#2D6145;line-height:1.1;">Sep 10</div><div style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#6B6B66;padding-top:3px;">Thursday</div></td><td valign="top" style="padding:13px 0;border-top:1px solid #DCD8CC;"><div style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif;font-size:15.5px;font-weight:600;color:#2C2921;">GCA Fall Social</div><div style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif;font-size:14px;color:#6B6B66;padding-top:2px;">Voodoo Brewing Co, 1010 Mansell Rd, Roswell. 6 to 8pm, free.</div></td></tr><tr><td width="104" valign="top" style="padding:13px 12px 13px 0;border-top:1px solid #DCD8CC;"><div style="font-family:'Cinzel',Georgia,serif;font-size:19px;color:#2D6145;line-height:1.1;">Sep 12&ndash;13</div><div style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#6B6B66;padding-top:3px;">Sat &amp; Sun</div></td><td valign="top" style="padding:13px 0;border-top:1px solid #DCD8CC;"><div style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif;font-size:15.5px;font-weight:600;color:#2C2921;">The Academy, with Dr. Joe Esposito</div><div style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif;font-size:14px;color:#6B6B66;padding-top:2px;">Embassy Suites Atlanta Perimeter, 1030 Crown Pointe Pkwy, Dunwoody.</div></td></tr><tr><td width="104" valign="top" style="padding:13px 12px 13px 0;border-top:1px solid #DCD8CC;"><div style="font-family:'Cinzel',Georgia,serif;font-size:19px;color:#2D6145;line-height:1.1;">Sep 16&ndash;19</div><div style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#6B6B66;padding-top:3px;">Wed&ndash;Sat</div></td><td valign="top" style="padding:13px 0;border-top:1px solid #DCD8CC;"><div style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif;font-size:15.5px;font-weight:600;color:#2C2921;">Life Vision Extravaganza</div><div style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif;font-size:14px;color:#6B6B66;padding-top:2px;">Renaissance Atlanta Waverly, 2450 Galleria Pkwy SE. Booth 310.</div></td></tr></table><table role="presentation" align="center" cellpadding="0" cellspacing="0" style="margin:34px auto;"><tr><td width="56" height="1" bgcolor="#4FA877" style="font-size:1px;line-height:1px;">&#8202;</td></tr></table><div style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:1.7;color:#3A362E;text-align:left;"><p style="margin:0 0 18px;"><strong>And if you are not a chiropractor or a dietitian, we hear you.</strong> Our practices include medical doctors, nurse practitioners, physician assistants, pharmacists, acupuncturists and nutritionists, and two associations is not a fair spread. Tell us which association or society we should be showing up for and we will look at sponsoring it. That is a real ask, not a courtesy one.</p></div>
+  </td></tr>
+
+  <tr><td bgcolor="#EAE7DD" class="pad" style="background-color:#EAE7DD; padding:50px 48px;">
+    <div style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:5px;text-transform:uppercase;color:#2D6145;text-align:center;">The 48 Hour Certification</div><h2 class="h-display" style="font-family:'Cinzel',Georgia,serif;font-weight:400;font-size:27px;line-height:1.25;letter-spacing:2px;text-transform:uppercase;color:#2C2921;text-align:center;margin:14px 0 0;">Seven Georgia Practitioners<br>Are Doing It This Year</h2><table role="presentation" align="center" cellpadding="0" cellspacing="0" style="margin:30px auto;"><tr><td width="56" height="1" bgcolor="#4FA877" style="font-size:1px;line-height:1px;">&#8202;</td></tr></table><div style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:1.7;color:#3A362E;text-align:left;"><p style="margin:0 0 18px;">NutriDyn runs a <strong>48 hour Functional Nutrition Certification</strong> with Northwestern Health Sciences University, taught by Dr. Charles Sefcik. Four weekends, twelve continuing education hours each. Do all four and you are certified.</p><p style="margin:0 0 18px;">We will say it plainly. <strong>It is the top functional nutrition course there is.</strong> Not the longest and not the flashiest. The one that moves you from picking a formula because it sounds right to knowing exactly why it belongs in the protocol.</p><p style="margin:0 0 18px;">Seven practitioners here in Georgia are working through it this year, and session one runs <strong>September 11 and 12</strong>. We are proud of them, we are pulling for them, and we wanted you to know they are doing it.</p><p style="margin:0 0 18px;"><strong>You can still get in.</strong> The remaining sessions are October 9 and 10, November 13 and 14, and December 4 and 5. Take one on its own if that is what your calendar allows. Take all four and you walk out certified.</p></div>
+  </td></tr>
+
+  <tr><td bgcolor="#EAE7DD" style="background-color:#EAE7DD; padding:6px 48px 10px; font-size:0; line-height:0;">
+    <a href="https://nutridyn.com/education" style="text-decoration:none;"><img src="https://apdad.github.io/mission/blasts/assets/edu-landing.jpg" width="544"
+         alt="The NutriDyn education page at nutridyn.com/education, listing every seminar and certification NutriDyn sponsors, including the Great Lakes Conference 2026 on October 24 and 25 at the JW Marriott in Bloomington Minnesota and the 48 Hour Functional Nutrition Certification. Tap to open the page and sign up."
+         style="width:100%; max-width:544px; height:auto; display:block; margin:0 auto; border:0; color:#3A362E; font-family:Helvetica,Arial,sans-serif; font-size:14px; line-height:1.6;"/></a>
+  </td></tr>
+
+  <tr><td bgcolor="#EAE7DD" class="pad" style="background-color:#EAE7DD; padding:16px 48px 50px;">
+    <div style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:1.7;color:#3A362E;text-align:left;"><p style="margin:0 0 18px;">Tap that page and you are on <a href="https://nutridyn.com/education" style="color:#2D6145;font-weight:600;text-decoration:underline;">nutridyn.com/education</a>, which is every seminar and certification we sponsor in one place, not only the ones we run in Georgia. If you are willing to travel, there is more on it than you think.</p><p style="margin:0 0 18px;">Registration for the certification itself goes through Northwestern. <a href="https://celearning.nwhealth.edu/product/functional-nutrition-certification" style="color:#2D6145;font-weight:600;text-decoration:underline;">Sign up for the Functional Nutrition Certification here</a>. If you would rather ask us what it covers first, reply to this email and ask.</p></div>
+  </td></tr>
+
+  <tr><td bgcolor="#F1EFE8" class="pad band-paper" style="background-color:#F1EFE8; padding:52px 48px;">
+    <div style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:5px;text-transform:uppercase;color:#2D6145;text-align:center;">Saturday and Sunday, October 24 and 25 &middot; Bloomington, Minnesota</div><h2 class="h-display" style="font-family:'Cinzel',Georgia,serif;font-weight:400;font-size:27px;line-height:1.25;letter-spacing:2px;text-transform:uppercase;color:#2C2921;text-align:center;margin:14px 0 0;">The Great Lakes<br>Conference</h2><table role="presentation" align="center" cellpadding="0" cellspacing="0" style="margin:30px auto;"><tr><td width="56" height="1" bgcolor="#4FA877" style="font-size:1px;line-height:1px;">&#8202;</td></tr></table><div style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:1.7;color:#3A362E;text-align:left;"><p style="margin:0 0 18px;">If you are willing to get on a plane, this is the one we would put you on. Two days at the JW Marriott in Bloomington, fourteen CE hours, and this year the theme is <strong>The Root Cause Revolution</strong>.</p><p style="margin:0 0 18px;">The roster includes Rick Mayfield, our chief science officer, and <strong>Dr. Matt Chalmers</strong>, the same speaker we brought to Life University in August, along with Kenneth Johnson, Scott Bergman, Rhonda Jolliffe, Jose Colon, Tolu Oyelowo, Jeffrey Rich and Joshua Berka.</p><p style="margin:0 0 18px;"><strong>For Georgia chiropractors:</strong> Georgia is one of the sixteen states Northwestern filed CE hours for, and our education team tells us Georgia has come through. The registration page carries the official status, so confirm it there before you count the hours.</p><p style="margin:0 0 18px;">Early bird pricing closes <strong>Thursday September 24</strong>. <a href="https://nutridyn.com/glc" style="color:#2D6145;font-weight:600;text-decoration:underline;">See the agenda and register</a>.</p></div>
+  </td></tr>
+
+  <!-- ============ NUTRIDYN CONNECT PRO: the structural event (portal activation) ============ -->
+  <tr><td bgcolor="#D5D0C6" class="pad" style="background-color:#D5D0C6; padding:52px 48px;">
+    <div style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:5px;text-transform:uppercase;color:#2D6145;text-align:center;">The Part That Runs Without You</div><h2 class="h-display" style="font-family:'Cinzel',Georgia,serif;font-weight:400;font-size:27px;line-height:1.25;letter-spacing:2px;text-transform:uppercase;color:#2C2921;text-align:center;margin:14px 0 0;">Your Own Storefront,<br>Already In Your Account</h2><table role="presentation" align="center" cellpadding="0" cellspacing="0" style="margin:30px auto;"><tr><td width="56" height="1" bgcolor="#4FA877" style="font-size:1px;line-height:1px;">&#8202;</td></tr></table><div style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:1.7;color:#3A362E;text-align:left;"><p style="margin:0 0 18px;">Everything above this asks you to go somewhere. This one does not. <strong>NutriDyn Connect Pro</strong> gives your practice its own store at yourpractice.nutridyn.com. Your patient orders from it, we pick it and ship it to their door, and you never touch a bottle or carry a shelf.</p><p style="margin:0 0 18px;">Here is what that looks like in real life. One practice on this book has not placed a single clinic order in two and a half years. Their store has still shipped thirteen times to the same patient across that stretch, and partway through she moved herself from one bottle to two. Nobody called her. Nobody chased her. A second practice went from four store orders a month to nine.</p><p style="margin:0 0 18px;">It comes with the account, there is nothing to install, and standing it up is our job and not yours. <strong>Eighty one practices on this book were running one as of August.</strong> If yours is not one of them, or you do not have an account with us yet, that is the same one line reply.</p></div>
+  </td></tr>
+
+  <!-- ============ FEEDBACK (THE FEEDBACK LAW) ============ -->
+  <tr><td bgcolor="#F1EFE8" align="center" class="pad band-paper" style="background-color:#F1EFE8; padding:52px 48px 40px;">
+    <div class="kick-paper" style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif; font-size:12px; letter-spacing:5px; text-transform:uppercase; color:#2D6145; text-align:center;">Building This With You</div>
+    <h2 class="h-display" style="font-family:'Cinzel',Georgia,serif; font-weight:400; font-size:22px; line-height:1.25; letter-spacing:2px; text-transform:uppercase; color:#2C2921; text-align:center; margin:14px 0 0;">What Should We Fix Next?</h2>
+    <table role="presentation" align="center" cellpadding="0" cellspacing="0" style="margin:26px auto;"><tr><td width="56" height="1" bgcolor="#4FA877" style="font-size:1px; line-height:1px;">&#8202;</td></tr></table>
+    <div style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif; font-size:16px; font-weight:400; line-height:1.7; color:#3A362E; max-width:460px; margin:0 auto; text-align:left;">
+      We are here to help you and your patients get results. Tell us what is not
+      working in your practice, what you wish NutriDyn made, or what you want covered at the
+      next lunch and learn. <strong>Just hit reply.</strong> It comes straight to Asher and he
+      reads every one.</div>
+  </td></tr>
+
+  
+  <!-- ============ WAS THIS USEFUL (thumbs, Asher's order 2026-08-31) ============
+       Direct Mail tracks these two links per recipient; directmail-radar reads
+       ZLINKCLICK and scores every send and every doctor. Reply stays the primary
+       feedback channel per THE FEEDBACK LAW; this is the low-friction layer. -->
+  <tr><td bgcolor="#F1EFE8" align="center" class="band-paper" style="background-color:#F1EFE8; padding:0 48px 48px;">
+    <div class="serif" style="font-family:'Cinzel',Georgia,serif; font-weight:400; font-size:19px; letter-spacing:2px; text-transform:uppercase; color:#2C2921; text-align:center;">Was this email useful?</div>
+    <table role="presentation" align="center" cellpadding="0" cellspacing="0" style="margin-top:18px;"><tr>
+      <td style="border:1px solid #4FA877; padding:12px 26px;">
+        <a href="https://apdad.github.io/mission/feedback/useful.html"
+           style="display:block; color:#2D6145; font-family:'Source Sans 3',Helvetica,Arial,sans-serif; font-size:13px; font-weight:600; letter-spacing:2.5px; text-transform:uppercase; text-decoration:none;">&#128077;&nbsp; Yes</a>
+      </td>
+      <td width="12" style="font-size:0; line-height:0;">&nbsp;</td>
+      <td style="border:1px solid #C9C4B8; padding:12px 26px;">
+        <a href="https://apdad.github.io/mission/feedback/not-useful.html"
+           style="display:block; color:#7A7468; font-family:'Source Sans 3',Helvetica,Arial,sans-serif; font-size:13px; font-weight:600; letter-spacing:2.5px; text-transform:uppercase; text-decoration:none;">&#128078;&nbsp; No</a>
+      </td>
+    </tr></table>
+    <div style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif; font-size:12px; color:#7A7468; margin-top:14px; letter-spacing:.5px;">One tap. It steers what we research next.</div>
+  </td></tr>
+
+  <!-- ============ SIGNATURE (canonical block, THE SIGNATURE LAW) ============ -->
+  <tr><td bgcolor="#F1EFE8" class="band-paper" style="background-color:#F1EFE8; padding:0 30px 44px;">
+    <table role="presentation" align="center" cellpadding="0" cellspacing="0"><tr><td><table cellpadding="0" cellspacing="0" border="0" style="max-width:580px;background-color:#ffffff;border-radius:2px;"><tr><td width="6" bgcolor="#1a4a3a" style="width:6px;background-color:#1a4a3a;background-image:linear-gradient(180deg,#1a4a3a 0%,#2d7a5e 100%);font-size:0;line-height:0;">&nbsp;</td><td width="110" style="width:110px;padding:20px 0 20px 20px;vertical-align:top;"><img src="https://apdad.github.io/mission/sig/asher-allen.jpg" width="90" height="90" style="border-radius:50%;display:block;border:3px solid #2d7a5e;width:90px;height:90px;" alt="Asher Allen" /></td><td style="padding:20px 20px 20px 16px;vertical-align:top;"><div style="font-family:Georgia,'Playfair Display',serif;font-size:18px;font-weight:600;color:#1a1a1a;letter-spacing:0.3px;line-height:1.2;"> Asher Allen </div><div style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;color:#2d7a5e;letter-spacing:1.8px;text-transform:uppercase;margin-top:3px;"> M.S. Human Nutrition </div><div style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:12px;font-weight:600;color:#1a1a1a;letter-spacing:0.3px;margin-top:2px;"> NutriDyn </div><table cellpadding="0" cellspacing="0" border="0" width="40" style="margin:10px 0;"><tr><td height="2" bgcolor="#2d7a5e" style="height:2px;line-height:2px;font-size:0;background-color:#2d7a5e;background-image:linear-gradient(90deg,#2d7a5e,#a8d5c2);border-radius:2px;">&nbsp;</td></tr></table><table cellpadding="0" cellspacing="0" border="0"><tr><td style="padding:2px 0;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;"><span style="font-size:11px;color:#555555;">&#128241;</span><a href="tel:6785771003" style="font-size:12px;color:#333333;text-decoration:none;margin-left:6px;">678.577.1003</a></td></tr><tr><td style="padding:2px 0;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;"><span style="font-size:11px;color:#555555;">&#9993;</span><a href="mailto:asher@nutri-dyn.com" style="font-size:12px;color:#2d7a5e;text-decoration:none;margin-left:6px;">asher@nutri-dyn.com</a></td></tr><tr><td style="padding:2px 0;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;"><span style="font-size:11px;color:#555555;">&#127760;</span><a href="https://nutridyn.com" style="font-size:12px;color:#2d7a5e;text-decoration:none;margin-left:6px;">nutridyn.com</a></td></tr></table><table cellpadding="0" cellspacing="0" border="0" role="presentation" style="margin-top:12px;"> <tr> <td bgcolor="#0077b5" style="background-color:#0077b5;border-radius:3px;"> <a href="https://www.linkedin.com/in/asherallen" style="display:inline-block;padding:5px 10px;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:10px;font-weight:600;color:#ffffff;text-decoration:none;letter-spacing:0.5px;">LinkedIn</a> </td> <td width="6" style="width:6px;font-size:0;line-height:0;">&nbsp;</td> <td bgcolor="#c13584" style="background-color:#c13584;background-image:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);border-radius:3px;"> <a href="https://instagram.com/asherallen21" style="display:inline-block;padding:5px 10px;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:10px;font-weight:600;color:#ffffff;text-decoration:none;letter-spacing:0.5px;">Instagram</a> </td> <td width="6" style="width:6px;font-size:0;line-height:0;">&nbsp;</td> <td bgcolor="#14291F" style="background-color:#14291F;border-radius:3px;"> <a href="https://twitter.com/asherallen" style="display:inline-block;padding:5px 10px;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:10px;font-weight:600;color:#ffffff;text-decoration:none;letter-spacing:0.5px;">X</a> </td> <td width="6" style="width:6px;font-size:0;line-height:0;">&nbsp;</td> <td bgcolor="#1877f2" style="background-color:#1877f2;border-radius:3px;"> <a href="https://www.facebook.com/share/g/1CEhYGLGp2/?mibextid=wwXIfr" style="display:inline-block;padding:5px 10px;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:10px;font-weight:600;color:#ffffff;text-decoration:none;letter-spacing:0.5px;">Clinician Group</a> </td> </tr> </table></td></tr><tr><td colspan="3" bgcolor="#1a4a3a" style="background-color:#1a4a3a;background-image:linear-gradient(90deg,#1a4a3a,#2d7a5e);padding:8px 20px;"><p style="margin:0;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:10px;color:#d6e5df;letter-spacing:0.5px;"> &#128197; &nbsp;<strong style="color:#ffffff;">Book a Lunch &amp; Learn or Zoom:</strong> &nbsp;Reply to this email or text 678.577.1003 </p><p style="margin:5px 0 0;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:10px;color:#d6e5df;letter-spacing:0.5px;"> &#128172; &nbsp;<strong style="color:#ffffff;">What should we build next?</strong> &nbsp;Reply with what your territory needs, what NutriDyn should make, or a seminar topic. I read every one. </p></td></tr></table></td></tr></table></td></tr></table>
+  </td></tr>
+
+  <!-- ============ FOOTER (black, merge tags) ============ -->
+  <tr><td bgcolor="#14291F" align="center" style="background-color:#14291F; padding:38px 48px;">
+    <p style="font-family:'Source Sans 3','Noto Sans',Helvetica,Arial,sans-serif; font-size:12px; line-height:2; color:#8A857C; letter-spacing:1px; margin:0;">
+      <a href="[unsubscribe url]" style="color:#B7D8C3;">Unsubscribe</a> &nbsp;&middot;&nbsp;
+      <a href="[email preferences url]" style="color:#B7D8C3;">Email Preferences</a> &nbsp;&middot;&nbsp;
+      <a href="[web version url]" style="color:#B7D8C3;">View Online</a></p>
+  </td></tr>
+
+</table>
+<!--[if mso]></td></tr></table><![endif]-->
+</td></tr></table>
