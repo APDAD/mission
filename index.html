@@ -1188,6 +1188,30 @@ function loadPage(key, frameId, upId, missingMsg, force) {
     up.textContent = 'Updated ' + new Date(d.updated_at).toLocaleString();
   }).catch(function () { up.textContent = 'Could not load it. Tap Reload.'; });
 }
+/* ONE SCROLLER (Asher 2026-09-15: "I should only have one scroller... the native one").
+   A fixed-height iframe grows its own scrollbar the moment its page is taller, so the
+   visible frames get sized to their content every second and the DOCUMENT does all the
+   scrolling. Same-origin srcdoc frames only. Loop-breaker: a page built on 100vh grows
+   with its frame forever - after 5 straight grows it gets its old fixed height back. */
+function fitFrames() {
+  document.querySelectorAll('iframe').forEach(function (f) {
+    if (f._noFit || !f.offsetParent) return;
+    var d; try { d = f.contentDocument; } catch (e) { return; }
+    if (!d || !d.documentElement) return;
+    var h = Math.max(d.documentElement.scrollHeight, d.body ? d.body.scrollHeight : 0);
+    if (h < 100) return;
+    if (Math.abs(h - f.clientHeight) <= 4) { f._grew = 0; return; }
+    if (h > f.clientHeight) {
+      f._grew = (f._grew || 0) + 1;
+      if (f._grew > 5) { f._noFit = 1; f.style.height = ''; return; }
+    } else { f._grew = 0; }
+    f.style.height = h + 'px';
+  });
+}
+setInterval(fitFrames, 1000);
+window.addEventListener('resize', fitFrames);
+document.querySelectorAll('iframe').forEach(function (f) { f.addEventListener('load', fitFrames); });
+
 function loadNd(force) {
   loadPage('nutridyn', 'ndFrame', 'ndUpdated', 'No dashboard pushed up yet. It arrives with the morning refresh.', force);
 }

@@ -183,8 +183,12 @@ Base: $MISSION_API from ~/nutridyn-territory/dashboard-feed/mission.env, header 
   and a sweep found four more victims — silently, at exactly 500, no error). Discipline
   unchanged: a tile is ONE ACTION AND A LINK; long detail belongs in a draft or page. After
   posting, re-read and check len(text) — the cap is still silent, just far away now.
-- Tab panels fill the viewport (iframes calc(100vh - 150px)). Mobile 375px must stack clean
-  with zero horizontal scroll. SPC cannot be iframed (their login blocks it); honest button.
+- ONE SCROLLER (Asher 2026-09-15: "I should only have one scroller... the native one... the
+  inner one is why it looks so weird"): tab iframes are SIZED TO THEIR CONTENT by fitFrames()
+  (1s tick + resize + load), so only the document scrolls; the CSS calc(100vh-150px) height is
+  just the pre-fit placeholder and the fallback for 100vh-built pages the loop-breaker exempts.
+  Never reintroduce a fixed-height scrolling pane. Mobile 375px must stack clean with zero
+  horizontal scroll. SPC cannot be iframed (their login blocks it); honest button.
 - The page must keep working inside nothing (it IS the top page) and its child iframes get
   <base target="_blank"> injected by loadPage.
 
@@ -295,3 +299,14 @@ build of the Brazil packet shipped a label collision that only an eyeball caught
 zero horizontal overflow stands. Every page-owning loop (mission-life-refresh,
 nutridyn-command-refresh, directmail-radar, card-benefits-sweep, day-close) carries this law in
 its own SKILL.md; a rebuild that flattens a designed section back to paragraphs is a defect.
+
+## THE KPIs PAGE (2026-09-15): second reference implementation of THE VISUAL LAW
+NutriDyn > KPIs is generated, not written: ~/nutridyn-territory/dashboard-feed/kpi-page-builder.py
+reads kpi-page-data.json (territory monthlies, whale monthlies, growing/declining/new lists from the
+live book) and emits kpi-page.html, which is POSTed to /api/page/kpi. 29 inline-SVG charts (waterfall,
+goal ladder, stacked columns, multi-line, donut, paired bars, staggered gate timeline), every number a
+stat tile or a chart with one caption, full width (.wrap max-width:none). Owning loops (insight-miner,
+territory-strategist, onboarding-desk) update the DATA or the BUILDER and re-run it; nobody hand-edits
+the HTML. Full-width is the standard for every pushed page: a max-width cap on a sub-tab page reads as
+"cut short two inches on each side" (his words, 2026-09-14). COMMAND.html (Territory) still carries
+max-width:1120px and is next.
