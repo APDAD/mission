@@ -144,15 +144,24 @@ Base: $MISSION_API from ~/nutridyn-territory/dashboard-feed/mission.env, header 
   URLs are shielded (\x01-fenced) from the sentence splitter so Open buttons never split at
   their dots — caught live 2026-08-12 when com#drafts fragments leaked as text. Note the
   shell caches: a JS change reaches his phone on next app relaunch, not on data refresh. Tiles starting "FRIDAY ONLY."/"LATER."
-  render muted inside their drawer. Below the
-  snake: THE EMPIRE STRIP (2026-08-03, Asher: "whatever is in SPC, financial, card benefits,
-  NutriDyn, the map, radar — it needs to be on TODAY in some way or form; that's my source
-  of truth") — six cards (NutriDyn/Radar/Map/Finances/Card benefits/SPC) showing live digest
-  lines pulled from each domain's pushed page plus an updated-ago stamp; one tap opens the
-  deep view. LOOPS: mark the 2-3 lines worth surfacing with data-digest="..." attributes on
-  any element in your pushed page; without them the strip falls back to the page's first
-  h1-h3 headings. The strip also exposes feed staleness (an "Updated 20d ago" card is a
-  loop bug on display) — never suppress the stamp.
+  render muted inside their drawer. TODAY IS WORK, PERSPECTIVE IS THE VIEW (Asher
+  2026-09-15: "anything underneath my tiles, starting with the whole empire, I'm not even
+  looking at that... When I go to today, I am there to work"; supersedes the 2026-08-03
+  "it needs to be on TODAY" placement): NOTHING renders on TODAY below the LATER drawer.
+  THE EMPIRE STRIP, "Since you were gone", and "Tomorrow" all live on the PERSPECTIVE tab
+  (second pill), PICTURE-FIRST per his session-summary standard ("three or four sentences
+  needs to be a picture... I don't want to read"): each empire card leads with its first
+  real figure as a BIG NUMBER and a FRESHNESS DIAL (SVG donut off updated_at: green <24h,
+  gold <3d, red after, drained by 7d) instead of updated-ago prose; at most 2-3 digest
+  lines under it. Real computed data only — no figure in the digest means no big number.
+  TODAY's only pointer back is the 🕰️ catch-up chip, shown solely after a 3+ day absence
+  (localStorage mc_lastseen). LOOPS: mark the 2-3 lines worth surfacing with
+  data-digest="..." attributes on any element in your pushed page (first $ / % / big
+  count in those lines becomes the card's headline number); without them the card falls
+  back to the page's first h1-h3 headings. Feed staleness stays on display (a drained red
+  dial is a loop bug in public) — never suppress the dial. Six tabs no longer fit 375px:
+  the tab ROW swipes sideways with a hidden scrollbar; the page itself never scrolls
+  horizontally.
 - THE REFRESH SYSTEM (2026-08-03; he saved the site to his iPhone home screen and the only
   way to freshen it was Safari-refresh-and-return): the hero's ↻ button refreshes EVERYTHING
   (todos, tomorrow, empire digests, any open tab iframes) from one tap; the app also
