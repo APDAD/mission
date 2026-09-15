@@ -201,6 +201,23 @@ Base: $MISSION_API from ~/nutridyn-territory/dashboard-feed/mission.env, header 
 - The page must keep working inside nothing (it IS the top page) and its child iframes get
   <base target="_blank"> injected by loadPage.
 
+## THE GAME LAYER (Asher 2026-09-15: "I want this to feel like I'm playing a video game...
+## make me doing my work fun." Answers his 8/15 "Mr Beast gameplan" ask.)
+The scoring currency is THE KILL — kills-per-day is the one number the board exists to move,
+so the game rewards finishing, never lingering (Instagram rewards staying; this board rewards
+leaving with the work sent). His four picks, all binding: NFL career ladder (Practice Squad ->
+Special Teams -> Starter -> Captain -> Pro Bowl -> All-Pro -> MVP -> Hall of Fame; season XP
+resets monthly with the $30K/mo season), full synthesized sound with a per-device mute (zero
+audio assets, WebAudio only — the CSP and the repo stay clean), a loot-card flip after DAY WON
+(REAL earned stats only, rotated by day), and MOMENTUM ONLY: combos and streaks add, nothing
+ever counts down at him, warns him, or takes anything away — the praise-ladder law with a
+scoreboard. Mechanics: XP by kill class (VITAL boss 60 / send 25 / call-text 20 / other 10),
+3 kills in 15 min = ON FIRE x2 for 10 min, streak = consecutive kill-days off mc_hist with
+banked freezes (earned at 10 kills/day, max 2) absorbing single dark days, VITAL tiles render
+as BOSS FIGHT cards, the easiest draft-link send in the run wears FIRST BLOOD. State is
+per-device localStorage (mc_game, mc_sound, mc_loot_*), same policy as the dealt run. DO NOT
+add loss mechanics, visible timers, or fake numbers; new mechanics must reward a SEND.
+
 ## VERIFICATION LAW
 No change ships without loading the LIVE site (PIN 116584) in a browser, exercising the
 changed behavior (desktop AND 375px mobile), and leaving ZERO test residue (undo any test

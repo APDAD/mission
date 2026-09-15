@@ -120,6 +120,38 @@ h1{font-family:var(--serif);font-size:clamp(34px,3.4vw,50px);font-weight:600;lin
 .daywon{text-align:center;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:44px 20px;margin-bottom:14px}
 .daywon-big{font-family:var(--serif);font-size:42px;font-weight:700;color:var(--accent)}
 .daywon-sub{color:var(--muted);font-size:14px;margin-top:6px}
+/* THE GAME LAYER (2026-09-15) */
+.gamebar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:12px}
+.lvl{display:flex;flex-direction:column;min-width:150px;flex:1;max-width:280px}
+.lvl-name{font-family:var(--serif);font-size:17px;font-weight:700;letter-spacing:.02em}
+.lvl-bar{height:7px;background:rgba(44,44,42,.1);border-radius:999px;margin-top:4px;overflow:hidden}
+.lvl-bar b{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--gold));border-radius:999px;transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.lvl-xp{font-size:10.5px;color:var(--muted);margin-top:3px;letter-spacing:.04em}
+.flame{font-size:14px;font-weight:700;color:#B04A3A;display:flex;align-items:center;gap:4px;white-space:nowrap}
+.flame.onfire{animation:firepulse .8s ease-in-out infinite}
+@keyframes firepulse{0%,100%{transform:scale(1)}50%{transform:scale(1.16)}}
+.sndbtn{border:1px solid var(--line);background:var(--card);border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:14px;line-height:1}
+.lvlup{position:fixed;inset:0;background:rgba(44,44,42,.55);backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;z-index:60;cursor:pointer}
+.lvlup-card{background:var(--card);border:2px solid var(--gold);border-radius:24px;padding:44px 40px;text-align:center;max-width:340px;animation:lvlpop .5s cubic-bezier(.2,1.4,.3,1)}
+@keyframes lvlpop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
+.lvlup-kick{font-size:11px;letter-spacing:.24em;color:var(--gold);font-weight:700}
+.lvlup-name{font-family:var(--serif);font-size:42px;font-weight:700;margin-top:6px}
+.lvlup-sub{color:var(--muted);font-size:13px;margin-top:8px}
+.step.boss{background:linear-gradient(135deg,#2C2C2A,#413E36);border:2px solid var(--gold)}
+.step.boss .headline,.step.boss .stepmain,.step.boss .tpara,.step.boss .tbul li{color:#F1EFE8}
+.step.boss .steplabel{color:var(--gold)}
+.boss-chip{display:inline-block;background:var(--gold);color:#2C2C2A;font-size:10px;font-weight:800;letter-spacing:.16em;border-radius:4px;padding:2px 7px;margin-bottom:6px}
+.fb-chip{display:inline-block;background:var(--accent);color:#fff;font-size:10px;font-weight:800;letter-spacing:.16em;border-radius:4px;padding:2px 7px;margin-bottom:6px}
+.loot{perspective:800px;margin:18px auto 0;width:240px;height:140px;cursor:pointer}
+.loot-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.3,1.2,.3,1)}
+.loot.flip .loot-inner{transform:rotateY(180deg)}
+.loot-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px;text-align:center}
+.loot-back{background:linear-gradient(135deg,#1D9E75,#136A4F);color:#fff;font-family:var(--serif);font-size:20px;font-weight:700}
+.loot-front{background:var(--card);border:2px solid var(--gold);transform:rotateY(180deg)}
+.loot-big{font-family:var(--serif);font-size:26px;font-weight:700;color:var(--ink)}
+.loot-sub{font-size:12px;color:var(--muted);margin-top:4px}
+@keyframes bshake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+.shake{animation:bshake .45s ease}
 .kudos{font-size:13px;color:var(--accent);font-weight:600;margin-top:8px}
 /* Serpentine flow: .flow stacks .frow (tiles + inline arrows) and .fdown (the
    turn arrow under a row's last tile). Both get the same grid-template-columns
@@ -304,6 +336,15 @@ iframe{width:100%;height:calc(100vh - 150px);min-height:480px;border:1px solid v
     </div>
     <div class="greet" id="greet"></div>
     <div class="prog" id="prog"><b id="progBar" style="width:0%"></b></div>
+    <div class="gamebar">
+      <div class="lvl">
+        <div class="lvl-name" id="lvlName"></div>
+        <div class="lvl-bar"><b id="lvlBar" style="width:0%"></b></div>
+        <div class="lvl-xp" id="lvlXp"></div>
+      </div>
+      <div class="flame" id="flame" style="display:none"></div>
+      <button class="sndbtn" id="sndBtn" aria-label="Sound on or off">&#128266;</button>
+    </div>
   </div>
   <div class="tabs">
     <button class="tab on" data-t="todo">TODAY</button>
@@ -724,6 +765,10 @@ function stepCard(t, n) {
   if (!isM && a && !later) num.style.background = a[2];
   var mid = el('div', 'steptxt');
   mid.appendChild(el('div', 'steplabel', isM ? 'From the machine' : (isQuestion(t) ? 'Your question' : (a ? a[1] : 'To do'))));
+  /* GAME LAYER: VITAL tiles fight as bosses; the easiest send in the run wears
+     first blood so the first kill of a session is ten seconds away. */
+  if (/^VITAL [123]:/.test(t.text || '')) { row.classList.add('boss'); mid.insertBefore(el('span', 'boss-chip', 'BOSS FIGHT · 60 XP'), mid.firstChild); }
+  else if (t.id === window._firstBlood) { mid.insertBefore(el('span', 'fb-chip', '⚡ FIRST BLOOD — ONE TAP'), mid.firstChild); }
   var parts = splitHead(t.text);
   if (parts.rest) {
     var hl = stepMainInto(el('div', 'headline'), parts.head);
@@ -757,7 +802,7 @@ function stepCard(t, n) {
   var tick = el('button', 'tick', '');
   tick.setAttribute('aria-label', 'Mark done');
   tick.onclick = function (e) {
-    burst(e.clientX || window.innerWidth / 2, e.clientY || 160);
+    gameKill(t, e.clientX || window.innerWidth / 2, e.clientY || 160);
     row.classList.add('popping');
     api('todos/' + t.id, { method: 'PATCH', body: JSON.stringify({ done: true }) }).then(loadTodos);
   };
@@ -918,7 +963,7 @@ function restRow(t) {
   tick.setAttribute('aria-label', 'Mark done');
   tick.style.background = 'none';
   tick.onclick = function (e) {
-    burst(e.clientX || window.innerWidth / 2, e.clientY || 200);
+    gameKill(t, e.clientX || window.innerWidth / 2, e.clientY || 200);
     api('todos/' + t.id, { method: 'PATCH', body: JSON.stringify({ done: true }) }).then(loadTodos);
   };
   var mid = el('div', 'rtxt');
@@ -971,6 +1016,10 @@ function renderTodos() {
   dealt.forEach(function (id) { dealtSet[id] = 1; });
   var run = pool.filter(function (t) { return dealtSet[t.id]; });
   var rest = pool.filter(function (t) { return !dealtSet[t.id]; });
+  window._firstBlood = null;
+  for (var fbi = 0; fbi < run.length; fbi++) {
+    if (/#drafts\//.test(run[fbi].text || '')) { window._firstBlood = run[fbi].id; break; }
+  }
   var killed = dealt.length - run.length;
   window._runStat = { dealt: dealt.length, left: run.length, killed: killed };
   var word = open.filter(needsWord);
@@ -1033,11 +1082,13 @@ function renderTodos() {
     won.appendChild(el('div', 'daywon-sub', killed > 0
       ? 'You crushed all ' + killed + ' dealt today.' + (rest.length ? ' The machine holds ' + rest.length + ' for their day — none lost.' : ' Nothing is waiting.')
       : 'Add one thing above and go.'));
+    if (killed > 0) won.appendChild(lootCard(killed));
     dwWrap.appendChild(won);
     var today = new Date().toDateString();
     if (killed > 0 && localStorage.getItem('mc_won') !== today) {
       localStorage.setItem('mc_won', today);
       burst(window.innerWidth / 2, 220);
+      sfx('won');
     }
     document.getElementById('runIt').style.display = 'none';
   } else {
@@ -1080,6 +1131,181 @@ function renderTodos() {
 /* THE WINS SPARKLINE: seven days of kills as bars in the hero — real data only,
    accumulated locally per device from the dealt-run counter (Asher 2026-08-19:
    "incorporate visuals where you see fit"). Gold bar = today. */
+/* ============================ THE GAME LAYER ============================
+   Asher 2026-09-15: "I want this to feel like I'm playing a video game...
+   make me doing my work fun." His four picks: NFL career ladder, full sound
+   with a mute, loot card after DAY WON, MOMENTUM ONLY — the game adds and
+   celebrates, it never ticks at him, warns him, or takes anything away
+   (the praise-ladder law with a scoreboard). The scoring currency is THE
+   KILL, because kills-per-day is the one number this board exists to move.
+   All state is per-device localStorage, same as the dealt run. */
+var LADDER = [
+  ['PRACTICE SQUAD', 0], ['SPECIAL TEAMS', 100], ['STARTER', 250],
+  ['CAPTAIN', 450], ['PRO BOWL', 700], ['ALL-PRO', 1000],
+  ['MVP', 1400], ['HALL OF FAME', 1900]
+];
+function seasonKey() { var d = new Date(); return d.getFullYear() + '-' + (d.getMonth() + 1); }
+function gameState() {
+  var s = {};
+  try { s = JSON.parse(localStorage.getItem('mc_game') || '{}'); } catch (e) { s = {}; }
+  if (s.season !== seasonKey()) s = { season: seasonKey(), xp: 0, kills: {}, freezes: s.freezes || 0 };
+  s.kills = s.kills || {}; s.freezes = s.freezes || 0;
+  return s;
+}
+function saveGame(s) { try { localStorage.setItem('mc_game', JSON.stringify(s)); } catch (e) {} }
+function levelOf(xp) {
+  var i = 0; while (i + 1 < LADDER.length && xp >= LADDER[i + 1][1]) i++;
+  return i;
+}
+function xpFor(t) {
+  var x = t.text || '';
+  if (/^VITAL [123]:/.test(x)) return 60;
+  if (/READ AND SEND|#drafts\/|mailto:/i.test(x)) return 25;
+  if (/tel:\+|sms:\+/.test(x)) return 20;
+  return 10;
+}
+/* Combo: 3 kills inside 15 minutes lights the fire — x2 XP for 10 minutes.
+   No countdown is ever shown; the flame just burns while it burns. */
+var comboKills = [], fireUntil = 0;
+function onFire() { return Date.now() < fireUntil; }
+function gameKill(t, x, y) {
+  var s = gameState();
+  var boss = /^VITAL [123]:/.test(t.text || '');
+  var now = Date.now();
+  comboKills.push(now);
+  comboKills = comboKills.filter(function (k) { return now - k < 15 * 60000; });
+  var lit = false;
+  if (comboKills.length >= 3 && !onFire()) { fireUntil = now + 10 * 60000; lit = true; }
+  var before = levelOf(s.xp);
+  s.xp += xpFor(t) * (onFire() ? 2 : 1);
+  var day = new Date().toDateString();
+  s.kills[day] = (s.kills[day] || 0) + 1;
+  if (s.kills[day] === 10 && s.freezes < 2) s.freezes++;
+  var after = levelOf(s.xp);
+  saveGame(s);
+  burst(x, y);
+  if (boss) { document.body.classList.add('shake'); setTimeout(function () { document.body.classList.remove('shake'); }, 500); }
+  sfx(boss ? 'boss' : (lit ? 'fire' : 'kill'));
+  if (after > before) levelUp(LADDER[after][0]);
+  renderGame();
+}
+function levelUp(name) {
+  sfx('level');
+  var o = el('div', 'lvlup');
+  var c = el('div', 'lvlup-card');
+  c.appendChild(el('div', 'lvlup-kick', 'LEVEL UP'));
+  c.appendChild(el('div', 'lvlup-name', name));
+  c.appendChild(el('div', 'lvlup-sub', 'The territory just promoted you. Keep swinging.'));
+  o.appendChild(c);
+  o.onclick = function () { o.remove(); };
+  document.body.appendChild(o);
+  burst(window.innerWidth / 2, 200);
+  setTimeout(function () { if (o.parentNode) o.remove(); }, 5200);
+}
+/* Streak: consecutive days with at least one kill, read off the same history
+   the sparkline trusts. A single dark day burns a banked freeze (earned by a
+   10-kill day) instead of the streak. Never rendered as a threat. */
+function streakNow() {
+  var hist = {};
+  try { hist = JSON.parse(localStorage.getItem('mc_hist') || '{}'); } catch (e) {}
+  var s = gameState(), n = 0, freezes = s.freezes, d = new Date();
+  if (!hist[d.toDateString()]) d = new Date(Date.now() - 86400000);
+  while (n < 400) {
+    if (hist[d.toDateString()]) { n++; d = new Date(d.getTime() - 86400000); }
+    else if (freezes > 0 && n > 0) { freezes--; d = new Date(d.getTime() - 86400000); }
+    else break;
+  }
+  return n;
+}
+function renderGame() {
+  var s = gameState();
+  var li = levelOf(s.xp);
+  var base = LADDER[li][1];
+  var next = li + 1 < LADDER.length ? LADDER[li + 1][1] : null;
+  document.getElementById('lvlName').textContent = LADDER[li][0] + (onFire() ? '  ·  ON FIRE x2' : '');
+  document.getElementById('lvlBar').style.width = next ? Math.min(100, Math.round((s.xp - base) / (next - base) * 100)) + '%' : '100%';
+  document.getElementById('lvlXp').textContent = next
+    ? s.xp + ' XP · ' + (next - s.xp) + ' to ' + LADDER[li + 1][0]
+    : s.xp + ' XP · the top of the ladder';
+  var st = streakNow();
+  var f = document.getElementById('flame');
+  if (st >= 2 || onFire()) {
+    f.style.display = 'flex';
+    f.className = 'flame' + (onFire() ? ' onfire' : '');
+    f.textContent = '🔥 ' + st + '-day streak' + (s.freezes ? ' · ' + s.freezes + '🧊' : '');
+  } else { f.style.display = 'none'; }
+}
+/* Loot: one card flip after DAY WON — a real earned stat, different by day. */
+function lootStat(killed) {
+  var s = gameState(), hist = {};
+  try { hist = JSON.parse(localStorage.getItem('mc_hist') || '{}'); } catch (e) {}
+  var best = 0; Object.keys(hist).forEach(function (k) { if (hist[k] > best) best = hist[k]; });
+  var st = streakNow();
+  var opts = [
+    { big: killed + ' kills', sub: best <= killed ? 'Your best day on record.' : 'Personal best is ' + best + ' — in reach.' },
+    { big: s.xp + ' XP', sub: 'Season total · ' + LADDER[levelOf(s.xp)][0] },
+    { big: '🔥 ' + st + ' days', sub: 'Your streak' + (s.freezes ? ' · ' + s.freezes + ' freeze banked' : ', and it lives another day') }
+  ];
+  return opts[new Date().getDate() % opts.length];
+}
+function lootCard(killed) {
+  var lootKey = 'mc_loot_' + new Date().toDateString();
+  var box = el('div', 'loot'), inner = el('div', 'loot-inner');
+  var back = el('div', 'loot-face loot-back');
+  back.appendChild(el('div', '', "TODAY'S LOOT"));
+  var hint = el('div', '', 'tap to flip');
+  hint.style.cssText = 'font-size:11px;font-weight:400;opacity:.85;margin-top:4px;font-family:Inter,Helvetica,sans-serif';
+  back.appendChild(hint);
+  var front = el('div', 'loot-face loot-front');
+  var stat = lootStat(killed);
+  front.appendChild(el('div', 'loot-big', stat.big));
+  front.appendChild(el('div', 'loot-sub', stat.sub));
+  inner.appendChild(back); inner.appendChild(front); box.appendChild(inner);
+  if (localStorage.getItem(lootKey)) box.classList.add('flip');
+  box.onclick = function () {
+    if (box.classList.contains('flip')) return;
+    box.classList.add('flip');
+    try { localStorage.setItem(lootKey, '1'); } catch (e) {}
+    sfx('level');
+    burst(window.innerWidth / 2, 320);
+  };
+  return box;
+}
+/* Sound: synthesized in WebAudio, zero assets, one mute toggle per device. */
+var AC = null;
+function sfx(kind) {
+  try {
+    if (localStorage.getItem('mc_sound') === 'off') return;
+    AC = AC || new (window.AudioContext || window.webkitAudioContext)();
+    if (AC.state === 'suspended') AC.resume();
+    var t0 = AC.currentTime;
+    var tone = function (f0, f1, dur, delay, type, vol) {
+      var o = AC.createOscillator(), g = AC.createGain();
+      o.type = type;
+      o.frequency.setValueAtTime(f0, t0 + delay);
+      o.frequency.exponentialRampToValueAtTime(Math.max(1, f1), t0 + delay + dur);
+      g.gain.setValueAtTime(0.0001, t0 + delay);
+      g.gain.exponentialRampToValueAtTime(vol, t0 + delay + 0.012);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + delay + dur);
+      o.connect(g); g.connect(AC.destination);
+      o.start(t0 + delay); o.stop(t0 + delay + dur + 0.05);
+    };
+    if (kind === 'kill') { tone(660, 880, .09, 0, 'triangle', .22); tone(1320, 1760, .07, .05, 'sine', .1); }
+    if (kind === 'fire') { tone(330, 660, .12, 0, 'sawtooth', .12); tone(660, 1320, .18, .1, 'sawtooth', .12); tone(990, 1980, .22, .22, 'sawtooth', .1); }
+    if (kind === 'boss') { tone(110, 55, .3, 0, 'sawtooth', .2); tone(220, 440, .15, .28, 'square', .12); tone(880, 1760, .2, .4, 'triangle', .16); }
+    if (kind === 'level') { [523, 659, 784, 1047].forEach(function (f, i) { tone(f, f, .16, i * .13, 'triangle', .2); }); }
+    if (kind === 'won') { [392, 523, 659, 784, 1047].forEach(function (f, i) { tone(f, f * 1.01, .2, i * .11, 'triangle', .2); }); }
+  } catch (e) {}
+}
+document.getElementById('sndBtn').textContent = localStorage.getItem('mc_sound') === 'off' ? '🔇' : '🔊';
+document.getElementById('sndBtn').onclick = function () {
+  var off = localStorage.getItem('mc_sound') === 'off';
+  try { localStorage.setItem('mc_sound', off ? 'on' : 'off'); } catch (e) {}
+  this.textContent = off ? '🔊' : '🔇';
+  if (off) sfx('kill');
+};
+renderGame();
+
 function renderHistory(killedToday) {
   var hist = {};
   try { hist = JSON.parse(localStorage.getItem('mc_hist') || '{}'); } catch (e) { hist = {}; }
@@ -1102,6 +1328,7 @@ function renderHistory(killedToday) {
       '<text x="' + (i * (w + gap) + w / 2) + '" y="' + H + '" text-anchor="middle" font-size="7" font-family="Inter,Helvetica" fill="#6B6B66">' + d.label + '</text>';
   });
   el7.innerHTML = '<svg width="' + (7 * (w + gap) - gap) + '" height="' + H + '" aria-label="Wins this week">' + svg + '</svg>';
+  renderGame();
 }
 
 /* RUN MODE: the game he asked for — one card, one decision, next. */
@@ -1118,7 +1345,7 @@ function showRunCard() {
   body.innerHTML = '';
   renderRich(body, t.text);
   document.getElementById('rmDone').onclick = function (e) {
-    burst(e.clientX || window.innerWidth / 2, e.clientY || 300);
+    gameKill(t, e.clientX || window.innerWidth / 2, e.clientY || 300);
     api('todos/' + t.id, { method: 'PATCH', body: JSON.stringify({ done: true }) }).then(function () {
       t.done = true;
       showRunCard();
