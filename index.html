@@ -105,6 +105,23 @@ h1{font-family:var(--serif);font-size:clamp(34px,3.4vw,50px);font-weight:600;lin
 .rrow .rtxt{flex:1;min-width:0;font-size:13.5px;line-height:1.45;overflow-wrap:anywhere;cursor:pointer}
 .rrow .rlabel{font-size:9px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--muted)}
 .rrow.mrow .rlabel{color:var(--gold)}
+/* THE PILE, AS A PICTURE (2026-09-22 evening): what the held tiles ARE, by the one gesture each asks for,
+   so a 250-tile fold reads in three seconds. Real counts only, one bar, filters are the legend. */
+.kindbar{padding:2px 6px 12px}
+.kbar{display:flex;height:12px;border-radius:999px;overflow:hidden;background:rgba(44,44,42,.08);margin:2px 0 10px}
+.kbar i{display:block;height:100%;transition:flex-grow .3s ease}
+.kchips{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.kchip{display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:999px;border:1px solid var(--line);background:var(--bg);font-size:12px;color:var(--ink);cursor:pointer;font-family:var(--sans);transition:transform .15s ease,border-color .15s ease}
+.kchip:hover{transform:translateY(-1px);border-color:var(--accent)}
+.kchip b{font-weight:700}
+.kchip .kd{width:8px;height:8px;border-radius:50%;flex:none}
+.kchip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.kchip.sort{margin-left:auto;color:var(--muted)}
+.kchip.sort.on{background:var(--card);color:var(--ink);border-color:var(--ink)}
+.rage{display:inline-block;margin-left:6px;padding:0 6px;border-radius:999px;font-size:9px;letter-spacing:.06em;font-weight:700;background:rgba(44,44,42,.07);color:var(--muted);text-transform:none}
+.rage.warm{background:#FCF1DC;color:#8a6516}
+.rage.old{background:#F7E3E0;color:#9b3b2e}
+@media(max-width:480px){.kchip.sort{margin-left:0}}
 /* Focus mode: one card at a time. Done or Next, nothing else on screen. */
 #runmode{position:fixed;inset:0;background:var(--bg);z-index:70;display:none;flex-direction:column;align-items:center;justify-content:center;padding:22px}
 #runmode.on{display:flex}
@@ -388,11 +405,12 @@ iframe{width:100%;height:calc(100vh - 150px);min-height:480px;border:1px solid v
         <span class="foldtitle">The rest of the board</span>
         <span class="foldsub" id="restSub"></span>
       </summary>
+      <div class="kindbar" id="kindBar"></div>
       <div class="foldbody" id="restBody"></div>
     </details>
     <details class="fold" id="laterFold" style="margin-top:12px">
       <summary>
-        <span class="foldtitle">Later &mdash; parked on purpose</span>
+        <span class="foldtitle">Later, parked on purpose</span>
         <span class="foldsub" id="laterSub"></span>
       </summary>
       <div class="foldbody" id="laterBody"></div>
@@ -750,10 +768,23 @@ function isSendTile(t) { return /^(NutriDyn: )?(send|review and send|reply|text|
 function needsWord(t) { return t.source === 'loop' && !t.answer && /\?/.test(t.text || ''); }
 /* Headline = the first sentence; the rest folds behind one tap so a thorough
    machine tile never reads as a wall (council 2026-08-11: collapse-to-headline). */
+/* The headline is the first real sentence. A period after a title or an initial is not a
+   sentence end (2026-09-22: held rows read "READ AND SEND the Dr." and "GWEN SAMPLES FOR DR."). */
+var HEAD_ABBR = /(?:^|[\s(])(?:dr|mr|mrs|ms|st|sr|jr|no|vs|inc|co|ste|rd|ave|blvd|mt|ft|approx|dra)\.$/i;
+var HEAD_INITIAL = /(?:^|[\s(])[A-Z]\.$/;
 function splitHead(text) {
-  var m = (text || '').match(/^[\s\S]{10,160}?[.!?](?=\s|$)/);
-  var head = m ? m[0] : (text || '').slice(0, 140);
-  return { head: head, rest: (text || '').slice(head.length).trim() };
+  var t = text || '', re = /[.!?](?=\s|$)/g, m;
+  while ((m = re.exec(t))) {
+    var i = m.index;
+    if (i < 10) continue;
+    if (i > 160) break;
+    var tail = t.slice(Math.max(0, i - 7), i + 1);
+    if (HEAD_ABBR.test(tail) || HEAD_INITIAL.test(tail)) continue;
+    var head = t.slice(0, i + 1);
+    return { head: head, rest: t.slice(head.length).trim() };
+  }
+  var cut = t.slice(0, 140);
+  return { head: cut, rest: t.slice(cut.length).trim() };
 }
 function stepCard(t, n) {
   var isM = t.source === 'loop';
@@ -768,7 +799,7 @@ function stepCard(t, n) {
   /* GAME LAYER: VITAL tiles fight as bosses; the easiest send in the run wears
      first blood so the first kill of a session is ten seconds away. */
   if (/^VITAL [123]:/.test(t.text || '')) { row.classList.add('boss'); mid.insertBefore(el('span', 'boss-chip', 'BOSS FIGHT · 60 XP'), mid.firstChild); }
-  else if (t.id === window._firstBlood) { mid.insertBefore(el('span', 'fb-chip', '⚡ FIRST BLOOD — ONE TAP'), mid.firstChild); }
+  else if (t.id === window._firstBlood) { mid.insertBefore(el('span', 'fb-chip', '⚡ FIRST BLOOD, ONE TAP'), mid.firstChild); }
   var parts = splitHead(t.text);
   if (parts.rest) {
     var hl = stepMainInto(el('div', 'headline'), parts.head);
@@ -831,7 +862,7 @@ function renderRich(node, text) {
   var boldLead = function (container, p) {
     var m = p.match(/^([A-Z][A-Z0-9 .'&$-]{2,}[:,])\s*([\s\S]+)$/);
     if (m) {
-      container.appendChild(el('strong', '', m[1].replace(/[:,]$/, '') + ' — '));
+      container.appendChild(el('strong', '', m[1].replace(/[:,]$/, '') + ': '));
       stepMainInto(container, m[2]);
     } else stepMainInto(container, p);
   };
@@ -957,6 +988,67 @@ function laterIsDue(t) {
   return due <= now;
 }
 var searchTerm = '';
+/* KINDS: the one gesture a tile asks for, read from its first sentence (the headline loops
+   are required to write), falling back to its buttons. Order is precedence. */
+var KINDS = [
+  ['call', 'Call or text', '#1D9E75'],
+  ['money', 'Money', '#C65545'],
+  ['send', 'Send', '#EF9F27'],
+  ['word', 'Your word', '#8a6516'],
+  ['look', 'Look', '#B9B3A6']
+];
+var curKind = '', restOldest = false;
+try { restOldest = localStorage.getItem('mc_rest_oldest') === '1'; } catch (e) {}
+function kindOf(t) {
+  var x = t.text || '', head = splitHead(x).head;
+  if (/^(?:\S+: )?(?:call|text)\b/i.test(head) || /\b(?:CALL|TEXT)\b/.test(head) || /^(?:tel|sms):/.test(x.trim())) return 'call';
+  if (t.area === 'money' || /\bPAY\b/.test(head) || /^(?:\S+: )?pay\b/i.test(head)) return 'money';
+  if (isSendTile(t) || /\b(READ AND SEND|REVIEW AND SEND|SEND IT)\b/i.test(head) || /#drafts\//.test(x)) return 'send';
+  if (/(?:^|\s)(?:tel|sms):/.test(x)) return 'call';
+  if (needsWord(t) || /\b(answer|type)\b[^.]{0,60}\b(this box|answer box|in this tile)/i.test(x)) return 'word';
+  return 'look';
+}
+function ageDays(t) { return Math.max(0, Math.floor((Date.now() - new Date(t.created_at).getTime()) / 86400000)); }
+function ageBadge(t) {
+  var d = ageDays(t);
+  var b = el('span', 'rage' + (d >= 14 ? ' old' : d >= 7 ? ' warm' : ''), d === 0 ? 'today' : d + 'd');
+  b.title = 'On the board since ' + new Date(t.created_at).toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
+  return b;
+}
+function renderKindBar(rows) {
+  var box = document.getElementById('kindBar');
+  if (!box) return;
+  box.innerHTML = '';
+  if (!rows.length) return;
+  var n = {}; KINDS.forEach(function (k) { n[k[0]] = 0; });
+  rows.forEach(function (t) { n[kindOf(t)]++; });
+  var bar = el('div', 'kbar');
+  KINDS.forEach(function (k) {
+    if (!n[k[0]]) return;
+    var seg = el('i'); seg.style.flexGrow = n[k[0]]; seg.style.background = k[2];
+    seg.title = k[1] + ': ' + n[k[0]];
+    bar.appendChild(seg);
+  });
+  box.appendChild(bar);
+  var chips = el('div', 'kchips');
+  var all = el('button', 'kchip' + (curKind ? '' : ' on'));
+  all.appendChild(el('b', '', String(rows.length))); all.appendChild(document.createTextNode(' all'));
+  all.onclick = function () { curKind = ''; renderTodos(); };
+  chips.appendChild(all);
+  KINDS.forEach(function (k) {
+    if (!n[k[0]]) return;
+    var c = el('button', 'kchip' + (curKind === k[0] ? ' on' : ''));
+    var dot = el('span', 'kd'); dot.style.background = k[2];
+    c.appendChild(dot); c.appendChild(el('b', '', String(n[k[0]]))); c.appendChild(document.createTextNode(' ' + k[1].toLowerCase()));
+    c.onclick = function () { curKind = curKind === k[0] ? '' : k[0]; renderTodos(); };
+    chips.appendChild(c);
+  });
+  var srt = el('button', 'kchip sort' + (restOldest ? ' on' : ''), restOldest ? 'Oldest first' : 'Priority order');
+  srt.title = 'Switch between priority order and oldest first';
+  srt.onclick = function () { restOldest = !restOldest; try { localStorage.setItem('mc_rest_oldest', restOldest ? '1' : '0'); } catch (e) {} renderTodos(); };
+  chips.appendChild(srt);
+  box.appendChild(chips);
+}
 function restRow(t) {
   var row = el('div', 'rrow' + (t.source === 'loop' ? ' mrow' : ''));
   var tick = el('button', 'tick mini', '');
@@ -967,7 +1059,9 @@ function restRow(t) {
     api('todos/' + t.id, { method: 'PATCH', body: JSON.stringify({ done: true }) }).then(loadTodos);
   };
   var mid = el('div', 'rtxt');
-  mid.appendChild(el('div', 'rlabel', t.source === 'loop' ? 'machine' : (areaOf(t) ? areaOf(t)[1] : 'to do')));
+  var lab = el('div', 'rlabel', t.source === 'loop' ? 'machine' : (areaOf(t) ? areaOf(t)[1] : 'to do'));
+  lab.appendChild(ageBadge(t));
+  mid.appendChild(lab);
   stepMainInto(mid, splitHead(t.text).head);
   mid.onclick = function () { mid.innerHTML = ''; renderRich(mid, t.text); };
   row.appendChild(tick); row.appendChild(mid);
@@ -1080,7 +1174,7 @@ function renderTodos() {
     var won = el('div', 'daywon');
     won.appendChild(el('div', 'daywon-big', killed > 0 ? 'DAY WON.' : 'The board is clear.'));
     won.appendChild(el('div', 'daywon-sub', killed > 0
-      ? 'You crushed all ' + killed + ' dealt today.' + (rest.length ? ' The machine holds ' + rest.length + ' for their day — none lost.' : ' Nothing is waiting.')
+      ? 'You crushed all ' + killed + ' dealt today.' + (rest.length ? ' The machine holds ' + rest.length + ' for their day, none lost.' : ' Nothing is waiting.')
       : 'Add one thing above and go.'));
     if (killed > 0) won.appendChild(lootCard(killed));
     dwWrap.appendChild(won);
@@ -1099,9 +1193,12 @@ function renderTodos() {
 
   var rb = document.getElementById('restBody');
   rb.innerHTML = '';
-  rest.forEach(function (t) { rb.appendChild(restRow(t)); });
+  renderKindBar(rest);
+  var shown = curKind ? rest.filter(function (t) { return kindOf(t) === curKind; }) : rest.slice();
+  if (restOldest) shown.sort(function (a, b) { return new Date(a.created_at) - new Date(b.created_at); });
+  shown.forEach(function (t) { rb.appendChild(restRow(t)); });
   document.getElementById('restSub').textContent = rest.length
-    ? rest.length + ' held safe — sorted, nothing lost' : 'empty';
+    ? rest.length + ' held safe, nothing lost' + (curKind ? ' · showing ' + shown.length : '') : 'empty';
   document.getElementById('restFold').style.display = rest.length || q ? 'block' : 'none';
   if (q) document.getElementById('restFold').setAttribute('open', '');
 
@@ -1242,7 +1339,7 @@ function lootStat(killed) {
   var best = 0; Object.keys(hist).forEach(function (k) { if (hist[k] > best) best = hist[k]; });
   var st = streakNow();
   var opts = [
-    { big: killed + ' kills', sub: best <= killed ? 'Your best day on record.' : 'Personal best is ' + best + ' — in reach.' },
+    { big: killed + ' kills', sub: best <= killed ? 'Your best day on record.' : 'Personal best is ' + best + '. In reach.' },
     { big: s.xp + ' XP', sub: 'Season total · ' + LADDER[levelOf(s.xp)][0] },
     { big: '🔥 ' + st + ' days', sub: 'Your streak' + (s.freezes ? ' · ' + s.freezes + ' freeze banked' : ', and it lives another day') }
   ];
@@ -1840,7 +1937,7 @@ function loadTomorrow() {
     if (prevSeen && Date.now() - prevSeen > 3 * 86400000) {
       var ac = document.getElementById('awayChip');
       ac.innerHTML = '';
-      var b = el('button', 'nw-chip', '🕰️ You were gone a while — the catch-up is on PERSPECTIVE');
+      var b = el('button', 'nw-chip', '🕰️ You were gone a while. The catch-up is on PERSPECTIVE');
       b.onclick = function () { showTab('persp'); window.scrollTo({ top: 0, behavior: 'smooth' }); };
       ac.appendChild(b);
       ac.style.display = 'block';
