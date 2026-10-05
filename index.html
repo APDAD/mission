@@ -84,6 +84,40 @@ h1{font-family:var(--serif);font-size:clamp(34px,3.4vw,50px);font-weight:600;lin
 .step.sendtile{border-left:5px solid var(--gold)}
 /* Long machine tiles render as a scannable brief, never a wall (Asher 2026-08-12:
    "all that mumble jumbo... make it easier and more fun to read"). */
+/* TILE BRIEF v3 (2026-10-05): an opened tile is pictures, a date line and short bullets. */
+.step.open{flex-wrap:wrap;align-items:flex-start;row-gap:10px}
+.step.open .steptxt{order:3;flex-basis:100%}
+.step.open .tick{margin-left:auto}
+.glance{margin:10px 0 6px;display:flex;flex-direction:column;gap:10px}
+.gl-pics{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.gl-pics::-webkit-scrollbar{display:none}
+.gl-pic{margin:0;flex:0 0 auto;width:78px;text-align:center}
+.gl-pic img{width:78px;height:78px;object-fit:contain;background:#fff;border:1px solid var(--line);border-radius:12px;padding:4px;display:block}
+.gl-pic figcaption{font-size:10.5px;line-height:1.25;color:var(--muted);margin-top:4px}
+.gl-line{display:flex;align-items:stretch;gap:0;overflow-x:auto;scrollbar-width:none;position:relative;padding:2px 0}
+.gl-line::-webkit-scrollbar{display:none}
+.gl-pt{flex:0 0 auto;min-width:76px;padding:7px 10px 6px;border-top:3px solid var(--accent);margin-right:6px;background:#EEF6F1;border-radius:0 0 10px 10px}
+.gl-pt b{display:block;font-family:var(--serif);font-size:19px;line-height:1;color:var(--ink)}
+.gl-pt span{display:block;font-size:10.5px;color:var(--muted);margin-top:3px;white-space:nowrap}
+.gl-pt.past{border-top-color:#CFCBBD;background:rgba(44,44,42,.04)}
+.gl-pt.past b{color:var(--muted)}
+.gl-pt.due{border-top-color:var(--gold);background:#FCF1DC}
+.gl-now{flex:0 0 auto;align-self:center;font-size:9px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--gold);padding:0 8px 0 2px}
+.gl-row{display:flex;flex-wrap:wrap;gap:6px}
+.gl-money{font-family:var(--serif);font-weight:700;font-size:18px;padding:2px 10px;border-radius:8px;background:#FCF1DC;color:#814800}
+.gl-check{font-size:11px;font-weight:700;letter-spacing:.04em;padding:4px 9px;border-radius:999px;background:#E6F3EC;color:#14664D}
+.bl-btns{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 6px}
+.bl-btns .gobtn.named{margin:0;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bl-intro{font-size:14.5px;line-height:1.5;padding:6px 0;overflow-wrap:anywhere}
+.bl-lead{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:800;color:var(--accent);margin-bottom:1px}
+.bl-rest{display:none}
+li.show .bl-rest,.bl-intro.show .bl-rest{display:inline}
+.bl-more{border:0;background:none;color:var(--accent);font-size:12px;font-weight:700;cursor:pointer;padding:2px 0 0 6px;font-family:var(--sans)}
+.tnum{list-style:none;counter-reset:tn;margin:6px 0 0;padding:0}
+.tnum li{counter-increment:tn;position:relative;padding:7px 0 7px 36px;font-size:14px;line-height:1.5;overflow-wrap:anywhere;border-top:1px dashed rgba(227,224,213,.7)}
+.tnum li:first-child{border-top:0}
+.tnum li:before{content:counter(tn);position:absolute;left:0;top:7px;width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;font-family:var(--serif);font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center}
+.step.boss .bl-intro,.step.boss .tnum li{color:#F1EFE8}
 .tbul{list-style:none;margin:6px 0 0;padding:0}
 .tbul li{position:relative;padding:5px 0 5px 18px;font-size:14px;line-height:1.5;overflow-wrap:anywhere;border-top:1px dashed rgba(227,224,213,.7)}
 .tbul li:first-child{border-top:0}
@@ -129,6 +163,8 @@ h1{font-family:var(--serif);font-size:clamp(34px,3.4vw,50px);font-weight:600;lin
 .rm-card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:30px 28px;max-width:640px;width:100%;box-shadow:0 18px 44px rgba(44,44,42,.12)}
 .rm-num{font-family:var(--serif);font-size:15px;color:var(--muted);margin-bottom:10px}
 .rm-text{font-size:18px;line-height:1.55;overflow-wrap:anywhere}
+.rm-head{font-size:19px;line-height:1.4;font-weight:600;margin-bottom:6px}
+.rm-card{max-height:calc(100vh - 120px);overflow-y:auto}
 .rm-actions{display:flex;gap:10px;margin-top:26px;flex-wrap:wrap}
 .rm-done{flex:2;border:0;background:var(--accent);color:#fff;border-radius:14px;padding:16px;font-size:16px;font-weight:600;cursor:pointer;font-family:var(--sans)}
 .rm-skip{flex:1;border:1px solid var(--line);background:var(--card);color:var(--muted);border-radius:14px;padding:16px;font-size:14px;cursor:pointer;font-family:var(--sans)}
@@ -851,46 +887,252 @@ function stepMainInto(node, text) {
   while (built.firstChild) node.appendChild(built.firstChild);
   return node;
 }
-/* THE BRIEF RENDERER v2 (Asher 2026-08-24: "if there's a little backstory, give me
-   one unified bullet - don't give me one story that goes across multiple bullet
-   points... one open button each card"). Bullets appear ONLY where the writing
-   loop marked them deliberately ("•" or " | "). Everything else renders as
-   UNIFIED paragraphs split on blank lines - the machine never chops a story into
-   fragments again (the sentence-splitter mangled "$563K" and "fidelity.com" into
-   confetti on his screen, caught live 2026-08-24). */
-function renderRich(node, text) {
-  var boldLead = function (container, p) {
-    var m = p.match(/^([A-Z][A-Z0-9 .'&$-]{2,}[:,])\s*([\s\S]+)$/);
-    if (m) {
-      container.appendChild(el('strong', '', m[1].replace(/[:,]$/, '') + ': '));
-      stepMainInto(container, m[2]);
-    } else stepMainInto(container, p);
-  };
-  var parts = null;
-  if (text.indexOf('•') >= 0) parts = text.split('•');
-  else if (text.indexOf(' | ') >= 0) parts = text.split(' | ');
-  if (parts) {
-    parts = parts.map(function (p) { return p.trim(); }).filter(Boolean);
-    if (parts.length >= 2) {
-      var pre = parts.shift();
-      if (pre) { var lead = el('div', 'tpara'); boldLead(lead, pre); node.appendChild(lead); }
-      var ul = el('ul', 'tbul');
-      parts.forEach(function (p) {
-        var li = document.createElement('li');
-        boldLead(li, p);
-        ul.appendChild(li);
-      });
-      node.appendChild(ul);
-      return node;
+/* THE TILE BRIEF v3 (Asher 2026-10-05, on a phone screenshot of an opened tile: "when I open up
+   a tile, there should be again pictures, graphs, visuals... I want more bullet points... use as
+   little language as needed"). An opened tile renders as:
+   1. AT A GLANCE: real pictures and marks read from the tile's own words, never invented:
+      the product bottles it names (self-hosted photos), a date line (past grey, ahead green,
+      weekday computed, never trusted from text), the dollar amounts, the cert checks.
+   2. BULLETS: one per numbered item ("1." "(1)" "STEP 1") or CAPS section ("WHY:"), each
+      showing only its bold lead and first sentence; the rest is one tap away. The 2026-08-24
+      unified-bullet law stands: a story is never chopped across bullets, only its tail folds,
+      and a link in the folded tail is hoisted so no button ever hides. */
+var PRODUCT_PICS = [
+  [/muscle[\s-]?eze/i, 'muscle-eze.png', 'Muscle Eze'],
+  [/gi integrity/i, 'gi-integrity.png', 'GI Integrity'],
+  [/gluco[\s-]?ir\b/i, 'gluco-ir.png', 'Gluco IR'],
+  [/berberine pro/i, 'berberine-pro.png', 'Berberine Pro'],
+  [/cortisol pro/i, 'cortisol-pro.png', 'Cortisol Pro'],
+  [/curcumin bcm/i, 'curcumin-bcm-95.png', 'Curcumin BCM-95'],
+  [/d3 10,?000/i, 'd3-10000-k2-2026.png', 'D3 10,000 + K2'],
+  [/d3 5,?000/i, 'd3-5000-with-k2.png', 'D3 5000 + K2'],
+  [/collagen renew/i, 'dynamic-multi-collagen-renew.png', 'Collagen Renew'],
+  [/fruits (?:and|&) greens/i, 'fruits-greens-berry.png', 'Fruits & Greens'],
+  [/inflam[\s-]?eze/i, 'inflam-eze-plus.png', 'Inflam-Eze Plus'],
+  [/mag calm/i, 'mag-calm-pro.png', 'Mag Calm Pro'],
+  [/magnesium glycinate/i, 'magnesium-glycinate.png', 'Magnesium Glycinate'],
+  [/menopause support/i, 'menopause-support.png', 'Menopause Support'],
+  [/omega pure (?:epa-dha )?1000/i, 'omega-pure-epa-dha-1000.png', 'Omega Pure 1000'],
+  [/dha 600/i, 'omega-pure-epa-dha-600.png', 'Omega Pure DHA 600'],
+  [/prm resolve/i, 'prm-resolve.png', 'PRM Resolve'],
+  [/whey protein/i, 'whey-protein.png', 'Whey Protein'],
+  [/chalmers/i, 'chalmers.jpg', 'Dr. Chalmers']
+];
+var KEEP_CAPS = {};
+'gi pl ce dc nd md np pa rd pr ga sc tn mn fl am pm ir et usa vip sku pdf lve gca cmf pmc nfl pac spc irs llc ups dm oat aws id ok fnp rn pt otc l&l'.split(' ').forEach(function (w) { KEEP_CAPS[w] = 1; });
+/* A list marker ("send: 1." / ". 2.") is not a sentence end; a date at the end ("Sep 14.") is. */
+var SENT_STOP = /(?:(?:^|[:;.]\s*)\d{1,2}|(?:^|[\s(])(?:dr|mr|mrs|ms|st|sr|jr|no|vs|inc|co|ste|rd|ave|blvd|mt|ft|approx|dra|jan|feb|mar|apr|jun|jul|aug|sep|sept|oct|nov|dec)|(?:^|[\s(])[A-Z]|\b[ap]\.m|\be\.g|\bi\.e)\.$/i;
+function sentencesOf(s) {
+  var out = [], re = /[.!?](?=\s+["“(]?[A-Z0-9$])/g, last = 0, m;
+  while ((m = re.exec(s))) {
+    var i = m.index;
+    if (SENT_STOP.test(s.slice(Math.max(0, i - 7), i + 1))) continue;
+    out.push(s.slice(last, i + 1).trim());
+    last = i + 1;
+  }
+  out.push(s.slice(last).trim());
+  return out.filter(Boolean);
+}
+function isCapsLead(x) { return /[A-Z]{2}/.test(x) && !/[a-z]/.test(x.replace(/\b(?:and|of|the|to|a|in|on|for|or)\b/g, '')); }
+/* Numbered items: the marker style with the longest 1,2,3... run wins; needs two or more. */
+function numberedSplit(t) {
+  var styles = [/(?:^|\s)(\d{1,2})[.)]\s+(?=["“$(A-Z])/g, /(?:^|\s)\((\d{1,2})\)\s+/g, /(?:^|\s)STEP\s+(\d{1,2})\b[:.]?\s*/gi], best = null;
+  styles.forEach(function (re) {
+    var m, run = [], want = 1;
+    while ((m = re.exec(t))) { if (+m[1] === want) { run.push({ at: m.index, end: m.index + m[0].length }); want++; } }
+    if (run.length >= 2 && (!best || run.length > best.length)) best = run;
+  });
+  if (!best) return null;
+  var pre = t.slice(0, best[0].at).trim(), items = [];
+  best.forEach(function (r, k) { items.push(t.slice(r.end, k + 1 < best.length ? best[k + 1].at : t.length).trim()); });
+  var lastParts = items[items.length - 1].split(/\n\s*\n/);
+  var post = lastParts.length > 1 ? lastParts.slice(1).join('\n\n').trim() : '';
+  items[items.length - 1] = lastParts[0].trim();
+  return { pre: pre, items: items, post: post };
+}
+/* Mid-paragraph CAPS heads ("... the day. WHAT HAPPENED. Wed ...") start their own section. */
+function capsSplit(p) {
+  var out = [], re = /([.!?:])\s+([A-Z][A-Z0-9 ,'&$\/()-]{3,}?[.:])\s/g, last = 0, m;
+  while ((m = re.exec(p))) {
+    if (!isCapsLead(m[2]) || m[2].replace(/[^A-Z]/g, '').length < 3) continue;
+    out.push(p.slice(last, m.index + 1).trim());
+    last = m.index + m[0].length - m[2].length - 1;
+  }
+  out.push(p.slice(last).trim());
+  return out.filter(Boolean);
+}
+function briefSections(text) {
+  var t = text.trim();
+  var mark = t.indexOf('•') >= 0 ? '•' : (t.indexOf(' | ') >= 0 ? ' | ' : null);
+  if (mark) {
+    var ps = t.split(mark).map(function (x) { return x.trim(); }).filter(Boolean);
+    if (ps.length >= 2) return { lead: ps.shift(), items: ps, numbered: false, post: '' };
+  }
+  var ns = numberedSplit(t);
+  if (ns) return { lead: ns.pre, items: ns.items, numbered: true, post: ns.post };
+  var secs = [];
+  t.split(/\n\s*\n/).forEach(function (p) { capsSplit(p.trim()).forEach(function (x) { secs.push(x); }); });
+  if (secs.length === 1) {
+    var ss = sentencesOf(secs[0]);
+    if (ss.length >= 4) {
+      secs = [ss.shift()];
+      for (var i = 0; i < ss.length; i += 2) secs.push(ss.slice(i, i + 2).join(' '));
     }
   }
-  var paras = text.split(/\n\s*\n/).map(function (p) { return p.trim(); }).filter(Boolean);
-  if (paras.length < 2) return stepMainInto(node, text);
-  paras.forEach(function (p) {
-    var d = el('div', 'tpara');
-    boldLead(d, p);
-    node.appendChild(d);
+  return { lead: '', items: secs, numbered: false, post: '' };
+}
+var CERT_LINE = /✓\s?[a-z]+/i;
+function tileGlance(text) {
+  var g = { pics: [], dates: [], money: [], checks: [] }, seen = {};
+  PRODUCT_PICS.forEach(function (p) { if (p[0].test(text) && g.pics.length < 6) g.pics.push(p); });
+  var now = new Date(); now.setHours(0, 0, 0, 0);
+  /* Month names only, capitalized or all caps: "deck 8" and "Marietta 30060" are not dates. */
+  var dre = /\b(?:(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun|MON|TUE|WED|THU|FRI|SAT|SUN)[a-zA-Z]*\.?,?\s+)?(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|June?|July?|Aug(?:ust)?|Sept?(?:ember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?|JAN(?:UARY)?|FEB(?:RUARY)?|MAR(?:CH)?|APR(?:IL)?|MAY|JUNE?|JULY?|AUG(?:UST)?|SEPT?(?:EMBER)?|OCT(?:OBER)?|NOV(?:EMBER)?|DEC(?:EMBER)?)\.?\s+(\d{1,2})(?!\d|:\d)(?:,?\s+(20\d\d))?/g, m;
+  while ((m = dre.exec(text))) {
+    var d = +m[2]; if (d < 1 || d > 31) continue;
+    var dt = new Date(m[3] ? +m[3] : now.getFullYear(), MONTHS[m[1].toLowerCase().slice(0, 3)], d);
+    if (!m[3]) { if (dt - now > 200 * 864e5) dt.setFullYear(dt.getFullYear() - 1); else if (now - dt > 200 * 864e5) dt.setFullYear(dt.getFullYear() + 1); }
+    var k = dt.toDateString(); if (seen[k]) continue; seen[k] = 1; g.dates.push(dt);
+  }
+  g.dates.sort(function (a, b) { return a - b; });
+  if (g.dates.length > 6) { var fut = g.dates.filter(function (x) { return x >= now; }); g.dates = g.dates.filter(function (x) { return x < now; }).slice(-Math.max(1, 6 - fut.length)).concat(fut.slice(0, 5)); }
+  var mre = /\$\d[\d,]*(?:\.\d{1,2})?(?:\s?[KkMm]\b)?/g;
+  while ((m = mre.exec(text))) { if (g.money.indexOf(m[0]) < 0 && g.money.length < 4) g.money.push(m[0]); }
+  var cre = /✓\s?([a-z]+)/gi;
+  while ((m = cre.exec(text))) { if (g.checks.indexOf(m[1].toLowerCase()) < 0) g.checks.push(m[1].toLowerCase()); }
+  return g;
+}
+function relDay(dt) {
+  var now = new Date(); now.setHours(0, 0, 0, 0);
+  var n = Math.round((dt - now) / 864e5);
+  return n === 0 ? 'today' : n === 1 ? 'tomorrow' : n === -1 ? 'yesterday' : n > 0 ? 'in ' + n + 'd' : -n + 'd ago';
+}
+function renderGlance(node, g) {
+  if (!g.pics.length && g.dates.length < 2 && !g.money.length && !g.checks.length) return;
+  var box = el('div', 'glance');
+  if (g.pics.length) {
+    var pr = el('div', 'gl-pics');
+    g.pics.forEach(function (p) {
+      var f = el('figure', 'gl-pic');
+      var im = document.createElement('img'); im.src = 'blasts/assets/' + p[1]; im.alt = p[2]; im.loading = 'lazy';
+      f.appendChild(im); f.appendChild(el('figcaption', '', p[2]));
+      pr.appendChild(f);
+    });
+    box.appendChild(pr);
+  }
+  if (g.dates.length >= 2 || (g.dates.length === 1 && (g.money.length || g.pics.length))) {
+    var tl = el('div', 'gl-line'), today = new Date(), marked = false;
+    today.setHours(0, 0, 0, 0);
+    g.dates.forEach(function (dt) {
+      if (!marked && dt > today) { tl.appendChild(el('span', 'gl-now', 'now')); marked = true; }
+      var cls = dt < today ? ' past' : dt.getTime() === today.getTime() ? ' due' : '';
+      var pt = el('div', 'gl-pt' + cls);
+      pt.appendChild(el('b', '', dt.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })));
+      pt.appendChild(el('span', '', dt.toLocaleDateString(undefined, { weekday: 'short' }) + ' · ' + relDay(dt)));
+      tl.appendChild(pt);
+    });
+    box.appendChild(tl);
+  }
+  if (g.money.length || g.checks.length) {
+    var row = el('div', 'gl-row');
+    g.money.forEach(function (v) { row.appendChild(el('span', 'gl-money', v)); });
+    g.checks.forEach(function (c) { row.appendChild(el('span', 'gl-check', '✓ ' + c)); });
+    box.appendChild(row);
+  }
+  node.appendChild(box);
+}
+/* One bullet: bold CAPS lead, the first sentence, every link in the tail hoisted, the rest folded. */
+function briefItem(container, text) {
+  var t = text.replace(/\s+/g, ' ').trim(), lead = '';
+  var lm = t.match(/^([A-Z][A-Z0-9 ,.'&$\/()-]{2,}?)[:.]\s+(?=\S)/);
+  if (lm && isCapsLead(lm[1]) && lm[1].length <= 60) { lead = lm[1].trim(); t = t.slice(lm[0].length); }
+  /* A shouted run that flows into the sentence ("THE PYRAMID PRINT PIECE is a 2 page PDF")
+     reads as bold sentence case instead of all caps. */
+  var ss = sentencesOf(t), first = ss.shift() || '', tail = ss.join(' ');
+  /* No visible line runs past ~25 words: a long first sentence breaks at its last comma,
+     colon or semicolon inside the window (never inside a link), and the rest folds. */
+  var fw = first.split(/\s+/);
+  if (fw.length > 28) {
+    var cutAt = -1;
+    for (var w = 26; w >= 12; w--) { if (/[,;:]$/.test(fw[w - 1]) && !/:\/\/|^(?:sms|tel):/.test(fw[w - 1])) { cutAt = w; break; } }
+    if (cutAt < 0) cutAt = 24;
+    tail = (fw.slice(cutAt).join(' ') + (tail ? ' ' + tail : '')).trim();
+    first = fw.slice(0, cutAt).join(' ').replace(/[,;:]$/, '') + ' …';
+  }
+  if (lead) container.appendChild(el('strong', 'bl-lead', lead.charAt(0) + lead.slice(1).toLowerCase()));
+  var cm = first.match(/^((?:[A-Z][A-Z0-9'&$\/-]*\s+){1,7}[A-Z][A-Z0-9'&$\/-]*)(?=,?\s+[a-z0-9("“])/);
+  if (cm && cm[1].replace(/[^A-Z]/g, '').length >= 6) {
+    var cap = cm[1].toLowerCase().replace(/[a-z0-9&']+/g, function (w, at) {
+      if (KEEP_CAPS[w] || /\d/.test(w)) return w.toUpperCase();
+      if (at && /^(?:and|of|the|to|a|an|in|on|for|or|at|by)$/.test(w)) return w;
+      return w.charAt(0).toUpperCase() + w.slice(1);
+    });
+    container.appendChild(el('strong', '', cap));
+    first = first.slice(cm[1].length);
+  }
+  /* An all-caps sentence is a shout, not information: it reads in sentence case.
+     Short tokens and anything with a digit (GI, PL, SO1996118) keep their capitals. */
+  if (/[A-Z]{3}/.test(first) && !/[a-z]/.test(first.replace(/(?:https?:\/\/|sms:|tel:)\S+/g, ''))) {
+    first = first.split(/((?:https?:\/\/|sms:|tel:)\S+)/).map(function (seg, i) {
+      if (i % 2) return seg; // links keep their exact characters
+      var x = seg.toLowerCase().replace(/\b([a-z]+|[a-z]*\d[a-z0-9]*)\b/g, function (w) { return /\d/.test(w) || KEEP_CAPS[w] ? w.toUpperCase() : w; });
+      x = x.replace(/([.!?]\s+)([a-z])/g, function (a, b, c) { return b + c.toUpperCase(); });
+      return i === 0 ? x.replace(/^(\s*)([a-z])/, function (a, b, c) { return b + c.toUpperCase(); }) : x;
+    }).join('');
+  }
+  stepMainInto(container, first);
+  if (tail) {
+    var qr = quotedRanges(tail), re = /(?:https?:\/\/|sms:|tel:)[^\s]+/g, m;
+    while ((m = re.exec(tail))) { if (!inQuoted(qr, m.index)) container.appendChild(linkBtn(m[0].replace(URL_TAIL, ''))); }
+    var more = el('button', 'bl-more', '+ more');
+    var rest = el('span', 'bl-rest');
+    stepMainInto(rest, ' ' + tail);
+    more.onclick = function (e) { e.stopPropagation(); container.classList.toggle('show'); more.textContent = container.classList.contains('show') ? '− less' : '+ more'; };
+    container.appendChild(rest);
+    container.appendChild(more);
+  }
+}
+function renderRich(node, text) {
+  var lines = text.split('\n'), clean = [];
+  lines.forEach(function (ln) {
+    var k = ln.indexOf('✓');
+    if (k >= 0 && CERT_LINE.test(ln)) { var keep = ln.slice(0, k).trim(); if (keep) clean.push(keep); }
+    else clean.push(ln);
   });
+  var body = clean.join('\n');
+  renderGlance(node, tileGlance(text));
+  /* NAMED BUTTONS: loops write "Dr. Bob note: <link>". Each pair becomes one labeled button
+     and leaves the prose, so the reader sees "Dr. Bob note" instead of a bare Open. */
+  var qrB = quotedRanges(body), named = [], seenU = {};
+  body = body.replace(/(^|[\s(])([A-Z][A-Za-z0-9.'&+ \/-]{1,32}?):\s*((?:https?:\/\/|sms:|tel:)[^\s]+)/g, function (all, pre, label, url, off) {
+    if (inQuoted(qrB, off)) return all;
+    /* Only a standalone label: line start, after a sentence end, or right after another link.
+       "same shape as your Sept 10 list: <link>" is a sentence, not a label, and stays whole. */
+    if (!/(?:^|\n|[.!?)]\s*|(?:https?:\/\/|sms:|tel:)\S+\s*)$/.test(body.slice(0, off) + pre)) return all;
+    if (!/[a-z]/.test(label) || /^(read and send|review and send|send|open|link|here|button \d+|form|text|call|cert|page)$/i.test(label.trim())) return all;
+    url = url.replace(URL_TAIL, '');
+    if (!seenU[url]) { seenU[url] = 1; named.push([label.trim().replace(/^(?:the|your)\s+/i, ''), url]); }
+    return pre;
+  });
+  /* Lifting the links out can leave bare list markers ("send: 1. 2. 3."): sweep them. */
+  /* Only true leftovers go: a line that is just "3.", a run of two or more markers, or one
+     marker hanging after a colon. A date that ends a line ("Fri Sep 18.") stays. */
+  body = body.replace(/^[ \t]*\d{1,2}[.)][ \t]*$/gm, '').replace(/(?:[ \t]+\d{1,2}[.)]){2,}[ \t]*(?=\n|$)/g, '')
+    .replace(/:[ \t]+\d{1,2}[.)][ \t]*(?=\n|$)/g, ':').replace(/:[ \t]*(?=\n\s*(?:\n|$)|$)/g, '.');
+  if (named.length) {
+    var br = el('div', 'bl-btns');
+    named.forEach(function (n) { var a = linkBtn(n[1]); a.textContent = n[0]; a.classList.add('named'); br.appendChild(a); });
+    node.appendChild(br);
+  }
+  var b = briefSections(body);
+  if (b.lead) { var ld = el('div', 'bl-intro'); briefItem(ld, b.lead); node.appendChild(ld); }
+  if (b.items.length === 1 && !b.lead) { var one = el('div', 'bl-intro'); briefItem(one, b.items[0]); node.appendChild(one); }
+  else if (b.items.length) {
+    var list = el(b.numbered ? 'ol' : 'ul', b.numbered ? 'tnum' : 'tbul');
+    b.items.forEach(function (it) { var li = document.createElement('li'); briefItem(li, it); list.appendChild(li); });
+    node.appendChild(list);
+  }
+  if (b.post) { var po = el('div', 'bl-intro'); briefItem(po, b.post); node.appendChild(po); }
   return node;
 }
 
@@ -1063,7 +1305,15 @@ function restRow(t) {
   lab.appendChild(ageBadge(t));
   mid.appendChild(lab);
   stepMainInto(mid, splitHead(t.text).head);
-  mid.onclick = function () { mid.innerHTML = ''; renderRich(mid, t.text); };
+  mid.onclick = function () {
+    if (mid.classList.contains('opened')) return;
+    var sp = splitHead(t.text);
+    mid.classList.add('opened');
+    mid.innerHTML = '';
+    mid.appendChild(lab);
+    stepMainInto(mid.appendChild(el('div', 'headline')), sp.head);
+    if (sp.rest) renderRich(mid, sp.rest);
+  };
   row.appendChild(tick); row.appendChild(mid);
   return row;
 }
@@ -1440,7 +1690,9 @@ function showRunCard() {
   document.getElementById('rmNum').textContent = (runIdx + 1) + ' of ' + live.length + (isSendTile(t) ? '  ·  money move' : '');
   var body = document.getElementById('rmText');
   body.innerHTML = '';
-  renderRich(body, t.text);
+  var rsp = splitHead(t.text);
+  stepMainInto(body.appendChild(el('div', 'rm-head')), rsp.head);
+  if (rsp.rest) renderRich(body, rsp.rest);
   document.getElementById('rmDone').onclick = function (e) {
     gameKill(t, e.clientX || window.innerWidth / 2, e.clientY || 300);
     api('todos/' + t.id, { method: 'PATCH', body: JSON.stringify({ done: true }) }).then(function () {
