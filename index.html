@@ -117,7 +117,6 @@ li.show .bl-rest,.bl-intro.show .bl-rest{display:inline}
 .tnum li{counter-increment:tn;position:relative;padding:7px 0 7px 36px;font-size:14px;line-height:1.5;overflow-wrap:anywhere;border-top:1px dashed rgba(227,224,213,.7)}
 .tnum li:first-child{border-top:0}
 .tnum li:before{content:counter(tn);position:absolute;left:0;top:7px;width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;font-family:var(--serif);font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center}
-.step.boss .bl-intro,.step.boss .tnum li{color:#F1EFE8}
 .tbul{list-style:none;margin:6px 0 0;padding:0}
 .tbul li{position:relative;padding:5px 0 5px 18px;font-size:14px;line-height:1.5;overflow-wrap:anywhere;border-top:1px dashed rgba(227,224,213,.7)}
 .tbul li:first-child{border-top:0}
@@ -190,9 +189,6 @@ li.show .bl-rest,.bl-intro.show .bl-rest{display:inline}
 .lvlup-kick{font-size:11px;letter-spacing:.24em;color:var(--gold);font-weight:700}
 .lvlup-name{font-family:var(--serif);font-size:42px;font-weight:700;margin-top:6px}
 .lvlup-sub{color:var(--muted);font-size:13px;margin-top:8px}
-.step.boss{background:linear-gradient(135deg,#2C2C2A,#413E36);border:2px solid var(--gold)}
-.step.boss .headline,.step.boss .stepmain,.step.boss .tpara,.step.boss .tbul li{color:#F1EFE8}
-.step.boss .steplabel{color:var(--gold)}
 .boss-chip{display:inline-block;background:var(--gold);color:#2C2C2A;font-size:10px;font-weight:800;letter-spacing:.16em;border-radius:4px;padding:2px 7px;margin-bottom:6px}
 .fb-chip{display:inline-block;background:var(--accent);color:#fff;font-size:10px;font-weight:800;letter-spacing:.16em;border-radius:4px;padding:2px 7px;margin-bottom:6px}
 .loot{perspective:800px;margin:18px auto 0;width:240px;height:140px;cursor:pointer}
@@ -226,6 +222,53 @@ li.show .bl-rest,.bl-intro.show .bl-rest{display:inline}
 /* A tile whose answer the machine has claimed glows green at the spine:
    proof it was heard, visible from across the room. */
 .step.mstep.heard{border-left-color:var(--accent);background:#F0F7F1;border-color:#CFE5D6}
+/* QUEST CARDS (2026-10-06): banner + color wash per move. Placed after the mstep and
+   heard rules on purpose so the quest colors win; text is ink on a light wash everywhere. */
+.step.quest{flex-wrap:wrap;align-items:center;row-gap:12px;background:var(--kt);border:2px solid var(--k);border-left-width:2px;padding:0 14px 16px 16px;overflow:hidden;position:relative}
+.step.quest:hover{transform:translateY(-4px);box-shadow:0 14px 30px -6px var(--k)}
+.qbar{order:-1;flex:0 0 calc(100% + 30px);margin:0 -14px 0 -16px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:9px 14px 9px 16px;background:var(--k);color:#fff}
+.qicon{font-size:18px;line-height:1;filter:drop-shadow(0 1px 0 rgba(0,0,0,.15))}
+.qverb{font-family:var(--serif);font-size:21px;font-weight:700;letter-spacing:.01em;line-height:1}
+.qwho{font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;opacity:.85}
+.qflag{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;background:rgba(255,255,255,.22);border-radius:999px;padding:3px 8px}
+.qstake{font-size:11px;font-weight:800;background:rgba(255,255,255,.92);color:#2C2C2A;border-radius:999px;padding:4px 9px;white-space:nowrap}
+.qdue.hot{background:#FFF1C9;color:#8A4B00;animation:duepulse 1.6s ease-in-out infinite}
+@keyframes duepulse{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+.qxp{margin-left:auto;font-size:11px;font-weight:800;letter-spacing:.06em;background:#fff;color:var(--k);border-radius:999px;padding:4px 10px;white-space:nowrap}
+.step.quest .stepnum{background:var(--k);box-shadow:0 0 0 4px #fff}
+.step.quest .headline,.step.quest .stepmain{color:var(--ink);font-size:16.5px;line-height:1.42;font-weight:600}
+.step.quest .tick{border-color:var(--k);border-width:3px;background:#fff}
+.step.quest .tick:hover{background:var(--k);transform:scale(1.14)}
+.step.quest .tick:hover:after{content:'✓';color:#fff;font-size:17px;font-weight:800}
+.step.quest .expand,.step.quest .bl-more{color:var(--k)}
+.step.quest .gobtn{background:var(--k)}
+.step.quest.q-send .qbar,.step.quest.q-send .qwho{color:#2C2C2A}
+.step.quest.q-send .qxp{color:#9A5A00}
+.step.quest.q-send .gobtn{background:#C76F00}
+.step.quest.q-look .gobtn{background:var(--accent)}
+.step.quest.boss{border:2px solid var(--gold);box-shadow:0 0 0 3px rgba(239,159,39,.25);animation:bossglow 2.6s ease-in-out infinite}
+.step.quest.boss .qbar{background:linear-gradient(100deg,#2C2C2A 0%,#4A4436 55%,#2C2C2A 100%);color:#F6E3B4}
+.step.quest.boss .qxp{background:var(--gold);color:#2C2C2A}
+.step.quest.boss .stepnum{background:linear-gradient(135deg,#EF9F27,#C77A0F)}
+.step.quest.boss .tick{border-color:var(--gold)}
+.step.quest.boss .tick:hover{background:var(--gold)}
+.step.quest.boss .gobtn{background:#C77A0F}
+.step.quest.mstep.heard{background:var(--kt);border-color:var(--k)}
+.step.quest.mstep:hover{box-shadow:0 14px 30px -6px var(--k)}
+.qnum{display:none;align-items:center;justify-content:center;min-width:24px;height:24px;border-radius:50%;background:#fff;color:var(--k);font-family:var(--serif);font-weight:700;font-size:15px}
+.step.quest.boss .qnum{color:#2C2C2A;background:var(--gold)}
+/* Phone: the headline gets the full card width. The number rides in the banner and the
+   Done circle drops under the text, right-aligned where the thumb already is. */
+@media (max-width:700px){
+  .step.quest .stepnum{display:none}
+  .step.quest .qnum{display:inline-flex}
+  .step.quest .steptxt{order:2;flex-basis:100%}
+  .step.quest .tick{order:3;margin-left:auto;width:40px;height:40px;min-width:40px}
+  .step.quest .del{order:4}
+}
+@keyframes bossglow{0%,100%{box-shadow:0 0 0 3px rgba(239,159,39,.22)}50%{box-shadow:0 0 0 6px rgba(239,159,39,.38)}}
+.step.quest.later{opacity:.6}
+@media (prefers-reduced-motion:reduce){.step.quest.boss{animation:none}}
 /* FRIDAY ONLY items recede: today's work pops, Friday's does not. */
 .step.later{opacity:.55}
 .step.later .stepnum,.step.later.mstep .stepnum{background:#8A8A82}
@@ -829,14 +872,37 @@ function stepCard(t, n) {
   var heard = !!(t.answer && t.answer_seen_at);
   var row = el('div', 'step' + (isM ? ' mstep' : '') + (later ? ' later' : '') + (heard ? ' heard' : '') + (isSendTile(t) ? ' sendtile' : ''));
   var num = el('div', 'stepnum', String(n));
-  if (!isM && a && !later) num.style.background = a[2];
   var mid = el('div', 'steptxt');
-  mid.appendChild(el('div', 'steplabel', isM ? 'From the machine' : (isQuestion(t) ? 'Your question' : (a ? a[1] : 'To do'))));
-  /* GAME LAYER: VITAL tiles fight as bosses; the easiest send in the run wears
-     first blood so the first kill of a session is ten seconds away. */
-  if (/^VITAL [123]:/.test(t.text || '')) { row.classList.add('boss'); mid.insertBefore(el('span', 'boss-chip', 'BOSS FIGHT · 60 XP'), mid.firstChild); }
-  else if (t.id === window._firstBlood) { mid.insertBefore(el('span', 'fb-chip', '⚡ FIRST BLOOD, ONE TAP'), mid.firstChild); }
+  /* QUEST CARDS (Asher 2026-10-06, on boss tiles he could not read: "I would like for my every
+     tile to be fun, expressive color-wise... something that I want to do, because it is
+     motivating, impactful"). Every run card wears a colored banner naming the move it asks
+     for, with its icon and the XP it pays; the card, badge and Done ring take the same color.
+     Text is always dark ink on a light wash, so nothing can go unreadable again. */
+  var q = questOf(t);
+  row.classList.add('quest', 'q-' + q.kind);
+  row.style.setProperty('--k', q.color);
+  row.style.setProperty('--kt', q.tint);
+  var bar = el('div', 'qbar');
+  bar.appendChild(el('span', 'qnum', String(n)));
+  bar.appendChild(el('span', 'qicon', q.icon));
+  bar.appendChild(el('span', 'qverb', q.verb));
+  bar.appendChild(el('span', 'qwho', isM ? 'from the machine' : (isQuestion(t) ? 'your question' : (a ? a[1].toLowerCase() : 'yours'))));
+  if (t.id === window._firstBlood && q.kind !== 'boss') bar.appendChild(el('span', 'qflag', '⚡ first blood'));
+  if (heard) bar.appendChild(el('span', 'qflag', '✓ heard'));
+  /* The stakes ride on the banner: the first dollar amount and the nearest deadline ahead. */
+  var gl = tileGlance(t.text || ''), now0 = new Date(); now0.setHours(0, 0, 0, 0);
+  if (gl.money.length) bar.appendChild(el('span', 'qstake', gl.money[0]));
+  var soon = gl.dates.filter(function (d) { return d >= now0 && d - now0 <= 14 * 864e5; })[0];
+  if (soon) bar.appendChild(el('span', 'qstake qdue' + (soon - now0 <= 864e5 ? ' hot' : ''), '⏰ ' + soon.toLocaleDateString(undefined, { weekday: 'short' }) + ' · ' + relDay(soon)));
+  bar.appendChild(el('span', 'qxp', '+' + xpFor(t) + ' XP'));
+  row.appendChild(bar);
+  if (q.kind === 'boss') row.classList.add('boss');
   var parts = splitHead(t.text);
+  /* The banner already says the move and the lane, so the headline drops the words that
+     repeat it ("VITAL 1:", "NutriDyn:", "READ AND SEND:"). Display only; the tile text is untouched. */
+  parts.head = parts.head.replace(/^VITAL [123]:\s*/, '').replace(/^NutriDyn[:.,]?\s+(?=\S)/, '');
+  if (q.kind === 'send') parts.head = parts.head.replace(/^(?:READ AND SEND|REVIEW AND SEND|READ, [^:]{0,30}SEND)[:,.]?\s+(?=\S)/i, '');
+  parts.head = parts.head.charAt(0).toUpperCase() + parts.head.slice(1);
   if (parts.rest) {
     var hl = stepMainInto(el('div', 'headline'), parts.head);
     /* THE BUTTON NEVER HIDES BEHIND THE FOLD (2026-08-11). The headline is capped at
@@ -863,7 +929,7 @@ function stepCard(t, n) {
     };
     mid.appendChild(ex);
   } else {
-    mid.appendChild(stepMain(t.text));
+    mid.appendChild(stepMain(parts.head));
   }
   mid.appendChild(answerBox(t));
   var tick = el('button', 'tick', '');
@@ -1249,6 +1315,26 @@ function kindOf(t) {
   if (/(?:^|\s)(?:tel|sms):/.test(x)) return 'call';
   if (needsWord(t) || /\b(answer|type)\b[^.]{0,60}\b(this box|answer box|in this tile)/i.test(x)) return 'word';
   return 'look';
+}
+var QUEST = {
+  boss: ['⚔️', 'Boss fight', '#2C2C2A', '#FBF3DF'],
+  call: ['📞', 'Call', '#1D9E75', '#EAF6F0'],
+  text: ['💬', 'Text', '#1D9E75', '#EAF6F0'],
+  money: ['💰', 'Money', '#C65545', '#FBECE8'],
+  send: ['✉️', 'Send it', '#E8901A', '#FDF2E0'],
+  word: ['🎯', 'Your call', '#7A4E8C', '#F3ECF6'],
+  look: ['👀', 'Look', '#6E6A60', '#F1EFE8']
+};
+function questOf(t) {
+  var x = t.text || '', k;
+  if (/^VITAL [123]:/.test(x)) k = 'boss';
+  else {
+    k = kindOf(t);
+    if (k === 'call') k = /(?:^|\s)sms:/.test(x) && !/(?:^|\s)tel:/.test(x.split(/(?:^|\s)sms:/)[0]) ? 'text' : 'call';
+    if (k === 'money' && /\bPAY\b|^(?:\S+: )?pay\b/i.test(splitHead(x).head)) { var r = QUEST.money.slice(); r[1] = 'Pay'; return { kind: 'money', icon: r[0], verb: r[1], color: r[2], tint: r[3] }; }
+  }
+  var v = QUEST[k];
+  return { kind: k, icon: v[0], verb: v[1], color: v[2], tint: v[3] };
 }
 function ageDays(t) { return Math.max(0, Math.floor((Date.now() - new Date(t.created_at).getTime()) / 86400000)); }
 function ageBadge(t) {
