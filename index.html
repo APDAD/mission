@@ -138,6 +138,25 @@ li.show .bl-rest,.bl-intro.show .bl-rest{display:inline}
 .rrow .rtxt{flex:1;min-width:0;font-size:13.5px;line-height:1.45;overflow-wrap:anywhere;cursor:pointer}
 .rrow .rlabel{font-size:9px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--muted)}
 .rrow.mrow .rlabel{color:var(--gold)}
+/* QUEST ROWS (2026-10-06): the held pile in color. */
+.rrow.qrow{background:var(--kt);border:1px solid rgba(44,44,42,.06);border-left:5px solid var(--k);border-radius:12px;margin:8px 0;padding:10px 12px 11px 10px;transition:transform .15s ease,box-shadow .15s ease}
+.rrow.qrow:hover{transform:translateX(3px);box-shadow:0 8px 18px -8px var(--k)}
+.rrow.qrow .rlabel{display:flex;flex-wrap:wrap;align-items:center;gap:6px;color:var(--muted);margin-bottom:4px}
+.rrow.qrow .rage{margin-left:0}
+.rpill{display:inline-flex;align-items:center;background:var(--k);color:#fff;border-radius:999px;padding:3px 9px;font-size:10px;letter-spacing:.08em;font-weight:800;text-transform:uppercase}
+.rrow.q-send .rpill{color:#2C2C2A}
+.rwho{font-size:9px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+.rstake{font-size:10px;font-weight:800;background:#fff;color:#2C2C2A;border:1px solid rgba(44,44,42,.12);border-radius:999px;padding:2px 8px;text-transform:none;letter-spacing:0;white-space:nowrap}
+.rstake.qdue.hot{background:#FFF1C9;color:#8A4B00;border-color:#F0D58A}
+.rxp{margin-left:auto;font-size:10px;font-weight:800;color:var(--k);background:#fff;border-radius:999px;padding:2px 8px;letter-spacing:.04em;text-transform:none}
+.rrow.q-send .rxp{color:#9A5A00}
+.rhead{font-size:15px;line-height:1.42;font-weight:600;color:var(--ink)}
+.rrow.qrow .tick.mini{width:26px;height:26px;min-width:26px;margin-top:2px;background:#fff;border:2.5px solid var(--k)}
+.rrow.qrow .tick.mini:hover{background:var(--k)}
+.rrow.qrow .gobtn{background:var(--k)}
+.rrow.q-send .gobtn{background:#C76F00}
+.rrow.q-look .gobtn{background:var(--accent)}
+.rrow.q-boss .rpill{background:linear-gradient(100deg,#2C2C2A,#4A4436);color:#F6E3B4}
 /* THE PILE, AS A PICTURE (2026-09-22 evening): what the held tiles ARE, by the one gesture each asks for,
    so a 250-tile fold reads in three seconds. Real counts only, one bar, filters are the legend. */
 .kindbar{padding:2px 6px 12px}
@@ -890,19 +909,14 @@ function stepCard(t, n) {
   if (t.id === window._firstBlood && q.kind !== 'boss') bar.appendChild(el('span', 'qflag', '⚡ first blood'));
   if (heard) bar.appendChild(el('span', 'qflag', '✓ heard'));
   /* The stakes ride on the banner: the first dollar amount and the nearest deadline ahead. */
-  var gl = tileGlance(t.text || ''), now0 = new Date(); now0.setHours(0, 0, 0, 0);
-  if (gl.money.length) bar.appendChild(el('span', 'qstake', gl.money[0]));
-  var soon = gl.dates.filter(function (d) { return d >= now0 && d - now0 <= 14 * 864e5; })[0];
-  if (soon) bar.appendChild(el('span', 'qstake qdue' + (soon - now0 <= 864e5 ? ' hot' : ''), '⏰ ' + soon.toLocaleDateString(undefined, { weekday: 'short' }) + ' · ' + relDay(soon)));
+  stakeChips(t, 'qstake').forEach(function (c) { bar.appendChild(c); });
   bar.appendChild(el('span', 'qxp', '+' + xpFor(t) + ' XP'));
   row.appendChild(bar);
   if (q.kind === 'boss') row.classList.add('boss');
   var parts = splitHead(t.text);
   /* The banner already says the move and the lane, so the headline drops the words that
      repeat it ("VITAL 1:", "NutriDyn:", "READ AND SEND:"). Display only; the tile text is untouched. */
-  parts.head = parts.head.replace(/^VITAL [123]:\s*/, '').replace(/^NutriDyn[:.,]?\s+(?=\S)/, '');
-  if (q.kind === 'send') parts.head = parts.head.replace(/^(?:READ AND SEND|REVIEW AND SEND|READ, [^:]{0,30}SEND)[:,.]?\s+(?=\S)/i, '');
-  parts.head = parts.head.charAt(0).toUpperCase() + parts.head.slice(1);
+  parts.head = cleanHead(parts.head, q.kind);
   if (parts.rest) {
     var hl = stepMainInto(el('div', 'headline'), parts.head);
     /* THE BUTTON NEVER HIDES BEHIND THE FOLD (2026-08-11). The headline is capped at
@@ -1301,9 +1315,9 @@ var searchTerm = '';
 var KINDS = [
   ['call', 'Call or text', '#1D9E75'],
   ['money', 'Money', '#C65545'],
-  ['send', 'Send', '#EF9F27'],
-  ['word', 'Your word', '#8a6516'],
-  ['look', 'Look', '#B9B3A6']
+  ['send', 'Send', '#E8901A'],
+  ['word', 'Your call', '#7A4E8C'],
+  ['look', 'Look', '#6E6A60']
 ];
 var curKind = '', restOldest = false;
 try { restOldest = localStorage.getItem('mc_rest_oldest') === '1'; } catch (e) {}
@@ -1335,6 +1349,35 @@ function questOf(t) {
   }
   var v = QUEST[k];
   return { kind: k, icon: v[0], verb: v[1], color: v[2], tint: v[3] };
+}
+/* Shared by run cards and held rows: the headline minus words the color pill already says,
+   and the stakes (first dollar amount, nearest deadline inside 14 days). Display only. */
+function cleanHead(head, kind) {
+  var h = head.replace(/^VITAL [123]:\s*/, '').replace(/^NutriDyn\s*[:.,\/]?\s+(?=\S)/, '');
+  if (kind === 'send') h = h.replace(/^(?:READ AND SEND|REVIEW AND SEND|READ, [^:]{0,30}SEND)[:,.]?\s+(?=\S)/i, '');
+  /* A shouted headline reads in title case so names keep their capitals: the whole line when it
+     has no lowercase, else its leading CAPS run ("SEND FIVE WELCOMES, top to bottom"). */
+  var caps = !/[a-z]/.test(h.replace(/(?:https?:\/\/|sms:|tel:)\S+/g, '')) ? h : (h.match(/^(?:[A-Z][A-Z0-9'&$\/-]*[:,]?\s+){2,}(?=[a-z0-9("“])/) || [''])[0];
+  if (caps.replace(/[^A-Z]/g, '').length >= 6) h = titleCaps(caps) + h.slice(caps.length);
+  return h.charAt(0).toUpperCase() + h.slice(1);
+}
+function titleCaps(x) {
+  return x.split(/((?:https?:\/\/|sms:|tel:)\S+)/).map(function (seg, i) {
+    if (i % 2) return seg;
+    return seg.toLowerCase().replace(/[a-z0-9&']+/g, function (w, at) {
+      if (KEEP_CAPS[w] || /\d/.test(w) || (!at && !i && w === 'of')) return w.toUpperCase(); // a leading OF is OpenFunctional
+      if ((at || i) && /^(?:and|of|the|to|a|an|in|on|for|or|at|by)$/.test(w) && !/[:.!?]\s*$/.test(seg.slice(0, at))) return w;
+      return w.charAt(0).toUpperCase() + w.slice(1);
+    });
+  }).join('');
+}
+function stakeChips(t, cls) {
+  var out = [], gl = tileGlance(t.text || ''), now0 = new Date(); now0.setHours(0, 0, 0, 0);
+  var cash = gl.money.filter(function (m) { return /[1-9]/.test(m); })[0];
+  if (cash) out.push(el('span', cls, cash));
+  var soon = gl.dates.filter(function (d) { return d >= now0 && d - now0 <= 14 * 864e5; })[0];
+  if (soon) out.push(el('span', cls + ' qdue' + (soon - now0 <= 864e5 ? ' hot' : ''), '⏰ ' + soon.toLocaleDateString(undefined, { weekday: 'short' }) + ' · ' + relDay(soon)));
+  return out;
 }
 function ageDays(t) { return Math.max(0, Math.floor((Date.now() - new Date(t.created_at).getTime()) / 86400000)); }
 function ageBadge(t) {
@@ -1378,26 +1421,38 @@ function renderKindBar(rows) {
   box.appendChild(chips);
 }
 function restRow(t) {
-  var row = el('div', 'rrow' + (t.source === 'loop' ? ' mrow' : ''));
+  /* QUEST ROWS (Asher 2026-10-06, "do the same for the rest of the board rows"): every held
+     row carries its move color, a colored pill with icon and verb, the stakes, the XP and its
+     age, over a light wash with an ink headline. */
+  var q = questOf(t);
+  var row = el('div', 'rrow qrow q-' + q.kind + (t.source === 'loop' ? ' mrow' : '') + (isLater(t) ? ' later' : ''));
+  row.style.setProperty('--k', q.color);
+  row.style.setProperty('--kt', q.tint);
   var tick = el('button', 'tick mini', '');
   tick.setAttribute('aria-label', 'Mark done');
-  tick.style.background = 'none';
   tick.onclick = function (e) {
     gameKill(t, e.clientX || window.innerWidth / 2, e.clientY || 200);
     api('todos/' + t.id, { method: 'PATCH', body: JSON.stringify({ done: true }) }).then(loadTodos);
   };
   var mid = el('div', 'rtxt');
-  var lab = el('div', 'rlabel', t.source === 'loop' ? 'machine' : (areaOf(t) ? areaOf(t)[1] : 'to do'));
+  var lab = el('div', 'rlabel');
+  var pill = el('span', 'rpill');
+  pill.appendChild(el('span', '', q.icon + ' ' + q.verb));
+  lab.appendChild(pill);
+  lab.appendChild(el('span', 'rwho', t.source === 'loop' ? 'machine' : (areaOf(t) ? areaOf(t)[1] : 'to do')));
   lab.appendChild(ageBadge(t));
+  stakeChips(t, 'rstake').forEach(function (c) { lab.appendChild(c); });
+  lab.appendChild(el('span', 'rxp', '+' + xpFor(t) + ' XP'));
   mid.appendChild(lab);
-  stepMainInto(mid, splitHead(t.text).head);
+  var head0 = cleanHead(splitHead(t.text).head, q.kind);
+  stepMainInto(mid.appendChild(el('div', 'rhead')), head0);
   mid.onclick = function () {
     if (mid.classList.contains('opened')) return;
     var sp = splitHead(t.text);
     mid.classList.add('opened');
     mid.innerHTML = '';
     mid.appendChild(lab);
-    stepMainInto(mid.appendChild(el('div', 'headline')), sp.head);
+    stepMainInto(mid.appendChild(el('div', 'rhead')), head0);
     if (sp.rest) renderRich(mid, sp.rest);
   };
   row.appendChild(tick); row.appendChild(mid);
