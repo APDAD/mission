@@ -572,17 +572,21 @@ iframe{width:100%;height:calc(100vh - 150px);min-height:480px;border:1px solid v
         <button class="subtab on" data-m="money">Overview</button>
         <button class="subtab" data-m="benefits">Card benefits</button>
         <button class="subtab" data-m="tax">Tax</button>
+        <button class="subtab" data-m="spending">Spending</button>
       </span>
       <span class="small" id="moneyUpdated"></span>
       <span class="small" id="benefitsUpdated" style="display:none"></span>
       <span class="small" id="taxUpdated" style="display:none"></span>
+      <span class="small" id="spendingUpdated" style="display:none"></span>
       <button class="reload" id="moneyReload">Reload</button>
       <button class="reload" id="benefitsReload" style="display:none">Reload</button>
       <button class="reload" id="taxReload" style="display:none">Reload</button>
+      <button class="reload" id="spendingReload" style="display:none">Reload</button>
     </div>
     <iframe id="moneyFrame" title="Money"></iframe>
     <iframe id="benefitsFrame" title="Card Benefits" style="display:none"></iframe>
     <iframe id="taxFrame" title="Tax" style="display:none"></iframe>
+    <iframe id="spendingFrame" title="Spending" style="display:none"></iframe>
     <div class="linkrow">
       <a class="lbtn" href="http://localhost:3200" target="_blank" rel="noopener">Finance Command Center<span>opens only when running on your Mac</span></a>
       <a class="lbtn" href="http://localhost:3300" target="_blank" rel="noopener">APEX.AI<span>same</span></a>
@@ -1966,6 +1970,9 @@ function loadBenefits(force) {
 function loadTax(force) {
   loadPage('tax', 'taxFrame', 'taxUpdated', 'No tax page pushed yet.', force);
 }
+function loadSpending(force) {
+  loadPage('spending', 'spendingFrame', 'spendingUpdated', 'No spending audit pushed yet.', force);
+}
 function loadLifeu(force) {
   loadPage('lifeu', 'lifeuFrame', 'lifeuUpdated', 'No Life U page pushed yet.', force);
 }
@@ -2021,7 +2028,7 @@ function showSub(which) {
 
 // Money sub-views: the money page and the card-benefits sweep share one tab.
 // Benefits is INSIGHT ONLY; every action it finds is also a TODAY tile.
-var MSUBS = { money: 'money', benefits: 'benefits', tax: 'tax' };
+var MSUBS = { money: 'money', benefits: 'benefits', tax: 'tax', spending: 'spending' };
 var curMoneySub = 'money';
 function showMoneySub(which) {
   if (!MSUBS[which]) which = 'money';
@@ -2035,6 +2042,7 @@ function showMoneySub(which) {
   });
   if (which === 'benefits') loadBenefits(false);
   else if (which === 'tax') loadTax(false);
+  else if (which === 'spending') loadSpending(false);
   else loadMoney(false);
 }
 
@@ -2075,6 +2083,8 @@ var EMPIRE = [
     go: function () { showTab('money'); showMoneySub('benefits'); } },
   { name: 'Tax', desc: 'The wall, the order, the dates', color: '#C65545', page: 'tax',
     go: function () { showTab('money'); showMoneySub('tax'); } },
+  { name: 'Spending', desc: 'Where the money goes', color: '#C65545', page: 'spending',
+    go: function () { showTab('money'); showMoneySub('spending'); } },
   { name: 'Travel', desc: 'Trips, points, deadlines', color: '#63BD9C', page: 'travel',
     go: function () { showTab('life'); showLifeSub('travel'); } },
   { name: 'Life U', desc: 'The campus account', color: '#1D9E75', page: 'lifeu',
@@ -2196,6 +2206,7 @@ function refreshAll(manual) {
   if (document.getElementById('moneyFrame').srcdoc) loadMoney(true);
   if (document.getElementById('benefitsFrame').srcdoc) loadBenefits(true);
   if (document.getElementById('taxFrame').srcdoc) loadTax(true);
+  if (document.getElementById('spendingFrame').srcdoc) loadSpending(true);
   if (document.getElementById('lifeuFrame').srcdoc) loadLifeu(true);
   if (document.getElementById('travelFrame').srcdoc) loadTravel(true);
   if (document.getElementById('ofFrame').srcdoc) loadOf(true);
@@ -2411,6 +2422,7 @@ document.getElementById('lifeuReload').onclick = function () { loadLifeu(true); 
 document.getElementById('moneyReload').onclick = function () { loadMoney(true); };
 document.getElementById('benefitsReload').onclick = function () { loadBenefits(true); };
 document.getElementById('taxReload').onclick = function () { loadTax(true); };
+document.getElementById('spendingReload').onclick = function () { loadSpending(true); };
 document.querySelectorAll('#p-money .subtab').forEach(function (b) { b.onclick = function () { showMoneySub(b.dataset.m); }; });
 document.getElementById('travelReload').onclick = function () { loadTravel(true); };
 document.getElementById('ofReload').onclick = function () { loadOf(true); };
