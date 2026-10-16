@@ -106,6 +106,9 @@ h1{font-family:var(--serif);font-size:clamp(34px,3.4vw,50px);font-weight:600;lin
 .gl-row{display:flex;flex-wrap:wrap;gap:6px}
 .gl-money{font-family:var(--serif);font-weight:700;font-size:18px;padding:2px 10px;border-radius:8px;background:#FCF1DC;color:#814800}
 .gl-check{font-size:11px;font-weight:700;letter-spacing:.04em;padding:4px 9px;border-radius:999px;background:#E6F3EC;color:#14664D}
+.art-card{margin:6px 0 10px}
+.art-card img{display:block;width:100%;height:auto;border-radius:14px;border:1px solid var(--line);background:#fff}
+.art-card:empty{display:none}
 .bl-btns{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 6px}
 .bl-btns .gobtn.named{margin:0;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .bl-intro{font-size:14.5px;line-height:1.5;padding:6px 0;overflow-wrap:anywhere}
@@ -398,6 +401,12 @@ iframe{width:100%;height:calc(100vh - 150px);min-height:480px;border:1px solid v
 .gatebox button:hover{filter:brightness(1.08)}
 .gerr{color:var(--red);font-size:13px;margin-top:12px;display:none}
 @media (max-width:700px){
+/* Six sub-tabs plus Updated plus Reload no longer fit 375px: the sub-tab row swipes and the
+   top row wraps, so the page itself never scrolls sideways (measured 495px wide 2026-10-15). */
+.toprow{flex-wrap:wrap}
+.subtabs{max-width:100%;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;flex-wrap:nowrap}
+.subtabs::-webkit-scrollbar{display:none}
+
   .hero{padding:16px 16px 14px}
   .emp-grid{grid-template-columns:1fr 1fr}
   .emp{padding:13px 14px 12px}
@@ -751,10 +760,13 @@ function areaOf(t) {
 function linkBtn(url) {
   var a = document.createElement('a');
   a.href = url;
-  if (url.indexOf('sms:') !== 0 && url.indexOf('tel:') !== 0) { a.target = '_blank'; }
+  /* A link into this very page (#go/...) navigates in place so the deep link lands in the
+     open app instead of a second copy; a claude:// link opens the Claude session on the Mac. */
+  var selfGo = url.indexOf('#go/') > 0 && url.split('#')[0] === location.href.split('#')[0];
+  if (url.indexOf('sms:') !== 0 && url.indexOf('tel:') !== 0 && url.indexOf('claude:') !== 0 && !selfGo) { a.target = '_blank'; }
   a.rel = 'noopener';
   a.title = url;
-  a.textContent = url.indexOf('sms:') === 0 ? 'Text' : url.indexOf('tel:') === 0 ? 'Call' : 'Open';
+  a.textContent = url.indexOf('sms:') === 0 ? 'Text' : url.indexOf('tel:') === 0 ? 'Call' : url.indexOf('claude:') === 0 ? 'Session' : (selfGo && /[?&]q=/.test(url)) ? 'Read it there' : 'Open';
   /* The styling moved to the .gobtn class so the coarse-pointer rule can reach it —
      an inline cssText beats every stylesheet rule, so the phone fix was unreachable
      while these lived here. */
@@ -787,7 +799,7 @@ function stepMain(text) {
      add this to his text and just have it there for me to press send?"). An sms: link with a
      body opens Messages on his iPhone with the whole message already typed, so the only
      gesture left is Send — the machine never types into a thread. */
-  var re = /(?:https?:\/\/|sms:|tel:)[^\s]+/g, last = 0, m, qr = quotedRanges(text);
+  var re = /(?:https?:\/\/|sms:|tel:|claude:\/\/)[^\s]+/g, last = 0, m, qr = quotedRanges(text);
   while ((m = re.exec(text))) {
     if (inQuoted(qr, m.index)) continue;
     var url = m[0].replace(URL_TAIL, '');
@@ -921,6 +933,8 @@ function stepCard(t, n) {
   /* The banner already says the move and the lane, so the headline drops the words that
      repeat it ("VITAL 1:", "NutriDyn:", "READ AND SEND:"). Display only; the tile text is untouched. */
   parts.head = cleanHead(parts.head, q.kind);
+  artKeys(t.text).forEach(function (k) { mid.appendChild(artCard(k)); });
+  parts.head = stripArt(parts.head); parts.rest = stripArt(parts.rest);
   if (parts.rest) {
     var hl = stepMainInto(el('div', 'headline'), parts.head);
     /* THE BUTTON NEVER HIDES BEHIND THE FOLD (2026-08-11). The headline is capped at
@@ -929,16 +943,23 @@ function stepCard(t, n) {
        75 of 121 open tiles had their ONLY button out of sight, which quietly guts THE
        PRE-DECIDED LAW — every tile is a button, and a button one tap away is not one.
        Hoist the first link of any scheme up into the headline. */
-    var pressUrl = null, qr2 = quotedRanges(parts.rest), hre = /(?:https?:\/\/|sms:|tel:)[^\s]+/g, hm;
+    var pressUrl = null, qr2 = quotedRanges(parts.rest), hre = /(?:https?:\/\/|sms:|tel:|claude:\/\/)[^\s]+/g, hm;
     while ((hm = hre.exec(parts.rest))) {
       if (inQuoted(qr2, hm.index)) continue;
       pressUrl = hm[0].replace(URL_TAIL, '');
       break;
     }
-    if (pressUrl && parts.head.indexOf(pressUrl) < 0) { hl.appendChild(linkBtn(pressUrl)); }
+    if (pressUrl && parts.head.indexOf(pressUrl) < 0) {
+      var pb = linkBtn(pressUrl);
+      /* A "Label: link" pair in the fold names the hoisted button too ("Georgia Functional
+         Nutrition" beats a bare "Session"), so the headline says where the tap goes. */
+      var lm = parts.rest.match(new RegExp('(?:^|\\n)[ \\t]*([A-Z][A-Za-z0-9.\'&+ \\/-]{1,32}?):[ \\t]*' + pressUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+      if (lm && /[a-z]/.test(lm[1])) pb.textContent = lm[1].trim().replace(/^(?:the|your)\s+/i, '');
+      hl.appendChild(pb);
+    }
     mid.appendChild(hl);
     var more = el('div', 'stepmore');
-    renderRich(more, parts.rest);
+    renderRich(more, parts.rest, { noArt: true });
     mid.appendChild(more);
     var ex = el('button', 'expand', 'the whole story ▾');
     ex.onclick = function () {
@@ -1156,8 +1177,8 @@ function briefItem(container, text) {
   }
   /* An all-caps sentence is a shout, not information: it reads in sentence case.
      Short tokens and anything with a digit (GI, PL, SO1996118) keep their capitals. */
-  if (/[A-Z]{3}/.test(first) && !/[a-z]/.test(first.replace(/(?:https?:\/\/|sms:|tel:)\S+/g, ''))) {
-    first = first.split(/((?:https?:\/\/|sms:|tel:)\S+)/).map(function (seg, i) {
+  if (/[A-Z]{3}/.test(first) && !/[a-z]/.test(first.replace(/(?:https?:\/\/|sms:|tel:|claude:\/\/)\S+/g, ''))) {
+    first = first.split(/((?:https?:\/\/|sms:|tel:|claude:\/\/)\S+)/).map(function (seg, i) {
       if (i % 2) return seg; // links keep their exact characters
       var x = seg.toLowerCase().replace(/\b([a-z]+|[a-z]*\d[a-z0-9]*)\b/g, function (w) { return /\d/.test(w) || KEEP_CAPS[w] ? w.toUpperCase() : w; });
       x = x.replace(/([.!?]\s+)([a-z])/g, function (a, b, c) { return b + c.toUpperCase(); });
@@ -1166,7 +1187,7 @@ function briefItem(container, text) {
   }
   stepMainInto(container, first);
   if (tail) {
-    var qr = quotedRanges(tail), re = /(?:https?:\/\/|sms:|tel:)[^\s]+/g, m;
+    var qr = quotedRanges(tail), re = /(?:https?:\/\/|sms:|tel:|claude:\/\/)[^\s]+/g, m;
     while ((m = re.exec(tail))) { if (!inQuoted(qr, m.index)) container.appendChild(linkBtn(m[0].replace(URL_TAIL, ''))); }
     var more = el('button', 'bl-more', '+ more');
     var rest = el('span', 'bl-rest');
@@ -1176,7 +1197,34 @@ function briefItem(container, text) {
     container.appendChild(more);
   }
 }
-function renderRich(node, text) {
+/* THE PICTURE CARD (Asher 2026-10-15: "if there's anything that you have to write to me
+   that's over a sentence or two, make it visually appealing. Use art."). A loop writes
+   "Picture: art-<key>" on its own line after posting the image to /api/page/art-<key>
+   (scripts/tile_art.py does both). The image never touches the public repo: it rides the
+   PIN-gated API like every other page, and renders here as a full-width card. */
+var ART_LINE = /(^|\n)[ \t]*Picture:[ \t]*(art-[a-z0-9][a-z0-9-]{1,60})[ \t]*(?=\n|$)/g;
+function artKeys(text) {
+  var keys = [], m; ART_LINE.lastIndex = 0;
+  while ((m = ART_LINE.exec(text || ''))) { if (keys.indexOf(m[2]) < 0) keys.push(m[2]); }
+  return keys;
+}
+function stripArt(text) { return (text || '').replace(ART_LINE, '$1').replace(/\n{3,}/g, '\n\n'); }
+function artCard(key) {
+  var fig = el('figure', 'art-card');
+  fig.setAttribute('data-art', key);
+  fetchPage(key).then(function (d) {
+    var html = d && d.html || '';
+    var m = html.match(/src=["'](data:image\/[^"']+)["']/) || html.match(/src=["'](https:\/\/[^"']+)["']/);
+    if (!m) { fig.remove(); return; }
+    var im = document.createElement('img'); im.src = m[1]; im.alt = 'picture'; im.loading = 'lazy';
+    fig.appendChild(im);
+  }).catch(function () { fig.remove(); });
+  return fig;
+}
+function renderRich(node, text, opts) {
+  opts = opts || {};
+  if (!opts.noArt) artKeys(text).forEach(function (k) { node.appendChild(artCard(k)); });
+  text = stripArt(text);
   var lines = text.split('\n'), clean = [];
   lines.forEach(function (ln) {
     var k = ln.indexOf('✓');
@@ -1188,11 +1236,11 @@ function renderRich(node, text) {
   /* NAMED BUTTONS: loops write "Dr. Bob note: <link>". Each pair becomes one labeled button
      and leaves the prose, so the reader sees "Dr. Bob note" instead of a bare Open. */
   var qrB = quotedRanges(body), named = [], seenU = {};
-  body = body.replace(/(^|[\s(])([A-Z][A-Za-z0-9.'&+ \/-]{1,32}?):\s*((?:https?:\/\/|sms:|tel:)[^\s]+)/g, function (all, pre, label, url, off) {
+  body = body.replace(/(^|[\s(])([A-Z][A-Za-z0-9.'&+ \/-]{1,32}?):\s*((?:https?:\/\/|sms:|tel:|claude:\/\/)[^\s]+)/g, function (all, pre, label, url, off) {
     if (inQuoted(qrB, off)) return all;
     /* Only a standalone label: line start, after a sentence end, or right after another link.
        "same shape as your Sept 10 list: <link>" is a sentence, not a label, and stays whole. */
-    if (!/(?:^|\n|[.!?)]\s*|(?:https?:\/\/|sms:|tel:)\S+\s*)$/.test(body.slice(0, off) + pre)) return all;
+    if (!/(?:^|\n|[.!?)]\s*|(?:https?:\/\/|sms:|tel:|claude:\/\/)\S+\s*)$/.test(body.slice(0, off) + pre)) return all;
     if (!/[a-z]/.test(label) || /^(read and send|review and send|send|open|link|here|button \d+|form|text|call|cert|page)$/i.test(label.trim())) return all;
     url = url.replace(URL_TAIL, '');
     if (!seenU[url]) { seenU[url] = 1; named.push([label.trim().replace(/^(?:the|your)\s+/i, ''), url]); }
@@ -1361,12 +1409,12 @@ function cleanHead(head, kind) {
   if (kind === 'send') h = h.replace(/^(?:READ AND SEND|REVIEW AND SEND|READ, [^:]{0,30}SEND)[:,.]?\s+(?=\S)/i, '');
   /* A shouted headline reads in title case so names keep their capitals: the whole line when it
      has no lowercase, else its leading CAPS run ("SEND FIVE WELCOMES, top to bottom"). */
-  var caps = !/[a-z]/.test(h.replace(/(?:https?:\/\/|sms:|tel:)\S+/g, '')) ? h : (h.match(/^(?:[A-Z][A-Z0-9'&$\/-]*[:,]?\s+){2,}(?=[a-z0-9("“])/) || [''])[0];
+  var caps = !/[a-z]/.test(h.replace(/(?:https?:\/\/|sms:|tel:|claude:\/\/)\S+/g, '')) ? h : (h.match(/^(?:[A-Z][A-Z0-9'&$\/-]*[:,]?\s+){2,}(?=[a-z0-9("“])/) || [''])[0];
   if (caps.replace(/[^A-Z]/g, '').length >= 6) h = titleCaps(caps) + h.slice(caps.length);
   return h.charAt(0).toUpperCase() + h.slice(1);
 }
 function titleCaps(x) {
-  return x.split(/((?:https?:\/\/|sms:|tel:)\S+)/).map(function (seg, i) {
+  return x.split(/((?:https?:\/\/|sms:|tel:|claude:\/\/)\S+)/).map(function (seg, i) {
     if (i % 2) return seg;
     return seg.toLowerCase().replace(/[a-z0-9&']+/g, function (w, at) {
       if (KEEP_CAPS[w] || /\d/.test(w) || (!at && !i && w === 'of')) return w.toUpperCase(); // a leading OF is OpenFunctional
@@ -1920,7 +1968,9 @@ function loadPage(key, frameId, upId, missingMsg, force) {
     var html = d.html || '';
     if (html.indexOf('<head>') >= 0) html = html.replace('<head>', '<head><base target="_blank">');
     else html = '<base target="_blank">' + html;
-    document.getElementById(frameId).srcdoc = html;
+    var fr = document.getElementById(frameId);
+    fr.onload = function () { if (pendingFind && pendingFind.frame === frameId) setTimeout(tryFind, 200); };
+    fr.srcdoc = html;
     pageLoaded[key] = true;
     up.textContent = 'Updated ' + new Date(d.updated_at).toLocaleString();
   }).catch(function () { up.textContent = 'Could not load it. Tap Reload.'; });
@@ -2285,14 +2335,95 @@ function showApp() {
    #go/life/travel, #go/nutridyn/radar, #go/money/benefits. Applied after PIN unlock and on
    every hash change, so links work cold and while the app is open. */
 function goHash() {
-  var m = location.hash.match(/^#go\/([a-z]+)(?:\/([a-z]+))?$/);
+  var m = location.hash.match(/^#go\/([a-z]+)(?:\/([a-z]+))?(?:\?q=(.*))?$/);
   if (!m) return;
+  /* THE SENTENCE LINK (Asher 2026-10-15: "a button that I press that takes me directly to
+     the sentence, highlighted"). #go/<tab>/<sub>?q=<urlencoded sentence> opens the view,
+     finds that exact sentence in the pushed page, paints it gold, and scrolls the ONE
+     scroller to it. The sentence is matched loosely (case and whitespace folded). */
+  var sub = m[2] || ({ nutridyn: 'nd', money: 'money', life: 'travel' })[m[1]] || '';
+  var frameId = sub ? sub + 'Frame' : null;
+  if (m[3] && frameId) {
+    var q = '';
+    try { q = decodeURIComponent(m[3].replace(/\+/g, ' ')); } catch (e) { q = m[3]; }
+    pendingFind = { frame: frameId, q: q, tries: 0 };
+  }
   showTab(m[1]);
   if (m[2]) {
     if (m[1] === 'nutridyn') showSub(m[2]);
     else if (m[1] === 'money') showMoneySub(m[2]);
     else if (m[1] === 'life') showLifeSub(m[2]);
   }
+  if (pendingFind) setTimeout(tryFind, 300);
+}
+var pendingFind = null;
+function foldWS(x) { return x.replace(/\s+/g, ' ').replace(/[\u2018\u2019]/g, "'").replace(/[\u201c\u201d]/g, '"').trim().toLowerCase(); }
+/* Find a needle inside one text node, with whitespace folded; returns [start, end] in the
+   node's own characters or null. */
+function findInText(text, needle) {
+  var norm = '', map = [], lastSp = true;
+  for (var i = 0; i < text.length; i++) {
+    var ch = text[i];
+    if (/\s/.test(ch)) { if (lastSp) continue; ch = ' '; lastSp = true; } else lastSp = false;
+    if (ch === '\u2018' || ch === '\u2019') ch = "'"; else if (ch === '\u201c' || ch === '\u201d') ch = '"';
+    norm += ch.toLowerCase(); map.push(i);
+  }
+  var k = norm.indexOf(needle);
+  if (k < 0) return null;
+  return [map[k], map[k + needle.length - 1] + 1];
+}
+function tryFind() {
+  var pf = pendingFind; if (!pf) return;
+  var f = document.getElementById(pf.frame), doc = f && f.contentDocument;
+  var ready = doc && doc.body && doc.body.textContent.replace(/\s/g, '').length > 40;
+  if (!ready) { if (++pf.tries < 40) setTimeout(tryFind, 400); else pendingFind = null; return; }
+  pendingFind = null;
+  var needle = foldWS(pf.q); if (!needle) return;
+  var hit = null, walker = doc.createTreeWalker(doc.body, NodeFilter.SHOW_TEXT, null, false), node;
+  while ((node = walker.nextNode())) {
+    var tag = node.parentNode && node.parentNode.nodeName;
+    if (tag === 'SCRIPT' || tag === 'STYLE') continue;
+    var r = findInText(node.nodeValue, needle);
+    if (r) { hit = { node: node, r: r }; break; }
+  }
+  var target = null;
+  if (!doc.getElementById('mc-mark-style')) {
+    var st = doc.createElement('style'); st.id = 'mc-mark-style';
+    st.textContent = '.mc-mark{background:linear-gradient(transparent 35%,#F6D98A 35%);box-shadow:0 0 0 3px #F6D98A;border-radius:3px;color:inherit;animation:mcPulse 1.6s ease-in-out 3}@keyframes mcPulse{50%{box-shadow:0 0 0 9px rgba(239,159,39,.45)}}';
+    doc.head.appendChild(st);
+  }
+  if (hit) {
+    try {
+      var range = doc.createRange();
+      range.setStart(hit.node, hit.r[0]); range.setEnd(hit.node, hit.r[1]);
+      var mark = doc.createElement('mark'); mark.className = 'mc-mark';
+      range.surroundContents(mark); target = mark;
+    } catch (e) { target = hit.node.parentNode; target.classList.add('mc-mark'); }
+  } else {
+    /* The sentence crosses tags (a bold word inside it): mark the smallest block that holds it. */
+    var best = null, all = doc.body.querySelectorAll('p,li,td,th,h1,h2,h3,h4,div,span,figcaption,dd,dt,blockquote');
+    for (var i = 0; i < all.length; i++) {
+      if (foldWS(all[i].textContent).indexOf(needle) >= 0) best = all[i];
+    }
+    if (best) { best.classList.add('mc-mark'); target = best; }
+  }
+  if (!target) return;
+  /* A sentence folded inside <details> (the whale cards' "What to do") is opened on the way in. */
+  for (var anc = target.parentNode; anc && anc !== doc.body; anc = anc.parentNode) {
+    if (anc.nodeName === 'DETAILS') anc.open = true;
+  }
+  /* The frame grows to its content (ONE SCROLLER), so the document scrolls, not the frame. */
+  /* fitFrames grows the frame on a 1s tick, so the first scroll can land before the frame
+     is tall enough to reach the sentence (seen at 375px: scrollY stayed 0). Keep nudging
+     until the mark sits where it should or five tries are spent. */
+  var tries = 0, scrollToIt = function () {
+    var fr = f.getBoundingClientRect(), tr = target.getBoundingClientRect();
+    var top = fr.top + tr.top;
+    /* Same-origin frame: scrollIntoView walks up and scrolls the document itself. */
+    if (top < 90 || top > window.innerHeight - 120) target.scrollIntoView({ behavior: tries ? 'auto' : 'smooth', block: 'center' });
+    if (++tries < 9) setTimeout(scrollToIt, tries < 3 ? 700 : 1500);
+  };
+  setTimeout(scrollToIt, 250);
 }
 window.addEventListener('hashchange', goHash);
 function tryPin(p) {
