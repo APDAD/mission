@@ -336,3 +336,32 @@ territory-strategist, onboarding-desk) update the DATA or the BUILDER and re-run
 the HTML. Full-width is the standard for every pushed page: a max-width cap on a sub-tab page reads as
 "cut short two inches on each side" (his words, 2026-09-14). COMMAND.html (Territory) still carries
 max-width:1120px and is next.
+
+
+## THE FIVE NUTRIDYN SUB-TABS ARE PICTURE-FIRST (2026-09-15, Asher: "do the same for territory, map, radar, life u and room")
+Territory (COMMAND.html render layer; DATA block stays the loop's), Map (Numbers sheet in ifm-a4m-map/build.py), Radar (scripts/blast_radar_page.py bars + .cols grid), Life U (~/life-university/page/lifeu-builder.py + lifeu-data.json) and Room (~/nutridyn-territory/peptide-day-2026-10-31/room-page-builder.py, the Oct 31 room) all follow the KPIs standard: full width (.wrap max-width none), stat tiles, inline-SVG charts with direct labels, prose behind a tap, 44px buttons, zero overflow at 375px. Shared kit: ~/nutridyn-territory/scripts/atelier_charts.py. A rebuild that hand-edits generated HTML or flattens a chart back to prose is a defect. Handoff: ~/.claude/handoffs/20260915-to-page-owners--territory-map-radar-lifeu-room-are-picture-first.md
+
+
+## THE SENTENCE LINK, THE SESSION BUTTON, THE PICTURE CARD (Asher's order 2026-10-15)
+His words: "go to the NutriDyn tab and read this sentence. Have a button that I press that takes me
+directly to the sentence, highlighted... if there's anything that you have to write to me that's over
+a sentence or two, make it visually appealing. Use art." Shell commit 4376428. All three verified in
+the stubbed harness (no PIN typed) at desktop and 375px.
+1. `#go/<tab>/<sub>?q=<urlencoded sentence>`: goHash parses it, tryFind polls the frame until the
+   pushed page's JS has rendered (COMMAND.html builds its prose from DATA), finds the sentence in one
+   text node (whitespace and case folded, curly quotes normalised) or the smallest block holding it,
+   wraps it in `<mark class="mc-mark">` (gold, three pulses), opens every `<details>` above it, and
+   scrollIntoView-walks the ONE scroller to it with retries while fitFrames grows the frame. A tile's
+   own #go link navigates in place (no second copy); linkBtn labels it "Read it there". The tile
+   carries the sentence too: no extra step to get the fact.
+2. `claude://` is a link scheme everywhere links are detected (9 regex sites). linkBtn labels it
+   "Session", same tab; a "Label: claude://..." pair names the hoisted headline button. The weekday
+   rollup "SESSIONS WAITING ON YOU" comes from ~/nutridyn-territory/scripts/session_sweep.py --tile,
+   run by day-close, reading the desktop app's own session store (postTurnSummary.needs_action is
+   the classifier; archived sessions included because auto-archive is now 2 days).
+3. `Picture: art-<key>` on its own line renders `/api/page/art-<key>` (an `<img src="data:...">`
+   page behind the PIN; 300KB POST proven) as a full-width `.art-card`, above the headline on run
+   cards and inline elsewhere. scripts/tile_art.py renders the Atelier card via render_card.mjs and
+   posts it. Images never enter this public repo.
+Phone: the NutriDyn sub-tab row now swipes (.toprow wraps) so the page is 375px wide, not 495.
+Loop guide: ~/.claude/handoffs/20261015-to-every-tile-writing-loop--read-this-buttons-session-buttons-and-picture-cards.md
