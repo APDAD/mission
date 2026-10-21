@@ -1,24 +1,117 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Rick Mayfield, Clinical Pearls | NutriDyn with Asher Allen</title>
 <style>
-:root{--bg:#F1EFE8;--card:#FBFAF6;--ink:#2C2C2A;--muted:#6B6B66;--line:#e6e2da;--green:#1D9E75}
+:root{--bg:#F1EFE8;--card:#FBFAF6;--ink:#2C2C2A;--muted:#6B6B66;--line:#e6e2da;--green:#1D9E75;--tint:#e3f3ec}
 *{margin:0;padding:0;box-sizing:border-box}body{background:var(--bg);color:var(--ink);font-family:Inter,-apple-system,Helvetica,sans-serif;font-size:15px;line-height:1.6;padding:34px 18px 70px}
 .wrap{max-width:680px;margin:0 auto}.kicker{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--green);font-weight:700}
 h1{font-family:Georgia,'Cormorant Garamond',serif;font-size:36px;font-weight:600;line-height:1.12;margin-top:6px}.sub{color:var(--muted);font-size:14.5px;margin-top:10px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-top:18px}
-.btn{display:block;text-align:center;background:var(--green);color:#fff;border-radius:12px;padding:15px;font-size:16px;font-weight:600;text-decoration:none;margin-top:14px}
-table{width:100%;border-collapse:collapse;font-size:14px;margin-top:8px}td{padding:9px 8px;border-bottom:1px solid var(--line);vertical-align:top}td.t{font-variant-numeric:tabular-nums;font-weight:700;color:var(--green);white-space:nowrap;width:64px}tr:last-child td{border-bottom:0}
-.hint{font-size:12.5px;color:var(--muted);margin-top:10px}h2{font-family:Georgia,serif;font-size:22px;margin-top:8px}
+h2{font-family:Georgia,serif;font-size:22px;margin-top:8px}
+.player{position:sticky;top:0;z-index:2;background:var(--card);padding:10px 0 8px;margin-top:6px}
+.player video{display:block;width:100%;aspect-ratio:16/9;background:#000;border-radius:10px}
+.now{font-size:12.5px;color:var(--muted);margin-top:6px;min-height:20px}.now b{color:var(--green)}
+.chs{margin-top:4px}
+.ch{display:flex;gap:12px;align-items:baseline;padding:10px 8px;border-bottom:1px solid var(--line);color:var(--ink);text-decoration:none;font-size:14px;border-radius:8px;transition:background .15s}
+.ch:last-child{border-bottom:0}.ch{scroll-margin-top:calc((min(680px,100vw - 36px) - 44px)*.5625 + 64px)}.ch .t{font-variant-numeric:tabular-nums;font-weight:700;color:var(--green);min-width:62px}
+.ch .n{flex:1}.ch .p{color:var(--green);font-size:11px;opacity:.5;transition:opacity .15s}
+.ch:hover,.ch:focus-visible{background:#eef7f2;outline:none}.ch:hover .p,.ch.on .p{opacity:1}.ch.on{background:var(--tint)}
+.hint{font-size:12.5px;color:var(--muted);margin-top:10px}.alt{color:var(--muted)}
+@media(max-width:480px){td[width="110"]{display:none}}
 </style></head><body><div class="wrap">
-<div class="kicker">Six minutes on the product you just ordered</div>
+<div class="kicker">A few minutes on the product you just ordered</div>
 <h1>Rick Mayfield on the newest NutriDyn formulas.</h1>
-<div class="sub">Dr. Richard Mayfield, DC, CCN, IFMCP, NutriDyn's Chief Science Officer, walking through the clinical reasoning behind each formula. The whole recording is two hours. You do not need two hours. Open the video, drag to the chapter for the product on your shelf, and watch six minutes. The doctors who run the biggest NutriDyn dispensaries all started with one product they understood cold.</div>
-<div class="card"><h2>Chapters</h2><table><tr><td class="t">0:02</td><td>Detox and the newest formulas, opening</td></tr><tr><td class="t">0:03</td><td>Dynamic Multi-Collagen Renew: four collagen peptides, tendon, joint, skin, bone</td></tr><tr><td class="t">0:20</td><td>Berberine and Inflam-Eze: metabolic and inflammatory pearls</td></tr><tr><td class="t">0:24</td><td>Liver and gallbladder support, Lipo-Flow</td></tr><tr><td class="t">0:25</td><td>Gluco IR: insulin resistance protocol</td></tr><tr><td class="t">0:38</td><td>Immune formulas</td></tr><tr><td class="t">0:46</td><td>Thyroid support</td></tr><tr><td class="t">0:53</td><td>GI Integrity: gut lining and permeability</td></tr><tr><td class="t">0:58</td><td>Fruits and Greens: the daily foundation</td></tr><tr><td class="t">1:28</td><td>Glucose IR and adrenal pearls</td></tr><tr><td class="t">1:31</td><td>Sleep formulas</td></tr><tr><td class="t">1:37</td><td>Muscle and recovery</td></tr><tr><td class="t">1:43</td><td>Nitric oxide and cardiovascular</td></tr><tr><td class="t">1:51</td><td>Dynamic Hormone Balance, I3C+, Estral Balance: the hormone practice trio</td></tr></table>
-<a class="btn" href="https://www.dropbox.com/scl/fi/d0bbh4sb2fc5cvwv0vedi/Unleashing-Clinical-Pearls-Applications-for-NutriDyn-s-Newest-Formulas-Presented-by-Richard-Mayfield-DC-CCN-IFMCP.mp4?rlkey=lod4zvt19vjsx4m17szrj71aj&amp;dl=0">Open the Mayfield video</a>
-<div class="hint">Opens on Dropbox. Drag the playhead to the chapter time. Runtime 1 hour 59 minutes.</div></div>
+<div class="sub">Dr. Richard Mayfield, DC, CCN, IFMCP, NutriDyn's Chief Science Officer, walking through the clinical reasoning behind each formula. The whole recording is two hours. You do not need two hours. Tap the chapter for the product on your shelf and it plays from that moment. Most chapters run under ten minutes. The doctors who run the biggest NutriDyn dispensaries all started with one product they understood cold.</div>
+<div class="card"><h2>Chapters</h2>
+<div class="player"><video id="v-mayfield" controls playsinline preload="metadata" poster="/media/mayfield-poster.jpg" src="/media/mayfield-clinical-pearls.mp4"></video>
+<div class="now" id="now-mayfield">Tap any chapter below and the video jumps straight to it.</div></div>
+<div class="chs">
+<a class="ch" id="mayfield-welcome-and-introduction-of-dr-richard-mayfield" href="/media/mayfield-clinical-pearls.mp4#t=0" data-v="mayfield" data-t="0"><span class="t">0:00</span><span class="n">Welcome and introduction of Dr. Richard Mayfield</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="mayfield-opening" href="/media/mayfield-clinical-pearls.mp4#t=178" data-v="mayfield" data-t="178"><span class="t">2:58</span><span class="n">Opening: the formulas and how Dr. Mayfield uses them in practice</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="mayfield-dynamic-multi-collagen-renew" href="/media/mayfield-clinical-pearls.mp4#t=209" data-v="mayfield" data-t="209"><span class="t">3:29</span><span class="n">Dynamic Multi-Collagen Renew: four collagen peptides, tendon, joint, skin, bone</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="mayfield-bone-density-support" href="/media/mayfield-clinical-pearls.mp4#t=1187" data-v="mayfield" data-t="1187"><span class="t">19:47</span><span class="n">Bone density support: D3 with K2, Bone Support, fish oil, berberine, zinc</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="mayfield-inflam-eze-and-inflam-eze-plus" href="/media/mayfield-clinical-pearls.mp4#t=1302" data-v="mayfield" data-t="1302"><span class="t">21:42</span><span class="n">Inflam-Eze and Inflam-Eze Plus: ingredient science for a healthy inflammatory response</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="mayfield-joint-eze" href="/media/mayfield-clinical-pearls.mp4#t=1513" data-v="mayfield" data-t="1513"><span class="t">25:13</span><span class="n">Joint Eze: hops and undenatured collagen type 2 for joint comfort</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="mayfield-herbal-eze" href="/media/mayfield-clinical-pearls.mp4#t=1589" data-v="mayfield" data-t="1589"><span class="t">26:29</span><span class="n">Herbal Eze: ginger, turmeric, Boswellia, and inflammation signaling pathways</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="mayfield-nerve-eze" href="/media/mayfield-clinical-pearls.mp4#t=1790" data-v="mayfield" data-t="1790"><span class="t">29:50</span><span class="n">Nerve Eze: bioavailable PEA with alpha lipoic acid for healthy nerve function</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="mayfield-gi-restore" href="/media/mayfield-clinical-pearls.mp4#t=2271" data-v="mayfield" data-t="2271"><span class="t">37:51</span><span class="n">GI Restore: gut barrier, mucin layer, and prebiotic support</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="mayfield-gi-integrity" href="/media/mayfield-clinical-pearls.mp4#t=3218" data-v="mayfield" data-t="3218"><span class="t">53:38</span><span class="n">GI Integrity: gut lining and permeability</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="mayfield-dynamic-fiber" href="/media/mayfield-clinical-pearls.mp4#t=3344" data-v="mayfield" data-t="3344"><span class="t">55:44</span><span class="n">Dynamic Fiber, now Fiber: the fiber gap, microbiome, and detox pathways</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="mayfield-lipo-flow" href="/media/mayfield-clinical-pearls.mp4#t=3595" data-v="mayfield" data-t="3595"><span class="t">59:55</span><span class="n">Lipo-Flow: gallbladder and bile flow support for fat digestion</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="mayfield-digestive-complete" href="/media/mayfield-clinical-pearls.mp4#t=3990" data-v="mayfield" data-t="3990"><span class="t">1:06:30</span><span class="n">Digestive Complete: dual-phase acid and enzyme support with ox bile</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="mayfield-micro-eze" href="/media/mayfield-clinical-pearls.mp4#t=4093" data-v="mayfield" data-t="4093"><span class="t">1:08:13</span><span class="n">Micro Eze: neem, vidanga, and mimosa for a healthy gut microbiome</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="mayfield-spectrum-ar" href="/media/mayfield-clinical-pearls.mp4#t=4236" data-v="mayfield" data-t="4236"><span class="t">1:10:36</span><span class="n">Spectrum AR: thyme, clove leaf, and oregano oils in the 5R program</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="mayfield-endotoxins-and-the-gut-barrier" href="/media/mayfield-clinical-pearls.mp4#t=4295" data-v="mayfield" data-t="4295"><span class="t">1:11:35</span><span class="n">Endotoxins and the gut barrier: magnesium, zinc, olive oil, fish oil, MCT</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="mayfield-spore-probiotics" href="/media/mayfield-clinical-pearls.mp4#t=4703" data-v="mayfield" data-t="4703"><span class="t">1:18:23</span><span class="n">Spore probiotics: post-meal endotoxin study and pairing with UltraBiotic</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="mayfield-5r-gut-plan-recap" href="/media/mayfield-clinical-pearls.mp4#t=4841" data-v="mayfield" data-t="4841"><span class="t">1:20:41</span><span class="n">5R gut plan recap: antimicrobials, probiotics, fiber, digestive support, repair</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="mayfield-gluco-ir" href="/media/mayfield-clinical-pearls.mp4#t=5036" data-v="mayfield" data-t="5036"><span class="t">1:23:56</span><span class="n">Gluco IR: ingredient science for healthy blood sugar and insulin balance</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="mayfield-dynamic-cardio-metabolic" href="/media/mayfield-clinical-pearls.mp4#t=5809" data-v="mayfield" data-t="5809"><span class="t">1:36:49</span><span class="n">Dynamic Cardio-Metabolic: glucomannan and plant sterols for healthy glucose and cholesterol</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="mayfield-cardio-flow" href="/media/mayfield-clinical-pearls.mp4#t=6039" data-v="mayfield" data-t="6039"><span class="t">1:40:39</span><span class="n">Cardio Flow: hibiscus, beet root, arginine, taurine, and nitric oxide pathways</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="mayfield-perimenopause-support" href="/media/mayfield-clinical-pearls.mp4#t=6333" data-v="mayfield" data-t="6333"><span class="t">1:45:33</span><span class="n">PeriMenopause Support: ashwagandha, milk thistle, and a three-plant blend</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="mayfield-menopause-support" href="/media/mayfield-clinical-pearls.mp4#t=6582" data-v="mayfield" data-t="6582"><span class="t">1:49:42</span><span class="n">Menopause Support: black cohosh added to the PeriMenopause formula</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="mayfield-dynamic-hormone-balance" href="/media/mayfield-clinical-pearls.mp4#t=6684" data-v="mayfield" data-t="6684"><span class="t">1:51:24</span><span class="n">Dynamic Hormone Balance: estrogen metabolism, detox pathways, and calcium D-glucarate</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="mayfield-i-3-c-plus" href="/media/mayfield-clinical-pearls.mp4#t=6764" data-v="mayfield" data-t="6764"><span class="t">1:52:44</span><span class="n">I-3-C Plus: upgraded DIM absorption for healthy estrogen metabolism</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="mayfield-estro-balance" href="/media/mayfield-clinical-pearls.mp4#t=6847" data-v="mayfield" data-t="6847"><span class="t">1:54:07</span><span class="n">Estro Balance: HMR, higher-dose DIM, and sulforaphane</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="mayfield-wrap-up" href="/media/mayfield-clinical-pearls.mp4#t=6956" data-v="mayfield" data-t="6956"><span class="t">1:55:56</span><span class="n">Wrap-up: hormone recap, thanks, and host closing</span><span class="p" aria-hidden="true">&#9654;</span></a>
+</div>
+<div class="hint">It loads only the part you watch, so a chapter starts quickly even on a slow connection. Runtime 1 hour 58 minutes. <a class="alt" href="https://www.dropbox.com/scl/fi/d0bbh4sb2fc5cvwv0vedi/Unleashing-Clinical-Pearls-Applications-for-NutriDyn-s-Newest-Formulas-Presented-by-Richard-Mayfield-DC-CCN-IFMCP.mp4?rlkey=lod4zvt19vjsx4m17szrj71aj&amp;dl=0">Full file on Dropbox</a></div></div>
 <div class="card"><h2>Start here if you are new to root-cause practice</h2>
-<p style="font-size:14px;color:var(--muted)">Dr. Kristi Hughes, ND, IFMCP, "What Do You Keep in Your Root-Cause Medicine Cabinet." The first 56 minutes are the framework she organizes her own practice around: RESTORE, NOURISH, DEFEND, SHED, PERFORM. No product pitch in that first hour. The product cabinet starts at 0:56 with collagen and runs to 4:20.</p>
-<a class="btn" href="https://www.dropbox.com/scl/fi/o4iv9iod8bm5of4s7a91d/What-Do-You-Keep-in-Your-Root-Cause-Medicine-Cabinet_-Presented-by-Dr.-Kristi-Hughes.mp4?rlkey=9eqdml5ri62wfl3agq34p8n9l&amp;dl=0">Open the Hughes course</a></div>
+<p style="font-size:14px;color:var(--muted)">Dr. Kristi Hughes, ND, IFMCP, "What Do You Keep in Your Root-Cause Medicine Cabinet." The first 54 minutes are the framework she organizes her own practice around: RESTORE, NOURISH, DEFEND, SHED, PERFORM, plus genomics and practitioner self-care. No product pitch in that stretch. Her toolbox opens at 53:59, and the cases run to the close at 4:11:21.</p>
+<div class="player"><video id="v-hughes" controls playsinline preload="metadata" poster="/media/hughes-poster.jpg" src="/media/hughes-root-cause-cabinet.mp4"></video>
+<div class="now" id="now-hughes">Tap any chapter below and the video jumps straight to it.</div></div>
+<div class="chs">
+<a class="ch" id="hughes-welcome-and-how-the-four-hours-run" href="/media/hughes-root-cause-cabinet.mp4#t=0" data-v="hughes" data-t="0"><span class="t">0:00</span><span class="n">Welcome and how the four hours run</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="hughes-restore" href="/media/hughes-root-cause-cabinet.mp4#t=212" data-v="hughes" data-t="212"><span class="t">3:32</span><span class="n">Restore, Nourish, Defend, Shed, Perform: the five areas and root-cause thinking</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="hughes-genomics-in-practice" href="/media/hughes-root-cause-cabinet.mp4#t=1155" data-v="hughes" data-t="1155"><span class="t">19:15</span><span class="n">Genomics in practice: nutrigenomic panels and My Origins kits</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="hughes-practitioner-self-care" href="/media/hughes-root-cause-cabinet.mp4#t=1710" data-v="hughes" data-t="1710"><span class="t">28:30</span><span class="n">Practitioner self-care: IFM timeline, Shaking Your Tree, tree rings</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="hughes-her-toolbox-opens" href="/media/hughes-root-cause-cabinet.mp4#t=3239" data-v="hughes" data-t="3239"><span class="t">53:59</span><span class="n">Her toolbox opens: Stress Essentials, Hydrate, her daily drink, cases ahead</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="hughes-break" href="/media/hughes-root-cause-cabinet.mp4#t=3728" data-v="hughes" data-t="3728"><span class="t">1:02:08</span><span class="n">Break, then welcome back</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="hughes-restore-opens-with-abby" href="/media/hughes-root-cause-cabinet.mp4#t=4691" data-v="hughes" data-t="4691"><span class="t">1:18:11</span><span class="n">RESTORE opens with Abby: chemical exposure and gut reset</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="hughes-gut-restoration-in-three-stages" href="/media/hughes-root-cause-cabinet.mp4#t=6505" data-v="hughes" data-t="6505"><span class="t">1:48:25</span><span class="n">Gut restoration in three stages</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="hughes-gi-integrity" href="/media/hughes-root-cause-cabinet.mp4#t=6801" data-v="hughes" data-t="6801"><span class="t">1:53:21</span><span class="n">GI Integrity: gut lining support</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="hughes-probiotics" href="/media/hughes-root-cause-cabinet.mp4#t=6980" data-v="hughes" data-t="6980"><span class="t">1:56:20</span><span class="n">Probiotics: UltraBiotic Probiotic Pro and spore-based options</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="hughes-stage-two" href="/media/hughes-root-cause-cabinet.mp4#t=7213" data-v="hughes" data-t="7213"><span class="t">2:00:13</span><span class="n">Stage two: Digestive Complete with enzymes, ox bile and bitters</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="hughes-lipo-flow" href="/media/hughes-root-cause-cabinet.mp4#t=7345" data-v="hughes" data-t="7345"><span class="t">2:02:25</span><span class="n">Lipo-Flow: bile flow support</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="hughes-dynamic-gi-restore" href="/media/hughes-root-cause-cabinet.mp4#t=7499" data-v="hughes" data-t="7499"><span class="t">2:04:59</span><span class="n">Dynamic GI Restore, then stool testing and her gut program</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="hughes-break-2" href="/media/hughes-root-cause-cabinet.mp4#t=7938" data-v="hughes" data-t="7938"><span class="t">2:12:18</span><span class="n">Break</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="hughes-muscle-and-joint-support" href="/media/hughes-root-cause-cabinet.mp4#t=8653" data-v="hughes" data-t="8653"><span class="t">2:24:13</span><span class="n">Muscle and joint support: foundation formulas and Inflam-Eze</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="hughes-case" href="/media/hughes-root-cause-cabinet.mp4#t=9091" data-v="hughes" data-t="9091"><span class="t">2:31:31</span><span class="n">Case: Dylan, MMA fighter, and the My Origins fight panel</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="hughes-dylan-s-plan" href="/media/hughes-root-cause-cabinet.mp4#t=9892" data-v="hughes" data-t="9892"><span class="t">2:44:52</span><span class="n">Dylan&#x27;s plan: Paleo Protein, Herbal Eze, Muscle Eze Advanced, Hydrate</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="hughes-brain-support-and-brain-restore" href="/media/hughes-root-cause-cabinet.mp4#t=10297" data-v="hughes" data-t="10297"><span class="t">2:51:37</span><span class="n">Brain Support and Brain Restore: brain performance support</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="hughes-defend" href="/media/hughes-root-cause-cabinet.mp4#t=10570" data-v="hughes" data-t="10570"><span class="t">2:56:10</span><span class="n">DEFEND: Inflam-Eze, Curcumin 400X and food triggers</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="hughes-kbmo-food-sensitivity-testing" href="/media/hughes-root-cause-cabinet.mp4#t=10865" data-v="hughes" data-t="10865"><span class="t">3:01:05</span><span class="n">KBMO food sensitivity testing, with two cases</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="hughes-cyrex-array-12-testing" href="/media/hughes-root-cause-cabinet.mp4#t=11189" data-v="hughes" data-t="11189"><span class="t">3:06:29</span><span class="n">Cyrex Array 12 testing, with two cases</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="hughes-antimicrobial-rotation" href="/media/hughes-root-cause-cabinet.mp4#t=11560" data-v="hughes" data-t="11560"><span class="t">3:12:40</span><span class="n">Antimicrobial rotation: Spectrum BR and Spectrum AR</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="hughes-immune-support" href="/media/hughes-root-cause-cabinet.mp4#t=11743" data-v="hughes" data-t="11743"><span class="t">3:15:43</span><span class="n">Immune Support, ParaCleanse and more antimicrobial formulas</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="hughes-break-and-ce-poll-instructions" href="/media/hughes-root-cause-cabinet.mp4#t=12152" data-v="hughes" data-t="12152"><span class="t">3:22:32</span><span class="n">Break and CE poll instructions</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="hughes-shed" href="/media/hughes-root-cause-cabinet.mp4#t=12749" data-v="hughes" data-t="12749"><span class="t">3:32:29</span><span class="n">SHED: detox and body composition with Dynamic Detox and Renal Complex</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="hughes-case-2" href="/media/hughes-root-cause-cabinet.mp4#t=13519" data-v="hughes" data-t="13519"><span class="t">3:45:19</span><span class="n">Case: Michelle, body composition and hormone balance</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="hughes-dynamic-hormone-balance-and-gluco-ir" href="/media/hughes-root-cause-cabinet.mp4#t=14413" data-v="hughes" data-t="14413"><span class="t">4:00:13</span><span class="n">Dynamic Hormone Balance and Gluco IR: estrogen metabolism, blood sugar support</span><span class="p" aria-hidden="true">&#9654;</span></a>
+<a class="ch" id="hughes-close" href="/media/hughes-root-cause-cabinet.mp4#t=15081" data-v="hughes" data-t="15081"><span class="t">4:11:21</span><span class="n">Close: foundation formulas, immune basics, handouts and next steps</span><span class="p" aria-hidden="true">&#9654;</span></a>
+</div>
+<div class="hint">Runtime 4 hours 20 minutes. <a class="alt" href="https://www.dropbox.com/scl/fi/o4iv9iod8bm5of4s7a91d/What-Do-You-Keep-in-Your-Root-Cause-Medicine-Cabinet_-Presented-by-Dr.-Kristi-Hughes.mp4?rlkey=9eqdml5ri62wfl3agq34p8n9l&amp;dl=0">Full file on Dropbox</a></div></div>
+<script>
+(function(){
+  var rows=[].slice.call(document.querySelectorAll('a.ch'));
+  function fmt(s){s=Math.floor(s);var h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;return (h?h+':'+(m<10?'0':''):'')+m+':'+(x<10?'0':'')+x;}
+  function mark(vid,now){
+    var cur=null;
+    rows.forEach(function(r){if(r.dataset.v===vid&&+r.dataset.t<=now+0.5)cur=r;});
+    rows.forEach(function(r){if(r.dataset.v===vid)r.classList.toggle('on',r===cur);});
+    if(cur)document.getElementById('now-'+vid).innerHTML='Now playing from <b>'+fmt(+cur.dataset.t)+'</b> &middot; '+cur.querySelector('.n').innerHTML;
+  }
+  function jump(a,play){
+    var vid=a.dataset.v,t=+a.dataset.t,v=document.getElementById('v-'+vid);
+    v.currentTime=t;
+    if(v.readyState<1)v.addEventListener('loadedmetadata',function(){if(Math.abs(v.currentTime-t)>1)v.currentTime=t;},{once:true});
+    if(play){var p=v.play();if(p&&p.catch)p.catch(function(){});}
+    mark(vid,t);
+  }
+  rows.forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();jump(a,true);history.replaceState(null,'','#'+a.id);});});
+  ['mayfield','hughes'].forEach(function(vid){var v=document.getElementById('v-'+vid);v.addEventListener('timeupdate',function(){mark(vid,v.currentTime);});v.addEventListener('play',function(){[].forEach.call(document.querySelectorAll('video'),function(o){if(o!==v)o.pause();});});});
+  var h=location.hash&&document.getElementById(location.hash.slice(1));
+  if(h&&h.classList.contains('ch')){jump(h,false);addEventListener('load',function(){h.scrollIntoView();});}
+})();
+</script>
 <div class="card"><p style="font-size:14px">Want a sample of anything you hear about? Reply to the email that brought you here, or text 678.577.1003, and it ships.</p>
 <div style="margin-top:14px"><!-- ASHER ALLEN — CANONICAL EMAIL SIGNATURE (email-safe build, 2026-07-15)
      Source of truth. Every machine-made draft appends this block. Do not inline a data URI
@@ -31,7 +124,7 @@ table{width:100%;border-collapse:collapse;font-size:14px;margin-top:8px}td{paddi
     <td width="6" bgcolor="#1a4a3a" style="width:6px;background-color:#1a4a3a;background-image:linear-gradient(180deg,#1a4a3a 0%,#2d7a5e 100%);font-size:0;line-height:0;">&nbsp;</td>
 
     <td width="110" style="width:110px;padding:20px 0 20px 20px;vertical-align:top;">
-      <img src="https://apdad.github.io/mission/sig/asher-allen.jpg"
+      <img src="/asher-allen.jpg"
            width="90" height="90"
            style="border-radius:50%;display:block;border:3px solid #2d7a5e;width:90px;height:90px;"
            alt="Asher Allen" />
