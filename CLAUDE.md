@@ -219,7 +219,7 @@ per-device localStorage (mc_game, mc_sound, mc_loot_*), same policy as the dealt
 add loss mechanics, visible timers, or fake numbers; new mechanics must reward a SEND.
 
 ## VERIFICATION LAW
-No change ships without loading the LIVE site (PIN 116584) in a browser, exercising the
+No change ships without loading the LIVE site (PIN = $MISSION_PIN in ~/nutridyn-territory/dashboard-feed/mission.env, never written in this public repo) in a browser, exercising the
 changed behavior (desktop AND 375px mobile), and leaving ZERO test residue (undo any test
 todo state via the API). A broken page push blanks his whole dashboard; validate before push.
 
