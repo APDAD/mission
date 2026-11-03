@@ -860,6 +860,7 @@ CSS = r"""
 .sheet.back:has(.nrp-bk) .slot{padding:5px 4px}
 .sheet.back:has(.nrp-bk) .slot li{font-size:7.6pt;line-height:1.15;margin:0 0 1px}
 .sheet.back:has(.nrp-bk) .slot li .nrp-if{display:block}
+.sheet.back:has(.nrp-bk) .total{font-size:7.6pt}
 .sheet.back:has(.nrp-bk) .rx li{font-size:7.6pt;line-height:1.26}
 .sheet.back:has(.nrp-bk) .notes{margin-top:.07in;padding-top:.05in;padding-bottom:.055in}
 .sheet.back:has(.nrp-bk) .notes .ln:last-child{display:none}

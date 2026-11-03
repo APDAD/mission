@@ -5,27 +5,42 @@ FRONT, top to bottom:
   intro -> "One woman, every system": a standing woman drawn from mirrored splines (so she is
   exactly symmetric), with the parts each system note points to: hair, breasts, heart, liver,
   stomach and bowel, ovaries and uterus, bladder, pelvis and hip, thigh muscles.  The hip bones are
-  drawn BEHIND the bowel (front view) in a bone colour that reads apart from the skin; the liver,
-  stomach, colon and pelvis are named on small white pills.  The KEY names the gold dot (where a
-  change can show up) and the red and blue vessels at the heart; a magnified circle, joined to the
-  BRAIN note by a leader, shows the hypothalamus (the thermostat).
+  drawn BEHIND the bowel (front view) in a bone colour that reads apart from the skin; the bladder is
+  a sac of urine yellow (a fluid line and a glint) so it reads apart from the cream pubic bone; the
+  liver, stomach and colon are named on small white pills (the crowded lower pelvis gets none).  The
+  KEY names the gold dot (where a change can show up) and the red and blue vessels at the heart, by
+  oxygen (rich / low), which is true of all three vessels drawn; a magnified circle, joined to the
+  BRAIN note by a leader, shows the hypothalamus (the thermostat), named on a pill in clear space
+  under the circle.
   -> "Why hot flashes happen" (the comfort zone that narrows) beside "How your hormones change"
   (grey stage bands, a pink estrogen line that swings then falls, a purple dashed progesterone line
   that falls first, the MENOPAUSE marker at about age 51, plus the hot-flash and fast-bone-loss
   windows) -> one KEY for every symbol.
-  -> "Track your symptoms" (the 12 Menopause Map questions, scored on the Map's 0 to 3 scale) beside
-  "Hot flashes: what works best" (hormone therapy first; supplements not proven for hot flashes,
-  said plainly, with a 6-week retest for anyone who tries EstroG-100).  The back's START HERE pick
-  is sold for "comfort through menopause", never for hot flashes, so the two pages agree.
-  The OVARIES AND UTERUS note carries the pregnancy fact and the see-your-doctor bleeding signs.
+  -> "Track your symptoms" (the 12 Menopause Map questions in the Map's order, scored on the Map's 0 to
+  3 scale, circled in pen today and in a new color at 6 weeks) beside "Hot flashes: what works best"
+  (hormone therapy first; supplements not proven for hot flashes, said plainly, with a 6-week retest
+  for anyone who tries EstroG-100; that product sentence carries the drawn diamond and the box ends
+  with the short FDA line).  The back's START HERE pick is sold for "comfort through menopause",
+  never for hot flashes, so the two pages agree.  The OVARIES AND UTERUS note carries the pregnancy
+  fact (use birth control until 12 months with no period) and the see-your-doctor bleeding signs.
 BACK: lifestyle circles, five NutriDyn picks (one per system), daily rhythm, and ONE safety check
-that is identical in both editions apart from {who} (pregnancy and cancer label cautions, liver
-signs, warfarin and vitamin K, ashwagandha with thyroid or sedating drugs, the vitamin D upper
-limit, creatine and creatinine, antibiotic and bone-drug spacing from magnesium).
+that is identical in both editions apart from {who} (pregnancy and cancer label cautions; liver
+signs, on their own line; warfarin and vitamin K, ashwagandha with thyroid or sedating drugs; the
+vitamin D upper limit and kidney disease; antibiotic and bone-drug spacing from Mag Calm Pro).  The
+START column carries two tick boxes ({who} marks Menopause Support or PeriMenopause Support by stage)
+and both formulas' amounts; D3 5000 is "only if your level is low", as on the thyroid sheet.
 Every SVG id starts with "mnp-" and every CSS class with "mnp-", so nothing collides with other
-sheets in the all-sheets bundle; the back page is reached with .sheet.back:has(.mnp-back), which
-also lifts the shared kit's 6.2 to 6.8 pt column text to 7 pt on this sheet.
+sheets in the all-sheets bundle; the back page is reached with .sheet.back:has(.mnp-back).
 Hormone-therapy asks say "your doctor" in both editions (it needs a prescriber).
+
+DEVIATIONS FROM THE MENOPAUSE MAP, for Asher to approve (reasons at each column):
+  * D3 5000 with K2 is "only if your level is low" (the Map gives it to everyone): its label says it
+    exceeds the upper limit and needs monitoring, and [BURT19] [ES24] found no bone or other benefit
+    from high doses in healthy adults.
+  * Mag Calm Pro instead of the Map's Stress Essentials Balance for sleep and mood: no second dose of
+    ashwagandha on top of the formula's.
+  * Creatine Powder added for muscle and strength (the Map has no muscle pick) [GREEN19] [CREA26].
+  * Estro Balance and Everyday Essentials Women's (both on the Map) stay off: no label facts on file.
 
 SOURCES (tags sit in comments next to each number or claim on the page)
   [GOLD11]   Gold EB. Obstet Gynecol Clin North Am 2011;38:425-40. doi:10.1016/j.ogc.2011.05.002
@@ -79,13 +94,26 @@ SOURCES (tags sit in comments next to each number or claim on the page)
   [MAP]      Asher's "Menopause Map" protocol artifact: 12 symptom questions scored "0 none, 1 mild,
              2 disrupts some days, 3 disrupts most days" (total /36), retest at 6 weeks; PeriMenopause
              Support when the last period was within the last year, Menopause Support after; D3 5000
-             with K2 for everyone; UltraBiotic Women's for dryness or UTIs.  Under 45 or cycles under
-             21 days: rule out thyroid, pregnancy and high prolactin first.
+             with K2 for everyone; UltraBiotic Women's for dryness or UTIs; Stress Essentials Balance
+             when sleep and mood together score 4.  Under 45 or cycles under 21 days: rule out thyroid,
+             pregnancy and high prolactin first.
   [ODS]      NIH Office of Dietary Supplements fact sheets: vitamin D (adult upper limit 4,000 IU a
              day); vitamin K (interacts with warfarin); magnesium (take tetracycline or quinolone
              antibiotics at least 2 hours before or 4 to 6 hours after it; keep oral bisphosphonates
-             such as alendronate at least 2 hours apart); black cohosh (rare liver injury).  NCCIH
-             ashwagandha (possible interactions with thyroid hormone and sedatives; rare liver injury).
+             such as alendronate at least 2 hours apart; the risk of magnesium toxicity rises with
+             impaired kidney function); black cohosh (rare liver injury).  NCCIH ashwagandha (possible
+             interactions with thyroid hormone and sedatives; rare liver injury).
+  [BURT19]   Burt LA et al. JAMA 2019;322:736-45. PMID 31454046, doi:10.1001/jama.2019.11889 (311
+             healthy adults aged 55 to 70, 3 years: 4,000 IU a day left radial bone density LOWER than
+             400 IU; "do not support a benefit of high-dose vitamin D supplementation for bone health")
+  [ES24]     Demay MB et al. J Clin Endocrinol Metab 2024;109:1907-47. PMID 38828931,
+             doi:10.1210/clinem/dgae290 (Endocrine Society guideline: suggests against empiric vitamin D
+             above the DRI in healthy adults under 75); its systematic review, Shah VP et al. 2024;
+             109:1961-74, PMID 38828942, doi:10.1210/clinem/dgae312 (no significant effect in healthy
+             adults 19 to 74)
+  [ND382]    D3 5000 with K2 sell sheet ND382 Rev. 6/24 (as read for the thyroid sheet): one softgel daily
+             with food; exceeds the adult upper limit, use short-term with regular monitoring; K2 not
+             for people on blood thinners
   [LABELS]   Sell sheets ND564 Menopause Support and ND565 PeriMenopause Support (Rev. 8/24): "Do not
              use if pregnant or nursing. This product is not recommended for individuals with known
              or suspected estrogen-dependent cancer."
@@ -1003,18 +1031,30 @@ CSS = r"""
 .mnp .mnp-best small{margin-top:1px;font-size:7pt;color:#6A747B}
 /* back page: scoped with :has() to the marker span in this sheet's lifestyle title */
 .sheet.back:has(.mnp-back) .col .need{height:0.5in;min-height:0.5in;justify-content:flex-start}
-.sheet.back:has(.mnp-back) .col .need i{white-space:normal;font-size:7pt}
-/* the shared kit prints these at 6.2 to 6.8 pt; this sheet keeps every word at 7 pt or more */
-.sheet.back:has(.mnp-back) .col .key,.sheet.back:has(.mnp-back) .col .key b,
-.sheet.back:has(.mnp-back) .col .pick .sz,.sheet.back:has(.mnp-back) .col .dose small,
-.sheet.back:has(.mnp-back) .startt{font-size:7pt}
-.sheet.back:has(.mnp-back) .rhythm em{white-space:nowrap}
 .sheet.back:has(.mnp-back) .col .pick .sz{white-space:nowrap}
-/* the safety panel carries the same four warnings in both editions, so it gets the wider half */
-.sheet.back:has(.mnp-back) .duo{grid-template-columns:1fr 1.25fr}
-/* three writing lines, 0.22in apart, so the full page keeps a few pixels above the footer */
+/* START column: {who} ticks Menopause Support or PeriMenopause Support (boxes are drawn, not glyphs) */
+.sheet.back:has(.mnp-back) .col .what li:has(.mnp-pk){padding-left:0}
+.sheet.back:has(.mnp-back) .col .what li:has(.mnp-pk)::before{display:none}
+.sheet.back:has(.mnp-back) .mnp-pk{display:block;position:relative;padding-left:12px;margin:2px 0 0;font-size:7pt}
+.sheet.back:has(.mnp-back) .col .key .mnp-kk{font-style:normal;font-weight:700;color:var(--deep)}
+.sheet.back:has(.mnp-back) .mnp-pk i{position:absolute;left:0;top:2.4px;width:7.2px;height:7.2px;box-sizing:border-box;
+  border:1.3px solid var(--deep);border-radius:1.5px;background:#fff}
+.sheet.back:has(.mnp-back) .rhythm .mnp-or{color:#283035}
+/* a little more room for the evening slot, so "Evening meal" stays on one line */
+.sheet.back:has(.mnp-back) .rhythm{grid-template-columns:1fr 1.14fr 1fr}
+/* the START column holds two formulas, so it gets a little more width (the others still fit their text) */
+.sheet.back:has(.mnp-back) .cols{grid-template-columns:1.25fr 1fr 1fr 1fr 1fr!important}
+/* the safety panel carries the same five warnings in both editions, so it gets the wider part */
+.sheet.back:has(.mnp-back) .duo{grid-template-columns:1fr 1.4fr}
+/* two writing lines, 0.22in apart (the five-line safety check needs the third line's room) */
 .sheet.back:has(.mnp-back) .notes .ln{height:0.22in}
+.sheet.back:has(.mnp-back) .notes .ln:last-child{display:none}
 """
+
+# START column, second bullet: the two formulas, by stage [MAP] ("When was your last period?  Within the
+# last year: PeriMenopause Support; longer ago: Menopause Support"); {who} ticks one
+PICK = ('<span class="mnp-pk"><i></i><b>Menopause Support</b>: no period for a year or more</span>'
+        '<span class="mnp-pk"><i></i><b>PeriMenopause Support</b>, 30 tablets: period in the past year</span>')
 
 # ============================================================== the sheet
 SHEET = {
@@ -1047,59 +1087,88 @@ SHEET = {
             ("smoke", "Skip smoking", "Smoking speeds bone loss and raises heart risk."),
         ],
         "cols": [
-            {"p": "meno_menopause_support", "need": "Menopausal comfort", "needsub": "EstroG&#8209;100, ashwagandha, black cohosh",
+            {"p": "meno_menopause_support", "need": "Menopausal comfort", "needsub": "EstroG&#8209;100 and ashwagandha",
              "start": True,
-             # Bullet 1 says "through the menopause years", not "hot flashes": the front says plainly that
-             # supplements are not proven for hot flashes [NH23], and the two pages must agree.  [ASHW24]
-             # Peri vs Meno by stage [MAP]: last period within the last year -> PeriMenopause Support R199.
-             # PeriMenopause Support R199, sell sheet ND565 Rev. 8/24 (labels.json): per tablet Estro G-100 blend
-             # 500 mg, ashwagandha root powder 500 mg, milk thistle seed powder 100 mg; same label caution
-             "bullets": ["Supports comfort through menopause",
-                         "Period in the last 12 months? Use PeriMenopause Support: 500 mg EstroG&#8209;100, 500 mg "
-                         "ashwagandha, 100 mg milk thistle"],
-             "dose": "1 tablet daily", "dosesub": "with food, same time daily", "sched": [("am", 1, "tablet")]},
+             # Bullet 1 says "through menopause", not "hot flashes": the front says plainly that supplements are
+             # not proven for hot flashes [NH23], and the two pages must agree.  [ASHW24]
+             # The formula goes by stage [MAP]: last period within the last year -> PeriMenopause Support R199;
+             # longer ago -> Menopause Support R264L.  {Who} ticks one, so a woman who still has periods is
+             # never left holding the pictured bottle.  Both labels (ND564, ND565 Rev. 8/24): one tablet daily
+             # with food at the same time of day, so the dose bar and the rhythm hold for either.  Sizes from
+             # price list ND144 10/1/26 (R264L 90T, R199 30T).  "In each serving" shows both formulas (the
+             # PeriMenopause amounts after "Peri:"; see products.d/menopause.json).
+             "bullets": ["Supports comfort through menopause", PICK],
+             "dose": "1 tablet daily", "dosesub": "with food, same time daily",
+             "sched": [("am", 1, 'tablet, or <span class="mnp-or">PeriMenopause Support</span>')]},
             {"p": "meno_mag_calm_pro", "need": "Sleep and calm", "needsub": "magnesium, myo&#8209;inositol, L&#8209;theanine",
+             # Off the [MAP] on purpose (Asher to approve): for sleep plus mood the Map adds Stress Essentials
+             # Balance R123, which carries 400 mg ashwagandha extract (Sensoril) per 3 capsules (products DB, six
+             # chart label checks).  At the Map's 2 capsules twice a day that is about 530 mg more ashwagandha on
+             # top of the 250 mg (Menopause Support) or 500 mg (PeriMenopause Support) already in the formula.
+             # Mag Calm Pro carries no ashwagandha and was on the research list for sleep and calm.
              "bullets": ["Supports relaxation and restful sleep", "Supports a healthy stress response and mood"],
              # label (ND1075): 1 scoop with 6 oz water 1 to 2 times daily; "try bedtime" is plan timing
              "dose": "1 to 2 scoops daily", "dosesub": "in 6 oz water · try bedtime",
              "sched": [("bed", 1, "scoop")]},
-            {"p": "meno_d3_5000_k2", "need": "Bone strength", "needsub": "vitamin D3 with vitamins K2 and K1",
-             "bullets": ["Supports calcium absorption for strong bones", "K2 helps put calcium to work in bone"],
-             # label (R197): take one softgel daily.  "best with a meal" is a soft cue (vitamin D is fat soluble;
-             # NIH ODS); the evening-meal slot in the rhythm panel is plan timing
-             "dose": "1 softgel daily", "dosesub": "best with a meal", "sched": [("pm", 1, "softgel")]},
+            {"p": "meno_d3_5000_k2", "need": "Vitamin D", "needsub": "only if your level is low",
+             # Same bottle, same framing as the thyroid sheet ("Vitamin D / only if your level is low"), so the
+             # shelf agrees with itself.  5,000 IU is above the adult upper limit of 4,000 IU [ODS]; the label
+             # (ND382 Rev. 6/24) says it exceeds the upper limit and use should be short-term with regular
+             # monitoring.  In healthy adults 55 to 70, 4,000 IU a day for 3 years did not help bone: radial bone
+             # density ended LOWER than at 400 IU [BURT19].  The Endocrine Society suggests against vitamin D
+             # above the daily intake (DRI) for healthy adults under 75, untested [ES24].  So it is for a low
+             # level found on a blood test [ND382].
+             # The [MAP] gives D3 5000 to everyone: this is a deviation for Asher to approve.
+             "bullets": ["Supports bone health when a blood test shows low vitamin D",
+                         "K2 helps put calcium to work in bone"],
+             # label (ND382): one softgel daily with food; "test first" = the blood test bullet 1 names (one line,
+             # so this dose bar lines up with its neighbours); the evening-meal slot in the rhythm is plan timing
+             "dose": "1 softgel daily", "dosesub": "test first · with a meal",
+             "sched": [("pm", 1, "softgel, if vitamin&nbsp;D is low")]},
             {"p": "meno_ultrabiotic_womens", "need": "Good bacteria", "needsub": "women’s probiotic, 9 strains",
-             # sell sheet ND1053 claims: healthy vaginal microbiome, healthy gut microbiome (said in plain words)
+             # [MAP]: UltraBiotic Women's for dryness or UTIs.  Sell sheet ND1053 claims: healthy vaginal
+             # microbiome, healthy gut microbiome (said in plain words)
              "bullets": ["Supports healthy vaginal bacteria", "Supports healthy gut bacteria"],
              # label: take two capsules daily; the bedtime slot in the rhythm panel is plan timing
              "dose": "2 capsules daily", "dosesub": "same time each day", "sched": [("bed", 2, "capsules")]},
             {"p": "meno_creatine", "need": "Muscle and strength", "needsub": "creatine monohydrate",
-             # [CREA26] (PubMed 42141930): benefit when >= 5 g a day was combined with resistance training;
-             # trials of <= 3 g a day without training showed no effect
+             # Off the [MAP] on purpose (Asher to approve): the Map has no muscle pick, but muscle and strength
+             # start to fall as the transition begins [GREEN19], and [CREA26] is a 2026 meta-analysis of 7
+             # randomized trials after menopause.  (PubMed 42141930): benefit when >= 5 g a day was combined with
+             # resistance training; trials of <= 3 g a day without training showed no effect
+             # Creatine raises serum creatinine without harming the kidneys (de Souza Almeida 2026, cited in the
+             # creatine blast; [CREA26] kidney markers unchanged), so a kidney blood test can read high: said here,
+             # at the product, in plain words.  The evening-meal slot is plan timing (label: any drink, any time).
              "bullets": ["Supports muscle and strength with strength training",
-                         "5 g a day plus strength training is what helped in studies after menopause"],
-             "dose": "1 scoop daily", "dosesub": "in 8 to 16 oz of any drink", "sched": [("am", 1, "scoop")]},
+                         "5 g a day plus training helped in studies after menopause",
+                         "Can raise creatinine, a kidney blood test"],
+             "dose": "1 scoop daily", "dosesub": "in 8 to 16 oz of any drink", "sched": [("pm", 1, "scoop")]},
         ],
         # ONE safety core for both editions (the practitioner edition is what MDs and DCs hand out, so it must
         # carry every warning the pharmacist edition does).  {who} = "your provider" / "your pharmacist".
         "rx": [
             # labels ND564 (Menopause Support) and ND565 (PeriMenopause Support): "Do not use if pregnant or
-            # nursing. Not recommended for individuals with known or suspected estrogen-dependent cancer."
-            # NIH ODS black cohosh, NCCIH ashwagandha: rare liver injury; stop with dark urine or jaundice
-            "<b>Pregnant, could be, or nursing? Had breast cancer or another cancer fed by estrogen?</b> The labels "
-            "say not to use Menopause Support or PeriMenopause Support. Stop it and call your doctor if urine darkens "
-            "or skin or eyes turn yellow.",
+            # nursing. This product is not recommended for individuals with known or suspected estrogen-dependent
+            # cancer."
+            "<b>Pregnant, could be, or nursing? Ever had breast cancer or another estrogen-fed cancer?</b> The "
+            "labels say do not use Menopause or PeriMenopause Support.",
+            # NIH ODS black cohosh and NCCIH ashwagandha: rare liver injury; dark urine and yellow skin or eyes are
+            # the signs.  Its own line, so every woman taking either formula reads it.
+            "<b>Dark urine, or yellow skin or eyes?</b> Stop Menopause or PeriMenopause Support and call your "
+            "doctor: black cohosh and ashwagandha can rarely harm the liver.",
             # NIH ODS vitamin K (warfarin); NCCIH / NIH ODS ashwagandha: thyroid hormone, sedatives
             "<b>Warfarin?</b> The vitamin K in D3 5000 with K2 can shift your INR (clotting test). <b>Thyroid "
             "pills, or drugs that make you sleepy?</b> Ashwagandha can add to them.",
-            # NIH ODS vitamin D: adult upper limit 4,000 IU a day.  Creatine raises serum creatinine
-            # (de Souza Almeida 2026, cited in the creatine blast) without harming the kidneys [CREA26]
-            "<b>D3 5000 is above the 4,000 IU daily upper limit:</b> ask {who} about a vitamin D test. "
-            "<b>Creatine</b> can make a kidney blood test (creatinine) read higher.",
-            # NIH ODS magnesium: tetracycline and quinolone antibiotics at least 2 hours before or 4 to 6 hours
-            # after magnesium; oral bisphosphonates (alendronate) at least 2 hours apart
-            "<b>Antibiotics?</b> Take some 2 hours before or 4 to 6 hours after magnesium. Keep bone drugs such "
-            "as alendronate 2 hours apart from it.",
+            # [ODS] vitamin D: adult upper limit 4,000 IU a day; ND382 label: exceeds the upper limit, monitor
+            # levels (the D3 column says "only if your level is low" and "after a vitamin D test").  NIH ODS
+            # magnesium: the risk of too much magnesium rises with poor kidney function; creatine is cleared by
+            # the kidneys and raises creatinine (the Creatine column says so in plain words).
+            "<b>Vitamin D:</b> test first, then recheck; 5,000 IU is over the 4,000 IU daily upper limit. "
+            "<b>Kidney disease?</b> Ask {who} before Mag Calm Pro or Creatine.",
+            # NIH ODS magnesium: tetracyclines (doxycycline) and quinolones (ciprofloxacin) at least 2 hours before
+            # or 4 to 6 hours after magnesium; oral bisphosphonates (alendronate) at least 2 hours apart
+            "<b>Doxycycline, ciprofloxacin or similar antibiotics?</b> Take them 2 hours before or 4 to 6 hours "
+            "after Mag Calm Pro. Keep alendronate (a bone drug) 2 hours apart too.",
         ],
     },
 }

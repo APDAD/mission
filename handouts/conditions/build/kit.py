@@ -15,7 +15,8 @@ BRAND_CORAL = "#F15F3F"
 THEMES = {
     "gut":    {"c1": "#0E6A7A", "c2": "#2C8DB4", "soft": "#E3F1F4", "deep": "#0A4B57", "tint": "#F2F8F9"},
     "teal":   {"c1": "#13827C", "c2": "#3A9FC4", "soft": "#E2F2F0", "deep": "#0D5A56", "tint": "#F1F8F7"},
-    "gerd":   {"c1": "#CF4A1C", "c2": "#EE9A2E", "soft": "#FCEADB", "deep": "#8E3110", "tint": "#FEF6EF"},
+    "gerd":   {"c1": "#CF4A1C", "c2": "#EE9A2E", "soft": "#FCEADB", "deep": "#8E3110", "tint": "#FEF6EF",
+               "c2t": "#BC5B12"},  # hand-picked: darkening #EE9A2E toward black turns it brown
     "metab":  {"c1": "#8A1B22", "c2": "#C2392E", "soft": "#F6E4E1", "deep": "#62121A", "tint": "#FBF3F2"},
     "immune": {"c1": "#4A2B80", "c2": "#7A52B3", "soft": "#EDE6F6", "deep": "#34205C", "tint": "#F7F3FB"},
     # families for the next wave (pain and movement, brain and nerves, hormones)
@@ -175,7 +176,7 @@ h1,h2,h3{margin:0}
 .nw{white-space:nowrap}
 
 /* back page */
-.band{margin:0 -0.42in;padding:0.16in 0.42in 0.18in;background:linear-gradient(120deg,var(--c1),var(--c2));color:#fff;
+.band{margin:0 -0.42in;padding:0.16in 0.42in 0.18in;background:linear-gradient(120deg,var(--c1t),var(--c2t));color:#fff;
   position:relative}
 .band h2{font-family:Merriweather,Georgia,serif;font-weight:700;font-size:21pt;text-align:center;margin:0 0 0.1in;color:#fff}
 .band h2 small{display:block;font-size:10pt;font-weight:700;color:#FFE6D4;margin-top:2px}
@@ -199,7 +200,7 @@ h1,h2,h3{margin:0}
 .cols{display:grid;gap:0.08in;margin-top:0.09in}
 .col{display:flex;flex-direction:column;background:#fff;border-radius:6px;overflow:visible;
   box-shadow:0 1px 0 #E3E7EA,0 2px 6px rgba(20,30,40,.10);border:1px solid #E1E5E8}
-.col .need{background:linear-gradient(160deg,var(--c1),var(--c2));color:#fff;padding:0.07in 0.07in 0.06in;text-align:center;border-radius:5px 5px 0 0;
+.col .need{background:linear-gradient(160deg,var(--c1t),var(--c2t));color:#fff;padding:0.07in 0.07in 0.06in;text-align:center;border-radius:5px 5px 0 0;
   min-height:0.5in;display:flex;flex-direction:column;justify-content:center}
 .col .need b{font-size:8.2pt;line-height:1.2;display:block}
 .col .need i{font-style:normal;font-size:7pt;opacity:.92;display:block;margin-top:2px;line-height:1.2}
@@ -241,8 +242,32 @@ h1,h2,h3{margin:0}
 """
 
 
+def _lum(h):
+    h = h.lstrip("#")
+    r, g, b = (int(h[i:i + 2], 16) / 255 for i in (0, 2, 4))
+    f = lambda c: c / 12.92 if c <= 0.03928 else ((c + 0.055) / 1.055) ** 2.4  # noqa: E731
+    return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b)
+
+
+def text_safe(hexcolor, ratio=4.5):
+    """The same hue, darkened just enough that white text on it reaches `ratio` contrast (WCAG AA
+    for small text). Used for every gradient that carries white words: the back-page band and the
+    product column headers. Light theme ends (GERD orange, energy gold) measured 2.3:1 before."""
+    h = hexcolor.lstrip("#")
+    rgb = [int(h[i:i + 2], 16) for i in (0, 2, 4)]
+    for step in range(0, 101):
+        k = 1 - step / 100
+        c = "#" + "".join(f"{round(v * k):02X}" for v in rgb)
+        if 1.05 / (_lum(c) + 0.05) >= ratio:
+            return c
+    return "#000000"
+
+
 def theme_vars(theme):
-    return ";".join(f"--{k}:{v}" for k, v in THEMES[theme].items())
+    t = dict(THEMES[theme])
+    t.setdefault("c1t", text_safe(t["c1"]))
+    t.setdefault("c2t", text_safe(t["c2"]))
+    return ";".join(f"--{k}:{v}" for k, v in t.items())
 
 
 # Drawn symbols. The shipped fonts carry the Latin set only; any other glyph (a diamond, an arrow,

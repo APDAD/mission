@@ -17,11 +17,14 @@ FRONT, top to bottom
   BALANCED (left column) and OVERGROWN (right column); small intestine on top, colon below.  The SIBO
   circle is crowded with the colon's own (green) bacteria plus gas, because SIBO is colon bacteria in the
   wrong place [NAC17]; red "unfriendly" bacteria appear only in the colon circle.  The colon parasite is
-  a pinworm, the worm that lives in the colon [CDC-PIN].  Organ names sit on the circle rims; each circle
-  has a one-line caption in clear space ->
+  a pinworm, the worm that lives in the colon [CDC-PIN].  Organ names sit on the circle rims, and the figure
+  itself names the stomach, the small intestine (pink loops, leader to the duodenum where it leaves the
+  stomach) and the colon (tan pouched tube), each in clear space; each circle has a one-line caption.
+  Zoom-circle symbols are placed by a seeded random fill that keeps every item clear of the others (rods are
+  tested as capsules, hairs included) and clear of the organ tag on the rim ->
   KEY (every symbol, same drawing code as the art, two rows) -> three kinds of overgrowth (SIBO, yeast,
   parasites: clues, risks, which test) -> breath test "know your numbers" strip (consensus cut-offs and a
-  write-in box) -> red-flag line -> the 5R ribbon with Remove marked "this sheet".
+  write-in box for each gas) -> red-flag line -> the 5R ribbon with Remove marked "this sheet".
 Testing is always the practitioner's: the front says "your provider" in both editions (never {who}).
 Anatomy notes: villi are drawn only in the small intestine; the colon lining is flat with crypts (the
 colon has no villi).  The stomach sits on the viewer's right (the patient's left), the cecum and
@@ -46,13 +49,15 @@ SOURCES (each fact on the page carries one of these tags in a comment next to it
   [MMC12]   Deloose E et al. The migrating motor complex. Nat Rev Gastroenterol Hepatol 2012;9:271-85.
             PMID 22450306: fasting "housekeeper" waves, interrupted by eating; absent MMC goes with SIBO.
   [CANDIDA20] Kumamoto CA, Gresnigt MS, Hube B. Curr Opin Microbiol 2020;56:7-15. PMID 32604030: Candida
-            is a regular gut resident in most people (so finding some in stool is normal; the amount
-            matters); dysbiosis, immune suppression and a weak barrier let it overgrow.  Candida grows as
-            round budding cells and as chains of stretched cells (pseudohyphae and hyphae).
+            is a regular gut resident in most people (so finding some in stool is normal, and there is no
+            validated stool cut-off: the provider reads the result); dysbiosis, immune suppression and a
+            weak barrier let it overgrow.  Candida grows as round budding cells and as chains of stretched
+            cells (pseudohyphae and hyphae).
   [SAMONIS93] Samonis G et al. Antimicrob Agents Chemother 1993;37:51-53. PMID 8431017: broad-spectrum
             antibiotics raise gut yeast colonization.
   [CDC-CAND] CDC, Candidiasis (thrush; vaginal candidiasis): risk factors antibiotics, corticosteroids,
-            diabetes, weakened immune system.  These are infections elsewhere; there is no single gut sign.
+            diabetes, weakened immune system.  These are separate infections elsewhere that share those risk
+            factors, not signs of gut yeast; there is no single gut sign.  So the card calls them a hint.
   [CDC-GIA] CDC, Giardia: diarrhea, gas, greasy stools that can float, cramps; spread by untreated or
             recreational water, food, surfaces and people; diagnosed from stool samples.  CDC, Giardia and
             pets: the chance of getting Giardia from dogs or cats is small (people and pets usually carry
@@ -68,7 +73,12 @@ SOURCES (each fact on the page carries one of these tags in a comment next to it
   [ALARM]   NIDDK, Diarrhea (see a doctor for blood or black stools, high fever, dehydration); ACG
             Clinical Guideline: Management of IBS, Lacy BE et al. Am J Gastroenterol 2021;116:17-44,
             PMID 33315591 (alarm features: bleeding, unintended weight loss).
-  Back-page safety notes (both editions): labels opened in Dropbox 2026-11-03: Spectrum BR ND505 Rev. 8/24
+  [LBT180]  Santos ANR et al. Rev Paul Pediatr 2020;38:e2018164, PMID 31939507: a lactulose breath test with
+            hydrogen and methane read for 180 minutes.  With [NAC17] (SIBO testing can stop at 2 hours) the
+            front says "2 to 3 hours".
+  [DPDX-PIN] CDC DPDx, Enterobiasis: adult female pinworms are 8 to 13 mm long, males 2 to 5 mm (not
+            re-opened this session: cdc.gov is outside the allowed network), so the KEY says "about 1 cm".
+  Back-page safety notes (both editions): labels opened 2026-11-03: Spectrum BR ND505 Rev. 8/24
   "Warning: Do not use if pregnant or nursing" and "If taking medication including cyclosporine, consult your
   healthcare practitioner"; Nutricidin ND949 Rev. 2/25, UltraBiotic S. boulardii ND170 Rev. 8/25 and Binder
   Pro ND1141 Rev. 12/25 "If you are pregnant, nursing, or taking medication, consult your healthcare
@@ -78,10 +88,20 @@ SOURCES (each fact on the page carries one of these tags in a comment next to it
   et al. Metabolism 2008;57:712-7, PMID 18442638; invasive Saccharomyces infection, central venous catheters
   and immune suppression the main risks, Enache-Angoulvant A, Hennequin C. Clin Infect Dis
   2005;41:1559-68, PMID 16267727; S. boulardii is a yeast, so antibacterial antibiotics do not kill it and
-  antifungals can, Kelesidis T, Pothoulakis C. Ther Adv Gastroenterol 2012;5:111-25, PMID 22423260; garlic
-  and pau d'arco bleeding cautions (NCCIH garlic; pau d'arco interaction monographs); chlorella vitamin K
-  and warfarin (MedlinePlus).  Plan length: ND584 runs the Remove step 10 days within a 24-day program;
-  Chedid 2014 (below) gave herbal therapy for 4 weeks and retested, so "often a few weeks, then may retest".
+  antifungals can, Kelesidis T, Pothoulakis C. Ther Adv Gastroenterol 2012;5:111-25, PMID 22423260.
+  Bleeding: ginger, clove and garlic are among the herbs that may raise bleeding risk with warfarin, Heck AM
+  et al. Am J Health Syst Pharm 2000;57:1221-7, PMID 10902065; serratiopeptidase breaks down fibrin
+  (anticoagulant, fibrinolytic), Hosseini SB et al. Arch Microbiol 2024;206:180, PMID 38502196 and Jadhav SB
+  et al. Biotechnol Rep 2020;28:e00544, PMID 33134103; pau d'arco's lapachol blocks vitamin K recycling
+  as warfarin does, Preusch PC et al. Arch Biochem Biophys 1989;269:18-24, PMID 2916837; chlorella vitamin K
+  and warfarin (MedlinePlus chlorella monograph; not re-opened this session).  Licorice (in the Spectrum BR
+  blend, ND505; not DGL): glycyrrhizin raises blood pressure and lowers potassium (apparent mineralocorticoid
+  excess), Deutch MR et al. Foods 2019;8:495, PMID 31615045; Kwon YJ et al. J Med Food 2020;23:12-20, PMID
+  31874059; so the pharmacy edition flags diuretics, digoxin and steroids.  Children: every label dose is an
+  adult dose, and berberine displaces bilirubin and is best avoided in jaundiced newborns, Chan E. Biol
+  Neonate 1993;63:201-8, PMID 8513024, so both editions say "ask first" for a child.
+  Plan length: ND584 runs the Remove step 10 days within a 24-day program; Chedid 2014 (below) gave herbal
+  therapy for 4 weeks and retested, so "often a few weeks, then may retest".
   Research anchors behind the product picks (not quoted on the page): Chedid V et al. Glob Adv Health
   Med 2014;3:16-24, PMID 24891990 (herbal therapy incl. CandiBactin-BR, which Spectrum BR matches);
   Redondo-Cuevas L et al. Nutrients 2024;16:1083, PMID 38613116; Bustos Fernandez LM et al. Dig Dis
@@ -92,7 +112,7 @@ import os
 import random
 
 from kit import icon
-from svgkit import T, svg
+from svgkit import T, label_bg, svg
 
 U = "gov"
 SLUG = "gut-overgrowth"
@@ -337,7 +357,9 @@ def crypts(x0, x1, top, bottom, k0=0, gap=11.5, depth=19):
 
 # ============================================================== the digestive tract (local 300 x 360 box)
 # Front view, as if facing the person: their right side is on the viewer's left.
-ESO = [(152, -2), (156, 26), (162, 50), (171, 69)]
+# The esophagus bends into the cardia and ends well inside the stomach outline (the stomach is drawn over it),
+# so both of its edges meet the stomach and no cut end shows beside it.
+ESO = [(152, -2), (156, 26), (163, 48), (172, 63), (184, 74)]
 STOMACH = [(171, 66), (178, 55), (194, 47), (214, 49), (231, 61), (242, 82), (245, 108), (239, 134), (224, 156),
            (201, 171), (174, 176), (149, 170), (131, 160), (120, 152), (116, 146), (121, 140), (136, 143),
            (153, 143), (168, 134), (176, 116), (176, 95), (172, 80)]
@@ -532,9 +554,72 @@ def _place(rng, n, r_item, ok, taken, gap=1.5, tries=6000):
     return out
 
 
-def _in_circle(R, top_cut):
-    """Region test: inside the circle (with margin) and above the lining at y = top_cut."""
-    return lambda x, y, r: math.hypot(x, y) < R - r - 3 and y < top_cut - r - 1
+def _in_circle(R, top_cut, tag_half=0.0):
+    """Region test: inside the circle (with margin), above the lining at y = top_cut, and clear of the organ tag
+    on the top rim (the tag covers |x| < tag_half down to 8.5 below the rim, so nothing hides under it)."""
+    def ok(x, y, r):
+        if math.hypot(x, y) >= R - r - 3 or y >= top_cut - r - 1:
+            return False
+        return not (abs(x) < tag_half + r + 1.5 and y < -R + 10.5 + r)
+    return ok
+
+
+def _seg_dist(p, a, b):
+    """Distance from point p to the segment a-b."""
+    dx, dy = b[0] - a[0], b[1] - a[1]
+    L2 = dx * dx + dy * dy
+    t = 0.0 if L2 == 0 else max(0.0, min(1.0, ((p[0] - a[0]) * dx + (p[1] - a[1]) * dy) / L2))
+    return math.hypot(p[0] - a[0] - t * dx, p[1] - a[1] - t * dy)
+
+
+def _segs_dist(a1, a2, b1, b2):
+    """Distance between the segments a1-a2 and b1-b2 (0 when they cross)."""
+    def side(p, q, r):
+        return (q[0] - p[0]) * (r[1] - p[1]) - (q[1] - p[1]) * (r[0] - p[0])
+    if (side(b1, b2, a1) > 0) != (side(b1, b2, a2) > 0) and (side(a1, a2, b1) > 0) != (side(a1, a2, b2) > 0):
+        return 0.0
+    return min(_seg_dist(a1, b1, b2), _seg_dist(a2, b1, b2), _seg_dist(b1, a1, a2), _seg_dist(b2, a1, a2))
+
+
+ROD_L, ROD_W = 12.5, 5.4
+
+
+def _rod_capsule(x, y, rot, kind):
+    """The capsule a rod covers as printed: its axis end points and radius.  A friendly rod is its rounded body
+    plus the outline stroke (0.4 outside); an unfriendly rod's capsule also takes in its short hairs (2.6 past
+    the body on both long sides, 0.85 wide)."""
+    hl, rr = (2.2, ROD_W / 2 + 2.6 + 0.45) if kind == "bad" else (ROD_L / 2 - ROD_W / 2, ROD_W / 2 + 0.4)
+    a = math.radians(rot)
+    c, s = math.cos(a) * hl, math.sin(a) * hl
+    return (x - c, y - s), (x + c, y + s), rr
+
+
+def _place_rods(rng, n, kind, ok, taken, rods, gap=0.5, tries=30000):
+    """Random rods (x, y, rot) inside ok(), tested as capsules: clear of every circle in `taken` and of every
+    rod already in `rods` (which this extends) by `gap` of white space, so no two rods touch, not even end to
+    end.  Each count below is what fits, so no rod is silently dropped."""
+    out = []
+    for _ in range(n):
+        for _t in range(tries):
+            x, y, rot = rng.uniform(-80, 80), rng.uniform(-80, 80), float(round(rng.uniform(0, 180)))
+            p1, p2, rr = _rod_capsule(x, y, rot, kind)
+            if not (ok(*p1, rr) and ok(*p2, rr) and ok(x, y, rr)):
+                continue
+            if any(_seg_dist((a, b), p1, p2) < rb + rr + gap for a, b, rb in taken):
+                continue
+            if any(_segs_dist(p1, p2, q1, q2) < rr + rq + gap for q1, q2, rq in rods):
+                continue
+            rods.append((p1, p2, rr))
+            out.append((x, y, rot))
+            break
+    if len(out) < n:
+        print(f"WARNING {SLUG}: only {len(out)} of {n} {kind} rods fit in a zoom circle")
+    return out
+
+
+def _tag_half(text):
+    """Half the width of an organ tag on a circle rim (see _tag), stroke included."""
+    return (tw(text, 10.5, 800, 1.0) + 2 * 17 * 0.62) / 2 + 0.65
 
 
 def si_zoom(cx, cy, R, over):
@@ -553,14 +638,19 @@ def si_zoom(cx, cy, R, over):
         for (dx, dy, a) in [(-30, -30, 18), (14, -44, -28), (36, -10, 40), (-6, 2, -12)]:
             o.append(rod(cx + dx, cy + dy, a, "ok"))
         return "".join(o)
-    # SIBO: the colon's own (friendly, green) bacteria crowd in and ferment food into gas [NAC17]
+    # SIBO: the colon's own (friendly, green) bacteria crowd in and ferment food into gas [NAC17].  The big
+    # bubbles go first and join `taken` before the small ones are placed, so no two bubbles overlap.
+    th = _tag_half("SMALL INTESTINE")
     taken = []
-    gas = _place(rng, 4, 6.2, _in_circle(R, tips), taken, 3) + _place(rng, 7, 3.6, _in_circle(R, tips + 6), taken, 2.4)
-    taken += gas
-    crowd = _place(rng, 30, 5.4, _in_circle(R, tips + 10), taken, 0.8)
-    for x, y, _ in crowd:
-        o.append(rod(cx + x, cy + y, rng.uniform(0, 180), "ok"))
-    for x, y, r in gas:
+    big = _place(rng, 4, 6.2, _in_circle(R, tips, th), taken, 3)
+    taken += big
+    small = _place(rng, 7, 3.6, _in_circle(R, tips + 6, th), taken, 2.4)
+    taken += small
+    clear = [(x, y, r + 0.5) for x, y, r in taken]          # the bubbles' outline stroke
+    crowd = _place_rods(rng, 19, "ok", _in_circle(R, tips + 10, th), clear, [])
+    for x, y, a in crowd:
+        o.append(rod(cx + x, cy + y, a, "ok"))
+    for x, y, r in big + small:
         o.append(bubble(cx + x, cy + y, r))
     return "".join(o)
 
@@ -568,13 +658,13 @@ def si_zoom(cx, cy, R, over):
 def colon_zoom(cx, cy, R, over):
     rng = random.Random(53 if over else 29)
     floor = R * 0.46
+    th = _tag_half("COLON")
     o = [f'<rect x="{cx - R}" y="{cy - R}" width="{2 * R}" height="{2 * R}" fill="url(#{U}-lc)"/>',
          crypts(cx - R - 4, cx + R + 4, cy + floor, cy + R + 4)]     # flat lining with crypts (no villi)
     if not over:
-        taken = []
-        good = _place(rng, 56, 5.2, _in_circle(R, floor), taken, 0.3)
-        for x, y, _ in good:
-            o.append(rod(cx + x, cy + y, rng.uniform(0, 180), "ok"))
+        good = _place_rods(rng, 46, "ok", _in_circle(R, floor, th), [], [])
+        for x, y, a in good:
+            o.append(rod(cx + x, cy + y, a, "ok"))
         return "".join(o)
     # overgrowth: yeast cells and chains on the lining, a pinworm, fewer friendly and some unfriendly bacteria
     taken = []
@@ -590,14 +680,15 @@ def colon_zoom(cx, cy, R, over):
         taken.append((dx, floor + dy, 8.5 * s))
     for (dx, dy, r) in [(-18, -40, 4.2), (34, -42, 3.2)]:
         o.append(bubble(cx + dx, cy + dy, r))
-        taken.append((dx, dy, r))
-    good = _place(rng, 14, 5.2, _in_circle(R, floor - 16), taken, 1.0)
-    taken += good
-    bad = _place(rng, 9, 5.4, _in_circle(R, floor - 16), taken, 1.0)
-    for x, y, _ in good:
-        o.append(rod(cx + x, cy + y, rng.uniform(0, 180), "ok"))
-    for x, y, _ in bad:
-        o.append(rod(cx + x, cy + y, rng.uniform(0, 180), "bad"))
+        taken.append((dx, dy, r + 0.5))
+    rods = []
+    ok = _in_circle(R, floor - 16, th)
+    bad = _place_rods(rng, 9, "bad", ok, taken, rods)        # the hairy rods first: they need the most room
+    good = _place_rods(rng, 14, "ok", ok, taken, rods)
+    for x, y, a in good:
+        o.append(rod(cx + x, cy + y, a, "ok"))
+    for x, y, a in bad:
+        o.append(rod(cx + x, cy + y, a, "bad"))
     return "".join(o)
 
 
@@ -676,6 +767,19 @@ def _tag(cx, cy_top, text):
     return _pill(cx, cy_top - 8.5, text, "#FFFFFF", 10.5, 17, INK, "#33403F", 1.0)
 
 
+def _organ_label(lines, x, y, anchor, p0, p1, size=11, lh=12.5):
+    """An organ name in clear space on a white backdrop (svgkit.label_bg), styled like "Stomach", with a thin
+    leader from p0 to the organ at p1.  Lines stack down from the first baseline y; anchor is start or end."""
+    w = max(tw(s, size, 700) for s in lines)
+    x0 = x - w if anchor == "end" else x
+    top = y - size * 0.8
+    h = size * 0.8 + (len(lines) - 1) * lh + size * 0.25
+    return (label_bg(round(x0 - 3, 1), round(top - 2.5, 1), round(w + 6, 1), round(h + 5, 1), rx=4)
+            + f'<path d="M{p0[0]:.1f},{p0[1]:.1f} L{p1[0]:.1f},{p1[1]:.1f}" stroke="#7B848A" stroke-width="1.1" '
+              'stroke-linecap="round"/>'
+            + "".join(T(x, round(y + i * lh, 1), s, size, 700, INK2, anchor) for i, s in enumerate(lines)))
+
+
 def art_overgrowth():
     gl = lambda p: (FX + p[0] * FS, FY + p[1] * FS)
     o = [defs_svg()]
@@ -694,18 +798,25 @@ def art_overgrowth():
     o.append(_pill(LX, TOP, "BALANCED", OK, h=21) + _pill(RX, TOP, "OVERGROWTH", BAD, h=21))
     for cx in (LX, RX):
         o.append(_tag(cx, SY - R, "SMALL INTESTINE") + _tag(cx, CY - R, "COLON"))
-    # [NAC17] SIBO = bacteria normally found in the large intestine, in the small intestine
-    subs = [(LX, SY, "only a few bacteria", OK_TX), (RX, SY, "colon bacteria crowd in, make gas", BAD_TX),
+    # [NAC17] SIBO = bacteria normally found in the large intestine, in the small intestine.  Each caption is
+    # short enough to sit centred under its circle, clear of the zoom beams (the gas is named in the KEY).
+    subs = [(LX, SY, "only a few bacteria", OK_TX), (RX, SY, "colon bacteria move in", BAD_TX),
             (LX, CY, "a thick, friendly colony", OK_TX), (RX, CY, "yeast and parasites take hold", BAD_TX)]
     for cx, cy, s, col in subs:
         half = tw(s, 11.2, 700) / 2 + 1.5           # +1.5: the italic runs a little wider than the upright face
         x = min(max(cx, 6 + half), W - 6 - half)
         o.append(T(round(x, 1), cy + R + 15.5, s, 11.2, 700, col, "middle", italic=True))
-    # one organ name the zooms do not carry
+    # The figure names its organs, each in clear space on a white backdrop, so the pink small intestine and the
+    # tan colon can be told apart without tracing a beam.  Stomach: leader to the greater curvature.  Small
+    # intestine: above the left beam, leader to the duodenum where it leaves the stomach (above the transverse
+    # colon).  Colon: in the pocket between the two right-hand beams, leader to the descending colon.
     sx, sy = gl((246, 92))
     o.append(f'<path d="M{sx - 4:.1f},{sy:.1f} H{sx + 13:.1f}" stroke="#7B848A" stroke-width="1.1"/>'
              + T(sx + 17, sy + 3.9, "Stomach", 11, 700, INK2))
-    return svg(W, H, "".join(o), "The digestive tract with one spot in the small intestine and one spot in the colon shown "
+    o.append(_organ_label(["Small intestine"], 306, 121, "end", (309, 120.5), gl((107, 146))))
+    o.append(_organ_label(["Colon", "(large intestine)"], 507, 208.5, "start", (504, 205), (gl((284, 213))[0] + 7.5, 205)))
+    return svg(W, H, "".join(o), "The digestive tract, with the stomach, the small intestine (pink loops) and the colon "
+               "(tan pouched tube) labelled, and one spot in the small intestine and one spot in the colon shown "
                "up close. Balanced: only a few bacteria in the small intestine and a thick friendly colony in the colon. "
                "Overgrowth: the colon's own bacteria crowd the small intestine and make gas bubbles, and in the colon yeast "
                "cells and chains, a pinworm and some unfriendly bacteria take hold.")
@@ -729,7 +840,9 @@ def key_html():
         (_sw(rod(0, 0, -30, "bad", 15, 6.2)), "Unfriendly bacteria"),
         (_sw(bubble(-4, 3, 6.5) + bubble(6, -5, 4)), "Gas: hydrogen, methane"),
         (_sw(yeast(-11, 3, -10, 0.95) + hypha(2, 12, -62, 3, 0.62), wide=True), "Yeast (Candida): cells and chains"),
-        (_sw(pinworm(0, 0, -22, 0.48, w=4.6, sw=0.85)), "Parasite (pinworm)"),
+        # [DPDX-PIN] an adult female pinworm is 8 to 13 mm: drawn far smaller than life next to the bacteria,
+        # so the KEY gives its real size (parents may look for them at night)
+        (_sw(pinworm(0, 0, -22, 0.48, w=4.6, sw=0.85)), "Parasite (pinworm, about 1 cm)"),
         (_sw(vil), "Villi: small-intestine lining"),
         (_sw(lining), "Colon lining (no villi)"),
         (_sw(spot), "Zoomed spot"),
@@ -757,12 +870,13 @@ KINDS = [
     (_mini(yeast(-3, 2, -10, 1.35) + yeast(9, -8, 30, 0.8, False)),
      # [CANDIDA20]: Candida is a regular member of the gut flora in most people
      "Yeast", "Candida, normally in small numbers",
-     # [CDC-CAND] thrush and vaginal candidiasis are infections elsewhere; there is no single gut sign
-     ["No single gut sign", "White mouth patches (thrush)", "Repeat vaginal yeast infections"],
+     # [CDC-CAND] thrush and vaginal candidiasis are separate infections that share the risk factors; they are
+     # not signs of gut yeast, only a hint; there is no single gut sign
+     ["No single gut sign", "Yeast infections elsewhere (mouth, vagina) can hint at it"],
      # [SAMONIS93] antibiotics; [CDC-CAND] corticosteroids, diabetes, weakened immune system
      ["Antibiotics, steroid medicines", "High blood sugar", "A weakened immune system"],
-     # [CANDIDA20] some Candida in stool is normal, so only the amount means anything
-     "Stool test: the amount matters"),
+     # [CANDIDA20] some Candida in stool is normal and there is no validated cut-off: the provider reads it
+     "Stool test; some yeast is normal"),
     (_mini(pinworm(0, 0, -26, 0.54, w=4.6, sw=0.85)),
      # [CDC-GIA] [CDC-PIN]
      "Parasites", "such as Giardia or pinworm",
@@ -797,11 +911,14 @@ def numbers_html():
         f'<div class="{U}-n"><i>Hydrogen</i><b>rises 20 ppm or more</b><span>within 90 minutes: SIBO</span></div>'
         # [NAC17]: methane >=10 ppm at any point = positive; [ACG20] names it intestinal methanogen overgrowth (IMO)
         f'<div class="{U}-n"><i>Methane</i><b>10 ppm or more</b><span>at any point: methane overgrowth (IMO)</span></div>'
-        f'<div class="{U}-mine"><span>My result</span></div>')
-    # [NAC17]: 8-12 h fast; glucose or lactulose drink; SIBO testing can be limited to 2 hours.  "Microbes", not
-    # "bacteria": hydrogen comes from bacteria, methane from archaea [ACG20]
+        # the test reports two gases, so the write-in box has a labelled line for each
+        f'<div class="{U}-mine"><b>My result</b><div><span>Hydrogen</span><i></i></div>'
+        '<div><span>Methane</span><i></i></div></div>')
+    # [NAC17]: 8-12 h fast; glucose or lactulose drink; SIBO testing can be limited to 2 hours; [LBT180] lactulose
+    # tests are often read for 3 hours, so "2 to 3 hours".  "Microbes", not "bacteria": hydrogen comes from
+    # bacteria, methane from archaea [ACG20]
     lead = (f'<div class="{U}-nl">{icon("breath", "0.3in", sw=3.4)}<div><b>Breath test: know your numbers</b>'
-            '<span>After an overnight fast you drink a sugar solution, then breathe into tubes for about 2 hours. '
+            '<span>After an overnight fast you drink a sugar solution, then breathe into tubes for 2 to 3 hours. '
             'Misplaced microbes turn the sugar into gas, measured in ppm (parts per million).</span></div></div>')
     # [ALARM]: blood or black stools, high fever, unplanned weight loss; confirmed parasites are treated with medicine
     alarm = (f'<div class="{U}-alarm">{icon("warning", "0.19in", sw=4)}<p><b>Get checked soon</b> for blood or black '
@@ -810,9 +927,9 @@ def numbers_html():
 
 
 # ============================================================== the 5R ribbon
-# The Remove step reads "rebalance the gut", not "clear the overgrowth": next to "this sheet" a disease word
-# would tie the back page's products to treating an overgrowth.
-FIVE = [("Remove", "rebalance the gut", "This sheet"), ("Replace", "stomach acid, enzymes", None),
+# [ND584] Remove = take out unwanted microbes and trigger foods.  The ribbon says what is removed, with no disease
+# word ("clear the overgrowth"), which next to "this sheet" would tie the back page's products to treating one.
+FIVE = [("Remove", "unwanted microbes, trigger foods", "This sheet"), ("Replace", "stomach acid, enzymes", None),
         ("Reinoculate", "friendly bacteria", None), ("Repair", "heal the lining", None),
         ("Retain", "keep the balance", None)]
 
@@ -837,8 +954,9 @@ def front(t, ed):
 
 
 CSS = r"""
-.gov .gov-art svg{display:block;width:100%;height:auto}
-.gov-key{position:relative;border:1.2px solid #C9D6DA;border-radius:8px;padding:7px 8px 4px;margin-top:6px}
+.gov .gov-art svg{display:block;width:96.6%;height:auto;margin:0 auto}   /* a hair under full width: the room pays for the
+   two-line Remove step, the KEY gap and the gas boxes */
+.gov-key{position:relative;border:1.2px solid #C9D6DA;border-radius:8px;padding:7px 8px 4px;margin-top:10px}
 .gov-kt{position:absolute;top:-7px;left:12px;background:#fff;padding:0 6px;font:800 7.2pt Inter,sans-serif;
   letter-spacing:.16em;text-transform:uppercase;color:var(--deep)}
 .gov-kg{display:grid;grid-template-columns:repeat(4,auto);justify-content:space-between;align-items:center;gap:2px 8px}
@@ -864,7 +982,7 @@ CSS = r"""
 .gov-kl li::before{content:"";position:absolute;left:0;top:4px;width:4px;height:4px;border-radius:50%;background:var(--c2)}
 .gov-kl.gov-kf li::before{background:#C9574B}
 .gov-kl p{margin:0;font-size:7.6pt;line-height:1.26;font-weight:700;color:var(--deep)}
-.gov-nums{display:grid;grid-template-columns:1fr 1.42in 1.42in 0.66in;gap:5px;margin-top:0.08in;align-items:stretch;
+.gov-nums{display:grid;grid-template-columns:1fr 1.42in 1.42in 1in;gap:5px;margin-top:0.08in;align-items:stretch;
   border:1px solid #E8D9B6;background:#FFFCF4;border-radius:8px;padding:5px 6px}
 .gov-nl{display:flex;align-items:center;gap:7px}
 .gov-nl .ic{flex:none;color:var(--c1)}
@@ -874,8 +992,12 @@ CSS = r"""
 .gov-n i{display:block;font:800 7pt Inter,sans-serif;letter-spacing:.07em;text-transform:uppercase;font-style:normal}
 .gov-n b{display:block;font:800 8.6pt/1.15 Inter,sans-serif;color:#5B3C00}
 .gov-n span{display:block;font-size:7.2pt;line-height:1.2;color:#6E5320}
-.gov-mine{border:1.3px dashed #9AA5AC;border-radius:5px;display:flex;align-items:flex-start;justify-content:center;background:#fff}
-.gov-mine span{font:700 7pt Inter,sans-serif;color:#6A747B;margin-top:2px}
+.gov-mine{border:1.3px dashed #9AA5AC;border-radius:5px;background:#fff;display:flex;flex-direction:column;
+  justify-content:space-between;padding:2px 6px 4px}
+.gov-mine b{font:700 7pt/1.15 Inter,sans-serif;color:#6A747B;text-align:center}
+.gov-mine div{display:flex;align-items:flex-end;gap:3px}
+.gov-mine span{font:600 7pt/1 Inter,sans-serif;color:#56606A}
+.gov-mine i{flex:1;height:14px;border-bottom:1px solid #9AA5AC}
 .gov-alarm{display:flex;align-items:center;gap:7px;border:1.4px solid #C0392B;background:#FDF1EF;border-radius:7px;
   padding:2px 9px;margin-top:0.06in}
 .gov-alarm .ic{flex:none;color:#B3362B}
@@ -886,7 +1008,7 @@ CSS = r"""
 .gov-5rh span{display:block;font-size:7.4pt;line-height:1.25;color:#4A555C;margin-top:1px}
 .gov-5rh em{font-style:normal;font-weight:700;color:var(--deep)}
 .gov-5rr{display:grid;grid-template-columns:repeat(5,1fr)}
-.gov-5rr>div{position:relative;background:var(--soft);color:var(--deep);padding:4px 14px 4px 18px;min-height:0.42in;
+.gov-5rr>div{position:relative;background:var(--soft);color:var(--deep);padding:3px 14px 3px 18px;min-height:0.42in;
   display:flex;flex-direction:column;justify-content:center;
   clip-path:polygon(0 0,calc(100% - 10px) 0,100% 50%,calc(100% - 10px) 100%,0 100%,10px 50%)}
 .gov-5rr>div:first-child{clip-path:polygon(0 0,calc(100% - 10px) 0,100% 50%,calc(100% - 10px) 100%,0 100%);padding-left:9px}
@@ -894,27 +1016,42 @@ CSS = r"""
 .gov-5rr b{display:flex;align-items:center;gap:4px;font:800 8.2pt Inter,sans-serif;text-transform:uppercase;letter-spacing:.04em}
 .gov-5rr b i{font-style:normal;display:inline-flex;align-items:center;justify-content:center;width:13px;height:13px;
   border-radius:50%;background:var(--c1);color:#fff;font:800 7pt/1 Inter,sans-serif}
-.gov-5rr span{font-size:7pt;line-height:1.2;color:#3B464C}
+.gov-5rr span{font-size:7pt;line-height:1.12;color:#3B464C}
 .gov-5rr em{font-style:normal;font:800 7pt/1.15 Inter,sans-serif;letter-spacing:.04em;color:#B3362B;margin-top:1px}
 .gov-5rr>div.gov-on{background:var(--c1);color:#fff}
 .gov-5rr>div.gov-on b i{background:#fff;color:var(--c1)}
 .gov-5rr>div.gov-on span{color:#E3F1F4}
-/* the Paradex photo is a flat RGB image: blend its white ground into the column tint (this image only) */
-.col .pick img[src$="nd-go-paradex.png"]{mix-blend-mode:multiply;filter:none}
 .gov-5rr>div.gov-on em{color:#fff;background:#F15F3F;border-radius:3px;padding:1px 5px;align-self:flex-start;text-transform:uppercase}
-/* ---- this sheet's pages only (front: the page holding .gov; back: the page holding the .gov-back marker).
-   Every printed word is at least 7 pt (the shared kit sets some back-page labels at 6.2 to 6.8 pt). */
-.sheet.front:has(.gov) .foot,.sheet.front:has(.gov) .foot .code{font-size:7pt}
-.sheet.back:has(.gov-back) .foot .code,.sheet.back:has(.gov-back) .disc{font-size:7pt}
-.sheet.back:has(.gov-back) .col .need i,.sheet.back:has(.gov-back) .col .pick .sz,
-.sheet.back:has(.gov-back) .col .key,.sheet.back:has(.gov-back) .col .key b,
-.sheet.back:has(.gov-back) .col .dose small,.sheet.back:has(.gov-back) .startt{font-size:7pt}
+/* ---- this sheet's back page only (the page holding the .gov-back marker in the lifestyle title).  The shared
+   kit sets all fine print at 7 pt and draws the START HERE badge (.startb) on the column's top edge. */
+/* the Paradex photo is a flat RGB image: blend its white ground into the column tint (this image only) */
+.sheet.back:has(.gov-back) .col .pick img[alt="NutriDyn Paradex bottle"]{mix-blend-mode:multiply;filter:none}
 /* Nutricidin's label lists 12 lines: its column is wider so the full list fits */
 .sheet.back:has(.gov-back) .cols{grid-template-columns:1fr 1.4fr 1.06fr 1fr .96fr!important}
-/* the check list gets half the row (four cautions); the bedtime box holds one product */
+/* rows line up across the five columns.  Every header keeps a top band for the START HERE badge, so the badge
+   never touches the first column's title, and all five titles sit at the same height (each needsub is one
+   line); every name is one line ("S. boulardii", with UltraBiotic on the size line) and every column's two
+   bullets take four lines, so the bullets and the "In each serving" lines start level in all five. */
+.sheet.back:has(.gov-back) .col .need{padding-top:13px}
+/* the check list gets half the row; the bedtime box holds one product */
 .sheet.back:has(.gov-back) .duo{grid-template-columns:1fr 1fr}
 .sheet.back:has(.gov-back) .rhythm{grid-template-columns:1.2fr 1.2fr .6fr}
 .sheet.back:has(.gov-back) .life .disc2{width:0.76in;height:0.76in}
+/* the two safety panels need the room: slightly tighter gaps between the back page's blocks */
+.sheet.back:has(.gov-back) .band{padding-bottom:0.14in}
+.sheet.back:has(.gov-back) .ns-title{margin-top:0.1in}
+.sheet.back:has(.gov-back) .cols{margin-top:0.06in}
+.sheet.back:has(.gov-back) .duo{margin-top:0.08in}
+.sheet.back:has(.gov-back) .notes{margin-top:0.08in}
+/* The kit's plan line ends "start with the Start here pick, then add one product a week", which would stretch
+   a Remove step with a set length (ND584: 10 days) to five weeks.  This sheet's line keeps the kit's count and
+   asks who to start with instead, in each edition's words (.gov-edp / .gov-edh mark the edition). */
+.sheet.back:has(.gov-back) .total:has(> b + b){font-size:0}
+.sheet.back:has(.gov-back) .total:has(> b + b) > b:first-of-type{font-size:7pt}
+.sheet.back:has(.gov-back) .total:has(> b + b) > b + b{display:none}
+.sheet.back:has(.gov-back) .total:has(> b + b)::before{content:"The full plan is ";font-size:7pt}
+.sheet.back:has(.gov-edp) .total:has(> b + b)::after{content:". Ask your provider which to start first.";font-size:7pt}
+.sheet.back:has(.gov-edh) .total:has(> b + b)::after{content:". Ask your pharmacist which to start first.";font-size:7pt}
 """
 
 
@@ -923,11 +1060,12 @@ SHEET = {
     "slug": SLUG, "code": "ND-GI-104", "order": 11, "theme": "gut", "series": "Gut Health Series",
     "title": "Gut Overgrowth", "sub": "Yeast, parasites and SIBO",
     # [SENDER16] trillions of bacteria, almost all in the colon.  [ACG20] [MMC12] defences: stomach acid, the
-    # fasting "housekeeper" waves, immunity.  [CANDIDA20] Candida is a normal resident.  [CDC-GIA] parasites.
-    # The test sentence lives in the "Three kinds" header just below.
+    # fasting "housekeeper" waves, immunity.  [NAC17] a healthy upper small bowel holds up to about 10^3 CFU/mL and
+    # the ileum more [ACG20], so "few", never "free of bacteria".  [CANDIDA20] Candida is a normal resident.
+    # [CDC-GIA] parasites.  The test sentence lives in the "Three kinds" header just below.
     "intro": ("Trillions of microbes live in your gut, almost all of them in the <b>colon</b> (large intestine). "
-              "Stomach acid, the gut&rsquo;s sweeping waves and your immune system keep the <b>small intestine</b> nearly "
-              "free of bacteria and keep yeast and parasites in check. When those defenses slip, bacteria crowd the "
+              "Stomach acid, the gut&rsquo;s sweeping waves and your immune system keep bacteria in the "
+              "<b>small intestine</b> few, and yeast and parasites in check. When those defenses slip, bacteria crowd the "
               "small intestine (<b>SIBO</b>), <b>Candida</b> yeast multiplies, or a <b>parasite</b> moves in."),
     "front": front,
     "css": CSS,
@@ -949,26 +1087,29 @@ SHEET = {
             # [SU18] PPIs raise SIBO risk; stopping is a prescriber decision
             ("rx", "Review acid blockers", "They lower stomach acid, a key defense. Never stop one without your prescriber."),
         ],
-        # Products: NutriDyn's own Remove-step picks.  GI-MAP protocol REMOVE line (Asher, Gmail 194b7cdf22b9133b,
+        # Products: NutriDyn's own Remove-step picks.  Asher's GI-MAP protocol, REMOVE line (his email of
         # 2025-01-30): "Nutricidin 1 softgel 3x daily away from probiotics; Spectrum BR 2 tabs 3x; ParaCleanse/Paradex
-        # 1 cap 3x".  ND584 Remove = Spectrum BR (+ Spectrum AR, not in the product DB).  NutriDyn's 5R product grid
-        # (Drive 1mbYXJNRcry81g...): Berberine Anti-microbial = Spectrum BR, Biofilm Aromatic Aid = NutriCidin,
-        # Parasite Botanical = Paradex, BioToxin Binder = Binder Pro; "Sac B Anti-candida Probiotic" for Candida.
-        # NutriDyn GLC 2023 5R talk: binders GI Defend, Binder Pro.  Facts and sources: products.d/gut-overgrowth.json.
+        # 1 cap 3x".  ND584 Remove = Spectrum BR (+ Spectrum AR, not in the product DB).  NutriDyn's 5R product grid:
+        # Berberine Anti-microbial = Spectrum BR, Biofilm Aromatic Aid = NutriCidin, Parasite Botanical = Paradex,
+        # BioToxin Binder = Binder Pro; "Sac B Anti-candida Probiotic" for Candida.  NutriDyn GLC 2023 5R talk:
+        # binders GI Defend, Binder Pro.  Facts and sources: products.d/gut-overgrowth.json.
         # Timing: the herbs go with meals; S. boulardii, a live yeast, sits between meals, 2 hours from the herbs
-        # (Asher's rule: probiotics 2 hours away from antimicrobials); Binder Pro is alone at bedtime, apart from
-        # every other pill, so it cannot carry the probiotic or a medicine out with the stool.
+        # (Asher's rule from his case notes: probiotics 2 hours away from antimicrobials); Binder Pro is alone at
+        # bedtime, 2 hours from every other pill, so it cannot carry the probiotic or a medicine out with the stool.
+        # Claim bullets start with their verb, so the kit ends each one with the diamond tied to the FDA line.
         "cols": [
+            # ND505 Rev. 8/24, the sell sheet's own claim: "Promote a healthy gastrointestinal tract"
             {"p": "go_spectrum_br", "need": "Balance the flora", "needsub": "berberine, Oregon grape",
              "start": True, "dose": "dose_from_db",
-             "bullets": ["Supports balanced gut bacteria and yeast",
+             "bullets": ["Promotes a healthy gastrointestinal tract",
                          "Step 1 of NutriDyn&rsquo;s 5R gut plan"]},
             # ND949 Rev. 2/25: ginger plus eight oils; serratiopeptidase and calcium EDTA "support healthy biofilms"
             {"p": "go_nutricidin", "need": "Plant oils + enzyme", "needsub": "oregano, thyme, clove and more",
              "dose": "dose_from_db",
-             "bullets": ["Eight plant oils and ginger support balanced gut flora",
-                         "An enzyme and EDTA (a mineral binder) support healthy biofilms"]},
-            {"p": "go_paradex", "need": "Herbal cleanse", "needsub": "black walnut, sweet wormwood",
+             "bullets": ["Supports balanced gut flora with eight plant oils and ginger",
+                         "Supports healthy biofilms with an enzyme and a mineral binder"]},
+            # "wormwood", the catalog's word: the species is not confirmed (see products.d src)
+            {"p": "go_paradex", "need": "Herbal cleanse", "needsub": "black walnut, wormwood",
              "dose": "dose_from_db",
              "bullets": ["Supports a healthy intestinal environment", "Five traditional cleanse herbs"]},
             # ND170 Rev. 8/25: one capsule twice daily
@@ -976,38 +1117,53 @@ SHEET = {
              "dose": "dose_from_db",
              "bullets": ["Supports a balanced gut microbiome",
                          "A yeast, so antibiotics do not wipe it out"]},
+            # the header says "Bind and carry out"; a binder taken with other pills can carry them out too, so it
+            # sits 2 hours from medicines and other pills (both bullets fit two lines in this narrow column)
             {"p": "go_binder_pro", "need": "Bind and carry out", "needsub": "apple pectin, chlorella",
              "dose": "dose_from_db",
-             "bullets": ["Binds unwanted compounds so they leave with the stool",
-                         "Take apart from all medicines and pills"]},
+             "bullets": ["Helps bind unwanted compounds",
+                         "Take 2 hours from medicines and pills"]},
         ],
         "rx": {
-            # Both editions go to patients: the same four cautions, worded for who checks them.
+            # Both editions go to patients, worded for who checks them.  No disease words next to the products
+            # (the "test first" line moved off this page: the front says testing shows which overgrowth it is).
+            # The empty .gov-edp / .gov-edh spans mark the edition for the plan line's CSS (see CSS).
             "practitioner": [
-                # [NAC17] [ACG20] testing; plan length (ND584, Chedid 2014).  No disease words next to the products.
-                "<b>Test first.</b> A breath or stool test shows what is overgrown, so {who} can choose your plan and "
-                "how long you stay on it.",
-                # ND505 (Spectrum BR) "Do not use if pregnant or nursing"; Paradex retail label: not in pregnancy or
-                # nursing; ND949, ND170, ND1141: "consult your healthcare practitioner"
-                "<b>Pregnant or nursing?</b> Do not take Spectrum BR or Paradex. Ask {who} before the others.",
-                # Guo 2012 (berberine slows CYP3A4/2D6/2C9; ND505 names cyclosporine); Yin 2008 (adds to glucose
-                # lowering); garlic, pau d'arco bleeding; chlorella vitamin K vs warfarin; all five labels: "taking
+                # Guo 2012 (berberine slows CYP3A4/2D6/2C9; ND505 names cyclosporine); Yin 2008 (berberine lowers
+                # blood sugar, so it adds to diabetes drugs: the risk is low blood sugar); all labels: "taking
                 # medication ... consult"
-                "<b>On any medicine?</b> Berberine changes how many drugs are cleared (cyclosporine, diabetes drugs), "
-                "and garlic, pau d&rsquo;arco and chlorella affect blood thinners. Bring your list to {who}.",
+                f'<span class="{U}-edp"></span><b>On any medicine?</b> Berberine changes how the liver clears many '
+                "medicines, such as cyclosporine, and can push blood sugar too low with diabetes drugs. Bring your "
+                "list to {who}.",
+                # Heck 2000 (ginger, clove, garlic); Hosseini 2024, Jadhav 2020 (serratiopeptidase breaks down fibrin);
+                # Preusch 1989 (pau d'arco's lapachol); chlorella vitamin K vs warfarin (MedlinePlus)
+                "<b>On a blood thinner?</b> Nutricidin, Paradex and Binder Pro can affect it. Ask {who} first.",
+                # ND505 (Spectrum BR) "Do not use if pregnant or nursing"; Paradex retail label: not in pregnancy or
+                # nursing; ND949, ND170, ND1141: "consult"; all doses are adult label doses; Chan 1993 (berberine
+                # and newborns)
+                "<b>Pregnant or nursing?</b> Do not take Spectrum BR or Paradex; ask {who} about the rest. "
+                "<b>For a child?</b> These are adult doses: ask first.",
                 # Enache-Angoulvant 2005 (central lines, weak immunity); Paradex: black walnut, "may contain traces
                 # of tree nuts" (retail listing)
                 "<b>Weak immunity, a central IV line or a tree-nut allergy?</b> Ask before S. boulardii or Paradex.",
             ],
             "pharmacy": [
-                # Guo 2012 PMID 21870106; ND505 cyclosporine caution; Yin 2008 PMID 18442638
-                "<b>Berberine</b> (Spectrum BR) slows the liver enzymes that clear many medicines (CYP3A4, 2D6, 2C9), "
-                "such as cyclosporine, and adds to diabetes drugs. Show {who} your full medicine list.",
-                # garlic and pau d'arco bleeding cautions; chlorella vitamin K and warfarin (MedlinePlus)
-                "<b>Blood thinners:</b> garlic and pau d&rsquo;arco may add to bleeding, and the vitamin K in chlorella "
-                "(Binder Pro) can weaken warfarin.",
-                # ND505 + Paradex retail label: not in pregnancy or nursing; the other three labels: consult
-                "<b>Pregnant or nursing?</b> Do not take Spectrum BR or Paradex. Ask {who} before the others.",
+                # Guo 2012 PMID 21870106; ND505 cyclosporine caution; Yin 2008 PMID 18442638.  Licorice root is in
+                # the ND505 blend (not DGL): Deutch 2019 PMID 31615045, Kwon 2020 PMID 31874059 (blood pressure up,
+                # potassium down), hence diuretics, digoxin and steroids
+                f'<span class="{U}-edh"></span><b>Spectrum BR:</b> berberine slows drug-clearing enzymes (CYP3A4, '
+                "2D6, 2C9; cyclosporine) and adds to diabetes drugs; its licorice can raise blood pressure and lower "
+                "potassium (diuretics, digoxin, steroids).",
+                # Heck 2000 PMID 10902065 (ginger, clove, garlic); Hosseini 2024 PMID 38502196 and Jadhav 2020 PMID
+                # 33134103 (serratiopeptidase); Preusch 1989 PMID 2916837 (pau d'arco); chlorella vitamin K and
+                # warfarin (MedlinePlus)
+                "<b>Blood thinners:</b> ginger, clove oil and the enzyme serratiopeptidase (Nutricidin) and garlic and "
+                "pau d&rsquo;arco (Paradex) may add to bleeding; chlorella&rsquo;s vitamin K (Binder Pro) can weaken "
+                "warfarin.",
+                # ND505 + Paradex retail label: not in pregnancy or nursing; the other three labels: consult; adult
+                # label doses; Chan 1993 PMID 8513024 (berberine displaces bilirubin in newborns)
+                "<b>Pregnant or nursing?</b> Do not take Spectrum BR or Paradex; ask {who} about the rest. "
+                "<b>For a child?</b> These are adult doses: ask first.",
                 # Enache-Angoulvant 2005 PMID 16267727 (catheters, immune suppression); Kelesidis 2012 (antifungals
                 # act on yeast, so they may inactivate S. boulardii); Paradex tree-nut trace warning (retail listing)
                 "<b>S. boulardii</b> is a live yeast: skip it with a central IV line or weak immunity; antifungals "

@@ -586,10 +586,11 @@ def _spine():
     for k in range(2, 7):
         o.append(_local(k, BODY_D, f'fill="{BONE}" stroke="{BONE_EDGE}" stroke-width=".6" stroke-linejoin="round"'))
     t1.append(_local(7, BODY_D, f'fill="{BONE}" stroke="{BONE_EDGE}" stroke-width=".6" stroke-linejoin="round"'))
-    # C1 front arch: a small flat oval tucked against the front of the dens (in C1's frame the dens front
-    # runs at about u = 1.0 to 1.1 near v = 0), not a round bubble standing clear of it
-    o.append(f'<ellipse transform="translate({c0[0]:.2f},{c0[1]:.2f}) rotate({_rot(t0):.2f})" cx="2.25" cy=".1" rx="1.15" '
-             f'ry="1.3" {BONE_ST}/>')
+    # C1 front arch, as a midline view shows it: a slim upright oval (about 6 x 9 mm) pressed against the
+    # front of the dens.  In C1's frame the dens front runs from about (1.06, 0.65) down to (0.73, 2.93), so
+    # the oval is tilted 8 degrees to lie along it, not a round bubble perched on top of the column.
+    o.append(f'<ellipse transform="translate({c0[0]:.2f},{c0[1]:.2f}) rotate({_rot(t0):.2f}) translate(1.95,.95) rotate(8)" '
+             f'rx=".95" ry="1.6" {BONE_ST}/>')
     o.append('<g mask="url(#ih-t1m)">' + "".join(t1) + "</g>")
     return "".join(o)
 
@@ -951,9 +952,10 @@ CSS = r"""
 .ihl-cc li b{color:#1F2A2E}
 .ihl-nw{white-space:nowrap}
 /* back page: scoped with :has() to the marker span in this sheet's lifestyle title (the 7 pt fine print and
-   the Start here badge come from the shared kit).  Equal-height need headers; the "In each serving" rows
-   start on one line. */
-.sheet.back:has(.ihl-back) .col .need{height:0.53in;min-height:0.53in}
+   the Start here badge come from the shared kit).  Equal-height need headers, with 0.02in more room on top
+   so the start column's title clears the badge that straddles the column edge (same inner height, so every
+   title stays on one line across the five columns); the "In each serving" rows start on one line. */
+.sheet.back:has(.ihl-back) .col .need{height:0.55in;min-height:0.55in;padding-top:0.09in}
 .sheet.back:has(.ihl-back) .col .what ul{min-height:4.2em}
 .sheet.back:has(.ihl-back) .slot li em{white-space:nowrap}
 /* back layout: the same blocks as every sheet, re-placed with a grid so the six-line check panel can run
@@ -965,7 +967,7 @@ CSS = r"""
 .sheet.back:has(.ihl-back) .ns-title{grid-row:2}
 .sheet.back:has(.ihl-back) .cols{grid-row:3}
 .sheet.back:has(.ihl-back) .duo{display:contents}
-.sheet.back:has(.ihl-back) .duo>.panel,.sheet.back:has(.ihl-back) .notes{margin-top:0.05in}
+.sheet.back:has(.ihl-back) .duo>.panel,.sheet.back:has(.ihl-back) .notes{margin-top:0.08in}
 .sheet.back:has(.ihl-back) .ns-title{margin-top:0.1in}
 .sheet.back:has(.ihl-back) .duo>.panel.rx{grid-row:4;grid-column:1/-1}
 .sheet.back:has(.ihl-back) .duo>.panel:not(.rx){grid-row:5;grid-column:1}

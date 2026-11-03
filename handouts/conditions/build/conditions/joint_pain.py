@@ -343,7 +343,7 @@ TIB_ART_R = (N_TIB - 2 - TIB_ART[1], N_TIB - 2 - TIB_ART[0])
 # lining comes in to meet the outer rim of its meniscus at mid-height (the rim is held by the joint capsule), with
 # the fluid pocket above it; on the worn side the pushed-out meniscus presses into the swollen lining.
 SYN_L = [(CX - 103, 159), (CX - 114, 164), (CX - 123, 175), (CX - 128, 191), (CX - 128.4, 205), (CX - 123.6, 219),
-         (CX - 124, 229), (CX - 121.5, 239), (CX - 116.3, 247.5)]
+         (CX - 122.8, 228.5), (CX - 121.6, 238), (CX - 116.3, 247.5)]
 SYN_R = [(CX + 103, 159), (CX + 119, 162), (CX + 133, 173), (CX + 142, 190), (CX + 144.5, 209), (CX + 142.5, 224),
          (CX + 138, 234), (CX + 132.5, 246), (CX + 122, 255.5), (CX + 112, 258.5)]
 MEN_W = (CX + 133, CX + 95)    # worn meniscus, outer and inner edge: pushed out past the plateau rim to the lining
@@ -1067,8 +1067,8 @@ def art_knee():
     rx, ry = tf(CX + LENS_U[1], _y_at(g["fem_r"], CX + LENS_U[1], max) + 1.6)
     o.append(inset(INS_L, False))
     o.append(inset(INS_W, True))
-    o.append(_connector((lx, ly), LENS_R, INS_L, 52, (lx - 34, 116), GREEN_DK))
-    o.append(_connector((rx, ry), LENS_R, INS_W, 56, (rx + 36, 116), RED_DK))
+    o.append(_connector((lx, ly), LENS_R, INS_L, 66, (lx - 32, 104), GREEN_DK))
+    o.append(_connector((rx, ry), LENS_R, INS_W, 80, (rx + 30, 100), RED_DK))   # stays left of the lining's top end
     o.append(_lens(lx, ly, GREEN_DK, LENS_R))
     o.append(_lens(rx, ry, RED_DK, LENS_R))
 
@@ -1132,7 +1132,7 @@ def art_knee():
 FEEL = [  # [NICE22] activity-related pain, short morning stiffness; [HUNTER19] crepitus, bony enlargement,
     # restricted motion, mild swelling, instability.  [KHAN04] hip OA pain sits mostly in the groin and buttock.
     # The 30-minute number lives once, in ALERT, where it is the threshold to act on.
-    "Pain with use (stairs, kneeling, jars) that eases with rest",
+    "Pain with use (stairs, kneeling, opening jars) that eases with rest",
     "Brief stiffness on waking or after sitting still",
     "Creaking, grinding or clicking as it bends",
     "Some swelling, or a joint that feels unsteady",
@@ -1142,7 +1142,9 @@ FEEL = [  # [NICE22] activity-related pain, short morning stiffness; [HUNTER19] 
 ALERT = [  # [NICE22] QS87 atypical features: hot swollen joint, prolonged stiffness, trauma, rapid worsening, deformity.
     # "suddenly" and "fast" keep these apart from the slow, typical signs in FEEL (unsteady joint, finger knobs)
     "A <b>hot, red, very swollen</b> joint, above all with a fever: <b>get care the same day</b>",
-    "Morning stiffness <b>over 30 minutes</b>, or many sore joints",
+    # several joints swollen at once points to inflammatory arthritis, not OA; ordinary hand OA can make many
+    # finger joints sore, so the line is about swelling, not soreness
+    "Morning stiffness <b>over 30 minutes</b>, or several swollen joints at once",
     "It began with a <b>fall or injury</b>, or is worsening fast",
     "It <b>suddenly locks or gives way</b>, or <b>changes shape fast</b>",
 ]
@@ -1168,30 +1170,40 @@ RISKS = [  # (icon, label, custom)
 # back page: a balance pose for "Tai chi or yoga" (the kit has no such figure; a namespaced key cannot collide)
 ICONS.setdefault("jp_taichi", '<circle cx="32" cy="9" r="5"/><path d="M32 15.5V38"/><path d="M32 22 19.5 12.5M32 22l12.5-9.5"/>'
                                '<path d="M32 38v19.5"/><path d="M32 38l11 6.6-9.6 5.4"/><path d="M24 58h16"/>')
+# and a heat pack with warmth rising off it for "Heat and support" (the kit's thermometer reads as fever)
+ICONS.setdefault("jp_heatpack", '<rect x="8" y="32" width="48" height="23" rx="7"/><path d="M24 32v23M40 32v23"/>'
+                                 '<path d="M20 25.5c-3.6-3.6 3.6-7 0-11.8M32 25.5c-3.6-3.6 3.6-7 0-11.8M44 25.5c-3.6-3.6 3.6-7 0-11.8"/>')
 
 ARROW = ('<svg class="jpn-arr" viewBox="0 0 24 12" role="img" aria-label="becomes"><path d="M1.5 6H20.5M14.6 1.6 '
          '20.8 6l-6.2 4.4" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" '
          'stroke-linejoin="round"/></svg>')
 
-# where OA strikes: a standing figure, side view, red dots on the joints OA hits most.  [WHO23] knee, then hip and
-# hand; [GBD21] knee the most common site; [KALICH08] spine facet-joint OA in about 60% of adults (CT, Framingham);
-# [RODDY15] symptomatic big-toe (1st MTP) OA in 7.8% of adults 50+, the most common foot site.
-WHERE_DOTS = [(17.7, 16.4), (15.1, 32.8), (25.9, 41.6), (19.6, 43.8), (22.3, 57.2), (32.6, 76.0)]  # neck, low back,
-# hand, hip, knee, big toe
+# where OA strikes: a standing figure seen from the front, one arm held out from the body, with a faint dashed spine
+# and red dots on the joints OA hits most.  [WHO23] knee, then hip and hand; [GBD21] knee the most common site;
+# [KALICH08] spine facet-joint OA in about 60% of adults (CT, Framingham); [RODDY15] symptomatic big-toe (1st MTP) OA
+# in 7.8% of adults 50+, the most common foot site.  Drawn 0.76in tall (84 units), so 1 unit = 0.23 mm: every pair of
+# dots is at least 8.9 units (2.0 mm) apart, centre to centre.
+WHERE_DOTS = [(19, 14.8), (19, 35.2), (38.6, 38.8), (24.6, 42.2), (14.55, 59.4), (22.3, 78.4)]   # neck, low back,
+# the held-out hand, hip, knee, big toe (the inner front of the foot).  Proportions follow a standing adult: shoulders
+# about 82%, waist 60%, hip joint 52%, crotch 47% and knee 28% of the height up from the soles.
+WHERE_BODY = [   # (x, y, tension): down the figure's right side (viewer's left), across both feet, up the other side
+    (17.4, 12.4, 0), (17.4, 15.2, .5), (13.2, 16.7), (10.0, 18.2), (8.4, 20.9), (7.6, 27), (7.1, 35), (6.7, 43.4),
+    (6.6, 46.6), (8.3, 48.7), (9.9, 47.2), (10.1, 43.7), (10.6, 34.5), (11.4, 25.4, 0), (12.4, 29.8), (12.9, 34),
+    (11.9, 38.4), (11.6, 42), (12.2, 50), (12.7, 59.4), (12.9, 66), (13.4, 73.6), (11.8, 77.6), (11.9, 79.8, .4),
+    (17.0, 79.8, .4), (16.9, 76.4), (16.5, 73.4), (16.6, 66), (16.4, 59.4), (17.6, 50.4), (19, 45, .3), (20.4, 50.4),
+    (21.6, 59.4), (21.4, 66), (21.5, 73.4), (21.1, 76.4), (21.0, 79.8, .4), (26.1, 79.8, .4), (26.2, 77.6), (24.6, 73.6),
+    (25.1, 66), (25.3, 59.4), (25.8, 50), (26.4, 42), (26.1, 38.4), (25.1, 34), (25.6, 29.8), (26.6, 25.4, 0),
+    (32.2, 30.6), (36.0, 36.6), (36.6, 39.6), (38.6, 41.5), (40.7, 40.0), (40.7, 37.0), (38.6, 34.8), (33.6, 26.0),
+    (30.0, 19.7), (28.0, 18.2), (24.8, 16.7), (20.6, 15.2, .5), (20.6, 12.4, 0)]
 
 
 def _where_fig():
-    body = ("M18 14.6C15.2 21.4 14.2 29.6 15.4 37.4 15.6 39.4 14.6 41 15.4 42.8L18.2 57.2 17.2 63.2C17.4 66 18.6 68.4 "
-            "19.3 71L19 77.4H33.9C34.6 75.6 33 74.6 30.6 74.2L26 72.2 25.4 58.6 26.6 56C27.6 52.8 27.8 48.4 27.6 46"
-            "L26.8 40.8C27.8 35 28 27 27.6 21.4 27 17.8 25.6 15.8 23.8 15Z")
-    arm = "M21.4 18.6C23.4 25.6 24.6 33.2 25.8 40.8"
     dots = "".join(f'<circle cx="{x}" cy="{y}" r="2.6" fill="{RED}" stroke="#FFFFFF" stroke-width="1.1"/>' for x, y in WHERE_DOTS)
-    return ('<svg class="jpn-fig" viewBox="0 0 40 80" role="img" aria-label="A standing figure, side view, with red dots '
-            'on the neck, low back, hand, hip, knee and big toe">'
-            f'<path d="{body}" fill="#B7CFE3" stroke="#577FA2" stroke-width="1" stroke-linejoin="round"/>'
-            '<circle cx="21.2" cy="8.4" r="6.4" fill="#B7CFE3" stroke="#577FA2" stroke-width="1"/>'
-            f'<path d="{arm}" fill="none" stroke="#577FA2" stroke-width="5.8" stroke-linecap="round"/>'
-            f'<path d="{arm}" fill="none" stroke="#D3E3F0" stroke-width="3.8" stroke-linecap="round"/>'
+    return ('<svg class="jpn-fig" viewBox="4.5 0 39 84" role="img" aria-label="A standing figure seen from the front, '
+            'one arm held out, with red dots on the neck, low back, hand, hip, knee and big toe">'
+            f'<path d="{path_d(WHERE_BODY)}" fill="#B7CFE3" stroke="#577FA2" stroke-width="1" stroke-linejoin="round"/>'
+            '<circle cx="19" cy="7.6" r="5.4" fill="#B7CFE3" stroke="#577FA2" stroke-width="1"/>'
+            '<path d="M19 16.6V43" stroke="#577FA2" stroke-width="1" stroke-dasharray="1.3 1.1" opacity=".55"/>'
             f'{dots}</svg>')
 
 
@@ -1244,10 +1256,10 @@ CSS = r"""
 .jpn .jpn-dots{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr;gap:1px 0}
 .jpn .jpn-dots li{position:relative;padding-left:12px;font-size:8.2pt;line-height:1.27;color:#2B3236}
 .jpn .jpn-dots li::before{content:"";position:absolute;left:0;top:4px;width:6px;height:6px;border-radius:50%;background:var(--c2)}
-.jpn .jpn-alert{border:1.5px solid #C0392B;background:#FDF1EF;border-radius:8px;padding:4px 10px 5px}
+.jpn .jpn-alert{border:1.5px solid #C0392B;background:#FDF1EF;border-radius:8px;padding:3px 10px 3px}
 .jpn .jpn-ah{font:800 7.6pt Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#A5281E;margin:0 0 2px}
 .jpn .jpn-alert ul{margin:0;padding:0 0 0 12px}
-.jpn .jpn-alert li{font-size:8pt;line-height:1.27;color:#2B3236;margin:0 0 1px}
+.jpn .jpn-alert li{font-size:8pt;line-height:1.23;color:#2B3236;margin:0 0 1px}
 .jpn .jpn-alert li::marker{color:#C0392B}
 .jpn .jpn-alert b{color:#8E2219}
 .jpn .jpn-risk{display:grid;grid-template-columns:repeat(7,1fr);gap:0 0.05in}
@@ -1263,7 +1275,8 @@ CSS = r"""
 .jpn .jpn-where{flex-direction:row;align-items:center;gap:6px}
 .jpn .jpn-where>div{display:flex;flex-direction:column;gap:1px}
 .jpn .jpn-where>div>b{font:800 8.4pt Inter,sans-serif;color:var(--deep)}
-.jpn .jpn-fig{flex:none;height:0.64in;width:0.32in}
+.jpn .jpn-fig{flex:none;height:0.76in;width:0.353in}
+.jpn .jpn-n.jpn-where{padding:2px 6px 2px;gap:5px}
 .jpn .jpn-n span{font-size:7.8pt;line-height:1.26;color:#2B3236}
 .jpn .jpn-n span b{color:var(--deep)}
 .jpn .jpn-me>b{font:800 8.4pt Inter,sans-serif;color:var(--deep)}
@@ -1275,84 +1288,104 @@ CSS = r"""
 """
 
 BACK_CSS = r"""
-/* ---- this sheet's footers and back page.  The back page has no sheet class, so it is reached through the empty
-   .jpn-bk marker in the lifestyle title.  The shared kit (kit.py .foot/.disc/.col, build.py .startt) still sets
-   these below 7 pt for every sheet; the rules below lift them to 7 pt on this sheet only. ---- */
-.sheet.front:has(.jpn) .foot,.sheet.front:has(.jpn) .foot .code,
-.sheet.back:has(.jpn-bk) .foot,.sheet.back:has(.jpn-bk) .foot .code{font-size:7pt}
-.sheet.back:has(.jpn-bk) .disc{font-size:7pt;line-height:1.28;max-width:none}
-.sheet.back:has(.jpn-bk) .col .need i,.sheet.back:has(.jpn-bk) .col .pick .sz,.sheet.back:has(.jpn-bk) .col .key,
-.sheet.back:has(.jpn-bk) .col .key b,.sheet.back:has(.jpn-bk) .col .dose small{font-size:7pt}
-/* START HERE: a ribbon under the need band, above the photo, so it never covers the bottle cap */
-.sheet.back:has(.jpn-bk) .startt{font-size:7pt;top:0.4in}
+/* ---- this sheet's back page, reached through the empty .jpn-bk marker in the lifestyle title (the back page has
+   no sheet class).  Fine print, the START HERE badge and the diamonds all come from the kit; these rules only make
+   room for the six-point check list. ---- */
+/* all five need bands stay one height (the kit's 0.5in) with column 2's two-line subtitle, so the photos line up */
+.sheet.back:has(.jpn-bk) .col .need{padding:0.06in 0.06in 0.048in}
+.sheet.back:has(.jpn-bk) .life .disc2{width:0.74in;height:0.74in}
+.sheet.back:has(.jpn-bk) .life .disc2 svg{width:0.46in!important;height:0.46in!important}
+.sheet.back:has(.jpn-bk) .band{padding-bottom:0.13in}
+.sheet.back:has(.jpn-bk) .ns-title{margin-top:0.11in}
 """
 
 SHEET = {
     "slug": SLUG, "code": "ND-MS-602", "order": 13, "theme": "msk", "series": "Pain and Movement Series",
     "title": "Joint Pain and Osteoarthritis", "sub": "Knees, hips and hands",
-    # [HUNTER19] most common arthritis, a whole-joint disease (cartilage, bone, lining).
-    # [GBD21] 595 million people (7.6% of the world) had OA in 2020; [WHO23] knee most common, then hip and hand.
+    # [HUNTER19] most common arthritis, a whole-joint disease (cartilage, bone, lining); spurs (osteophytes) grow at
+    # the joint margins while the bone under the cartilage thickens.
+    # [GBD21] 595 million people (7.6% of the world) had OA in 2020, up 132% since 1990, and cases are projected to
+    # keep rising to 2050 (knee +75%, hip +79%); [WHO23] knee most common, then hip and hand.
     "intro": ("Osteoarthritis (OA), the most common arthritis, changes the whole joint: the smooth "
-              "<b>cartilage</b> on the ends of the bones thins and cracks, the bone underneath grows <b>spurs</b>, and "
-              "the joint lining can swell. It shows up most in <b>knees, hips and hands</b> and affects about "
-              "<b>595 million people</b> worldwide. Moving more and carrying less weight help most people stay active."),
+              "<b>cartilage</b> on the bone ends thins and cracks, bone <b>spurs</b> grow at the joint's edges, and the "
+              "lining can swell. It hits <b>knees, hips and hands</b> most. About <b>595 million people</b> had it in "
+              "2020, and the number is rising. Moving more and carrying less weight help most people stay active."),
     "front": front,
     "css": CSS + BACK_CSS,
     "back": {
         "life_title": 'Lifestyle Recommendations<span class="jpn-bk"></span>',
         "style": "circle",
         "life": [
-            ("walk", "Move most days", "Moving feeds cartilage: walk, cycle or swim 150 minutes a week."),  # [FOX09] [CDC-PA] [ACR19]
-            ("dumbbell", "Build strength", "Thigh and hip work 2 days a week takes load off the joint."),            # [CDC-PA] [OIESTAD15]
-            ("scale", "Lighten the load", "Each pound lost takes about 4 pounds off your knees with every step."),   # [MESSIER05]
-            ("jp_taichi", "Tai chi or yoga", "Slow, steady moves ease stiffness and build balance."),                  # [ACR19]
-            ("fish", "Calming foods", "Mediterranean style: fish, olive oil, beans, nuts, colorful plants."),
-            ("thermo", "Heat and support", "Warmth for stiffness, ice after a flare, a cane in the other hand."),     # [ACR19]
+            ("walk", "Move most days", "Moving feeds cartilage: walk, cycle or swim 150&nbsp;minutes a week."),  # [FOX09] [CDC-PA] [ACR19]
+            ("dumbbell", "Build strength", "Thigh and hip work 2&nbsp;days a week takes load off the joint."),            # [CDC-PA] [OIESTAD15]
+            ("scale", "Lighten the load", "Each pound lost takes about 4&nbsp;pounds off your knees with every step."),   # [MESSIER05]
+            ("jp_taichi", "Tai chi or yoga", "Slow, steady moves ease stiffness and build balance."),                       # [ACR19]
+            ("fish", "Food for joints", "Mediterranean style: fish, olive oil, beans, nuts, colorful plants."),
+            # [ACR19] cane (strong, knee and hip), heat or cold (conditional); "on your good side" = in the hand
+            # opposite the sore side, said in plain words so the line stays three lines long
+            ("jp_heatpack", "Heat and support", "Heat for stiffness, ice after a flare, a cane on your good side."),
         ],
         # Picks: boswellia and curcumin lead the evidence [ZHANG25] [BIDESHKI24]; omega-3 did not help knee-OA symptoms
         # [MATHIEU22], so the fifth column is Curcumin 400X, not fish oil (topics brief: "Omega Pure ... or Curcumin
-        # 400X").  Chondro-Relief's glucosamine 500 mg / chondroitin 400 mg are printed as label facts only, with no
-        # dose claim (they are a third of the 1,500 / 1,200 mg comparator in [LUGO16]).
+        # 400X").  It is framed as the willow-free choice INSTEAD of Inflam-Eze Plus (for an aspirin allergy, see the
+        # check list), never on top of it, so the plan does not stack two enhanced-absorption curcumins [TGA23] and
+        # its "sched": [] keeps it out of the daily rhythm.  Chondro-Relief's glucosamine 500 mg / chondroitin 400 mg
+        # are printed as label facts only, with no dose claim (they are a third of the 1,500 / 1,200 mg comparator in
+        # [LUGO16]); its subtitle leads with MSM and green-lipped mussel, one of the two supplements with a clinically
+        # important medium-term effect in Liu X et al. Br J Sports Med 2018;52:167-75 (PMID 29018060).
         "cols": [
             {"p": "jp_inflam_eze", "need": "Inflammatory balance", "needsub": "ginger, curcumin, boswellia", "start": True,
              "bullets": ["Supports a healthy inflammatory response", "Supports joint comfort and movement"],
              "dose": "dose_from_db"},
-            {"p": "jp_chondro_ic", "need": "Building blocks", "needsub": "glucosamine, chondroitin",
-             "bullets": ["Raw materials for cartilage and joint fluid", "Supports joint structure"],
+            {"p": "jp_chondro_ic", "need": "Building blocks", "needsub": "glucosamine, MSM, green‑lipped mussel",
+             "bullets": ["Raw materials for cartilage and joint fluid", "Supports joint tissues"],
              "dose": "dose_from_db"},
-            # label: UC-II 20 mg per capsule, 1 capsule twice daily = 40 mg a day (the amount used in [LUGO16])
+            # label: "Undenatured Collagen Blend (UC-II) 20 mg" per capsule, 1 capsule twice daily = 40 mg of the
+            # blend a day.  [LUGO16] used 40 mg of UC-II itself; the label does not say the blend is all UC-II, so the
+            # bullet says "blend" and makes no trial-dose claim.
             {"p": "jp_joint_eze", "need": "Joint comfort", "needsub": "UC-II undenatured collagen",
-             "bullets": ["UC-II, 40 mg a day in 2 capsules", "Supports joint comfort and flexibility"],
+             "bullets": ["UC‑II blend, 40&nbsp;mg a day in 2&nbsp;capsules", "Supports joint comfort and flexibility"],
              "dose": "dose_from_db"},
             {"p": "jp_collagen_renew", "need": "Collagen support", "needsub": "collagen peptides",
              "bullets": ["Supports cartilage, tendons and ligaments", "Pair it with a vitamin C food, like an orange"],
              "dose": "dose_from_db"},
-            # label: "Take two softgels daily"; "Liquid-Soluble" is printed on the bottle
-            {"p": "jp_curcumin_400x", "need": "Extra curcumin", "needsub": "liquid-soluble softgels",
-             "bullets": ["Tops up the curcumin in Inflam-Eze Plus", "Supports comfort in hard-working joints"],
-             "dose": "dose_from_db"},
+            # label: "Take two softgels daily" (products DB R268); the single active is BioCurc turmeric extract
+            {"p": "jp_curcumin_400x", "need": "Willow-free option", "needsub": "curcumin on its own",
+             "bullets": ["A curcumin pick without willow bark", "Supports a healthy inflammatory response"],
+             "dose": "2 softgels daily", "dosesub": "instead of Inflam-Eze Plus", "sched": []},
         ],
-        # One list for both editions; {who} reads "your provider" / "your pharmacist".
+        # One list for both editions; {who} reads "your provider" / "your pharmacist".  Every product is named in full
+        # ("Chondro-Relief Intensive Care": NutriDyn also sells Chondro-Relief R150C and Chondro-Relief Plus R155).
+        # A no-break hyphen (U+2011) and &nbsp; keep each product name on one line.
         # 1 [KNUDSEN08] glucosamine raises the INR on warfarin; willow [EMA-SALIX], devil's claw [COMM-E], ginger and
-        #   curcumin carry bleeding / anticoagulant cautions.  2 [EMA-SALIX] willow bark: not with salicylate allergy;
-        #   not with aspirin or other NSAIDs without advice.  3 [COMM-E] devil's claw: not with stomach or duodenal
-        #   ulcers, gallstones only after advice; [EMA-CURCUMA] turmeric: not with gallstones or blocked bile ducts.
-        #   4 green-lipped mussel is a shellfish (label).  5 labels: Joint Eze "Do not use if pregnant or nursing";
-        #   Inflam-Eze Plus and Collagen Renew "consult your healthcare practitioner" if pregnant or nursing.
+        #   curcumin carry bleeding / anticoagulant cautions; [ASA-HERB] pause herbs before surgery (bleeding).
+        #   2 [EMA-SALIX] willow bark: not with salicylate allergy; not with aspirin or other NSAIDs without advice;
+        #   Curcumin 400X has no willow (column 5).  3 [EMA-CURCUMA] turmeric: not with liver disease, gallstones or
+        #   blocked bile ducts; [COMM-E] devil's claw: not with stomach or duodenal ulcers; [TGA23] rare liver injury,
+        #   higher risk with enhanced-absorption curcumin, stop and see a doctor if the skin or eyes turn yellow or the
+        #   urine dark; [MN-UL] Chondro-Relief Intensive Care's manganese clears through the liver.  4 green-lipped
+        #   mussel is a shellfish (label).  5 [CDC-AGS] Collagen Renew is bovine collagen peptides (label).  6 labels:
+        #   Joint Eze "Do not use if pregnant or nursing"; Inflam-Eze Plus and Collagen Renew "consult your healthcare
+        #   practitioner" if pregnant or nursing.
         "rx": [
-            "<b>On a blood thinner?</b> Ask {who} before Inflam-Eze Plus, Curcumin 400X or Chondro-Relief.",
-            "<b>Inflam-Eze Plus has willow bark, a plant cousin of aspirin.</b> Skip it with an aspirin allergy; ask "
-            "{who} before taking it with aspirin, ibuprofen or naproxen.",
-            "<b>Stomach ulcer or gallstones?</b> Ask {who} before Inflam-Eze Plus or Curcumin 400X.",
-            "<b>Shellfish allergy?</b> Skip Chondro-Relief: it has green-lipped mussel.",
-            "<b>Pregnant or nursing?</b> Skip Joint Eze, and ask {who} before the others.",
+            "<b>On a blood thinner, or surgery coming up?</b> Ask {who} before Inflam‑Eze&nbsp;Plus, Curcumin&nbsp;400X "
+            "or Chondro‑Relief Intensive&nbsp;Care: you may need to pause them.",
+            "<b>Inflam‑Eze&nbsp;Plus has willow bark, a cousin of aspirin.</b> Aspirin allergy? Skip it; "
+            "Curcumin&nbsp;400X is willow-free. On aspirin, ibuprofen or naproxen? Ask {who}.",
+            "<b>Liver or gallbladder trouble, or a stomach ulcer?</b> Ask {who} before Inflam‑Eze&nbsp;Plus, "
+            "Curcumin&nbsp;400X or Chondro‑Relief Intensive&nbsp;Care. Yellow skin or eyes, or dark urine? Stop them "
+            "and call your doctor.",
+            "<b>Shellfish allergy?</b> Skip Chondro‑Relief Intensive&nbsp;Care: it has green‑lipped mussel.",
+            "<b>Red-meat (alpha-gal) allergy?</b> Skip Collagen&nbsp;Renew: it is made from beef collagen.",
+            "<b>Pregnant or nursing?</b> Skip Joint&nbsp;Eze; ask {who} about the rest.",
         ],
     },
 }
 
 
 def _slots_used():
-    """Daily-rhythm slots this plan fills (a column's own sched, else its product's sched in products.d)."""
+    """Daily-rhythm slots this plan fills: a column's own sched (an empty list keeps it out of the rhythm, as
+    build.py reads it), else its product's sched in products.d."""
     import json
     f = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "products.d", f"{SLUG}.json")
     try:
@@ -1361,7 +1394,8 @@ def _slots_used():
         return {"am", "pm", "bed"}
     used = set()
     for c in SHEET["back"]["cols"]:
-        for slot, *_ in c.get("sched") or prods.get(c["p"], {}).get("sched", [("bed",)]):
+        sched = c["sched"] if "sched" in c else prods.get(c["p"], {}).get("sched", [("bed",)])
+        for slot, *_ in sched:
             used.add(slot)
     return used
 
@@ -1369,5 +1403,5 @@ def _slots_used():
 if "bed" not in _slots_used():   # no bedtime products: show the two slots in use instead of an empty "nothing" box
     SHEET["css"] += (".sheet.back:has(.jpn-bk) .rhythm{grid-template-columns:1fr 1fr}"
                      ".sheet.back:has(.jpn-bk) .rhythm .slot:nth-child(3){display:none}"
-                     # two slots need less width, so the five-line check panel gets more and stays short
-                     ".sheet.back:has(.jpn-bk) .duo{grid-template-columns:1fr 1.22fr}")
+                     # two slots need less width, so the six-point check panel gets more and stays short
+                     ".sheet.back:has(.jpn-bk) .duo{grid-template-columns:1fr 1.7fr}")

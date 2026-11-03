@@ -5,10 +5,15 @@ here (no legacy sheets.py / art.py imports).  Front, top to bottom:
   intro -> nitric-oxide pathway (4 numbered steps) beside a tight-vs-relaxed artery
   with its KEY -> risk-factor icons -> "reading your numbers" + "measure it right"
   beside the AHA/ACC category table.
-Back: unchanged from the first draft (the back-page pass revises the products, the
-Provider/Pharmacist check and the lifestyle band).
+Back (2026-11-03 back-page pass): six lifestyle tiles aligned with the NutriDyn protocols
+(nitrate foods and no antiseptic mouthwash from Chad Oler's HBP slide, sodium, weight,
+movement with isometric holds, sleep, smoking and alcohol); five NutriDyn formulas from
+Asher's High Blood Pressure Protocol and the Oler / Johnson GLC protocols (Cardio Essentials
+BP Support = Start here, Nitric Boost, Magnesium Glycinate, Omega Pure EPA-DHA 1000, CoQ10
+100 mg; label facts and sources in products.d/high-blood-pressure.json); a 10-pill daily
+rhythm; three medicine-and-nutrient notes worded per edition.
 
-Every number stated on the front carries a source comment next to it.
+Every number stated on the sheet carries a source comment next to it.
 Edition wording: "{who}" / "{Who}" become "your provider" or "your pharmacist" (build.ed_text).
 """
 import re
@@ -382,8 +387,17 @@ CSS = r"""
   font-size:8pt;line-height:1.3;color:#2B3236}
 .hbp .hbp-note b{color:var(--deep)}
 .hbp .hbp-fn{font-size:7pt;color:#5E686F;line-height:1.3;margin:3px 0 0}
-/* back page, scoped: only this sheet's back carries the .hbp-back marker */
+/* back page, scoped: only this sheet's back carries the .hbp-back marker.
+   The two formula columns carry the longest label facts, so they get the extra width; the duo gives the
+   check panel a little more room so each note stays at 3 lines; one header height for all five columns
+   lines the photos up.  In the daily rhythm each count sits on its own line under the product name, so a
+   name that ends in a number never runs into it ("EPA-DHA 1000" then "2 softgels"); the evening slot is
+   widest so "Cardio Essentials BP Support" stays on one line. */
+.sheet.back:has(.hbp-back) .cols{grid-template-columns:1.18fr 1.18fr .88fr .88fr .88fr!important}
 .sheet.back:has(.hbp-back) .col .need{min-height:0.56in}
+.sheet.back:has(.hbp-back) .duo{grid-template-columns:1.1fr 1fr}
+.sheet.back:has(.hbp-back) .rhythm{grid-template-columns:1fr 1.5fr .85fr}
+.sheet.back:has(.hbp-back) .slot li{margin:1px 0 3px}
 .sheet.back:has(.hbp-back) .slot li em{display:block}
 """
 
@@ -409,34 +423,34 @@ SHEET = {
         # names "your doctor", which is right in both editions.
         "life": [
             # Oler GLC 2025 HBP slide 12: nitrate-rich foods daily (beets, lettuce, spinach); avoid antiseptic
-            # mouthwash (it blunts the nitrate-to-NO pathway).  Kapil V et al., Free Radic Biol Med 2013;55:93-100:
+            # mouthwash (it blunts the nitrate-to-NO pathway).  Kapil V et al., Free Radic Biol Med 2013;55:93-100 (PMID 23183324):
             # 7 days of antiseptic (chlorhexidine) mouthwash cut oral nitrite and raised systolic pressure 2 to 3.5
             # mm Hg.  The front's steps 1 and 2 (Lundberg, Weitzberg & Gladwin 2008).
-            ("beet", "Boost your NO", "Eat leafy greens and beets daily. Skip antiseptic mouthwash: it kills the "
-                                       "bacteria that help make NO."),
+            ("beet", "Boost your NO", "Eat greens and beets daily. Skip antiseptic mouthwash: it kills helpful "
+                                       "mouth bacteria."),
             # AHA "How much sodium should I eat per day?": no more than 2,300 mg a day, an ideal limit of 1,500 mg
             # for most adults, especially with high blood pressure; more than 70% comes from packaged, prepared and
             # restaurant food.  2025 AHA/ACC guideline (Hypertension 2025;82:e212-e316): under 1,500 mg optimal.
             ("salt", "Cut the sodium", "Stay under 2,300 mg a day; under 1,500 is even better. Most hides in "
-                                       "packaged and restaurant food."),
+                                       "packaged food."),
             # AHA "Managing Weight to Control High Blood Pressure": losing even 5 to 10 pounds can help lower blood
             # pressure.  2017 ACC/AHA guideline Table 15: about 1 mm Hg lower for every 1 kg lost.
-            ("scale", "Trim extra weight", "Losing even 5 to 10 pounds can help lower your numbers."),
+            # ("Trim extra weight" measured two lines at 9.6 pt; this title fits one.)
+            ("scale", "Lighten the load", "Losing even 5 to 10 pounds can help lower your numbers."),
             # AHA physical activity advice: 150 minutes a week of moderate activity (30 minutes, 5 days).
             # 2017 ACC/AHA Table 15: isometric resistance (hand grip, 4 x 2 minutes) 3 sessions a week.
-            # Edwards JJ et al., Br J Sports Med 2023;57:1317-26: isometric work (wall squats, hand grips) gave the
+            # Edwards JJ et al., Br J Sports Med 2023;57:1317-26 (PMID 37491419): isometric work (wall squats, hand grips) gave the
             # largest resting blood pressure drop of any exercise type.  Oler GLC 2025: 20 to 30 minutes, 5 times a
             # week, plus resistance training; Johnson GLC 2026: 30 minutes 5 times a week plus resistance 2-3 times.
             ("dumbbell", "Move, then hold", "Walk briskly 30 minutes, 5 days a week. Add wall sits or hand grips "
                                             "3 times a week."),
-            # AHA Life's Essential 8: 7 to 9 hours of sleep a night for adults; AHA: sleep apnea raises blood
-            # pressure.  Oler GLC 2025: daily stress care with slow nasal breathing, humming, meditation, yoga.
-            ("moon", "Sleep and breathe", "Sleep 7 to 9 hours. Slow breathing calms stress. Loud snoring? Ask your "
-                                          "doctor about a sleep test."),
+            # AHA Life's Essential 8: 7 to 9 hours of sleep a night for adults; AHA: obstructive sleep apnea
+            # raises blood pressure, and loud snoring is a common sign.
+            ("moon", "Sleep and breathe", "Sleep 7 to 9 hours. Loud snoring? Ask your doctor about a&nbsp;sleep&nbsp;test."),
             # AHA: each cigarette raises blood pressure for a while and smoking damages the vessel lining.
             # 2025 AHA/ACC guideline: drink less alcohol, and none is best; Oler GLC 2019: under 1 drink a day.
-            ("smoke", "Quit and cut back", "Quit smoking: it tightens your vessels. Cut back on alcohol; none "
-                                           "is best."),
+            ("smoke", "Quit and cut back", "Quit smoking: it tightens your vessels. Cut back on alcohol; "
+                                           "none&nbsp;is&nbsp;best."),
         ],
         # Products: Asher's High Blood Pressure Protocol (Gmail 17822c0dfc689947, 2021-03-11: Cardio Essentials
         # BP Support is "the formula"), Chad Oler's HBP slide (GLC 2025 slide 12, GLC 2019: Cardio Flow or Nitric
@@ -454,24 +468,22 @@ SHEET = {
             {"p": "hbp_bp_support", "need": "Healthy pressure", "needsub": "olive leaf, black garlic, celery and grape seed",
              "start": True, "dose": "dose_from_db",
              "bullets": ["Supports healthy blood pressure already in the normal range",
-                         "Olive leaf and grape seed support nitric oxide production"]},
+                         "Helps vessels make NO"]},
             # ND1255: beet root nitrates convert to nitric oxide; "supports healthy nitric oxide production and
             # optimal blood flow"
             {"p": "hbp_nitric_boost", "need": "Boost nitric oxide", "needsub": "beet root and potassium nitrate",
              "dose": "dose_from_db",
-             "bullets": ["The nitrate of step 1 on the front, in a capsule",
-                         "Supports healthy nitric oxide and blood flow"]},
+             "bullets": ["The nitrate of step 1 on the front, in a capsule", "Supports NO and blood flow"]},
             # Asher's magnesium blast (2026-10-12, Hypertension 2025 meta-analysis of 38 RCTs): the benefit
             # tracked the starting state, so test first
             {"p": "hbp_mag_glycinate", "need": "Relax vessel walls", "needsub": "magnesium", "dose": "dose_from_db",
-             "bullets": ["Supports relaxed, healthy vessel walls",
-                         "Helps most when magnesium is low; ask your doctor to check"]},
+             "bullets": ["Supports relaxed vessel walls", "Helps most if you run low"]},
             {"p": "hbp_omega_1000", "need": "Flexible vessels", "needsub": "omega-3s EPA and DHA", "dose": "dose_from_db",
-             "bullets": ["Supports heart and blood vessel health", "Supports healthy triglyceride levels"]},
+             "bullets": ["Supports heart and vessel health", "Supports healthy triglyceride levels"]},
             # Statins lower CoQ10 (NIH NCCIH, Coenzyme Q10); ND270: "Supports blood flow and nitric oxide
             # production", "Supports energy production"
             {"p": "hbp_coq10", "need": "Power the heart", "needsub": "coenzyme Q10", "dose": "dose_from_db",
-             "bullets": ["Statins can lower your CoQ10", "Supports heart energy and healthy blood flow"]},
+             "bullets": ["Statins can lower your CoQ10", "Fuel for heart cells"]},
         ],
         # Three medicine-and-nutrient notes per edition, worded for who checks them: pharmacists check
         # interactions and depletions; providers (MDs, DCs, NDs) order labs and adjust doses.
@@ -487,22 +499,18 @@ SHEET = {
             "pharmacy": [
                 "<b>Water pills</b> (HCTZ, chlorthalidone, furosemide) can drain magnesium and potassium, and "
                 "<b>statins</b> lower CoQ10. Ask your doctor to check your levels.",
-                "<b>Kidney disease, an ACE inhibitor, ARB or spironolactone?</b> Potassium can build up: no potassium "
-                "pills or salt substitutes unless prescribed. Ask {who} before magnesium or Nitric Boost "
-                "(150 mg potassium).",
+                "<b>Kidney disease, ACE inhibitor, ARB or spironolactone?</b> Potassium can build up: skip salt "
+                "substitutes, and ask {who} before magnesium or Nitric Boost (150 mg potassium).",
                 "<b>Blood thinners?</b> Garlic, fish oil and vitamin E may add to bleeding. <b>Nitroglycerin or ED "
-                "pills</b> (sildenafil, tadalafil)? Nitric Boost may add to the pressure drop. Bring this sheet to "
-                "your next doctor visit.",
+                "pills?</b> Nitric Boost may add to their pressure drop. Bring this sheet to your next doctor visit.",
             ],
             "practitioner": [
                 "<b>Water pills</b> (HCTZ, chlorthalidone, furosemide) can drain magnesium and potassium, and "
                 "<b>statins</b> lower CoQ10. Ask {who} to check your levels and kidney function.",
-                "<b>Kidney disease, an ACE inhibitor, ARB or spironolactone?</b> Potassium can build up: no potassium "
-                "pills or salt substitutes unless prescribed. Ask {who} before magnesium or Nitric Boost "
-                "(150 mg potassium).",
-                "<b>Keep a home log.</b> These formulas may add to blood pressure pills, nitroglycerin, ED pills and "
-                "blood thinners, so {who} may adjust your doses. Never stop a medicine on your own. Bring this sheet "
-                "to your pharmacist.",
+                "<b>Kidney disease, ACE inhibitor, ARB or spironolactone?</b> Potassium can build up: skip salt "
+                "substitutes, and ask {who} before magnesium or Nitric Boost (150 mg potassium).",
+                "<b>Keep a home log.</b> These formulas may strengthen blood pressure pills, nitroglycerin, ED pills "
+                "and blood thinners, so {who} may adjust your doses. Never stop a medicine on your own.",
             ],
         },
     },

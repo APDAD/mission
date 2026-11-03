@@ -45,6 +45,7 @@ Condition facts (sources; every citation resolved on PubMed 2026-11-03):
 """
 import math
 import random
+import re
 
 from kit import icon
 from svgkit import T, svg, TOXIN
@@ -73,12 +74,23 @@ STRESS = "#8150B8"
 LANE_X = [6 + i * 150 for i in range(5)]       # lane and tab left edges
 LANE_W = 142
 HX = [4 + i * 50 for i in range(7)]            # healthy cell walls; cell 0 sits inside the frame
-NUT_X = [HX[i] + 25 for i in range(3)]         # green arrows through the centres of cells 0-2
-TRAVEL = [("C", "#B85A16"), ("D", "#2F6DB5"), ("Zn", "#264D8C")]   # lane -> cell -> blood; every token colour
-# gives its white letter at least 4.5:1 contrast
-LANE_TOKENS = [("Mg", "#8A5A3C"), ("Fe", "#6B3A87"), ("B", "#2E7D4C"), ("Ca", "#187580")]
-NUTRIENT_NAMES = [("C", "#B85A16", "vitamin C"), ("D", "#2F6DB5", "vitamin D"), ("Zn", "#264D8C", "zinc"),
-                  ("Mg", "#8A5A3C", "magnesium"), ("Fe", "#6B3A87", "iron"), ("B", "#2E7D4C", "B vitamins"),
+# The green arrows cross the cytoplasm of cells 0-2 beside the nucleus (recheck 2026-11-03: an arrow down the
+# middle sliced every nucleus in half).  Arrow 5 units left of the cell centre, nucleus 11 units right of it
+# (all six healthy cells, so they stay uniform): 2.2 units of clear cytoplasm between the arrow's white halo and
+# the nucleus, 4.3 between the nucleus and the cell wall.
+NUT_X = [HX[i] + 20 for i in range(3)]
+NUC_DX = 11
+LANE_TOK_X = [29 + i * 100 / 3 for i in range(4)]   # top row of the Nutrients lane
+# The three that travel lane -> cell -> blood leave the cell straight into the blood (standard physiology:
+# vitamin C via its transporter, iron via ferroportin, zinc via ZnT1, all into the portal blood).  Vitamin D is
+# fat-soluble: it is absorbed with dietary fat and leaves the cell in chylomicrons through the lymph, so it stays
+# in the lane rather than being drawn going straight into the blood (Silva MC, Furlanetto TW. Nutr Rev
+# 2018;76:60-76, PMID 29025082; recheck 2026-11-03).
+# Every token colour gives its white letter at least 4.5:1 contrast; none is green, so none blends into an arrow.
+TRAVEL = [("C", "#B85A16"), ("Fe", "#6B3A87"), ("Zn", "#264D8C")]
+LANE_TOKENS = [("Mg", "#8A5A3C"), ("D", "#2F6DB5"), ("B", "#2E7D4C"), ("Ca", "#187580")]
+NUTRIENT_NAMES = [("C", "#B85A16", "vitamin C"), ("Fe", "#6B3A87", "iron"), ("Zn", "#264D8C", "zinc"),
+                  ("Mg", "#8A5A3C", "magnesium"), ("D", "#2F6DB5", "vitamin D"), ("B", "#2E7D4C", "B vitamins"),
                   ("Ca", "#187580", "calcium")]
 
 _REG = []   # every placed item as (kind, x, y, half-width, half-height): read by the layout check
@@ -94,6 +106,44 @@ def _mix(col, a, bg="#F1F7F8"):
 
 def _reg(kind, x, y, hw, hh):
     _REG.append((kind, x, y, hw, hh))
+
+
+# Every drawn object also records its real outline (rotated, scaled) as (kind, points, stroke radius), so a
+# clearance check can measure true gaps between shapes instead of loose axis-aligned boxes (recheck 2026-11-03:
+# the box pass hid tangencies such as a flagellum ending on a food particle).
+_SHAPES = []   # (kind, points, stroke radius, closed, group): pieces of one object share a group
+
+
+def _shape(kind, pts, rad=0.0, closed=True, group=None):
+    if group is None:
+        group = len(_SHAPES) + 1
+    _SHAPES.append((kind, [(float(px), float(py)) for px, py in pts], float(rad), closed, group))
+    return group
+
+
+def _xf(pts, x, y, rot=0.0, s=1.0):
+    a = math.radians(rot)
+    ca, sa = math.cos(a), math.sin(a)
+    return [(x + s * (px * ca - py * sa), y + s * (px * sa + py * ca)) for px, py in pts]
+
+
+def _bez(p0, p1, p2, p3, n=8):
+    return [tuple((1 - t) ** 3 * a + 3 * (1 - t) ** 2 * t * b + 3 * (1 - t) * t * t * c + t ** 3 * d
+                  for a, b, c, d in zip(p0, p1, p2, p3)) for t in (i / n for i in range(n + 1))]
+
+
+def _ell(rx, ry, n=24):
+    return [(rx * math.cos(2 * math.pi * i / n), ry * math.sin(2 * math.pi * i / n)) for i in range(n)]
+
+
+def _rrect(w, h, r, n=6):
+    """Outline of a w x h rounded rectangle centred on 0,0."""
+    pts = []
+    for cx, cy, a0 in ((w / 2 - r, -h / 2 + r, -90), (w / 2 - r, h / 2 - r, 0), (-w / 2 + r, h / 2 - r, 90),
+                       (-w / 2 + r, -h / 2 + r, 180)):
+        pts += [(cx + r * math.cos(math.radians(a0 + 90 * i / n)), cy + r * math.sin(math.radians(a0 + 90 * i / n)))
+                for i in range(n + 1)]
+    return pts
 
 
 # ----------------------------------------------------------------------------- symbols
@@ -198,28 +248,85 @@ def arrow(x, y0, y1, col, w=5.5, head=16.0, halo="#FFFFFF"):
             f'stroke="{col}" stroke-width="1.2" stroke-linejoin="round"/>')
 
 
-def leak_band(wl, wr, gx, top, gid, neck=BLT + 3):
-    """The leak stream: it fills the gap between the two walls (fading in from nothing, so it has no
-    edge of its own), then tapers to a slim neck that carries it across the tissue into the blood."""
-    ys = [top + i * (CB - top) / 16 for i in range(17)]
-    left = [(x_on(wl, y) - 1.5, y) for y in ys]
-    right = [(x_on(wr, y) + 1.5, y) for y in ys[::-1]]
-    xl, xr = left[-1][0], right[0][0]
-    d = ("M" + " L".join(f"{x:.1f},{y:.1f}" for x, y in left)
-         + f" C{(xl + gx - 7) / 2:.1f},{CB + 3} {gx - 7:.1f},{CB + 6} {gx - 7:.1f},{CB + 11} L{gx - 7:.1f},{neck} "
-         + f"L{gx + 7:.1f},{neck} L{gx + 7:.1f},{CB + 11} C{gx + 7:.1f},{CB + 6} {(xr + gx + 7) / 2:.1f},{CB + 3} {xr:.1f},{CB} L"
-         + " L".join(f"{x:.1f},{y:.1f}" for x, y in right) + " Z")
-    grad = (f'<defs><linearGradient id="{gid}" gradientUnits="userSpaceOnUse" x1="0" y1="{top:.1f}" x2="0" y2="{neck}">'
-            f'<stop offset="0" stop-color="{LEAK}" stop-opacity="0"/><stop offset=".2" stop-color="{LEAK}" stop-opacity=".15"/>'
-            f'<stop offset=".84" stop-color="{LEAK}" stop-opacity=".27"/><stop offset="1" stop-color="{LEAK}" stop-opacity=".52"/>'
-            '</linearGradient></defs>')
-    return grad + f'<path d="{d}" fill="url(#{gid})"/>'
+# ---- the leak: ONE continuous arrow per gap (recheck 2026-11-03: the old faint band left five detached red
+# triangles hanging on the vessel wall like yield signs).  A stream fills the middle of the gap from its mouth,
+# deepens as it falls, narrows into a solid neck that crosses the basement membrane and the tissue, and flows
+# straight into a bold arrowhead in the blood.  It starts at the gap mouth, below the lanes, so nothing in the
+# Medications or Stress lanes ever looks like it leaks.
+VESSEL = [((0, BLT + 5), (150, BLT - 5), (300, BLT + 7), (450, BLT)),
+          ((450, BLT), (600, BLT - 7), (650, BLT - 4), (W, BLT + 4))]   # the vessel's top edge (S reflected)
+NECK_HW = 4.6        # solid neck, 9.2 units wide
+HEAD_HW, HEAD_H = 12.5, 26.0
 
 
-def leak_head(gx, y0=BLT + 2, y1=BLT + 27, hw=13.0):
-    """The one bold arrowhead at the end of each leak stream."""
-    return (f'<path d="M{gx - hw - 2.4:.1f},{y0 - 1.5:.1f} L{gx + hw + 2.4:.1f},{y0 - 1.5:.1f} L{gx:.1f},{y1 + 3.2:.1f} Z" '
-            'fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1.4" stroke-linejoin="round"/>'
+def vessel_y(x):
+    """y of the vessel's top edge at x."""
+    pts = [p for seg in VESSEL for p in _bez(*seg, n=40)]
+    for (x0, y0), (x1, y1) in zip(pts, pts[1:]):
+        if x0 <= x <= x1:
+            return y0 + (y1 - y0) * (x - x0) / max(1e-6, x1 - x0)
+    return BLT
+
+
+def _smooth(pts):
+    """Cubic segments (Catmull-Rom) through pts, as path commands after the first point."""
+    out = []
+    for i in range(len(pts) - 1):
+        p0 = pts[i - 1] if i else pts[i]
+        p1, p2 = pts[i], pts[i + 1]
+        p3 = pts[i + 2] if i + 2 < len(pts) else p2
+        out.append(f"C{p1[0] + (p2[0] - p0[0]) / 6:.1f},{p1[1] + (p2[1] - p0[1]) / 6:.1f} "
+                   f"{p2[0] - (p3[0] - p1[0]) / 6:.1f},{p2[1] - (p3[1] - p1[1]) / 6:.1f} {p2[0]:.1f},{p2[1]:.1f}")
+    return " ".join(out)
+
+
+def leak_stream(wl, wr, ybot, gid):
+    """The stream down one gap and its neck.  Returns (markup, x of the neck, y where the head starts)."""
+    y0, n = ybot - 3, 22
+    ys = [y0 + i * (CB - y0) / n for i in range(n + 1)]
+    xl, xr = [x_on(wl, y) for y in ys], [x_on(wr, y) for y in ys]
+    # narrowest width within two samples either side, so the stream clears every notch; smoothed centre line
+    wmin = [min(xr[j] - xl[j] for j in range(max(0, i - 2), min(n, i + 2) + 1)) for i in range(n + 1)]
+    mid = [(a + b) / 2 for a, b in zip(xl, xr)]
+    cen = [sum(mid[max(0, i - 2):i + 3]) / len(mid[max(0, i - 2):i + 3]) for i in range(n + 1)]
+    hw = [max(5.0, min(0.37 * w, 0.5 * w - 3.4)) for w in wmin]
+    hw = [sum(hw[max(0, i - 1):i + 2]) / len(hw[max(0, i - 1):i + 2]) for i in range(n + 1)]
+    gx = cen[-1]
+    hy0 = vessel_y(gx) + 0.5                      # the head's base sits on the vessel's top edge
+    left = [(c - h, y) for c, h, y in zip(cen, hw, ys)]
+    right = [(c + h, y) for c, h, y in zip(cen, hw, ys)][::-1]
+    cap = hw[0] * 0.7
+    d = (f"M{left[0][0]:.1f},{left[0][1]:.1f} {_smooth(left)} "
+         f"C{left[-1][0]:.1f},{CB + 4} {gx - NECK_HW:.1f},{CB + 3} {gx - NECK_HW:.1f},{CB + 9} "
+         f"L{gx - NECK_HW:.1f},{hy0 + 2.5:.1f} L{gx + NECK_HW:.1f},{hy0 + 2.5:.1f} L{gx + NECK_HW:.1f},{CB + 9} "
+         f"C{gx + NECK_HW:.1f},{CB + 3} {right[0][0]:.1f},{CB + 4} {right[0][0]:.1f},{right[0][1]:.1f} {_smooth(right)} "
+         f"C{right[-1][0]:.1f},{y0 - cap:.1f} {left[0][0]:.1f},{y0 - cap:.1f} {left[0][0]:.1f},{left[0][1]:.1f} Z")
+    span = hy0 + 2.5 - (y0 - cap)
+
+    def off(y):
+        return f"{min(1.0, max(0.0, (y - (y0 - cap)) / span)):.3f}"
+    grad = (f'<defs><linearGradient id="{gid}" gradientUnits="userSpaceOnUse" x1="0" y1="{y0 - cap:.1f}" x2="0" '
+            f'y2="{hy0 + 2.5:.1f}"><stop offset="0" stop-color="{LEAK}" stop-opacity="0"/>'
+            f'<stop offset="{off(y0 + 8)}" stop-color="{LEAK}" stop-opacity=".3"/>'
+            f'<stop offset="{off(CB - 40)}" stop-color="{LEAK}" stop-opacity=".45"/>'
+            f'<stop offset="{off(CB)}" stop-color="{LEAK}" stop-opacity=".7"/>'
+            f'<stop offset="{off(CB + 7)}" stop-color="{LEAK}" stop-opacity="1"/>'
+            f'<stop offset="1" stop-color="{LEAK}" stop-opacity="1"/></linearGradient></defs>')
+    # a soft highlight down one side of the stream: it reads as liquid, not as a tint on the gap
+    hl = [(c - h * 0.45, y) for c, h, y in zip(cen[2:-2], hw[2:-2], ys[2:-2])]
+    shine = (f'<path d="M{hl[0][0]:.1f},{hl[0][1]:.1f} {_smooth(hl)}" fill="none" stroke="#FFFFFF" '
+             f'stroke-width="1.6" stroke-linecap="round" stroke-opacity=".55"/>')
+    _shape("stream", left + right, 0)
+    return grad + f'<path d="{d}" fill="url(#{gid})"/>' + shine, gx, hy0
+
+
+def leak_head(gx, y0):
+    """The bold arrowhead at the end of each stream.  Its base meets the neck with no white seam (the halo runs
+    down the two slanted sides only), so the stream and the head read as one arrow."""
+    y1, hw = y0 + HEAD_H, HEAD_HW
+    _shape("head", [(gx - hw - 1.8, y0), (gx + hw + 1.8, y0), (gx, y1 + 3.0)], 0)
+    return (f'<path d="M{gx - hw - 2.2:.1f},{y0 + 1.2:.1f} L{gx + hw + 2.2:.1f},{y0 + 1.2:.1f} L{gx:.1f},{y1 + 3.2:.1f} Z" '
+            'fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1" stroke-linejoin="round"/>'
             f'<path d="M{gx - hw:.1f},{y0:.1f} L{gx + hw:.1f},{y0:.1f} L{gx:.1f},{y1:.1f} Z" fill="{LEAK}" '
             f'stroke="{LEAK}" stroke-width="1.2" stroke-linejoin="round"/>')
 
@@ -229,7 +336,7 @@ def stitches(x, y, n=3, gap=6.0, half=4.8, col=JUNCTION, sw=2.5):
                    'stroke-linecap="round"/>' for j in range(n))
 
 
-def stub(x, y, ln, direction, hang=0.0):
+def stub(x, y, ln, direction, hang=0.0, reg=False):
     """Half of a snapped tight-junction bar: it sticks out of a cell wall and ends in a jagged break.
     direction +1 points right (out of a gap's left wall), -1 points left; hang tips it down (deg)."""
     pts = [(-1.4, -1.25), (ln - 1.0, -1.25), (ln + 0.8, -0.45), (ln - 0.5, 0.15), (ln + 0.6, 0.75), (ln - 0.8, 1.25),
@@ -239,7 +346,59 @@ def stub(x, y, ln, direction, hang=0.0):
     for px, py in pts:
         rx, ry = px * math.cos(a) - py * math.sin(a), px * math.sin(a) + py * math.cos(a)
         out.append(f"{x + direction * rx:.2f},{y + ry:.2f}")
+    if reg:
+        _shape("stub", [tuple(map(float, p.split(","))) for p in out], 0.25)
     return f'<polygon points="{" ".join(out)}" fill="{JUNCTION}" stroke="{JUNCTION}" stroke-width=".5" stroke-linejoin="round"/>'
+
+
+# ----------------------------------------------------------------------------- true outlines for the clearance check
+def _path_pts(d):
+    """Sample an absolute 'M x,y C x,y x,y x,y ... Z' outline (the food shapes) into points."""
+    xy = [tuple(map(float, p.split(","))) for p in re.findall(r"-?[\d.]+,-?[\d.]+", d)]
+    pts = [xy[0]]
+    for j in range(1, len(xy) - 2, 3):
+        pts += _bez(pts[-1], xy[j], xy[j + 1], xy[j + 2])[1:]
+    return pts
+
+
+_FOOD_PTS = [_path_pts(d) for d in FOOD]
+_BOLT_PTS = [(2.5, -15), (-8.5, 1.8), (-1.6, 1.8), (-4.6, 15), (8.8, -3.6), (2.1, -3.6), (6.2, -15)]
+
+
+def _reg_food(kind, x, y, s, rot, v):
+    _shape(kind, _xf(_FOOD_PTS[v % 3], x, y, rot, s), 0.65 * s)
+
+
+def _reg_mic(kind, x, y, rot, s, tail=True):
+    g = _shape(kind, _xf(_rrect(30, 13.2, 6.6), x, y, rot, s), 0.65 * s)
+    for i in range(5):
+        for sg in (-1, 1):
+            _shape(kind, _xf([(-9 + 4.5 * i, sg * 6.4), (-10.3 + 4.5 * i, sg * 10.2)], x, y, rot, s), 0.65 * s, False, g)
+    if tail:
+        t = _bez((14.6, 0), (17.6, -3.6), (20.6, 3.6), (23.6, 0))
+        if tail is True:
+            t += _bez((23.6, 0), (26.6, -3.6), (29.6, 3.6), (32.6, 0))[1:]
+        _shape(kind, _xf(t, x, y, rot, s), 0.65 * s, False, g)
+
+
+def _reg_tox(kind, x, y, r):
+    _shape(kind, [(x + r * math.cos(math.radians(a)), y + r * math.sin(math.radians(a))) for a in range(-90, 270, 60)], 1.8)
+
+
+def _reg_pill(kind, x, y, rot, s):
+    _shape(kind, _xf(_rrect(29, 13.6, 6.8), x, y, rot, s), 0.75 * s)
+
+
+def _reg_bolt(kind, x, y, s, rot):
+    _shape(kind, _xf(_BOLT_PTS, x, y, rot, s), 0.6 * s)
+
+
+def _reg_rbc(x, y, rot, s=1.0):
+    _shape("rbc", _xf(_ell(13.5, 7.8), x, y, rot, s), 0.5 * s)
+
+
+def _reg_tok(kind, x, y, r):
+    _shape(kind, [(x + px, y + py) for px, py in _ell(r, r)], 1.1)
 
 
 # ----------------------------------------------------------------------------- defs
@@ -326,14 +485,17 @@ def h_villi(x0, x1, rnd):
 
 
 def h_cell(x0, x1):
-    """A healthy columnar cell; the nucleus sits low (basal), centred, the same in every cell."""
+    """A healthy columnar cell; the nucleus sits low (basal) and a little to the right, the same in every
+    cell, so the absorbed-nutrient arrow crosses clear cytoplasm beside it."""
     r = 8
     d = f"M{x0},{CB} V{CT + r} Q{x0},{CT} {x0 + r},{CT} H{x1 - r} Q{x1},{CT} {x1},{CT + r} V{CB} Z"
-    cx, cy = (x0 + x1) / 2, CT + (CB - CT) * 0.74
+    cx, cy = (x0 + x1) / 2 + NUC_DX, CT + (CB - CT) * 0.74
+    _shape("cell", [(x0, CB), (x0, CT), (x1, CT), (x1, CB)], 0.6)
+    _shape("nucleus", [(cx + 8.6 * math.cos(a * math.pi / 12), cy + 14.5 * math.sin(a * math.pi / 12)) for a in range(24)], 0.45)
     return (f'<path d="{d}" fill="url(#{U}-hc)" stroke="#D2937E" stroke-width="1.2"/>'
             f'<path d="{d}" fill="url(#{U}-hcv)"/>'
-            f'<ellipse cx="{cx:.1f}" cy="{cy:.1f}" rx="9" ry="14.5" fill="url(#{U}-hn)" stroke="#B35E57" stroke-width=".9"/>'
-            f'<circle cx="{cx + 2:.1f}" cy="{cy - 4:.1f}" r="2.6" fill="#9C423C"/>')
+            f'<ellipse cx="{cx:.1f}" cy="{cy:.1f}" rx="8.6" ry="14.5" fill="url(#{U}-hn)" stroke="#B35E57" stroke-width=".9"/>'
+            f'<circle cx="{cx + 2:.1f}" cy="{cy - 4:.1f}" r="2.5" fill="#9C423C"/>')
 
 
 # The six damaged cells.  hw = half-widths at 7, 25, 52, 78 and 100 % of the cell's height;
@@ -405,6 +567,7 @@ def l_cell(c, rnd):
         return x + (CB - y) * k, y
 
     outline = [sh(x, y) for x, y in wall_l + head + wall_r]
+    _shape("lcell", outline, 0.7)
     d = "M" + " L".join(f"{x:.1f},{y:.1f}" for x, y in outline) + " Z"
     vil = []
     for i, (x, y) in enumerate(tops[1:-1]):
@@ -451,6 +614,9 @@ STREAM = [[M, X, F, M, X, M, M, X, F, M, X, F],
           [F, M, X, F, M, X, X, F, M, M, F],
           [M, F, X, F, M, X, F, M, X, X, F, M]]
 CROWD = [(-15, -26), (12, -28), (-2, -13), (19, -8)]   # (dx, dy) above the higher cell top; mirrored on odd gaps
+RBCS = [(176, 352, 10), (236, 366, -12), (300, 350, 8), (196, 404, -8), (262, 414, 14), (326, 398, -10),
+        (411, 352, 6), (491, 354, -8), (571, 350, 10), (651, 352, -6), (730, 352, 8),
+        (411, 421, 12), (491, 417, -6), (568, 421, 10), (648, 418, -12), (732, 416, 8), (176, 425, -4)]
 
 
 def _ext(kind, s=1.0, rot=0.0, r=6.0):
@@ -463,35 +629,53 @@ def _ext(kind, s=1.0, rot=0.0, r=6.0):
     return 13 * s, 13 * s
 
 
-def _place(kind, x, y, rnd, rot=None, s=None, narrow=False, tail=True):
+# Hand nudges (dx, dy, extra rotation) for single stream items, keyed by tag (g<gap><c|m|d|b|f><index>), that clear
+# the tangencies the true-outline clearance check found (2 units minimum between any two objects).
+NUDGE = {}
+
+
+def _place(kind, x, y, rnd, rot=None, s=None, narrow=False, tail=True, tag=""):
     """Draw one stream item and register it; microbes in a narrow gap swim nose-down."""
     if kind == M:
         s = s or 0.62
         rot = rot if rot is not None else (rnd.uniform(250, 290) if narrow else rnd.uniform(-60, 240))
+    elif kind == F:
+        s = s or (0.6 if narrow else 0.66)
+        rot = rot if rot is not None else rnd.uniform(-40, 40)
+        v = rnd.randrange(3)
+    dx, dy, dr = NUDGE.get(tag, (0, 0, 0))
+    x, y = x + dx, y + dy
+    if kind == M:
+        rot += dr
         x0, x1, y0, y1 = microbe_extent(rot, s, tail)
         _reg(M, x + (x0 + x1) / 2, y + (y0 + y1) / 2, (x1 - x0) / 2, (y1 - y0) / 2)
+        _reg_mic(f"{M}:{tag}", x, y, rot, s, tail)
         return microbe(x, y, rot, s, tail)
     if kind == X:
         r = 5.8 if narrow else 6.2
         _reg(X, x, y, r + 1.8, r + 1.8)
+        _reg_tox(f"{X}:{tag}", x, y, r)
         return toxin(x, y, r)
-    s = s or (0.6 if narrow else 0.66)
+    rot += dr
     _reg(F, x, y, 13 * s, 13 * s)
-    return food(x, y, s, rot if rot is not None else rnd.uniform(-40, 40), rnd.randrange(3))
+    _reg_food(f"{F}:{tag}", x, y, s, rot, v)
+    return food(x, y, s, rot, v)
 
 
-def _in_gap(kind, wl, wr, y, inset, side, rnd):
+def _in_gap(kind, wl, wr, y, inset, side, rnd, tag=""):
     """Place an item in a gap at height y, inside the walls less `inset`, nudged to one side."""
     lo, hi = x_on(wl, y) + inset, x_on(wr, y) - inset
     rot = rnd.uniform(250, 290) if kind == M else None
     ew = (microbe_extent(rot, 0.62, "short")[1] - microbe_extent(rot, 0.62, "short")[0]) / 2 if kind == M else \
         (_ext(X, r=5.8)[0] if kind == X else _ext(F, 0.6)[0])
     slack = max(0.0, (hi - lo) / 2 - ew)
-    return _place(kind, (lo + hi) / 2 + side * min(slack, rnd.uniform(1.5, 4.0)), y, rnd, rot=rot, narrow=True, tail="short")
+    return _place(kind, (lo + hi) / 2 + side * min(slack, rnd.uniform(1.5, 4.0)), y, rnd, rot=rot, narrow=True,
+                  tail="short", tag=tag)
 
 
 def art_barrier(t):
     del _REG[:]
+    del _SHAPES[:]
     rnd = random.Random(23)
     tabcol = [TAB_GREEN] + [t["c1"]] * 4
     o = [defs_svg(),
@@ -505,27 +689,30 @@ def art_barrier(t):
     # tissue from the basal edge down, inflammation glow (below the lanes), vessel, basement membrane
     o.append(f'<rect x="0" y="{CB}" width="{W}" height="{BLT - CB + 14}" fill="url(#{U}-tissue)"/>')
     o.append(f'<ellipse cx="531" cy="{CT + 96}" rx="224" ry="92" fill="url(#{U}-glow)"/>')
-    vessel = f"M0,{BLT + 5} C150,{BLT - 5} 300,{BLT + 7} 450,{BLT} S650,{BLT - 4} {W},{BLT + 4}"
+    (a0, a1, a2, a3), (_, b1, b2, b3) = VESSEL
+    vessel = (f"M{a0[0]},{a0[1]} C{a1[0]},{a1[1]} {a2[0]},{a2[1]} {a3[0]},{a3[1]} "
+              f"C{b1[0]},{b1[1]} {b2[0]},{b2[1]} {b3[0]},{b3[1]}")
     o.append(f'<path d="{vessel} V{FB + 2} H0 Z" fill="url(#{U}-blood)"/>')
     o.append(f'<path d="{vessel}" fill="none" stroke="#E9A09C" stroke-width="3"/>')
     o.append(f'<path d="M0,{CB + 2} H{W}" stroke="#D9A898" stroke-width="2"/>')
 
     # ---- leaky half geometry first (the streams sit behind the cells)
     cells = [l_cell(c, rnd) for c in LCELLS]
+    outlines = [pts for kind, pts, *_ in _SHAPES if kind == "lcell"]
     gaps = []
     for k in range(5):
         wl, wr = cells[k][2], cells[k + 1][1]           # right wall of cell k, left wall of cell k+1
         ytop, ybot = sorted((cells[k][3], cells[k + 1][3]))
         gx = (x_on(wl, ybot + 14) + x_on(wr, ybot + 14)) / 2
-        gaps.append((wl, wr, (ytop, ybot), gx))
-        o.append(leak_band(wl, wr, gx, ybot + 2, f"{U}-band{k}"))
+        stream, gxn, hy0 = leak_stream(wl, wr, ybot, f"{U}-band{k}")
+        gaps.append((wl, wr, (ytop, ybot), gx, gxn, hy0))
+        o.append(stream)
 
     # ---- blood cells (behind the arrows, the delivered nutrients and the leaked items)
-    for (x, y, r) in [(176, 352, 10), (236, 366, -12), (300, 350, 8), (196, 404, -8), (262, 414, 14), (326, 398, -10),
-                      (411, 352, 6), (491, 354, -8), (571, 350, 10), (651, 352, -6), (730, 352, 8),
-                      (411, 421, 12), (491, 417, -6), (568, 421, 10), (648, 418, -12), (732, 416, 8), (176, 425, -4)]:
+    for (x, y, r) in RBCS:
         o.append(rbc(x, y, r))
         _reg("rbc", x, y, 14, 9)
+        _reg_rbc(x, y, r)
 
     # ---- healthy half: six columnar cells, seams sealed by tight junctions
     for i in range(6):
@@ -538,9 +725,19 @@ def art_barrier(t):
     # ---- leaky half: the damaged cells, then the snapped junctions across every gap
     for body, *_ in cells:
         o.append(body)
-    o.append(stitches(SPLIT, CT + 15, n=2))   # the healthy | leaky seam: still holding, but only just
+    # The healthy | leaky seam is still sealed: the key's three-bar tight junction, each bar centred on the seam and
+    # reaching 3.5 units into both cells, where both walls are present (recheck 2026-11-03: the old two-bar mark
+    # was not in the key and ran 5 units into the leaky cell's wall).
+    for j in range(3):
+        y = CT + 10 + j * 6
+        xs = [x0 + (x1 - x0) * (y - y0) / (y1 - y0) for (x0, y0), (x1, y1) in zip(outlines[0], outlines[0][1:] + outlines[0][:1])
+              if min(y0, y1) <= y <= max(y0, y1) and y1 != y0]
+        xr_ = min(xs)
+        xm, half = (SPLIT + xr_) / 2, (xr_ - SPLIT) / 2 + 3.5
+        o.append(f'<path d="M{xm - half:.1f},{y:.1f} H{xm + half:.1f}" stroke="{JUNCTION}" stroke-width="2.5" '
+                 'stroke-linecap="round"/>')
     hang = [(1, 0, 58), (0, 2, 64), (1, 1, 52), (0, 1, 66), (1, 2, 60)]   # per gap: (side, bar, angle)
-    for k, (wl, wr, mouth, gx) in enumerate(gaps):
+    for k, (wl, wr, mouth, gx, gxn, hy0) in enumerate(gaps):
         for side, wall, ctop, dirn in ((0, wl, cells[k][3], 1), (1, wr, cells[k + 1][3], -1)):
             for j in range(3):
                 y = ctop + 9 + j * 6
@@ -548,18 +745,22 @@ def art_barrier(t):
                 ang = hang[k][2] if (side, j) == hang[k][:2] else 0
                 if k in (1, 3) and side == 0 and j == 2:     # a second hanging bar on two of the gaps
                     ang = 48
-                o.append(stub(x, y, rnd.uniform(5.2, 7.4), dirn, ang))
+                o.append(stub(x, y, rnd.uniform(5.2, 7.4), dirn, ang, reg=True))
                 _reg("stub", x + dirn * 4, y + (3 if ang else 0), 4.5, 3 if not ang else 5)
 
-    # ---- nutrients through the healthy cell bodies (lane -> cell -> blood: the same three letters)
+    # ---- nutrients through the healthy cells, beside the nucleus (lane -> cell -> blood: the same three letters)
     for x, (s, c) in zip(NUT_X, TRAVEL):
         o.append(arrow(x, R2 + 19, BLT + 40, GREEN, 5.2, 15))
+        ga = _shape("arrow", [(x, R2 + 19), (x, BLT + 40 - 15 + 1)], 4.7, False)
+        _shape("arrow", [(x - 11.7, BLT + 40 - 16.5), (x + 11.7, BLT + 40 - 16.5), (x, BLT + 43)], 0.8, True, ga)
         o.append(token(x, CT + 40, s, c, 11))
+        _reg_tok("tok:cell", x, CT + 40, 11)
         o.append(token(x + 15, BLT + 57, s, c, 11))
         _reg("tok", x + 15, BLT + 57, 12.5, 12.5)
+        _reg_tok("tok:blood", x + 15, BLT + 57, 11)
 
     # ---- the leak streams: a crowd at each gap mouth, thinning out as it pours into the blood
-    for k, (wl, wr, (ytop, ybot), gx) in enumerate(gaps):
+    for k, (wl, wr, (ytop, ybot), gx, gxn, hy0) in enumerate(gaps):
         g = random.Random(100 + k)
         kinds = STREAM[k]
         flip = -1 if k % 2 else 1
@@ -569,25 +770,27 @@ def art_barrier(t):
         for i, (cx, cy) in enumerate(CROWD):
             x, y = gx + flip * cx + g.uniform(-2.5, 2.5), ytop + cy + g.uniform(-2.5, 2.5)
             rot = math.degrees(math.atan2(aim[1] - y, aim[0] - x)) + 180 + g.uniform(-15, 15)
-            o.append(_place(kinds[i], x, y, g, rot=rot if kinds[i] == M else None, s=0.64, tail="short"))
+            o.append(_place(kinds[i], x, y, g, rot=rot if kinds[i] == M else None, s=0.64, tail="short", tag=f"g{k}c{i}"))
         # 2 squeezing into the mouth, centred in the space between the snapped junction bars
         for i, yy in enumerate([ybot + 5 + g.uniform(-1.5, 1.5), ybot + 24 + g.uniform(-2, 2)]):
-            o.append(_in_gap(kinds[4 + i], wl, wr, yy, 9.5, flip * (1 - 2 * i), g))
+            o.append(_in_gap(kinds[4 + i], wl, wr, yy, 9.5, flip * (1 - 2 * i), g, tag=f"g{k}m{i}"))
         # 2 further down the gap, thinning out
         for i, yy in enumerate([CT + 70 + g.uniform(-6, 6), CT + 111 + g.uniform(-6, 6)]):
-            o.append(_in_gap(kinds[6 + i], wl, wr, yy, 3.0, g.choice((-1, 1)), g))
-        # 1 crossing the basement membrane into the tissue
-        o.append(_place(kinds[8], gx + g.uniform(-2, 2), CB + 7, g, narrow=True, s=0.56, tail="short"))
+            o.append(_in_gap(kinds[6 + i], wl, wr, yy, 3.0, g.choice((-1, 1)), g, tag=f"g{k}d{i}"))
+        # 1 squeezing through the neck, across the basement membrane
+        o.append(_place(kinds[8], gxn + g.uniform(-2, 2), CB + 7, g, narrow=True, s=0.56, tail="short", tag=f"g{k}b"))
         # the bold arrowhead, then a small fan of leaked items just under it
-        o.append(leak_head(gx))
+        o.append(leak_head(gxn, hy0))
         fan = [(-18, BLT + 38), (17, BLT + 43), (-1, BLT + 62)][:len(kinds) - 9]
         for i, (fx, fy) in enumerate(fan):
-            o.append(_place(kinds[9 + i], gx + flip * fx + g.uniform(-2, 2), fy + g.uniform(-2, 2), g, s=0.66))
+            o.append(_place(kinds[9 + i], gxn + flip * fx + g.uniform(-2, 2), fy + g.uniform(-2, 2), g, s=0.66,
+                            tag=f"g{k}f{i}"))
 
     # ---- causes of damage, on the cells: a pill resting on the shrunken cell, bolts striking tops
     px_, py_ = LCELLS[2]["xc"] + 1, cells[2][3] - 7.5
     o.append(pill(px_, py_, -4, 0.82))
     _reg("pill", px_, py_, 12.5, 6.5)
+    _reg_pill("pill", px_, py_, -4, 0.82)
     for ci, (bx, rot) in [(4, (650, 10)), (5, (731, -8))]:
         ctop = cells[ci][3]
         a = math.radians(rot)
@@ -596,6 +799,7 @@ def art_barrier(t):
         cx_, cy_ = bx - tx, ctop - 1 - ty
         o.append(bolt(cx_, cy_, 0.82, rot))
         _reg("bolt", cx_, cy_, 9, 13)
+        _reg_bolt("bolt", cx_, cy_, 0.82, rot)
         hx, hy = bx, ctop - 1
         o.append("".join(f'<path d="M{hx + 3.2 * math.cos(math.radians(an)):.1f},{hy + 3.2 * math.sin(math.radians(an)):.1f} '
                          f'L{hx + 6.6 * math.cos(math.radians(an)):.1f},{hy + 6.6 * math.sin(math.radians(an)):.1f}" '
@@ -605,26 +809,33 @@ def art_barrier(t):
     for x, (s, c) in zip(NUT_X, TRAVEL):        # the three that travel, each right above its arrow
         o.append(token(x, R2 + 1, s, c))
         _reg("lane:tok", x, R2 + 1, 13.6, 13.6)
+        _reg_tok("lane:tok", x, R2 + 1, 12.5)
     for i, (s, c) in enumerate(LANE_TOKENS):
-        o.append(token(29 + i * 100 / 3, R1 - 2, s, c))
-        _reg("lane:tok", 29 + i * 100 / 3, R1 - 2, 13.6, 13.6)
+        o.append(token(LANE_TOK_X[i], R1 - 2, s, c))
+        _reg("lane:tok", LANE_TOK_X[i], R1 - 2, 13.6, 13.6)
+        _reg_tok("lane:tok", LANE_TOK_X[i], R1 - 2, 12.5)
     for (x, y, s, r, v) in [(184, R1 + 2, 1.0, 10, 0), (227, R1, 0.92, -20, 1), (270, R1 + 3, 1.0, 30, 2),
                             (205, R2 + 1, 0.9, 50, 2), (250, R2, 0.95, -40, 0)]:
         o.append(food(x, y, s, r, v))
         _reg("lane:food", x, y, 13 * s, 13 * s)
+        _reg_food("lane:food", x, y, s, r, v)
     for (x, y, s, r, v) in [(179, BT - 11, 0.9, 0, 1), (229, BT - 11, 0.88, 20, 0), (279, BT - 11, 0.9, -15, 2)]:
         o.append(food(x, y, s, r, v))   # kept out: resting on the sealed lining
         _reg("rest:food", x, y, 13 * s, 13 * s)
+        _reg_food("rest:food", x, y, s, r, v)
     for (x, y, r) in [(336, R1, 18), (378, R1 - 4, -14), (424, R1 + 4, 158), (346, R2 + 2, -26), (402, R2 + 4, 10)]:
         o.append(microbe(x, y, r, 0.92))
         x0, x1, y0, y1 = microbe_extent(r, 0.92)
         _reg("lane:mic", x + (x0 + x1) / 2, y + (y0 + y1) / 2, (x1 - x0) / 2, (y1 - y0) / 2)
+        _reg_mic("lane:mic", x, y, r, 0.92)
     for (x, y, r) in [(484, R1, -22), (528, R1 - 3, 14), (572, R1 + 1, -8), (503, R2 + 2, 30), (556, R2 + 4, -24)]:
         o.append(pill(x, y, r, 0.96))
         _reg("lane:pill", x, y, 15, 12)
+        _reg_pill("lane:pill", x, y, r, 0.96)
     for (x, y, r) in [(635, R1 + 1, -8), (678, R1 + 5, 10), (721, R1 + 1, -6), (656, R2 + 3, 8), (700, R2 + 3, -10)]:
         o.append(bolt(x, y, 0.9, r))
         _reg("lane:bolt", x, y, 10, 14)
+        _reg_bolt("lane:bolt", x, y, 0.9, r)
 
     o.append(T(16, FB - 12, "BLOODSTREAM", 13, 800, "#FFFFFF", ls=2))
     o.append("</g>")

@@ -5,22 +5,22 @@
     "img_src": "R190.png",
     "key": "17.5&nbsp;g collagen peptides: TENDOFORTE, FORTIGEL and FORTIBONE 5&nbsp;g each, VERISOL 2.5&nbsp;g",
     "dose": "1 scoop in 8 oz water",
-    "dosesub": "or any drink",
+    "dosesub": "about 1 hour before exercise,<br>any time on rest days",
     "sched": [
       [
         "am",
         1,
-        "scoop"
+        "scoop, or before exercise"
       ]
     ],
     "url": "https://nutridyn.com/dynamic-multi-collagen-renew",
-    "src": "Supplement Facts from NutriDyn sell sheet 'Collagen Renew SS ND569' (Rev. 9/24, Dropbox Practitioner Resource/Marketing Materials) as recorded in scratchpad labels/labels.json R190: about 1 scoop (17.5 g), about 30 servings, collagen peptides 17.5 g = FORTIGEL 5 g + FORTIBONE 5 g + TENDOFORTE 5 g + VERISOL 2.5 g, protein 15 g; directions 'Mix 1 scoop in 8 ounces of water, your favorite beverage, or a recipe'. Corroborated by products DB R190 (catalog ND143 10/1/26 via five switch charts) and the repo blast blasts/2026-10-19-collagen-tendon.html (panel read live; no vitamin C in the formula). Size R190 525G from price list ND144 10/1/26. Product URL from the same blast (curl-verified 2026-08-11). Bottle photo R190 (unflavored, 18.52 oz / 525 g, 30 servings). The sheet's dose line '1 scoop in 8 oz water' is the label direction; 'about 1 hour before exercise' is the sheet's timing from Shaw 2017 (PMID 27852613), not a label direction."
+    "src": "Supplement Facts from NutriDyn sell sheet 'Collagen Renew SS ND569' (Rev. 9/24, Dropbox Practitioner Resource/Marketing Materials) as recorded in scratchpad labels/labels.json R190: about 1 scoop (17.5 g), about 30 servings, collagen peptides 17.5 g = FORTIGEL 5 g + FORTIBONE 5 g + TENDOFORTE 5 g + VERISOL 2.5 g, protein 15 g; directions 'Mix 1 scoop in 8 ounces of water, your favorite beverage, or a recipe'. Corroborated by products DB R190 (catalog ND143 10/1/26 via five switch charts) and the repo blast blasts/2026-10-19-collagen-tendon.html (panel read live; no vitamin C in the formula). Size R190 525G from price list ND144 10/1/26. Product URL from the same blast (curl-verified 2026-08-11). Bottle photo R190 (unflavored, 18.52 oz / 525 g, 30 servings). The sheet's dose line '1 scoop in 8 oz water' is the label direction; 'about 1 hour before exercise, any time on rest days' is the sheet's timing from Shaw 2017 (PMID 27852613), not a label direction."
   },
   "ts_vitamin_c_1000": {
     "name": "Vitamin C 1000",
     "size": "100 capsules",
     "img_src": "R101.png",
-    "key": "1,000&nbsp;mg vitamin C (as ascorbic acid) per capsule",
+    "key": "1,000&nbsp;mg vitamin C (as&nbsp;ascorbic acid) per capsule",
     "dose": "1 capsule, 1 to 2 times daily",
     "dosesub": "",
     "sched": [
@@ -30,7 +30,7 @@
         "capsule"
       ]
     ],
-    "src": "products DB R101 (scratchpad products/nutridyn_products.json, Nutri-West switch chart label check of NutriDyn catalog ND143 10/1/26): 'Vitamin C (as ascorbic acid) per serving: NutriDyn 1,000 mg (1 capsule)'; directions 'Take one capsule one to two times daily'. Size R101 100C from the 10/1/26 price list as listed in the DB. Product page slug not verified, so the link falls back to the nutridyn.com catalog search. PHOTO STILL LOW-RES: the only staged image is the 89x160 px chart thumbnail (products/img/R101.png). Print source to stage centrally as build/img-src/R101.png: Dropbox /NutriDyn/Product Images/Product Images (1)/R101.png (id:xHepYs_Ou4AAAAAAAA5IJA, 60,438 bytes, content_hash f7df3e98dd929ee619463eb37d2cec153b81f4436214a2ef5535070bf93f5f1f) or R101_Web in the same folder (id:xHepYs_Ou4AAAAAAAA5ILA, 66,129 bytes). Checked 2026-11-03: metadata readable, but the download host (dl.dropboxusercontent.com) returns 403 through this session's proxy, so the pixel size could not be read; by byte size it matches the other products' 420 px web renders, which img-src/SOURCES.md gives a text-safe 4x AI upscale."
+    "src": "products DB R101 (scratchpad products/nutridyn_products.json, Nutri-West switch chart label check of NutriDyn catalog ND143 10/1/26): 'Vitamin C (as ascorbic acid) per serving: NutriDyn 1,000 mg (1 capsule)'; directions 'Take one capsule one to two times daily'. Size R101 100C from the 10/1/26 price list as listed in the DB. Product page slug not verified, so the link falls back to the nutridyn.com catalog search. PHOTO STILL SOFT: the print shop source is the shared stopgap build/img-src/R101.png (356x640, a 4x Lanczos enlargement of the 89x160 px chart thumbnail, listed in img-src/soft.json and SOURCES.md), so the build reports ts_vitamin_c_1000 under SOFT PRODUCT PHOTOS. It is the correct bottle but needs Asher's print master before printing: Dropbox /NutriDyn/Product Images/Product Images (1)/R101.png (id:xHepYs_Ou4AAAAAAAA5IJA, 60,438 bytes, content_hash f7df3e98dd929ee619463eb37d2cec153b81f4436214a2ef5535070bf93f5f1f) or R101_Web in the same folder (id:xHepYs_Ou4AAAAAAAA5ILA, 66,129 bytes); the download host returned 403 through this session's proxy on 2026-11-03."
   },
   "ts_inflam_eze_plus": {
     "name": "Inflam-Eze Plus",
@@ -50,21 +50,26 @@
     "src": "Supplement Facts from NutriDyn sell sheet 'Inflam-Eze Plus SS ND516' (Rev. 5/25) as recorded in scratchpad labels/labels.json R856 / R856L: serving 3 capsules; ginger root powder 800 mg; CurQfen = proprietary mix of curcumin extract (35% curcuminoids) and fenugreek galactomannans extract, 250 mg for the mix (so the key says 'curcumin-fenugreek 250 mg', not 250 mg of curcumin); Boswellia serrata gum extract 250 mg (65% boswellic acid); white willow bark extract 200 mg (25% salicin); hops extract 150 mg (2% xanthohumol); devil's claw root extract 60 mg (1.2% harpagosides); directions 'Take 3 capsules once daily with food'; caution 'If you are pregnant, nursing, or taking medication, consult your healthcare practitioner before use' (carried into the sheet's check panel). Matches products DB R856 (catalog ND143 10/1/26). Sizes R856 90C and R856L 180C from price list ND144 10/1/26. URL slug from build/products.py SLUGS ('inflam-eze-plus', NutriDyn 60-day protocol doc)."
   },
   "ts_omega_1000": {
-    "name": "Omega Pure EPA-⁠DHA 1000",
+    "name": "Omega Pure EPA‑DHA 1000",
     "size": "120 softgels",
     "img_src": "R243.png",
     "key": "1,000&nbsp;mg EPA + DHA per softgel (730&nbsp;mg EPA, 270&nbsp;mg DHA)",
-    "dose": "2 softgels daily",
-    "dosesub": "with your evening meal",
+    "dose": "1 softgel twice daily",
+    "dosesub": "with meals",
     "sched": [
       [
+        "am",
+        1,
+        "softgel"
+      ],
+      [
         "pm",
-        2,
-        "softgels"
+        1,
+        "softgel"
       ]
     ],
     "url": "https://nutridyn.com/omega-pure-epa-dha-1000",
-    "src": "products DB R243 (scratchpad products/nutridyn_products.json, Pure Encapsulations chart label check of NutriDyn catalog ND143 10/1/26): 'EPA+DHA per softgel (1 softgel per serving each): NutriDyn 1,000 mg (EPA 730 mg + DHA 270 mg)'; directions 'Take one softgel up to three times daily with food'; size R243 120S. Same facts as the shared products.py entry omega_1000; this sheet-own entry exists only so the name breaks as 'Omega Pure / EPA-DHA 1000' (a word joiner after the hyphen and a no-break space before 1000; both are plain characters, so alt text and the index stay clean). Photo img-src/R243.png, 848x1552 (text-safe 4x AI upscale of the 244x420 web render, img-src/SOURCES.md). URL slug from build/products.py SLUGS (omega-pure-epa-dha-1000)."
+    "src": "products DB R243 (scratchpad products/nutridyn_products.json, Pure Encapsulations chart label check of NutriDyn catalog ND143 10/1/26): 'EPA+DHA per softgel (1 softgel per serving each): NutriDyn 1,000 mg (EPA 730 mg + DHA 270 mg)'; directions 'Take one softgel up to three times daily with food'; size R243 120S. Same facts as the shared products.py entry omega_1000; this sheet-own entry exists so the name breaks as 'Omega Pure / EPA-DHA 1000': a no-break hyphen (U+2011), which kit.print_safe prints as a plain hyphen inside an unbreakable span (the word joiner used before is now stripped by print_safe, which let the name split after 'EPA-'), and a no-break space before 1000; alt text gets a plain hyphen. Dose follows the label: one softgel at a time, twice daily with meals (2 a day, within the label's up to 3). Photo img-src/R243.png, 848x1552 (text-safe 4x AI upscale of the 244x420 web render, img-src/SOURCES.md). URL slug from build/products.py SLUGS (omega-pure-epa-dha-1000)."
   },
   "ts_d3_5000_k2": {
     "name": "D3 5000 with K2",
@@ -72,15 +77,15 @@
     "img_src": "R197.png",
     "key": "5,000&nbsp;IU (125&nbsp;mcg) vitamin D3, 60&nbsp;mcg vitamin K2 <span style=\"white-space:nowrap\">(MK-7)</span>, 15&nbsp;mcg vitamin K1",
     "dose": "1 softgel daily",
-    "dosesub": "with a meal",
+    "dosesub": "with your evening meal",
     "sched": [
       [
-        "am",
+        "pm",
         1,
         "softgel"
       ]
     ],
     "url": "https://nutridyn.com/d3-5000-with-k2",
-    "src": "products DB R197 (Designs for Health chart label checks of catalog ND143 10/1/26): per serving vitamin D3 125 mcg (5,000 IU), vitamin K1 15 mcg, vitamin K2 60 mcg as MK-7; directions 'Take one softgel daily'; size 60S. The bottle photo (img-src/R197.png) reads '60 SOFTGELS' and 'Featuring MenaQ7 Vitamin K2'. The shared products.py entry d3_5000_k2 says capsules, so this sheet uses its own entry and leaves the shared one alone. URL slug from build/products.py SLUGS (d3-5000-with-k2)."
+    "src": "products DB R197 (Designs for Health chart label checks of catalog ND143 10/1/26): per serving vitamin D3 125 mcg (5,000 IU), vitamin K1 15 mcg, vitamin K2 60 mcg as MK-7; directions 'Take one softgel daily'; size 60S. The bottle photo (img-src/R197.png) reads '60 SOFTGELS' and 'Featuring MenaQ7 Vitamin K2'. The shared products.py entry d3_5000_k2 now says softgels too; this sheet keeps its own entry for its fuller In each serving line (IU and mcg) and its evening-meal timing, and leaves the shared one alone. URL slug from build/products.py SLUGS (d3-5000-with-k2)."
   }
 }

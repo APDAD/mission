@@ -3,7 +3,7 @@
     "name": "Menopause Support",
     "size": "90 tablets",
     "img_src": "R264L.png",
-    "key": "500 mg EstroG‑100 blend, 250 mg ashwagandha root, 80 mg black cohosh root",
+    "key": "500 mg EstroG‑100 blend, 250 mg ashwagandha, 80 mg black cohosh. <em class=\"mnp-kk\">Peri:</em> 500 mg each EstroG‑100 and ashwagandha, 100 mg milk thistle",
     "dose": "1 tablet daily",
     "dosesub": "with food, same time daily",
     "sched": [
@@ -14,7 +14,7 @@
       ]
     ],
     "url": "https://nutridyn.com/menopause-support",
-    "src": "Menopause Support sell sheet ND564 Rev. 8/24 (Dropbox NutriDyn Marketing Materials id:xHepYs_Ou4AAAAAAAAtb9A, read into scratchpad labels/labels.json): per 1 tablet Estro G-100 blend (Angelica gigas nakai root extract, Cynanchum wilfordii root extract, Phlomis umbrosa root extract) 500 mg, ashwagandha root powder 250 mg, black cohosh root powder 80 mg; 90 servings; directions one tablet daily with food at the same time of day; caution: not for pregnancy or nursing, not recommended with known or suspected estrogen-dependent cancer. Same amounts in products DB R264L (Pendulum chart, catalog ND143 10/1/26). Size R264L 90T from price list ND144 10/1/26. URL from an earlier NutriDyn visit brief. Dose bar is the label direction; the morning slot in Your daily rhythm is plan timing."
+    "src": "Menopause Support sell sheet ND564 Rev. 8/24 (Dropbox NutriDyn Marketing Materials id:xHepYs_Ou4AAAAAAAAtb9A, read into scratchpad labels/labels.json): per 1 tablet Estro G-100 blend (Angelica gigas nakai root extract, Cynanchum wilfordii root extract, Phlomis umbrosa root extract) 500 mg, ashwagandha root powder 250 mg, black cohosh root powder 80 mg; 90 servings; directions one tablet daily with food at the same time of day; caution: not for pregnancy or nursing, not recommended with known or suspected estrogen-dependent cancer. Same amounts in products DB R264L (Pendulum chart, catalog ND143 10/1/26). Size R264L 90T from price list ND144 10/1/26. URL from an earlier NutriDyn visit brief. Dose bar is the label direction; the morning slot in Your daily rhythm is plan timing. PeriMenopause Support (the other box the provider can tick, for a period in the last 12 months): sell sheet ND565 Rev. 8/24 (Dropbox NutriDyn Marketing Materials id:xHepYs_Ou4AAAAAAAAtRRA, read into scratchpad labels/labels.json): per 1 tablet Estro G-100 blend 500 mg, ashwagandha root powder 500 mg, milk thistle seed powder 100 mg; 30 servings; same directions (one tablet daily with food at the same time of day) and the same pregnancy, nursing and estrogen-dependent-cancer caution. Size R199 30T from price list ND144 10/1/26. Stage rule (period within the last year: PeriMenopause Support; longer: Menopause Support) from Asher's Menopause Map."
   },
   "meno_mag_calm_pro": {
     "name": "Mag Calm Pro",
@@ -39,16 +39,16 @@
     "img_src": "R197.png",
     "key": "5,000 IU (125 mcg) vitamin D3, 60 mcg vitamin K2 (MK‑7), 15 mcg vitamin K1",
     "dose": "1 softgel daily",
-    "dosesub": "best with a meal",
+    "dosesub": "test first · with a meal",
     "sched": [
       [
         "pm",
         1,
-        "softgel"
+        "softgel, if vitamin&nbsp;D is low"
       ]
     ],
     "url": "https://nutridyn.com/d3-5000-with-k2",
-    "src": "products DB R197 (Designs for Health and Ortho Molecular charts, catalog ND143 10/1/26): per softgel vitamin D3 125 mcg (5,000 IU), vitamin K2 60 mcg as MK-7, vitamin K1 15 mcg; directions take one softgel daily; size 60S (60 softgels, also printed on the bottle photo). The shared products.py entry d3_5000_k2 says capsules; the label says softgels, so this sheet uses its own entry. Dose bar: '1 softgel daily' is the label direction; 'best with a meal' is a soft cue (vitamin D is fat soluble, NIH ODS) and the evening-meal slot in Your daily rhythm is plan timing, not label text."
+    "src": "NutriDyn sell sheet 'D3 5000 with K2 SS ND382' Rev. 6/24, Supplement Facts panel (Dropbox Marketing Materials id:xHepYs_Ou4AAAAAAAAnbug, as read for the thyroid sheet, products.d/thyroid.json): serving 1 softgel, 60 servings; vitamin D3 125 mcg (5,000 IU), vitamin K1 15 mcg, vitamin K2 as MK-7 (MenaQ7) 60 mcg; directions 'Take one softgel daily with food'; label warnings: contains vitamin D at a level that exceeds the adult tolerable upper intake level, use should be short-term and include regular monitoring of vitamin D levels, and vitamin K2 is not recommended for patients on blood-thinning medications. Same amounts in products DB R197 (Designs for Health and Ortho Molecular charts, catalog ND143 10/1/26); size 60S (60 softgels, also printed on the bottle photo). Dose bar: '1 softgel daily' and 'with a meal' are the label direction; 'test first' (a vitamin D blood test) follows the label's monitoring warning and the thyroid sheet's 'only if your level is low' framing; the evening-meal slot in Your daily rhythm is plan timing, not label text."
   },
   "meno_ultrabiotic_womens": {
     "name": "UltraBiotic Women’s",

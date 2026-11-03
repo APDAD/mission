@@ -19,12 +19,14 @@ FRONT, top to bottom
   -> what raises your risk (8 icons) -> the exercise pain guide (0-10 traffic light + "12 weeks")
   -> when to get checked right away (shoulder AND Achilles red flags; 911 for arm pain with heart-attack signs).
 BACK: six lifestyle circles; five NutriDyn columns (Collagen Renew starts, Vitamin C 1000 is its pair,
-Inflam-Eze Plus, Omega Pure EPA-DHA 1000, D3 5000 with K2); rhythm; three edition-aware checks ({who}).
+Inflam-Eze Plus, Omega Pure EPA-DHA 1000, D3 5000 with K2) on a shared four-row subgrid, so names, bullets, serving
+facts and dose bars line up; a two-slot rhythm (no bedtime products); four edition-aware checks ({who}) that match
+the sibling Pain and Movement sheets for the same products.
 Products: all five are ts_* entries in products.d/tendon-shoulder.json (label facts + "src"); sheet-specific dose
 lines and schedules are set per column below.
 
-CSS scoping: the front lives inside .tsp.  Back-page rules are scoped with .sheet.back:has(img[src*="/nd-ts-"]),
-the page that shows this sheet's own product photos (nd-ts-*.png), which no other sheet uses.
+CSS scoping: the front lives inside .tsp.  Back-page rules are scoped with .sheet.back:has(.tsp-bk), an empty
+marker span in this sheet's lifestyle title (photo files are pooled across sheets, so their names cannot mark it).
 
 Geometry: the anatomy is drawn once in "scapula units" (posterior view of a right shoulder blade,
 medial border at x = 0, inferior angle at y = 1.0, about 16 cm in life) and mapped into each panel;
@@ -641,7 +643,7 @@ def _crimp_band(x0, x1, yc, h, amp=1.2, period=9.5, hi=True):
     return out
 
 
-def _fray_end(x, y, dirn, h=6.0, n=4, length=12.0, sw=0.95, seed=1):
+def _fray_end(x, y, dirn, h=6.0, n=4, length=12.0, sw=0.95, seed=1, depth=4.0):
     """A torn fibre end: its blunt tip at x, centred on y, pointing dirn (+1 right, -1 left).  Like the end of a
     frayed rope, n loose gold strands peel off across the end's width at slightly different depths, splay a little
     (the outer ones most) and stop at different lengths with a slight curl.  The strands of the two ends of a break
@@ -650,7 +652,7 @@ def _fray_end(x, y, dirn, h=6.0, n=4, length=12.0, sw=0.95, seed=1):
     parts = []
     for i in range(n):
         f = (i - (n - 1) / 2) / ((n - 1) / 2 or 1)          # -1 .. 1 across the end
-        x0 = x - dirn * rnd.uniform(0.5, 4.0)
+        x0 = x - dirn * rnd.uniform(0.5, depth)
         y0 = y + f * h * 0.32
         ln = length * rnd.uniform(0.6, 1.0)
         ang = math.radians(f * 20 + rnd.uniform(-8, 8))
@@ -823,10 +825,11 @@ def _sw_fibers():
 
 def _sw_fray():
     """The KEY swatch drawn like the art: two tapered fibre ends whose gold strands splay into the gap, unjoined."""
-    return (_wavy(-15, -6, 0, 0.0, 10, 0, 6.0, (False, True), 0, tip=(3.8, 3))
-            + _wavy(6, 15, 0, 0.0, 10, 0, 6.0, (True, False), 0, tip=(3.8, 3))
-            + _fray_end(-6, 0, +1, 6.0, 4, length=4.6, sw=0.95, seed=3)
-            + _fray_end(6, 0, -1, 6.0, 4, length=4.6, sw=0.95, seed=4))
+    # it stays inside the KEY_SW slot (+-13), so the label keeps its full gap
+    return (_wavy(-13, -5, 0, 0.0, 10, 0, 6.0, (False, True), 0, tip=(3.8, 3))
+            + _wavy(5, 13, 0, 0.0, 10, 0, 6.0, (True, False), 0, tip=(3.8, 3))
+            + _fray_end(-5, 0, +1, 6.0, 4, length=4.4, sw=0.95, seed=3, depth=1.6)
+            + _fray_end(5, 0, -1, 6.0, 4, length=4.4, sw=0.95, seed=4, depth=1.6))
 
 
 def _sw_vessel():
@@ -1052,11 +1055,8 @@ BK .col{display:grid;grid-row:1/span 4;grid-template-rows:subgrid;row-gap:0}
 BK .col .pick a.plink{flex:1}
 BK .col .pick .nm{margin-top:auto;padding-top:0.04in}
 BK .col .dose{display:flex;flex-direction:column;justify-content:center}
-/* No bedtime products: two rhythm slots instead of an empty "nothing to take" box, and the freed width goes to the
-   check panel, which carries the most text on the page. */
-BK .rhythm{grid-template-columns:1fr 1fr}
-BK .rhythm .slot:nth-child(3){display:none}
-BK .duo{grid-template-columns:1fr 1.22fr}
+/* two write-in lines instead of three pay for the aligned name row and the safety lines */
+BK .notes .ln:last-child{display:none}
 """.replace("BK", _BK)
 
 # ============================================================== back-page icons (registered by name for build.life_block)
@@ -1077,7 +1077,7 @@ SHEET = {
               "tendon does more than it is ready for and its rope-like fibers fray. Shoulder pain is the "
               "<b>third most common</b> muscle and joint reason to see a family doctor, usually from the "
               "<b>rotator cuff</b>: 4 muscles whose tendons hug the ball of the arm bone and keep it in its socket. "
-              "The <b>supraspinatus</b> helps lift your arm; the other three turn it in and out."),
+              "The <b>supraspinatus</b> helps lift your arm. The other three turn it in and out."),
     "front": front,
     "css": CSS,
     "back": {
@@ -1092,7 +1092,8 @@ SHEET = {
             # Work with the arm above shoulder height raises cuff risk [LEONG19]
             ("ts_lower", "Lower your reach", "Keep heavy lifting below shoulder height."),
             # Vitamin C is needed to make collagen [ODS-C]
-            ("plate", "Feed the rebuild", "Eat protein and vitamin&nbsp;C foods like citrus."),
+            # (a no-break space keeps "vitamin C" whole; the wording keeps the cell to two lines)
+            ("plate", "Feed the rebuild", "Eat protein and foods rich in vitamin&nbsp;C."),
             # Adults need 7 to 9 hours [NSF15]; the day's biggest growth hormone (repair hormone) pulse comes in deep
             # sleep [VC96]
             ("moon", "Sleep 7 to 9 hours", "Your repair hormone peaks in deep sleep."),
@@ -1107,7 +1108,7 @@ SHEET = {
              # the timing is the sheet's, not the label's [SHAW17]: about 1 hour before exercise; on a rest day the
              # time does not matter.  The rhythm says the same, so a later workout never clashes with the Morning slot.
              "dosesub": "about 1 hour before exercise,<br>any time on rest days",
-             "sched": [("am", 1, "scoop, or 1 hour before exercise")]},
+             "sched": [("am", 1, "scoop, or before exercise")]},
             {"p": "ts_vitamin_c_1000", "need": "Build collagen", "needsub": "vitamin C",
              "bullets": ["Your body needs it to build collagen",                            # [ODS-C]
                          "Collagen Renew has none, so pair them"],                         # labels.json R190: no vitamin C
@@ -1125,7 +1126,9 @@ SHEET = {
              # Vitamin D fact sheet: bones need it to absorb calcium; muscles need it to move).  Structure/function only.
              "bullets": ["Supports the muscles and bones that tendons join",
                          "High dose: check your vitamin D level first"],   # 5,000 IU is above the 4,000 IU adult UL (NIH ODS)
-             "dose": "1 softgel daily", "dosesub": "with breakfast", "sched": [("am", 1, "softgel")]},
+             # label: "Take one softgel daily"; taken with the evening meal (fat helps absorption), which also keeps the
+             # Morning and Evening rhythm slots the same height
+             "dose": "1 softgel daily", "dosesub": "with your evening meal", "sched": [("pm", 1, "softgel")]},
         ],
         # Edition-aware via {who}: "your provider" (practitioner) / "your pharmacist" (pharmacy).  The same cautions, in
         # substance, as the sibling Pain and Movement sheets that carry these products (injury-healing: surgery and
@@ -1136,12 +1139,14 @@ SHEET = {
             # the effect of coumarin anticoagulants [EMA-SALIX: EMA/HMPC/80630/2016]; ginger and turmeric/curcumin may
             # slow clotting (MedlinePlus).  Vitamin K counters warfarin (NIH ODS Vitamin K fact sheet).  Surgery: the
             # American Society of Anesthesiologists asks patients to stop herbal supplements 2 weeks before surgery.
+            # The EMA, Commission E, MedlinePlus and ASA points are as cited in conditions/joint_pain.py and
+            # conditions/injury_healing.py (ema.europa.eu is blocked here; not re-opened for this sheet).
             "<b>Blood thinner, aspirin, or surgery coming up?</b> Fish oil and the Inflam-Eze Plus herbs can add to "
             "bleeding; many surgeons stop them 2 weeks before. The vitamin K in D3 5000 with K2 affects warfarin. "
             "Ask {who} and the doctor who prescribes it.",
             # [FDA16][YU19]: stop the antibiotic and call at the first tendon pain
-            "<b>Fluoroquinolone antibiotics</b> (ciprofloxacin, levofloxacin) can injure tendons, more so after 60 or with "
-            "steroids. Stop and call your prescriber at the first tendon pain.",
+            "<b>Fluoroquinolone antibiotics</b> (ciprofloxacin, levofloxacin) can injure tendons, more so after 60 or on "
+            "steroids. Stop and call your doctor if a tendon hurts.",
             # White willow bark carries salicin, a salicylate (labels.json R856: 200 mg, 25% salicin): not with a
             # salicylate allergy, and not with aspirin or other NSAIDs without advice [EMA-SALIX].
             "<b>Aspirin allergy?</b> Skip Inflam-Eze Plus: its white willow is aspirin's cousin (a salicylate). Ask {who} "
@@ -1150,7 +1155,26 @@ SHEET = {
             # turmeric: not with gallstones or blocked bile ducts (EMA/HMPC/329755/2017).  Label caution (labels.json
             # R856, R190): "If you are pregnant, nursing, or taking medication, consult your healthcare practitioner
             # before use"; the line covers all five products.
-            "<b>Stomach ulcer, gallstones, pregnant or nursing?</b> Ask {who} before starting any of these.",
+            "<b>Stomach ulcer, gallstones, pregnant or nursing?</b> Ask {who} first.",
         ],
     },
 }
+
+
+def _slots_used():
+    """Daily-rhythm slots the back page fills: each column's own sched, else its product's sched in products.d."""
+    import json
+    f = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "products.d", f"{SLUG}.json")
+    try:
+        prods = json.load(open(f))
+    except Exception:
+        return {"am", "pm", "bed"}
+    return {slot for c in SHEET["back"]["cols"] for slot, *_ in (c.get("sched") or prods.get(c["p"], {}).get("sched", [("bed",)]))}
+
+
+if "bed" not in _slots_used():
+    # No bedtime products: two rhythm slots instead of an empty "nothing to take" box, and the freed width goes to
+    # the check panel, which carries the most text on the page.
+    SHEET["css"] += (f"{_BK} .rhythm{{grid-template-columns:1fr 1fr}}"
+                     f"{_BK} .rhythm .slot:nth-child(3){{display:none}}"
+                     f"{_BK} .duo{{grid-template-columns:1fr 1.22fr}}")

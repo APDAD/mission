@@ -692,9 +692,11 @@ CSS = r"""
 .ly-front .ly-tk span{display:block;font-size:7.8pt;color:#3A4247;line-height:1.28;margin-top:1px}
 /* BACK PAGE.  Every rule is scoped by the empty .ly-back marker in life_title, so it touches
    only this sheet's back, in its own file and in the all-sheets bundle. */
-/* the life icons keep their 0.6 in size inside a shorter box (the page needs the room) */
+/* life icons at 0.54 in (kit 0.6 in) in a shorter box, and a tighter band: the back needs the room */
 .sheet.back:has(.ly-back) .icons5 .life .disc2{height:0.56in}
 .sheet.back:has(.ly-back) .icons5 .life .disc2 svg{width:0.54in!important;height:0.54in!important}
+.sheet.back:has(.ly-back) .band{padding-bottom:0.11in}
+.sheet.back:has(.ly-back) .band h2{margin-bottom:0.07in}
 .sheet.back:has(.ly-back) .ns-title{margin-top:0.1in}
 /* dose bands: a little more width so "2 to 3 hours from doxycycline" stays on one line */
 .sheet.back:has(.ly-back) .col .dose{padding-left:0.025in;padding-right:0.025in}
@@ -812,7 +814,7 @@ SHEET = {
                  ("dryer", "Dry, then shower", "Dry clothes on high heat for 10 minutes. Shower within 2 hours."),
                  ("ly_check", "Check daily", "Scalp, ears, armpits, waist and behind the knees. Pets, too."),
                  ("ly_tweezers", "Remove it right", "Fine-tipped tweezers at the skin, pull straight up. Note the date."),
-                 ("thermo", "Worse at first?", "Can be germs dying off. Keep your antibiotic; call your clinician.")],
+                 ("thermo", "Worse at first?", "Can be germs dying off. Stay on your antibiotic; call your clinician.")],
         "cols": [
             {"p": "ly_ultrabiotic_dms", "need": "Protect your gut", "needsub": "with <em>S.&nbsp;boulardii</em>", "start": True,
              "bullets": ["Supports a healthy gut microbiome",

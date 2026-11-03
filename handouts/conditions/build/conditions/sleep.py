@@ -23,8 +23,9 @@ FRONT, top to bottom
      doctor orders it)").  A pharmacist can go over the check but cannot order the study, so the line
      says who orders it without sending a practitioner-edition reader "to your doctor".
 BACK: "Reset your sleep clock" (CBT-I habits by morning / day / night, with sleep drive explained) and
-5 NutriDyn products: GoodNight (start here), Stress Essentials Calm, Mag Calm Pro, Magnesium Glycinate,
-Stress Essentials Cortisol Pro (facts and sources in products.d/sleep.json).
+5 NutriDyn products: GoodNight (start here), Stress Essentials Calm, Mag Calm Pro, Magnesium Glycinate (the
+capsule alternative to Mag Calm Pro: one magnesium, never both), Stress Essentials Cortisol Pro (facts and
+sources in products.d/sleep.json).
 
 Every SVG id starts with "slp-" and every CSS class with "slp-", so nothing collides with other
 sheets in the all-sheets bundle.  SVG text is never below 10 units (7.3 pt printed; the viewBox is
@@ -530,9 +531,10 @@ LW, RX = 398, 410            # left card width, right card x
 P1H = 314                    # card height (the 3-line step strip needs about 4.6 units clear top and bottom)
 ART_B = 258                  # bottom of the drawing area; the step strip sits below
 STEP_Y0, STEP_DY, STEP_R = 15.5, 15.8, 7.0   # strip baselines ART_B + 15.5 + i * 15.8; dot radius
-# Cortisol leader: from beside its gloss (x-height middle of "the wake-up and") to the gold band at 9:30 am.
-# Checked numerically: it clears the melatonin band (with its stroke) by 6.9 units and every hour tick by 3.4.
-CORTISOL_LEADER_FROM, CORTISOL_LEADER_H = (RX + 104, 71.0), 9.5
+# Cortisol leader: from 7.5 units right of its gloss ("the wake-up and") to the gold band at 9:30 am.
+# Checked numerically, edge to edge with stroke widths: 5.9 units clear of the melatonin band (whose thin
+# end is at 8:36 am) and 3.1 units clear of the nearest hour tick (9 am).
+CORTISOL_LEADER_FROM, CORTISOL_LEADER_H = (RX + 104, 73.0), 9.5
 
 
 def art_clock(t):
@@ -579,10 +581,11 @@ def art_clock(t):
     bt = 0.24
     o.append(moon_badge((1 - bt) ** 2 * n0[0] + 2 * (1 - bt) * bt * nc[0] + bt ** 2 * n1[0],
                         (1 - bt) ** 2 * n0[1] + 2 * (1 - bt) * bt * nc[1] + bt ** 2 * n1[1]))
-    # Melatonin leaving the pineal gland rides the vein (VEIN_PTS, drawn with the head): it drops onto the
-    # border between cerebrum and cerebellum within two dots, then runs back along it toward the back of
-    # the head.  Dots every 12.6 local units (about 9.8 printed units).
-    for k, q in enumerate(spline_at(VEIN_PTS, [3.5 + 12.6 * i for i in range(9)])):
+    # Melatonin leaving the pineal gland rides the vein (VEIN_PTS, drawn with the head): the third dot is
+    # already on the border between cerebrum and cerebellum, the rest run back along it to the back of the
+    # head, and the vein carries on alone where "into blood" points.  Dots every 12.6 local units (about
+    # 9.8 printed units).
+    for k, q in enumerate(spline_at(VEIN_PTS, [9.5 + 12.6 * i for i in range(8)])):
         x, y = m(q)
         o.append(f'<circle cx="{_f(x)}" cy="{_f(y)}" r="{2.9 if k < 2 else 2.6}" fill="{MEL}" stroke="#FFFFFF" '
                  'stroke-width=".7"/>')
@@ -694,7 +697,7 @@ STAGES = {"W": ("Awake", AWAKE), "R": ("REM (dreams)", REM), "L": ("Light", LITE
 ROW_Y = {"W": 45, "R": 59.5, "L": 74, "D": 88.5}
 BAND_Y0, BAND_Y1 = 28.5, 96.5            # shaded cycle bands
 AXIS_Y = 107.8                           # time-axis baseline: 5 units clear of the card's bottom border
-P2H, KEY_Y, KEY_H = 116, 121, 26
+P2H, KEY_Y, KEY_H = 116, 121, 38   # the two-row key (38 units; the page-1 room comes from the Know panel)
 CX0, CX1 = 118, 556          # chart x for minute 0 and minute 480
 
 
@@ -777,23 +780,29 @@ def _sw_bar(c):
     return f'<rect x="-11" y="-5" width="22" height="10" rx="2.6" fill="{c}"/>'
 
 
-KEY_ITEMS = [(_sw_beam, "Daylight"), (_sw_signal, "Nerve signal"), (_sw_mel, "Melatonin"), (_sw_cor, "Cortisol"),
-             (lambda: _sw_bar(AWAKE), "Awake"), (lambda: _sw_bar(REM), "REM sleep"),
-             (lambda: _sw_bar(LITE), "Light sleep"), (lambda: _sw_bar(DEEP), "Deep sleep")]
+# Two rows: the clock picture's symbols, then the sleep stages (nine entries do not fit one row at a
+# readable size).  Columns line up across the rows; the last column ends flush with the strip's right pad.
+KEY_ROWS = [[(_sw_beam, "Daylight"), (_sw_signal, "Day signal"), (_sw_night, "Night signal"), (_sw_mel, "Melatonin"),
+             (_sw_cor, "Cortisol")],
+            [(lambda: _sw_bar(AWAKE), "Awake"), (lambda: _sw_bar(REM), "REM sleep"),
+             (lambda: _sw_bar(LITE), "Light sleep"), (lambda: _sw_bar(DEEP), "Deep sleep")]]
+KEY_ROW_DY = 13.6                 # distance between the two row centres
 
 
 def key_strip(y, w=W, h=KEY_H, fs=10.6):
     o = [f'<rect x=".6" y="{y}" width="{w - 1.2}" height="{h}" rx="8" fill="#FFFFFF" stroke="#CFD6DA" stroke-width="1.2"/>',
          T(13, y + h / 2 + 3.7, "KEY", 10.4, 800, INK, ls=1.3)]
     sw_w, gap = 24, 6
-    widths = [sw_w + gap + tw(lab, fs, 600) for _, lab in KEY_ITEMS]
+    ncol = max(len(r) for r in KEY_ROWS)
+    colw = [max(sw_w + gap + tw(r[c][1], fs, 600) for r in KEY_ROWS if c < len(r)) for c in range(ncol)]
     x0, x1 = 50, w - 12
-    space = (x1 - x0 - sum(widths)) / (len(KEY_ITEMS) - 1)
-    x = x0
-    for (sw, lab), wd in zip(KEY_ITEMS, widths):
-        o.append(f'<g transform="translate({_f(x + sw_w / 2)},{_f(y + h / 2)})">{sw()}</g>')
-        o.append(T(_f(x + sw_w + gap), _f(y + h / 2 + 3.8), lab, fs, 600, INK))
-        x += wd + space
+    space = (x1 - x0 - sum(colw)) / (ncol - 1)
+    xs = [x0 + sum(colw[:c]) + space * c for c in range(ncol)]
+    for r, row in enumerate(KEY_ROWS):
+        cy = y + h / 2 + (r - (len(KEY_ROWS) - 1) / 2) * KEY_ROW_DY
+        for c, (sw, lab) in enumerate(row):
+            o.append(f'<g transform="translate({_f(xs[c] + sw_w / 2)},{_f(cy)})">{sw()}</g>')
+            o.append(T(_f(xs[c] + sw_w + gap), _f(cy + 3.8), lab, fs, 600, INK))
     return "".join(o)
 
 
@@ -838,32 +847,36 @@ def risk_strip():
 
 
 def know_panel():
-    # [CDCNEED] hours of sleep by age
+    # [CDCNEED] hours of sleep by age, written with the CDC's own en-dash ranges so each row fits the
+    # 1.3 in column on one line
     need = "".join(f'<div class="slp-age"><i>{a}</i><b>{b}</b></div>' for a, b in
-                   (("Ages 18 to 60", "7+ hours"), ("Ages 61 to 64", "7 to 9 hours"), ("65 and older", "7 to 8 hours")))
-    # [ICSD3TR] chronic insomnia: all three parts
+                   (("Ages 18&ndash;60", "7+ hours"), ("Ages 61&ndash;64", "7&ndash;9 hours"),
+                    ("Ages 65+", "7&ndash;8 hours")))
+    # [ICSD3TR] chronic insomnia: all three parts.  The heading says "long-term" (chronic), because
+    # trouble that lasts less than 3 months is short-term insomnia, which is still insomnia.
     ins = "".join(f'<li><span class="slp-bx"></span><span>{x}</span></li>' for x in (
         "Trouble falling or staying asleep, or waking too early",
         "3 or more nights a week, for 3+ months",
         "Your days suffer: tired, moody or foggy"))
     # [STOPBANG] the eight yes/no items, in questionnaire order (Chung 2016 wording, shortened).
-    # B is BMI > 35 kg/m2, glossed in plain words.
+    # B is BMI > 35 kg/m2; most people do not know theirs, so the line says who can work it out.
     sb = [("S", "Snore loudly"), ("T", "Tired or sleepy by day"),
           ("O", "Seen to stop breathing or gasp"), ("P", "High blood pressure, or pills for it"),
-          ("B", "BMI over 35 (very heavy)"), ("A", "Age over 50"),
+          ("B", "BMI over 35 (ask {who})"), ("A", "Age over 50"),
           ("N", "Collar 17 in+ (men), 16 in+ (women)"), ("G", "Male")]
     sbl = "".join(f'<li><span class="slp-bx"></span><em>{a}</em><span>{b}</span></li>' for a, b in sb)
     return ('<div class="slp-know"><div class="slp-kh"><b>Know your sleep</b><span>Tick what fits you, then go over it '
             'with {who}.</span></div><div class="slp-kg">'
             f'<div><h4>How much sleep?</h4>{need}'
             '<div class="slp-mine"><span>My usual</span><i></i><span>hours</span></div></div>'
-            f'<div><h4>Is it insomnia?</h4><ul class="slp-ul">{ins}</ul>'
+            f'<div><h4>Is it long-term insomnia?</h4><ul class="slp-ul">{ins}</ul>'
             # [ACP16, AASM21]
             '<p class="slp-act"><b>All 3?</b> Ask about <b>CBT-I</b>, the short sleep-coaching program experts '
             'recommend first.</p></div>'
             f'<div><h4>Sleep apnea check <span>(STOP-Bang)</span></h4><ul class="slp-sb">{sbl}</ul>'
-            # fixed route in both editions: a doctor orders the sleep study (a pharmacist cannot)
-            '<p class="slp-act"><b>3 or more ticks?</b> Ask your doctor about a sleep apnea test.</p></div>'
+            # Both editions: say who orders the sleep study (a doctor; a pharmacist cannot) without sending the
+            # reader away from the provider who handed out the sheet.  [STOPBANG] 3+ = intermediate/high risk.
+            '<p class="slp-act"><b>3 or more ticks?</b> Ask about a sleep apnea test (a doctor orders it).</p></div>'
             '</div><p class="slp-src">Sources: CDC; American Academy of Sleep Medicine (ICSD-3-TR); STOP-Bang, Chung 2016; '
             'American College of Physicians 2016.</p></div>')
 
@@ -891,34 +904,34 @@ CSS = r"""
 .slp .slp-kh{display:flex;align-items:baseline;gap:10px;margin:0 0 3px}
 .slp .slp-kh b{font:900 11.5pt Merriweather,Georgia,serif;color:var(--c1)}
 .slp .slp-kh span{font-size:7.8pt;color:#56626A}
-.slp .slp-kg{display:grid;grid-template-columns:1.5in 2.3in 1fr;gap:0.14in;align-items:start}
+/* The age column only needs about 1.25 in; the spare width goes to the STOP-Bang list, whose long items
+   (O, B, N) sit in its left half, so B's "ask ..." gloss and the apnea line each stay on one line. */
+.slp .slp-kg{display:grid;grid-template-columns:1.3in 2.3in 1fr;gap:0.14in;align-items:start}
 .slp .slp-kg h4{margin:0 0 3px;font:800 8.1pt Inter,sans-serif;color:#2B3236;white-space:nowrap}
 .slp .slp-kg h4 span{font-weight:600;color:#5E686F}
 .slp .slp-age{display:flex;justify-content:space-between;align-items:baseline;gap:4px;background:var(--tint);
-  border-left:3px solid var(--c2);border-radius:0 5px 5px 0;padding:1.5px 6px;margin:0 0 3px}
+  border-left:3px solid var(--c2);border-radius:0 5px 5px 0;padding:1.5px 5px;margin:0 0 3px}
 .slp .slp-age i{font-style:normal;font-size:7.3pt;color:#4A555C;white-space:nowrap}
 .slp .slp-age b{font:800 7.8pt Inter,sans-serif;color:var(--deep);white-space:nowrap}
 .slp .slp-mine{display:flex;align-items:center;gap:5px;font:700 7.3pt Inter,sans-serif;color:#4A555C;margin-top:4px}
 .slp .slp-mine i{display:block;width:0.4in;height:0.21in;border-radius:5px;background:#E9ECEE;border:1px solid #D6DBDF}
 .slp .slp-ul,.slp .slp-sb{list-style:none;margin:0;padding:0}
 .slp .slp-ul li,.slp .slp-sb li{display:flex;align-items:flex-start;gap:5px;font-size:7.4pt;line-height:1.22;color:#2B3236;margin:0 0 2.5px}
-.slp .slp-sb{display:grid;grid-template-columns:1fr 1fr;gap:0 0.1in}
-.slp .slp-sb em{flex:none;font:800 7.4pt/1.22 Inter,sans-serif;font-style:normal;color:var(--c1);width:7px}
+.slp .slp-sb{display:grid;grid-template-columns:1.185fr .815fr;gap:0 0.08in}
+.slp .slp-sb em{flex:none;font:800 7.4pt/1.22 Inter,sans-serif;font-style:normal;color:var(--c1);width:8px}
+.slp .slp-sb li{gap:4.5px}
 .slp .slp-bx{flex:none;width:0.115in;height:0.115in;border:1.5px solid var(--deep);border-radius:2px;background:#fff;margin-top:.5px}
 .slp .slp-act{margin:2px 0 0;font-size:7.4pt;line-height:1.25;color:#2B3236;background:var(--soft);border-radius:5px;padding:2px 7px}
 .slp .slp-act b{color:var(--deep)}
 .slp .slp-src{margin:3px 0 0;font-size:7pt;color:#5E686F;line-height:1.3}
-/* Standard 3 (7 pt floor) for the shared kit text on THIS sheet only.  The front is found by its .slp body,
-   the back by the empty <i class="slp-bk"> in its band title; no other sheet carries either class. */
-.sheet.front:has(.slp) .foot,.sheet.front:has(.slp) .foot .code{font-size:7pt}
-.sheet.back:has(.slp-bk) .col .key,.sheet.back:has(.slp-bk) .col .key b,.sheet.back:has(.slp-bk) .col .pick .sz,
-.sheet.back:has(.slp-bk) .col .dose small,.sheet.back:has(.slp-bk) .col .need i,.sheet.back:has(.slp-bk) .startt,
-.sheet.back:has(.slp-bk) .foot .disc,.sheet.back:has(.slp-bk) .foot .code{font-size:7pt}
-/* smaller habit discs give the bullets room, so the band does not grow */
+/* Back-page rules are scoped by the empty <i class="slp-bk"> in the band title (no other sheet carries it).
+   The shared kit already sets all fine print to 7 pt, so this sheet no longer overrides it.
+   Smaller habit discs give the bullets room, so the band does not grow. */
 .sheet.back:has(.slp-bk) .life.l3 .disc2{width:0.64in;height:0.64in}
 .sheet.back:has(.slp-bk) .life.l3 .disc2 svg{width:0.42in!important;height:0.42in!important}
-/* the medicine check carries four notes, so it gets the wider half of the duo row */
-.sheet.back:has(.slp-bk) .duo{grid-template-columns:1fr 1.2fr}
+/* the medicine check carries four notes, so it gets the wider part of the duo row: at 1.25 the pharmacy
+   check is 11 lines and each rhythm slot is still wide enough for "Evening meal" on one line */
+.sheet.back:has(.slp-bk) .duo{grid-template-columns:1fr 1.25fr}
 /* the need headers hold two short lines, so they do not need the kit's 0.5 in minimum */
 .sheet.back:has(.slp-bk) .col .need{min-height:0.44in}
 """
@@ -946,7 +959,8 @@ SHEET = {
                   ["Get up at the same time every day, even after a rough night",
                    "Get outdoor light within an hour of waking",
                    "Use your bed only for sleep: no phone, TV or work in bed"]),
-                 ("coffee", "Day: build sleep drive",
+                 # "walk" (an active day builds sleep drive), never the coffee cup page 1 uses as a sleep risk
+                 ("walk", "Day: build sleep drive",
                   ["Sleep drive builds while you are awake; naps drain it",
                    "Skip naps, or keep them short and early",
                    "Caffeine in the morning only", "Move your body most days"]),
@@ -954,12 +968,16 @@ SHEET = {
                   ["Dim lights and put screens away an hour before bed", "No alcohol or big meals late",
                    "A cool, dark, quiet bedroom",
                    "Awake 20 minutes? Get up. Go back to bed when sleepy"])],
-        # Doses: every one is inside its label's directions [LABELS], except Magnesium Glycinate, which is held
-        # to 1 capsule (half a 2-capsule serving; label: 2 capsules twice daily) so that magnesium from both
-        # magnesium products stays at 200 + 130 = 330 mg a day, under the 350 mg supplement limit [ODSMG].
-        # L-theanine in the rhythm: GoodNight 1 capsule 100 mg + Stress Essentials Calm 200 mg + Mag Calm Pro
-        # 100 mg + Cortisol Pro 100 mg = 500 mg a day (600 mg with 2 GoodNight).  GoodNight's label says one
-        # hour before bedtime, so its rhythm line says so too.
+        # Doses: every one is inside its label's directions [LABELS].  Magnesium is a choice, not a stack:
+        # Mag Calm Pro (1 scoop, 200 mg) OR Magnesium Glycinate (2 capsules = one label serving, 260 mg; label:
+        # 2 capsules twice daily); either one stays under the 350 mg supplement limit [ODSMG].  Magnesium
+        # Glycinate has no rhythm entry (sched []), so the plan counts one magnesium source; its column says it
+        # replaces Mag Calm Pro.  L-theanine across the plan: GoodNight 1 capsule 100 mg + Stress Essentials Calm
+        # 200 mg + Mag Calm Pro 100 mg + Cortisol Pro 100 mg = 500 mg a day (600 mg with 2 GoodNight); it is not
+        # printed, because the number alone tells a patient nothing.  GoodNight's label says one hour before
+        # bedtime, so its rhythm line says so too.  Stress Essentials Calm sits at bedtime, matching its "wind-down
+        # hours before bed" bullet (label: two capsules daily, no time of day given).
+        # Claim bullets (starting "Supports" / "Helps") get the FDA diamond from the shared kit.
         "cols": [
             {"p": "sleep_goodnight", "need": "Ease into sleep", "needsub": "melatonin + calming herbs", "start": True,
              "bullets": ["Supports falling asleep and restful sleep",
@@ -968,40 +986,50 @@ SHEET = {
              "sched": [("bed", 1, "capsule, 1 hour before bed")]},
             {"p": "sleep_stress_calm", "need": "Quiet a busy mind", "needsub": "GABA + L-theanine",
              "bullets": ["Supports a calm, relaxed state of mind", "For the wind-down hours before bed"],
-             "dose": "2 capsules", "dosesub": "in the evening", "sched": [("pm", 2, "capsules")]},
+             "dose": "2 capsules", "dosesub": "before bed", "sched": [("bed", 2, "capsules")]},
             {"p": "sleep_mag_calm_pro", "need": "Evening wind-down", "needsub": "magnesium drink",
              "bullets": ["Supports relaxation and a calm mood", "Magnesium, inositol and taurine in one drink"],
              "dose": "1 scoop in 6 oz water", "dosesub": "after dinner", "sched": [("pm", 1, "scoop")]},
-            {"p": "sleep_mag_glycinate", "need": "Relax body and nerves", "needsub": "magnesium",
+            {"p": "sleep_mag_glycinate", "need": "Magnesium, no drink", "needsub": "instead of Mag Calm Pro",
              "bullets": ["Helps maintain normal muscle and nerve function", "Supports relaxation at bedtime"],
-             "dose": "1 capsule", "dosesub": "at bedtime (half a serving)", "sched": [("bed", 1, "capsule")]},
+             "dose": "2 capsules", "dosesub": "at bedtime", "sched": []},
             {"p": "sleep_cortisol_pro", "need": "Handle daily stress", "needsub": "cortisol support",
-             "bullets": ["Supports a healthy response to daily stress", "Helps keep cortisol at healthy levels"],
+             # the bottle's own claim ("Adaptogenic Support for Healthy Stress Response"); short enough that the
+             # kit's FDA diamond stays on the line instead of wrapping onto a line of its own
+             "bullets": ["Supports a healthy stress response", "Helps keep cortisol at healthy levels"],
              "dose": "2 capsules", "dosesub": "in the morning", "sched": [("am", 2, "capsules")]},
         ],
-        # [BOYER05] L-tryptophan + serotonergic drugs; GoodNight label caution (pregnant, nursing, SSRIs, MAOIs,
-        # "May cause drowsiness. Use with caution if driving or operating machinery."); [STOPBANG]; [ODSMG]
-        # magnesium (350 mg supplement limit, kidney disease, spacing from thyroid, bisphosphonate and
-        # antibiotic pills); Cortisol Pro label caution "Do not use if pregnant."  Totals as in the cols note.
+        # Label cautions [LABELS]: GoodNight "If you are pregnant, nursing, or taking medications such as SSRIs or
+        # MAOIs consult your healthcare practitioner before use. May cause drowsiness. Use with caution if driving
+        # or operating machinery."  Mag Calm Pro "If pregnant, nursing, or taking medication, consult your
+        # healthcare practitioner before use."  Cortisol Pro "Do not use if pregnant. If nursing or taking
+        # medication, consult your healthcare practitioner before use."  Bullet 4 carries all three (and covers
+        # Calm and Magnesium Glycinate too).  [BOYER05] L-tryptophan + serotonergic drugs (antidepressants,
+        # triptans).  [STOPBANG] apnea.  [ODSMG] magnesium: 350 mg supplement limit, kidney disease, spacing from
+        # bisphosphonate (bone) and tetracycline / quinolone antibiotic pills; [LT4LBL] spacing from thyroid pills.
         "rx": {
             "pharmacy": [
-                "<b>Ask your pharmacist before GoodNight</b> if pregnant, nursing, or on SSRIs, SNRIs, MAOIs, triptans or "
-                "sleep pills: its tryptophan adds to serotonin, and its melatonin and valerian add drowsiness. Do not "
+                "<b>Ask {who} before GoodNight</b> if you take antidepressants (SSRIs, SNRIs, MAOIs), migraine triptans "
+                "or sleep pills: its tryptophan adds to serotonin, and its melatonin and valerian add drowsiness. Do not "
                 "drive after taking it.",
                 "<b>Loud snoring, gasping or sleepy days?</b> Your pharmacist can go over the apnea check on page 1. "
                 "Apnea needs a sleep test ordered by your doctor; supplements are no substitute for apnea care.",
-                "<b>Mag Calm Pro plus Magnesium Glycinate: 330 mg magnesium a day</b>, under the 350 mg daily limit for "
-                "supplements. Check first if you have kidney disease. Space it from thyroid, bone and antibiotic pills.",
-                "<b>Do not use Cortisol Pro if pregnant.</b> L-theanine from four products adds up to about 500 mg a day."],
+                "<b>Choose Mag Calm Pro (200 mg magnesium) or Magnesium Glycinate (260 mg), not both:</b> either stays "
+                "under the 350 mg daily limit for supplements. Check first if you have kidney disease. Space it from "
+                "thyroid, bone and antibiotic pills.",
+                "<b>Pregnant, nursing or taking any medicine?</b> Ask {who} before you start any of these. "
+                "<b>Do not use Cortisol Pro if pregnant.</b>"],
             "practitioner": [
-                "<b>Ask your provider before GoodNight</b> if pregnant, nursing, or on SSRIs, SNRIs, MAOIs, triptans or "
-                "sleep pills: its tryptophan adds to serotonin, and its melatonin and valerian add drowsiness. Do not "
+                "<b>Ask {who} before GoodNight</b> if you take antidepressants (SSRIs, SNRIs, MAOIs), migraine triptans "
+                "or sleep pills: its tryptophan adds to serotonin, and its melatonin and valerian add drowsiness. Do not "
                 "drive after taking it.",
-                "<b>Loud snoring, gasping or sleepy days?</b> Ask your doctor about a sleep apnea test (check on "
-                "page 1). Supplements are no substitute for apnea care.",
-                "<b>Mag Calm Pro plus Magnesium Glycinate: 330 mg magnesium a day</b>, under the 350 mg daily limit for "
-                "supplements. Check first if you have kidney disease. Space it from thyroid, bone and antibiotic pills.",
-                "<b>Do not use Cortisol Pro if pregnant.</b> L-theanine from four products adds up to about 500 mg a day."],
+                "<b>Loud snoring, gasping or sleepy days?</b> Ask {who} about a sleep apnea test (check on page 1). "
+                "Supplements are no substitute for apnea care.",
+                "<b>Choose Mag Calm Pro (200 mg magnesium) or Magnesium Glycinate (260 mg), not both:</b> either stays "
+                "under the 350 mg daily limit for supplements. Check first if you have kidney disease. Space it from "
+                "thyroid, bone and antibiotic pills.",
+                "<b>Pregnant, nursing or taking any medicine?</b> Ask {who} before you start any of these. "
+                "<b>Do not use Cortisol Pro if pregnant.</b>"],
         },
     },
 }

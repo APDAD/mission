@@ -2,20 +2,23 @@
 
 Self-contained sheet module (no legacy sheets.py / art.py drawing code).  Built 2026-11-03, revised the same
 day after an independent review (K2 retraction-and-replacement notice, magnesium grade, calcium message,
-conditional products kept out of the daily plan, guarding angle for chiropractors, medicine checks).
+conditional products kept out of the daily plan, guarding angle for chiropractors, medicine checks), then polished
+after a second review (back page fits again; no product tied to a cramp trial or a drug's side effect; kidney and
+one-magnesium-at-a-time checks; the 2026 stockings-and-magnesium trial; heartburn pills; a guarding inset).
 
 FRONT, top to bottom
   intro (cramp, spasm and guarding) -> "Contract, then let go": one picture that zooms in three steps
       YOUR CALF (lateral view of a lower leg: calf muscle, the deeper calf muscle, Achilles tendon, motor nerve,
-      the red cramp knot)  ->  ONE MUSCLE FIBER (the nerve ending firing on a striped fiber, one thread of
-      motors pulled out with the same stripe spacing, and the nerve's firing pattern: normal vs cramp)  ->  ONE
-      TINY MOTOR (a sarcomere, RELAXED above and CONTRACTED below: calcium switches it on, ATP with magnesium's
-      help switches it off)
-  with a KEY for every symbol (the zoom ring included), a numbered 4-step strip, the common triggers, an honest
-  "what the research says" panel and the get-checked red flags.
+      the red cramp knot), with a small GUARDING inset in its empty corner (the low back from behind: a back
+      muscle beside the spine tightens to guard a joint)  ->  ONE MUSCLE FIBER (the nerve ending firing on a
+      striped fiber, one thread of motors pulled out with the same stripe spacing, and the nerve's firing pattern:
+      normal vs cramp)  ->  ONE TINY MOTOR (a sarcomere, RELAXED above and CONTRACTED below: calcium switches it
+      on, ATP with magnesium's help switches it off)
+  with a KEY for every symbol (the zoom ring and bracket included), a numbered 4-step strip, the common triggers,
+  an honest "what the research says" panel and the get-checked red flags.
 BACK: lifestyle band, five NutriDyn columns (Muscle Eze is Start here; Mag Calm Pro and Mag-K are swaps for it,
-  CoQ10 is only for statin users, so none of those three is in the daily rhythm), daily rhythm and the
-  edition-specific medicine checks.
+  CoQ10 is only for statin users, so none of those three is in the daily rhythm), daily rhythm (the empty Morning
+  slot hidden) and the edition-specific medicine checks.
 
 Every SVG id starts with "mc-" and every CSS class with "mcr-", so nothing collides with other sheets in the
 all-sheets bundle.  Back-page CSS is scoped with BACK (the back <section> right after the front that holds
@@ -83,8 +86,23 @@ SOURCES (each fact on the page carries one of these tags in a comment beside it)
              conduction and muscle contraction; UL 350 mg/day from supplements; separate magnesium from oral
              bisphosphonates by at least 2 hours; take tetracycline or quinolone antibiotics at least 2 hours
              before or 4 to 6 hours after magnesium; loop and thiazide diuretics raise magnesium loss,
-             potassium-sparing diuretics lower it; kidney disease; food sources; low magnesium raises
-             neuromuscular excitability).
+             potassium-sparing diuretics lower it; proton pump inhibitors taken for a long time (usually over a
+             year) can cause low magnesium; magnesium can build up when kidney function is impaired; food
+             sources; low magnesium raises neuromuscular excitability, and muscle cramps are a sign of worsening
+             deficiency).  The sheet was not re-opened this session (no host access); the PPI point is confirmed
+             by [FDA-PPI].
+  [FDA-PPI]  FDA Drug Safety Communication, 2 March 2011: prescription proton pump inhibitors may cause low serum
+             magnesium if taken for a long time (in most cases over a year); low magnesium can cause muscle spasm
+             (tetany), irregular heartbeat and seizures.  Read via drugs.com and Healio coverage of the notice
+             (fda.gov/Drugs/DrugSafety/ucm245011.htm), web search 2026-11-03.
+  [KUUS26]   Kuusipalo A et al. Secondary prevention of leg cramps using compression stockings or magnesium
+             supplements: a three-arm randomized clinical trial. Trials 2026;27(1). PMID 41680812, PMC13005370,
+             doi:10.1186/s13063-025-09370-z (full text read on PMC).  121 adults aged 50 to 85 with 2 or more leg
+             cramps a week; 4 weeks of knee-high medical compression stockings (worn from waking to bedtime),
+             magnesium hydrochloride (250 mg magnesium a day) or placebo pills.  Stockings vs placebo: -1.43 cramps a
+             week (95% CI -2.36 to -0.50), fewer night wakings (-1.12), less pain; not blinded.  Magnesium vs placebo:
+             -0.20 (95% CI -1.49 to 1.09), no benefit.  Excluded: diagnosed or suspected peripheral arterial disease,
+             severe neuropathy, eGFR under 30, leg ulcers and other skin or leg problems.
   [CIPRO]    FDA ciprofloxacin label: take at least 2 hours before or 6 hours after products containing magnesium,
              calcium, iron or zinc.
   [LEVO]     FDA levothyroxine (Synthroid) label: take at least 4 hours apart from calcium carbonate and from
@@ -358,6 +376,56 @@ def panel_leg(t):
     return "".join(o)
 
 
+GUARD = (3, 24, 82, 82)           # the guarding inset: x, y, w, h (panel A's empty top-left corner)
+
+
+def guard_inset(t):
+    """Muscle guarding [SPASM], for the chiropractors who hand this sheet out: the low back seen from behind.  Four
+    lumbar vertebrae (body, two short wings, the spinous tab) with the long back muscles on either side; the right one
+    is bunched and carries the same red knot glow as the calf (keyed "Cramp knot"), beside a spine joint.  Fills the
+    empty corner left of the knee, clear of the panel title, the leg and the "Calf muscle" label."""
+    x, y, w, h = GUARD
+    cx = x + w / 2
+    o = [f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="10" fill="{t["tint"]}" stroke="#CBD9E4" stroke-width="1.2"/>',
+         T(cx, y + 12.5, "GUARDING", 10.5, 800, t["deep"], "middle", ls=0.8)]
+    top, bot = y + 17, y + 57                         # the picture's band, between the title and the caption
+    mid = (top + bot) / 2
+
+    def muscle(side, half):
+        """A long back muscle (erector spinae): a smooth spindle beside the spine, `half` wide at its belly."""
+        mx = cx + side * 13
+        pts = [(mx, top), (mx + half * 0.55, top + 8), (mx + half, mid), (mx + half * 0.55, bot - 8), (mx, bot),
+               (mx - half * 0.55, bot - 8), (mx - half, mid), (mx - half * 0.55, top + 8)]
+        d = _spline(pts, closed=True)
+        # Solid, pre-blended stroke colours (no stroke-opacity): in Chromium's PDF a gradient fill drawn right after a
+        # translucent stroke came out at that stroke's opacity (the second muscle printed pale pink).
+        fib = "".join(f'<path d="M{mx + k * half * 0.45:.1f},{top + 6} Q{mx + k * half * 0.75:.1f},{mid:.1f} '
+                      f'{mx + k * half * 0.45:.1f},{bot - 6}" stroke="#A8443E" stroke-width=".9" fill="none"/>'
+                      for k in (-1, 0, 1))
+        return (f'<path d="{d}" fill="url(#mc-gas)" stroke="#8C3530" stroke-width=".9"/>' + fib)
+
+    # four vertebrae with a pale disc between each pair.  Seen from behind, the long back muscles lie over the
+    # vertebrae's side wings, so the wings go down first, then the muscles, then the bones and their midline tabs.
+    step = (bot - top - 4) / 4
+    rows = [top + 2 + step * (i + 0.5) for i in range(4)]
+    for vy in rows:
+        o.append(f'<rect x="{cx - 11:.1f}" y="{vy - 1.6:.1f}" width="22" height="3.2" rx="1.6" fill="{TEN}" '
+                 f'stroke="{TEN_EDGE}" stroke-width=".8"/>')                       # the two wings
+    o.append(muscle(-1, 4.6))                         # resting side
+    o.append(muscle(1, 6.4))                          # guarding side: bunched up and tight
+    for i, vy in enumerate(rows):
+        if i:
+            o.append(f'<rect x="{cx - 5.5:.1f}" y="{vy - step / 2 - 1:.1f}" width="11" height="2" rx="1" fill="#DCE5EC"/>')
+        o.append(f'<rect x="{cx - 5.5:.1f}" y="{vy - 3.6:.1f}" width="11" height="7.2" rx="2.4" fill="{TEN}" '
+                 f'stroke="{TEN_EDGE}" stroke-width=".9"/>')                       # the bone
+        o.append(f'<ellipse cx="{cx:.1f}" cy="{vy:.1f}" rx="1.5" ry="2.3" fill="#E4D3B0"/>')   # the spinous tab
+    # the guarding knot: next to the joint between the second and third vertebrae
+    o.append(f'<ellipse cx="{cx + 12.5:.1f}" cy="{top + 2 + step * 2:.1f}" rx="8" ry="12" fill="url(#mc-knot)"/>')
+    o.append(T(cx, y + h - 16, "Tightens to", 10, 600, INK, "middle"))
+    o.append(T(cx, y + h - 5, "guard a joint", 10, 600, INK, "middle"))
+    return "".join(o)
+
+
 def lens_and_cone():
     lx, ly = L(*LENS)
     r = 11
@@ -473,7 +541,9 @@ def panel_fiber(t):
     zl, zr = bracket_x()
     yb = MYO_Y - MYO_R - 5
     o.append(f'<path d="M{zl},{yb + 3} V{yb} H{zr} V{yb + 3}" fill="none" stroke="{INK}" stroke-width="1.4"/>')
-    o.append(T((zl + zr) / 2, yb - 4, "1 motor", 10, 700, INK, "middle"))
+    # The zoom beam to panel C rises from the bracket's right end and passes x 402 to 404 at this label's height, so
+    # the label ends at x 397 (5 units clear of the line) instead of centring over the bracket.
+    o.append(T(zr - 3, yb - 4, "1 motor", 10, 700, INK, "end"))
     o.append(T(MYO_X0 + 6, MYO_Y + MYO_R + 13, "a thread of tiny motors", 10, 600, INK2, italic=True))
     # firing pattern: normal vs cramp
     xa, xb = bx + 12, bx + bw - 22
@@ -633,19 +703,22 @@ def key_strip(y):
         return '<circle r="11" fill="url(#mc-knot)"/>'
 
     def zoom_sw():
-        """The zoom device used twice in the picture: a white ring on the art with grey lines opening out."""
+        """The zoom device used twice in the picture: a white ring (calf to fiber) or a bracket (fiber to motor), each
+        with grey lines opening out.  The swatch draws the ring and its lines."""
         return (f'<path d="M-6,-5.4 L13,-10 M-6,5.4 L13,10" stroke="{ZOOM_LINE}" stroke-width="1.1" stroke-opacity=".8"/>'
                 f'<circle cx="-6" cy="0" r="6.4" fill="{SKIN_B}"/>'
                 '<circle cx="-6" cy="0" r="4.6" fill="none" stroke="#FFFFFF" stroke-width="2.2"/>'
                 '<circle cx="-6" cy="0" r="6.2" fill="none" stroke="#2F2626" stroke-width=".9" stroke-opacity=".6"/>')
 
     # Columns line up across the two rows, so each column pairs a long label with a short one (it only fits
-    # the 760-unit width that way).  Calcium is ON, ATP is OFF, magnesium helps ATP [PHYS].
+    # the 760-unit width that way).  Calcium is ON, ATP is OFF, magnesium helps ATP [PHYS].  The zoom device is a
+    # ring (calf to fiber) or a bracket (fiber to motor), each with lines opening out; "Ring or bracket + lines"
+    # would leave no gap between the key's columns, and the swatch already draws the lines.
     rows = [[(nerve_sw, 13, "Nerve signal"), (lambda: ca_dot(0, 0, 4.2), 5, "Calcium: switch ON"),
              (lambda: bolt(0, 0, 1.15), 5, "ATP: energy, switch OFF"), (lambda: mg_dot(0, 0, 4.2), 5, "Magnesium: helps ATP"),
              (lambda: drop(0, 0.6, 1.15), 5, "Sodium, potassium")],
             [(knot_sw, 11, "Cramp knot"), (thin_sw, 12, "Thin filament (actin)"), (thick_sw, 12, "Thick filament (myosin)"),
-             (zoom_sw, 13, "Ring and lines: zoom in"), (z_sw, 4, "Z-line: the anchor")]]
+             (zoom_sw, 13, "Ring or bracket: zoom in"), (z_sw, 4, "Z-line: the anchor")]]
     fs, gap_sw = 10.5, 6
     ncol = max(len(r) for r in rows)
     colw = [0.0] * ncol
@@ -683,6 +756,7 @@ def art_cramp(t):
         o.append(f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="12" fill="{t["tint"]}" stroke="#CBD9E4" stroke-width="1.2"/>')
     beam_a, lines_a = lens_and_cone()
     beam_b, lines_b = bracket_beam()
+    o.append(guard_inset(t))
     o.append(beam_a)
     o.append(panel_leg(t))
     o.append(lines_a)
@@ -712,10 +786,11 @@ def art_cramp(t):
     o.append(key)
     return svg(W, KEY_Y + kh + 2, "".join(o),
                "How a muscle tightens and lets go. Left: a calf muscle and the deeper calf muscle, with a red cramp knot "
-               "and its motor nerve; a white ring and grey lines zoom in. Middle: one muscle fiber with the nerve ending "
-               "firing on it, one thread of tiny motors, and the nerve's firing pattern, normal versus a cramp that keeps "
-               "firing. Right: one tiny motor, a sarcomere, relaxed when ATP with magnesium's help lets go, and "
-               "contracted with calcium.")
+               "and its motor nerve; a white ring and grey lines zoom in. Inset: guarding, the low back from behind, "
+               "where a back muscle beside the spine tightens to guard a joint. Middle: one muscle fiber with the nerve "
+               "ending firing on it, one thread of tiny motors, and the nerve's firing pattern, normal versus a cramp "
+               "that keeps firing; a bracket and grey lines zoom in. Right: one tiny motor, a sarcomere, relaxed when "
+               "ATP with magnesium's help lets go, and contracted with calcium.")
 
 
 # =============================================================== blocks under the picture
@@ -759,8 +834,10 @@ TRIGGERS = [  # [MAYO] causes and risk factors; [AAFP12] linked conditions; [SCH
     ("age", "Getting older"),
     ("pregnant", "Pregnancy"),
     # [GARR12]: inhalers (LABA 2.42) and some water pills (potassium-sparing 2.12, thiazide-like 1.48) are the strong
-    # links; loop diuretics (1.20) and statins (1.16) are weak ones, so statins come last
-    ("rx", "Some water pills, inhalers, statins"),
+    # links; loop diuretics (1.20) and statins (1.16) are weak ones, so statins come last.  [FDA-PPI] [ODS-MG]: long-term
+    # heartburn pills (PPIs) can lower blood magnesium, and low magnesium can cause spasms.  This word order keeps the
+    # label to three lines in the narrow cell.
+    ("rx", "Some water and heartburn pills, inhalers, statins"),
     # [MAYO] too little potassium, calcium or magnesium; [ODS-CA] [ODS-MG] low blood levels make nerves over-fire
     ("lowlevels", "Low magnesium, calcium or potassium"),
     # [MAYO] diabetes, nerve, liver, thyroid; [AAFP12] hemodialysis (kidney) and cirrhosis (liver)
@@ -770,23 +847,31 @@ TRIGGERS = [  # [MAYO] causes and risk factors; [AAFP12] linked conditions; [SCH
 
 RESEARCH = [  # (css class, tag, tag sub-line, lead, text)
     # [HALL12] n=80, over 55, calf AND hamstring stretches nightly for 6 weeks (not blinded): fewer, milder cramps.
-    # [COPPIN05] n=191, calf-only stretching: no change.  One positive trial of the routine this sheet recommends.
-    ("ok", "Helped", "1 trial", "Stretching at bedtime.",
-     "Adults over 55 who stretched calves and hamstrings nightly for 6 weeks had fewer, milder night cramps. "
-     "A larger trial of calf-only stretching found no benefit."),
-    # [TAN24] 65+, MK-7 180 mcg nightly for 8 weeks.  [TAN25N] retracted and replaced in 2025; the authors keep the
-    # finding, but the corrected numbers could not be re-checked here, so none are printed (and no placebo detail).
+    # [COPPIN05] n=191, calf-only stretching: no change.  [KUUS26] n=121, ages 50 to 85: knee-high medical compression
+    # stockings worn from waking to bedtime for 4 weeks, -1.43 cramps a week against placebo pills (95% CI -2.36 to
+    # -0.50), fewer night wakings, less pain; stocking arm not blinded; peripheral arterial disease was excluded, hence
+    # "people with good circulation".  One positive trial each.  The same trial is the 2026 magnesium result below,
+    # so both of its arms are reported.
+    ("ok", "Helped", "1 trial each", "Stretches and stockings.",
+     "Adults over 55 who stretched calves and hamstrings nightly had fewer, milder night cramps; calf stretches "
+     "alone did not. Knee-high compression stockings by day helped people with good circulation (2026)."),
+    # [TAN24] 65+, MK-7 180 mcg nightly for 8 weeks.  [TAN25N] retracted and replaced in 2025 ("reissued with fixes");
+    # the authors keep the finding, but the corrected numbers could not be re-checked here, so none are printed (and
+    # no placebo detail).  The 180 mcg trial dose lives here only, never next to the product on the back.
     ("ea", "Early", "1 trial", "Vitamin K2 (MK-7).",
-     "One trial in adults 65+ taking 180 mcg nightly found fewer night cramps. Its report was withdrawn and "
-     "replaced with a corrected one in 2025, and a second trial is needed."),
-    # [COCH20] only cramp outcomes from the same review: unlikely to prevent cramps in older adults (moderate to high
-    # certainty); pregnancy trials conflict; no trials in exercise-associated cramps.
+     "One trial (adults 65+, 180 mcg nightly) found fewer night cramps. Its report was reissued with fixes in 2025; "
+     "it needs a second trial."),
+    # [COCH20] unlikely to prevent cramps in older adults (moderate to high certainty).  [KUUS26] magnesium
+    # hydrochloride, 250 mg magnesium a day for 4 weeks: -0.20 cramps a week against placebo (95% CI -1.49 to 1.09),
+    # "a 2026 trial agreed".  The bridge to the back's magnesium products, without claiming they fix anything:
+    # [ODS-MG] low magnesium itself causes cramps (muscle cramps are a sign of worsening deficiency); loop and
+    # thiazide water pills raise magnesium loss; [FDA-PPI] long-term heartburn pills (PPIs) can lower it.
     ("np", "Not proven", "", "Magnesium.",
-     "Unlikely to prevent ordinary night cramps in older adults (Cochrane). Studies in pregnancy disagree; "
-     "none tested sports cramps."),
+     "Unlikely to prevent ordinary night cramps in older adults (Cochrane 2020; a 2026 trial agreed). But low "
+     "magnesium can itself cause cramps, and some water pills and heartburn pills lower it."),
     # [KOVAC25] 7 RCTs, 389 patients: small drop in statin muscle pain; [KENN20] 7 RCTs, 321 patients: no benefit
     ("mx", "Mixed", "", "CoQ10 with a statin.",
-     "The newest review (2025) found a little less muscle pain. A 2020 review found no clear benefit."),
+     "A 2025 review found a little less muscle pain. A 2020 review found no clear benefit."),
 ]
 
 RED_FLAGS = [
@@ -819,9 +904,10 @@ def research():
     rows = "".join(
         f'<div class="mcr-rr"><span class="mcr-tag {c}">{tag}{f"<small>{sub}</small>" if sub else ""}</span>'
         f'<p><b>{a}</b> {b}</p></div>' for c, tag, sub, a, b in RESEARCH)
-    # source line: [HALL12] [COPPIN05] [TAN24] [TAN25N] [COCH20] [KOVAC25] [KENN20]
+    # source line: [HALL12] [COPPIN05] [KUUS26] [TAN24] [TAN25N] [COCH20] [KOVAC25] [KENN20]
     src = " &middot; ".join(x.replace(" ", "&nbsp;") for x in (
-        "Hallegraeff 2012", "Coppin 2005", "Tan 2024 (notice 2025)", "Cochrane 2020", "Kovacic 2025", "Kennedy 2020"))
+        "Hallegraeff 2012", "Coppin 2005", "Kuusipalo 2026", "Tan 2024 (notice 2025)", "Cochrane 2020",
+        "Kovacic 2025", "Kennedy 2020"))
     return (f'<div class="mcr-res"><div class="mcr-ph">What the research says</div>{rows}'
             f'<p class="mcr-src">{src}</p></div>')
 
@@ -898,7 +984,7 @@ CSS = r"""
 {BACK} .col .dose small{{line-height:1.25}}
 /* only Muscle Eze and Vitamin K2 are in the daily plan, while the medicine check is long: a narrow rhythm panel with
    the times of day stacked (an empty slot is hidden, see _rhythm_css), beside a wide check panel */
-{BACK} .duo{{grid-template-columns:2.1in 1fr}}
+{BACK} .duo{{grid-template-columns:1.9in 1fr}}
 {BACK} .rhythm{{grid-template-columns:1fr;gap:4px}}
 {BACK} .slot{{display:flex;align-items:center;gap:6px;padding:4px 6px}}
 {BACK} .ns-title{{margin-top:0.1in}}
@@ -914,10 +1000,15 @@ CSS = r"""
 # wall calf stretch: both hands on the wall, a clear torso leaning in, front knee bent, back leg straight, heel down
 ICONS.setdefault("mcr_stretch", '<path d="M58 4v54M4 58h54"/><circle cx="41" cy="9" r="5"/><path d="M40 15 34 34"/>'
                  '<path d="M39 19 57 20M38.5 22 57 27"/><path d="M34 34 44 43 43 56h6"/><path d="M34 34 13 56h8"/>')
-# stop a cramp: side view of a lower leg with the foot flexed up toward the shin, and a bold curved arrow
-ICONS.setdefault("mcr_foot", '<path d="M13 3C8 12 8 24 13 32C15 36 16 40 16 44C16 51 20 54 26 51L49 39C53 37 52 31 47 32.5'
-                 'L30 38C28 27 27 15 27 3"/><path d="M54 41C62 30 59 15 46 10" stroke-width="3.6"/>'
-                 '<path d="M52 4.5 45 10 51.5 16" stroke-width="3.6"/>')
+# stop a cramp: the seated towel stretch, side view, in the same stick-figure style as the wall stretch.  On a floor
+# line, a figure leans forward from the hip with the leg straight; the foot stands up from a round heel, the sole
+# rising to the ball and the toes tipped back toward the shin (with a toe crease); one arm holds a towel whose loop
+# wraps the ball of the foot.  Drawn from y 8 to 56, so it sits centred in its disc.
+ICONS.setdefault("mcr_foot", '<path d="M4 56H60"/><circle cx="17" cy="13" r="5"/><path d="M8.5 50 15.5 24.5"/>'
+                 '<path d="M8.5 50H40"/>'
+                 '<path d="M40 50C41.2 53.6 44 55 46.5 53.6L50.6 38.2C51.3 35.6 49.5 33.2 47 34.2L42.8 44.6"/>'
+                 '<path d="M46.2 37.6 50 38.8"/><path d="M15.2 28.5 30 35"/>'
+                 '<path d="M30 35 46.6 34.6M30 35C38 38 45.5 40.4 50.4 40.6C53.6 40.7 54.6 36.4 51.9 35.1"/>')
 
 # =============================================================== the sheet
 SHEET = {

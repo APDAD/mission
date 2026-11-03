@@ -72,7 +72,13 @@ SOURCES (each number on the page carries one of these tags in a comment)
               /NutriDyn/Public Share Folder/GLC 2026 Notes/3 - Rick Mayfield/ (id:xHepYs_Ou4AAAAAAAA7oHg),
               read 2026-11-03: "Metabolic Fatty Liver (MAFLD, MASLD, MASH)": PPC Silymarin (coming soon),
               Ganoderma Plus, Inflam-Eze Plus, Milk Thistle Complex, Berberine Pro, Detox, Mito Recharge,
-              UltraBiotic Prebiotic.  The same talk covers the gut barrier and "inflammatory endotoxins".
+              UltraBiotic Prebiotic.  His GLC 2026 outline (Dropbox "GLC 2026 outline marketing.docx",
+              id:xHepYs_Ou4AAAAAAAA4B1A, per scratchpad/protocols/metabolic.md) covers the gut barrier and the
+              "total toxic load of xenobiotics and inflammatory endotoxins".
+  [MAYFIELD24] Mayfield, GLC2024 Rick Mayfield Protocols.pdf (id:xHepYs_Ou4AAAAAAAArn1w, per
+              scratchpad/wf/protocol-fatty-liver.json): UltraBiotic Prebiotic's polyphenols "all reduce LPS",
+              listed as an Akkermansia booster.  Asher's Direct Mail blast "NutriDyn New Formula: Akkermansia
+              Plus" (Gmail 18f5f05aa7b72a44, 2024-05-09) ties Akkermansia to "colon and liver health".
   [LABELS]    NutriDyn sell sheets read 2026-11-03 (Dropbox NutriDyn Marketing Materials): Berberine Pro
               ND1130 Rev. 11/25, Lipo-Flow ND606 Rev. 4/26, Milk Thistle Complex ND764 Rev. 2/25,
               Mito Recharge ND812 Rev. 2/25.  Amounts are in products.d/fatty-liver.json.
@@ -497,7 +503,7 @@ def _tissue_scarred(cx, cy, r):
         rim = [(cx + x, cy + y) for x, y in _wobble(_rounded(poly, 7), 1.1, rnd)]
         rims.append(rim)
         d = "M" + " L".join(f"{x:.1f},{y:.1f}" for x, y in rim) + "Z"
-        out.append(f'<clipPath id="fl-nod{i}"><path d="{d}"/></clipPath><g clip-path="url(#fl-nod{i})">'
+        out.append(f'<clipPath id="fl-isl{i}"><path d="{d}"/></clipPath><g clip-path="url(#fl-isl{i})">'
                    f'<path d="{d}" fill="{TISSUE_BG}"/>')
         rot = rnd.uniform(-25, 25)
         ox, oy = rnd.uniform(0, 2 * SCAR_CR), rnd.uniform(0, 2 * SCAR_CR)
@@ -943,7 +949,8 @@ LIFE = [
     # 10-minute walks after meals lowered after-meal glucose more than one 30-minute walk [REYNOLDS16]
     ("walk", "Move every day",
      "150 minutes a week of brisk walking plus 2 strength days. A 10-minute walk after meals blunts the sugar spike."),
-    # [MAYFIELD26] gut barrier and "inflammatory endotoxins"; [AASLD23] gut-microbiome products "may also contribute"
+    # gut barrier and endotoxins [MAYFIELD26]; plant polyphenols and fiber as Akkermansia boosters [MAYFIELD24];
+    # [AASLD23]: gut-microbiome products "may also contribute"
     ("gut", "Feed your gut",
      "Fiber and colorful plants feed helpful gut bacteria, like Akkermansia, that help keep the gut lining strong."),
     # [EASL24]: people with steatotic liver disease "should be discouraged from consuming alcohol"; "All alcohol
@@ -983,19 +990,19 @@ COLS = [
 RX = {
     "pharmacy": [
         "<b>Diabetes medicines:</b> Berberine Pro adds to their sugar-lowering effect, and it can slow the liver "
-        "enzymes that clear some drugs (CYP2D6, 2C9, 3A4).",
+        "enzymes that clear some drugs (CYP2D6, 2C9, 3A4), so {who} checks your other medicines.",
         "<b>Warfarin:</b> Mito Recharge has 250 mcg vitamin K1, which works against it. Take it the same way every "
         "day, and tell {who} before you start.",
-        "<b>Statins</b> are safe with fatty liver but can lower CoQ10; Mito Recharge has 100 mg. It has green tea "
-        "extract, so take it with food. Dark urine or yellow skin? Stop it and call your doctor.",
+        "<b>Statins</b> are safe with fatty liver but lower CoQ10; Mito Recharge has 100 mg. It has green tea "
+        "extract: take it with food. Dark urine or yellow skin? Stop it and call your doctor.",
     ],
     "practitioner": [
         "<b>Diabetes medicines:</b> Berberine Pro adds to their sugar-lowering effect, so {who} may check your "
         "blood sugar more often and adjust doses.",
         "<b>Warfarin:</b> Mito Recharge has 250 mcg vitamin K1, which works against it. Keep the dose steady; "
         "{who} may recheck your INR after you start.",
-        "<b>Statins</b> are safe with fatty liver but can lower CoQ10; Mito Recharge has 100 mg. It has green tea "
-        "extract, so take it with food. Dark urine or yellow skin? Stop it and call {who}.",
+        "<b>Statins</b> are safe with fatty liver but lower CoQ10; Mito Recharge has 100 mg. It has green tea "
+        "extract: take it with food. Dark urine or yellow skin? Stop it and call {who}.",
     ],
 }
 
