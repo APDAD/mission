@@ -65,9 +65,6 @@ def _defs():
             '<linearGradient id="gx-acid" x1="0" y1="0" x2="0" y2="1">'
             f'<stop offset="0" stop-color="{ACID_TOP}"/><stop offset=".35" stop-color="{ACID_MID}"/>'
             f'<stop offset="1" stop-color="{ACID_BOT}"/></linearGradient>'
-            '<linearGradient id="gx-jet" x1="0" y1="0" x2="1" y2="0">'
-            f'<stop offset="0" stop-color="{ACID_BOT}"/><stop offset=".45" stop-color="{ACID_TOP}"/>'
-            f'<stop offset="1" stop-color="{ACID_MID}"/></linearGradient>'
             # cylinder shading laid over the outside of the esophagus
             '<linearGradient id="gx-cyl" x1="0" y1="0" x2="1" y2="0">'
             '<stop offset="0" stop-color="#7A2A1A" stop-opacity=".16"/>'
@@ -462,7 +459,7 @@ CSS = r"""
 .gxf .gx-strip{display:grid;grid-template-columns:1.3fr 1fr;gap:0.14in;align-items:center;background:var(--soft);border-radius:10px;
   padding:0.07in 0.12in 0.07in 0.14in}
 .gxf .gx-meds p{margin:0;font-size:8.2pt;line-height:1.34;color:#2B3236}
-.gxf .gx-meds sup{color:var(--c1);font-weight:700}
+.gxf .gx-meds sup{color:var(--c1);font-weight:700;font-size:7.2pt;line-height:0}
 .gxf .gx-dep{background:#fff;border-radius:8px;padding:0.05in 0.08in 0.05in}
 .gxf .gx-coins{display:grid;grid-template-columns:repeat(5,1fr);gap:0.04in}
 .gxf .gx-coin{display:flex;flex-direction:column;align-items:center}
