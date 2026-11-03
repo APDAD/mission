@@ -3,7 +3,7 @@
     "name": "Inflam-Eze Plus",
     "size": "90 or 180 capsules",
     "img_src": "R856.png",
-    "key": "3 capsules: ginger 800 mg, curcumin blend (CurQfen) 250 mg, boswellia 250 mg, white willow 200 mg, hops 150 mg, devil's claw 60 mg",
+    "key": "3 capsules: ginger 800&nbsp;mg, curcumin-fenugreek blend (CurQfen) 250&nbsp;mg, boswellia 250&nbsp;mg, white willow 200&nbsp;mg, hops 150&nbsp;mg, devil's claw 60&nbsp;mg",
     "dose": "3 capsules once daily",
     "dosesub": "with food",
     "sched": [
@@ -14,13 +14,13 @@
       ]
     ],
     "url": "https://nutridyn.com/inflam-eze-plus",
-    "src": "NutriDyn sell sheet 'Inflam-Eze Plus SS ND516' (Rev. 5/25, Dropbox /NutriDyn/Sales/Practitioner Resource/NutriDyn Marketing Materials/), as transcribed in scratchpad labels/labels.json: per 3 capsules ginger powder 800 mg; CurQfen (curcumin extract 35% curcuminoids + fenugreek galactomannans) 250 mg; Boswellia serrata gum extract 65% boswellic acid 250 mg; white willow bark extract 25% salicin 200 mg; hops extract 2% xanthohumol 150 mg; devil's claw extract 1.2% harpagosides 60 mg; directions 'Take 3 capsules once daily with food'. Matches products DB R856 (catalog ND143 10/1/26 via the Ortho Molecular, Metagenics and Nutritional Frontiers switch charts). Sizes R856 90C / R856L 180C from price list ND144 10/1/26. URL slug from build/products.py SLUGS (NutriDyn 60-day protocol doc); nutridyn.com is blocked from this machine, so the link was not re-checked."
+    "src": "NutriDyn sell sheet 'Inflam-Eze Plus SS ND516' (Rev. 5/25, Dropbox /NutriDyn/Sales/Practitioner Resource/NutriDyn Marketing Materials/), as transcribed in scratchpad labels/labels.json: per 3 capsules ginger powder 800 mg; CurQfen (curcumin extract 35% curcuminoids + fenugreek galactomannans) 250 mg; Boswellia serrata gum extract 65% boswellic acid 250 mg; white willow bark extract 25% salicin 200 mg; hops extract 2% xanthohumol 150 mg; devil's claw extract 1.2% harpagosides 60 mg; directions 'Take 3 capsules once daily with food'. CurQfen is printed as a 'Proprietary Mix of Curcumin Extract (35% curcuminoids) and Fenugreek Galactomannans Extract', so the line says 'curcumin-fenugreek blend', not curcumin. Capsule: hypromellose (other ingredients, same sell sheet). Matches products DB R856 (catalog ND143 10/1/26 via the Ortho Molecular, Metagenics and Nutritional Frontiers switch charts). Sizes R856 90C / R856L 180C from price list ND144 10/1/26. URL slug from build/products.py SLUGS (NutriDyn 60-day protocol doc); nutridyn.com is blocked from this machine, so the link was not re-checked."
   },
   "jp_chondro_ic": {
     "name": "Chondro-Relief Intensive Care",
     "size": "120 capsules",
     "img_src": "R160.png",
-    "key": "4 capsules: glucosamine HCl 500 mg, chondroitin sulfate 400 mg, MSM 1 g, hyaluronic acid 100 mg, green-lipped mussel 1 g",
+    "key": "4 capsules: glucosamine HCl 500&nbsp;mg, chondroitin sulfate 400&nbsp;mg, MSM 1&nbsp;g, hyaluronic acid 100&nbsp;mg, green-lipped mussel 1&nbsp;g, plus vitamin C and manganese",
     "dose": "4 capsules daily",
     "dosesub": "with your evening meal",
     "sched": [
@@ -30,13 +30,13 @@
         "capsules"
       ]
     ],
-    "src": "Products DB R160 label_facts (Nutritional Frontiers switch charts 'Ha Plus' and 'Green Lipped Mussel', read from NutriDyn catalog ND143 10/1/26): glucosamine 500 mg (HCl, 4 capsules), chondroitin sulfate 400 mg, MSM 1 g, hyaluronic acid 100 mg, green-lipped mussel powder 1 g; directions 'Take four capsules daily with food'. Also in scratchpad labels/labels.json (R160). Vitamin C, manganese and ASU amounts exist only in the 2014 catalog, so they are not printed. No current sell sheet was found. All four capsules are scheduled with the evening meal, inside the label's 'four capsules daily with food'. Size 120C from price list ND144 10/1/26. No product URL known: the link falls back to the catalog search."
+    "src": "Products DB R160 label_facts (Nutritional Frontiers switch charts 'Ha Plus' and 'Green Lipped Mussel', read from NutriDyn catalog ND143 10/1/26): glucosamine 500 mg (HCl, 4 capsules), chondroitin sulfate 400 mg, MSM 1 g, hyaluronic acid 100 mg, green-lipped mussel powder 1 g; directions 'Take four capsules daily with food'. Also in scratchpad labels/labels.json (R160). Vitamin C and manganese (as manganese ascorbate) are still in the formula: the Chondro Relief Clinical Guide ND181 (Rev. 3/22, Dropbox Marketing Materials) lists them among the IC ingredients. Their only printed amounts (vitamin C 38 mg, manganese 15 mg per 4 capsules) are from the June 2014 catalog, so the line names them without numbers. 15 mg would be above the adult upper limit for manganese (11 mg a day, Institute of Medicine 2001): read the current bottle panel before printing. ASU (2014 catalog) is not in the 2022 guide, so it is left out. No current sell sheet was found. All four capsules are scheduled with the evening meal, inside the label's 'four capsules daily with food'. Size 120C from price list ND144 10/1/26. No product URL known: the link falls back to the catalog search."
   },
   "jp_joint_eze": {
     "name": "Joint Eze",
     "size": "60 capsules",
     "img_src": "R340.png",
-    "key": "1 capsule: UC-II undenatured collagen 20 mg, hops extract 50 mg, magnesium 37.5 mg",
+    "key": "1 capsule: undenatured collagen blend (UC-II) 20&nbsp;mg, hops extract 50&nbsp;mg, magnesium 37.5&nbsp;mg",
     "dose": "1 capsule twice daily",
     "dosesub": "with food",
     "sched": [
@@ -51,13 +51,13 @@
         "capsule"
       ]
     ],
-    "src": "NutriDyn sell sheet 'Joint Eze SS ND512' (Rev. 8/24, Dropbox Marketing Materials), as transcribed in scratchpad labels/labels.json: per capsule magnesium (bisglycinate chelate, TRAACS) 37.5 mg, hops extract 2% xanthohumol 50 mg, undenatured collagen blend (UC-II) 20 mg; directions 'Take one capsule twice daily with food'; caution 'Do not use if pregnant or nursing'. Matches products DB R340 (Pure Encapsulations chart, catalog ND143 10/1/26). Size 60C from price list ND144 10/1/26. No product URL known: the link falls back to the catalog search."
+    "src": "NutriDyn sell sheet 'Joint Eze SS ND512' (Rev. 8/24, Dropbox Marketing Materials), as transcribed in scratchpad labels/labels.json: per capsule magnesium (bisglycinate chelate, TRAACS) 37.5 mg, hops extract 2% xanthohumol 50 mg, undenatured collagen blend (UC-II) 20 mg (printed as a blend, so the sheet says 'UC-II blend' and never implies 20 mg of UC-II itself); directions 'Take one capsule twice daily with food'; caution 'Do not use if pregnant or nursing'. Matches products DB R340 (Pure Encapsulations chart, catalog ND143 10/1/26). Size 60C from price list ND144 10/1/26. No product URL known: the link falls back to the catalog search."
   },
   "jp_collagen_renew": {
     "name": "Collagen Renew",
     "size": "525 g &middot; about 30 scoops",
     "img_src": "R190.png",
-    "key": "1 scoop: 17.5 g collagen peptides (FORTIGEL, FORTIBONE and TENDOFORTE 5 g each, VERISOL 2.5 g)",
+    "key": "1 scoop: 17.5&nbsp;g bovine collagen peptides (FORTIGEL, FORTIBONE and TENDOFORTE 5&nbsp;g each, VERISOL 2.5&nbsp;g)",
     "dose": "1 scoop daily",
     "dosesub": "in 8 oz water or a smoothie",
     "sched": [
@@ -68,13 +68,13 @@
       ]
     ],
     "url": "https://nutridyn.com/dynamic-multi-collagen-renew",
-    "src": "NutriDyn sell sheet 'Collagen Renew SS ND569' (Rev. 9/24, Dropbox Marketing Materials), as transcribed in scratchpad labels/labels.json: per scoop (17.5 g) collagen peptides 17.5 g = FORTIGEL 5 g + FORTIBONE 5 g + TENDOFORTE 5 g + VERISOL 2.5 g; protein 15 g; about 30 servings; directions 'Mix 1 scoop in 8 ounces of water, your favorite beverage, or a recipe'. Matches products DB R190 (5 switch charts, catalog ND143 10/1/26) and the repo blast blasts/2026-10-19-collagen-tendon.html (panel read live; no vitamin C in the formula, hence the 'pair with a vitamin C food' line). URL from that blast (curl 200 on 2026-08-11). Size 525G from price list ND144 10/1/26."
+    "src": "NutriDyn sell sheet 'Collagen Renew SS ND569' (Rev. 9/24, Dropbox Marketing Materials), as transcribed in scratchpad labels/labels.json: per scoop (17.5 g) collagen peptides 17.5 g = FORTIGEL 5 g + FORTIBONE 5 g + TENDOFORTE 5 g + VERISOL 2.5 g; protein 15 g; about 30 servings; other ingredients 'Bovine Collagen Peptides' (hence 'bovine' here and the alpha-gal line in the check panel); directions 'Mix 1 scoop in 8 ounces of water, your favorite beverage, or a recipe'. Matches products DB R190 (5 switch charts, catalog ND143 10/1/26) and the repo blast blasts/2026-10-19-collagen-tendon.html (panel read live; no vitamin C in the formula, hence the 'pair with a vitamin C food' line). URL from that blast (curl 200 on 2026-08-11). Size 525G from price list ND144 10/1/26."
   },
   "jp_curcumin_400x": {
     "name": "Curcumin 400X",
     "size": "60 softgels",
     "img_src": "R268.png",
-    "key": "2 softgels: BioCurc turmeric extract 800 mg",
+    "key": "2 softgels: BioCurc turmeric extract 800&nbsp;mg",
     "dose": "2 softgels daily",
     "dosesub": "with breakfast",
     "sched": [

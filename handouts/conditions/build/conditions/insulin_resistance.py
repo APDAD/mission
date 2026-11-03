@@ -19,7 +19,14 @@ fenced by hairlines so no swatch can be read with its neighbour's label.  Below 
 it / clues / where it leads, the CDC stat (only "1 in 3" is big) and a "Know your numbers" panel
 (ADA glucose and A1c ranges, a fasting-insulin write-in, NHLBI/AHA metabolic syndrome check).
 
-BACK: unchanged from the first draft (a later pass revises the products).
+BACK (product pass, 2026-11-03): lifestyle band from Asher's blood-sugar handout (10-hour eating window,
+slow-sugar plate) plus ADA movement and sleep; four NutriDyn protocol products, each "In each serving" line
+copied from its NutriDyn sell sheet (sources in products.d/insulin-resistance.json): Gluco IR (Start here),
+Berberine Pro, UltraBiotic Akkermansia Plus, Omega Pure EPA-DHA 1000; a daily rhythm that keeps Berberine
+Pro's three before-meal doses; three medicine-and-nutrient notes per edition (pharmacy: interactions and
+depletions; practitioner: labs and dose changes), including the dihydroberberine overlap and biotin's lab
+interference.  The back-page CSS is scoped with .sheet.back:has(.ir-back), a marker span in the lifestyle
+title, so it cannot leak into other sheets in the all-sheets bundle.
 """
 import math
 import random
@@ -600,6 +607,20 @@ CSS = r"""
 .irf .ir-src{margin:4px 0 0;font-size:7pt;color:#5E686F;line-height:1.3}
 """
 
+# Back page: the shared back layout has no sheet class, so every rule is scoped with :has() to the marker
+# span in this sheet's lifestyle title and cannot leak into the other sheets of the all-sheets bundle.
+BACK_CSS = r"""
+/* Gluco IR's label line (eleven ingredients) is the longest */
+.sheet.back:has(.ir-back) .cols{grid-template-columns:1.34fr 1fr 1fr 1fr!important}
+/* a little less red above and below the lifestyle cards (shared 0.3 in / 0.18 in) so the footer stays on the page */
+.sheet.back:has(.ir-back) .band{padding-top:0.22in!important;padding-bottom:0.14in}
+.sheet.back:has(.ir-back) .band h2{margin-bottom:0.07in}
+/* the morning list is the longest, bedtime holds one capsule */
+.sheet.back:has(.ir-back) .rhythm{grid-template-columns:1.4fr 1.1fr .8fr}
+/* lifestyle discs a little smaller so each bullet line holds about 28 characters */
+.sheet.back:has(.ir-back) .life.l3 .disc2{width:0.68in;height:0.68in}
+"""
+
 SHEET = {
     "slug": "insulin-resistance", "code": "ND-CM-203", "theme": "metab", "series": "Metabolic Health Series",
     "order": 5,
@@ -612,25 +633,107 @@ SHEET = {
               "pancreas pushes out more and more insulin to keep blood sugar normal. This can go on quietly for years "
               "before blood sugar climbs high enough to be called prediabetes or type 2 diabetes."),
     "front": front,
-    "css": CSS,
-    # ---- back: kept exactly as the first draft (sheets.py) until the product pass
+    "css": CSS + BACK_CSS,
     "back": {
-        "life_title": "Lifestyle-Based Medicine", "style": "circle3",
-        "life": [("plate", "Low-glycemic Mediterranean plate", ["Protein first at every meal", "Half the plate vegetables", "Whole-food carbs, paired with protein or fat", "Three to five balanced meals", "Limit sugar and sweet drinks"]),
-                 ("breath", "Lower stress, better sleep", ["Commit to a simple plan", "Deep breathing, 5 minutes a day", "7 to 9 hours of sleep, same times daily", "One 10-minute mindful walk a day"]),
-                 ("walk", "Move your muscles", ["Walk 10 minutes after meals", "Strength training 2 to 3 times a week", "Stand up every 30 to 60 minutes", "Moderate to hard exercise 3 to 5 days a week"])],
-        "cols": [
-            {"p": "gluco_ir", "need": "All-in-one glucose support", "needsub": "dihydroberberine, chromium, ALA, cinnamon", "start": True,
-             "bullets": ["Supports healthy glucose metabolism", "Supports insulin sensitivity"], "dose": "dose_from_db"},
-            {"p": "berberine", "need": "Metabolic signaling", "needsub": "berberine",
-             "bullets": ["Supports healthy glucose levels already in a normal range", "Supports healthy lipid levels"], "dose": "dose_from_db"},
-            {"p": "mag_glycinate", "need": "Insulin's helper mineral", "needsub": "magnesium",
-             "bullets": ["Needed for normal insulin signaling", "Low magnesium is common with high blood sugar"], "dose": "dose_from_db"},
-            {"p": "omega_1000", "need": "Balance fats", "needsub": "omega-3 fatty acids",
-             "bullets": ["Supports healthy triglyceride levels", "Supports a healthy inflammatory response"], "dose": "dose_from_db"},
+        # the span marks this sheet's back page for the scoped CSS (.sheet.back:has(.ir-back))
+        "life_title": 'Lifestyle-Based Medicine<span class="ir-back"></span>',
+        # Asher's blood-sugar handout: "Three levers, one plan" (when you eat, what you eat; his third lever is
+        # Gluco IR, which sits in the products below).  NIDDK: physical activity and weight loss help the body
+        # respond better to insulin.  No disease words: the line sits over the product page.
+        "life_sub": "When you eat, what you eat and how you move: three levers that help your cells answer insulin",
+        "style": "circle3",
+        "life": [
+            # Asher's blood-sugar patient handout (repo handouts/blood-sugar-patient-handout.pdf), from the Viple
+            # 2026 meta-analysis of time-restricted eating (10 RCTs, 599 adults, windows 4 to 10 hours, about 4
+            # months): "A common starting point: 10 hrs"; "Keep the same hours: most days" and do not stretch the
+            # window "later and later on weekends"; water, sparkling water, herbal tea, black coffee "are fine
+            # during your fasting hours. Nothing with sugar in it."; "Talk to your provider first if: you already
+            # take anything for blood sugar".  8 AM to 6 PM: the protocol research's worked example.
+            ("clock", "A 10-hour eating window",
+             ["Example: 8 AM to 6 PM", "Same hours, weekends too",
+              "Outside it: water, tea or black coffee", "On blood sugar medicine? Ask your doctor first"]),
+            # Same handout, page 2 (Sun 2026 meta-analysis of low-glycemic-index eating, 25 RCTs, 1,973 people):
+            # "Low glycemic index simply means foods that raise blood sugar slowly" -> "slow-sugar plate" (no
+            # jargon); half the plate non-starchy vegetables; "vegetables and protein first, slow carbohydrate
+            # last"; slow carbs "about a fist"; "Whole fruit only. Juice delivers the sugar without the fiber".
+            ("plate", "A slow-sugar plate",
+             ["Half the plate non-starchy veggies", "Veggies and protein first",
+              "Slow carbs last, about a fist", "Whole fruit, not juice"]),
+            # ADA Standards of Care in Diabetes 2025, Section 5: resistance exercise 2 to 3 sessions a week on
+            # nonconsecutive days; interrupt prolonged sitting every 30 minutes.  Walking after meals: Reynolds AN
+            # et al., Diabetologia 2016 (10 minutes after each meal beat one 30-minute walk for after-meal glucose).
+            # Kenneth Johnson GLC 2026 adds resistance training.  Sleep: National Sleep Foundation, 7 to 9 hours
+            # for adults (the front lists short sleep as a driver).
+            ("walk", "Move often, sleep well",
+             ["Walk 10 minutes after meals", "Strength train 2 to 3 times a week",
+              "Stand up every 30 minutes", "Sleep 7 to 9 hours a night"]),
         ],
-        "rx": ["<b>Metformin</b> lowers B12 over time. Ask for a B12 check every year.",
-               "<b>On diabetes medicine?</b> Berberine adds to sugar-lowering effects: check your glucose and tell your prescriber.",
-               "<b>Berberine interacts</b> with some medicines (for example cyclosporine). Let your pharmacist review your list."],
+        # Products (4, the competitor sheet's count), all from NutriDyn protocols: Asher's blood-sugar handout and
+        # "Own Every Protocol" HbA1c path (Gluco IR + Berberine Pro), Kenneth Johnson's GLC 2026 insulin
+        # resistance panel (Berberine Pro, Alpha-Lipoic Acid 200 mg, Omega Pure EPA-DHA 1000 where triglycerides
+        # are raised) and Scott Bergman's GLC 2024 metabolic-syndrome protocol (UltraBiotic Akkermansia Plus).
+        # Competitor categories: chromium AND alpha lipoic acid -> Gluco IR (600 mcg chromium picolinate, 300 mg
+        # alpha lipoic acid), berberine -> Berberine Pro; vanadyl sulfate has no NutriDyn equivalent (scratchpad
+        # products/needs.md).  Alpha-Lipoic Acid R270 (200 mg, label facts in products.d as ir_ala) is held back
+        # only because its one staged photo is another brand's bottle (Progressive Professional P872, 60
+        # capsules); swap it in for ir_akk once build/img-src/ir_ala.png holds the real R270 bottle.
+        # Label facts, doses and sources: products.d/insulin-resistance.json.  Card claims are the NutriDyn sell
+        # sheets' own structure/function wording (ND506, ND1130, ND1194, ND416).
+        # Start here: Gluco IR, Asher's lead insulin-resistance formula ("IR = Insulin Resistance"), which carries
+        # the chromium, alpha-lipoic acid and dihydroberberine in one bottle.
+        "cols": [
+            # needsub spells out alpha-lipoic acid (203 px of the 206 px line); cinnamon is in the label line
+            {"p": "ir_gluco_ir", "need": "All-in-one glucose support",
+             "needsub": "dihydroberberine, chromium, alpha-lipoic acid", "start": True, "dose": "dose_from_db",
+             # both bullets open with the claim verb, so build.py ties each to the FDA disclaimer diamond
+             "bullets": ["Promotes healthy blood glucose levels already in the normal range",
+                         "Supports the normal action of insulin (chromium)"]},
+            # ND1130: dihydroberberine "works primarily through the activation of AMPK, a central regulator of
+            # cellular energy balance" -> "Cell energy switch"
+            {"p": "ir_berberine", "need": "Cell energy switch", "needsub": "dihydroberberine + cinnamon",
+             "dose": "dose_from_db",
+             "bullets": ["Promotes healthy glucose metabolism", "Supports heart health and healthy lipid balance"]},
+            # ND1194: "Support healthy glucose metabolism", "Promote effective weight management", "Promote
+            # healthy gut barrier function"
+            {"p": "ir_akk", "need": "Friendly gut bacteria", "needsub": "Akkermansia + 4 probiotic strains",
+             "dose": "dose_from_db",
+             "bullets": ["Supports healthy glucose metabolism", "Supports healthy weight and a healthy gut lining"]},
+            # Johnson GLC 2026 uses it "where triglycerides are raised"; ND416: "Healthy cardiovascular function"
+            {"p": "ir_omega", "need": "Healthy blood fats", "needsub": "omega-3 fish oil (EPA + DHA)",
+             "dose": "dose_from_db",
+             "bullets": ["Supports healthy triglyceride levels already in a normal range",
+                         "Supports healthy heart function"]},
+        ],
+        # Three notes per edition.  Pharmacists check interactions and depletions; providers order labs and adjust.
+        # Sources: dihydroberberine 100 mg per 5 Gluco IR capsules (ND506) + 100 mg per Berberine Pro capsule x 3
+        # (ND1130) = 400 mg a day.  Guo Y et al., Eur J Clin Pharmacol 2012;68:213-217 (berberine 300 mg three times
+        # daily lowered CYP2D6, 2C9 and 3A4 activity); Wu X et al., Eur J Clin Pharmacol 2005 (berberine raised
+        # cyclosporine levels in kidney-transplant patients).  Added sugar lowering: NIH ODS chromium fact sheet
+        # (insulin and diabetes medicines), MedlinePlus alpha-lipoic acid, gymnema and berberine monographs (all in
+        # Gluco IR; berberine also in Berberine Pro); insulin and sulfonylureas are the drugs that carry the
+        # low-sugar risk (ADA Standards of Care 2025, Sections 6 and 9).
+        # Metformin and B12: ADA Standards of Care 2025, Section 9 ("consider periodic measurement of vitamin B12").
+        # Biotin: FDA Safety Communication 2017, updated 2019 (biotin can cause incorrect results in some lab
+        # tests); Gluco IR has 2,000 mcg (ND506).  Recheck at about 3 months: A1c reflects about 3 months (front).
+        "rx": {
+            "practitioner": [
+                "<b>Labs now and in about 3 months:</b> fasting glucose, A1c, fasting insulin and lipids, plus B12 "
+                "if you take metformin. Gluco IR has biotin, which can throw off some tests: tell the lab.",
+                "<b>On medicine for blood sugar?</b> Gluco IR and Berberine Pro add to its effect, so {who} may "
+                "need to adjust it. Check your sugar more often at first.",
+                "<b>Two products, one ingredient.</b> Gluco IR and Berberine Pro both contain dihydroberberine, "
+                "400&nbsp;mg a day together, and it changes how some drugs (such as cyclosporine) clear. Ask "
+                "{who} if you need both.",
+            ],
+            "pharmacy": [
+                "<b>Two products, one ingredient.</b> Gluco IR and Berberine Pro both contain dihydroberberine, "
+                "400&nbsp;mg a day together. It slows the liver enzymes (CYP3A4, 2D6, 2C9) that clear drugs such "
+                "as cyclosporine: show {who} your full list.",
+                "<b>Insulin or a sulfonylurea</b> (such as glipizide)? Gluco IR and Berberine Pro add to the "
+                "sugar-lowering effect: watch for low blood sugar and tell your prescriber.",
+                "<b>Metformin</b> can lower B12 over time: ask about a regular check. Gluco IR has 2,000&nbsp;mcg "
+                "biotin, which can throw off some lab tests: tell the lab.",
+            ],
+        },
     },
 }

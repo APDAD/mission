@@ -1,10 +1,103 @@
 {
   "curcumin_bcm95": {
     "key": "800 mg BioCurc turmeric root extract per 2 softgels, an enhanced-absorption form (curcumin amount not stated on the label)",
-    "src": "Curcumin 400x sell sheet ND466 (Rev. 7/24; Dropbox NutriDyn Marketing Materials), Supplement Facts per 2 softgels: BioCurc (rhizome extract; Curcuma longa) 800 mg, no curcuminoid amount stated; directions two softgels daily. Product DB R268 agrees in every chart read (\"curcuminoid percentage not stated\"). Replaces the earlier \"800 mg curcumin\" line, which turned an extract weight into a curcumin amount."
+    "src": "Curcumin 400x sell sheet ND466 (Rev. 7/24; Dropbox NutriDyn Marketing Materials), Supplement Facts per 2 softgels: BioCurc (rhizome extract; Curcuma longa) 800 mg, no curcuminoid amount stated; directions two softgels daily. Product DB R268 agrees in every chart read (\"curcuminoid percentage not stated\"). Replaces the earlier \"800 mg curcumin\" line, which turned an extract weight into a curcumin amount. (Kept here as a shared label correction for the other sheets that use curcumin_bcm95; the lyme sheet itself no longer does.)"
   },
   "mito": {
     "key": "Per 3 capsules: 300 mg taurine, 200 mg acetyl-L-carnitine, 100 mg CoQ10, 100 mg NAC, 75 mg alpha-lipoic + 45 mg R-lipoic acid, 7 mg PQQ, 75 mg magnesium",
-    "src": "Mito Recharge sell sheet ND812 (Rev. 2/25; Dropbox NutriDyn Marketing Materials), Supplement Facts per 3 capsules (30 servings): vitamin C 150 mg, vitamin E 25 mg, vitamin K1 250 mcg, thiamin 25 mg, riboflavin 12 mg, niacin 12 mg NE, B6 (P5P) 7.5 mg, magnesium 75 mg (malate, ascorbate), selenium 25 mcg, taurine 300 mg, acetyl-L-carnitine HCl 200 mg, resveratrol 100 mg, CoQ10 100 mg, NAC 100 mg, EGCG 100 mg, quercetin 100 mg, alpha-lipoic acid 75 mg, R-alpha-lipoic acid 45 mg, sulforaphane glucosinolate 15 mg, hydroxytyrosol 10 mg, PQQ 7 mg; directions three capsules daily. Matches the CellCore and HydrOxygen chart reads in the product DB (R167); the earlier line used only the Ortho chart read and left out taurine, CoQ10, PQQ and magnesium."
+    "src": "Mito Recharge sell sheet ND812 (Rev. 2/25; Dropbox NutriDyn Marketing Materials), Supplement Facts per 3 capsules (30 servings): vitamin C 150 mg, vitamin E 25 mg, vitamin K1 250 mcg, thiamin 25 mg, riboflavin 12 mg, niacin 12 mg NE, B6 (P5P) 7.5 mg, magnesium 75 mg (malate, ascorbate), selenium 25 mcg, taurine 300 mg, acetyl-L-carnitine HCl 200 mg, resveratrol 100 mg, CoQ10 100 mg, NAC 100 mg, EGCG 100 mg, quercetin 100 mg, alpha-lipoic acid 75 mg, R-alpha-lipoic acid 45 mg, sulforaphane glucosinolate 15 mg, hydroxytyrosol 10 mg, PQQ 7 mg; directions three capsules daily. Matches the CellCore and HydrOxygen chart reads in the product DB (R167); the earlier line used only the Ortho chart read and left out taurine, CoQ10, PQQ and magnesium. (Kept here as a shared label correction for the other sheets that use the mito key; the lyme sheet uses ly_mito.)"
+  },
+  "ly_ultrabiotic_dms": {
+    "name": "UltraBiotic Daily Multi-Strain",
+    "size": "30 or 60 capsules",
+    "img_src": "R829.png",
+    "key": "30 billion CFU per capsule, seven strains: <i>S. boulardii</i>, <i>L. reuteri</i>, <i>B. lactis</i>, <i>L. plantarum</i>, <i>L. acidophilus</i>, <i>L. gasseri</i>, <i>B. coagulans</i>",
+    "dose": "1 capsule at bedtime",
+    "dosesub": "2 hours from antibiotics",
+    "sched": [
+      [
+        "bed",
+        1,
+        "capsule"
+      ]
+    ],
+    "url": "https://nutridyn.com/ultrabiotic-daily-multi-strain",
+    "src": "UltraBiotic Daily Multi-Strain sell sheet ND460 (Rev. 7/24; Dropbox /NutriDyn/Sales/Practitioner Resource/NutriDyn Marketing Materials, id:xHepYs_Ou4AAAAAAAAlbgg, opened 2026-11-03): Supplement Facts per 1 capsule, 30 billion CFU at time of manufacture: Saccharomyces boulardii Lynside, Lactobacillus reuteri LRC, Bifidobacterium lactis UABla-12, L. plantarum UALp-05, L. acidophilus UALa-01, L. gasseri UALg-05, Bacillus coagulans UABc-20; directions one capsule daily; dairy-free. Same strains and CFU as product DB R829 (catalog ND143 10/1/26). Sizes R829 30C / R829L 60C (ND144 price list 10/1/26, via the product DB). URL slug from products.SLUGS (NutriDyn 60-day protocol doc). Bedtime slot and the 2-hour antibiotic gap are this sheet's timing advice, not label text."
+  },
+  "ly_immune_prp": {
+    "name": "Immune PRP Pro",
+    "size": "120 capsules &middot; contains milk",
+    "img_src": "R2178.png",
+    "key": "Per 4 capsules: 1,720 mg bovine colostrum, standardized to 30% IgG, with PRP, IgA, IgM and lactoferrin",
+    "dose": "2 capsules twice daily",
+    "dosesub": "morning and evening",
+    "sched": [
+      [
+        "am",
+        2,
+        "capsules"
+      ],
+      [
+        "pm",
+        2,
+        "capsules"
+      ]
+    ],
+    "src": "Immune PRP Pro sell sheet ND1054 (Rev. 8/24; Dropbox NutriDyn Marketing Materials, id:xHepYs_Ou4AAAAAAAAu9Fw, opened 2026-11-03): Supplement Facts per 4 capsules (30 servings): Bovine Colostrum Blend [immunoglobulin G (IgG), proline-rich polypeptides (PRP), other immunoglobulins (IgA, IgM), lactoferrin] (standardized to 30% IgG) 1,720 mg; Contains: Milk; label directions four capsules twice daily. Same facts in labels.json (R2178) and the product DB Microbiome Labs chart note. Size R2178 120C (ND144 price list 10/1/26). DOSE: 2 capsules twice daily is NutriDyn's own protocol dose for this product (Jocelyn Strand ND, NutriDyn GLC 2019 protocol sheet 'Botanical Medicines in Complex, Multi-Pathogen Disease', Immune Support: 'Immune PRP Pro (R2178) 2 capsules 2x/day'; Dropbox JocelynStrand_Protocols.pdf), i.e. one label serving a day; the label allows up to 4 capsules twice daily 'or as directed by your healthcare practitioner'. No nutridyn.com slug on file, so the link falls back to the catalog search."
+  },
+  "ly_inflam_eze": {
+    "name": "Inflam-Eze Plus",
+    "size": "90 or 180 capsules",
+    "img_src": "R856.png",
+    "key": "Per 3 capsules: 800 mg ginger, 250 mg CurQfen curcumin, 250 mg boswellia, 200 mg white willow bark, 150 mg hops, 60 mg devil's claw",
+    "dose": "3 capsules once daily",
+    "dosesub": "with breakfast",
+    "sched": [
+      [
+        "am",
+        3,
+        "capsules"
+      ]
+    ],
+    "url": "https://nutridyn.com/inflam-eze-plus",
+    "src": "Inflam-Eze Plus sell sheet ND516 (Rev. 5/25; Dropbox NutriDyn Marketing Materials, id:xHepYs_Ou4AAAAAAAAdv1A, opened 2026-11-03): Supplement Facts per 3 capsules: ginger powder (root) 800 mg; CurQfen curcumin extract (35% curcuminoids) and fenugreek galactomannans 250 mg; Boswellia serrata gum extract (65% boswellic acid) 250 mg; white willow extract (bark; 25% salicin) 200 mg; hops extract (2% xanthohumol) 150 mg; devil's claw extract (1.2% harpagosides) 60 mg; directions 3 capsules once daily with food. Same panel in labels.json (R856/R856L) and the product DB (Ortho, Metagenics, Nutritional Frontiers chart reads). Sizes R856 90C / R856L 180C (ND144 price list 10/1/26). Protocol basis: Dr. Kristi Hughes ND's NutriDyn key maps 'Botanical Anti-inflam' to Inflam-eze Plus in the Gut-Neuro-Immune Restoration care plan (1-3 breakfast, 1-3 supper) from Asher's 2025 fatigue/immune seminar, which covered tick-borne disease. URL slug from products.SLUGS (inflam_eze)."
+  },
+  "ly_glutathione": {
+    "name": "Liposomal Glutathione",
+    "size": "60 mL liquid",
+    "img_src": "R2188.png",
+    "key": "100 mg reduced L-glutathione per 1 mL dropper, in liposomes made with sunflower lecithin",
+    "dose": "1 dropper twice daily",
+    "dosesub": "shake well",
+    "sched": [
+      [
+        "am",
+        1,
+        "dropper"
+      ],
+      [
+        "bed",
+        1,
+        "dropper"
+      ]
+    ],
+    "src": "Liposomal Glutathione sell sheet ND971 (Rev. 8/24; Dropbox NutriDyn Marketing Materials, id:xHepYs_Ou4AAAAAAAAhrrA, opened 2026-11-03): Supplement Facts per 1 dropper (1 mL), 60 servings: L-glutathione (reduced) 100 mg; other ingredients include non-GMO sunflower lecithin; directions 'Shake well. Take one full dropper (1 mL) 2-4 times daily'; tagline 'Bioavailable Antioxidant and Detox Support'. Same amount and directions in the product DB (R2188, five chart reads). Size R2188 60 mL (ND144 price list 10/1/26). Protocol basis: Strand, NutriDyn GLC 2019, 'Detoxification Support - for herxing: Liposomal Glutathione (R2188) 5 pumps up to 4x/day as needed for herxing'. No nutridyn.com slug on file, so the link falls back to the catalog search."
+  },
+  "ly_mito": {
+    "name": "Mito Recharge",
+    "size": "90 capsules",
+    "img_src": "R167.png",
+    "key": "Per 3 capsules: 200 mg acetyl-L-carnitine, 100 mg NAC, 75 mg alpha-lipoic + 45 mg R-lipoic acid, 75 mg magnesium, 250 mcg vitamin K1",
+    "dose": "3 capsules daily",
+    "dosesub": "2 to 3 hours from doxycycline",
+    "sched": [
+      [
+        "pm",
+        3,
+        "capsules, 2 to 3 hours from doxycycline"
+      ]
+    ],
+    "url": "https://nutridyn.com/mito-recharge-r167",
+    "src": "Mito Recharge sell sheet ND812 (Rev. 2/25; Dropbox NutriDyn Marketing Materials, id:xHepYs_Ou4AAAAAAAAvs1Q, re-opened 2026-11-03): Supplement Facts per 3 capsules (30 servings) as listed under the shared 'mito' entry above, including vitamin K1 (as phytonadione) 250 mcg and magnesium (as malate and ascorbate) 75 mg; directions three capsules daily. Size R167 90C (ND144 price list 10/1/26). The magnesium is why it sits 2 to 3 hours from doxycycline; the vitamin K1 is why the warfarin note names it. URL slug from products.SLUGS (mito)."
   }
 }

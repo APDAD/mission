@@ -267,23 +267,31 @@ def _blob(cx, cy, rx, ry, rnd, n=14, j=0.16):
     return "".join(d) + "Z"
 
 
-def _sprout(sx, y0, depth, wd):
-    """A new capillary: a thin loop hanging from the vessel floor at y0."""
-    return (f"M{sx},{y0} C{sx - 2},{y0 + depth * .6} {sx + wd * .1},{y0 + depth} {sx + wd / 2},{y0 + depth} "
-            f"C{sx + wd * .9},{y0 + depth} {sx + wd + 2},{y0 + depth * .6} {sx + wd},{y0}")
+def _bud(stem, tips, w=3.4):
+    """A new capillary sprouting from a vessel (angiogenesis): one stem that splits into blind-ended tips.
+    stem = (start, c1, c2, branch point) of a cubic; tips = [(control, tip)] quadratics from the branch point.
+    One path for the outline and one for the lumen, so the branches join cleanly."""
+    (x0, y0), (ax, ay), (bx, by), (px, py) = stem
+    d = f"M{x0:.1f},{y0:.1f} C{ax:.1f},{ay:.1f} {bx:.1f},{by:.1f} {px:.1f},{py:.1f}"
+    d += "".join(f" M{px:.1f},{py:.1f} Q{qx:.1f},{qy:.1f} {tx:.1f},{ty:.1f}" for (qx, qy), (tx, ty) in tips)
+    return (f'<path d="{d}" stroke="{VES_EDGE}" stroke-width="{w}" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'
+            f'<path d="{d}" stroke="{VES}" stroke-width="{w - 1.5:.1f}" fill="none" stroke-linecap="round" stroke-linejoin="round"/>')
 
 
-def _sprout_draw(d, w=3.4):
-    return (f'<path d="{d}" stroke="{VES_EDGE}" stroke-width="{w}" fill="none" stroke-linecap="round"/>'
-            f'<path d="{d}" stroke="{VES}" stroke-width="{w - 1.5:.1f}" fill="none" stroke-linecap="round"/>')
+# Panel 2 sprouts (view coords): they leave the floor of the vessel, cross the intact top fibres and end
+# inside the torn zone (tips within GAPX +/- 18, near TMID), partly behind the repair cells.  [LEONG20]: VEGF
+# "stimulating angiogenesis" in the proliferative phase.
+SPROUTS = [
+    (((60, 16), (60, 42), (80, 50), (84, 79)), [((80, 87), (78, 94)), ((90, 85), (93, 91))]),
+    (((132, 16), (133, 44), (111, 50), (107, 81)), [((102, 89), (101, 97)), ((112, 87), (113, 93))]),
+]
 
 
-def vessel(y0, x0=0, x1=PW, loops=()):
-    """Small blood vessel across the top of a view, with red cells inside (and new capillary loops)."""
+def vessel(y0, x0=0, x1=PW):
+    """Small blood vessel across the top of a view, with red cells inside."""
     h = 13
-    o = [_sprout_draw(_sprout(sx, y0 + h - 1, depth, wd)) for sx, depth, wd in loops]
-    o += [f'<rect x="{x0 - 2}" y="{y0}" width="{x1 - x0 + 4}" height="{h}" fill="{VES}" stroke="{VES_EDGE}" stroke-width=".9"/>',
-          f'<rect x="{x0 - 2}" y="{y0 + 2.6}" width="{x1 - x0 + 4}" height="{h - 5.2}" fill="{VES_LUM}"/>']
+    o = [f'<rect x="{x0 - 2}" y="{y0}" width="{x1 - x0 + 4}" height="{h}" fill="{VES}" stroke="{VES_EDGE}" stroke-width=".9"/>',
+         f'<rect x="{x0 - 2}" y="{y0 + 2.6}" width="{x1 - x0 + 4}" height="{h - 5.2}" fill="{VES_LUM}"/>']
     for k, x in enumerate(range(x0 + 16, x1 - 8, 46)):
         o.append(red_cell(x + (k % 2) * 7, y0 + h / 2, 0, 0.92))
     return "".join(o)
@@ -305,8 +313,8 @@ def view(i):
     rnd = random.Random(31 + i)
     o = [f'<clipPath id="ih-vc{i}"><rect width="{PW}" height="{VH}" rx="10"/></clipPath>',
          f'<g clip-path="url(#ih-vc{i})"><rect width="{PW}" height="{VH}" fill="{BG}"/>']
-    loops = [(60, 30, 15), (113, 38, 14)] if i == 1 else []
-    o.append(vessel(10, 0, PW, loops))
+    if i != 1:                                 # panel 2 draws its vessel over the roots of the new sprouts
+        o.append(vessel(10, 0, PW))
     for k in range(NF):
         y = BAND0 + k * (FH + FGAP)
         le, re = ENDS[k]
@@ -354,11 +362,16 @@ def view(i):
             segs.append((cx - ln / 2 * math.cos(a), cy - ln / 2 * math.sin(a), cx + ln / 2 * math.cos(a), cy + ln / 2 * math.sin(a)))
         o.append(f'<clipPath id="ih-nc"><ellipse cx="{GAPX}" cy="{TMID}" rx="33" ry="{TRY}"/></clipPath>')
         o.append('<g clip-path="url(#ih-nc)">' + "".join(new_collagen(*s, w=1.25) for s in segs) + "</g>")
+        # new vessel sprouts reach into the repair zone; the vessel they grow from covers their roots
+        o.extend(_bud(stem, tips) for stem, tips in SPROUTS)
+        o.append(vessel(10, 0, PW))
+        # repair cells scattered through the gap, lying roughly along the fibres (within about 30 degrees),
+        # with a clear patch of the gold criss-cross left open between them; the immune cell sits off-centre
         tz = TOR1 - TOR0
-        for x, y, r in [(GAPX - 12, TOR0 + .10 * tz, 35), (GAPX + 12, TOR0 + .30 * tz, -25), (GAPX - 6, TOR0 + .55 * tz, -62),
-                        (GAPX + 13, TOR0 + .74 * tz, 18), (GAPX - 13, TOR0 + .92 * tz, -8)]:
+        for x, y, r in [(GAPX - 14, TOR0 + .13 * tz, 14), (GAPX + 11, TOR0 + .25 * tz, -22), (GAPX - 18, TOR0 + .60 * tz, -9),
+                        (GAPX + 16, TOR0 + .74 * tz, 25), (GAPX - 1, TOR0 + .93 * tz, 7)]:
             o.append(fibroblast(x, y, r))
-        o.append(immune(GAPX + 4, TOR0 + .46 * tz))
+        o.append(immune(GAPX - 24, TOR0 + .36 * tz))
     else:
         # the patch, now made of new fibres lined up with the old ones (green), a few flat fibroblasts
         for k in TORN:
@@ -499,7 +512,9 @@ def _local(k, d, extra=BONE_ST):
 
 def _cord_path():
     c0, t0 = COL_PTS[0], TANS[0]
-    cl = [(c0, t0, -12.0), (c0, t0, -7.0)]     # on up into the skull (the brainstem), faded out
+    # The cord starts just above C1, where it leaves the skull through the foramen magnum.  It stops (and
+    # fades in, see ih-cdg) below the ear lobe, so it never reads as a cable running into the ear.
+    cl = [(c0, t0, -3.5)]
     for k in range(len(COL_PTS)):
         cl.append((COL_PTS[k], TANS[k], 0.0))
         if k < len(COL_PTS) - 1:
@@ -512,22 +527,13 @@ def _cord_path():
 
 
 def _skull_base():
-    """Faint skull base where the column meets the head, at ear-lobe level: the occipital condyle resting on
-    the lateral mass of C1 (the C0/C1 joint), and a thin line along the bottom of the skull from behind the
-    cord (the foramen magnum) back along the occipital bone, fading out toward the back of the head."""
+    """The skull base where the column meets the head, at ear-lobe level: the occipital condyle resting on
+    the lateral mass of C1 (the C0/C1 joint).  No line runs back along the skull: unlabelled, it read as a
+    crease or hairline on the head."""
     c0, t0 = COL_PTS[0], TANS[0]
     f = lambda u, v: "{:.2f},{:.2f}".format(*_pt(c0, t0, u, v))
-    cond = (f'<path d="M{f(-5.5, -3.6)} C{f(-5.8, -2.25)} {f(-9.6, -2.15)} {f(-9.9, -3.4)} Z" fill="{BONE}" '
+    return (f'<path d="M{f(-5.5, -3.6)} C{f(-5.8, -2.25)} {f(-9.6, -2.15)} {f(-9.9, -3.4)} Z" fill="{BONE}" '
             f'stroke="{BONE_EDGE}" stroke-width=".5" stroke-linejoin="round"/>')
-    pts = [_pt(c0, t0, -5.3, -3.7), _pt(c0, t0, -7.7, -3.62), _pt(c0, t0, -10.3, -3.8), _pt(c0, t0, -13.6, -4.3),
-           (26.0, 68.3), (18.5, 65.2)]
-    fade = ('<linearGradient id="ih-skg" gradientUnits="userSpaceOnUse" x1="44" y1="0" x2="18" y2="0">'
-            '<stop offset="0" stop-color="#fff"/><stop offset=".55" stop-color="#fff"/>'
-            '<stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>'
-            '<mask id="ih-skm"><rect x="10" y="55" width="40" height="20" fill="url(#ih-skg)"/></mask>')
-    line = (f'<path d="{_smooth(pts, closed=False)}" mask="url(#ih-skm)" fill="none" stroke="{BONE_EDGE}" '
-            'stroke-width=".8" stroke-linecap="round" opacity=".85"/>')
-    return fade + line + cond
 
 
 def _spine():
@@ -535,10 +541,11 @@ def _spine():
     behind them, pedicles crossing to the stacked articular pillars (the facet column), then the laminae
     and spinous processes.  C1 has no body: a small front arch, the lateral mass and a thin back arch."""
     o = []
-    # spinal cord, fading out at both ends
-    o.append('<linearGradient id="ih-cdg" gradientUnits="userSpaceOnUse" x1="0" y1="60" x2="0" y2="123">'
-             '<stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".11" stop-color="#fff"/>'
-             '<stop offset=".8" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>'
+    # spinal cord, fading out at both ends: clear above y 66 (the ear lobe ends near y 64.5), solid from
+    # y 69 (just above C1) down to about y 110, then fading out again toward T1
+    o.append('<linearGradient id="ih-cdg" gradientUnits="userSpaceOnUse" x1="0" y1="66" x2="0" y2="123">'
+             '<stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".05" stop-color="#fff"/>'
+             '<stop offset=".78" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>'
              '<mask id="ih-cdm"><rect x="0" y="50" width="100" height="80" fill="url(#ih-cdg)"/></mask>')
     o.append(f'<path d="{_cord_path()}" mask="url(#ih-cdm)" fill="{CORD}" stroke="{CORD_EDGE}" stroke-width=".45"/>')
     o.append(_skull_base())
@@ -578,8 +585,10 @@ def _spine():
     for k in range(2, 7):
         o.append(_local(k, BODY_D, f'fill="{BONE}" stroke="{BONE_EDGE}" stroke-width=".6" stroke-linejoin="round"'))
     t1.append(_local(7, BODY_D, f'fill="{BONE}" stroke="{BONE_EDGE}" stroke-width=".6" stroke-linejoin="round"'))
-    o.append(f'<ellipse transform="translate({c0[0]:.2f},{c0[1]:.2f}) rotate({_rot(t0):.2f})" cx="2.5" cy="-.1" rx="1.15" '
-             f'ry="1.8" {BONE_ST}/>')
+    # C1 front arch: a small flat oval tucked against the front of the dens (in C1's frame the dens front
+    # runs at about u = 1.0 to 1.1 near v = 0), not a round bubble standing clear of it
+    o.append(f'<ellipse transform="translate({c0[0]:.2f},{c0[1]:.2f}) rotate({_rot(t0):.2f})" cx="2.25" cy=".1" rx="1.15" '
+             f'ry="1.3" {BONE_ST}/>')
     o.append('<g mask="url(#ih-t1m)">' + "".join(t1) + "</g>")
     return "".join(o)
 
@@ -632,7 +641,7 @@ def whiplash_inset():
            'fill="none" opacity=".55"/>',
            f'<path d="M79.2,47.2 C77.6,48.4 77.4,50.2 78.8,51" stroke="{SKIN_EDGE}" stroke-width=".6" fill="none" opacity=".7"/>',
            _spine(),
-           # the ear is the outermost layer: it sits in front of the deep structures (the brainstem runs behind it)
+           # the ear is the outermost layer; the cord ends below the lobe, where it enters the skull
            f'<path d="{EAR_D}" fill="{SKIN_SH}" stroke="{SKIN_EDGE}" stroke-width=".7"/>',
            f'<path d="M36.6,53 C35.4,55.6 35.8,58.8 37.4,60.4" stroke="{SKIN_EDGE}" stroke-width=".6" fill="none"/>',
            "</g>"]
@@ -642,7 +651,11 @@ def whiplash_inset():
     o.append(_tag(70, 18, "BACK"))
     o.append(_arrow("M143,26 C151,36 155,50 154,66"))
     o.append(_tag(124, 18, "FORWARD"))
-    ty = FIG_Y + 136 * FIG_S + 23
+    # caption block (WHIPLASH + four lines) centred in the space between the base of the neck and the
+    # bottom of the inset: cap height of the 12.5 px title about 9.1, last baseline 16 + 3 x 12.9 below it
+    lh = 10.6 * 1.22
+    fig_bot, blk = FIG_Y + 136 * FIG_S, 9.1 + 16 + 3 * lh + 2
+    ty = fig_bot + (bot - fig_bot - blk) / 2 + 9.1
     o.append(T(cx, ty, "WHIPLASH", 12.5, 800, "#123F60", "middle", ls=1.2))
     o.append(T(cx, ty + 16, ["A crash snaps the head", "back (dashed outline), then", "forward. Neck ligaments",
                              "and muscles overstretch."], 10.6, 600, INK, "middle", lh=1.22))
@@ -663,8 +676,10 @@ PHASES = [
 PCOL = [P1, P2, P3]
 PTX = [P1_TX, P2_TX, P3_TX]
 CAPS = [
-    # [LEONG20]: clot first; neutrophils, then macrophages clear the damaged tissue
-    ["Torn ligament fibers bleed and", "clot. Swelling and immune cells", "move in to clean up."],
+    # [LEONG20]: "The inflammatory stage ... begins immediately after acute injury with clot formation";
+    # neutrophils, then macrophages clear the damaged tissue.  The small vessels in the tear bleed, not the
+    # collagen fibres themselves.
+    ["The tear bleeds and a clot", "forms. Swelling and immune cells", "move in to clean up."],
     # [LEONG20]: fibroblasts lay down scar; VEGF "stimulating angiogenesis" (new vessels)
     ["Repair cells (fibroblasts) lay", "down new collagen in a loose", "criss-cross. New vessels sprout."],
     # [LEONG20]: fibres "aligned in the direction of stress"; "continues for months and years"
@@ -766,9 +781,10 @@ def _key_items():
     clot = (f'<path d="{_blob(0, 0, 11, 7.5, random.Random(3), 12, 0.18)}" fill="#D9535B" fill-opacity=".5" stroke="#B23A42" '
             'stroke-width=".8" stroke-opacity=".75"/><path d="M-6,-3 L5,4 M-4,4 L6,-3" stroke="#FBE0E0" stroke-width=".7"/>'
             + red_cell(1, 0, 20, 0.8))
-    ves = (_sprout_draw(_sprout(-2, 0.5, 6.5, 8), 3.0)
-           + f'<rect x="-13" y="-7.5" width="26" height="9" rx="2" fill="{VES}" stroke="{VES_EDGE}" stroke-width=".8"/>'
-           f'<rect x="-13" y="-5.6" width="26" height="5.2" fill="{VES_LUM}"/>')
+    # a vessel with one new sprout branching off it, as in panel 2
+    ves = (_bud(((-3, -3), (-3, 1), (-1, 2.5), (0, 4)), [((-1, 6), (-3.5, 8)), ((2, 5.5), (5, 7))], 2.8)
+           + f'<rect x="-13" y="-8.5" width="26" height="9" rx="2" fill="{VES}" stroke="{VES_EDGE}" stroke-width=".8"/>'
+           f'<rect x="-13" y="-6.6" width="26" height="5.2" fill="{VES_LUM}"/>')
     newc = ('<g>' + new_collagen(-11, 5, 9, -6) + new_collagen(-10, -5, 11, 4) + new_collagen(-3, -7, 2, 7) + '</g>')
     grn = (f'<g transform="translate(-12,-4)">{fiber(0, 24, 0, 8, amp=0.8, lam=14, kind="new")}</g>')
     pull = (f'<path d="M-12,0 H12" stroke="{PULL}" stroke-width="2.4" marker-start="url(#ih-pl)" marker-end="url(#ih-pl)"/>')

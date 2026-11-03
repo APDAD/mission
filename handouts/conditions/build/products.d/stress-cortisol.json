@@ -1,33 +1,28 @@
 {
   "sc_cortisol_pro": {
     "name": "Cortisol Pro",
-    "size": "Stress Essentials &middot; 60 capsules",
+    "size": "Stress Essentials<br>60&nbsp;capsules",
     "img_src": "R2182.png",
-    "key": "Per 2 capsules: 300 mg maral root, 250 mg Relora, 250 mg rhodiola, 150 mg ashwagandha, 100 mg L-theanine, 100 mg phosphatidylserine",
+    "key": "Per 2 capsules: 300&nbsp;mg maral&nbsp;root, 250&nbsp;mg Relora, 250&nbsp;mg rhodiola, 150&nbsp;mg ashwagandha, 100&nbsp;mg <span class=\"scx-nw\">L-theanine</span>, 100&nbsp;mg phosphatidylserine",
     "dose": "2 capsules daily",
-    "dosesub": "1 at breakfast, 1 at dinner",
+    "dosesub": "with breakfast",
     "sched": [
       [
         "am",
-        1,
-        "capsule"
-      ],
-      [
-        "pm",
-        1,
-        "capsule"
+        2,
+        "capsules"
       ]
     ],
     "url": "https://nutridyn.com/cortisol-pro",
-    "src": "Stress Essentials Cortisol Pro sell sheet ND975 Rev. 2/25 (Dropbox NutriDyn Marketing Materials, read into scratchpad labels/labels.json): per 2 capsules maral root extract (Rhaponticum carthamoides) 300 mg, Relora (Magnolia officinalis and Phellodendron amurense bark extracts) 250 mg, Rhodiola rosea root powder 250 mg, ashwagandha root and leaf extract (Sensoril, 10% withanolides) 150 mg, L-theanine (Suntheanine) 100 mg, phosphatidylserine (from sunflower) 100 mg; 30 servings; directions 'two capsules daily'; caution 'Do not use if pregnant.' Same phosphatidylserine, Sensoril, L-theanine and Relora amounts in products DB R2182 (Integrative Therapeutics and Nutri-West switch charts, catalog ND143 10/1/26). Size: ND144 price list 10/1/26 (R2182 60C). The label gives no time of day; the sheet splits the two capsules between breakfast and dinner. URL nutridyn.com/cortisol-pro seen through web search only (nutridyn.com not opened). Sheet name: the Stress Essentials line prints on the size line and the product name alone above it (as on the bottle, which reads 'Stress Essentials' over the product name), so the daily-rhythm panel stays short."
+    "src": "Stress Essentials Cortisol Pro sell sheet ND975 Rev. 2/25 (Dropbox /NutriDyn/Sales/Practitioner Resource/NutriDyn Marketing Materials/Stress Essentials Cortisol Pro SS ND975.pdf, id:xHepYs_Ou4AAAAAAAAwfzw, read into scratchpad labels/labels.json): per 2 capsules maral root extract (Rhaponticum carthamoides) 300 mg, Relora (Magnolia officinalis and Phellodendron amurense bark extracts) 250 mg, Rhodiola rosea root powder 250 mg, ashwagandha root and leaf extract (Sensoril, 10% withanolides) 150 mg, L-theanine (Suntheanine) 100 mg, phosphatidylserine (from sunflower) 100 mg; 30 servings; directions 'Take two capsules daily or as directed by your healthcare practitioner'; caution 'Do not use if pregnant. If nursing or taking medication, consult your healthcare practitioner before use.' Same phosphatidylserine, Sensoril, L-theanine and Relora amounts in products DB R2182 (Integrative Therapeutics and Nutri-West switch charts, catalog ND143 10/1/26). Size: ND144 price list 10/1/26 (R2182 60C). Timing: the label gives no time of day. The sheet puts both capsules at breakfast (it used to split them breakfast and dinner) because the formula's rhodiola (250 mg) and maral root are commonly taken early in the day, since some people find them stimulating, and this sheet is for people who are already wired at night. URL: nutridyn.com/cortisol-pro is in a web-search index of nutridyn.com (2026-11-03, with the R2182 product page and the ND975 sell sheet); nutridyn.com itself is blocked from this sandbox, so the link was not opened. Open it before publishing. Name line: the product name alone (unique in the NutriDyn range); 'Stress Essentials' prints on the size line, as on the bottle."
   },
   "sc_balance": {
-    "name": "Balance",
-    "size": "Stress Essentials &middot; 90 or 180 capsules",
+    "name": "Stress Essentials Balance",
+    "size": "90 or 180&nbsp;capsules",
     "img_src": "R123.png",
-    "key": "Per 3 capsules: 800 mg cordyceps, 400 mg ashwagandha (Sensoril), 107 mg Asian ginseng extract plus 58 mg ginseng root",
-    "dose": "3 capsules daily",
-    "dosesub": "with breakfast",
+    "key": "Per 3 capsules: 800&nbsp;mg cordyceps, 400&nbsp;mg ashwagandha (Sensoril), 107&nbsp;mg Asian ginseng extract, 100&nbsp;mg rhodiola, 58&nbsp;mg ginseng&nbsp;root",
+    "dose": "3 capsules at breakfast",
+    "dosesub": "half the label dose",
     "sched": [
       [
         "am",
@@ -36,13 +31,13 @@
       ]
     ],
     "url": "https://nutridyn.com/stress-management/stress-essentials-balance-seb",
-    "src": "products DB R123 (11 switch-chart label reads, catalog ND143 10/1/26): per 3 capsules cordyceps extract 800 mg, ashwagandha extract (Sensoril) 400 mg, Asian ginseng extract 107 mg (14% ginsenosides) plus 58 mg powder, rhodiola extract 100 mg (1 mg salidroside, 3 mg rosavins); directions 'three capsules two times daily'; sizes R123 90C and R123L 180C (ND144 price list 10/1/26). A nutridyn.com page variant seen through web search only (not opened) lists Cordyceps militaris and no rhodiola, so the sheet prints only the amounts both versions agree on and leaves rhodiola and the cordyceps species off. Sheet dose is once daily (inside 'or as directed'), so ashwagandha from this plus Cortisol Pro is 550 mg a day, inside the 300-600 mg/day stress range in Akhgarjand 2022 (PMID 36017529). Sheet name: the Stress Essentials line prints on the size line and the product name alone above it (as on the bottle, which reads 'Stress Essentials' over the product name), so the daily-rhythm panel stays short."
+    "src": "Stress Essentials Balance sell sheet ND422 Rev. 8/24 (Dropbox /NutriDyn/Sales/Practitioner Resource/NutriDyn Marketing Materials/Stress Essentials Balance SS ND422.pdf, id:xHepYs_Ou4AAAAAAAAlHMA, opened 2026-11-03), Supplement Facts per 3 capsules in label order: Cordyceps extract (fruiting body; Cordyceps militaris) 800 mg, ashwagandha extract (leaf and root; Sensoril) 400 mg, Asian ginseng extract (leaf and root; Panax ginseng; 14% ginsenosides) 107 mg, Rhodiola rosea extract (root; 1 mg salidroside, 3 mg rosavins) 100 mg, Asian ginseng powder (root) 58 mg; servings per container 30/60; directions 'Take three capsules two times daily or as directed by your healthcare practitioner'; warning 'Do not use if pregnant or nursing'; caution 'If taking heart medications or have a chronic health condition, inform your healthcare practitioner.' The same five amounts and directions appear in all 11 label reads in products DB R123 (switch charts, catalog ND143 10/1/26). An earlier version of this entry left rhodiola off because of a nutridyn.com variant seen only through web search; the sell sheet and every DB read list it, so it is printed. Sizes R123 90C and R123L 180C (ND144 price list 10/1/26). DOSE: the sheet prints 3 capsules once daily, HALF the label dose, and says so on the dose bar and in both check panels, so ashwagandha (Sensoril) from this plus Cortisol Pro stays at 550 mg a day (400 + 150). At the label dose it would be 950 mg a day (800 + 150), above the 125-500 mg a day used in Sensoril's stress trials and the 300-600 mg a day range in Akhgarjand 2022 (PMID 36017529). Name: 'Stress Essentials Balance' in full on the name line (NutriDyn also sells Estro, Testro, Neuro and Hormone Balance), so the daily-rhythm panel can't be misread. URL: nutridyn.com/stress-management/stress-essentials-balance-seb is in a web-search index of nutridyn.com (2026-11-03; that page lists cordyceps, ashwagandha, Asian ginseng and rhodiola and 'three capsules twice daily'); nutridyn.com is blocked here, so the link was not opened. Open it before publishing."
   },
   "sc_adrenal_renew": {
     "name": "Adrenal Renew",
-    "size": "Stress Essentials &middot; 60 capsules",
+    "size": "Stress Essentials<br>60&nbsp;capsules",
     "img_src": "R159.png",
-    "key": "Per 2 capsules: 300 mg vitamin C, 60 mg B6, 50 mg pantothenic acid, 15 mg zinc, 100 mg L-tyrosine, 300 mg bovine adrenal, 50 mg bovine spleen",
+    "key": "Per 2 capsules: 300&nbsp;mg vitamin&nbsp;C, 50&nbsp;mg vitamin&nbsp;B1, 15&nbsp;mg B2, 60&nbsp;mg B6, 50&nbsp;mg B5, 15&nbsp;mg zinc, 300&nbsp;mg cow&nbsp;adrenal, 200&nbsp;mg holy&nbsp;basil, 100&nbsp;mg <span class=\"scx-nw\">L-tyrosine</span>, 50&nbsp;mg cow&nbsp;spleen",
     "dose": "2 capsules daily",
     "dosesub": "with breakfast",
     "sched": [
@@ -53,13 +48,13 @@
       ]
     ],
     "url": "https://nutridyn.com/stress-essentials-adrenal-renew-r159",
-    "src": "products DB R159 (Ortho Molecular Adren-All, Apex Adreno-Zyme and Standard Process switch-chart label reads, catalog ND143 10/1/26): per 2 capsules bovine adrenal (suprarenal) substance 300 mg, vitamin C 300 mg, vitamin B6 60 mg, pantothenic acid 50 mg, zinc 15 mg, L-tyrosine 100 mg, bovine spleen 50 mg; directions 'two capsules daily'; size 60C (ND144 price list 10/1/26). The nutridyn.com page (seen through web search only, not opened) also lists thiamine 50 mg, riboflavin 15 mg and holy basil 200 mg; those are not in the DB read, so the sheet does not print them. Sheet name: the Stress Essentials line prints on the size line and the product name alone above it (as on the bottle, which reads 'Stress Essentials' over the product name), so the daily-rhythm panel stays short."
+    "src": "Stress Essentials Adrenal Renew sell sheet ND788 Rev. 10/24 (Dropbox /NutriDyn/Sales/Practitioner Resource/NutriDyn Marketing Materials/Stress Essentials Adrenal Renew SS ND788.pdf, id:xHepYs_Ou4AAAAAAAAdpPg, opened 2026-11-03), Supplement Facts per 2 capsules in label order: vitamin C (ascorbic acid) 300 mg (333% DV), thiamine (B1, thiamine HCl) 50 mg (4,167%), riboflavin (B2) 15 mg (1,154%), vitamin B6 (pyridoxine HCl) 60 mg (3,529%), pantothenic acid (B5, d-calcium pantothenate) 50 mg (1,000%), zinc (citrate) 15 mg (136%), suprarenal adrenal substance (bovine) 300 mg, holy basil powder (leaf; Ocimum sanctum) 200 mg, L-tyrosine 100 mg, spleen substance (bovine) 50 mg; capsule is gelatin; 30 servings; directions 'Take two capsules daily or as directed by your healthcare practitioner'; caution 'If you are pregnant, nursing, or taking medication, consult your healthcare practitioner before use.' The seven amounts in products DB R159 (Ortho Molecular Adren-All, Apex Adreno-Zyme and Standard Process chart reads, catalog ND143 10/1/26) match; the DB reads leave out thiamine, riboflavin and holy basil, which the sell sheet lists, so the sheet now prints all ten. 'Bovine' is printed as 'cow'. Size 60C (ND144 price list 10/1/26). Column framing: the switch charts list it as the close match to Ortho Molecular Adren-All, and the topic research found its real use is stepping patients down from a glandular (Asher, 2026-10-05: 'step the glandular down... bridge with a botanical HPA'), so the column is 'Coming off a glandular?' and says 'not a first step'. URL: nutridyn.com/stress-essentials-adrenal-renew-r159 is in a web-search index of nutridyn.com (2026-11-03); nutridyn.com is blocked here, so the link was not opened. Open it before publishing."
   },
   "sc_calm": {
-    "name": "Calm",
-    "size": "Stress Essentials &middot; 60 capsules",
+    "name": "Stress Essentials Calm",
+    "size": "60&nbsp;capsules",
     "img_src": "R405.png",
-    "key": "550 mg GABA and 200 mg L-theanine per 2 capsules",
+    "key": "Per 2 capsules: 500&nbsp;mg GABA, 200&nbsp;mg <span class=\"scx-nw\">L-theanine</span>",
     "dose": "2 capsules daily",
     "dosesub": "in the evening",
     "sched": [
@@ -69,15 +64,15 @@
         "capsules"
       ]
     ],
-    "url": "https://nutridyn.com/stress-management/calm-eze-r405",
-    "src": "products DB R405 (Designs for Health switch chart, label read vs NeuroCalm, catalog ND143 10/1/26): GABA 550 mg and L-theanine 200 mg per 2 capsules; directions 'two capsules daily'; size 60C (ND144 price list 10/1/26). Formerly sold as Calm Eze; URL seen through web search only. Sheet name: the Stress Essentials line prints on the size line and the product name alone above it (as on the bottle, which reads 'Stress Essentials' over the product name), so the daily-rhythm panel stays short."
+    "url": "https://nutridyn.com/calm-eze",
+    "src": "Stress Essentials Calm sell sheet ND856 Rev. 2/25 (Dropbox /NutriDyn/Sales/Practitioner Resource/NutriDyn Marketing Materials/Stress Essentials Calm SS ND856.pdf, id:xHepYs_Ou4AAAAAAAAu6LQ, opened 2026-11-03), Supplement Facts per 2 capsules: GABA (gamma-aminobutyric acid) 500 mg, L-theanine (Suntheanine) 200 mg; 30 servings; directions 'Take two capsules daily or as directed by your healthcare practitioner'; caution 'If you are pregnant, nursing, or taking medication, consult your healthcare practitioner before use.' CONFLICTING READING: products DB R405 (one Designs for Health switch-chart read, vs NeuroCalm, catalog ND143 10/1/26) gives GABA 550 mg, and a web-search summary (not opened; nutridyn.com and afc.nutridyn.com are blocked here) says the legacy nutridyn.com 'calm-eze' page and some retailers show 550 mg. The sheet prints NutriDyn's own label document (500 mg) until the current bottle or product page is checked; recheck before printing. L-theanine 200 mg agrees everywhere. Size 60C (ND144 price list 10/1/26). Formerly sold as Calm Eze. URL: the main-site page in a web-search index of nutridyn.com is nutridyn.com/calm-eze (2026-11-03); the old 'stress-management/calm-eze-r405' path appears only on practitioner subdomains, so it was replaced. nutridyn.com is blocked here, so the link was not opened. Open it before publishing. Name: 'Stress Essentials Calm' in full, so it can't be mixed up with Mag Calm Pro on the same sheet."
   },
   "sc_mag_calm_pro": {
     "name": "Mag Calm Pro",
-    "size": "About 60 servings &middot; Raspberry Lemon",
+    "size": "About 60 servings<br>Raspberry Lemon",
     "img_src": "R2122.png",
-    "key": "Per scoop: 200 mg magnesium, 2 g myo-inositol, 500 mg taurine, 100 mg L-theanine, 5 mg vitamin B6",
-    "dose": "1 scoop in 6 oz water",
+    "key": "Per scoop: 200&nbsp;mg magnesium, 2&nbsp;g <span class=\"scx-nw\">myo-inositol</span>, 500&nbsp;mg taurine, 100&nbsp;mg <span class=\"scx-nw\">L-theanine</span>, 5&nbsp;mg vitamin&nbsp;B6",
+    "dose": "1 scoop in 6&nbsp;oz water",
     "dosesub": "at bedtime",
     "sched": [
       [
@@ -87,6 +82,6 @@
       ]
     ],
     "url": "https://nutridyn.com/mag-calm-pro",
-    "src": "Mag Calm Pro sell sheet ND1075 Rev. 11/24 (labels.json): per scoop (4.13 g) vitamin B6 (as P5P) 5 mg, magnesium (as dimagnesium malate) 200 mg, myo-inositol 2 g, taurine 500 mg, L-theanine (Suntheanine) 100 mg; about 60 servings, 247.8 g; directions 'Mix 1 scoop with 6 ounces of water 1-2 times daily'. Same amounts in products DB R2122 (Metagenics chart, catalog ND143 10/1/26). URL seen through web search only."
+    "src": "Mag Calm Pro sell sheet ND1075 Rev. 11/24 (Dropbox Mag Calm Pro SS ND1075.pdf, id:xHepYs_Ou4AAAAAAAAryEw, read into labels.json): per scoop (4.13 g) vitamin B6 (as P5P) 5 mg, magnesium (as dimagnesium malate) 200 mg, myo-inositol 2 g, taurine 500 mg, L-theanine (Suntheanine) 100 mg; about 60 servings, 247.8 g; directions 'Mix 1 scoop with 6 ounces of water 1-2 times daily'; caution 'If pregnant, nursing, or taking medication, consult your healthcare practitioner before use.' Same amounts in products DB R2122 (Metagenics chart, catalog ND143 10/1/26). URL: nutridyn.com/mag-calm-pro is in a web-search index of nutridyn.com (2026-11-03, R2122, about 60 servings); nutridyn.com is blocked here, so the link was not opened. Open it before publishing."
   }
 }

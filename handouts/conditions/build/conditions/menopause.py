@@ -96,7 +96,7 @@ SOURCES (tags sit in comments next to each number or claim on the page)
 import math
 import os
 
-from kit import ICONS
+from kit import DIAMOND, ICONS
 from svgkit import T, label_bg, svg
 
 SLUG = "menopause"
@@ -156,7 +156,10 @@ SACRUM = "#E6D2A6"
 MUSCLE, MUSCLE_LN = "#E39A8D", "#C47263"
 UTER, UTER_LN = "#E3869C", "#A9506A"
 OVARY, OVARY_LN = "#F6CBD5", "#BE6F86"
-BLADDER, BLADDER_LN = "#F2DCA8", "#BE9852"
+# bladder: a clear urine yellow with an amber edge, a hue used nowhere else in the figure, so it reads
+# apart from the cream pubic bone it sits on (the old fill was bone-coloured)
+BLADDER_A, BLADDER, BLADDER_LN = "#FFF7D2", "#F8DD68", "#A87B0C"
+URINE, URINE_LN = "#F1C93E", "#C99A14"
 GUT_S, GUT_S_LN = "#F3C3AF", "#CF8C74"        # small intestine
 GUT_L, GUT_L_LN = "#E7A48D", "#B56E59"        # large intestine
 LIVER_A, LIVER_B = "#D58F78", "#B8644F"
@@ -222,10 +225,11 @@ IC_RIBBON = ('<path d="M24 56 39 31c4-7 5-13 1-18-2-3-5-4-8-4s-6 1-8 4c-4 5-3 11
 IC_UTERUS = ('<path d="M22 22c0 11 5 17 7 21v11h6V43c2-4 7-10 7-21 0-5-20-5-20 0z"/>'
              '<path d="M22 22c-5-6-11-6-14-1M42 22c5-6 11-6 14-1"/>'
              '<circle cx="9" cy="29" r="4.5"/><circle cx="55" cy="29" r="4.5"/>')
-# bladder: the two tubes from the kidneys come in at the top, one tube leaves below
-IC_BLADDER = ('<path d="M9 5c2 8 6 13 13 18M55 5c-2 8-6 13-13 18"/>'
-              '<path d="M13 37c0-10 8-16 19-16s19 6 19 16-9 15-19 15-19-5-19-15z"/>'
-              '<path d="M32 52v9"/><path d="M21 37c0 4 3 7 7 8"/>')
+# bladder: a rounded sac that narrows into the urethra, with a drop of urine inside.  (The old icon's
+# two ureters rose from the top like horns and read as a bull's head or the Taurus sign.)
+IC_BLADDER = ('<path d="M32 13c-11 0-20 8-20 18 0 8 5 14 12 17 3.5 1.5 5.5 3.5 6 6h4c.5-2.5 2.5-4.5 6-6 '
+              '7-3 12-9 12-17 0-10-9-18-20-18z"/><path d="M32 54v7"/>'
+              '<path d="M32 23c-3.5 4.5-6 8-6 11a6 6 0 0 0 12 0c0-3-2.5-6.5-6-11z"/>')
 
 
 # ============================================================== the figure (local units, head = 80)
@@ -260,11 +264,14 @@ HAIR_BACK_D = _spline(_mirror(HAIR_BACK_R))
 HAIR_FRONT_D = _spline(HAIR_FRONT)
 HAIRLINE_D = _spline(HAIRLINE, closed=False)
 
-# where each gold dot sits (local units).  The ovary dot sits just below and outside her left
-# ovary (the ovary itself stays visible); the hip dot sits on the bony knob at the outside of her
-# right hip (greater trochanter), clear of the ball of the hip joint.
-DOT = {"hair": (31.5, 50), "breast": (-31, 169), "heart": (8, 158), "gut": (-9, 250), "ovary": (33, 286),
-       "bladder": (8, 307), "hip": (-61.2, 297), "thigh": (-34, 338), "brain": (0, 41)}
+# where each gold dot sits (local units).  The ovary dot sits on the outer pole of her left ovary
+# (clear of the hip socket and the ball of the femur, most of the ovary still showing); the bladder
+# dot sits on the bladder's right edge, where its leader comes in, so the yellow sac stays visible;
+# the hip dot sits on the bony knob at the outside of her right hip (greater trochanter), clear of
+# the ball of the hip joint.  The two pelvic dots are a little smaller: it is the most crowded spot.
+DOT = {"hair": (31.5, 50), "breast": (-31, 169), "heart": (8, 158), "gut": (-9, 250), "ovary": (35, 276),
+       "bladder": (12.2, 305.4), "hip": (-61.2, 297), "thigh": (-34, 338), "brain": (0, 41)}
+DOT_R = {"ovary": 4.2, "bladder": 4.4}
 
 
 def _pelvis():
@@ -405,8 +412,17 @@ def _pelvic_organs():
     o.append(f'<path d="{_spline(uterus)}" fill="url(#mnp-uterus)" stroke="{UTER_LN}" stroke-width=".9"/>')
     o.append('<path d="M-6.6,267.4 C-3,265.6 3,265.6 6.6,267.4 C5,273.4 2.4,277.6 0,281 C-2.4,277.6 -5,273.4 -6.6,267.4 Z" '
              'fill="#F6C2CE" opacity=".9"/>')
-    bl = [(-13.4, 301), (-11, 294.6), (0, 292.4), (11, 294.6), (13.4, 301), (10.6, 308.6), (0, 312.4), (-10.6, 308.6)]
-    o.append(f'<path d="{_spline(bl)}" fill="url(#mnp-bladder)" stroke="{BLADDER_LN}" stroke-width=".9"/>')
+    # bladder: a sac of urine (fluid line, deeper yellow below it, a glint on the wall), urethra below
+    bl_d = _spline([(-13.4, 301), (-11, 294.6), (0, 292.4), (11, 294.6), (13.4, 301), (10.6, 308.6), (0, 312.4),
+                    (-10.6, 308.6)])
+    o.append(f'<clipPath id="mnp-blad"><path d="{bl_d}"/></clipPath>')
+    o.append(f'<path d="{bl_d}" fill="url(#mnp-bladder)"/>')
+    o.append('<path d="M-15,301.6 C-9,299.6 -4,303 1,301.4 C6,299.8 10,302.6 15,301 V314 H-15 Z" '
+             f'fill="{URINE}" clip-path="url(#mnp-blad)"/>')
+    o.append('<path d="M-15,301.6 C-9,299.6 -4,303 1,301.4 C6,299.8 10,302.6 15,301" fill="none" '
+             f'stroke="{URINE_LN}" stroke-width=".7" clip-path="url(#mnp-blad)"/>')
+    o.append('<ellipse cx="-6.4" cy="296.6" rx="3.6" ry="1.6" fill="#fff" opacity=".75" transform="rotate(-14 -6.4 296.6)"/>')
+    o.append(f'<path d="{bl_d}" fill="none" stroke="{BLADDER_LN}" stroke-width="1"/>')
     o.append(f'<path d="M0,312.4 V318.6" stroke="{BLADDER_LN}" stroke-width="1.6" stroke-linecap="round"/>')
     return "".join(o)
 
@@ -453,7 +469,7 @@ def figure_defs():
             f'<stop offset="1" stop-color="{LIVER_B}"/></linearGradient>'
             '<linearGradient id="mnp-uterus" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EC9AAD"/>'
             '<stop offset="1" stop-color="#CF6A83"/></linearGradient>'
-            '<radialGradient id="mnp-bladder" cx=".42" cy=".38" r=".7"><stop offset="0" stop-color="#FBEBC4"/>'
+            f'<radialGradient id="mnp-bladder" cx=".4" cy=".3" r=".75"><stop offset="0" stop-color="{BLADDER_A}"/>'
             f'<stop offset="1" stop-color="{BLADDER}"/></radialGradient>'
             f'<clipPath id="mnp-torso"><path d="{BODY_D}"/></clipPath>'
             '<linearGradient id="mnp-fadeg" x1="0" y1="324" x2="0" y2="366" gradientUnits="userSpaceOnUse">'
@@ -570,7 +586,7 @@ def callout(side, y, title, text, ico, t, warn=None):
 FX, FY = 380, 8             # where the figure's crown sits in the viewBox
 BM_W, BM_H = 760, 372
 INSET_C, INSET_R = (218, 62), 50
-KEY_BOX = (4, 42, 152, 79)  # x, y, w, h of the KEY (top left, under the heading)
+KEY_BOX = (4, 42, 144, 79)  # x, y, w, h of the KEY (top left, under the heading)
 
 # Each note: title baseline y, title, text, icon, the dots its leader goes to.  `via` bends a leader
 # through extra points; `to_inset` draws the BRAIN leader to the magnified circle.
@@ -603,8 +619,8 @@ NOTES_R = [
     # menopause, needs a work-up (NAMS).  [MAP]: under 45 or cycles under 21 days, rule out thyroid,
     # pregnancy and high prolactin first.
     dict(y=160, title="OVARIES AND UTERUS",
-         text="Eggs run low, so hormones swing, then fall. Periods change, then stop. You can still get pregnant "
-              "until 12 months with no period.",
+         text="Eggs run low, so hormones swing, then fall. Periods change, then stop. You can still get pregnant, "
+              "so use birth control until 12 months with no period.",
          warn="See your doctor for any bleeding after menopause, very heavy periods, periods closer than 3 weeks "
               "apart, bleeding after sex, or these changes before 40.",
          ico=IC_UTERUS, dots=["ovary"], via=[(488, 262)]),
@@ -613,8 +629,10 @@ NOTES_R = [
                                                  "treatable.", ico=IC_BLADDER, dots=["bladder"]),
 ]
 
-# organ names, drawn small on white pills where each organ has room (global units, centre of the pill)
-ORGANS = [("liver", 342, 212), ("stomach", 405, 208.5), ("colon", 370, 233.5), ("pelvis", 426, 308)]
+# organ names, drawn small on white pills where each organ has room (global units, centre of the pill).
+# The lower pelvis has no clear space for a pill (two leaders and three dots meet there), so the hip
+# bones go unnamed: the BONES AND MUSCLES note and its hip and thigh dots already point at them.
+ORGANS = [("liver", 342, 212), ("stomach", 405, 208.5), ("colon", 370, 233.5)]
 
 
 def _organ_label(text, cx, cy):
@@ -626,15 +644,18 @@ def _organ_label(text, cx, cy):
 
 
 def key_box():
-    """KEY for the body map: the gold dot, and the red and blue vessels at the heart."""
+    """KEY for the body map: the gold dot, and the red and blue vessels at the heart.  The vessels are
+    named by oxygen, not by direction: that is true for all three drawn (red aorta and its branches,
+    rich in oxygen; blue vena cava coming in and blue pulmonary trunk going out to the lungs, both
+    low in oxygen)."""
     x, y, w, h = KEY_BOX
     tx = x + 30
     o = [f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="8" fill="#fff" stroke="#D9CBD2" stroke-width="1.2"/>',
          T(x + 10, y + 14, "KEY", 10.4, 800, INK, ls=1.3),
          _dot(x + 18, y + 29.5, 5),
          T(tx, y + 26, ["Where a change", "can show up"], 10.4, 600, INK, lh=1.2)]
-    for row, (dark, light, lab) in enumerate((("#7A1820", "#C7363F", "Blood out of the heart"),
-                                              ("#3E4F8C", "#6F84C9", "Blood back to the heart"))):
+    for row, (dark, light, lab) in enumerate((("#7A1820", "#C7363F", "Blood rich in oxygen"),
+                                              ("#3E4F8C", "#6F84C9", "Blood low in oxygen"))):
         cy = y + 52.5 + row * 13.5
         o.append(f'<path d="M{x + 10},{cy} H{x + 22}" stroke="{dark}" stroke-width="4.6" stroke-linecap="round"/>'
                  f'<path d="M{x + 10},{cy} H{x + 22}" stroke="{light}" stroke-width="3" stroke-linecap="round"/>')
@@ -669,11 +690,17 @@ def body_map(t):
     out.append(f'<g clip-path="url(#mnp-inset)"><g transform="translate({INSET_C[0] + 1},{INSET_C[1] - 4}) scale(.92)">'
                f'{brain_side()}</g></g>')
     out.append(f'<circle cx="{INSET_C[0]}" cy="{INSET_C[1]}" r="{INSET_R}" fill="none" stroke="{c1}" stroke-width="2"/>')
+    # the Hypothalamus pill sits in clear space under the circle: right of the KEY, left of the BRAIN
+    # leader, above the BRAIN note.  Its leader leaves the hypothalamus at its lower left (clear of the
+    # pituitary) and crosses the ring once.
     hx, hy = INSET_C[0] + 1 - 8.4 * .92, INSET_C[1] - 4 + 7.6 * .92
     lab = "Hypothalamus"
     lw = tw(lab, 10.2, 800) + 12
-    lx, ly = hx - 15 - lw / 2 + 4, hy + 21
-    out.append(f'<path d="M{hx - 3:.1f},{hy + 4:.1f} L{hx - 15:.1f},{hy + 21:.1f}" stroke="{HYPO}" stroke-width="1.3"/>')
+    lx, ly = KEY_BOX[0] + KEY_BOX[2] + 7, INSET_C[1] + INSET_R + 10
+    sx, sy = hx - 5.4, hy + 3.2
+    ex = lx + lw * 0.45
+    out.append(f'<path d="M{sx:.1f},{sy:.1f} L{ex:.1f},{ly:.1f}" stroke="#fff" stroke-width="3.2" stroke-linecap="round"/>'
+               f'<path d="M{sx:.1f},{sy:.1f} L{ex:.1f},{ly:.1f}" stroke="{HYPO}" stroke-width="1.3"/>')
     out.append(f'<rect x="{lx:.1f}" y="{ly:.1f}" width="{lw:.1f}" height="15" rx="7.5" fill="#fff" '
                f'stroke="{HYPO}" stroke-width="1.1"/>' + T(lx + lw / 2, ly + 11, lab, 10.2, 800, "#B04A14", "middle"))
 
@@ -691,9 +718,9 @@ def body_map(t):
             for k in n["dots"]:
                 px, py = g(k)
                 out.append(_leader([(ax, ay), elbow] + n.get("via", []) + [(px, py)]))
-                marks.append((px, py))
-    for px, py in marks:
-        out.append(_dot(px, py))
+                marks.append((px, py, DOT_R.get(k, 5.4)))
+    for px, py, r in marks:
+        out.append(_dot(px, py, r))
     out.append(_dot(*lens_c, r=4.2))          # the brain dot sits inside the lens on the head
     return svg(BM_W, BM_H, "".join(out),
                "A woman's body with notes on the changes menopause can bring: brain and thermostat, skin and hair, "
@@ -735,7 +762,8 @@ def hotflash_panel(t):
     c1 = t["c1"]
     o = [T(0, 13, "WHY HOT FLASHES HAPPEN", 12.4, 800, c1, ls=0.6)]
     y0, y1, mid = 36, 104, 69
-    for x0, title, top, bot in ((4, "STEADY ESTROGEN", 48, 90), (152, "LOW ESTROGEN", 62, 76)):
+    # "PLENTY OF" (not "STEADY"): the timeline beside it shows estrogen rising and falling every month
+    for x0, title, top, bot in ((4, "PLENTY OF ESTROGEN", 48, 90), (152, "LOW ESTROGEN", 62, 76)):
         w = 134
         o.append(T(x0 + w / 2, 30, title, 10.2, 800, "#4A3F45", "middle", ls=0.5))
         o.append(f'<rect x="{x0}" y="{y0}" width="{w}" height="{y1 - y0}" rx="6" fill="#fff" stroke="#D9CDD3" stroke-width="1.1"/>')
@@ -880,20 +908,28 @@ def picture2(t):
     body = (f'{hotflash_panel(t)}<path d="M296,4 V{P2_H - 40}" stroke="#E6DCE1" stroke-width="1.2"/>'
             f'{timeline_panel(t)}{key_strip(P2_H - 29)}')
     return svg(P2_W, P2_H, body,
-               "Left: two charts of body heat over time. With steady estrogen the comfort zone is wide; with low "
+               "Left: two charts of body heat over time. With plenty of estrogen the comfort zone is wide; with low "
                "estrogen it is narrow, so the same small rise in heat crosses the sweat line and sets off a hot flash. "
                "Right: estrogen and progesterone across the reproductive years, perimenopause and postmenopause.")
 
 
 # ============================================================== blocks under the art
-TRACK = ["Hot flashes", "Poor sleep", "Mood or anxiety", "Vaginal dryness", "UTIs (bladder)", "Low sex drive",
-         "Weight change", "Sore breasts", "Headaches", "Brain fog", "Joint aches", "Hair changes"]   # the 12 [MAP] items
+# The 12 [MAP] items in the Map's order, so the home total and the clinic total are the same test.
+# Two keep the Map's exact words (its first and eleventh questions); the Map's "UTIs" is said in plain
+# words.  The rest are the Map's questions in plainer words (Map: "Sleep or insomnia", "Mood, anxiety,
+# low mood", "Sex drive", "Weight changes", "Breast tenderness", "Hair thinning or facial hair").
+# A label with "|" wraps there onto a second line.
+TRACK = ["Hot flashes or|night sweats", "Poor sleep", "Mood or anxiety", "Vaginal dryness", "Bladder|infections",
+         "Low sex drive", "Weight change", "Sore breasts", "Headaches", "Brain fog", "Joint or|muscle pain",
+         "Hair changes"]
 
 
 def tracker():
-    cells = "".join(f'<div class="mnp-it"><span>{lab}</span><em><i>0</i><i>1</i><i>2</i><i>3</i></em></div>'
-                    for lab in TRACK)
-    return ('<div class="mnp-track"><div class="mnp-th"><b>Track your symptoms</b>'
+    cells = "".join(f'<div class="mnp-it"><span>{lab.replace("|", "<br>")}</span>'
+                    '<em><i>0</i><i>1</i><i>2</i><i>3</i></em></div>' for lab in TRACK)
+    return ('<div class="mnp-track"><div class="mnp-th"><div class="mnp-th1"><b>Track your symptoms</b>'
+            # [MAP] "Same twelve questions at six weeks": two colors keep the two scores apart on one grid
+            '<span class="mnp-pen">Circle in pen today. At 6 weeks, circle again in a new color.</span></div>'
             # [MAP] scale: 0 none, 1 mild, 2 disrupts some days, 3 disrupts most days
             '<span>Circle <strong>0</strong> none, <strong>1</strong> mild, <strong>2</strong> bothers you some days, '
             '<strong>3</strong> bothers you most days.</span></div>'
@@ -909,15 +945,19 @@ def best_box():
     # EstroG-100 WITH GABA; 3 of its 5 authors work at OLLY PBC (Unilever), a supplement company.  The abstract
     # does not say who paid, so the sheet says "run by", not "paid for by".
     # The 6-week retest is the [MAP] retest, so the patient can see for herself whether it helps.
+    # The EstroG-100 sentence is a product statement, so it carries the drawn diamond and page 1 carries
+    # the short DSHEA disclaimer it points to (the full one is on page 2).
+    mark = f'<span class="mark">{DIAMOND}</span>'
     return ('<div class="mnp-best"><h4>Hot flashes: what works best</h4><ol>'
             '<li><b>Hormone therapy works best.</b> For most healthy women under 60, the benefits outweigh the '
             'risks. It needs a prescription, so ask your doctor.</li>'
-            '<li><b>Also proven:</b> CBT (a short course of talk therapy), clinical hypnosis and some '
-            'prescriptions.</li>'
+            '<li><b>Also proven:</b> CBT (a brief talk therapy), clinical hypnosis and some prescriptions.</li>'
             '<li><b>Supplements</b> are not proven for hot flashes. EstroG&#8209;100, in Menopause Support, '
-            'helped in small trials; the newest was run by a supplement company and paired it with GABA. '
-            'If you try it, score yourself again at 6 weeks.</li></ol>'
-            '<small>Source: The Menopause Society, 2022 and 2023</small></div>')
+            'helped in small trials; the newest was run by a supplement company and added GABA.&nbsp;'
+            f'{mark} If you try it, score yourself again at 6 weeks.</li></ol>'
+            '<small>Source: The Menopause Society, 2022 and 2023.<br>'
+            f'{mark} Not evaluated by the FDA; not intended to diagnose, treat, cure, or prevent any '
+            'disease.</small></div>')
 
 
 def front(t, ed):
@@ -935,13 +975,15 @@ CSS = r"""
 .mnp .mnp-track{border:1px solid #E7D3DC;border-radius:9px;background:var(--tint);padding:0.05in 0.1in 0.05in;
   display:flex;flex-direction:column}
 .mnp .mnp-th{display:flex;flex-direction:column;margin-bottom:2px}
+.mnp .mnp-th1{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
 .mnp .mnp-th b{font:900 10.2pt Merriweather,Georgia,serif;color:var(--c1);white-space:nowrap}
 .mnp .mnp-th span{font-size:7.6pt;line-height:1.25;color:#3F4A50;white-space:nowrap}
+.mnp .mnp-th .mnp-pen{font-weight:600;color:var(--deep)}
 .mnp .mnp-th strong{color:var(--deep)}
-.mnp .mnp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0 12px}
+.mnp .mnp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0 12px;flex:1;align-content:space-between}
 .mnp .mnp-it{display:flex;align-items:center;justify-content:space-between;gap:4px;border-bottom:1px dotted #E2C9D4;
-  padding:6.4px 0}
-.mnp .mnp-it span{font-size:7.6pt;line-height:1.1;color:#2B3236;white-space:nowrap}
+  padding:3.4px 0;min-height:0.27in}
+.mnp .mnp-it span{font-size:7.6pt;line-height:1.06;color:#2B3236;white-space:nowrap}
 .mnp .mnp-it em{display:flex;gap:2px;font-style:normal;flex:none}
 .mnp .mnp-it i{display:inline-flex;align-items:center;justify-content:center;width:0.14in;height:0.14in;border-radius:50%;
   border:1.1px solid var(--c2);font:700 7pt/1 Inter,sans-serif;font-style:normal;color:var(--deep);background:#fff}

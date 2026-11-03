@@ -17,8 +17,10 @@ FRONT, top to bottom
   -> "Know your numbers" (TSH scale, free T4, TPO antibodies, ferritin, vitamin D) with the
   biotin warning.
 BACK: hexagon lifestyle band, five NutriDyn picks (Essential Multi starts), daily rhythm built
-around thyroid medicine (nothing in the morning but the probiotic, minerals 4 hours later), and
-three Pharmacist / Provider check notes.
+around thyroid medicine (nothing in the morning but the probiotic, minerals 4 hours later; the two
+lab-gated picks say "if ... is low" in the rhythm too), and the medicine check: four Pharmacist notes or
+three Provider notes (bedtime dosing, biotin incl. Essential Multi, the 6,000 IU D3 total, glandulars).
+Front and back say the same thing about iodine: no kelp or drops, 150 mcg (salt or a multi) is plenty.
 Every SVG id and CSS class starts with "thy", so nothing collides in the all-sheets bundle.
 Edition wording: "{who}" / "{Who}" become "your provider" or "your pharmacist" (build.ed_text).
 
@@ -1041,7 +1043,7 @@ SHEET = {
              # [HUW24] [ZHANG25] selenium; [HU17] 50-100 mcg selenium a day where intake is low; [KNEZ20] zinc for
              # T4 to T3; 150 mcg iodine = the adult RDA, not a high dose ([ATA15] warns about high doses)
              "bullets": ["Selenium and zinc support thyroid health" + SF,
-                         "Normal-dose iodine (150 mcg), not a high dose"],
+                         "Iodine at a normal dose (150&nbsp;mcg)"],
              "dose": "3 capsules with dinner", "dosesub": "4 hours after thyroid meds", "sched": [("pm", 3, "capsules")]},
             {"p": "thy_d3_5000_k2", "need": "Vitamin D", "needsub": "only if your level is low",
              # [HU17] check vitamin D and correct a deficiency; [WANG18]; [KNEZ20] vitamin D and immune regulation

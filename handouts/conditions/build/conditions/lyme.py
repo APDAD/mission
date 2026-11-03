@@ -3,13 +3,11 @@
 Front rebuilt 2026-11-03 from Asher's notes on draft 1 ("That's pretty good...
 Lyme disease, symptoms. That's a pretty good one"): same composition (how it
 spreads, symptoms on the body beside three notes, know your ticks), plus
-  * a KEY for every symbol (early dot, later dot, rash marker, tick life stages),
+  * a KEY for every symbol (early dot, later dot, both looks of the rash),
   * every label at 7 pt or more and nothing clipped at any edge,
   * the three ticks drawn from life: blacklegged (deer) tick dark with a
     red-orange body, western blacklegged, and the lone star tick with the white
     dot on its back.
-Back: lifestyle steps and products kept exactly as draft 1 (a later pass revises
-the products).
 
 Fix round 2026-11-03 (art director's review of the rebuilt front):
   * purple and orange now mean only "early sign" and "later sign": card headers,
@@ -21,22 +19,56 @@ Fix round 2026-11-03 (art director's review of the rebuilt front):
     actual-size strip scaled from the drawing's real length;
   * the notes column fills the symptoms row, the Georgia card is no longer
     half-empty, the western-tick card teaches "where you live is the best clue",
-    and the after-treatment note no longer ties the back-page products to Lyme;
-  * the draft-1 back page overflowed its footer; SHEET["back"] stays frozen for
-    the back-page pass, so a back-only CSS rule removes empty space instead.
+    and the after-treatment note no longer ties the back-page products to Lyme.
+
+Back-page pass 2026-11-03 (with the final front review's leftover defects):
+  * FRONT: the feeding tick has EIGHT legs (four near, four paler far ones), a
+    flatter half-fed body and a solid dark shield cap instead of a black band;
+    Borrelia are drawn as real corkscrew helices; the body shows the rash as it
+    most often looks (solid red, faint clearing) and the KEY shows both looks;
+    the lone star tick's eyes no longer read as extra white dots; one skin
+    gradient for the whole figure; "WAITS" step label with grass; the blood vessel
+    stops short of its label; a missing CDC later sign ("more rashes on other
+    parts of the body") fills the empty lower right; "OTHER INFECTIONS DEER TICKS
+    CAN CARRY" (the western tick carries fewer); Georgia source note corrected.
+  * BACK: rebuilt as RECOVERY SUPPORT (gut, immune, inflammatory balance, detox,
+    energy) with five NutriDyn products from NutriDyn protocols, label facts in
+    products.d/lyme.json, a daily rhythm that keeps magnesium away from
+    doxycycline, and edition-specific medicine-and-nutrient checks.
 
 Every SVG is drawn at 1:1 with its printed CSS size (viewBox width = rendered
 width in CSS px), so an SVG font-size of 9.6 (the smallest used) prints at 7.2 pt.
 Sources (each number below carries a short comment): CDC Lyme disease pages
 (Signs and Symptoms of Untreated Lyme Disease; Transmission; Data and Statistics),
-CDC tick pages (Regions Where Ticks Live; STARI; Diseases Transmitted by Ticks),
-CDC MMWR 2017;66(15):408-409 (Powassan virus), Kugeler et al., Emerg Infect Dis
-2021;27(2), and UGA Cooperative Extension (Circular 937, Ticks in Georgia).
+CDC tick pages (Regions Where Ticks Live; How Ticks Spread Disease; STARI), CDC MMWR
+2017;66(15):408-409 (Powassan virus), Kugeler et al., Emerg Infect Dis 2021;27(2),
+UGA Extension Circular 937 ("Protect Yourself from Ticks") and UGA CAES Newswire
+("Ticks in Georgia", Nancy Hinkle) for Georgia.
 """
 import math
 import re
 
+import kit
 from svgkit import FONT, T, defs, svg
+
+# Fine-tipped tweezers (angled, as people hold them) gripping a tick (eight legs) at the skin
+# line, with an arrow for "pull straight up".
+kit.ICONS.setdefault("ly_tweezers",
+    '<path d="M51.5 6.5C55.5 6 58.2 9.6 57.6 13.6"/>'
+    '<path d="M51.5 6.5 26.6 41.6"/><path d="M57.6 13.6 29.4 43.4"/>'
+    '<path d="M40.2 20.4l3.4 2.6M44.6 25.6l3 2.8"/>'
+    '<ellipse cx="25" cy="49.6" rx="4.4" ry="3.6" fill="currentColor" stroke="none"/>'
+    '<circle cx="27.4" cy="45.6" r="1.8" fill="currentColor" stroke="none"/>'
+    '<path d="M21.4 47.4l-4.2-2M20.8 49.4h-4.8M21 51.4l-4.2 2.2M22 53l-2.8 3.2'
+    'M28.6 49.8l4.4-.6M28.8 51.6l4.2 2M27.8 53.2l2.6 3.4M26.4 53.6l.6 3.6" stroke-width="1.6"/>'
+    '<path d="M7 59H57"/><path d="M12 40V20M7.4 24.6 12 20l4.6 4.6"/>')
+# A magnifying glass over a tick (eight legs): "check your skin".
+kit.ICONS.setdefault("ly_check",
+    '<circle cx="27" cy="27" r="17"/><path d="M39.5 39.5 55 55"/>'
+    '<ellipse cx="27" cy="29" rx="4.2" ry="5.2" fill="currentColor" stroke="none"/>'
+    '<circle cx="27" cy="22.6" r="1.8" fill="currentColor" stroke="none"/>'
+    '<path d="M23.4 25.6l-4.6-2.8M22.9 28.2l-5.2-.6M23 30.8l-5 1.8M23.8 33.2l-3.6 3.6'
+    'M30.6 25.6l4.6-2.8M31.1 28.2l5.2-.6M31 30.8l5 1.8M30.2 33.2l3.6 3.6" stroke-width="1.6"/>')
 
 EARLY = "#4A2C80"       # purple: early sign (the symptom key's colour; used nowhere else in the art)
 LATER = "#D9873A"       # orange: later sign (likewise)
@@ -181,8 +213,8 @@ def tick_top(kind, x, y, s=1.0, rot=0.0, uid="lyt", quest=False, shadow=True, mi
         out.append(f'<ellipse cx="0" cy="{_f(s1 - L * .23)}" rx="{_f(sw * .3)}" ry="{_f(L * .2)}" fill="#FBF8F0" '
                    f'stroke="#E2D5BC" stroke-width=".6"/>'
                    f'<ellipse cx="{_f(-sw * .08)}" cy="{_f(s1 - L * .28)}" rx="{_f(sw * .12)}" ry="{_f(L * .08)}" fill="#fff"/>'
-                   f'<circle cx="{_f(sw * .93)}" cy="{_f(s0 + L * .3)}" r="1.1" fill="#E9D7B0"/>'
-                   f'<circle cx="{_f(-sw * .93)}" cy="{_f(s0 + L * .3)}" r="1.1" fill="#E9D7B0"/>')
+                   f'<circle cx="{_f(sw * .93)}" cy="{_f(s0 + L * .3)}" r=".8" fill="#8A6A44"/>'
+                   f'<circle cx="{_f(-sw * .93)}" cy="{_f(s0 + L * .3)}" r=".8" fill="#8A6A44"/>')
     # mouthparts (capitulum) from above: a short base, then two long palps held
     # together like a beak.  The palps are two separate shapes over a near-black
     # under-shape, so a thin DARK seam runs between them; no light strokes or
@@ -364,10 +396,15 @@ def art_spread(t):
     # 1. waits on a leaf, with tall grass behind it.  CDC "How Ticks Spread Disease": ticks
     # wait "questing", holding leaves and grass with the third and fourth pairs of legs and
     # "the first pair of legs outstretched, waiting to climb onto the host".
+    # the blades fade out at the bottom (no cut-off ends, no ground needed)
+    out.append('<defs><linearGradient id="lygf" gradientUnits="userSpaceOnUse" x1="0" y1="58" x2="0" y2="92">'
+               '<stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#000"/></linearGradient>'
+               '<mask id="lygm"><rect x="0" y="0" width="60" height="96" fill="url(#lygf)"/></mask></defs><g mask="url(#lygm)">')
     for d, c in (("M5.5,92 C7,68 10,42 16,15 C13.6,42 11.4,68 10,92Z", "#5E9E43"),
                  ("M10.5,92 C17,71 28,49 41,29 C31,50 21.5,72 15,92Z", "#4E8B37"),
                  ("M2.5,92 C2.6,78 3.4,64 5.6,50 C5.9,65 6.2,79 6.4,92Z", "#73B254")):
         out.append(f'<path d="{d}" fill="{c}"/>')
+    out.append('</g>')
     out.append(leaf(20, 74, 114, -21, "lyleaf"))
     out.append(tick_top("deer", 109, 33, 0.44, 69, "lyq", quest=True, shadow=False))
     out.append(T(146, 31, "WAITS", 11, 800, INK, ls=1))
@@ -510,8 +547,11 @@ def human(cx, top, s, uid="lyh"):
     arm_l = _mirror_path(arm)
     shapes = [HEAD, body, arm, arm_l]
     ears = '<ellipse cx="13.6" cy="21" rx="2.3" ry="4.4"/><ellipse cx="-13.6" cy="21" rx="2.3" ry="4.4"/>'
-    out = [f'<defs><linearGradient id="{uid}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="{SKIN[1]}"/>'
-           f'<stop offset=".5" stop-color="{SKIN[0]}"/><stop offset="1" stop-color="{SKIN[1]}"/></linearGradient></defs>',
+    # one gradient in figure units (userSpaceOnUse) shared by every part, so the shading runs on
+    # across the neck and shoulders instead of restarting inside each shape
+    out = [f'<defs><linearGradient id="{uid}" gradientUnits="userSpaceOnUse" x1="-56" y1="0" x2="56" y2="0">'
+           f'<stop offset="0" stop-color="{SKIN[1]}"/><stop offset=".5" stop-color="{SKIN[0]}"/>'
+           f'<stop offset="1" stop-color="{SKIN[1]}"/></linearGradient></defs>',
            f'<g transform="translate({_f(cx)},{_f(top)}) scale({s})">',
            # pass 1: outline (stroked union), pass 2: fill on top = one clean silhouette
            f'<g fill="{SKIN[2]}" stroke="{SKIN[2]}" stroke-width="2.4" stroke-linejoin="round">'
@@ -526,8 +566,22 @@ def human(cx, top, s, uid="lyh"):
     return "".join(out)
 
 
+def rash_patch(x, y, rx, ry, uid="lyrp", rot=-12):
+    """Erythema migrans as it most often looks: a solid, evenly red, expanding oval with a crisp
+    edge, a faint clearing at most, and the bite in the middle.  CDC: the rash "sometimes clears
+    as it enlarges, resulting in a target or bull's-eye appearance" and "does not always appear
+    as a classic erythema migrans rash"."""
+    return (f'<defs><radialGradient id="{uid}"><stop offset="0" stop-color="#fff" stop-opacity=".3"/>'
+            f'<stop offset=".55" stop-color="#fff" stop-opacity=".1"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>'
+            f'</radialGradient></defs>'
+            f'<g transform="translate({_f(x)},{_f(y)}) rotate({rot})">'
+            f'<ellipse rx="{_f(rx)}" ry="{_f(ry)}" fill="{RASH}" fill-opacity=".86" stroke="#A9352C" stroke-width=".9"/>'
+            f'<ellipse rx="{_f(rx * .55)}" ry="{_f(ry * .55)}" fill="url(#{uid})"/>'
+            f'<circle r="{_f(max(.8, rx * .09))}" fill="#7E231C"/></g>')
+
+
 def bullseye(x, y, r):
-    """The erythema migrans marker: red ring, clearer middle, red centre."""
+    """The bull's-eye form of erythema migrans: red ring, clearer middle, red centre."""
     return (f'<circle cx="{_f(x)}" cy="{_f(y)}" r="{_f(r)}" fill="{RASH}" fill-opacity=".14" stroke="{RASH}" '
             f'stroke-width="{_f(r * .36)}" stroke-opacity=".9"/>'
             f'<circle cx="{_f(x)}" cy="{_f(y)}" r="{_f(r * .34)}" fill="{RASH}" fill-opacity=".9"/>')
@@ -553,16 +607,17 @@ def art_symptoms(t):
     out.append(T(294, 28, "days to months, if untreated", 9.6, 600, SOFT_INK))
     out.append(human(cx, top, s))
     rash = at(-15, 140)
-    out.append(bullseye(rash[0], rash[1], 10.5))
+    out.append(rash_patch(rash[0], rash[1], 11.5, 9.4))
     # (lines, first baseline, target).  Left = early (CDC early list), right = later.
     early = [(["Fever, chills, headache", "and tiredness"], 50, at(-7, 15)),
              (["Swollen lymph nodes"], 84, at(-7.5, 42)),
              (["Muscle and joint aches"], 114, at(-33, 63)),
-             (["Expanding rash, sometimes", "like a bull's-eye"], 156, (rash[0] - 10.5, rash[1]))]
+             (["Expanding rash, sometimes", "like a bull's-eye"], 156, (rash[0] - 11.2, rash[1] + 1.5))]
     later = [(["Face droop (palsy), bad", "headache, stiff neck"], 50, at(7.5, 24)),
              (["Pounding or skipped", "heartbeat (Lyme carditis)"], 112, at(10, 88)),
              (["Nerve pain, numbness or", "tingling in hands or feet"], 190, at(50.5, 180)),
-             (["Arthritis: swollen joints,", "most often the knees"], 244, at(15, 222))]
+             (["Arthritis: swollen joints,", "most often the knees"], 244, at(15, 222)),
+             (["More rashes on other", "parts of the body"], 288, at(17, 262))]
     for lines, by, (px, py) in early:
         ly = by - 3.6
         out.append(f'<path d="M154,{_f(ly)} L{_f(px)},{_f(py)}" stroke="{EARLY}" stroke-width="1.3" fill="none"/>')
@@ -579,12 +634,14 @@ def art_symptoms(t):
     out.append(f'<rect x="{kx}" y="{ky}" width="{kw}" height="{kh}" rx="8" fill="#FFFFFF" stroke="#CFD6DA" stroke-width="1.3"/>')
     out.append(T(kx + 11, ky + 17, "KEY", 9.6, 800, INK, ls=1.4))
     stub = '<path d="M{0},{1} H{2}" stroke="{3}" stroke-width="1.3"/>'
-    rows = [(stub.format(kx + 10, ky + 36, kx + 22, EARLY) + dot(kx + 22, ky + 36, EARLY), "Early sign"),
-            (stub.format(kx + 10, ky + 57, kx + 22, LATER) + dot(kx + 22, ky + 57, LATER), "Later sign"),
-            (bullseye(kx + 20, ky + 78, 8), "Rash where the tick bit")]
+    rows = [(stub.format(kx + 10, ky + 35, kx + 22, EARLY) + dot(kx + 22, ky + 35, EARLY), "Early sign"),
+            (stub.format(kx + 10, ky + 55, kx + 22, LATER) + dot(kx + 22, ky + 55, LATER), "Later sign")]
     for i, (sw, lab) in enumerate(rows):
         out.append(sw)
-        out.append(T(kx + 36, ky + 39.6 + i * 21, lab, 10.4, 600, INK))
+        out.append(T(kx + 36, ky + 38.6 + i * 20, lab, 10.4, 600, INK))
+    out.append(rash_patch(kx + 16, ky + 76, 7, 5.6, "lyrpk", rot=0) + bullseye(kx + 33.5, ky + 76, 6.4))
+    out.append(T(kx + 46, ky + 73.4, "Rash at the bite:", 10.4, 600, INK))
+    out.append(T(kx + 46, ky + 85, "plain red or bull's-eye", 9.6, 600, SOFT_INK))
     return svg(W, H, "".join(out), "Early and later signs of Lyme disease on the body, with a key")
 
 
@@ -620,7 +677,7 @@ def art_tick_card(kind, uid):
 # ============================================================ front page
 CSS = r"""
 .ly-front{display:flex;flex-direction:column}
-.ly-front .ly-h{font:900 12pt Merriweather,Georgia,serif;color:var(--c1);letter-spacing:.02em;margin:0.05in 0 0.03in}
+.ly-front .ly-h{font:900 12pt Merriweather,Georgia,serif;color:var(--c1);letter-spacing:.02em;margin:0.03in 0 0.02in}
 .ly-front .ly-art svg{display:block;width:100%;height:auto}
 .ly-front .ly-grid{display:grid;grid-template-columns:4.625in 1fr;gap:0.14in;align-items:stretch}
 .ly-front .ly-notes{display:flex;flex-direction:column;justify-content:space-between;gap:0.07in}
@@ -633,16 +690,20 @@ CSS = r"""
 .ly-front .ly-tk svg{flex:none;width:0.7917in;height:auto}
 .ly-front .ly-tk b{display:block;font-size:8.8pt;color:#1F2A2E;line-height:1.2}
 .ly-front .ly-tk span{display:block;font-size:7.8pt;color:#3A4247;line-height:1.28;margin-top:1px}
-/* BACK-PAGE FIT (fix round 2026-11-03).  SHEET["back"] is draft 1 and stays frozen
-   until the back-page product pass; as built it ran the footer under the bottom bar
-   (disclaimer cut, page/edition line hidden).  These rules touch only THIS sheet's
-   back (the page right after the .ly-front page, so the all-sheets bundle is safe)
-   and only remove empty space: the life icons keep their 0.6 in size inside a
-   shorter box, and the daily-rhythm columns size to their contents so short
-   product lines stop wrapping.  Re-check, and drop them if unneeded, once the
-   rebuilt back lands. */
-.sheet.front:has(.ly-front)+.sheet.back .icons5 .life .disc2{height:0.66in}
-.sheet.front:has(.ly-front)+.sheet.back .rhythm{grid-template-columns:auto auto auto}
+/* BACK PAGE.  Every rule is scoped by the empty .ly-back marker in life_title, so it touches
+   only this sheet's back, in its own file and in the all-sheets bundle. */
+/* the life icons keep their 0.6 in size inside a shorter box (the page needs the room) */
+.sheet.back:has(.ly-back) .icons5 .life .disc2{height:0.56in}
+.sheet.back:has(.ly-back) .icons5 .life .disc2 svg{width:0.54in!important;height:0.54in!important}
+.sheet.back:has(.ly-back) .ns-title{margin-top:0.1in}
+/* dose bands: a little more width so "2 to 3 hours from doxycycline" stays on one line */
+.sheet.back:has(.ly-back) .col .dose{padding-left:0.025in;padding-right:0.025in}
+/* products section: say the frame out loud.  The kit's generic subtitle is not rendered
+   (display:none, so it is not in the PDF either) and the sheet's own line takes its place:
+   "Recovery support", antibiotics first.  Same line in both editions. */
+.sheet.back:has(.ly-back) .ns-title span{display:none}
+.sheet.back:has(.ly-back) .ns-title::after{content:"Recovery support. Antibiotics prescribed by your clinician come first.";
+  font:700 8pt Inter,sans-serif;color:var(--deep);letter-spacing:.02em}
 """
 
 
@@ -696,45 +757,92 @@ SHEET = {
               "early treatment is the next best."),
     "front": front,
     "css": CSS,
-    # back: exactly as draft 1 (sheets.py) and frozen in the 2026-11-03 fix round; the
-    # back-page pass revises the products and the check panel.  Sources for its numbers
-    # (cdc.gov was not reachable from the fix session, so the CDC lines were checked
-    # against archived copies of the same pages):
-    #   permethrin on clothing and gear; EPA-registered DEET, picaridin, IR3535 or oil of
-    #   lemon eucalyptus; tumble dry on HIGH heat for 10 minutes; shower within 2 hours of
-    #   coming indoors; check scalp, ears, armpits, waist, behind the knees: CDC
-    #   "Preventing Tick Bites on People".
-    #   Fine-tipped tweezers close to the skin, pull upward with steady pressure; note when
-    #   and where the bite happened: CDC "Removing a Tick" / "Symptoms of Tickborne Illness".
-    #   Doxycycline 2 to 3 hours apart from calcium, magnesium, iron and zinc: doxycycline
-    #   prescribing information (absorption impaired by antacids with calcium or magnesium,
-    #   and by iron and zinc) and NHS doxycycline guidance (2 hours); not re-opened this round.
-    #   Probiotic 2 hours apart from each antibiotic dose and 2 weeks after: common
-    #   pharmacist practice; no primary source found in this round (flagged for the back pass).
-    #   Note: Mito Recharge carries 75 mg magnesium per 3 capsules (sell sheet ND812), so
-    #   the back pass should name it in the doxycycline line and move it off the morning slot.
+    # BACK PAGE (back-page pass, 2026-11-03).  Framed as RECOVERY SUPPORT for gut, immune,
+    # inflammatory balance, detox (die-off) and energy, in structure/function words only: no product
+    # here treats Lyme, and "Antibiotics prescribed by your clinician come first" heads the products.
+    # Five columns, the competitor's count.  Picks follow NutriDyn's own protocols first:
+    #   Immune PRP Pro and Liposomal Glutathione: Jocelyn Strand ND, NutriDyn GLC 2019 "Botanical
+    #     Medicines in Complex, Multi-Pathogen Disease" (Immune Support: Immune PRP Pro 2 capsules
+    #     2x/day; Detoxification Support "for herxing": Liposomal Glutathione up to 4x/day).  The sheet
+    #     never prints "Lyme" on that protocol: verification found it is not labelled for Lyme.
+    #   Inflam-Eze Plus: Dr. Kristi Hughes ND's NutriDyn key ("Botanical Anti-inflam" = Inflam-eze
+    #     Plus), Gut-Neuro-Immune Restoration plan, Asher's 2025 fatigue/immune seminar (which covered
+    #     tick-borne disease); also the closest NutriDyn match to the competitor's turmeric matrix.
+    #   Mito Recharge: the competitor's mitochondrial category (NAC, ALC, ALA) in one NutriDyn formula.
+    #   UltraBiotic Daily Multi-Strain (START HERE): gut support during the antibiotics that come first;
+    #     its S. boulardii is a yeast, which antibacterial antibiotics do not kill (sell sheet ND460
+    #     cites McFarland 2010).  It stands in for the competitor's herbal antimicrobial, which on a
+    #     Lyme sheet would read as treating the infection.
+    # Label facts, sizes and links: products.d/lyme.json (each entry has its "src").
+    # Lifestyle sources:
+    #   permethrin on clothing and gear; EPA-registered DEET, picaridin, IR3535 or oil of lemon
+    #   eucalyptus; tumble dry on HIGH for 10 minutes; shower within 2 hours of coming indoors;
+    #   check under the arms, in and around the ears and hair, the waist, behind the knees, and
+    #   pets: CDC "Preventing Tick Bites on People".  Light colours and pants tucked into socks:
+    #   CDC/NIOSH tick-borne disease guidance for outdoor workers.
+    #   Fine-tipped tweezers close to the skin, pull upward with steady pressure: CDC "Removing a
+    #   Tick"; tell the doctor when and where the bite happened: CDC "Symptoms of Tickborne Illness".
+    #   "Worse at first?": the Jarisch-Herxheimer reaction comes within 24 hours of starting
+    #   antibiotics in 7 to 30% of treated Lyme patients and usually passes within a day (Butler T,
+    #   Am J Trop Med Hyg 2017;96(1):46-52; StatPearls NBK557820).  Asher's own Herx explainer
+    #   (Gmail 17541a5df3e6e6e5, 2020): "feeling worse before feeling better", and "the biggest
+    #   problem ... is that people stop taking the supplement or medication".  So: keep the
+    #   antibiotic, call the clinician.  The protocols' "go slow" advice (titrate slowly) is the
+    #   kit's own rhythm line: start with the Start here pick, add one product a week.
+    # Check-panel sources:
+    #   Doxycycline label: "Absorption of tetracyclines is impaired by antacids containing aluminum,
+    #   calcium, or magnesium ... and iron-containing preparations"; NHS doxycycline guidance keeps
+    #   iron and zinc 2 hours away; HSE (Ireland) tetracycline guidance: iron 3 hours before or 2 to
+    #   3 hours after.  Mito Recharge has 75 mg magnesium per 3 capsules (ND812).  Doxycycline label:
+    #   "tetracyclines have been shown to depress plasma prothrombin activity, patients who are on
+    #   anticoagulant therapy may require downward adjustment of their anticoagulant dosage."
+    #   Vitamin K "can interact with ... warfarin" (NIH ODS vitamin K fact sheet); Mito Recharge has
+    #   250 mcg vitamin K1 (ND812).  Willow bark: may raise bleeding risk with warfarin or other
+    #   anticoagulants, avoid with salicylate (aspirin) allergy, and children should not take it
+    #   (Reye syndrome), per MSKCC "About Herbs: Willow Bark" and MedlinePlus.  Probiotic 2 hours
+    #   from each antibiotic dose: common practice with thin evidence (no guideline found), so the
+    #   pharmacy line says the pharmacist "may suggest" it.  Doxycycline with milk or colostrum:
+    #   overall absorption not significantly affected (doxycycline labelling, via PDR).
     "back": {
-        "life_title": "Lifestyle Recommendations", "life_sub": "Avoiding tick bites", "style": "icons",
-        "life": [("shirt", "Clothing", "Light colors, long sleeves, pants tucked into socks. Treat gear with permethrin."),
-                 ("drop", "Repellent", "Use an EPA-registered repellent: DEET, picaridin, IR3535 or oil of lemon eucalyptus."),
-                 ("dryer", "High heat", "Tumble dry clothes on high for 10 minutes after outdoor time to kill ticks."),
-                 ("shower", "Shower and check", "Shower within 2 hours. Check scalp, ears, armpits, waist and behind knees."),
-                 ("paw", "Pets", "Check pets daily and ask your vet about tick prevention."),
-                 ("clipboard", "Remove it right", "Fine-tipped tweezers, close to the skin, pull straight up. Note the date.")],
+        "life_title": 'Lifestyle Recommendations<span class="ly-back"></span>',
+        "life_sub": "Avoid the next bite, and pace your recovery",
+        "style": "icons",
+        "life": [("shirt", "Dress for ticks", "Light colors, long sleeves, pants in socks. Permethrin on gear."),
+                 ("drop", "Repellent", "EPA-registered: DEET, picaridin, IR3535 or oil of lemon eucalyptus."),
+                 ("dryer", "Dry, then shower", "Dry clothes on high heat for 10 minutes. Shower within 2 hours."),
+                 ("ly_check", "Check daily", "Scalp, ears, armpits, waist and behind the knees. Pets, too."),
+                 ("ly_tweezers", "Remove it right", "Fine-tipped tweezers at the skin, pull straight up. Note the date."),
+                 ("thermo", "Worse at first?", "Can be germs dying off. Keep your antibiotic; call your clinician.")],
         "cols": [
-            {"p": "ultrabiotic_dms", "need": "Protect your gut", "needsub": "probiotic + S. boulardii", "start": True,
-             "bullets": ["S. boulardii keeps working during antibiotics", "Supports normal bowel function"], "dose": "1 capsule daily", "dosesub": "2 hours from antibiotics"},
-            {"p": "immunity_pro", "need": "Immune readiness", "needsub": "beta-glucan",
-             "bullets": ["Supports a healthy immune response", "One capsule a day"], "dose": "dose_from_db"},
-            {"p": "curcumin_bcm95", "need": "Inflammatory balance", "needsub": "curcumin",
-             "bullets": ["Supports a healthy inflammatory response", "Supports joint comfort"], "dose": "dose_from_db"},
-            {"p": "gi_defend", "need": "Barrier support", "needsub": "serum-derived bovine immunoglobulins",
-             "bullets": ["Binds microbial toxins in the gut", "Supports immune balance"], "dose": "dose_from_db"},
-            {"p": "mito", "need": "Cellular energy", "needsub": "mitochondrial support",
-             "bullets": ["Supports energy production in every cell", "Antioxidant support"], "dose": "dose_from_db"},
+            {"p": "ly_ultrabiotic_dms", "need": "Protect your gut", "needsub": "with <em>S. boulardii</em>", "start": True,
+             "bullets": ["Supports a healthy gut microbiome",
+                         "<i>S. boulardii</i>, a yeast, is not killed by antibiotics"]},
+            {"p": "ly_immune_prp", "need": "Immune readiness", "needsub": "colostrum immunoglobulins",
+             "bullets": ["Promotes healthy immune function", "Supports the gut lining"]},
+            {"p": "ly_inflam_eze", "need": "Inflammatory balance", "needsub": "ginger, curcumin, boswellia",
+             "bullets": ["Promotes healthy inflammatory markers", "Supports joint comfort"]},
+            {"p": "ly_glutathione", "need": "Detox support", "needsub": "liposomal glutathione",
+             "bullets": ["Supports healthy glutathione levels", "Provides antioxidant and detox support"]},
+            {"p": "ly_mito", "need": "Cellular energy", "needsub": "mitochondrial support",
+             "bullets": ["Supports your cells' energy production", "Promotes healthy antioxidant status"]},
         ],
-        "rx": ["<b>Doxycycline:</b> take it 2 to 3 hours apart from calcium, magnesium, iron and zinc, which block it.",
-               "<b>During any antibiotic,</b> take the probiotic 2 hours apart from each dose, then keep going 2 weeks after.",
-               "<b>Antibiotics can lower vitamin K and B vitamins.</b> Eat leafy greens and ask before adding herbs."],
+        # Pharmacists check interactions and depletions; providers order labs, refer and adjust.
+        "rx": {
+            "pharmacy": [
+                "<b>Doxycycline:</b> take it 2 to 3 hours apart from calcium, magnesium (Mito Recharge has some), "
+                "iron, zinc and antacids, which block it.",
+                "<b>Probiotic timing:</b> {who} may suggest taking UltraBiotic at least 2 hours apart from each "
+                "antibiotic dose.",
+                "<b>Blood thinners:</b> doxycycline can make warfarin stronger; the vitamin K1 in Mito Recharge can "
+                "make it weaker. Inflam-Eze Plus has aspirin-like willow bark: not for children, teens or aspirin allergy."],
+            "practitioner": [
+                "<b>Doxycycline:</b> take it 2 to 3 hours apart from calcium, magnesium (Mito Recharge has some), "
+                "iron, zinc and antacids, which block it.",
+                "<b>Antibiotic days:</b> take UltraBiotic at least 2 hours apart from each antibiotic dose. "
+                "{Who} can say how long to continue it.",
+                "<b>On warfarin?</b> Doxycycline can make it stronger and Mito Recharge's vitamin K1 weaker, so {who} "
+                "may check your INR (a clotting test). Inflam-Eze Plus has aspirin-like willow bark: not for children, "
+                "teens or aspirin allergy."],
+        },
     },
 }

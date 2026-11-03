@@ -10,9 +10,11 @@ FRONT, top to bottom:
           a weak signal that fails);
     one KEY under both halves names every symbol and colour (seven entries).
   -> "What you may feel" + "Common causes" cards
-  -> "Ask for these checks" (A1c, B12 + MMA, thyroid, foot test) + a "see someone soon / right away / 911" strip.
-BACK: lifestyle band, five NutriDyn columns (label facts in products.d/neuropathy.json, sheet-local keys),
-daily rhythm and five Pharmacist / Provider checks.
+  -> "Ask for these checks" (A1c, B12 + MMA, thyroid, foot test) + a "911 / get care right away / see someone soon"
+     strip, most urgent first.
+BACK: lifestyle band, five NutriDyn columns (label facts in products.d/neuropathy.json, sheet-local keys, every
+"In each serving" line read from the NutriDyn sell sheet's Supplement Facts panel), daily rhythm and five
+Pharmacist / Provider checks.
 Every SVG id starts "nrp-" and every CSS class ".nrp", so nothing collides in the all-sheets bundle.
 The back page has no sheet class of its own, so the lifestyle subtitle carries an empty <span class="nrp-bk">
 marker and this sheet's back-page CSS is scoped with .sheet.back:has(.nrp-bk) (front: .sheet.front:has(.nrp)).
@@ -44,8 +46,11 @@ SOURCES (each number or fact on the page carries one of these tags in a comment)
             glucose tolerance test when routine glucose is not diagnostic.
   [ADA26]   American Diabetes Association. Standards of Care in Diabetes-2026: 2. Diagnosis and
             Classification (A1C <5.7% normal, 5.7-6.4% prediabetes, >=6.5% diabetes); 9. Pharmacologic
-            Approaches (periodic B12 measurement with long-term metformin); 12. Retinopathy, Neuropathy, and
-            Foot Care (PMID 41358886, doi:10.2337/dc26-S012).
+            Approaches to Glycemic Treatment (PMID 41358900, PMC12690185, doi:10.2337/dc26-S009); 12. Retinopathy,
+            Neuropathy, and Foot Care (PMID 41358886, doi:10.2337/dc26-S012). The Section 9 wording on how often to
+            recheck B12 with long-term metformin could NOT be opened in this session (diabetesjournals.org, PMC and
+            Europe PMC blocked; the PubMed full-text tool returns it empty), so the sheet states no interval: it says
+            "ask how often to recheck it", which is right whether the 2026 text says periodic or yearly.
   [AROD16]  Aroda VR et al. Long-term metformin use and vitamin B12 deficiency in the DPP Outcomes Study.
             J Clin Endocrinol Metab 2016;101:1754-61. PMID 26900641, doi:10.1210/jc.2015-3754
             (routine B12 testing in metformin users "should be considered").
@@ -62,14 +67,26 @@ SOURCES (each number or fact on the page carries one of these tags in a comment)
             PMID 31473202, doi:10.1016/j.clinbiochem.2019.08.012: immunoassays at greatest risk include thyroid
             and reproductive hormones, cardiac and immunosuppressive-drug tests.
   [GUO12]   Guo Y et al. Repeated administration of berberine inhibits cytochromes P450 in humans. Eur J Clin
-            Pharmacol 2012;68:213-7. PMID 21870106, doi:10.1007/s00228-011-1108-2 (CYP2D6, 2C9, 3A4 down).
+            Pharmacol 2012;68:213-7. PMID 21870106, doi:10.1007/s00228-011-1108-2 (CYP2D6, 2C9, 3A4 down; warfarin
+            is cleared by CYP2C9, so: blood thinners).
+  [WU05]    Wu X et al. Effects of berberine on the blood concentration of cyclosporin A in renal transplanted
+            recipients. Eur J Clin Pharmacol 2005;61:567-72. PMID 16133554, doi:10.1007/s00228-005-0952-3 (randomized:
+            berberine raised cyclosporin trough levels, CYP3A4; so: transplant medicines).
+  [NIDDK]   NIDDK patient pages (wording as published; not reopened in this session): "The A1C test ... provides
+            information about your average levels of blood glucose ... over the past 3 months"; the OGTT "checks your
+            blood glucose levels before and 2 hours after you drink a special sweet drink".
+  [ATA]     American Thyroid Association, Thyroid Function Tests: "the best way to initially test thyroid function is
+            to measure the TSH level in a blood sample" (so: the main thyroid blood test).
   [CHAN93]  Chan E. Displacement of bilirubin from albumin by berberine. Biol Neonate 1993;63:201-8.
             PMID 8513024, doi:10.1159/000243932: berberine "best avoided in jaundiced neonates and pregnant women".
   [YASU16]  Yasueda A et al. Antioxidant supplements as adjuvant therapy in cancer treatment: a systematic review.
             Integr Cancer Ther 2016;15:17-39. PMID 26503419, doi:10.1177/1534735415610427 (effect on
             chemotherapy and radiotherapy unclear, so: ask first).
-  [LABEL]   Nerve Eze and Alpha-Lipoic Acid sell sheets (labels.json): "If you are pregnant, nursing, or taking
-            medication, consult your healthcare practitioner before use."
+  [LABEL]   Nerve Eze and Alpha-Lipoic Acid sell sheets (labels.json), and the Gluco IR (ND506), B12 Pro (ND1390),
+            Methyl Complete (ND420) and Omega Pure EPA-DHA 1000 (ND416) sell sheets read for this sheet (products.d
+            "src"): every one says "If [you are] pregnant, nursing, or taking medication, consult your healthcare
+            practitioner before use." Methyl Complete (ND420) also lists biotin 500 mcg per 2 capsules, so the
+            blood-test check names both biotin sources.
   [ASA]     American Stroke Association BE FAST warning signs: sudden numbness or weakness, especially on one
             side, face drooping, speech difficulty -> call 911.
   [CFR93]   21 CFR 101.93 (structure/function statements): disclaimer adjacent to each statement or linked to it
@@ -86,7 +103,8 @@ SOURCES (each number or fact on the page carries one of these tags in a comment)
             PMID 23218892: L-methylfolate 3 mg + methylcobalamin 2 mg + P5P 35 mg, 24 weeks, improved symptom
             scores (NTSS-6) and lowered homocysteine vs placebo.
   Product choice: Methyl Complete (1 mg B12 a day, already an oral repletion-level dose [BCSH14]) is for everyone;
-  B12 Pro (5,000 mcg) is marked "if your B12 runs low", after the test.  Alpha-Lipoic Acid R270 (200 mg, SS ND283)
+  B12 Pro (5,000 mcg) is "after your B12 test" in its column and "if advised" in the daily rhythm, so the back page
+  carries no deficiency (disease) wording, only structure/function.  Alpha-Lipoic Acid R270 (200 mg, SS ND283)
   was not added: Nerve Eze + Gluco IR already give 600 mg ALA a day, a third ALA product would read as padding,
   and the only R270 photo on hand shows the Progressive P872 bottle.
 """
@@ -657,7 +675,8 @@ def _doc(ed):
 # ============================================================== front page blocks
 # [ADA17] pain "burning, lancinating, tingling, or shooting (electric shock-like) ... typically worse at night";
 # large fibres "numbness, tingling, poor balance"; "a major contributor to falls"; "the most important cause of
-# foot ulceration"; "up to half of the patients may be asymptomatic" (so: sometimes no signs at first).
+# foot ulceration"; "up to half of the patients may be asymptomatic": no symptoms, so "you feel nothing" (the exam
+# can still find it, which the foot touch test tile below answers).
 # [NINDS] motor nerve damage: muscle weakness, painful cramps.
 FEEL = [("flame", "<b>Burning</b> or sharp, electric jolts"),
         ("nrp-tingle", "<b>Tingling</b>, pins and needles"),
@@ -666,16 +685,17 @@ FEEL = [("flame", "<b>Burning</b> or sharp, electric jolts"),
         ("age", "<b>Poor balance</b>, stumbles and falls"),
         ("nrp-foot", "Cuts or blisters you <b>do not feel</b>"),
         ("dumbbell", "<b>Weak</b> muscles or cramps"),
-        ("stethoscope", "Sometimes <b>no signs</b> at first")]
+        ("stethoscope", "Sometimes you <b>feel nothing</b> at first")]
 
 # [NINDS] diabetes is the leading cause; [ADA17] prediabetes too (10-30% with impaired glucose tolerance), and the
 # non-diabetic causes table (B12, alcohol, chemotherapy drugs: vinca alkaloids, platinum, taxanes; amiodarone,
-# colchicine; HIV, hepatitis B, Lyme; CIDP; hereditary) + work-up incl. thyroid function [ADA17, AAN09];
-# [AROD16] long-term metformin and [LAM13] acid blockers lower B12; kidney disease per NINDS.
+# colchicine; pyridoxine (B6) excess; HIV, hepatitis B, Lyme; CIDP; hereditary) + work-up incl. thyroid function
+# [ADA17, AAN09]; [EFSA23] excess B6 -> peripheral neuropathy "is well established" (the back page warns about it
+# too); [AROD16] long-term metformin and [LAM13] acid blockers lower B12; kidney disease per NINDS.
 CAUSES = [("meter", "<b>High blood sugar:</b> diabetes or prediabetes", True),
           ("nrp-b12", "<b>Low vitamin B12</b>, as with metformin or acid blockers", False),
           ("nrp-glass", "<b>Heavy alcohol</b> use", False),
-          ("rx", "<b>Chemotherapy</b> and some other medicines", False),
+          ("rx", "<b>Chemotherapy</b>, other medicines or too much B6", False),
           ("nrp-thyroid", "<b>Low thyroid</b> (hypothyroidism)", False),
           ("kidney", "<b>Kidney disease</b>", False),
           ("microbe", "<b>Infections</b> or autoimmune disease", False),
@@ -693,22 +713,26 @@ def feel_causes():
 
 def checks(ed):
     # [ADA26] Table 2.1/2.2: A1C <5.7% normal, 5.7-6.4% prediabetes, >=6.5% diabetes (a repeat test confirms).
-    # [AAN09] if routine glucose is not diagnostic, a glucose tolerance test may be considered.
+    # [NIDDK] A1C = average blood glucose "over the past 3 months" (the gloss in the tile title).
+    # [AAN09] if routine glucose is not diagnostic, a glucose tolerance test may be considered; [NIDDK] the OGTT
+    # checks blood glucose before and 2 hours after "a special sweet drink" (the gloss in the text).
     a1c = ('<div class="nrp-a1c"><div class="ok"><i>Normal</i><b>under 5.7%</b></div>'
            '<div class="pre"><i>Prediabetes</i><b>5.7 to 6.4%</b></div>'
            '<div class="dm"><i>Diabetes</i><b>6.5% or more</b></div></div>')
     mine = '<div class="nrp-mine"><span>{}</span><i></i></div>'
     tiles = [
-        ("meter", "Blood sugar", "A1c",
-         a1c + '<p>A normal A1c? A 2-hour glucose test can still catch early sugar trouble.</p>', "My A1c"),
+        ("meter", "Blood sugar", "A1c: your 3-month average",
+         a1c + '<p>A normal A1c? A 2-hour glucose test (a sweet drink, then a blood test) can still catch early '
+         'sugar trouble.</p>', "My A1c"),
         # [AAN09, BCSH14] serum B12 "with metabolites (methylmalonic acid ...)"; [BCSH14] test before supplements
-        # raise it; [ADA26] periodic B12 with long-term metformin, [AROD16] testing "should be considered".
+        # raise it; [AROD16] testing in long-term metformin users "should be considered"; [ADA26] Section 9 interval
+        # not verified this session, so no interval is printed: "ask how often to recheck it".
         ("nrp-b12", "Vitamin B12", "",
          '<p>Test <b>before</b> you take B12. Low or borderline? An <b>MMA</b> (methylmalonic acid) test shows if it '
-         'is really low. On metformin: ask to check it at least yearly.</p>', "My B12"),
-        # [ADA17] thyroid function is part of the work-up to exclude other causes.
+         'is really low. On metformin? Ask how often to recheck it.</p>', "My B12"),
+        # [ADA17] thyroid function is part of the work-up to exclude other causes; [ATA] TSH is the first thyroid test.
         ("nrp-thyroid", "Thyroid", "TSH",
-         '<p>An underactive thyroid can cause tingling too, and it is easy to test.</p>', "My TSH"),
+         '<p>An underactive thyroid can cause tingling too. <b>TSH</b> is the main thyroid blood test.</p>', "My TSH"),
         # [ADA17] "annual 10-g monofilament testing" (people with diabetes); [ADA26] foot exam at least yearly.
         ("nrp-foot", "Foot touch test", "",
          '<p>A thin nylon thread touched to your feet (10-gram monofilament). It does not hurt. Have diabetes? '
@@ -728,15 +752,17 @@ def checks(ed):
 
 
 def alarm(ed):
-    # [ADA17] atypical features (asymmetry, rapid onset, weakness more than numbness) need prompt work-up, not 911:
-    # one-sided numbness is common with sciatica and carpal tunnel. Fast-spreading weakness, a non-healing foot
-    # sore and a red, hot, swollen (Charcot) foot are urgent [ADA17, ADA26]. Sudden numbness or weakness on one
-    # side, a drooping face or slurred speech are stroke signs [ASA]: call 911.
+    # Most urgent first, so nobody reads "soon" and waits through a stroke. Sudden numbness or weakness on one side,
+    # a drooping face or slurred speech are stroke signs [ASA]: call 911. Fast-spreading weakness, a non-healing
+    # foot sore and a red, hot, swollen (Charcot) foot are urgent [ADA17, ADA26]. [ADA17] atypical features
+    # (asymmetry, rapid onset, weakness more than numbness) need prompt work-up, not 911: one-sided numbness that
+    # came on slowly is common with sciatica and carpal tunnel.
     doc = _doc(ed)[0]
     return ('<div class="nrp-alarm">' + icon("warning", "0.24in", "#A5281E", sw=3.6)
-            + f'<p><b>See {doc} soon</b> for numbness on one side only. <b>Get care right away</b> for numbness or '
-            'weakness that comes on fast or spreads over days, a foot sore that will not heal, or a red, hot, swollen '
-            'foot. <b>Sudden numbness or weakness on one side, a drooping face or slurred speech: call 911.</b></p></div>')
+            + '<p><b>Sudden numbness or weakness on one side, a drooping face or slurred speech: call 911.</b> '
+            '<b>Get care right away</b> for numbness or weakness that comes on fast or spreads over days, a foot sore '
+            f'that will not heal, or a red, hot, swollen foot. <b>See {doc} soon</b> if numbness on one side only '
+            'came on slowly.</p></div>')
 
 
 def front(t, ed):
@@ -788,11 +814,10 @@ CSS = r"""
 .nrp .nrp-alarm p{margin:0;font-size:8pt;line-height:1.3;color:#2B3236}
 .nrp .nrp-alarm b{color:#A5281E}
 /* ---- this sheet's footers and back page. The back page has no sheet class, so it is scoped through the empty
-   .nrp-bk marker in the lifestyle subtitle. The shared kit (kit.py .foot/.disc/.col, build.py .startt) still sets
-   these below 7 pt for every sheet; the rules below lift them on this sheet only. ---- */
+   .nrp-bk marker in the lifestyle subtitle. The kit now sets all shared fine print to 7 pt and draws the START HERE
+   badge (.startb) on the column's top edge; the rules below only restate or lift sizes on this sheet. ---- */
 .sheet.front:has(.nrp) .foot,.sheet.back:has(.nrp-bk) .foot,
 .sheet.front:has(.nrp) .foot .code,.sheet.back:has(.nrp-bk) .foot .code{font-size:7pt}
-.sheet.back:has(.nrp-bk) .startt{font-size:7pt}
 .sheet.back:has(.nrp-bk) .col .need i{font-size:7pt}
 .sheet.back:has(.nrp-bk) .col .pick .sz{font-size:7pt}
 .sheet.back:has(.nrp-bk) .col .key{font-size:7.2pt}
@@ -811,19 +836,30 @@ CSS = r"""
 .sheet.back:has(.nrp-bk) .slot li em::before{content:"\00B7\00A0"}
 /* a two-line name slot in every column, so all five columns start their bullets on the same line */
 .sheet.back:has(.nrp-bk) .col .pick .nm{min-height:2.1em;line-height:1.05;display:flex;align-items:center;justify-content:center}
+/* ...and a five-line bullet block in every column (the tallest has five), so all five "In each serving" heads
+   share one line too */
+.sheet.back:has(.nrp-bk) .col .what ul{min-height:calc(5 * 1.28em + 2px)}
 .nrp-nw{white-space:nowrap}
 /* five safety checks need room: smaller lifestyle discs, tighter band and spacing, a wider check panel,
    two write-in lines instead of three */
-.sheet.back:has(.nrp-bk) .band{padding-bottom:.12in}
+.sheet.back:has(.nrp-bk) .band{padding-top:.24in!important;padding-bottom:.12in}
 .sheet.back:has(.nrp-bk) .band h2{margin-bottom:.06in}
 .sheet.back:has(.nrp-bk) .life .disc2{width:.68in;height:.68in}
 .sheet.back:has(.nrp-bk) .life .disc2 svg{width:.4in!important;height:.4in!important}
 .sheet.back:has(.nrp-bk) .life b{margin-top:.05in}
-.sheet.back:has(.nrp-bk) .ns-title{margin-top:.09in}
+.sheet.back:has(.nrp-bk) .ns-title{margin-top:.08in}
 .sheet.back:has(.nrp-bk) .cols{margin-top:.05in}
-.sheet.back:has(.nrp-bk) .duo{grid-template-columns:1fr 1.3fr;margin-top:.08in}
-.sheet.back:has(.nrp-bk) .slot li{line-height:1.15;margin:0 0 1px}
-.sheet.back:has(.nrp-bk) .notes{margin-top:.08in}
+/* the patient's working instructions (daily rhythm, checks) at 7.6 pt for older eyes. The space comes from the
+   nearly empty Bedtime slot (narrowest), the panels' side padding and the write-in box padding. The rhythm panel is
+   just wide enough for one-line morning items ("Gluco IR · 3 capsules"), the check panel for two-line checks. */
+.sheet.back:has(.nrp-bk) .duo{grid-template-columns:3.1in 1fr;margin-top:.07in}
+.sheet.back:has(.nrp-bk) .duo .panel{padding-left:.08in;padding-right:.08in}
+.sheet.back:has(.nrp-bk) .rhythm{grid-template-columns:114fr 90fr 67fr;gap:5px}
+.sheet.back:has(.nrp-bk) .slot{padding:5px 4px}
+.sheet.back:has(.nrp-bk) .slot li{font-size:7.6pt;line-height:1.15;margin:0 0 1px}
+.sheet.back:has(.nrp-bk) .slot li .nrp-if{display:block}
+.sheet.back:has(.nrp-bk) .rx li{font-size:7.6pt;line-height:1.26}
+.sheet.back:has(.nrp-bk) .notes{margin-top:.07in;padding-top:.05in;padding-bottom:.055in}
 .sheet.back:has(.nrp-bk) .notes .ln:last-child{display:none}
 """
 
@@ -870,16 +906,24 @@ SHEET = {
              "bullets": ["Supports healthy blood sugar already in the normal range" + DIA,
                          "With Nerve Eze: 600 mg of ALA a day"],
              "dose": "dose_from_db"},
-            # B12 Pro: DB R2181. Only when the test shows low or borderline B12 [BCSH14], or with years of metformin
-            # [AROD16] or acid blockers [LAM13]; B12 is needed for myelin.
-            {"p": "nrp_b12_pro", "need": "Feed the nerve coat", "needsub": "if your B12 runs low",
+            # B12 Pro: SS ND1390 / DB R2181. Taken after the B12 test, when the provider advises it [BCSH14]. The column
+            # and the rhythm say "after your B12 test" / "if advised" and never "for low B12": deficiency wording is a
+            # disease claim (FD&C 403(r)(6)(A)), and metformin / acid-blocker side effects are disease claims too
+            # (21 CFR 101.93(g)(2)(ix)), so that advice stays on the front (B12 tile) and in check 1.
+            # "Ready-to-use": the sell sheet calls methylcobalamin "the active coenzyme form of B12".
+            {"p": "nrp_b12_pro", "need": "Feed the nerve coat", "needsub": "after your B12 test",
              "bullets": ["Supports healthy myelin, the nerve’s coat" + DIA,
-                         "For low or borderline B12, or years on metformin or acid blockers"],
-             "dose": "1 tablet daily", "dosesub": "let it dissolve in your mouth", "sched": [("am", 1, "tablet")]},
-            # Methyl Complete: DB R187 (nrp_methyl_complete). Same three active forms (L-methylfolate, methylcobalamin,
-            # P5P) as the Metanx RCT [FONS13], at lower doses.
+                         "Methylcobalamin, a ready-to-use form of B12" + DIA],
+             "dose": "1 tablet daily", "dosesub": "let it dissolve in your mouth",
+             # rhythm_block prints the unit as given: "B12 Pro · 1 tablet" with "if advised" on its own line, so
+             # "The full plan is 11 pills a day" reads as the most anyone takes, not what everyone takes.
+             "sched": [("am", 1, 'tablet <span class="nrp-if">if advised</span>')]},
+            # Methyl Complete: SS ND420 / DB R187 (nrp_methyl_complete). Same three active forms (L-methylfolate,
+            # methylcobalamin, P5P) as the Metanx RCT [FONS13], at lower doses. "Supports healthy methylation" is the
+            # sell sheet's own claim; the qualified homocysteine claim ("already in the normal range") took 4 lines
+            # and would have made this column the tallest, so it was left off.
             {"p": "nrp_methyl_complete", "need": "The B-vitamin team", "needsub": "active folate, B6 and B12",
-             "bullets": ["Active forms, ready for your body to use" + DIA, "Supports healthy homocysteine levels" + DIA],
+             "bullets": ["Active forms, ready for your body to use" + DIA, "Supports healthy methylation" + DIA],
              "dose": "dose_from_db"},
             # Omega Pure EPA-DHA 1000: DB R243 (nrp_omega). Evidence: [LEWIS17].
             {"p": "nrp_omega", "need": "Nerve membranes", "needsub": "omega-3s, EPA and DHA",
@@ -887,32 +931,37 @@ SHEET = {
              "dose": "dose_from_db"},
         ],
         "rx": {
-            # 1 [BCSH14] supplements raise serum B12, so test first; [AROD16, ADA26] metformin, [LAM13] PPIs/H2 blockers.
+            # 1 [BCSH14] serum B12 first, MMA second-line when borderline; supplements raise serum B12, so test first;
+            #   [AROD16, LAM13] long-term metformin and PPIs/H2 blockers; no interval printed ([ADA26] note above).
             # 2 dihydroberberine, chromium and ALA (Gluco IR) and ALA (Nerve Eze) lower glucose: additive with diabetes
-            #   medicines.  3 [FDA19, BOWEN19] biotin (2,000 mcg/5 capsules, DB R960) and streptavidin immunoassays.
-            # 4 [EFSA23] excess B6 -> neuropathy; UL 12 mg/day.  5 [CHAN93] berberine in pregnancy, [GUO12] CYP2D6,
-            #   2C9, 3A4 inhibition, [YASU16] antioxidants during chemotherapy unclear, [LABEL] consult if pregnant,
-            #   nursing or taking medication.
+            #   medicines.  3 [FDA19, BOWEN19] biotin and streptavidin immunoassays: troponin (heart), thyroid and
+            #   others; biotin 2,000 mcg per 5 Gluco IR capsules (SS ND506) and 500 mcg per 2 Methyl Complete capsules
+            #   (SS ND420).  4 [EFSA23] excess B6 -> neuropathy; UL 12 mg/day; Methyl Complete 10 mg is the only B6 on
+            #   the plan.  5 [CHAN93] berberine in pregnancy; [GUO12] CYP2C9 (warfarin) and CYP3A4 inhibition, [WU05]
+            #   cyclosporin levels up in transplant patients; [YASU16] antioxidants (ALA in Nerve Eze and Gluco IR, NAC
+            #   in Methyl Complete) during chemotherapy unclear; [LABEL] consult if pregnant, nursing or on medication.
             "practitioner": [
-                "<b>Test B12 (and MMA) first:</b> B12 Pro and Methyl Complete make it read high. Years on metformin or "
-                "acid blockers? Ask your provider about a yearly recheck.",
+                "<b>Test B12 first (MMA if borderline):</b> B12 Pro and Methyl Complete make it read high. Years on "
+                "metformin or acid blockers? Ask how often to recheck.",
                 "<b>On diabetes medicine?</b> Gluco IR (dihydroberberine, chromium, ALA) and the ALA in Nerve Eze may add "
                 "to it. Check your sugar more often and tell your prescriber.",
-                "<b>Blood test coming?</b> Gluco IR’s 2,000 mcg of biotin can throw off thyroid and other lab tests. "
-                "Tell the lab, and ask your provider if you should pause it first.",
-                "<b>B6 adds up.</b> Methyl Complete has 10 mg; too much B6 can itself cause tingling. Bring every bottle.",
-                "<b>Pregnant or nursing, on many medicines or in cancer care?</b> Ask your provider before Gluco IR "
-                "or the antioxidants (ALA, NAC)."],
+                "<b>Blood test coming?</b> Biotin (Gluco IR 2,000&nbsp;mcg, Methyl Complete 500&nbsp;mcg) can throw off "
+                "heart, thyroid and other tests. Tell the lab; ask what to pause.",
+                "<b>B6 adds up.</b> Methyl Complete has 10 mg; too much B6 can itself cause tingling. Show your provider "
+                "every bottle.",
+                "<b>Pregnant or nursing, in cancer care, or on blood thinners or transplant medicines?</b> Ask your "
+                "provider before Gluco IR, Nerve Eze or Methyl Complete."],
             "pharmacy": [
-                "<b>Test B12 (and MMA) first:</b> B12 Pro and Methyl Complete make it read high. Years on metformin or "
-                "acid blockers? Ask your prescriber about a yearly recheck.",
+                "<b>Test B12 first (MMA if borderline):</b> B12 Pro and Methyl Complete make it read high. Years on "
+                "metformin or acid blockers? Ask how often to recheck.",
                 "<b>On diabetes medicine?</b> Gluco IR (dihydroberberine, chromium, ALA) and the ALA in Nerve Eze may add "
                 "to it. Check your sugar more often and tell your prescriber.",
-                "<b>Blood test coming?</b> Gluco IR’s 2,000 mcg of biotin can throw off thyroid and other lab tests. "
-                "Tell the lab, and ask your pharmacist if you should pause it first.",
-                "<b>B6 adds up.</b> Methyl Complete has 10 mg; too much B6 can itself cause tingling. Bring every bottle.",
-                "<b>Pregnant or nursing, on many medicines or in cancer care?</b> Ask your pharmacist before Gluco IR "
-                "or the antioxidants (ALA, NAC)."],
+                "<b>Blood test coming?</b> Biotin (Gluco IR 2,000&nbsp;mcg, Methyl Complete 500&nbsp;mcg) can throw off "
+                "heart, thyroid and other tests. Tell the lab; ask what to pause.",
+                "<b>B6 adds up.</b> Methyl Complete has 10 mg; too much B6 can itself cause tingling. Show your "
+                "pharmacist every bottle.",
+                "<b>Pregnant or nursing, in cancer care, or on blood thinners or transplant medicines?</b> Ask your "
+                "pharmacist before Gluco IR, Nerve Eze or Methyl Complete."],
         },
     },
 }

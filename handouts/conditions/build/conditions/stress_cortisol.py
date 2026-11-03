@@ -106,6 +106,9 @@ SOURCES (tags sit in comments next to each number or claim on the page)
              cyclic sighing for a month: better mood, slower breathing, more than mindfulness)
   [HEIN03]   Heinrichs M et al. Biol Psychiatry 2003;54:1389-98. PMID 14675803 (support from a friend
              lowered the cortisol response to a stress test)
+  [CFR93]    21 CFR 101.93(d)-(e): the disclaimer sits next to each structure/function statement, or is linked to
+             it by a symbol at the end of the statement and then set off in a box; it is in bold type no smaller
+             than one-sixteenth inch.  -> a diamond after every product statement, a bold boxed disclaimer
   [HHS18]    Physical Activity Guidelines for Americans, 2nd ed. (HHS 2018): 150 minutes a week of moderate
              activity; [AASM15] Watson NF et al. Sleep 2015;38:843-4 (adults: 7 or more hours).
 """
@@ -741,8 +744,9 @@ def _curve(pts):
 def art_clock(t):
     c1, deep = t["c1"], t["deep"]
     o = []
-    # plot frame: day band, a quieter night band, recessive grid
-    nx = _hx(21.5)
+    # plot frame: day band, a quieter night band (from 8:30 PM, inside the quiet phase that starts near 7:45 PM
+    # [DEBONO09], and wide enough to hold the "Wired at night" label), recessive grid
+    nx = _hx(20.5)
     o.append(f'<rect x="{PX0}" y="{PY0 - 6}" width="{PX1 - PX0}" height="{PY1 - PY0 + 6}" rx="6" fill="#FFFBF3"/>'
              f'<rect x="{nx:.1f}" y="{PY0 - 6}" width="{PX1 - nx:.1f}" height="{PY1 - PY0 + 6}" fill="#EEF0F8"/>'
              f'<rect x="{PX1 - 6}" y="{PY0 - 6}" width="6" height="{PY1 - PY0 + 6}" fill="#EEF0F8"/>')
@@ -884,9 +888,8 @@ def front(t, ed):
             f'<div class="scx-h"><span>Your cortisol clock</span><i>one day, two rhythms</i></div>'
             f'<div class="art scx-art">{art_clock(t)}</div>'
             f'{signs_block()}{low_block()}'
-            '<p class="scx-src">Sources: Endocrine Society guidelines (adrenal insufficiency 2016, Cushing&rsquo;s '
-            'syndrome 2008, steroid-induced adrenal insufficiency 2024); Pituitary Society 2021; Cadegiani 2016 review; '
-            'Smith 2006; Miller 2007.</p>'
+            '<p class="scx-src">Sources: Endocrine Society guidelines (adrenal insufficiency 2016, 2024; '
+            'Cushing&rsquo;s 2008); Pituitary Society 2021; Cadegiani 2016; Smith 2006; Miller 2007.</p>'
             '</div>')
 
 
@@ -920,7 +923,64 @@ CSS = r"""
 .scx .scx-foot{margin:4px 0 0;padding-top:3px;border-top:1px solid #EBC9C3;font-size:7.8pt;line-height:1.3;color:#2B3236}
 .scx .scx-foot b{color:#A5281E}
 .scx .scx-src{margin:4px 0 0;font-size:7pt;color:#5E686F;line-height:1.3}
+/* ---- footers and the back page.  The kit gives the back page no sheet class, so the band title carries an empty
+   <i class="scx-bk"> marker and every back rule is scoped by .sheet.back:has(.scx-bk); the front is found by its
+   .scx body.  No other sheet carries either class. ---- */
+/* Standard 3 (7 pt floor): the kit sets this fine print to 7 pt; it is pinned here too so this sheet can never
+   drop below it, and the label facts (the most-read small text) get a little more. */
+.sheet.front:has(.scx) .foot,.sheet.front:has(.scx) .foot .code,.sheet.back:has(.scx-bk) .foot .code,
+.sheet.back:has(.scx-bk) .startb,.sheet.back:has(.scx-bk) .col .need i,.sheet.back:has(.scx-bk) .col .pick .sz,
+.sheet.back:has(.scx-bk) .col .key b,.sheet.back:has(.scx-bk) .col .dose small,.sheet.back:has(.scx-bk) .slot li,
+.sheet.back:has(.scx-bk) .total{font-size:7pt}
+.sheet.back:has(.scx-bk) .col .key{font-size:7.2pt;line-height:1.3}
+/* FDA disclaimer [CFR93]: bold, boxed, and linked by the diamond that ends every product statement.  8 pt, not
+   7: Inter Bold's lowercase o is 0.564 em, so 8 pt gives a 4.5 pt (1/16 in) o, which meets the rule even read the
+   strict way (lowercase o, as in 21 CFR 101.2(c)); 7 pt passes only on capital height.  The sheet code wraps onto
+   two lines so the box is wide enough to stay three lines tall. */
+.sheet.back:has(.scx-bk) .foot .disc{font-size:8pt;font-weight:700;color:#36424A;line-height:1.28;
+  border:1px solid #8D99A1;border-radius:4px;padding:3px 7px 4px;max-width:5.88in}
+.sheet.back:has(.scx-bk) .foot>div:last-child{flex:none;width:1.62in}
+.sheet.back:has(.scx-bk) .foot .code{white-space:normal;line-height:1.3}
+.scx-dia{color:var(--c1);margin-left:2px}
+.scx-nw{white-space:nowrap}
+/* hex band: a deeper amber, so the habit lines read at 4.5:1 or better from one end of the band to the other */
+.sheet.back:has(.scx-bk) .band{background:linear-gradient(120deg,#8C510B,#A65F0E)}
+.sheet.back:has(.scx-bk) .band h2 small{color:#FFF6EE}
+.sheet.back:has(.scx-bk) .life p{color:#FFFFFF}
+/* room for the full label lines and the longer check: smaller hexes, tighter gaps, two write-in lines */
+.sheet.back:has(.scx-bk) .band{padding-bottom:.13in}
+.sheet.back:has(.scx-bk) .band h2{margin-bottom:.07in}
+.sheet.back:has(.scx-bk) .life.hex .disc2{width:.76in;height:.66in}
+.sheet.back:has(.scx-bk) .life .disc2 svg{width:.42in!important;height:.42in!important}
+.sheet.back:has(.scx-bk) .life b{margin:.05in 0 .02in}
+.sheet.back:has(.scx-bk) .ns-title{margin-top:.1in}
+.sheet.back:has(.scx-bk) .notes{margin-top:.08in}
+.sheet.back:has(.scx-bk) .notes .ln:last-child{display:none}
+.sheet.back:has(.scx-bk) .notes .ln{height:.22in}
+.sheet.back:has(.scx-bk) .recby{margin-top:.06in}
+/* need headers: every title and every sub-line is one line here, so one short height lines them all up */
+.sheet.back:has(.scx-bk) .col .need{min-height:.42in;padding-left:.05in;padding-right:.05in}
+/* column widths follow the content: Calm's label is two lines, Adrenal Renew's is ten ingredients long, so
+   Calm gives up a little width (its name, photo and dose still fit) and Adrenal Renew takes it */
+.sheet.back:has(.scx-bk) .cols{grid-template-columns:1fr 1fr .84fr 1fr 1.16fr!important}
+/* every column has three name-and-size lines; one line height for both keeps the bullets level */
+.sheet.back:has(.scx-bk) .col .pick .nm,.sheet.back:has(.scx-bk) .col .pick .sz{line-height:9.9pt}
+/* daily rhythm: a count never splits from its unit.  Morning holds three products, so it gets a full-height
+   left slot and Evening sits over Bedtime on the right; the medicine check gets the wider half of the row */
+.sheet.back:has(.scx-bk) .slot li em{white-space:nowrap}
+.sheet.back:has(.scx-bk) .rhythm{grid-template-columns:1.2fr 1fr;grid-auto-rows:auto}
+.sheet.back:has(.scx-bk) .rhythm .slot:first-child{grid-row:span 2}
+.sheet.back:has(.scx-bk) .duo{grid-template-columns:1fr 1.25fr}
 """
+
+# ============================================================== back page helpers
+def sf(text):
+    """A structure/function statement, ending in the diamond that ties it to the boxed FDA disclaimer in the footer
+    [CFR93].  The diamond is drawn (kit.DIAMOND, inline SVG), never a font glyph, so the PDF has no Type 3 font;
+    the last word and the diamond never split across lines."""
+    head, _, last = text.rpartition(" ")
+    return f'{head} <span class="scx-nw">{last}<span class="scx-dia">{kit.DIAMOND}</span></span>'
+
 
 # ============================================================== the sheet
 SHEET = {
@@ -936,57 +996,65 @@ SHEET = {
     "css": CSS,
     "back": {
         # [LEP01] morning light; [BALB23] slow, exhale-focused breathing; [HHS18] 150 minutes a week;
-        # [AASM15] 7+ hours, [LEP97] one short night raises next-evening cortisol; [LOV05] caffeine and cortisol;
+        # [AASM15] 7+ hours, [LEP97] one short night raises next-evening cortisol; [DRAKE13] a late cup costs sleep;
         # [HEIN03] support from a friend lowers the cortisol response.
-        "life_title": "Steady Your Stress Response",
+        # The empty <i class="scx-bk"> is the back page's marker: every back-page rule in CSS is scoped by it.
+        "life_title": 'Steady Your Stress Response<i class="scx-bk"></i>',
         "life_sub": "Six daily habits that help reset your cortisol rhythm",
         "style": "hex",
         "life": [("sun", "Morning light", "Get outdoors within an hour of waking."),
                  ("breath", "Slow breathing", "Five minutes a day of long, slow exhales."),
                  ("walk", "Move daily", "150 minutes a week. A brisk walk counts."),
                  ("moon", "Protect sleep", "7+ hours. Short nights raise cortisol."),
-                 ("coffee", "Coffee by noon", "A late cup keeps cortisol up for hours."),
+                 ("coffee", "Coffee by noon", "A late cup can cost you sleep."),
                  ("sc-people", "Lean on people", "Friends soften your stress response.")],
+        # Every structure/function statement ends in the diamond (sf), which points to the boxed FDA disclaimer.
         "cols": [
             # [ARU24][AKH22] ashwagandha; [TALB13] Relora; [OLSS09] rhodiola; [HID19] L-theanine
-            {"p": "sc_cortisol_pro", "need": "Stress response", "needsub": "adaptogen and calming blend",
+            {"p": "sc_cortisol_pro", "need": "Stress response", "needsub": "stress herbs (adaptogens)",
              "start": True,
-             "bullets": ["Supports a healthy stress response", "Helps maintain healthy cortisol levels"],
+             "bullets": [sf("Supports a healthy stress response"), sf("Helps maintain healthy cortisol levels")],
              "dose": "dose_from_db"},
-            {"p": "sc_balance", "need": "Daytime energy", "needsub": "ashwagandha, ginseng, cordyceps",
-             "bullets": ["Supports energy and stamina under stress", "Helps your body adapt to daily demands"],
+            {"p": "sc_balance", "need": "Daytime energy", "needsub": "cordyceps plus stress herbs",
+             "bullets": [sf("Supports energy and stamina under stress"), sf("Helps your body adapt to daily demands")],
              "dose": "dose_from_db"},
-            {"p": "sc_calm", "need": "Quiet a busy mind", "needsub": "GABA and L-theanine",
-             "bullets": ["Promotes a calm, relaxed mood", "Helps you unwind in the evening"], "dose": "dose_from_db"},
-            # [PICK20] stress can raise magnesium loss (the magnesium-stress vicious circle)
+            {"p": "sc_calm", "need": "Quiet a busy mind", "needsub": 'GABA and <span class="scx-nw">L-theanine</span>',
+             "bullets": [sf("Promotes a calm, relaxed mood"), sf("Helps you unwind in the evening")],
+             "dose": "dose_from_db"},
+            # [PICK20] stress and low magnesium feed each other (the magnesium-stress vicious circle)
             {"p": "sc_mag_calm_pro", "need": "Restore magnesium", "needsub": "magnesium, inositol, taurine",
-             "bullets": ["Supports relaxation and restful sleep", "Stress can deplete magnesium"],
+             "bullets": [sf("Supports relaxation and restful sleep"), "Stress can use up magnesium"],
              "dose": "dose_from_db"},
-            # [PATAK04] vitamin C in the adrenal gland; pantothenic acid builds coenzyme A for steroid synthesis
-            {"p": "sc_adrenal_renew", "need": "Adrenal nutrients", "needsub": "vitamins C, B5, B6 + glandular",
-             "bullets": ["Vitamin C and B vitamins your adrenal glands use", "Supports healthy adrenal function"],
+            # Framed around its real use (topic research: Asher's 2026-10-05 advice to step a patient down from
+            # Ortho's Adren-All), so the back never says the adrenals need "renewing" after the front's myth box
+            # [CADE16].  [PATAK04] vitamin C in the adrenal gland; pantothenic acid builds coenzyme A for steroid
+            # synthesis; [AKTURK18] why glandulars are not a first step.
+            {"p": "sc_adrenal_renew", "need": "Coming off a glandular?", "needsub": "switch, then step down",
+             "bullets": ["Not a first step", sf("Supports a healthy stress response")],
              "dose": "dose_from_db"},
         ],
-        # Ashwagandha: [AKH22] 300-600 mg/d studied; 150 mg (Cortisol Pro) + 400 mg (Balance) = 550 mg a day as
-        # scheduled; Cortisol Pro label: "Do not use if pregnant"; [SHARMA18] raises T3/T4; additive with
-        # sedatives (benzodiazepines, sleep pills).  Glandular: [AKTURK18]; steroids never stopped suddenly
-        # [ES16AI]; licorice [PENN17].  Asian ginseng: can lower blood sugar; mixed evidence that it changes
-        # warfarin's effect (NCCIH herb-drug interaction digest, seen through web search).
-        "rx": {
-            "pharmacy": [
-                "<b>Ashwagandha</b> (Cortisol Pro and Balance, 550 mg a day here): not for pregnancy. It can raise thyroid "
-                "levels and add to sedatives.",
-                "<b>Adrenal Renew is a glandular.</b> Check first if you take prednisone, hydrocortisone or thyroid "
-                "pills.",
-                "<b>On warfarin or diabetes medicine?</b> Ginseng (in Balance) can change how they work. Licorice, in "
-                "some adrenal formulas, raises blood pressure."],
-            "practitioner": [
-                "<b>Ashwagandha</b> (Cortisol Pro and Balance, 550 mg a day here): not for pregnancy. On thyroid "
-                "medicine? Recheck levels. It adds to sedatives.",
-                "<b>Adrenal Renew is a glandular</b>, not a first step. On prednisone? Ask first. Ease off glandulars "
-                "slowly.",
-                "<b>On warfarin or diabetes medicine?</b> Ginseng (in Balance) can change how they work. Licorice, in "
-                "some adrenal formulas, raises blood pressure."],
-        },
+        # One list for both editions; {who} is the only difference.
+        # Ashwagandha: [AKH22] 300-600 mg/d studied (mostly root extracts); Sensoril's own stress trials used
+        # 125-500 mg/d.  150 mg (Cortisol Pro) + 400 mg (Balance at half its label dose) = 550 mg a day as scheduled;
+        # at the label dose it would be 950 mg.  Labels: Cortisol Pro "Do not use if pregnant", Balance "Do not use if
+        # pregnant or nursing" and "If taking heart medications... inform your healthcare practitioner".
+        # [SHARMA18] raises T3/T4; adds to sedatives (benzodiazepines, sleep pills).  Glandulars: [AKTURK18] hidden
+        # thyroid and steroid hormones; steroids are never stopped suddenly [ES16AI][BEUS24].  Asian ginseng can lower
+        # blood sugar, with mixed evidence that it changes warfarin's effect (NCCIH herb-drug interaction digest, seen
+        # through web search); holy basil lowers blood sugar [JAMS17] and lengthened clotting time in animals
+        # [SINGH01].  Daily totals as scheduled: B6 65 mg (Adrenal Renew 60 + Mag Calm Pro 5) against the US upper
+        # limit of 100 mg and EFSA's 12 mg [EFSA23]; rhodiola 350 mg (Cortisol Pro 250 + Balance 100); L-theanine
+        # 400 mg (Cortisol Pro 100 + Calm 200 + Mag Calm Pro 100).
+        "rx": [
+            "<b>Ashwagandha</b> (Cortisol Pro, Balance): 550 mg a day, with Balance at half its label dose "
+            "(3 capsules, not 6). Not for pregnancy or breastfeeding. It adds to sedatives (sleep or anxiety pills). "
+            "On thyroid medicine? Tell {who}: it can raise thyroid levels.",
+            "<b>Adrenal Renew is a glandular</b> (dried cow adrenal), not a first step. On prednisone, hydrocortisone "
+            "or thyroid pills? Ask {who} first, and stop glandulars slowly.",
+            "<b>On warfarin, diabetes or heart medicine?</b> Ginseng (in Balance) and holy basil (in Adrenal Renew) "
+            "can change how they work. Ask {who} first.",
+            "<b>A day adds up to</b> 65 mg vitamin B6, 350 mg rhodiola and 400 mg L-theanine. Tingling or numb hands "
+            "or feet? Tell {who}.",
+        ],
     },
 }

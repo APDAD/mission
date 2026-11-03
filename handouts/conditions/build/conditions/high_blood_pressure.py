@@ -31,18 +31,33 @@ PUSH = "#3A1411"       # arrows: blood pushing on the vessel wall (pressure)
 INK = "#2B3236"
 
 # ------------------------------------------------------------------ this sheet's icons (64 x 64 grid, stroke style)
-# Mouth with the tongue out; three solid dots on the tongue are the friendly bacteria.  The dots carry no
-# outline (stroke none), sit 2.6+ units clear of each other and of the tongue's inner edge, so they stay
-# three separate dots at print size instead of fusing with the outline.
+# Open mouth with the tongue out: upper lip, mouth line, a lower lip the tongue hangs over (so the mouth
+# reads as open), and four tiny rod-shaped bacteria on the tongue in green (friendly bacteria), each
+# 5.2 x 2.4 units, scattered at four angles.  No outline on the rods; placed by a clearance search
+# (tools/rods.py in the agent scratch folder): every rod sits 2.6+ units clear of the others and of the
+# tongue's and mouth line's inner stroke edge, so they stay separate rods at print size.
+BUG = "#2E7D5B"        # the friendly tongue bacteria
+_RODS = [(28.2, 39.1, 32), (35.8, 39.8, 16), (32.5, 34.6, -10), (32.2, 45.0, -26)]
 IC_TONGUE = ('<path d="M7 25c5-6 11-9 16-8 3 .6 6 2.4 9 2.4s6-1.8 9-2.4c5-1 11 2 16 8"/>'      # upper lip
              '<path d="M7 25c14 4 36 4 50 0"/>'                                                 # mouth line
-             '<path d="M21 28v8c0 8 5 14 11 14s11-6 11-14v-8" fill="#F6C9C1"/>'                 # tongue
-             '<g fill="currentColor" stroke="none"><circle cx="28.3" cy="37.2" r="2"/>'
-             '<circle cx="35.7" cy="37.2" r="2"/><circle cx="32" cy="43" r="2"/></g>')
+             '<path d="M7 25c4 11 13 17 25 17s21-6 25-17"/>'                                    # lower lip
+             '<path d="M20 28v9c0 9 5.5 15 12 15s12-6 12-15v-9" fill="#F6C9C1"/>'               # tongue, over the lip
+             f'<g fill="{BUG}" stroke="none">'
+             + "".join(f'<rect x="-2.6" y="-1.2" width="5.2" height="2.4" rx="1.2" transform="translate({x} {y}) rotate({a})"/>'
+                       for x, y, a in _RODS) + '</g>')
 IC_VESSEL = ('<path d="M5 25c14 0 22-8 54-11"/><path d="M5 39c14 0 22 8 54 11"/>'
              '<path d="M13 32h30"/><path d="M37 25.5l7 6.5-7 6.5"/>')
 IC_SOFA = ('<path d="M14 31v-7a6 6 0 0 1 6-6h24a6 6 0 0 1 6 6v7"/>'
            '<path d="M8 36a5 5 0 0 1 10 0v4h28v-4a5 5 0 0 1 10 0v11H8z"/><path d="M12 47v6M52 47v6"/>')
+# Cigarette: a long body with a filter band, two curls of smoke rising 21+ units from the lit end, so the
+# glyph fills about 38 of the 64 units in height like the scale, sofa and kidneys (the kit's flat bar
+# filled only 19 and read as a battery).
+IC_SMOKE = ('<rect x="6" y="40" width="46" height="10" rx="2.5"/><path d="M18 40v10"/>'
+            '<path d="M45.5 36c-4-4-4-8 0-12s4-8 0-12"/>'                 # smooth smoke waves, 24 and 20 units tall
+            '<path d="M54 34c-3.5-3.5-3.5-6.5 0-10s3.5-6.5 0-10"/>')
+# Birth control pills: a blister card with a 2 x 3 grid of pills.
+IC_PILLS = ('<rect x="13" y="9" width="38" height="46" rx="6"/>'
+            + "".join(f'<circle cx="{x}" cy="{y}" r="4.3"/>' for y in (21, 32, 43) for x in (25, 39)))
 
 
 def _noslash(name):
@@ -59,10 +74,6 @@ def _kidneys():
             f'<g transform="translate(2.8 0) translate(42.6 32) scale(.9) translate(-42.6 -32)" stroke-width="3.111">{right}</g>')
 
 
-# Female sign alone (the kit's 'hormone' glyph pairs it with the male sign, which reads as "sex").
-IC_FEMALE = '<circle cx="32" cy="22" r="12"/><path d="M32 34v22M23.5 46h17"/>'
-
-
 def _ic(body, size, color="currentColor", sw=2.8):
     """Same markup as kit.icon, for this sheet's own icon bodies."""
     return (f'<svg class="ic" viewBox="0 0 64 64" style="width:{size};height:{size};color:{color}" fill="none" '
@@ -71,13 +82,16 @@ def _ic(body, size, color="currentColor", sw=2.8):
 
 
 def _no_molecule(c1, c2):
-    """Ball-and-stick nitric oxide (N=O) in the 64 grid.  The atoms are plain discs (no outline) with a
-    6-unit gap between them, so the double bond (the two short bars) shows; letters 19.5 units = 7.3 pt."""
-    return (f'<path d="M29 27.5h6M29 36.5h6" stroke="{c1}"/>'
-            f'<circle cx="16" cy="32" r="13" fill="{c1}" stroke="none"/>'
-            f'<circle cx="48" cy="32" r="13" fill="{c2}" stroke="none"/>'
-            '<g stroke="none">' + T(16, 39.1, "N", 19.5, 800, "#fff", "middle")
-            + T(48, 39.1, "O", 19.5, 800, "#fff", "middle") + "</g>")
+    """Ball-and-stick nitric oxide (N=O) in the 64 grid.  The atoms are plain discs (no outline), r 11.5,
+    with a 12-unit gap between them, so the double bond (the two bars) reads at print size instead of the
+    pair fusing into one 'N-O' pill; letters 19.5 units = 7.3 pt, still inside the discs.  The two bond
+    bars are 3.8 units thick (a touch lighter than the 4.8 outline) with a 6.2-unit white gap, measured
+    at 0.8 mm on the 1200 dpi proof, so the '=' reads at arm's length."""
+    return (f'<path d="M26 27h12M26 37h12" stroke="{c1}" stroke-width="3.8"/>'
+            f'<circle cx="14.5" cy="32" r="11.5" fill="{c1}" stroke="none"/>'
+            f'<circle cx="49.5" cy="32" r="11.5" fill="{c2}" stroke="none"/>'
+            '<g stroke="none">' + T(14.5, 39.1, "N", 19.5, 800, "#fff", "middle")
+            + T(49.5, 39.1, "O", 19.5, 800, "#fff", "middle") + "</g>")
 
 
 # ------------------------------------------------------------------ small drawing helpers
@@ -172,11 +186,12 @@ def art_bp(t):
         out.append(f'<circle cx="{cx}" cy="{cy}" r="22" fill="#fff" stroke="{c1}" stroke-width="2"/>')
         out.append(f'<g transform="translate({cx - 16.5},{cy - 16.5}) scale(.515625)" fill="none" stroke="{c1}" '
                    f'stroke-width="4.8" stroke-linecap="round" stroke-linejoin="round">{bodies[ic]}</g>')
-        # step number, badged on the icon ring; its white halo (r 8 + 1) stops 2.5 units below the card top,
-        # clear of the card border (y +/- 0.75), and 3.9 units clear of the step-3 N disc
-        bx, by = cx - 17, y + 11.5
-        out.append(f'<circle cx="{bx}" cy="{by}" r="8" fill="{c1}" stroke="#fff" stroke-width="2"/>'
-                   + T(bx, by + 3.8, str(i + 1), 10.5, 800, "#fff", "middle"))
+        # step number, badged on the icon ring: r 7 with a white halo (r 7 + 1); the halo stops 3.75 units
+        # below the card border's lower edge (y + 0.75) and 4.4 units clear of the step-3 N disc;
+        # the number is 10 units = 7.3 pt
+        bx, by = cx - 17, y + 12.5
+        out.append(f'<circle cx="{bx}" cy="{by}" r="7" fill="{c1}" stroke="#fff" stroke-width="2"/>'
+                   + T(bx, by + 3.6, str(i + 1), 10, 800, "#fff", "middle"))
         tx = CX + 66
         out.append(T(tx, y + 17.5, title, 12.5, 800, deep))
         out.append(T(tx, y + 33.5, lines, 11, 500, "#33404A", lh=1.24))
@@ -191,7 +206,10 @@ def art_bp(t):
     TOP, BOT = 46, 234
     vy = (TOP + BOT) / 2
     lx1, rx0 = XM - 5, XM + 5
-    seg_l, lt, lb = _segment("hbp-cl", X0, lx1, TOP, BOT, 50, True, TIGHT, TIGHT_LN, 7.5, 1.7)
+    # A tightened artery narrows as a whole: the left tube is 8 units slimmer top and bottom (outer
+    # diameter 172 vs 188) and its thick muscle wall (44 vs 24) squeezes the channel down.
+    SQ = 8
+    seg_l, lt, lb = _segment("hbp-cl", X0, lx1, TOP + SQ, BOT - SQ, 44, True, TIGHT, TIGHT_LN, 7.5, 1.7)
     seg_r, rt, rb = _segment("hbp-cr", rx0, X1, TOP, BOT, 24, False, RELAX, RELAX_LN, 15, 1.6)
     out += [seg_l, seg_r]
     out.append(f'<path d="M{XM},{TOP - 3} V{BOT + 3}" stroke="#AEB5BA" stroke-width="2" stroke-dasharray="5 4"/>')
@@ -207,8 +225,10 @@ def art_bp(t):
                f'<path d="M{XM + 38},25 L{XM + 48},30.5 L{XM + 38},36 Z" fill="{c1}"/>')
 
     # pressure arrows: blood pushing out on the wall; bigger where pressure is high
+    # six denser columns at x 302 to 462, so both red cells (x 284 and 483) sit between columns and the
+    # arrows never seem to sprout from a cell
     for k in range(6):
-        x = X0 + 25 + k * 39
+        x = 302 + k * 32
         out.append(_varrow(x, vy - 15.5, lt, 3.2, 11, 9))
         out.append(_varrow(x, vy + 15.5, lb, 3.2, 11, 9))
     for k in range(5):
@@ -244,11 +264,12 @@ def art_bp(t):
 
     flow_sw = (f'<rect x="-13" y="-7.5" width="26" height="15" rx="3" fill="{LUMEN}" stroke="{LUMEN_LN}" stroke-width="1"/>'
                '<path d="M-8,-3 H3 L8,0 L3,3 H-8 Z" fill="#fff" stroke="#C9B3AD" stroke-width=".8"/>')
-    c_1, c_2, c_3 = X0 + 66, X0 + 214, X0 + 380     # even gaps: label -> next swatch, and right padding
+    # gaps label -> next swatch and the right padding measured even (about 27 units each, 400 dpi proof)
+    c_1, c_2, c_3 = X0 + 62, X0 + 211, X0 + 379
     out.append(item(c_1, r1, _cell(0, 0, 0.72), "Red blood cell"))
     out.append(item(c_1, r2, band(TIGHT, TIGHT_LN, 4), "Tight muscle wall"))
-    # big + small arrow: arrow size shows how hard the blood pushes (high vs normal pressure)
-    out.append(item(c_2, r1, _varrow(-5, 7.5, -7.5, 2.8, 9, 7.5) + _varrow(7, 7.5, -2.5, 2, 6.5, 5.5), "Pressure on the wall"))
+    # big + small arrow; the label says what the size means (big arrow = high pressure on the wall)
+    out.append(item(c_2, r1, _varrow(-5, 7.5, -7.5, 2.8, 9, 7.5) + _varrow(7, 7.5, -2.5, 2, 6.5, 5.5), "Pressure (big = high)"))
     out.append(item(c_2, r2, band(RELAX, RELAX_LN, 2), "Relaxed muscle wall"))
     out.append(item(c_3, r1, flow_sw, "Blood flow"))
     out.append(item(c_3, r2, f'<rect x="-12" y="-6.5" width="24" height="13" rx="2" fill="{OUTER}" stroke="{OUTER_LN}" stroke-width="1"/>',
@@ -259,20 +280,21 @@ def art_bp(t):
 # ------------------------------------------------------------------ front page
 # Risk factors: AHA "Know Your Risk Factors for High Blood Pressure" (family history, age, chronic kidney
 # disease; inactivity, high-sodium diet, overweight, too much alcohol, sleep apnea, diabetes, smoking, stress)
-# and CDC "High Blood Pressure Risk Factors".  "Pregnancy or birth control pills": high blood pressure in
-# pregnancy (gestational hypertension, preeclampsia) and estrogen birth control pills, which can raise blood
-# pressure: 2017 ACC/AHA guideline (Hypertension 2018;71:e13-e115, Table 13, oral contraceptives) and the
-# 2025 AHA/ACC guideline (Hypertension 2025;82:e212-e316, hypertension in pregnancy).
+# and CDC "High Blood Pressure Risk Factors".  "High BP in pregnancy, birth control pills": pregnancy itself
+# is not the risk; high blood pressure during pregnancy (gestational hypertension, preeclampsia, which also
+# raises later risk) and estrogen birth control pills, which can raise blood pressure, are: 2017 ACC/AHA
+# guideline (Hypertension 2018;71:e13-e115, Table 13, oral contraceptives) and the 2025 AHA/ACC guideline
+# (Hypertension 2025;82:e212-e316, hypertension in pregnancy); AHA "Know Your Risk Factors" (preeclampsia).
 RISKS = [
     ("scale", "Extra weight"), ("salt", "High-sodium,<br>processed food"), ("sofa", "Sitting most<br>of the day"),
     ("glass", "Too much<br>alcohol"), ("smoke", "Smoking"), ("headache", "Chronic stress"),
     ("moon", "Poor sleep or<br>sleep apnea"), ("bloodsugar", "Diabetes"), ("kidney", "Kidney<br>disease"),
-    ("female", "Pregnancy or<br>birth control pills"), ("dna", "Family<br>history"), ("age", "Increasing age")]
-# Icons drawn here rather than straight from the kit: no "avoid" slash on the salt, glass and cigarette
-# (this row lists risks, not rules), separated kidney beans, the female sign alone.  The slashed kit
-# versions stay on the back's lifestyle band.
-RISK_ICONS = {"sofa": IC_SOFA, "salt": _noslash("salt"), "glass": _noslash("glass"), "smoke": _noslash("smoke"),
-              "kidney": _kidneys(), "female": IC_FEMALE}
+    ("pills", "High BP in pregnancy,<br>birth control pills"), ("dna", "Family<br>history"), ("age", "Increasing age")]
+# Icons drawn here rather than straight from the kit: no "avoid" slash on the salt and glass (this row
+# lists risks, not rules), a full cigarette with smoke, separated kidney beans, a birth control blister
+# card.  The slashed kit versions stay on the back's lifestyle band.
+RISK_ICONS = {"sofa": IC_SOFA, "salt": _noslash("salt"), "glass": _noslash("glass"), "smoke": IC_SMOKE,
+              "kidney": _kidneys(), "pills": IC_PILLS}
 
 # Blood pressure categories, mm Hg: 2025 AHA/ACC high blood pressure guideline (same cutoffs as the 2017 guideline).
 BP_ROWS = [("#3E8E5B", "Normal", "under 120", "and", "under 80"),

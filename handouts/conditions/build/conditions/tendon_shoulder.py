@@ -5,8 +5,9 @@ Self-contained sheet module (wave 2, nothing from the legacy sheets.py / art.py)
 FRONT, top to bottom
   intro (it says what the rotator cuff is) -> one inline-SVG plate with three panels and a KEY strip:
      1. ROTATOR CUFF FROM THE FRONT: subscapularis, the supraspinatus tendon, the acromion "roof", the collarbone
-        and the bursa, drawn red at the pinch point under the roof ("a cushion that can get pinched under the roof");
-     2. ROTATOR CUFF FROM THE BACK: supraspinatus, infraspinatus, teres minor on the shoulder blade, with a lens on
+        and the bursa, drawn red under the roof ("a cushion between the roof and cuff; it can get sore and swollen");
+     2. ROTATOR CUFF FROM THE BACK: supraspinatus, infraspinatus, teres minor along the outer border of the shoulder
+        blade (the lower third of that border and the inferior angle left bare), with a lens on
         the supraspinatus band of the cuff, just lateral to the acromion, that opens into panel 3;
      3. INSIDE A TENDON ("the circled spot, magnified many times"): healthy collagen (tight, parallel bundles with an
         even crimp) beside an overloaded tendon (uneven fibers pulled apart, two slipped out of line and crossing the
@@ -14,7 +15,7 @@ FRONT, top to bottom
         STRONGER: plain physiology true of every tendon (load it -> feed it -> sleep on it), the same three habits as
         the back's lifestyle row.  No product and no timing on the front: the 1-hour collagen timing lives on the
         back, as the Collagen Renew direction.
-  -> where tendon pain shows up (shoulder, elbow, back of the ankle; coral dot keyed in the header)
+  -> where tendon pain shows up (shoulder, elbow, ankle; coral dot keyed in the header)
   -> what raises your risk (8 icons) -> the exercise pain guide (0-10 traffic light + "12 weeks")
   -> when to get checked right away (shoulder AND Achilles red flags; 911 for arm pain with heart-attack signs).
 BACK: six lifestyle circles; five NutriDyn columns (Collagen Renew starts, Vitamin C 1000 is its pair,
@@ -43,8 +44,11 @@ SOURCES (each number or fact on the page carries one of these tags in a comment)
               vessels and sensory nerves.
   [ANAT]      Standard anatomy (e.g. Gray's Anatomy): the rotator cuff is supraspinatus, infraspinatus, teres minor
               and subscapularis, whose tendons blend into one cuff over the ball of the arm bone and hold it in the
-              socket; the subacromial bursa lies between the cuff and the acromion, where lifting the arm can pinch
-              it (subacromial pain [LEWIS16]).
+              socket; the subacromial bursa lies between the cuff and the acromion and can become sore and swollen.
+              The caption gives no mechanism on purpose: the older "the roof pinches it" (impingement) model is no
+              longer taken as the cause of the pain, which is uncertain [LEWIS16].  Teres minor arises from the upper
+              two-thirds of the lateral border of the scapula; the supraspinatus helps lift the arm, infraspinatus
+              and teres minor turn it out, subscapularis turns it in.
   [COOK09]    Cook JL, Purdam CR. Br J Sports Med 2009;43:409-16. PMID 18812414 (load-induced tendinopathy).
   [KHAN02]    Khan KM et al. Time to abandon the "tendinitis" myth. BMJ 2002;324:626-7. PMID 11895810.
   [WHITTLE15] Whittle S, Buchbinder R. In the clinic: rotator cuff disease. Ann Intern Med 2015;162:ITC1-15.
@@ -52,8 +56,10 @@ SOURCES (each number or fact on the page carries one of these tags in a comment)
               to primary care.
   [ZHANG25]   Zhang W et al. J Orthop Surg Res 2025;20:1075. PMID 41276811. Rotator cuff-related shoulder
               pain is the most common cause of shoulder pain.
-  [LEWIS16]   Lewis J. Man Ther 2016;23:57-68. PMID 27083390. A graduated exercise approach gives at least
-              the benefit of surgery for subacromial pain, cuff tendinopathy and atraumatic tears.
+  [LEWIS16]   Lewis J. Man Ther 2016;23:57-68. PMID 27083390, doi:10.1016/j.math.2016.03.009 (abstract read via
+              PubMed, 2026-11-03). A graduated exercise approach gives at least the benefit of surgery for
+              subacromial pain, cuff tendinopathy and atraumatic tears; the "cause and source of symptoms" is listed
+              among the open uncertainties, so the bursa caption states no pinching mechanism.
   [CPG20]     Doiron-Cadrin P et al. Arch Phys Med Rehabil 2020;101:1233-42. PMID 32007452. All rotator
               cuff guidelines recommend an exercise program.
   [CPG24]     Lowry V et al. Arch Phys Med Rehabil 2024;105:411-26. PMID 37832814. Evaluate red flags first;
@@ -274,16 +280,85 @@ SUPRA_FRONT = [  # the same muscle seen from the front: a strip above the should
     (0.640, 0.060, 1.0), (0.646, 0.112, 1.0), (0.560, 0.098, 1.0), (0.460, 0.082, 1.0), (0.340, 0.066, 1.0),
     (0.200, 0.040, 1.0), (0.085, 0.022, 0.7),
 ]
-INFRA = [  # infraspinatus belly, below the spine
-    (0.040, 0.300, 0.7), (0.160, 0.276, 1.0), (0.300, 0.246, 1.0), (0.450, 0.212, 1.0), (0.560, 0.200, 1.0),
-    (0.672, 0.212, 0.8), (0.682, 0.300, 0.8), (0.560, 0.344, 1.0), (0.470, 0.424, 1.0), (0.360, 0.544, 1.0),
-    (0.255, 0.660, 1.0), (0.160, 0.756, 1.0), (0.104, 0.800, 0.7), (0.062, 0.640, 1.0), (0.030, 0.450, 1.0),
-]
-TMINOR = [  # teres minor, along the outer border of the shoulder blade
-    (0.682, 0.302, 0.8), (0.560, 0.344, 1.0), (0.470, 0.424, 1.0), (0.360, 0.544, 1.0), (0.255, 0.660, 1.0),
-    (0.200, 0.718, 0.6), (0.226, 0.776, 0.6), (0.330, 0.664, 1.0), (0.432, 0.534, 1.0), (0.522, 0.424, 1.0),
-    (0.600, 0.364, 1.0), (0.686, 0.352, 0.8),
-]
+def _cr_samples(P, per=32):
+    """Dense samples of the closed Catmull-Rom curve through P [(x, y, tension)], with the same tangents and
+    Bezier handles as _path, so a shape built from them lies exactly on the drawn outline (scapula units)."""
+    n = len(P)
+    tan = [(P[i][2] * (P[(i + 1) % n][0] - P[i - 1][0]) / 2, P[i][2] * (P[(i + 1) % n][1] - P[i - 1][1]) / 2)
+           for i in range(n)]
+    out = []
+    for i in range(n):
+        j = (i + 1) % n
+        p0, p3 = P[i][:2], P[j][:2]
+        p1 = (p0[0] + tan[i][0] / 3, p0[1] + tan[i][1] / 3)
+        p2 = (p3[0] - tan[j][0] / 3, p3[1] - tan[j][1] / 3)
+        for s in range(per):
+            t = s / per
+            u = 1 - t
+            out.append(tuple(u ** 3 * p0[c] + 3 * u * u * t * p1[c] + 3 * u * t * t * p2[c] + t ** 3 * p3[c]
+                             for c in (0, 1)))
+    return out
+
+
+# The lateral (outer) border of the shoulder blade, from just under the socket down toward the inferior angle:
+# SCAPULA points 12 -> 16, sampled from the drawn curve.
+_LAT = _cr_samples(SCAPULA)[12 * 32:16 * 32 + 1]
+
+
+def _on_border(y):
+    """(point, downward unit direction, outward unit normal) of the lateral border at height y."""
+    for a, b in zip(_LAT, _LAT[1:]):
+        if a[1] <= y <= b[1]:
+            t = (y - a[1]) / (b[1] - a[1])
+            p = (a[0] + (b[0] - a[0]) * t, y)
+            ln = math.hypot(b[0] - a[0], b[1] - a[1])
+            d = ((b[0] - a[0]) / ln, (b[1] - a[1]) / ln)
+            return p, d, (d[1], -d[0])          # the border runs down and in, so (dy, -dx) points out of the bone
+    raise ValueError(y)
+
+
+# Teres minor arises from the upper two-thirds of the lateral border of the shoulder blade and runs up and out to the
+# lowest facet of the greater tubercle, under infraspinatus [ANAT].  Its outer edge is the border itself (a hair
+# outside, so the muscle covers the bone's outline and no bone shows between them); its inner edge is the border
+# moved TM_W inward, narrowing toward the lower end.  Below it, along the lower third of the border, the bone is left
+# bare: that is where teres major starts (not a cuff muscle, not drawn), and the inferior angle carries the
+# "Shoulder blade" label.
+TM_Y0, TM_Y1, TM_W, TM_OUT = 0.378, 0.735, 0.070, 0.006
+
+
+def _tm_edges():
+    """Parallel inner and outer edge points of teres minor, from its insertion under the cuff to its lower end."""
+    inner = [(0.684, 0.304), (0.616, 0.318)]          # into the cuff's lowest band, between the seam and the hood edge
+    outer = [(0.688, 0.354), (0.646, 0.361)]
+    k = 9
+    for i in range(k + 1):
+        u = i / k
+        p, d, nrm = _on_border(TM_Y0 + (TM_Y1 - TM_Y0) * u)
+        w = TM_W - 0.024 * max(0.0, (u - 0.55) / 0.45) ** 1.5      # narrows over its lower part
+        inner.append((p[0] - w * nrm[0], p[1] - w * nrm[1]))
+        outer.append((p[0] + TM_OUT * nrm[0], p[1] + TM_OUT * nrm[1]))
+    return inner, outer
+
+
+TM_IN, TM_OUTER = _tm_edges()
+_tp, _td, _tn = _on_border(TM_Y1)
+TM_END = (_tp[0] + 0.016 * _td[0] - 0.016 * _tn[0], _tp[1] + 0.016 * _td[1] - 0.016 * _tn[1])   # rounded lower end
+TMINOR = ([(x, y, 1.0) for x, y in TM_IN] + [(*TM_END, 0.9)] + [(x, y, 1.0) for x, y in reversed(TM_OUTER)])
+TMINOR[0] = (*TMINOR[0][:2], 0.8)
+TMINOR[-1] = (*TMINOR[-1][:2], 0.8)
+# a point on teres minor's mid-line, half-way down its origin, for the label leader
+_mp, _md, _mn = _on_border(0.56)
+TM_MID = (_mp[0] - TM_W / 2 * _mn[0], _mp[1] - TM_W / 2 * _mn[1])
+
+# Infraspinatus fills the fossa below the spine.  Its lower edge runs UNDER teres minor (along teres minor's
+# mid-line, drawn first so teres minor covers it), leaves it at teres minor's lower end and crosses to the inner
+# border just above the inferior angle, so no bone shows between the two muscles or between them and the border.
+_im = [((a[0] + b[0]) / 2, (a[1] + b[1]) / 2) for a, b in zip(TM_IN[2:], TM_OUTER[2:])]
+INFRA = ([(0.040, 0.300, 0.7), (0.160, 0.276, 1.0), (0.300, 0.246, 1.0), (0.450, 0.212, 1.0), (0.560, 0.200, 1.0),
+          (0.672, 0.212, 0.8), (0.684, 0.302, 0.8), (0.640, 0.336, 1.0)]
+         + [(x, y, 1.0) for x, y in _im[::3]] + [(*TM_END, 0.8)]          # _im[::3] ends on _im[-1]
+         + [(0.300, 0.770, 1.0), (0.200, 0.800, 1.0), (0.112, 0.815, 0.7), (0.077, 0.700, 1.0),
+            (0.058, 0.590, 1.0), (0.030, 0.450, 1.0)])
 SUBSC = [  # subscapularis on the front of the shoulder blade
     (0.070, 0.050, 0.7), (0.200, 0.076, 1.0), (0.330, 0.100, 1.0), (0.440, 0.126, 1.0), (0.560, 0.166, 1.0),
     (0.668, 0.226, 0.8), (0.674, 0.336, 0.8), (0.560, 0.412, 1.0), (0.470, 0.542, 1.0), (0.370, 0.692, 1.0),
@@ -380,6 +455,22 @@ def _muscle(uid, pts, m, src, dst, n):
     d = _path(pts, m)
     return (f'<path d="{d}" fill="url(#ts-mus)" stroke="{MUS_EDGE}" stroke-width="1.1" stroke-linejoin="round"/>'
             + _fibers(uid, pts, m, src, dst, n)
+            + f'<path d="{d}" fill="url(#ts-mhi)" stroke="none"/>')
+
+
+def _strap(uid, pts, inner, outer, m, n):
+    """A long, curving strap muscle (teres minor): the same pink, edge and highlight as _muscle, but its fibre lines
+    follow the strap's own curve, between matching points of its inner and outer edges, instead of running straight."""
+    d = _path(pts, m)
+    lines = []
+    for i in range(n):
+        f = (i + 0.5) / n
+        mid = [(a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f, 1.0) for a, b in zip(inner, outer)]
+        lines.append(_path(mid, m, closed=False))
+    return (f'<path d="{d}" fill="url(#ts-mus)" stroke="{MUS_EDGE}" stroke-width="1.1" stroke-linejoin="round"/>'
+            f'<clipPath id="{uid}"><path d="{d}"/></clipPath>'
+            f'<path d="{"".join(lines)}" stroke="{MUS_FIB}" stroke-width=".9" opacity=".5" fill="none" '
+            f'stroke-linecap="round" clip-path="url(#{uid})"/>'
             + f'<path d="{d}" fill="url(#ts-mhi)" stroke="none"/>')
 
 
@@ -484,8 +575,8 @@ def panel_front():
     # the dot sits at mid-thickness of the bursa, clear of the acromion; the label stands in the margin left of the
     # arm bone, and its leader reaches the bursa without crossing bone [ANAT]
     bx, by = m(0.926, 0.167)
-    out.append(_label(P1X + 5, 160, "Bursa", bx, by, "start", side="above",
-                      sub=["a cushion", "that can get", "pinched under", "the roof"]))
+    out.append(_label(P1X + 5, 160, "Bursa", bx, by, "start", side="above",       # [ANAT][LEWIS16]
+                      sub=["a cushion", "between the", "roof and cuff;", "it can get sore", "and swollen"]))
     sx, sy = m(0.22, 0.78)
     out.append(_label(P1X + PW - 10, 282, "Subscapularis", sx, sy, "end", side="above"))
     hx, hy = m(0.80, 0.86)
@@ -504,8 +595,8 @@ def panel_back():
            '<g clip-path="url(#ts-p2)">']
     out.append(_shape(SCAPULA, m, "url(#ts-bone)", BONE_EDGE, 1.2))
     out.append(_humerus(m, "ts-hm2"))
-    out.append(_muscle("ts-f-infra", INFRA, m, [(0.05, 0.31), (0.11, 0.79)], [(0.664, 0.222), (0.680, 0.300)], 15))
-    out.append(_muscle("ts-f-tmin", TMINOR, m, [(0.208, 0.722), (0.226, 0.772)], [(0.680, 0.308), (0.686, 0.350)], 4))
+    out.append(_muscle("ts-f-infra", INFRA, m, [(0.05, 0.31), (0.11, 0.80)], [(0.664, 0.222), (0.680, 0.300)], 15))
+    out.append(_strap("ts-f-tmin", TMINOR, TM_IN, TM_OUTER, m, 4))
     out.append(_muscle("ts-f-supra", SUPRA, m, [(0.040, 0.040), (0.050, 0.232)], [(0.664, 0.090), (0.664, 0.124)], 7))
     out.append(_hood("ts-t-cuff", CUFF_BACK, m, [(0.600, 0.090), (0.642, 0.348)], [(0.930, 0.200), (0.928, 0.346)], 11,
                      seams=SEAMS_BACK, bow=-0.016))
@@ -521,7 +612,7 @@ def panel_back():
     out.append(_label(P2X + PW - 10, 52, "Acromion", ax, ay, "end", side="below"))
     ix, iy = m(0.14, 0.62)
     out.append(_label(P2X + 9, 282, "Infraspinatus", ix, iy, "start", side="above"))
-    tx_, ty_ = m(0.34, 0.66)
+    tx_, ty_ = m(*TM_MID)        # on teres minor's mid-line, half-way down the border; the leader climbs clear space
     out.append(_label(P2X + 148, 240, "Teres minor", tx_, ty_, "middle", side="above"))   # clear of the arm bone
     bx, by = m(0.205, 0.955)
     out.append(_label(P2X + 140, 282, "Shoulder blade", bx, by, "middle", side="above"))
@@ -550,38 +641,49 @@ def _crimp_band(x0, x1, yc, h, amp=1.2, period=9.5, hi=True):
     return out
 
 
-def _frayed(x0, x1, y, n=4, bulge=5.2, sw=1.2):
-    """A frayed stretch of fibre from x0 to x1 around height y: the fibre comes apart into n loose,
-    wiggly gold strands that bulge away from each other, like an unravelling rope."""
-    parts, w = [], x1 - x0
+def _fray_end(x, y, dirn, h=6.0, n=4, length=12.0, sw=0.95, seed=1):
+    """A torn fibre end: its blunt tip at x, centred on y, pointing dirn (+1 right, -1 left).  Like the end of a
+    frayed rope, n loose gold strands peel off across the end's width at slightly different depths, splay a little
+    (the outer ones most) and stop at different lengths with a slight curl.  The strands of the two ends of a break
+    never meet: a closed loop would read as a bead bridging the gap."""
+    rnd = random.Random(seed)
+    parts = []
     for i in range(n):
-        f = (i - (n - 1) / 2) / ((n - 1) / 2 or 1)          # -1 .. 1 across the fibre
-        ys, ym = y + f * 1.7, y + f * bulge
-        wig = 1.5 * (1 if i % 2 else -1)
-        parts.append(f"M{_f(x0)},{_f(ys)} C{_f(x0 + w * .22)},{_f(ym + wig)} {_f(x0 + w * .40)},{_f(ym - wig)} "
-                     f"{_f(x0 + w * .5)},{_f(ym)} S{_f(x1 - w * .22)},{_f(ys - wig)} {_f(x1)},{_f(ys)}")
+        f = (i - (n - 1) / 2) / ((n - 1) / 2 or 1)          # -1 .. 1 across the end
+        x0 = x - dirn * rnd.uniform(0.5, 4.0)
+        y0 = y + f * h * 0.32
+        ln = length * rnd.uniform(0.6, 1.0)
+        ang = math.radians(f * 20 + rnd.uniform(-8, 8))
+        ex, ey = x0 + dirn * ln * math.cos(ang), y0 + ln * math.sin(ang)
+        curl = rnd.uniform(0.8, 1.8) * (1 if f >= 0 else -1)
+        parts.append(f"M{_f(x0)},{_f(y0)} C{_f(x0 + dirn * ln * .4)},{_f(y0 + (ey - y0) * .2 - curl * .5)} "
+                     f"{_f(x0 + dirn * ln * .75)},{_f(y0 + (ey - y0) * .8 + curl)} {_f(ex)},{_f(ey)}")
     return f'<path d="{" ".join(parts)}" fill="none" stroke="{FRAY}" stroke-width="{sw}" stroke-linecap="round"/>'
 
 
-def _wavy(x0, x1, y, amp, period, phase, h, taper=(False, False), y_end=None):
+def _wavy(x0, x1, y, amp, period, phase, h, taper=(False, False), y_end=None, edge=TEN_EDGE, ew=0.7, tip=(2.4, 9)):
     """An uneven, swollen fibre: a ribbon whose centre line is a sine, sampled once per unit so it stays smooth.
-    taper=(left, right) narrows that end to a point over its last 9 units (a fibre coming apart); y_end pins the
-    centre line there to height y_end."""
+    taper=(left, right) narrows that end to tip[0] wide over its last tip[1] units (a fibre coming apart); y_end
+    pins the centre line there to height y_end.  edge / ew: outline colour and width (darker for slipped fibres)."""
     top, bot = [], []
     n = max(8, int(x1 - x0))
+    tw_, tl = tip
     for i in range(n + 1):
         x = x0 + (x1 - x0) * i / n
         c = y + amp * math.sin((x - x0) / period * 2 * math.pi + phase)
         hh = h
         for on, dist in ((taper[0], x - x0), (taper[1], x1 - x)):
-            if on and dist < 9:
-                hh = min(hh, 2.4 + (h - 2.4) * dist / 9)
+            if on and dist < tl:
+                hh = min(hh, tw_ + (h - tw_) * dist / tl)
                 if y_end is not None:
-                    c = y_end + (c - y_end) * dist / 9
+                    c = y_end + (c - y_end) * dist / tl
         top.append((x, c - hh / 2))
         bot.append((x, c + hh / 2))
-    return (f'<path d="{_ribbon(top, bot)}" fill="url(#ts-ten)" stroke="{TEN_EDGE}" stroke-width=".7" '
+    return (f'<path d="{_ribbon(top, bot)}" fill="url(#ts-ten)" stroke="{edge}" stroke-width="{ew}" '
             f'stroke-linejoin="round"/>')
+
+
+SLIP_EDGE = "#8E7B57"      # darker outline of the two fibres that slipped out of line, so they read as crossing
 
 
 def _vessel(pts, sw=1.6):
@@ -616,17 +718,20 @@ def zoom_circle(cx, cy, r, healthy, uid):
             x0, x1 = cx - r - 6, cx + r + 6
             if i in breaks:
                 gx = cx + breaks[i] * r
-                out.append(_wavy(x0, gx - 13, yc, amp, per, ph, h, (False, True), yc))
-                out.append(_wavy(gx + 13, x1, yc, amp, per, ph + 1.3, h, (True, False), yc))
-                frays.append((gx, yc))
+                # blunt torn ends (a rope cut through, not a needle point); the gold strands peel off them below
+                out.append(_wavy(x0, gx - 13, yc, amp, per, ph, h, (False, True), yc, tip=(0.5 * h, 6)))
+                out.append(_wavy(gx + 13, x1, yc, amp, per, ph + 1.3, h, (True, False), yc, tip=(0.5 * h, 6)))
+                frays.append((gx, yc, h))
             else:
                 out.append(_wavy(x0, x1, yc, amp, per, ph, h))
-        # the two slipped fibres cross well away from the two breaks, so each break reads on its own
-        for ang, oy, h, ph in ((-12, -28, 6.0, 0.6), (9, 33, 5.4, 2.2)):
+        # the two slipped fibres cross the others at about 18 degrees, with a darker outline, well away from the two
+        # breaks, so "tangled" shows and each break still reads on its own
+        for ang, oy, h, ph in ((-18, -31, 6.0, 0.6), (18, 33, 5.4, 2.2)):
             out.append(f'<g transform="rotate({ang} {_f(cx)} {_f(cy + oy)})">'
-                       + _wavy(cx - r - 22, cx + r + 22, cy + oy, 2.0, 21, ph, h) + "</g>")
-        for gx, gy in frays:
-            out.append(_frayed(gx - 15, gx + 15, gy, 4, 4.6))
+                       + _wavy(cx - r - 22, cx + r + 22, cy + oy, 2.0, 21, ph, h, edge=SLIP_EDGE, ew=0.95) + "</g>")
+        # each break: the strands of both torn ends fan out into the gap and stop short of each other
+        for j, (gx, gy, gh) in enumerate(frays):
+            out.append(_fray_end(gx - 13, gy, +1, gh, seed=11 + 2 * j) + _fray_end(gx + 13, gy, -1, gh, seed=12 + 2 * j))
         # new vessels grow in from the lower side, along the gaps between fibres and clear of the frayed breaks
         vessel = lambda pts, sw: _vessel([(cx + a, cy + b) for a, b in pts], sw)
         out.append(vessel([(-r - 4, 30), (-26, 25), (-8, 31), (10, 27), (28, 31), (r + 4, 24)], 1.9))
@@ -717,9 +822,11 @@ def _sw_fibers():
 
 
 def _sw_fray():
-    return (f'<rect x="-14" y="-3" width="8" height="6" rx="3" fill="url(#ts-ten)" stroke="{TEN_EDGE}" stroke-width=".6"/>'
-            f'<rect x="6" y="-3" width="8" height="6" rx="3" fill="url(#ts-ten)" stroke="{TEN_EDGE}" stroke-width=".6"/>'
-            + _frayed(-8, 8, 0, 4, 5.5, 1.15))
+    """The KEY swatch drawn like the art: two tapered fibre ends whose gold strands splay into the gap, unjoined."""
+    return (_wavy(-15, -6, 0, 0.0, 10, 0, 6.0, (False, True), 0, tip=(3.8, 3))
+            + _wavy(6, 15, 0, 0.0, 10, 0, 6.0, (True, False), 0, tip=(3.8, 3))
+            + _fray_end(-6, 0, +1, 6.0, 4, length=4.6, sw=0.95, seed=3)
+            + _fray_end(6, 0, -1, 6.0, 4, length=4.6, sw=0.95, seed=4))
 
 
 def _sw_vessel():
@@ -815,7 +922,7 @@ SITES = [
      ["Ache on the outer upper arm", "Worse when you lift your arm", "Hurts to lie on it at night"]),
     ("elbow", "Elbow", "tennis elbow",
      ["Pain on the outer elbow bump", "Worse when you grip or twist", "Common with gripping work"]),
-    ("ankle", "Back of the ankle", "Achilles tendon",
+    ("ankle", "Ankle", "Achilles tendon",
      ["Pain just above the heel bone", "Stiff in the morning", "Sore with running or jumping"]),
 ]
 
@@ -875,10 +982,10 @@ def flags_block():
     # push-off, so you cannot rise up on your toes [CHIODO10].  Heart attack warning signs include arm pain with
     # chest discomfort, shortness of breath or a cold sweat: call 911 [AHA].
     return ('<div class="tsp-flag">' + icon("warning", "0.3in", sw=3.4) +
-            '<p><b>Get checked right away</b> for a sudden pop or weakness after a fall or heavy lift, an arm you cannot '
-            'lift, a hot, red, swollen joint or a fever, or numbness running down the arm, and for a sudden pop at the '
-            'back of the ankle or not being able to stand on tiptoe. <b>Shoulder or arm pain with chest pressure, '
-            'shortness of breath or a cold sweat can be a heart attack: call 911.</b></p></div>')
+            '<p><b>Get checked right away for:</b> a pop or sudden weakness after a fall or heavy lift. An arm you cannot '
+            'lift. A hot, red, swollen joint, or a fever. Numbness running down the arm. A pop at the back of the ankle, '
+            'or not being able to stand on tiptoe. <b>Shoulder or arm pain with chest pressure, shortness of breath or a '
+            'cold sweat can be a heart attack: call 911.</b></p></div>')
 
 
 def front(t, ed):
@@ -956,11 +1063,13 @@ SHEET = {
     # Collagen, mostly type I, is 65-80% of tendon [KANNUS00].  Most tendon pain is overuse, a load the tendon
     # was not ready for [COOK09][MILLAR21], with disorganised (fraying) collagen fibres [KHAN99][MILLAR21].  Shoulder
     # pain: third most common musculoskeletal reason to see primary care [WHITTLE15]; rotator cuff the most
-    # common cause [ZHANG25].  The rotator cuff: 4 muscles whose tendons cover the ball and hold it in the socket [ANAT].
+    # common cause [ZHANG25].  The rotator cuff: 4 muscles whose tendons cover the ball and hold it in the socket; the
+    # supraspinatus helps lift the arm, the other three turn it in and out [ANAT] (glosses the plate's Latin labels).
     "intro": ("Tendons are tough cords of <b>collagen</b> that join muscle to bone. Most tendon pain builds slowly, when a "
               "tendon does more than it is ready for and its rope-like fibers fray. Shoulder pain is the "
               "<b>third most common</b> muscle and joint reason to see a family doctor, usually from the "
-              "<b>rotator cuff</b>: 4 muscles whose tendons hug the ball of the arm bone and keep it in its socket."),
+              "<b>rotator cuff</b>: 4 muscles whose tendons hug the ball of the arm bone and keep it in its socket. "
+              "The <b>supraspinatus</b> helps lift your arm; the other three turn it in and out."),
     "front": front,
     "css": CSS,
     "back": {

@@ -9,13 +9,31 @@ Self-contained: the art below was copied out of art.py / sheets.py and rebuilt o
   3. A KEY names everything inside the magnified tissue circles.
   4. The old empty space at the bottom holds an "Ask about liver checks" panel.
   5. The risk-factor icons stay, polished into one row of tinted discs.
-Art-director pass (front only; SHEET["back"] is frozen for the products pass): immune cells
-never stack (a cell is skipped when no free spot exists), scar bands are drawn edges-then-fills
-so they merge into one septum, every arc end and T-bar stops clear of the white ring, the band
-holds the arcs and their labels, the livers sit bottom-aligned 4 units above the band, the key
-reads "KEY TO THE CLOSE-UPS" with a "Zoomed in" tag on the first beam, the sugar icon's slash is
-hidden, all three check cards end in two sourced dots, and the pharmacy edition says the doctor
-orders the checks.
+Art-director pass (front only): immune cells never stack, scar is drawn edges-then-fills, every arc end
+and T-bar stops clear of the white ring, the band holds the arcs and their labels, the livers sit
+bottom-aligned 4 units above the band, all three check cards end in two sourced dots, and the pharmacy
+edition says the doctor orders the checks.
+Front recheck pass (2026-11-03, front_rechecks_BC.json), no redesign beyond the listed items:
+  - ALT dots read as upper limits, the FIB-4 dot names the FibroScan, the specialist dot is red.
+  - The zoom tag says "Close-up", the same word as the key.  Every key swatch sits on a dark tissue
+    chip like the art, the scar swatch is a straight piece of septum, the key names the pink nucleus.
+  - The cirrhotic liver is warm tan-brown, its nodules packed without overlap, lit by a soft lower
+    shadow and a highlight instead of dark rings.
+  - Close-up 4 shows rounded nodules ringed by scar: a gapped Voronoi layout (septa 6 to 11 wide that
+    swell, thin and fork where three nodules meet), each nodule with its own tilted cell grid.
+  - Close-up 3's immune cells sit in four tight foci of three in the gaps between cells, never on fat
+    or a nucleus (checked by asserts).
+  - The gut caption and the gut risk label are hedged ("may add to it", "being studied").
+  - The sugar icon is a soda cup with a straw; PCOS is a uterus-and-ovaries glyph in the kit's style.
+  - The severity row, the band and the key share one 8-unit margin on both sides.
+Back (products pass, same day): four columns, the competitor's count, matching its four nutrient
+categories (berberine; bergamot + artichoke; aged black garlic; alpha lipoic acid) with NutriDyn's own
+protocol products.  Berberine Pro, Milk Thistle Complex and Mito Recharge are on Rick Mayfield's GLC 2026
+"Metabolic Fatty Liver (MAFLD, MASLD, MASH)" list [MAYFIELD26]; Lipo-Flow is the NutriDyn science-team
+lipotropic (400 mg artichoke + tangerine peel: the citrus-and-artichoke match) Asher sends "to promote healthy
+liver function".  Milk Thistle Complex stands in for aged black garlic (both are antioxidant liver-cell
+support; NutriDyn has no liver protocol with garlic).  Label facts: products.d/fatty-liver.json (fl_* keys, so
+no other sheet's override reaches this page), each with its sell-sheet source.
 Shared helpers come only from svgkit / kit.  Every SVG id starts with "fl-" and every
 CSS class with "flv-", so nothing collides with other sheets in the all-sheets bundle.
 
@@ -32,8 +50,32 @@ SOURCES (each number on the page carries one of these tags in a comment)
   [YOUNOSSI23] Younossi ZM et al. The global epidemiology of NAFLD and NASH. Hepatology
               2023;77:1335-1347. doi:10.1097/HEP.0000000000000004 (global 30%; 38% in 2016-2019)
   [EASL24]    EASL-EASD-EASO Clinical Practice Guidelines on the management of MASLD. J Hepatol
-              2024;81:492-542. doi:10.1016/j.jhep.2024.04.031 (spectrum: steatosis, MASH, fibrosis,
-              cirrhosis; stepwise FIB-4 then transient elastography)
+              2024;81:492-542. doi:10.1016/j.jhep.2024.04.031; executive summary read in full,
+              Diabetologia 2024;67:2375-2392, doi:10.1007/s00125-024-06196-3 (PMC11519095)
+  [HHS18]     Physical Activity Guidelines for Americans, 2nd ed. US HHS, 2018 (muscle-strengthening
+              activity on 2 or more days a week).
+  [REYNOLDS16] Reynolds AN et al. Advice to walk after meals is more effective for lowering postprandial
+              glycaemia in type 2 diabetes. Diabetologia 2016;59:2572-2578. doi:10.1007/s00125-016-4085-2
+  [ZHANG08]   Zhang Y et al. Treatment of type 2 diabetes and dyslipidemia with the natural plant alkaloid
+              berberine. J Clin Endocrinol Metab 2008;93:2559-2565 (cited on Berberine Pro SS ND1130)
+  [GUO12]     Guo Y et al. Repeated administration of berberine inhibits cytochromes P450 in humans.
+              Eur J Clin Pharmacol 2012;68:213-217. doi:10.1007/s00228-011-1108-2 (CYP2D6, 2C9, 3A4)
+  [ODSK]      NIH Office of Dietary Supplements, Vitamin K fact sheet for health professionals
+              (vitamin K works against warfarin; people on warfarin keep vitamin K intake consistent)
+  [BANACH15]  Banach M et al. Statin therapy and plasma coenzyme Q10 concentrations: meta-analysis of
+              placebo-controlled trials. Pharmacol Res 2015;99:329-336. doi:10.1016/j.phrs.2015.07.008
+  [USP20]     Oketch-Rabah HA et al. USP comprehensive review of the hepatotoxicity of green tea extracts.
+              Toxicol Rep 2020;7:386-402. doi:10.1016/j.toxrep.2020.02.008 (fasting bolus doses raise EGCG
+              exposure; case reports at 140 to about 1000 mg/day EGCG; USP label: take with food, stop
+              and call if dark urine or yellow skin or eyes)
+  [MAYFIELD26] Rick Mayfield DC (NutriDyn CSO), FINAL_GLC 2026 PROTOCOL RICK.pdf, Dropbox
+              /NutriDyn/Public Share Folder/GLC 2026 Notes/3 - Rick Mayfield/ (id:xHepYs_Ou4AAAAAAAA7oHg),
+              read 2026-11-03: "Metabolic Fatty Liver (MAFLD, MASLD, MASH)": PPC Silymarin (coming soon),
+              Ganoderma Plus, Inflam-Eze Plus, Milk Thistle Complex, Berberine Pro, Detox, Mito Recharge,
+              UltraBiotic Prebiotic.  The same talk covers the gut barrier and "inflammatory endotoxins".
+  [LABELS]    NutriDyn sell sheets read 2026-11-03 (Dropbox NutriDyn Marketing Materials): Berberine Pro
+              ND1130 Rev. 11/25, Lipo-Flow ND606 Rev. 4/26, Milk Thistle Complex ND764 Rev. 2/25,
+              Mito Recharge ND812 Rev. 2/25.  Amounts are in products.d/fatty-liver.json.
 """
 import math
 import os
@@ -87,6 +129,7 @@ SCAR, SCAR_EDGE = "#D3CAC2", "#968B83"
 
 # ============================================================== geometry
 W = 760                       # viewBox width; rendered 7.66 in wide (1 unit = 0.73 pt, so 7 pt text >= 9.7)
+EDGE = 8                      # one outer margin for the severity row, the band and the key, both sides
 XS = (95, 285, 475, 665)      # stage centres, symmetric about x = 380
 BAND = (156, 357)             # light arrow band behind the circles (top, bottom); it holds the arcs AND their labels
 LIVER_S = 0.92                # base liver scale (each stage multiplies its own factor below)
@@ -110,9 +153,10 @@ STAGES = [
 # What pushes each step forward (plain words; mechanisms per [AASLD23] pathogenesis section:
 # insulin resistance raises fat delivery to the liver; lipotoxic stress on liver cells drives the
 # inflammation of MASH, and "exposure to products derived from the gut microbiome ... may also
-# contribute to the NASH phenotype" [AASLD23]; ongoing inflammation drives fibrosis).
+# contribute to the NASH phenotype" [AASLD23], hence the hedge "may add to it"; ongoing inflammation
+# drives fibrosis).
 DRIVERS = [["Insulin resistance", "sends extra fat", "into liver cells"],
-           ["Stressed cells and", "gut-bacteria waste", "spark inflammation"],
+           ["Stressed cells spark", "inflammation; gut", "bacteria may add to it"],
            ["Years of", "inflammation", "leave scars"]]
 
 # ============================================================== the liver
@@ -151,11 +195,6 @@ def _cubic(p0, p1, p2, p3, t):
     return tuple(m ** 3 * p0[k] + 3 * m * m * t * p1[k] + 3 * m * t * t * p2[k] + t ** 3 * p3[k] for k in (0, 1))
 
 
-def _cubic_d(p0, p1, p2, p3, t):
-    m = 1 - t
-    return tuple(3 * m * m * (p1[k] - p0[k]) + 6 * m * t * (p2[k] - p1[k]) + 3 * t * t * (p3[k] - p2[k]) for k in (0, 1))
-
-
 def _path_extent(d):
     """(x0, y0, x1, y1) of an M/C path, sampled: the spline bulges a little past its points."""
     nums = [float(v) for v in d.replace("M", " ").replace("C", " ").replace("Z", " ").replace(",", " ").split()]
@@ -168,8 +207,31 @@ def _path_extent(d):
 
 
 LIVER_EXT = _path_extent(LIVER_D)       # about (2.8, 2.4, 141.0, 71.0) in liver units
-LIVER_FILL = [("#C55B47", "#8C2E24"), ("#EEC468", "#C88E2E"), ("#DE8457", "#A8432A"), ("#A99689", "#6C5D54")]
-LIVER_EDGE = ["#6E241C", "#94661D", "#84331F", "#51463F"]
+# stage 4 is a warm tan-brown (a diseased liver), not grey stone
+LIVER_FILL = [("#C55B47", "#8C2E24"), ("#EEC468", "#C88E2E"), ("#DE8457", "#A8432A"), ("#B8936E", "#7A5843")]
+LIVER_EDGE = ["#6E241C", "#94661D", "#84331F", "#5A3E2C"]
+
+
+def _nodule_layout():
+    """Regrowth nodules for the cirrhotic liver, packed without overlap (centre spacing at least
+    r1 + r2 + 0.8), biggest first, so they read as separate bumps rather than bubble wrap.  A 12-unit
+    grid keeps the packing fast (it only ever compares neighbours)."""
+    rnd = random.Random(77)
+    x0, y0, x1, y1 = LIVER_EXT
+    placed, grid, g, tries = [], {}, 12.0, 40000
+    for k in range(tries):
+        hi = 5.6 - 3.0 * min(1.0, k / (tries * 0.6))
+        r = rnd.uniform(max(2.6, hi - 1.2), hi)
+        x, y = rnd.uniform(x0 - 3, x1 + 3), rnd.uniform(y0 - 3, y1 + 3)
+        gx, gy = int(x // g), int(y // g)
+        if all(math.hypot(x - a, y - b) >= r + rb + 0.8
+               for i in (gx - 1, gx, gx + 1) for j in (gy - 1, gy, gy + 1) for a, b, rb in grid.get((i, j), ())):
+            placed.append((x, y, r))
+            grid.setdefault((gx, gy), []).append((x, y, r))
+    return placed
+
+
+NODULES = _nodule_layout()
 
 
 def _liver_texture(stage):
@@ -181,18 +243,11 @@ def _liver_texture(stage):
                         for x, y, r in [(34, 32, 10), (63, 42, 9), (92, 25, 7), (118, 19, 5), (22, 52, 7)])
                 + "".join(f'<circle cx="{x}" cy="{y}" r="{r}" fill="#FFE3A6" opacity=".5"/>'
                           for x, y, r in [(52, 20, 5.5), (78, 32, 4.5), (40, 50, 4)]))
-    if stage == 3:   # cirrhosis: a lumpy surface of uneven regrowth nodules
-        rnd = random.Random(77)
-        out = []
-        for row in range(9):
-            for col in range(15):
-                x = col * 10.2 + (5.1 if row % 2 else 0) + rnd.uniform(-1.8, 1.8)
-                y = 2 + row * 8.8 + rnd.uniform(-1.6, 1.6)
-                r = rnd.uniform(3.6, 5.9)
-                out.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{r:.1f}" fill="rgba(255,255,255,.09)" '
-                           f'stroke="rgba(48,36,30,.42)" stroke-width="1.1"/>'
-                           f'<circle cx="{x - r * .3:.1f}" cy="{y - r * .32:.1f}" r="{r * .38:.1f}" fill="rgba(255,255,255,.16)"/>')
-        return "".join(out)
+    if stage == 3:   # cirrhosis: separate regrowth nodules, each a lit bump with a soft shadow below it
+        return "".join(f'<circle cx="{x + r * .10:.1f}" cy="{y + r * .30:.1f}" r="{r * 1.02:.1f}" fill="#4A2E1E" opacity=".34"/>'
+                       f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{r:.1f}" fill="url(#fl-nod)"/>'
+                       f'<circle cx="{x - r * .34:.1f}" cy="{y - r * .36:.1f}" r="{r * .34:.1f}" fill="#FFF1DC" opacity=".38"/>'
+                       for x, y, r in NODULES)
     return ""
 
 
@@ -210,8 +265,8 @@ def liver(cx, bot, s, stage):
 
 
 # ============================================================== magnified tissue
-def _hex(px, py, r):
-    return " ".join(f"{px + r * math.cos(math.radians(a)):.1f},{py + r * math.sin(math.radians(a)):.1f}"
+def _hex(px, py, r, rot=0.0):
+    return " ".join(f"{px + r * math.cos(math.radians(a + rot)):.1f},{py + r * math.sin(math.radians(a + rot)):.1f}"
                     for a in range(30, 390, 60))
 
 
@@ -233,50 +288,37 @@ def sw_immune(r=5.0, x=0, y=0):
     return f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{r:.1f}" fill="{IMM}" stroke="{IMM_RING}" stroke-width="1.8"/>'
 
 
-SCAR_FIBRE = "#B5AAA1"        # faint collagen strands along each scar band
+SCAR_FIBRE = "#B5AAA1"        # faint collagen strands along each band of scar
+
+# Close-up 3 (INFLAMED): the immune cells, relative to the circle centre.  Four tight foci of three
+# (top, left, bottom, lower right), all in the dark gaps between liver cells.  The positions came from a
+# free-space search over this circle's own droplets and nuclei (seed 2026 + 2): every spot keeps
+# droplet r + IMM_R + 1 from fat, nucleus r + IMM_R + 1.2 from a nucleus and IMM_GAP from its neighbours.
+# _immune_foci re-checks all of that, so the build fails if the tissue ever changes under them.
+IMM_FOCI = [(-4, -34), (2, -23), (8, -33),        # top
+            (-41, 10), (-36, -1), (-29, 11),      # left
+            (-8, 32), (-3, 21), (4, 31),          # bottom
+            (21, 30), (28, 20), (33, 31)]         # lower right
 
 
-def _ribbon(p, w, wobble=0.0, phase=0.0, n=48):
-    """A band of width w (gently swelling and thinning by +-wobble) along the cubic p = (p0, p1, p2, p3).
-    Returns the outline path and two fibre lines that run along it."""
-    left, right, fib = [], [], ([], [])
-    for i in range(n + 1):
-        t = i / n
-        x, y = _cubic(*p, t)
-        dx, dy = _cubic_d(*p, t)
-        m = math.hypot(dx, dy) or 1
-        nx, ny = -dy / m, dx / m
-        hw = w / 2 * (1 + wobble * math.sin(2 * math.pi * (1.3 * t + phase)))
-        left.append((x + nx * hw, y + ny * hw))
-        right.append((x - nx * hw, y - ny * hw))
-        for k, f in enumerate((-0.42, 0.36)):
-            fib[k].append((x + nx * hw * f, y + ny * hw * f))
-    poly = lambda pts: "M" + " L".join(f"{a:.1f},{b:.1f}" for a, b in pts)
-    return poly(left + right[::-1]) + "Z", [poly(f) for f in fib]
-
-
-def _scar_network(bands):
-    """Every band's dark edge first, then every pale fill, then the fibres, so where bands cross
-    they merge into one continuous septum instead of one tube passing over another."""
-    shapes = [_ribbon(p, w, wob, ph) for p, w, wob, ph in bands]
-    return ("".join(f'<path d="{o}" fill="{SCAR_EDGE}" stroke="{SCAR_EDGE}" stroke-width="3" stroke-linejoin="round"/>'
-                    for o, _ in shapes)
-            + "".join(f'<path d="{o}" fill="{SCAR}"/>' for o, _ in shapes)
-            + "".join(f'<path d="{f}" fill="none" stroke="{SCAR_FIBRE}" stroke-width=".8" stroke-linecap="round"/>'
-                      for _, fs in shapes for f in fs))
-
-
-def sw_scar():
-    """Key swatch: a short band with the same edge, fill and fibres as the art (round ends, as it is not clipped)."""
-    d = "M-11,2.5 C-5,-3.5 4,4 11,-2.5"
-    return (f'<path d="{d}" fill="none" stroke="{SCAR_EDGE}" stroke-width="9" stroke-linecap="round"/>'
-            f'<path d="{d}" fill="none" stroke="{SCAR}" stroke-width="6" stroke-linecap="round"/>'
-            f'<path d="M-9.5,0.6 C-4.5,-4.3 3.5,2.2 9.5,-3.6" fill="none" stroke="{SCAR_FIBRE}" stroke-width=".8" stroke-linecap="round"/>'
-            f'<path d="M-9.5,4.0 C-4.5,-0.6 4.5,5.6 9.5,0.6" fill="none" stroke="{SCAR_FIBRE}" stroke-width=".8" stroke-linecap="round"/>')
+def _immune_foci(cx, cy, r, drops, nucs):
+    out, placed = [], []
+    for ix, iy in IMM_FOCI:
+        x, y = cx + ix, cy + iy
+        assert math.hypot(ix, iy) <= r - IMM_R - 2.9, "immune cell outside the close-up"
+        assert all(math.hypot(x - a, y - b) >= rd + IMM_R + 1 for a, b, rd in drops), "immune cell on fat"
+        assert all(math.hypot(x - a, y - b) >= rn + IMM_R + 1.2 for a, b, rn in nucs), "immune cell on a nucleus"
+        assert all(math.hypot(x - a, y - b) >= IMM_GAP for a, b in placed), "immune cells stacked"
+        placed.append((x, y))
+        out.append(sw_immune(IMM_R, x, y))
+    return "".join(out)
 
 
 def tissue(cx, cy, r, stage):
-    """Magnified liver tissue: a honeycomb of liver cells, then fat, immune cells, scar."""
+    """Magnified liver tissue: a honeycomb of liver cells, then fat and immune cells.
+    Stage 3 (scarring) has its own nodular layout, see _tissue_scarred."""
+    if stage == 3:
+        return _tissue_scarred(cx, cy, r)
     rnd = random.Random(2026 + stage)
     out = [f'<clipPath id="fl-tc{stage}"><circle cx="{cx}" cy="{cy}" r="{r}"/></clipPath>',
            f'<g clip-path="url(#fl-tc{stage})"><rect x="{cx - r}" y="{cy - r}" width="{2 * r}" height="{2 * r}" fill="{TISSUE_BG}"/>']
@@ -287,42 +329,233 @@ def tissue(cx, cy, r, stage):
             px, py = cx + gx * dx + (dx / 2 if gy % 2 else 0), cy + gy * dy
             if math.hypot(px - cx, py - cy) < r + cr:
                 cells.append((px, py))
-    p_fat = {0: 0, 1: 0.66, 2: 0.5, 3: 0.2}[stage]
+    p_fat = {0: 0, 1: 0.66, 2: 0.5}[stage]
+    drops, nucs = [], []
     for px, py in cells:
         out.append(f'<polygon points="{_hex(px, py, cr)}" fill="{CELL}" stroke="{CELL_EDGE}" stroke-width="1.6"/>')
         if rnd.random() < p_fat:
-            big = rnd.uniform(6.6, 9.4) if stage < 3 else rnd.uniform(4.6, 6.8)
+            big = rnd.uniform(6.6, 9.4)
             fx, fy = px + rnd.uniform(-1, 1), py + rnd.uniform(-1, 1)
             out.append(sw_fat(big, fx, fy))
+            drops.append((fx, fy, big))
             a = rnd.uniform(0, 2 * math.pi)       # the nucleus is squeezed to the cell's edge
             nx, ny = px + 8.6 * math.cos(a), py + 8.6 * math.sin(a)
             out.append(f'<ellipse cx="{nx:.1f}" cy="{ny:.1f}" rx="2.7" ry="1.7" fill="{NUC}" '
                        f'transform="rotate({math.degrees(a) + 90:.0f} {nx:.1f} {ny:.1f})"/>')
+            nucs.append((nx, ny, 2.7))
         else:
             out.append(f'<circle cx="{px:.1f}" cy="{py:.1f}" r="3.6" fill="{NUC}"/>')
+            nucs.append((px, py, 3.6))
             if stage in (1, 2) and rnd.random() < 0.55:   # a few small droplets beside the nucleus
                 a = rnd.uniform(0, 2 * math.pi)
-                out.append(sw_fat(rnd.uniform(2.4, 3.4), px + 6.4 * math.cos(a), py + 6.4 * math.sin(a)))
-    if stage == 3:   # bridging bands of scar tissue cut the field into nodules (ends run past the clip)
-        o = lambda dx, dy: (cx + dx, cy + dy)
-        out.append(_scar_network([
-            ((o(-64, -22), o(-30, -42), o(8, -2), o(64, -24)), 7.4, 0.16, 0.0),
-            ((o(-64, 24), o(-26, 8), o(16, 42), o(64, 20)), 7.4, 0.16, 0.37),
-            ((o(-8, -64), o(-22, -26), o(18, 14), o(2, 64)), 7.4, 0.16, 0.71)]))
-    if stage >= 2:   # immune cells gather in small clusters (inflammation)
-        spots = ([(-22, -15, 4), (21, 12, 4), (3, -33, 3), (-11, 31, 3)] if stage == 2
-                 else [(-24, -21, 2), (27, -12, 2), (-14, 22, 2)])
-        placed = []
-        for sx, sy, n in spots:
-            for _ in range(n):
-                for _try in range(60):
-                    ix, iy = cx + sx + rnd.uniform(-13, 13), cy + sy + rnd.uniform(-11, 11)
-                    # a free spot only: whole ring inside the circle, never on top of another ring
-                    if (math.hypot(ix - cx, iy - cy) <= r - IMM_R - 2.9
-                            and all(math.hypot(ix - qx, iy - qy) >= IMM_GAP for qx, qy in placed)):
-                        placed.append((ix, iy))
-                        out.append(sw_immune(IMM_R, ix, iy))
-                        break                 # no free spot after 60 tries: skip this cell
+                rs = rnd.uniform(2.4, 3.4)
+                sx, sy = px + 6.4 * math.cos(a), py + 6.4 * math.sin(a)
+                out.append(sw_fat(rs, sx, sy))
+                drops.append((sx, sy, rs))
+    if stage == 2:
+        out.append(_immune_foci(cx, cy, r, drops, nucs))
+    out.append("</g>")
+    out.append(f'<circle cx="{cx}" cy="{cy}" r="{r + 2.2}" fill="none" stroke="#FFFFFF" stroke-width="2.4"/>')
+    out.append(f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="none" stroke="#2F2222" stroke-width="2.6"/>')
+    return "".join(out)
+
+
+# ---- close-up 4: rounded nodules ringed by scar
+SCAR_SEEDS = [(-6, 0), (22, -34), (40, -2), (16, 38), (-30, 30), (-36, -24)]   # one nodule each, centre first
+SCAR_WIDTH = (6, 11)          # septum width between two nodules, drawn per pair
+SCAR_CR = 10.5                # liver cells in the nodules (a touch smaller, so each nodule holds more)
+
+
+def _clip_half(poly, nx, ny, c):
+    """The part of a polygon where nx*x + ny*y <= c (Sutherland-Hodgman)."""
+    out = []
+    for i in range(len(poly)):
+        a, b = poly[i], poly[(i + 1) % len(poly)]
+        da, db = nx * a[0] + ny * a[1] - c, nx * b[0] + ny * b[1] - c
+        if da <= 0:
+            out.append(a)
+        if (da < 0) != (db < 0) and da != db:
+            t = da / (da - db)
+            out.append((a[0] + t * (b[0] - a[0]), a[1] + t * (b[1] - a[1])))
+    return out
+
+
+def _voronoi(seeds, widths, reach):
+    """Each seed's Voronoi cell inside a circle of radius `reach`, pulled back from every neighbour by
+    half the septum width between them (widths[(i, j)], 0 when absent)."""
+    base = [(reach * math.cos(math.pi * k / 36), reach * math.sin(math.pi * k / 36)) for k in range(72)]
+    cells = []
+    for i, s in enumerate(seeds):
+        poly = base
+        for j, t in enumerate(seeds):
+            if i != j:
+                m = math.hypot(t[0] - s[0], t[1] - s[1])
+                ux, uy = (t[0] - s[0]) / m, (t[1] - s[1]) / m
+                mx, my = (s[0] + t[0]) / 2, (s[1] + t[1]) / 2
+                poly = _clip_half(poly, ux, uy, ux * mx + uy * my - widths.get((min(i, j), max(i, j)), 0) / 2)
+        cells.append(poly)
+    return cells
+
+
+def _rounded(poly, rho, step=1.2):
+    """Dense outline of a convex polygon whose corners are rounded (quadratic, about radius rho)."""
+    n, pts = len(poly), []
+    for i in range(n):
+        p0, p1, p2 = poly[i - 1], poly[i], poly[(i + 1) % n]
+        l1, l2 = math.hypot(p1[0] - p0[0], p1[1] - p0[1]), math.hypot(p2[0] - p1[0], p2[1] - p1[1])
+        if l1 < 1e-6 or l2 < 1e-6:
+            continue
+        t1, t2 = min(rho / l1, 0.5), min(rho / l2, 0.5)
+        a = (p1[0] + (p0[0] - p1[0]) * t1, p1[1] + (p0[1] - p1[1]) * t1)
+        b = (p1[0] + (p2[0] - p1[0]) * t2, p1[1] + (p2[1] - p1[1]) * t2)
+        k = max(3, int((l1 * t1 + l2 * t2) / step))
+        for s in range(k):
+            u = s / k
+            pts.append(((1 - u) ** 2 * a[0] + 2 * (1 - u) * u * p1[0] + u * u * b[0],
+                        (1 - u) ** 2 * a[1] + 2 * (1 - u) * u * p1[1] + u * u * b[1]))
+        a2 = (p2[0] + (p1[0] - p2[0]) * t2, p2[1] + (p1[1] - p2[1]) * t2)   # the next corner's start
+        k = max(1, int(math.hypot(a2[0] - b[0], a2[1] - b[1]) / step))
+        pts += [(b[0] + (a2[0] - b[0]) * s / k, b[1] + (a2[1] - b[1]) * s / k) for s in range(k)]
+    return pts
+
+
+def _wobble(pts, amp, rnd):
+    """Push each outline point along its outward normal by a smooth random wave, so nodule edges
+    (and the scar between them) swell and thin a little like real septa."""
+    n = len(pts)
+    ph1, ph2 = rnd.uniform(0, 6.28), rnd.uniform(0, 6.28)
+    f1, f2 = rnd.choice([3, 4, 5]), rnd.choice([7, 8, 9])
+    mx, my = sum(p[0] for p in pts) / n, sum(p[1] for p in pts) / n
+    out = []
+    for i, (x, y) in enumerate(pts):
+        a, b = pts[i - 1], pts[(i + 1) % n]
+        tx, ty = b[0] - a[0], b[1] - a[1]
+        m = math.hypot(tx, ty) or 1
+        nx, ny = ty / m, -tx / m
+        if (x - mx) * nx + (y - my) * ny < 0:
+            nx, ny = -nx, -ny
+        s = i / n * 2 * math.pi
+        w = amp * (0.7 * math.sin(f1 * s + ph1) + 0.3 * math.sin(f2 * s + ph2))
+        out.append((x + nx * w, y + ny * w))
+    return out
+
+
+def _inside(poly, x, y):
+    c = False
+    for i in range(len(poly)):
+        (x1, y1), (x2, y2) = poly[i], poly[(i + 1) % len(poly)]
+        if (y1 > y) != (y2 > y) and x < x1 + (y - y1) * (x2 - x1) / (y2 - y1):
+            c = not c
+    return c
+
+
+def _seg_in_circle(a, b, rr):
+    """The part of segment a-b inside a circle of radius rr round the origin, or None."""
+    dx, dy = b[0] - a[0], b[1] - a[1]
+    qa, qb, qc = dx * dx + dy * dy, 2 * (a[0] * dx + a[1] * dy), a[0] ** 2 + a[1] ** 2 - rr * rr
+    disc = qb * qb - 4 * qa * qc
+    if qa < 1e-9 or disc <= 0:
+        return None
+    t0, t1 = max(0.0, (-qb - math.sqrt(disc)) / (2 * qa)), min(1.0, (-qb + math.sqrt(disc)) / (2 * qa))
+    if t1 - t0 < 1e-6:
+        return None
+    return (a[0] + dx * t0, a[1] + dy * t0), (a[0] + dx * t1, a[1] + dy * t1)
+
+
+def _tissue_scarred(cx, cy, r):
+    """Close-up 4 (cirrhosis): rounded nodules of liver cells walled off by scar.  Six seeds make a Voronoi
+    layout; each nodule is its seed's cell pulled back by half the septum width on every side (6 to 11
+    units, per pair), its corners rounded and its edge given a gentle wobble.  Where three nodules meet
+    the scar forks.  Each nodule has its own tilted cell grid, so cell rows never run on across the scar.
+    A few immune cells sit on the scar's edge (inflammation at the border)."""
+    wr = random.Random(5)
+    n = len(SCAR_SEEDS)
+    widths = {(i, j): wr.uniform(*SCAR_WIDTH) for i in range(n) for j in range(i + 1, n)}
+    rnd = random.Random(4)
+    nodules = _voronoi(SCAR_SEEDS, widths, r + 30)
+    plain = _voronoi(SCAR_SEEDS, {}, r + 30)
+    out = [f'<clipPath id="fl-tc3"><circle cx="{cx}" cy="{cy}" r="{r}"/></clipPath>',
+           f'<g clip-path="url(#fl-tc3)"><rect x="{cx - r}" y="{cy - r}" width="{2 * r}" height="{2 * r}" fill="{SCAR}"/>']
+    # collagen fibres: two faint strands along every septum centre line (the plain Voronoi edges),
+    # trimmed short of the junctions so strands from different septa do not cross there
+    for poly in plain:
+        for k in range(len(poly)):
+            a, b = poly[k], poly[(k + 1) % len(poly)]
+            if math.hypot(*a) > r + 25 and math.hypot(*b) > r + 25:
+                continue                       # part of the outer frame, not a septum
+            tx, ty = b[0] - a[0], b[1] - a[1]
+            m = math.hypot(tx, ty) or 1
+            ux, uy, nx, ny = tx / m, ty / m, -ty / m, tx / m
+            a, b = (a[0] + ux * 3.5, a[1] + uy * 3.5), (b[0] - ux * 3.5, b[1] - uy * 3.5)
+            for off in (-1.6, 1.4):
+                out.append(f'<path d="M{cx + a[0] + nx * off:.1f},{cy + a[1] + ny * off:.1f} '
+                           f'L{cx + b[0] + nx * off:.1f},{cy + b[1] + ny * off:.1f}" stroke="{SCAR_FIBRE}" '
+                           'stroke-width=".8" fill="none" stroke-linecap="round"/>')
+    drops, nucs, rims = [], [], []
+    ddx, ddy = SCAR_CR * math.sqrt(3), SCAR_CR * 1.5
+    for i, poly in enumerate(nodules):
+        rim = [(cx + x, cy + y) for x, y in _wobble(_rounded(poly, 7), 1.1, rnd)]
+        rims.append(rim)
+        d = "M" + " L".join(f"{x:.1f},{y:.1f}" for x, y in rim) + "Z"
+        out.append(f'<clipPath id="fl-nod{i}"><path d="{d}"/></clipPath><g clip-path="url(#fl-nod{i})">'
+                   f'<path d="{d}" fill="{TISSUE_BG}"/>')
+        rot = rnd.uniform(-25, 25)
+        ox, oy = rnd.uniform(0, 2 * SCAR_CR), rnd.uniform(0, 2 * SCAR_CR)
+        ca, sa = math.cos(math.radians(rot)), math.sin(math.radians(rot))
+        sx, sy = cx + SCAR_SEEDS[i][0], cy + SCAR_SEEDS[i][1]
+        for gy in range(-6, 7):
+            for gx in range(-6, 7):
+                lx, ly = gx * ddx + (ddx / 2 if gy % 2 else 0) + ox, gy * ddy + oy
+                px, py = sx + lx * ca - ly * sa, sy + lx * sa + ly * ca
+                edge = min(math.hypot(px - q[0], py - q[1]) for q in rim)
+                inside = _inside(rim, px, py)
+                if not inside and edge > SCAR_CR:
+                    continue
+                out.append(f'<polygon points="{_hex(px, py, SCAR_CR, rot)}" fill="{CELL}" stroke="{CELL_EDGE}" stroke-width="1.5"/>')
+                if rnd.random() < 0.18:
+                    big = rnd.uniform(4.2, 6.0)
+                    fx, fy = px + rnd.uniform(-1, 1), py + rnd.uniform(-1, 1)
+                    a = rnd.uniform(0, 2 * math.pi)
+                    if inside and edge >= big + 1.5:      # fat only where the whole droplet fits in the nodule
+                        out.append(sw_fat(big, fx, fy))
+                        drops.append((fx, fy, big))
+                        nx, ny = px + 7.4 * math.cos(a), py + 7.4 * math.sin(a)
+                        out.append(f'<ellipse cx="{nx:.1f}" cy="{ny:.1f}" rx="2.4" ry="1.5" fill="{NUC}" '
+                                   f'transform="rotate({math.degrees(a) + 90:.0f} {nx:.1f} {ny:.1f})"/>')
+                        nucs.append((nx, ny, 2.4))
+                        continue
+                out.append(f'<circle cx="{px:.1f}" cy="{py:.1f}" r="3.2" fill="{NUC}"/>')
+                nucs.append((px, py, 3.2))
+        out.append("</g>")
+        out.append(f'<path d="{d}" fill="none" stroke="{SCAR_EDGE}" stroke-width="1.6" stroke-linejoin="round"/>')
+    # immune cells on the scar's edge: the middle of each septum inside the view, moved onto one
+    # nodule's rim, kept clear of fat, nuclei, each other and the circle's edge
+    placed, side = [], 0
+    for i in range(n):
+        for j in range(i + 1, n):
+            si, sj = SCAR_SEEDS[i], SCAR_SEEDS[j]
+            m = math.hypot(sj[0] - si[0], sj[1] - si[1])
+            ux, uy = (sj[0] - si[0]) / m, (sj[1] - si[1]) / m
+            mx, my = (si[0] + sj[0]) / 2, (si[1] + sj[1]) / 2
+            on = [v for v in plain[i] if abs((v[0] - mx) * ux + (v[1] - my) * uy) < 1e-6]
+            if len(on) < 2:
+                continue                       # not neighbours
+            seg = _seg_in_circle(on[0], on[1], r - IMM_R - 6)
+            if not seg:
+                continue
+            (ax, ay), (bx, by) = seg
+            k = widths[(i, j)] / 2 * (1 if side % 2 else -1)
+            x, y = cx + (ax + bx) / 2 + ux * k, cy + (ay + by) / 2 + uy * k
+            side += 1
+            if (all(math.hypot(x - a, y - b) >= rd + IMM_R + 1 for a, b, rd in drops)
+                    and all(math.hypot(x - a, y - b) >= rn + IMM_R + 0.9 for a, b, rn in nucs)
+                    and all(math.hypot(x - a, y - b) >= 2 * IMM_GAP for a, b in placed)):
+                placed.append((x, y))
+                out.append(sw_immune(IMM_R, x, y))
+            if len(placed) == 5:
+                break
+        if len(placed) == 5:
+            break
     out.append("</g>")
     out.append(f'<circle cx="{cx}" cy="{cy}" r="{r + 2.2}" fill="none" stroke="#FFFFFF" stroke-width="2.4"/>')
     out.append(f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="none" stroke="#2F2222" stroke-width="2.6"/>')
@@ -399,10 +632,10 @@ def _hard_bracket(a, b):
 
 
 def _severity_row(y):
-    """LEAST SEVERE ====gradient arrow====> MOST SEVERE, across the top of the diagram."""
+    """LEAST SEVERE ====gradient arrow====> MOST SEVERE, across the top of the diagram, on the shared margin."""
     fs, ls = 12.5, 0.8
     wl, wr = tw("LEAST SEVERE", fs, 800, ls), tw("MOST SEVERE", fs, 800, ls)
-    m, gap = 14, 12
+    m, gap = EDGE, 12
     x0, x1 = m + wl + gap, W - m - wr - gap
     h, hh = 10, 9.5          # bar thickness, arrowhead half-height
     bar = (f'<path d="M{x0 + h / 2:.1f},{y - h / 2} H{x1 - 20:.1f} V{y - hh} L{x1:.1f},{y} L{x1 - 20:.1f},{y + hh} '
@@ -426,21 +659,45 @@ def _stage_label(i, cx):
             + T(cx, 73, sub, 11.5, 600, INK2, "middle", italic=True))
 
 
+# ---- the key: every swatch sits on a small dark tissue chip, exactly as it looks in the close-ups
+CHIP_W, CHIP_H = 26, 19
+
+
+def _chip(inner, clip_id=None):
+    x, y = -CHIP_W / 2, -CHIP_H / 2
+    rect = f'<rect x="{x}" y="{y}" width="{CHIP_W}" height="{CHIP_H}" rx="4" fill="{TISSUE_BG}"/>'
+    if not clip_id:
+        return rect + inner
+    return (f'<clipPath id="{clip_id}"><rect x="{x}" y="{y}" width="{CHIP_W}" height="{CHIP_H}" rx="4"/></clipPath>'
+            + rect + f'<g clip-path="url(#{clip_id})">{inner}</g>')
+
+
+def sw_scar():
+    """Key swatch: a straight piece of septum as wide as the art's bands, with the same pale fill,
+    dark edges (the nodule rims) and two fibre strands, cut off by its chip."""
+    hw = 3.9
+    band = (f'<g transform="rotate(-26)"><rect x="-22" y="{-hw}" width="44" height="{2 * hw}" fill="{SCAR}"/>'
+            f'<path d="M-22,{-hw} H22 M-22,{hw} H22" stroke="{SCAR_EDGE}" stroke-width="1.6"/>'
+            f'<path d="M-22,-1.6 H22 M-22,1.4 H22" stroke="{SCAR_FIBRE}" stroke-width=".8"/></g>')
+    return _chip(band, "fl-kscar")
+
+
 def _key(y):
     """KEY to everything drawn inside the magnified circles (same swatch code as the art)."""
-    # (swatch, half-width of the swatch incl. stroke, label)
-    items = [(sw_cell(), 9.5, "Liver cell"), (sw_fat(), 7, "Fat droplet"),
-             (sw_immune(), 6, "Immune cell (inflammation)"), (sw_scar(), 16, "Scar tissue")]
-    x0, x1, h = 8, W - 8, KEY_H
+    hw = CHIP_W / 2
+    items = [(_chip(sw_cell(7.4)), "Liver cell (pink = nucleus)"), (_chip(sw_fat(5.8)), "Fat droplet"),
+             (_chip(sw_immune(4.6)), "Immune cell"), (sw_scar(), "Scar tissue")]
+    x0, x1, h = EDGE, W - EDGE, KEY_H
     title, fs, base = "KEY TO THE CLOSE-UPS", 11.5, y + h / 2 + 4.1
     tx = x0 + 14
     start = tx + tw(title, 10.5, 800, 1.2) + 24
-    widths = [2 * hw + 7 + tw(lab, fs, 600) for _, hw, lab in items]
+    widths = [2 * hw + 7 + tw(lab, fs, 600) for _, lab in items]
     gap = (x1 - 16 - start - sum(widths)) / (len(items) - 1)
+    assert gap >= 14, "key too crowded"
     out = [f'<rect x="{x0}" y="{y}" width="{x1 - x0}" height="{h}" rx="8" fill="#FFFFFF" stroke="#D9D1CD" stroke-width="1.2"/>',
            T(tx, base - 0.2, title, 10.5, 800, INK, ls=1.2)]
     x = start
-    for (sw, hw, lab), wd in zip(items, widths):
+    for (sw, lab), wd in zip(items, widths):
         out.append(f'<g transform="translate({x + hw:.1f},{y + h / 2})">{sw}</g>')
         out.append(T(f"{x + 2 * hw + 7:.1f}", base, lab, fs, 600, INK))
         x += wd + gap
@@ -456,11 +713,11 @@ def _cone_half(y):
 
 
 def _zoom_tag(cx, y):
-    """'Zoomed in' tag sitting inside the first zoom beam, so a reader knows the circles are
-    close-ups of the liver.  Checked: the pill stays inside the beam (see the assert)."""
-    lab, fs = "Zoomed in", 10.2
+    """'Close-up' tag inside the first zoom beam (the key's own word), so a reader knows the circles are
+    close-ups of the liver.  Checked: the pill stays inside the beam with room to spare (see the assert)."""
+    lab, fs = "Close-up", 10.2
     w, h = tw(lab, fs, 700) + 9, 14.5
-    assert w / 2 + 3 <= _cone_half(y), "zoom tag too wide for the beam"
+    assert w / 2 + 6 <= _cone_half(y), "zoom tag too wide for the beam"
     return (f'<rect x="{cx - w / 2:.1f}" y="{y - h / 2:.1f}" width="{w:.1f}" height="{h}" rx="{h / 2}" '
             'fill="#FFFFFF" stroke="#B9AFA9" stroke-width=".9"/>'
             + T(cx, y + 3.7, lab, fs, 700, INK2, "middle"))
@@ -470,7 +727,10 @@ def art_progression(t):
     defs = ['<defs>',
             f'<clipPath id="fl-lclip"><path d="{LIVER_D}"/></clipPath>',
             '<linearGradient id="fl-band" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#E7F0E1"/>'
-            '<stop offset=".5" stop-color="#F6F0E4"/><stop offset="1" stop-color="#F8E0DB"/></linearGradient>']
+            '<stop offset=".5" stop-color="#F6F0E4"/><stop offset="1" stop-color="#F8E0DB"/></linearGradient>',
+            # a cirrhotic nodule: lit from the upper left, darker at its rim
+            '<radialGradient id="fl-nod" cx=".4" cy=".36" r=".72"><stop offset="0" stop-color="#D9B994"/>'
+            '<stop offset=".7" stop-color="#B48C66"/><stop offset="1" stop-color="#9C7652"/></radialGradient>']
     for i, (c1, c2) in enumerate(LIVER_FILL):
         defs.append(f'<linearGradient id="fl-lv{i}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="{c1}"/>'
                     f'<stop offset="1" stop-color="{c2}"/></linearGradient>')
@@ -482,7 +742,9 @@ def art_progression(t):
         out.append(_stage_label(i, cx))
     top, bot = BAND
     mid = (top + bot) / 2
-    out.append(f'<path d="M16,{top} H696 L756,{mid} L696,{bot} H16 Q4,{bot} 4,{bot - 12} V{top + 12} Q4,{top} 16,{top} Z" '
+    e = EDGE
+    out.append(f'<path d="M{e + 12},{top} H{W - e - 60} L{W - e},{mid} L{W - e - 60},{bot} H{e + 12} '
+               f'Q{e},{bot} {e},{bot - 12} V{top + 12} Q{e},{top} {e + 12},{top} Z" '
                'fill="url(#fl-band)" stroke="#E2D8D2" stroke-width="1"/>')
     for i, cx in enumerate(XS):
         out.append(liver(cx, LIVER_BOT, LIVER_S * STAGES[i][2], i))
@@ -510,16 +772,37 @@ def art_progression(t):
 
 
 # ============================================================== blocks under the art
-RISKS = [  # icons kept from the first draft; each factor is named in [AASLD23]
-    ("sugar", "Sugary drinks,<br>added sugar"),
+RISKS = [  # each factor is named in [AASLD23]
+    ("soda", "Sugary drinks,<br>added sugar"),
     ("meter", "Insulin resistance<br>or diabetes"),            # T2DM: "the most impactful risk factor"
     ("waist", "Weight carried<br>at the belly"),
     ("heartpulse", "High blood<br>pressure"),
     ("tube", "High blood fats<br>(triglycerides)"),
-    ("calendar", "PCOS (polycystic<br>ovary syndrome)"),       # 2- to 4-fold higher MASLD prevalence
+    ("ovaries", "PCOS (polycystic<br>ovary syndrome)"),        # 2- to 4-fold higher MASLD prevalence
     ("dna", "Family history<br>and genes"),                     # PNPLA3; relatives of NASH cirrhosis
-    ("gut", "Gut imbalance<br>(dysbiosis)"),                    # [AASLD23]: products from the gut microbiome "may also contribute"
+    ("gut", "Gut imbalance<br>(being studied)"),                # [AASLD23]: gut microbiome products "may also contribute"
 ]
+
+# Two glyphs drawn here in the kit's line style (64-unit grid, round caps, stroke 2.8 like the rest of the row)
+_RISK_ICONS = {
+    # a soda cup with a dome lid and a straw: "sugary drinks" at a glance (the kit's sugar cube read as a box)
+    "soda": ('<path d="M18 25h28"/><path d="M21 25a11 6 0 0 1 22 0"/>'
+             '<path d="M20 25l3.6 29.2a3 3 0 0 0 3 2.6h10.8a3 3 0 0 0 3-2.6L44 25"/>'
+             '<path d="M34 19.2 37.6 7H45"/><path d="M21.5 37h21"/>'),
+    # a uterus with its tubes and ovaries (PCOS), in place of the abstract calendar
+    "ovaries": ('<path d="M25 21c0-4 14-4 14 0 0 9-3 15-4.6 19.5V50h-4.8V40.5C28 36 25 30 25 21z"/>'
+                '<path d="M25.5 21.5C20 15 13 15 10 21"/><path d="M38.5 21.5C44 15 51 15 54 21"/>'
+                '<ellipse cx="12.5" cy="29" rx="5.5" ry="4.3"/><ellipse cx="51.5" cy="29" rx="5.5" ry="4.3"/>'),
+}
+
+
+def _risk_icon(name, size="0.33in", sw=2.8):
+    if name not in _RISK_ICONS:
+        return icon(name, size, sw=sw)
+    return (f'<svg class="ic" viewBox="0 0 64 64" style="width:{size};height:{size};color:currentColor" fill="none" '
+            f'stroke="currentColor" stroke-width="{sw}" stroke-linecap="round" stroke-linejoin="round" '
+            f'aria-hidden="true">{_RISK_ICONS[name]}</svg>')
+
 
 _STEP_ICONS = {
     "vial": ('<g transform="rotate(20 32 32)"><path d="M22 7h20"/><path d="M26.5 7v39a5.5 5.5 0 0 0 11 0V7"/>'
@@ -541,28 +824,29 @@ _ARROW = ('<svg viewBox="0 0 12 22" style="width:9px;height:17px" aria-hidden="t
           'fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>')
 
 # The three checks, in the order AASLD 2023 lays them out for primary care [AASLD23]:
-#  - serum aminotransferases "can be normal in patients with diabetes, NASH, and advanced hepatic fibrosis"
+#  - "Serum AST levels are often used clinically to identify patients with liver disease but can be normal
+#    in patients with diabetes, NASH, and advanced hepatic fibrosis" (hence "normal levels do not rule out")
 #  - "normal values provided by most laboratories are higher than what should be considered normal in
 #    NAFLD, in which a true normal alanine aminotransferase (ALT) ranges from 29 to 33 U/L in men and
-#    from 19 to 25 U/L in women" (an upper limit, hence "Healthy ALT limit" on the card)
+#    from 19 to 25 U/L in women": upper limits, so the dots give the top of each range ("about ... or less")
 #  - FIB-4 is "based upon age, ALT, AST, and platelet count"; low risk is "FIB-4 <1.3"
 #  - FIB-4 >= 1.3 -> VCTE (eg, FibroScan) favoured as the secondary test in primary care; it measures
 #    liver stiffness, and its CAP reading "provides a point-of-care semiquantitative assessment of
 #    hepatic steatosis but does not accurately quantify" liver fat (hence "estimates")
 #  - VCTE "LSM <8 kPa can be used to rule out advanced fibrosis"; intermediate or high risk on the
-#    secondary test -> "referred to specialty care"
+#    secondary test -> "referred to specialty care" (red: the most serious result on the page)
 CHECKS = [
     ("vial", "Liver enzymes (ALT, AST)",
      "A routine blood test. High levels can mean the liver is irritated, but normal levels do not rule out "
      "fatty liver.",
-     [(SEV[0], "Healthy ALT limit, women: 19 to 25 U/L"), (SEV[0], "Healthy ALT limit, men: 29 to 33 U/L")]),
+     [(SEV[0], "Healthy ALT, women: about 25 U/L or less"), (SEV[0], "Healthy ALT, men: about 33 U/L or less")]),
     ("gauge", "FIB-4 score",
      "Worked out from your age and routine labs (ALT, AST, platelets) to estimate the risk of advanced scarring.",
-     [(SEV[0], "Under 1.3: low risk"), (SEV[1], "1.3 or higher: step 3 is next")]),
+     [(SEV[0], "Under 1.3: low risk"), (SEV[1], "1.3 or higher: a FibroScan is next")]),
     ("probe", "FibroScan (elastography)",
      "A no-needle scan that measures liver stiffness (scarring) and estimates liver fat. "
      "The next step if FIB-4 is 1.3 or higher.",
-     [(SEV[0], "Under 8 kPa: low risk"), (SEV[1], "8 kPa or more: see a liver specialist")]),
+     [(SEV[0], "Under 8 kPa: low risk"), (SEV[3], "8 kPa or more: see a liver specialist")]),
 ]
 
 
@@ -571,7 +855,7 @@ def _ed(x, ed):
 
 
 def risk_strip():
-    cells = "".join(f'<div class="flv-rf"><span class="flv-disc">{icon(ic, "0.33in", sw=2.8)}</span>'
+    cells = "".join(f'<div class="flv-rf"><span class="flv-disc">{_risk_icon(ic)}</span>'
                     f'<span class="flv-rl">{lab}</span></div>' for ic, lab in RISKS)
     return f'<div class="flv-risk">{cells}</div>'
 
@@ -636,6 +920,80 @@ CSS = r"""
 .flv-foot small{font-size:7.2pt;color:#6A747B;white-space:nowrap}
 """
 
+# ============================================================== back page
+# Lifestyle: guideline steps [EASL24][AASLD23], plus the protocol's gut-liver angle [MAYFIELD26] (gut barrier,
+# endotoxins; UltraBiotic Prebiotic on the fatty-liver list, Akkermansia in Asher's 2024 launch blast).
+LIFE = [
+    # [EASL24]: "improving diet quality (similar to the Mediterranean dietary pattern), limiting the consumption of
+    # ultra-processed food (rich in sugars and saturated fat) and avoiding sugar-sweetened beverages"; [AASLD23]:
+    # "dietary sugars (eg, fructose, sucrose, and glucose), drive the formation and accumulation of intrahepatic fat"
+    ("plate", "Eat Mediterranean",
+     "Vegetables, beans, olive oil, nuts and fish. Skip sugary drinks and packaged sweets: sugar is easily turned into liver fat."),
+    # [EASL24]: weight loss "should aim at a sustained reduction of >=5% to reduce liver fat, 7-10% to improve
+    # liver inflammation and >=10% to improve fibrosis"
+    ("scale", "Lose 7 to 10 percent",
+     "Losing 5 percent of your weight cuts liver fat. 7 to 10 percent calms inflammation; 10 percent or more can ease scarring."),
+    # [EASL24]/[AASLD23]: ">150 min/week of moderate ... physical activity"; 2 strength days [HHS18];
+    # 10-minute walks after meals lowered after-meal glucose more than one 30-minute walk [REYNOLDS16]
+    ("walk", "Move every day",
+     "150 minutes a week of brisk walking plus 2 strength days. A 10-minute walk after meals blunts the sugar spike."),
+    # [MAYFIELD26] gut barrier and "inflammatory endotoxins"; [AASLD23] gut-microbiome products "may also contribute"
+    ("gut", "Feed your gut",
+     "Fiber and colorful plants feed helpful gut bacteria, like Akkermansia, that help keep the gut lining strong."),
+    # [EASL24]: people with steatotic liver disease "should be discouraged from consuming alcohol"; "All alcohol
+    # consumption should be stopped completely and permanently in individuals with advanced fibrosis or cirrhosis"
+    ("glass", "Go easy on alcohol",
+     "It did not cause this, but alcohol adds to the liver's load. Less is better, and none at all if there is scarring."),
+]
+
+COLS = [
+    # [MAYFIELD26]; label [LABELS] ND1130 via products.d (fl_berberine).  The first driver on the front is insulin
+    # resistance, and berberine is the competitor's first nutrient, so this is the one to start with.
+    {"p": "fl_berberine", "need": "Steady sugar and fat", "needsub": "berberine (as dihydroberberine)", "start": True,
+     "bullets": ["Supports healthy glucose metabolism", "Supports lipid levels already in a normal range"],
+     "dose": "dose_from_db"},
+    # NutriDyn science-team lipotropic; 400 mg artichoke + tangerine peel = the competitor's bergamot + artichoke
+    {"p": "fl_lipo_flow", "need": "Help the liver process fat", "needsub": "artichoke, citrus peel, inositol",
+     "bullets": ["Supports healthy fat metabolism in the liver", "Supports healthy bile flow"], "dose": "dose_from_db"},
+    # [MAYFIELD26]; antioxidant liver-cell support, the stand-in for the competitor's aged black garlic.
+    # Claims stay structure/function: [AASLD23] calls silymarin's effect in NASH "inconclusive".
+    {"p": "fl_milk_thistle", "need": "Protect liver cells", "needsub": "milk thistle (silymarin), NAC",
+     "bullets": ["Antioxidant support for healthy liver function", "Supports the liver's natural detox processes"],
+     "dose": "dose_from_db"},
+    # [MAYFIELD26]; alpha lipoic acid (75 mg + 45 mg R-lipoic) = the competitor's ALA
+    {"p": "fl_mito", "need": "Help cells make energy", "needsub": "alpha lipoic acid, CoQ10, NAC",
+     "bullets": ["Supports energy production in cells", "Promotes healthy antioxidant status"], "dose": "dose_from_db"},
+]
+
+# Medicine-and-nutrient checks for this page's own products.  Pharmacists check interactions and depletions;
+# providers order labs and adjust doses.
+#  - berberine lowers blood sugar [ZHANG08], so it adds to diabetes medicines; it slowed CYP2D6, 2C9 and 3A4 in
+#    people [GUO12]; Berberine Pro label: "If you are ... taking medication, consult your healthcare practitioner"
+#  - Mito Recharge: 250 mcg vitamin K1 per 3 capsules [LABELS ND812]; vitamin K works against warfarin and intake
+#    should stay steady [ODSK]
+#  - statins are safe "across the disease spectrum" [AASLD23] and lower plasma CoQ10 [BANACH15]; Mito Recharge has
+#    100 mg CoQ10 and 100 mg EGCG from green tea extract [LABELS ND812]; take green tea extract with food, stop if
+#    dark urine or yellow skin [USP20]
+RX = {
+    "pharmacy": [
+        "<b>Diabetes medicines:</b> Berberine Pro adds to the sugar-lowering effect of metformin, insulin and "
+        "sulfonylureas, and it slows the liver enzymes that clear some drugs (CYP2D6, 2C9, 3A4). Show {who} your full list.",
+        "<b>Warfarin:</b> Mito Recharge has 250 mcg vitamin K1, which works against warfarin. Take it every day, "
+        "not on and off, and tell {who} before you start or stop it.",
+        "<b>Statins</b> are safe with fatty liver but can lower CoQ10; Mito Recharge already has 100 mg. It also has "
+        "green tea extract: take it with food, and stop if you notice dark urine or yellow skin.",
+    ],
+    "practitioner": [
+        "<b>Diabetes medicines:</b> Berberine Pro adds to the sugar-lowering effect of metformin, insulin and "
+        "sulfonylureas, so {who} may check your blood sugar more often and adjust doses.",
+        "<b>Warfarin:</b> Mito Recharge has 250 mcg vitamin K1, which works against warfarin. {Who} may recheck "
+        "your INR after you start it; then keep the dose the same every day.",
+        "<b>Statins</b> are safe with fatty liver, so keep taking yours; they can lower CoQ10, and Mito Recharge "
+        "already has 100 mg. It also has green tea extract: take it with food, and call {who} about dark urine or "
+        "yellow skin.",
+    ],
+}
+
 SHEET = {
     "slug": "fatty-liver", "code": "ND-CM-201", "theme": "metab", "series": "Metabolic Health Series",
     "order": 4,
@@ -651,25 +1009,10 @@ SHEET = {
               "feel nothing. Caught early, it is often reversible."),
     "front": front,
     "css": CSS,
-    # BACK: unchanged from the first draft (a later pass revises the products).
     "back": {
         "life_title": "Lifestyle Recommendations", "style": "circle",
-        "life": [("plate", "Eat Mediterranean", "Vegetables, lean protein, olive oil, nuts and fish. Cut sugary drinks, juice and refined carbs: they turn into liver fat fastest."),
-                 ("scale", "Lose 7 to 10 percent", "Losing 7 to 10 percent of body weight is the change most tied to clearing liver fat and calming inflammation."),
-                 ("walk", "Move every day", "150 minutes a week of brisk walking plus 2 strength days. A 10-minute walk after meals blunts the sugar spike."),
-                 ("glass", "Go easy on alcohol", "Even though alcohol did not cause it, alcohol adds to the liver's load. Keep it minimal or skip it.")],
-        "cols": [
-            {"p": "berberine", "need": "Steady sugar and fat", "needsub": "berberine", "start": True,
-             "bullets": ["Supports healthy glucose metabolism", "Supports healthy lipid levels already in a normal range"], "dose": "dose_from_db"},
-            {"p": "lipo_flow", "need": "Help the liver process fat", "needsub": "lipotropic nutrients",
-             "bullets": ["Supports normal fat metabolism in the liver", "Supports healthy bile flow"], "dose": "dose_from_db"},
-            {"p": "omega_1000", "need": "Balance fats", "needsub": "omega-3 fatty acids, EPA and DHA",
-             "bullets": ["Supports healthy triglyceride levels", "Supports a healthy inflammatory response"], "dose": "dose_from_db"},
-            {"p": "mito", "need": "Protect cells", "needsub": "alpha lipoic acid, NAC, carnitine",
-             "bullets": ["Antioxidants that work in water and fat", "Supports cellular energy"], "dose": "dose_from_db"},
-        ],
-        "rx": ["<b>Statins:</b> often used alongside. They can lower CoQ10. Ask whether CoQ10 fits.",
-               "<b>Metformin</b> long term can lower B12. Ask for a B12 check once a year.",
-               "<b>Acetaminophen:</b> stay within label limits and never combine it with alcohol."],
+        "life": LIFE,
+        "cols": COLS,
+        "rx": RX,
     },
 }
