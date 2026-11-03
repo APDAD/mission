@@ -6,18 +6,21 @@ FRONT, top to bottom:
     left  "WHERE YOU FEEL IT": a standing figure with the spinal cord and nerves in yellow and
           the "stocking and glove" zones shaded blue (feet first, then hands);
     right "INSIDE ONE NERVE FIBER": a healthy myelinated fiber (signal jumps gap to gap) above a
-          damaged one (frayed coat, thinned and broken fiber, oxidative-stress sparks, extra glucose);
-    one KEY under both halves names every symbol and colour.
+          damaged one (frayed coat, thinned and broken fiber, oxidative-stress sparks, extra glucose,
+          a weak signal that fails);
+    one KEY under both halves names every symbol and colour (seven entries).
   -> "What you may feel" + "Common causes" cards
-  -> "Ask for these checks" (A1c, B12 + MMA, thyroid, yearly foot test) + a get-help-now strip.
-BACK: lifestyle band, five NutriDyn columns (label facts in products.py / products.d/neuropathy.json),
-daily rhythm and three Pharmacist / Provider checks.
+  -> "Ask for these checks" (A1c, B12 + MMA, thyroid, foot test) + a "see someone soon / right away / 911" strip.
+BACK: lifestyle band, five NutriDyn columns (label facts in products.d/neuropathy.json, sheet-local keys),
+daily rhythm and five Pharmacist / Provider checks.
 Every SVG id starts "nrp-" and every CSS class ".nrp", so nothing collides in the all-sheets bundle.
+The back page has no sheet class of its own, so the lifestyle subtitle carries an empty <span class="nrp-bk">
+marker and this sheet's back-page CSS is scoped with .sheet.back:has(.nrp-bk) (front: .sheet.front:has(.nrp)).
 
 SOURCES (each number or fact on the page carries one of these tags in a comment)
-  [NINDS]   NINDS Peripheral Neuropathy fact sheet (2025-05): "more than 20 million people in the
-            United States have been estimated to have some form of peripheral neuropathy";
-            "diabetes is the leading cause of polyneuropathy in the United States".
+  [NINDS]   NINDS Peripheral Neuropathy fact sheet (2025-05): peripheral nerves are the nerves outside the brain
+            and spinal cord; "more than 20 million people in the United States have been estimated to have some
+            form of peripheral neuropathy"; "diabetes is the leading cause of polyneuropathy in the United States".
   [ADA17]   Pop-Busui R et al. Diabetic Neuropathy: a position statement by the American Diabetes
             Association. Diabetes Care 2017;40:136-154. PMID 27999003, doi:10.2337/dc16-2042.
             DSPN in 10-15% of newly diagnosed type 2 diabetes, "rates increasing to 50% after 10 years";
@@ -29,10 +32,11 @@ SOURCES (each number or fact on the page carries one of these tags in a comment)
             "numbness, tingling, poor balance"; "a major contributor to falls"; "the most important
             cause of foot ulceration"; "up to half of the patients may be asymptomatic"; exclude other
             causes with "serum B12, folic acid, thyroid function, complete blood count, metabolic panel,
-            and a serum protein immunoelectrophoresis"; "annual 10-g monofilament testing"; atypical
-            features (rapid onset, asymmetry, motor > sensory) need further work-up; non-diabetic causes
-            table: HIV, hepatitis B, Lyme, CIDP, B12, pyridoxine, thiamine, alcohol, amiodarone,
-            colchicine, vinca alkaloids, platinum, taxanes, arsenic, mercury, hereditary.
+            and a serum protein immunoelectrophoresis"; "annual 10-g monofilament testing" (in diabetes);
+            atypical features (rapid onset, asymmetry, motor > sensory) need further work-up, not an
+            emergency in themselves; non-diabetic causes table: HIV, hepatitis B, Lyme, CIDP, B12,
+            pyridoxine, thiamine, alcohol, amiodarone, colchicine, vinca alkaloids, platinum, taxanes,
+            arsenic, mercury, hereditary.
   [AAN09]   England JD et al. Practice Parameter: evaluation of distal symmetric polyneuropathy: role of
             laboratory and genetic testing. Neurology 2009;72:185-192. PMID 19056666,
             doi:10.1212/01.wnl.0000336370.51010.a1. Highest-yield tests: blood glucose, serum B12 with
@@ -40,14 +44,36 @@ SOURCES (each number or fact on the page carries one of these tags in a comment)
             glucose tolerance test when routine glucose is not diagnostic.
   [ADA26]   American Diabetes Association. Standards of Care in Diabetes-2026: 2. Diagnosis and
             Classification (A1C <5.7% normal, 5.7-6.4% prediabetes, >=6.5% diabetes); 9. Pharmacologic
-            Approaches (B12 monitoring with long-term metformin); 12. Retinopathy, Neuropathy, and Foot
-            Care (PMID 41358886, doi:10.2337/dc26-S012).
+            Approaches (periodic B12 measurement with long-term metformin); 12. Retinopathy, Neuropathy, and
+            Foot Care (PMID 41358886, doi:10.2337/dc26-S012).
   [AROD16]  Aroda VR et al. Long-term metformin use and vitamin B12 deficiency in the DPP Outcomes Study.
-            J Clin Endocrinol Metab 2016;101:1754-61. PMID 26900641, doi:10.1210/jc.2015-3754.
+            J Clin Endocrinol Metab 2016;101:1754-61. PMID 26900641, doi:10.1210/jc.2015-3754
+            (routine B12 testing in metformin users "should be considered").
   [LAM13]   Lam JR et al. PPI and H2 blocker use and vitamin B12 deficiency. JAMA 2013;310:2435-42.
-            PMID 24327038, doi:10.1001/jama.2013.280490.
+            PMID 24327038, doi:10.1001/jama.2013.280490 (association with 2 or more years of use).
+  [BCSH14]  Devalia V et al. Guidelines for the diagnosis and treatment of cobalamin and folate disorders.
+            Br J Haematol 2014;166:496-513. PMID 24942828, doi:10.1111/bjh.12959: serum B12 first-line, plasma
+            MMA second-line; oral therapy suitable at appropriate doses. Supplements raise serum B12, so the
+            sheet asks for the test before B12 Pro or Methyl Complete is started.
   [EFSA23]  EFSA NDA Panel. Tolerable upper intake level for vitamin B6. EFSA J 2023;21:e08006.
             PMID 37207271: excess B6 -> peripheral neuropathy "is well established"; adult UL 12 mg/day.
+  [FDA19]   FDA Safety Communication "UPDATE: The FDA Warns that Biotin May Interfere with Lab Tests"
+            (2019-11-05; first issued 2017-11-28).  [BOWEN19] Bowen R et al. Clin Biochem 2019;74:1-11.
+            PMID 31473202, doi:10.1016/j.clinbiochem.2019.08.012: immunoassays at greatest risk include thyroid
+            and reproductive hormones, cardiac and immunosuppressive-drug tests.
+  [GUO12]   Guo Y et al. Repeated administration of berberine inhibits cytochromes P450 in humans. Eur J Clin
+            Pharmacol 2012;68:213-7. PMID 21870106, doi:10.1007/s00228-011-1108-2 (CYP2D6, 2C9, 3A4 down).
+  [CHAN93]  Chan E. Displacement of bilirubin from albumin by berberine. Biol Neonate 1993;63:201-8.
+            PMID 8513024, doi:10.1159/000243932: berberine "best avoided in jaundiced neonates and pregnant women".
+  [YASU16]  Yasueda A et al. Antioxidant supplements as adjuvant therapy in cancer treatment: a systematic review.
+            Integr Cancer Ther 2016;15:17-39. PMID 26503419, doi:10.1177/1534735415610427 (effect on
+            chemotherapy and radiotherapy unclear, so: ask first).
+  [LABEL]   Nerve Eze and Alpha-Lipoic Acid sell sheets (labels.json): "If you are pregnant, nursing, or taking
+            medication, consult your healthcare practitioner before use."
+  [ASA]     American Stroke Association BE FAST warning signs: sudden numbness or weakness, especially on one
+            side, face drooping, speech difficulty -> call 911.
+  [CFR93]   21 CFR 101.93 (structure/function statements): disclaimer adjacent to each statement or linked to it
+            by a symbol, boxed when not adjacent, in boldface (eCFR blocked in this session; rule as known).
   Product evidence (kept to comments; the back page stays structure/function):
   [HSIEH23] Hsieh RY et al. Nutrients 2023;15:3634. PMID 37630823: oral ALA, 10 RCTs, 1,242 patients,
             dose-related symptom improvement (600-1,800 mg/day).
@@ -59,9 +85,10 @@ SOURCES (each number or fact on the page carries one of these tags in a comment)
   [FONS13]  Fonseca VA et al. Metanx in type 2 diabetes with peripheral neuropathy. Am J Med 2013;126:141-9.
             PMID 23218892: L-methylfolate 3 mg + methylcobalamin 2 mg + P5P 35 mg, 24 weeks, improved symptom
             scores (NTSS-6) and lowered homocysteine vs placebo.
-  Alpha-Lipoic Acid R270 (200 mg, SS ND283) was the planned fifth column, but the only photo on hand
-  (products/img/R270.png) shows the Progressive Professional 60-capsule ALA bottle (P872, panel not found),
-  so Methyl Complete took its place; Nerve Eze + Gluco IR still give 600 mg ALA a day.
+  Product choice: Methyl Complete (1 mg B12 a day, already an oral repletion-level dose [BCSH14]) is for everyone;
+  B12 Pro (5,000 mcg) is marked "if your B12 runs low", after the test.  Alpha-Lipoic Acid R270 (200 mg, SS ND283)
+  was not added: Nerve Eze + Gluco IR already give 600 mg ALA a day, a third ALA product would read as padding,
+  and the only R270 photo on hand shows the Progressive P872 bottle.
 """
 import math
 import os
@@ -105,7 +132,8 @@ def tw(text, size, weight=600, ls=0.0):
 INK, INK2 = "#232B33", "#56616B"
 NERVE, NERVE_HI, NERVE_LO, NERVE_EDGE = "#F2C14E", "#FFE9A6", "#D19A22", "#9C6C0E"   # nerve fiber (axon): yellow
 MY_HI, MY_MID, MY_LO, MY_EDGE = "#FFFFFF", "#F8F2E4", "#E4D8BE", "#AE9F80"         # myelin coat: ivory white
-SIGNAL = "#2E8B57"                         # nerve signal: green arrows
+SIGNAL = "#2E8B57"                         # nerve signal: green arrows and green gap pulses
+FAIL = "#8C959E"                           # signal that fails: grey dashed hop and grey gap dot, red X
 SPARK, SPARK_CORE = "#E0462B", "#FFD34D"   # oxidative stress ("rust"): red spark
 GLU, GLU_EDGE = "#6B6FC2", "#45499A"       # extra blood sugar: purple hexagon (same purple as svgkit.GLUCOSE)
 NUMB = "#3D7FD9"                           # numb or tingling area: blue shading
@@ -117,7 +145,7 @@ W = 760
 TOP = 24                       # card tops (titles sit above, in clear space)
 A_X0, A_X1 = 0, 246            # left card
 B_X0, B_X1 = 258, 760          # right cards
-B_H, GAP = 130, 10             # each fiber card
+B_H, GAP = 125, 10             # each fiber card
 HDR = 24                       # fiber-card header band
 CAP = 24                       # fiber-card caption strip
 A_Y1 = TOP + 2 * B_H + GAP     # bottom of the left card (= bottom of the damaged card)
@@ -244,19 +272,22 @@ def _poly(pts):
     return _spline([(x, y, 1) for x, y in pts], closed=False)
 
 
-# nerve paths on the figure's right side (mirrored for the left), figure units: the spinal cord,
-# one trunk down each arm (branching to thumb and fingers) and down each leg (the sciatic nerve,
-# splitting near the knee into the tibial and peroneal nerves that reach the toes)
+# nerve paths on the figure's right side (mirrored for the left), figure units. The spinal cord; the arm
+# nerves leave the cord at the base of the neck, sweep down under the collarbone to the armpit and run down
+# the inner arm and the middle of the forearm into the palm, then branch to the thumb, to the index and middle
+# fingers and to the ring and little fingers; the leg nerve (sciatic) splits near the knee into the tibial and
+# peroneal nerves that reach the toes. Every centre line keeps at least 1.6 units (stroke half-width + 0.6)
+# inside the body outline (checked by sampling the splines), and the nerve group is clipped to the body too.
 _CORD = [(0, 33), (0, 62), (0, 96), (0, 124)]
-_ARM = [(1.0, 50.5), (12.4, 54.6), (24.6, 61.4), (31.4, 73.5), (34.8, 90), (38.2, 110), (41.8, 128), (45.2, 145.5)]
-_HAND = [[(45.2, 145.5), (48.6, 157), (50.6, 168), (51.0, 175.5)],
-         [(45.2, 145.5), (46.0, 158), (46.4, 170), (46.8, 177.5)],
-         [(46.2, 149.5), (50.4, 155), (53.0, 160.6)],
-         [(45.6, 152), (43.6, 164), (42.6, 172.5)]]
+_ARM = [(1.0, 50.5), (7.4, 54.2), (15.0, 60.0), (22.6, 66.6), (29.0, 73.6), (32.8, 82.4), (34.4, 94.0),
+        (37.0, 110.0), (41.2, 127.0), (45.2, 145.5)]
+_HAND = [[(45.2, 145.5), (47.0, 155.5), (49.4, 165.5), (50.6, 173.4)],     # index and middle fingers
+         [(45.4, 149.5), (45.6, 158.5), (46.6, 169.0)],                    # ring and little fingers
+         [(45.8, 148.6), (49.6, 153.4), (52.8, 157.8)]]                    # thumb
 _LEG = [(0.8, 122), (5.6, 135), (11.8, 151), (15.0, 174), (16.0, 198), (16.2, 216)]
 _TIB = [(16.2, 216), (14.8, 240), (12.6, 264), (10.8, 283), (10.4, 292)]
-_PER = [(16.2, 216), (19.6, 230), (18.0, 252), (15.6, 275), (14.8, 288)]
-_TOES = [[(10.4, 292), (7.6, 297.8)], [(10.4, 292), (11.8, 298.6)], [(14.8, 288), (16.6, 297.4)]]
+_PER = [(16.2, 216), (19.6, 230), (18.0, 252), (15.6, 275), (14.6, 287)]
+_TOES = [[(10.4, 292), (7.6, 297.8)], [(10.4, 292), (11.8, 298.6)], [(14.6, 287), (16.2, 296.6)]]
 
 
 def _nerve(pts, w):
@@ -284,6 +315,7 @@ def figure(cx, top, s):
              f'stroke-width="{0.9 / s:.2f}" stroke-opacity=".75"/>')
     o.append(f'<path d="M0,7.4 V20.4 M-4.2,9.2 C-2.8,11.4 -3,14.2 -5,16.4 M4.2,9.2 C2.8,11.4 3,14.2 5,16.4" fill="none" '
              f'stroke="{NERVE_EDGE}" stroke-width="{0.7 / s:.2f}" stroke-opacity=".5"/>')
+    o.append('<g clip-path="url(#nrp-body)">')            # no nerve can ever leave the body outline
     o.append(_nerve(_CORD, 2.4))
     for side in (1, -1):
         f = (lambda pts: pts) if side == 1 else _mirror
@@ -295,7 +327,7 @@ def figure(cx, top, s):
         o.append(_nerve(f(_PER), 1.0))
         for tpts in _TOES:
             o.append(_nerve(f(tpts), .8))
-    o.append("</g>")
+    o.append("</g></g>")
     return "".join(o)
 
 
@@ -323,8 +355,8 @@ def card_a():
         return "".join(out)
 
     o.append(callout(52.4, 166, 150, 2, ["Then hands,", "like gloves"]))
-    o.append(callout(20.4, 280, 150, 1, ["Feet first,", "like socks"]))
-    o.append(callout(36.6, 92, 160, 0, ["Nerves run from", "the spinal cord", "to your toes and", "fingertips"]))
+    o.append(callout(19.4, 280, 150, 1, ["Feet first,", "like socks"]))   # dot on the ankle edge, clear of the nerve
+    o.append(callout(34.1, 92, 160, 0, ["Nerves run from", "the spinal cord", "to your toes and", "fingertips"]))   # on the arm nerve
     return "".join(o)
 
 
@@ -389,6 +421,12 @@ def glucose(x, y, r=5.4):
     return f'<polygon points="{pts}" fill="{GLU}" stroke="{GLU_EDGE}" stroke-width="1" stroke-linejoin="round"/>'
 
 
+def fail_x(x, y, r=5, sw=2.6):
+    """The red X where a failing signal stops."""
+    return (f'<path d="M{x - r:.1f},{y - r:.1f} l{2 * r:.1f},{2 * r:.1f} M{x + r:.1f},{y - r:.1f} l{-2 * r:.1f},{2 * r:.1f}" '
+            f'stroke="{RED_HD}" stroke-width="{sw}" stroke-linecap="round"/>')
+
+
 def _card_frame(x0, y0, w, h, head, sub, hcol, cap):
     cid = f"nrp-cc{int(y0)}"
     return (f'<clipPath id="{cid}"><rect x="{x0}" y="{y0}" width="{w}" height="{h}" rx="12"/></clipPath>',
@@ -406,7 +444,7 @@ def _card_frame(x0, y0, w, h, head, sub, hcol, cap):
 
 def card_healthy():
     x0, y0, w, h = B_X0, TOP, B_X1 - B_X0, B_H
-    clip, frame, border = _card_frame(x0, y0, w, h, "HEALTHY NERVE", "signals travel fast and clear", GREEN_HD,
+    clip, frame, border = _card_frame(x0, y0, w, h, "HEALTHY NERVE FIBER", "signals travel fast and clear", GREEN_HD,
                                       "A thick coat (myelin) wraps the fiber, so signals jump fast from gap to gap.")
     cy = y0 + HDR + (h - HDR - CAP) / 2 + 9
     ra, rm = 8.0, 20.0
@@ -466,7 +504,7 @@ def _worn(xa, xb, ra, rm, notches_top, notches_bot, seed):
 
 def card_damaged():
     x0, y0, w, h = B_X0, TOP + B_H + GAP, B_X1 - B_X0, B_H
-    clip, frame, border = _card_frame(x0, y0, w, h, "DAMAGED NERVE", "signals slow, misfire or stop", RED_HD,
+    clip, frame, border = _card_frame(x0, y0, w, h, "DAMAGED NERVE FIBER", "signals slow, misfire or stop", RED_HD,
                                       "High sugar, low B12 and “rust” (oxidative stress) wear down the coat and the fiber.")
     cy = y0 + HDR + (h - HDR - CAP) / 2 + 2
     ra, rm = 5.4, 13.6
@@ -494,15 +532,13 @@ def card_damaged():
                  'stroke-linejoin="round"/>')
     o.append(_cut_face(cut, cy, ra, rm, rings=3, broken=True))
     o.append(_axon_stub(cut, cut - 16, cy, ra))
-    # the misfiring signal: one weak hop that never lands
+    # the misfiring signal: one weak hop that never lands (grey gap dot, dashed grey arc, red X; named in the KEY)
     n1 = (cut + 60 + x0 + 124) / 2
     top = cy - rm - 17
-    o.append(f'<circle cx="{n1:.1f}" cy="{cy}" r="2.4" fill="#8C959E"/>')
+    o.append(f'<circle cx="{n1:.1f}" cy="{cy}" r="2.4" fill="{FAIL}"/>')
     o.append(f'<path d="M{n1 + 2:.1f},{cy - rm - 2:.1f} C{n1 + 20:.1f},{top:.1f} {n1 + 44:.1f},{top:.1f} {n1 + 56:.1f},{cy - rm - 9:.1f}" '
-             'fill="none" stroke="#8C959E" stroke-width="2.2" stroke-dasharray="4 3.2" stroke-linecap="round"/>')
-    xx, xy = n1 + 64, cy - rm - 8
-    o.append(f'<path d="M{xx - 5},{xy - 5} l10,10 M{xx + 5},{xy - 5} l-10,10" stroke="{RED_HD}" stroke-width="2.6" '
-             'stroke-linecap="round"/>')
+             f'fill="none" stroke="{FAIL}" stroke-width="2.2" stroke-dasharray="4 3.2" stroke-linecap="round"/>')
+    o.append(fail_x(n1 + 64, cy - rm - 8))
     # oxidative stress sparks and extra glucose in the fluid around the fiber (kept off the signal arc)
     for x, y, r, rot in ((x0 + 100, cy + 23, 7.2, 14), (x0 + 236, cy + 23, 7.8, 20), (x0 + 252, cy - 26, 7.4, 4),
                          (x0 + 356, cy - 25, 7.0, 10), (x0 + 318, cy + 24, 6.6, 0), (x0 + 436, cy + 23, 7.4, 6)):
@@ -524,29 +560,44 @@ def _key():
     def sw_myelin():
         return _myelin_seg(-12, 12, 0, 3.2, 8.2, taper=6)
 
-    def sw_signal():
-        return (f'<path d="M-11,4 C-6,-7 4,-7 9,1" fill="none" stroke="{SIGNAL}" stroke-width="2.3" stroke-linecap="round" '
-                'marker-end="url(#nrp-ar)"/>')
+    def pulse(x, y):
+        return (f'<circle cx="{x}" cy="{y}" r="4.4" fill="{SIGNAL}" opacity=".28"/>'
+                f'<circle cx="{x}" cy="{y}" r="1.9" fill="{SIGNAL}"/>')
+
+    def sw_signal():       # as in the healthy card: a pulse at each gap and the jump from one gap to the next
+        return (pulse(-10, 5) + pulse(10, 5)
+                + f'<path d="M-9,-.4 C-5,-9.6 4,-9.6 7.6,-2.8" fill="none" stroke="{SIGNAL}" stroke-width="2.1" '
+                  'stroke-linecap="round" marker-end="url(#nrp-ar)"/>')
+
+    def sw_fail():         # as in the damaged card: grey gap dot, a dashed grey hop that never lands, red X
+        return (f'<circle cx="-11" cy="5" r="2.2" fill="{FAIL}"/>'
+                f'<path d="M-9.6,1.4 C-6,-8.2 .2,-8.2 3.2,-3.4" fill="none" stroke="{FAIL}" stroke-width="2" '
+                'stroke-dasharray="3 2.4" stroke-linecap="round"/>' + fail_x(10.2, -2.2, 3.4, 2.2))
 
     def sw_numb():
         return f'<rect x="-8" y="-8" width="16" height="16" rx="3" fill="url(#nrp-numbsw)"/>'
 
-    rows = [[(sw_fiber(), "Nerves and nerve fiber"), (sw_myelin(), "Myelin coat"),
-             (sw_signal(), "Nerve signal")],
+    rows = [[(sw_fiber(), "Nerves and nerve fiber"), (sw_myelin(), "Myelin coat"), (sw_signal(), "Nerve signal"),
+             (sw_fail(), "Signal that fails")],
             [(spark(0, 0, 7.4), "Oxidative stress (“rust”)"), (glucose(0, 0, 6), "Extra blood sugar (glucose)"),
              (sw_numb(), "Numb or tingling area")]]
     y, h = KEY_Y, KEY_H
+    SW = 34                                       # swatch slot: swatch centred at +15, label starts at +34
     start = 14 + tw("KEY", 10.5, 800, 1.2) + 24
-    col_w = (W - 10 - start) / 3
+    ncol = max(len(r) for r in rows)
+    need = [max(tw(r[c][1], 11, 600) for r in rows if c < len(r)) + SW for c in range(ncol)]
+    gap = (W - 12 - start - sum(need)) / (ncol - 1)   # columns sized to their longest label, equal gaps
+    assert gap >= 12, "key labels too long for four columns"
+    xs = [start + sum(need[:c]) + gap * c for c in range(ncol)]
     o = [f'<rect x=".6" y="{y}" width="{W - 1.2}" height="{h}" rx="8" fill="#FFFFFF" stroke="#CFD6DE" stroke-width="1.2"/>',
          T(14, y + h / 2 + 3.7, "KEY", 10.5, 800, INK, ls=1.2),
          f'<path d="M{start - 12:.1f},{y + 8} V{y + h - 8}" stroke="#DDE2E8" stroke-width="1.2"/>']
     for r, items in enumerate(rows):
         cy = y + 13 + r * 20
         for c, (sw, lab) in enumerate(items):
-            x = start + c * col_w
-            o.append(f'<g transform="translate({x + 12:.1f},{cy:.1f})">{sw}</g>')
-            o.append(T(round(x + 31, 1), round(cy + 3.9, 1), lab, 11, 600, INK))
+            x = xs[c]
+            o.append(f'<g transform="translate({x + 15:.1f},{cy:.1f})">{sw}</g>')
+            o.append(T(round(x + SW, 1), round(cy + 3.9, 1), lab, 11, 600, INK))
     return "".join(o)
 
 
@@ -559,7 +610,8 @@ def art_neuro(t):
                "Left: a standing figure with the spinal cord and nerves in yellow; numb or tingling zones shaded blue "
                "on the feet and lower legs (first) and on the hands (later). Right: a healthy nerve fiber wrapped in a "
                "thick myelin coat, its signal jumping from gap to gap, above a damaged fiber with a frayed coat, a "
-               "thinned and broken fiber, red oxidative-stress sparks and extra purple glucose, where the signal stops.")
+               "thinned and broken fiber, red oxidative-stress sparks and extra purple glucose, where a weak signal "
+               "fails and stops.")
 
 
 # ============================================================== this sheet's icons (64 x 64, stroke style)
@@ -582,9 +634,10 @@ NRP_ICONS = {
                     '<path d="M28.5 25.5c-3.6-6.4-13.6-8.6-17-2.6-3.4 6.2-.4 17.6 6.6 21.4 4.4 2.4 8.4.6 10.4-3.1z"/>'
                     '<path d="M35.5 25.5c3.6-6.4 13.6-8.6 17-2.6 3.4 6.2.4 17.6-6.6 21.4-4.4 2.4-8.4.6-10.4-3.1z"/>'
                     '<path d="M28.5 35h7"/>'),
-    "nrp-b12": ('<rect x="7" y="15" width="50" height="34" rx="10"/><text x="32" y="39.6" text-anchor="middle" '
-                'font-family="Inter, Arial, sans-serif" font-size="19" font-weight="800" fill="currentColor" stroke="none" '
-                'letter-spacing="-.5">B12</text>'),
+    # badge across the full box with 30-unit lettering: 7.4 pt printed at 0.22 in, 8.4 pt at 0.25 in
+    "nrp-b12": ('<rect x="2.5" y="14" width="59" height="36" rx="10"/><text x="32" y="42.9" text-anchor="middle" '
+                'font-family="Inter, Arial, sans-serif" font-size="30" font-weight="800" fill="currentColor" stroke="none" '
+                'letter-spacing="-1">B12</text>'),
     "nrp-glass": ICONS["glass"].split('<path class="x"')[0],      # the glass without the "avoid" slash
 }
 for _k, _v in NRP_ICONS.items():
@@ -593,6 +646,11 @@ for _k, _v in NRP_ICONS.items():
 
 def _ed(x, ed):
     return x.replace("{who}", ed["who"]).replace("{Who}", ed["Who"])
+
+
+def _doc(ed):
+    """Who orders tests and treats symptoms: the pharmacy edition says 'your doctor'."""
+    return ("your doctor", "Your doctor") if "pharmacist" in ed["who"] else (ed["who"], ed["Who"])
 
 
 # ============================================================== front page blocks
@@ -642,43 +700,51 @@ def checks(ed):
     tiles = [
         ("meter", "Blood sugar", "A1c",
          a1c + '<p>A normal A1c? A 2-hour glucose test can still catch early sugar trouble.</p>', "My A1c"),
-        # [AAN09] serum B12 "with metabolites (methylmalonic acid ...)"; [AROD16]/[ADA26] yearly with metformin.
+        # [AAN09, BCSH14] serum B12 "with metabolites (methylmalonic acid ...)"; [BCSH14] test before supplements
+        # raise it; [ADA26] periodic B12 with long-term metformin, [AROD16] testing "should be considered".
         ("nrp-b12", "Vitamin B12", "",
-         '<p>Low or borderline? An <b>MMA</b> test can show if it is really low. On metformin or an acid blocker: test yearly.</p>', "My B12"),
+         '<p>Test <b>before</b> you take B12. Low or borderline? An <b>MMA</b> (methylmalonic acid) test shows if it '
+         'is really low. On metformin: ask to check it at least yearly.</p>', "My B12"),
         # [ADA17] thyroid function is part of the work-up to exclude other causes.
         ("nrp-thyroid", "Thyroid", "TSH",
          '<p>An underactive thyroid can cause tingling too, and it is easy to test.</p>', "My TSH"),
-        # [ADA17] "annual 10-g monofilament testing"; [ADA26] comprehensive foot evaluation at least yearly.
+        # [ADA17] "annual 10-g monofilament testing" (people with diabetes); [ADA26] foot exam at least yearly.
         ("nrp-foot", "Foot touch test", "",
-         '<p>A soft nylon thread pressed on your feet (10-gram monofilament), <b>every year</b>.</p>', "Date"),
+         '<p>A thin nylon thread touched to your feet (10-gram monofilament). It does not hurt. Have diabetes? '
+         '<b>Every year.</b></p>', "Date"),
     ]
-    cells = "".join(f'<div class="nrp-tile"><h4>{icon(ic, "0.2in", sw=3.6)}{t}{f" <small>{sub}</small>" if sub else ""}</h4>'
+    cells = "".join(f'<div class="nrp-tile"><h4>{icon(ic, "0.22in", sw=3.6)}{t}{f" <small>{sub}</small>" if sub else ""}</h4>'
                     f'{body}{mine.format(m)}</div>' for ic, t, sub, body, m in tiles)
     # [ADA17] "serum B12, folic acid, thyroid function, complete blood count, metabolic panel, and a serum protein
     # immunoelectrophoresis"; [AAN09] serum protein immunofixation is a high-yield test.
     # Lab orders come from the prescriber, so the pharmacy edition says "your doctor" here.
-    who = "Your doctor" if "pharmacist" in ed["who"] else ed["Who"]
-    more = (f'{who} may also check folate, a blood count, kidney and liver tests and a blood protein test. '
+    more = (f'{_doc(ed)[1]} may also check folate, a blood count, kidney and liver tests and a blood protein test. '
             '<small>ADA and American Academy of Neurology guidance</small>')
+    # [ADA17] many causes are treatable; nerve damage may not fully reverse, so "treated", not "fixed".
     return ('<div class="nrp-checks"><div class="nrp-ch"><b>Ask for these checks</b><span>New numbness, tingling or burning? '
-            'These tests find the most common causes, and many can be fixed.</span></div>'
-            f'<div class="nrp-tiles">{cells}</div><p class="nrp-more">{_ed(more, ed)}</p></div>')
+            'These tests find the most common causes, and many can be treated.</span></div>'
+            f'<div class="nrp-tiles">{cells}</div><p class="nrp-more">{more}</p></div>')
 
 
-def alarm():
-    # [ADA17] atypical features (rapid onset, asymmetry, weakness more than numbness) need further work-up;
-    # foot ulcers and Charcot foot (a red, hot, swollen foot) are urgent [ADA17, ADA26];
-    # stroke warning signs per the American Stroke Association (BE FAST): call 911.
+def alarm(ed):
+    # [ADA17] atypical features (asymmetry, rapid onset, weakness more than numbness) need prompt work-up, not 911:
+    # one-sided numbness is common with sciatica and carpal tunnel. Fast-spreading weakness, a non-healing foot
+    # sore and a red, hot, swollen (Charcot) foot are urgent [ADA17, ADA26]. Sudden numbness or weakness on one
+    # side, a drooping face or slurred speech are stroke signs [ASA]: call 911.
+    doc = _doc(ed)[0]
     return ('<div class="nrp-alarm">' + icon("warning", "0.24in", "#A5281E", sw=3.6)
-            + '<p><b>Get care right away</b> for numbness or weakness that comes on fast, spreads over days or affects one '
-            'side only, or for a foot sore that will not heal or a red, hot, swollen foot. <b>Sudden weakness on one side, '
-            'a drooping face or slurred speech: call 911.</b></p></div>')
+            + f'<p><b>See {doc} soon</b> for numbness on one side only. <b>Get care right away</b> for numbness or '
+            'weakness that comes on fast or spreads over days, a foot sore that will not heal, or a red, hot, swollen '
+            'foot. <b>Sudden numbness or weakness on one side, a drooping face or slurred speech: call 911.</b></p></div>')
 
 
 def front(t, ed):
     return (f'<div class="nrp"><div class="art nrp-art">{art_neuro(t)}</div>'
-            f'{feel_causes()}{checks(ed)}{alarm()}</div>')
+            f'{feel_causes()}{checks(ed)}{alarm(ed)}</div>')
 
+
+# The ◆ that ties each structure/function statement to the FDA disclaimer in the footer [CFR93].
+DIA = '<span class="nrp-dia">&#9670;</span>'
 
 CSS = r"""
 .nrp .nrp-art svg{display:block;width:100%;height:auto}
@@ -696,7 +762,7 @@ CSS = r"""
 .nrp .nrp-ch{display:flex;align-items:baseline;gap:10px;margin:0 0 5px}
 .nrp .nrp-ch b{flex:none;font:900 11pt Merriweather,Georgia,serif;color:var(--c1)}
 .nrp .nrp-ch span{font-size:8pt;line-height:1.3;color:#2B3236}
-.nrp .nrp-tiles{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:6px}
+.nrp .nrp-tiles{display:grid;grid-template-columns:1.5fr 1.2fr .8fr 1fr;gap:6px}
 .nrp .nrp-tile{background:#fff;border:1px solid #DDE3EA;border-radius:8px;padding:5px 7px 6px;display:flex;flex-direction:column}
 .nrp .nrp-tile h4{margin:0;font:800 8.6pt Inter,sans-serif;color:var(--deep);display:flex;align-items:center;gap:5px}
 .nrp .nrp-tile h4 .ic{flex:none;color:var(--c2)}
@@ -720,23 +786,62 @@ CSS = r"""
 .nrp .nrp-alarm .ic{flex:none}
 .nrp .nrp-alarm p{margin:0;font-size:8pt;line-height:1.3;color:#2B3236}
 .nrp .nrp-alarm b{color:#A5281E}
+/* ---- this sheet's footers and back page. The back page has no sheet class, so it is scoped through the empty
+   .nrp-bk marker in the lifestyle subtitle. The shared kit (kit.py .foot/.disc/.col, build.py .startt) still sets
+   these below 7 pt for every sheet; the rules below lift them on this sheet only. ---- */
+.sheet.front:has(.nrp) .foot,.sheet.back:has(.nrp-bk) .foot,
+.sheet.front:has(.nrp) .foot .code,.sheet.back:has(.nrp-bk) .foot .code{font-size:7pt}
+.sheet.back:has(.nrp-bk) .startt{font-size:7pt}
+.sheet.back:has(.nrp-bk) .col .need i{font-size:7pt}
+.sheet.back:has(.nrp-bk) .col .pick .sz{font-size:7pt}
+.sheet.back:has(.nrp-bk) .col .key{font-size:7.2pt}
+.sheet.back:has(.nrp-bk) .col .key b{font-size:7pt}
+.sheet.back:has(.nrp-bk) .col .dose small{font-size:7pt}
+/* FDA disclaimer (21 CFR 101.93): bold, boxed, and linked by the diamond that ends every product statement */
+.sheet.back:has(.nrp-bk) .disc{font-size:7pt;font-weight:700;color:#36424A;border:1px solid #8D99A1;border-radius:4px;
+  padding:3px 7px 4px;max-width:5.5in}
+.nrp-dia{color:var(--c1);font-size:7pt;font-weight:700;margin-left:3px;white-space:nowrap}
+/* "Nutrient Support", not the kit's "Nutrient Solutions": beside a disease title "solutions" reads as a cure */
+.sheet.back:has(.nrp-bk) .ns-title{font-size:0;gap:0;visibility:hidden}
+.sheet.back:has(.nrp-bk) .ns-title::before{content:"Nutrient Support";font-size:19pt;margin-right:10px;visibility:visible}
+.sheet.back:has(.nrp-bk) .ns-title span{visibility:visible}
+/* daily rhythm: the count never splits from its unit and is set off from the product name */
+.sheet.back:has(.nrp-bk) .slot li em{white-space:nowrap}
+.sheet.back:has(.nrp-bk) .slot li em::before{content:"\00B7\00A0"}
+/* a two-line name slot in every column, so all five columns start their bullets on the same line */
+.sheet.back:has(.nrp-bk) .col .pick .nm{min-height:2.1em;line-height:1.05;display:flex;align-items:center;justify-content:center}
+.nrp-nw{white-space:nowrap}
+/* five safety checks need room: smaller lifestyle discs, tighter band and spacing, a wider check panel,
+   two write-in lines instead of three */
+.sheet.back:has(.nrp-bk) .band{padding-bottom:.12in}
+.sheet.back:has(.nrp-bk) .band h2{margin-bottom:.06in}
+.sheet.back:has(.nrp-bk) .life .disc2{width:.68in;height:.68in}
+.sheet.back:has(.nrp-bk) .life .disc2 svg{width:.4in!important;height:.4in!important}
+.sheet.back:has(.nrp-bk) .life b{margin-top:.05in}
+.sheet.back:has(.nrp-bk) .ns-title{margin-top:.09in}
+.sheet.back:has(.nrp-bk) .cols{margin-top:.05in}
+.sheet.back:has(.nrp-bk) .duo{grid-template-columns:1fr 1.3fr;margin-top:.08in}
+.sheet.back:has(.nrp-bk) .slot li{line-height:1.15;margin:0 0 1px}
+.sheet.back:has(.nrp-bk) .notes{margin-top:.08in}
+.sheet.back:has(.nrp-bk) .notes .ln:last-child{display:none}
 """
 
 # ============================================================== the sheet
 SHEET = {
     "slug": SLUG, "code": "ND-NR-701", "order": 16, "theme": "neuro", "series": "Brain and Nerve Series",
     "title": "Nerve Pain and Neuropathy", "sub": "Burning, tingling or numb feet and hands",
-    # [NINDS] "more than 20 million people in the United States"; "diabetes is the leading cause of polyneuropathy".
-    # [ADA17] length-dependent: starts at the big toe on both sides and moves up; linked to height as a proxy for
-    # nerve length; prediabetes can cause it; many non-diabetic causes are treatable (so: get checked).
-    "intro": ("<b>Peripheral neuropathy</b> means the nerves that carry messages to your hands and feet are damaged. The "
-              "longest nerves, the ones that reach your toes, are hit first, so it often starts as burning, tingling or numb "
-              "feet. More than <b>20 million Americans</b> have it. <b>High blood sugar is the top cause</b>, and many "
-              "others can be found and fixed."),
+    # [NINDS] peripheral nerves = all nerves outside the brain and spinal cord; "more than 20 million people in the
+    # United States"; "diabetes is the leading cause of polyneuropathy". [ADA17] length-dependent: starts at the big
+    # toe on both sides and moves up; many non-diabetic causes are treatable, nerve damage may not fully reverse.
+    "intro": ("<b>Peripheral neuropathy</b> means damage to the nerves outside the brain and spinal cord. The longest "
+              "ones, which reach your toes, are hit first, so it often starts as burning, tingling or numb feet. More "
+              "than <b>20 million Americans</b> have it. <b>High blood sugar is the top cause</b>, and many other "
+              "causes can be found and treated."),
     "front": front,
     "css": CSS,
     "back": {
-        "life_title": "Lifestyle Recommendations", "life_sub": "Protect your nerves and your feet", "style": "circle",
+        "life_title": "Lifestyle Recommendations",
+        "life_sub": 'Protect your nerves and your feet<span class="nrp-bk"></span>', "style": "circle",
         "life": [
             # [ADA17] "Optimize glucose control to prevent or slow the progression of distal symmetric polyneuropathy
             # in people with type 2 diabetes"; prevention "focuses on glucose control and lifestyle modifications".
@@ -747,53 +852,66 @@ SHEET = {
             # [ADA17, ADA26] foot self-care: look daily; neuropathy is the main cause of foot ulcers.
             ("nrp-foot", "Check your feet", "Daily: look for cuts, blisters, red spots."),
             ("nrp-shoe", "Guard your feet", "No bare feet. Test bath water by elbow."),
-            # [ADA17] alcohol is in the toxic-neuropathy table.
-            ("glass", "Limit alcohol", "Alcohol is toxic to nerves. Keep it low."),
+            # [ADA17] alcohol is in the toxic-neuropathy table. Slash-free glass: the advice is "limit", not "avoid".
+            ("nrp-glass", "Limit alcohol", "Alcohol is toxic to nerves. Keep it low."),
             # [ADA17] DSPN is associated with smoking; smoking slows wound healing.
             ("smoke", "Stop smoking", "Linked to nerve damage and slow healing."),
         ],
         "cols": [
             # Nerve Eze: SS ND633 (products.d/neuropathy.json). Evidence: PEA [VINA25, LANG23]; ALA [HSIEH23, PRADO24].
-            {"p": "nrp_nerve_eze", "need": "Calm nerve signals", "needsub": "PEA + alpha lipoic acid", "start": True,
-             "bullets": ["Supports healthy nerve function", "PEA is a fat-based messenger your body makes too"],
+            {"p": "nrp_nerve_eze", "need": "Healthy nerve function", "needsub": "PEA + alpha lipoic acid", "start": True,
+             "bullets": ["Supports healthy nerve function" + DIA, "PEA is a fat-based messenger your body makes too"],
              "dose": "1 capsule twice daily", "dosesub": "morning and bedtime",
              "sched": [("am", 1, "capsule"), ("bed", 1, "capsule")]},
-            # Gluco IR: products.py gluco_ir (label read). Blood sugar is the leading driver [NINDS, ADA17].
-            # Its 300 mg ALA + Nerve Eze's 300 mg = 600 mg/day, the dose studied most [PRADO24, HSIEH23].
-            {"p": "gluco_ir", "need": "Steady blood sugar", "needsub": "dihydroberberine, chromium, ALA",
-             "bullets": ["Supports healthy glucose metabolism", "With Nerve Eze: 600 mg of ALA a day"],
+            # Gluco IR: DB R960 (nrp_gluco_ir). Qualifier from NutriDyn's Gluco IR blast ("already in the normal
+            # range"). Its 300 mg ALA + Nerve Eze's 300 mg = 600 mg/day, the dose studied most [PRADO24, HSIEH23].
+            {"p": "nrp_gluco_ir", "need": "Healthy blood sugar", "needsub": "dihydroberberine + ALA",
+             "bullets": ["Supports healthy blood sugar already in the normal range" + DIA,
+                         "With Nerve Eze: 600 mg of ALA a day"],
              "dose": "dose_from_db"},
-            # B12 Pro: DB R2181. Metformin [AROD16] and acid blockers [LAM13] lower B12; B12 is needed for myelin.
-            {"p": "nrp_b12_pro", "need": "Feed the nerve coat", "needsub": "vitamin B12 as methylcobalamin",
-             "bullets": ["Supports healthy myelin, the nerve's coat", "Metformin and acid blockers can lower B12"],
+            # B12 Pro: DB R2181. Only when the test shows low or borderline B12 [BCSH14], or with years of metformin
+            # [AROD16] or acid blockers [LAM13]; B12 is needed for myelin.
+            {"p": "nrp_b12_pro", "need": "Feed the nerve coat", "needsub": "if your B12 runs low",
+             "bullets": ["Supports healthy myelin, the nerve’s coat" + DIA,
+                         "For low or borderline B12, or years on metformin or acid blockers"],
              "dose": "1 tablet daily", "dosesub": "let it dissolve in your mouth", "sched": [("am", 1, "tablet")]},
-            # Methyl Complete: products.py methyl_b (switch-chart label read; DB R187 across 8 charts). Same three
-            # active forms (L-methylfolate, methylcobalamin, P5P) as the Metanx RCT [FONS13], at lower doses.
-            {"p": "methyl_b", "need": "The B-vitamin team", "needsub": "active folate, B6 and B12",
-             "bullets": ["Active forms, ready for your body to use", "Supports healthy homocysteine levels"],
+            # Methyl Complete: DB R187 (nrp_methyl_complete). Same three active forms (L-methylfolate, methylcobalamin,
+            # P5P) as the Metanx RCT [FONS13], at lower doses.
+            {"p": "nrp_methyl_complete", "need": "The B-vitamin team", "needsub": "active folate, B6 and B12",
+             "bullets": ["Active forms, ready for your body to use" + DIA, "Supports healthy homocysteine levels" + DIA],
              "dose": "dose_from_db"},
-            # Omega Pure EPA-DHA 1000: products.py omega_1000 (switch chart label read). Evidence: [LEWIS17].
-            {"p": "omega_1000", "need": "Nerve membranes", "needsub": "omega-3s, EPA and DHA",
-             "bullets": ["Building blocks of nerve cell membranes", "Supports a healthy inflammatory response"],
+            # Omega Pure EPA-DHA 1000: DB R243 (nrp_omega). Evidence: [LEWIS17].
+            {"p": "nrp_omega", "need": "Nerve membranes", "needsub": "omega-3s, EPA and DHA",
+             "bullets": ["Building blocks of nerve cell membranes" + DIA, "Supports a healthy inflammatory response" + DIA],
              "dose": "dose_from_db"},
         ],
         "rx": {
-            # [AROD16], [ADA26] Section 9: B12 monitoring with long-term metformin; [LAM13] PPIs and H2 blockers.
-            # Berberine and ALA both lower glucose (additive with diabetes medicines).  [EFSA23] excess B6 -> neuropathy.
+            # 1 [BCSH14] supplements raise serum B12, so test first; [AROD16, ADA26] metformin, [LAM13] PPIs/H2 blockers.
+            # 2 dihydroberberine, chromium and ALA (Gluco IR) and ALA (Nerve Eze) lower glucose: additive with diabetes
+            #   medicines.  3 [FDA19, BOWEN19] biotin (2,000 mcg/5 capsules, DB R960) and streptavidin immunoassays.
+            # 4 [EFSA23] excess B6 -> neuropathy; UL 12 mg/day.  5 [CHAN93] berberine in pregnancy, [GUO12] CYP2D6,
+            #   2C9, 3A4 inhibition, [YASU16] antioxidants during chemotherapy unclear, [LABEL] consult if pregnant,
+            #   nursing or taking medication.
             "practitioner": [
-                "<b>Metformin or an acid blocker</b> (like omeprazole or famotidine) for years? Both can lower B12. "
-                "Ask your provider for a B12 test every year.",
-                "<b>On diabetes medicine?</b> Gluco IR (berberine plus alpha lipoic acid) can lower blood sugar further. "
-                "Check it more often and tell your prescriber.",
-                "<b>Vitamin B6 adds up.</b> Methyl Complete has 10 mg, and too much B6 can itself cause tingling. "
-                "Bring every bottle so your provider can add up your B6."],
+                "<b>Test B12 (and MMA) first:</b> B12 Pro and Methyl Complete make it read high. Years on metformin or "
+                "acid blockers? Ask your provider about a yearly recheck.",
+                "<b>On diabetes medicine?</b> Gluco IR (dihydroberberine, chromium, ALA) and the ALA in Nerve Eze may add "
+                "to it. Check your sugar more often and tell your prescriber.",
+                "<b>Blood test coming?</b> Gluco IR’s 2,000 mcg of biotin can throw off thyroid and other lab tests. "
+                "Tell the lab, and ask your provider if you should pause it first.",
+                "<b>B6 adds up.</b> Methyl Complete has 10 mg; too much B6 can itself cause tingling. Bring every bottle.",
+                "<b>Pregnant or nursing, on many medicines or in cancer care?</b> Ask your provider before Gluco IR "
+                "or the antioxidants (ALA, NAC)."],
             "pharmacy": [
-                "<b>Metformin or an acid blocker</b> (like omeprazole or famotidine) for years? Both can lower B12. "
-                "Ask your prescriber for a B12 test every year.",
-                "<b>On diabetes medicine?</b> Gluco IR (berberine plus alpha lipoic acid) can lower blood sugar further. "
-                "Check it more often and tell your prescriber.",
-                "<b>Vitamin B6 adds up.</b> Methyl Complete has 10 mg, and too much B6 can itself cause tingling. "
-                "Bring every bottle so your pharmacist can add up your B6."],
+                "<b>Test B12 (and MMA) first:</b> B12 Pro and Methyl Complete make it read high. Years on metformin or "
+                "acid blockers? Ask your prescriber about a yearly recheck.",
+                "<b>On diabetes medicine?</b> Gluco IR (dihydroberberine, chromium, ALA) and the ALA in Nerve Eze may add "
+                "to it. Check your sugar more often and tell your prescriber.",
+                "<b>Blood test coming?</b> Gluco IR’s 2,000 mcg of biotin can throw off thyroid and other lab tests. "
+                "Tell the lab, and ask your pharmacist if you should pause it first.",
+                "<b>B6 adds up.</b> Methyl Complete has 10 mg; too much B6 can itself cause tingling. Bring every bottle.",
+                "<b>Pregnant or nursing, on many medicines or in cancer care?</b> Ask your pharmacist before Gluco IR "
+                "or the antioxidants (ALA, NAC)."],
         },
     },
 }

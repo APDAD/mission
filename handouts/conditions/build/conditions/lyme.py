@@ -11,28 +11,68 @@ spreads, symptoms on the body beside three notes, know your ticks), plus
 Back: lifestyle steps and products kept exactly as draft 1 (a later pass revises
 the products).
 
+Fix round 2026-11-03 (art director's review of the rebuilt front):
+  * purple and orange now mean only "early sign" and "later sign": card headers,
+    note rules, arrows and the ACTUAL SIZE label moved to a neutral slate;
+  * BITE caption no longer reassures (other germs pass faster than Lyme), the
+    skin cut-away's red line is labelled "blood vessel", the other-infections card
+    uses disease names with singular germ labels;
+  * tick mouthparts drawn as two palps with a dark seam (no white cross), and the
+    actual-size strip scaled from the drawing's real length;
+  * the notes column fills the symptoms row, the Georgia card is no longer
+    half-empty, the western-tick card teaches "where you live is the best clue",
+    and the after-treatment note no longer ties the back-page products to Lyme;
+  * the draft-1 back page overflowed its footer; SHEET["back"] stays frozen for
+    the back-page pass, so a back-only CSS rule removes empty space instead.
+
 Every SVG is drawn at 1:1 with its printed CSS size (viewBox width = rendered
 width in CSS px), so an SVG font-size of 9.6 (the smallest used) prints at 7.2 pt.
 Sources (each number below carries a short comment): CDC Lyme disease pages
 (Signs and Symptoms of Untreated Lyme Disease; Transmission; Data and Statistics),
-CDC tick pages (Regions Where Ticks Live; STARI), Kugeler et al., Emerg Infect Dis
+CDC tick pages (Regions Where Ticks Live; STARI; Diseases Transmitted by Ticks),
+CDC MMWR 2017;66(15):408-409 (Powassan virus), Kugeler et al., Emerg Infect Dis
 2021;27(2), and UGA Cooperative Extension (Circular 937, Ticks in Georgia).
 """
 import math
+import re
 
-from svgkit import T, defs, svg
+from svgkit import FONT, T, defs, svg
 
-EARLY = "#4A2C80"       # purple: early sign
-LATER = "#D9873A"       # orange: later sign
+EARLY = "#4A2C80"       # purple: early sign (the symptom key's colour; used nowhere else in the art)
+LATER = "#D9873A"       # orange: later sign (likewise)
 LATER_TXT = "#A65A16"   # darker orange for text on white
 RASH = "#C8473C"        # erythema migrans red
 INK = "#2B3236"
 SOFT_INK = "#4A555C"
+SLATE = "#3D4A53"       # neutral for card headers, note rules and arrows
+SLATE_MID = "#5D6B74"
+PALE = "#F2F4F5"        # neutral card fill
 SKIN = ("#F4CBAA", "#E9B089", "#C98E67")   # light, mid, outline
 
 
 def _f(v):
     return f"{v:.2f}".rstrip("0").rstrip(".")
+
+
+def TR(x, y, lines, size=10, weight=600, fill=INK, anchor="start", lh=1.22, bold=800, bold_fill=None):
+    """Like svgkit.T, but a line may hold *bold* and _italic_ runs."""
+    if isinstance(lines, str):
+        lines = [lines]
+    out = [f'<text x="{_f(x)}" y="{_f(y)}" {FONT} font-size="{size}" font-weight="{weight}" fill="{fill}" '
+           f'text-anchor="{anchor}">']
+    bf = f' fill="{bold_fill}"' if bold_fill else ""
+    for i, ln in enumerate(lines):
+        out.append(f'<tspan x="{_f(x)}" dy="{0 if i == 0 else _f(size * lh)}">')
+        for seg in re.split(r"(\*[^*]+\*|_[^_]+_)", ln.strip()):
+            if len(seg) > 2 and seg[0] == seg[-1] == "*":
+                out.append(f'<tspan font-weight="{bold}"{bf}>{seg[1:-1]}</tspan>')
+            elif len(seg) > 2 and seg[0] == seg[-1] == "_":
+                out.append(f'<tspan font-style="italic">{seg[1:-1]}</tspan>')
+            else:
+                out.append(seg)
+        out.append("</tspan>")
+    out.append("</text>")
+    return "".join(out)
 
 
 # ============================================================ ticks, top view
@@ -143,22 +183,36 @@ def tick_top(kind, x, y, s=1.0, rot=0.0, uid="lyt", quest=False, shadow=True, mi
                    f'<ellipse cx="{_f(-sw * .08)}" cy="{_f(s1 - L * .28)}" rx="{_f(sw * .12)}" ry="{_f(L * .08)}" fill="#fff"/>'
                    f'<circle cx="{_f(sw * .93)}" cy="{_f(s0 + L * .3)}" r="1.1" fill="#E9D7B0"/>'
                    f'<circle cx="{_f(-sw * .93)}" cy="{_f(s0 + L * .3)}" r="1.1" fill="#E9D7B0"/>')
-    # mouthparts (capitulum): a short base, then two long palps held together like a beak
+    # mouthparts (capitulum) from above: a short base, then two long palps held
+    # together like a beak.  The palps are two separate shapes over a near-black
+    # under-shape, so a thin DARK seam runs between them; no light strokes or
+    # crossbars (at print size those read as a pill with a cross on it).
     pl, c0 = k["palp"], t - 3.4
     sh, hl = k["shield"][1], k["shield"][0]
-    out.append(f'<path d="M-4.4,{_f(c0 + 4.4)} L-3.4,{_f(c0)} H3.4 L4.4,{_f(c0 + 4.4)}Z" fill="{sh}"/>')
-    for sd in (1, -1):
-        out.append(f'<path d="M{_f(.3 * sd)},{_f(c0 + .4)} C{_f(3.3 * sd)},{_f(c0 + .3)} {_f(3.9 * sd)},{_f(c0 - pl * .42)} '
-                   f'{_f(3.3 * sd)},{_f(c0 - pl * .7)} C{_f(2.8 * sd)},{_f(c0 - pl * .93)} {_f(1.5 * sd)},{_f(c0 - pl)} '
-                   f'{_f(.35 * sd)},{_f(c0 - pl)}Z" fill="{sh}" stroke="{hl}" stroke-width=".35"/>'
-                   f'<path d="M{_f(.5 * sd)},{_f(c0 - pl * .38)} L{_f(3.5 * sd)},{_f(c0 - pl * .42)}" stroke="{hl}" '
-                   f'stroke-width=".45" opacity=".8"/>')
-    out.append(f'<path d="M-1.5,{_f(c0 - pl * .15)} Q-2,{_f(c0 - pl * .5)} -1.3,{_f(c0 - pl * .85)}" stroke="#fff" '
-               f'stroke-width=".7" opacity=".28" fill="none"/>')
+    seam = "#0B0705"
+    out.append(f'<defs><linearGradient id="{uid}m" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="{hl}"/>'
+               f'<stop offset=".75" stop-color="{sh}"/></linearGradient></defs>')
+    out.append(f'<path d="M-4.3,{_f(c0 + 4.4)} L-3.6,{_f(c0 + .6)} Q-3.45,{_f(c0)} -2.9,{_f(c0)} H2.9 '
+               f'Q3.45,{_f(c0)} 3.6,{_f(c0 + .6)} L4.3,{_f(c0 + 4.4)}Z" fill="url(#{uid}m)" stroke="{seam}" stroke-width=".3"/>')
+
+    def palp(sd, g):
+        return (f'M{_f(g * sd)},{_f(c0 + .6)} C{_f(1.9 * sd)},{_f(c0 + .5)} {_f(3.5 * sd)},{_f(c0 - pl * .12)} '
+                f'{_f(3.65 * sd)},{_f(c0 - pl * .42)} C{_f(3.78 * sd)},{_f(c0 - pl * .74)} {_f(2.7 * sd)},{_f(c0 - pl)} '
+                f'{_f((g + .25) * sd)},{_f(c0 - pl)} Q{_f(g * sd)},{_f(c0 - pl)} {_f(g * sd)},{_f(c0 - pl + .6)}Z')
+    out.append(f'<path d="{palp(1, 0)} {palp(-1, 0)}" fill="{seam}" stroke="{seam}" stroke-width=".35"/>')
+    for sd in (-1, 1):
+        out.append(f'<path d="{palp(sd, .3)}" fill="url(#{uid}m)"/>')
     out.append(f'<ellipse cx="{_f(-rx * .34)}" cy="{_f(cy + ry * .18)}" rx="{_f(rx * .26)}" ry="{_f(ry * .34)}" '
                f'fill="url(#{uid}g)" opacity=".8"/>')
     out.append("</g>")
     return "".join(out)
+
+
+def tick_len(kind):
+    """Palp tip to rear edge, in drawing units: the length CDC and Extension
+    pages mean by a tick's size.  Rear = cy + ry; palp tip = (cy - .85 ry) - 3.4 - palp."""
+    k = TICK_LOOK[kind]
+    return 1.85 * k["ry"] + 3.4 + k["palp"]
 
 
 def tick_feeding(hx, hy, uid="lyf"):
@@ -269,39 +323,44 @@ def arrow(d, col, w=3.2):
 
 # ============================================================ HOW IT SPREADS
 def art_spread(t):
-    W, H = 735, 218
+    W, H = 735, 222
     out = [defs()]
     # 1. waits on a leaf (questing: back legs hold on, front legs reach out)
     out.append(leaf(20, 74, 114, -21, "lyleaf"))
     out.append(tick_top("deer", 109, 33, 0.44, 69, "lyq", quest=True, shadow=False))
     out.append(T(146, 30, ["Waits on grass", "and leaves"], 10, 600, SOFT_INK))
     # 2. climbs on
-    out.append(arrow("M30,86 C16,108 18,132 40,146", t["c1"]))
-    out.append(tick_top("deer", 86, 144, 0.92, 0, "lyb"))
-    out.append(T(86, 188, "TICK", 11, 800, INK, "middle", ls=1))
-    out.append(T(86, 201, "Climbs on as you pass", 10, 600, SOFT_INK, "middle"))
+    out.append(arrow("M30,86 C16,106 18,126 40,140", SLATE))
+    out.append(tick_top("deer", 86, 138, 0.92, 0, "lyb"))
+    out.append(T(86, 179.5, "TICK", 11, 800, INK, "middle", ls=1))
+    out.append(T(86, 192.5, ["Climbs on", "as you pass"], 10, 600, SOFT_INK, "middle", lh=1.15))
     # 3. bites and feeds: skin cut away to show the mouthparts in it
-    out.append(arrow("M130,146 H150", t["c1"]))
-    sx0, sx1, sy0, sy1 = 158, 272, 136, 170
+    out.append(arrow("M130,140 H150", SLATE))
+    sx0, sx1, sy0, sy1 = 158, 272, 128, 166
     out.append(f'<defs><linearGradient id="lyskin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EDB596"/>'
                f'<stop offset="1" stop-color="#E29F80"/></linearGradient></defs>'
                f'<rect x="{sx0}" y="{sy0}" width="{sx1 - sx0}" height="{sy1 - sy0}" rx="6" fill="url(#lyskin)"/>'
                f'<path d="M{sx0},{sy0 + 6} a6,6 0 0 1 6,-6 H{sx1 - 6} a6,6 0 0 1 6,6 V{sy0 + 9} H{sx0}Z" fill="#F7D6C0"/>'
                f'<path d="M{sx0 + 6},{sy0} H{sx1 - 6}" stroke="#D29B7B" stroke-width="1.2"/>'
-               f'<path d="M{sx0 + 4},{sy1 - 8} C{sx0 + 30},{sy1 - 14} {sx0 + 62},{sy1 - 4} {sx1 - 4},{sy1 - 11}" '
-               f'stroke="#C9524A" stroke-width="2.2" fill="none" opacity=".55"/>')
-    out.append(T(sx1 - 8, sy1 - 16, "SKIN", 9.6, 800, "#8A4A30", "end", ls=1))
+               # a small blood vessel in the dermis, labelled where the line ends
+               f'<path d="M{sx0 + 4},{sy1 - 7} C{sx0 + 16},{sy1 - 10.5} {sx0 + 30},{sy1 - 5} {sx0 + 46},{sy1 - 8}" '
+               f'stroke="#C0564B" stroke-width="2.2" fill="none" stroke-linecap="round" opacity=".8"/>')
+    out.append(T(sx1 - 8, sy0 + 18, "SKIN", 9.6, 800, "#8A4A30", "end", ls=1))
+    out.append(T(sx1 - 8, sy1 - 6, "blood vessel", 9.6, 600, "#9A3D33", "end"))
     out.append(tick_feeding(210, sy0 - 0.6, "lyfeed"))
-    out.append(T(215, 188, "BITE", 11, 800, INK, "middle", ls=1))
-    out.append(T(215, 201, ["Lyme usually needs", "36+ hours attached"], 10, 600, SOFT_INK, "middle", lh=1.15))
+    out.append(T(215, 179.5, "BITE", 11, 800, INK, "middle", ls=1))
     # CDC Transmission: "In most cases, the tick must be attached for 36 to 48 hours
-    # or more before the Lyme disease bacterium can be transmitted."
+    # or more before the Lyme disease bacterium can be transmitted."  Faster germs:
+    # Powassan virus can pass "as quickly as 15 minutes after tick attachment"
+    # (CDC MMWR 2017;66(15):408-409, citing Ebel and Kramer 2004).
+    out.append(TR(215, 192.5, ["Lyme usually needs 36+ hours;", "some other germs pass faster.",
+                               "*Remove ticks right away.*"], 10, 600, SOFT_INK, "middle", lh=1.15, bold=700, bold_fill=INK))
     # 4. what one bite can pass on
-    out.append(arrow("M278,140 C290,138 292,74 306,70", t["c1"]))
-    out.append(arrow("M278,152 H306", t["c1"]))
+    out.append(arrow("M278,134 C290,132 292,70 306,66", SLATE))
+    out.append(arrow("M278,146 C291,146 294,171 306,172", SLATE))
     # Lyme disease card
-    out.append(card(314, 6, 160, 116, "LYME DISEASE", t["deep"]))
-    out.append(f'<rect x="324" y="36" width="140" height="48" rx="6" fill="{t["soft"]}"/>')
+    out.append(card(314, 6, 160, 116, "LYME DISEASE", SLATE))
+    out.append('<rect x="324" y="36" width="140" height="48" rx="6" fill="#E9EFF7"/>')
     for sx, sy, ln, rot, wv in ((332, 47, 88, -2, 8), (366, 60, 90, 2, 8), (338, 74, 74, -1.5, 7)):
         out.append(spirochete(sx, sy, ln, rot, wv, amp=2.9))
     out.append(T(394, 101, "Borrelia burgdorferi", 10.4, 700, INK, "middle", italic=True))
@@ -310,18 +369,26 @@ def art_spread(t):
     # people in Georgia; blacklegged ticks occur here but are less common.  CDC STARI page:
     # no evidence lone star ticks transmit the Lyme bacterium.  Georgia is a low-incidence
     # Lyme state (CDC surveillance).
-    out.append(card(484, 6, 247, 116, "IN GEORGIA", t["c2"], t["tint"], border=t["soft"]))
-    out.append(T(495, 46, ["Lyme is reported far less here than in", "the Northeast, but deer ticks live here",
-                           "too. The tick that bites people most", "here is the lone star tick, which is",
-                           "not known to spread Lyme."], 10, 500, "#33404A", lh=1.3))
-    # other infections card.  CDC: blacklegged ticks also transmit anaplasmosis,
-    # babesiosis, Borrelia miyamotoi disease and Powassan virus disease.
-    out.append(card(314, 134, 417, 74, "OTHER INFECTIONS THE SAME TICKS CAN CARRY", LATER))
-    for i, (name, kind) in enumerate([("Anaplasmosis", "bacteria"), ("Babesiosis", "parasite"),
-                                      ("Borrelia miyamotoi", "bacteria"), ("Powassan virus", "virus")]):
-        cx = 314 + 417 / 8 * (2 * i + 1)
-        out.append(T(cx, 177, name, 11, 700, "#33404A", "middle"))
-        out.append(T(cx, 192, kind, 9.6, 600, "#6A747B", "middle", italic=True))
+    out.append(card(484, 6, 247, 116, "IN GEORGIA", SLATE_MID, PALE, border="#D3DADE"))
+    out.append(TR(495, 48.5, ["Lyme is reported far less here than in", "the Northeast, but deer ticks live here",
+                              "too. The tick that bites people most", "here is the *lone star tick*, which is",
+                              "not known to spread Lyme."], 11, 500, "#33404A", lh=1.32, bold=700, bold_fill=INK))
+    # other infections card.  CDC (Diseases Transmitted by Ticks; Blacklegged tick): the
+    # same ticks also spread anaplasmosis (Anaplasma phagocytophilum, a bacterium),
+    # babesiosis (Babesia microti, a parasite), Borrelia miyamotoi disease (a bacterium)
+    # and Powassan virus disease (a virus).
+    ox, oy, ow, oh = 314, 134, 417, 83
+    out.append(card(ox, oy, ow, oh, "OTHER INFECTIONS THE SAME TICKS CAN CARRY", SLATE))
+    out.append(f'<path d="M{_f(ox + ow / 2)},{oy + 29} V{oy + oh - 8} M{ox + 14},{_f(oy + 22 + (oh - 22) / 2)} H{ox + ow - 14}" '
+               'stroke="#E1E6E9" stroke-width="1"/>')
+    items = [("Anaplasmosis", "bacterium"), ("Babesiosis", "parasite"),
+             ('<tspan font-style="italic">B. miyamotoi</tspan> disease', "bacterium"), ("Powassan virus disease", "virus")]
+    for i, (name, kind) in enumerate(items):
+        cx = ox + ow / 4 * (1 + 2 * (i % 2))
+        by = oy + 22 + (oh - 22) / 4 * (1 + 2 * (i // 2)) + 4
+        out.append(f'<text x="{_f(cx)}" y="{_f(by)}" {FONT} font-size="11" font-weight="700" fill="#33404A" '
+                   f'text-anchor="middle">{name}<tspan dx="7" font-size="9.6" font-weight="600" font-style="italic" '
+                   f'fill="#5F6A71">{kind}</tspan></text>')
     return svg(W, H, "".join(out), "How a tick bite spreads Lyme disease and other infections")
 
 
@@ -483,10 +550,11 @@ def art_actual_size():
     the size of a poppy seed, under 2 mm); adult female about the size of a sesame
     seed, roughly 3 mm long with mouthparts before feeding (UMN Extension, CDC)."""
     W, H = 248, 42
-    out = [T(1, 15, "ACTUAL SIZE", 9.6, 800, "#9A4F12", ls=1.2), T(1, 29, "deer tick", 9.6, 600, SOFT_INK)]
-    # drawing length (palp tip to rear) is about 61 units; scale so it prints at the real length
-    nym = 1.5 * MM / 54     # nymph body with mouthparts about 1.5 mm
-    adu = 3.0 * MM / 61     # adult female about 3 mm
+    out = [T(1, 15, "ACTUAL SIZE", 9.6, 800, SLATE, ls=1.2), T(1, 29, "deer tick", 9.6, 600, SOFT_INK)]
+    # scale each drawing so its palp-tip-to-rear length (tick_len: 43.9 units for the
+    # nymph, 54.9 for the adult) prints at the real length
+    nym = 1.5 * MM / tick_len("nymph")    # nymph with mouthparts about 1.5 mm
+    adu = 3.0 * MM / tick_len("deer")     # unfed adult female about 3 mm
     out.append(tick_top("nymph", 96, 20, nym, 0, "lyan", shadow=False, minw=0.45))
     out.append(T(105, 24.5, "nymph", 10, 700, INK))
     out.append(T(105, 36, "poppy seed", 9.6, 600, SOFT_INK))
@@ -507,16 +575,27 @@ CSS = r"""
 .ly-front{display:flex;flex-direction:column}
 .ly-front .ly-h{font:900 12pt Merriweather,Georgia,serif;color:var(--c1);letter-spacing:.02em;margin:0.05in 0 0.03in}
 .ly-front .ly-art svg{display:block;width:100%;height:auto}
-.ly-front .ly-grid{display:grid;grid-template-columns:4.625in 1fr;gap:0.14in;align-items:start}
-.ly-front .ly-nt{border-left:4px solid #D9873A;background:#FDF4EC;padding:0.05in 0.11in 0.06in;font-size:8.5pt;line-height:1.36;
-  border-radius:0 6px 6px 0;margin:0 0 0.07in;color:#2B3236}
-.ly-front .ly-nt b{color:#9A4F12}
+.ly-front .ly-grid{display:grid;grid-template-columns:4.625in 1fr;gap:0.14in;align-items:stretch}
+.ly-front .ly-notes{display:flex;flex-direction:column;justify-content:space-between;gap:0.07in}
+.ly-front .ly-nt{border-left:4px solid #5D6B74;background:#F2F4F5;padding:0.06in 0.11in 0.07in;font-size:9pt;line-height:1.4;
+  border-radius:0 6px 6px 0;color:#2B3236}
+.ly-front .ly-nt b{color:#1F2A2E}
 .ly-front .ly-nt svg{display:block;width:2.5833in;height:auto;margin:0.05in 0 0}
 .ly-front .ly-tks{display:grid;grid-template-columns:repeat(3,1fr);gap:0.1in}
-.ly-front .ly-tk{background:#FCEFE4;border-radius:8px;padding:0.03in 0.1in 0.03in 0.02in;display:flex;gap:4px;align-items:center}
+.ly-front .ly-tk{background:#F2F4F5;border-radius:8px;padding:0.03in 0.1in 0.03in 0.02in;display:flex;gap:4px;align-items:center}
 .ly-front .ly-tk svg{flex:none;width:0.7917in;height:auto}
-.ly-front .ly-tk b{display:block;font-size:8.8pt;color:#4A2C80;line-height:1.2}
+.ly-front .ly-tk b{display:block;font-size:8.8pt;color:#1F2A2E;line-height:1.2}
 .ly-front .ly-tk span{display:block;font-size:7.8pt;color:#3A4247;line-height:1.28;margin-top:1px}
+/* BACK-PAGE FIT (fix round 2026-11-03).  SHEET["back"] is draft 1 and stays frozen
+   until the back-page product pass; as built it ran the footer under the bottom bar
+   (disclaimer cut, page/edition line hidden).  These rules touch only THIS sheet's
+   back (the page right after the .ly-front page, so the all-sheets bundle is safe)
+   and only remove empty space: the life icons keep their 0.6 in size inside a
+   shorter box, and the daily-rhythm columns size to their contents so short
+   product lines stop wrapping.  Re-check, and drop them if unneeded, once the
+   rebuilt back lands. */
+.sheet.front:has(.ly-front)+.sheet.back .icons5 .life .disc2{height:0.66in}
+.sheet.front:has(.ly-front)+.sheet.back .rhythm{grid-template-columns:auto auto auto}
 """
 
 
@@ -531,14 +610,18 @@ def front(t, ed):
         'people never get a rash, and many rashes are plain red, not a bull\'s-eye. Early Lyme can pass for the flu.'
         f'{art_actual_size()}</div>'
         # CDC: some people have pain, fatigue or difficulty thinking for more than
-        # 6 months after treatment (post-treatment Lyme disease syndrome).
+        # 6 months after treatment (post-treatment Lyme disease syndrome).  No product
+        # claim here: the back page is structure/function only ({who} = edition token).
         '<div class="ly-nt"><b>After treatment,</b> some people have tiredness, pain or brain fog that lingers for '
-        'months. That recovery stretch is where food, sleep and the support on the back of this page come in.</div>')
-    # tick ranges and diseases: CDC Regions Where Ticks Live; UGA Extension for Georgia
+        'months. That stretch is a good time to focus on food, sleep and steady habits. Ask {who} which '
+        'support fits you.</div>')
+    # tick ranges and diseases: CDC Regions Where Ticks Live; UGA Extension for Georgia.
+    # Western vs deer: the two Ixodes species look nearly identical, so range is the clue.
     ticks = [("deer", "Blacklegged (deer) tick",
               "Black legs and shield, red-orange body. Eastern U.S., Georgia included. The main Lyme carrier."),
              ("western", "Western blacklegged tick",
-              "Pacific coast states. A darker, red-brown cousin of the deer tick. It also spreads Lyme."),
+              "Looks almost the same as the deer tick, so where you live is the best clue: Pacific coast states. "
+              "It also spreads Lyme."),
              ("lonestar", "Lone star tick",
               "White dot on the female's back. Spreads ehrlichiosis and can trigger alpha-gal (red-meat) allergy.")]
     cards = "".join(f'<div class="ly-tk">{art_tick_card(k, "lyk" + k)}<div><b>{n}</b><span>{d}</span></div></div>'
@@ -547,7 +630,7 @@ def front(t, ed):
             '<h3 class="ly-h">HOW IT SPREADS</h3>'
             f'<div class="ly-art">{art_spread(t)}</div>'
             '<h3 class="ly-h">SYMPTOMS</h3>'
-            f'<div class="ly-grid"><div class="ly-art">{art_symptoms(t)}</div><div>{notes}</div></div>'
+            f'<div class="ly-grid"><div class="ly-art">{art_symptoms(t)}</div><div class="ly-notes">{notes}</div></div>'
             '<h3 class="ly-h">KNOW YOUR TICKS <small style="font:600 7.8pt Inter,sans-serif;color:#5B666D;letter-spacing:0">'
             'adult females shown</small></h3>'
             f'<div class="ly-tks">{cards}</div></div>')
@@ -566,7 +649,23 @@ SHEET = {
               "early treatment is the next best."),
     "front": front,
     "css": CSS,
-    # back: exactly as draft 1 (sheets.py); a later pass revises the products.
+    # back: exactly as draft 1 (sheets.py) and frozen in the 2026-11-03 fix round; the
+    # back-page pass revises the products and the check panel.  Sources for its numbers
+    # (cdc.gov was not reachable from the fix session, so the CDC lines were checked
+    # against archived copies of the same pages):
+    #   permethrin on clothing and gear; EPA-registered DEET, picaridin, IR3535 or oil of
+    #   lemon eucalyptus; tumble dry on HIGH heat for 10 minutes; shower within 2 hours of
+    #   coming indoors; check scalp, ears, armpits, waist, behind the knees: CDC
+    #   "Preventing Tick Bites on People".
+    #   Fine-tipped tweezers close to the skin, pull upward with steady pressure; note when
+    #   and where the bite happened: CDC "Removing a Tick" / "Symptoms of Tickborne Illness".
+    #   Doxycycline 2 to 3 hours apart from calcium, magnesium, iron and zinc: doxycycline
+    #   prescribing information (absorption impaired by antacids with calcium or magnesium,
+    #   and by iron and zinc) and NHS doxycycline guidance (2 hours); not re-opened this round.
+    #   Probiotic 2 hours apart from each antibiotic dose and 2 weeks after: common
+    #   pharmacist practice; no primary source found in this round (flagged for the back pass).
+    #   Note: Mito Recharge carries 75 mg magnesium per 3 capsules (sell sheet ND812), so
+    #   the back pass should name it in the doxycycline line and move it off the morning slot.
     "back": {
         "life_title": "Lifestyle Recommendations", "life_sub": "Avoiding tick bites", "style": "icons",
         "life": [("shirt", "Clothing", "Light colors, long sleeves, pants tucked into socks. Treat gear with permethrin."),

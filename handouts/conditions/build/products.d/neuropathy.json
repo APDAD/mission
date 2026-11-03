@@ -3,37 +3,65 @@
     "name": "Nerve Eze",
     "size": "60 capsules",
     "img_src": "R184.png",
-    "key": "300 mg PEA (palmitoylethanolamide, as Levagen+) and 150 mg alpha lipoic acid per capsule",
+    "key": "Per capsule: 300&nbsp;mg PEA (palmitoylethanolamide, as Levagen+), 150&nbsp;mg alpha lipoic acid (ALA)",
     "dose": "1 capsule twice daily",
-    "dosesub": "",
+    "dosesub": "morning and bedtime",
     "sched": [
-      [
-        "am",
-        1,
-        "capsule"
-      ],
-      [
-        "bed",
-        1,
-        "capsule"
-      ]
+      ["am", 1, "capsule"],
+      ["bed", 1, "capsule"]
     ],
-    "src": "NutriDyn sell sheet Nerve Eze SS ND633, Rev. 8/24 (Dropbox /NutriDyn/Sales/Practitioner Resource/NutriDyn Marketing Materials/, id:xHepYs_Ou4AAAAAAAAtRRg), read into scratchpad labels/labels.json: 1 capsule = PEA (Levagen+) 300 mg + alpha lipoic acid 150 mg; directions 'Take one capsule twice daily'. Size: ND144 price list 10/1/26 line 'Nerve Eze R184 60C'."
+    "src": "NutriDyn sell sheet Nerve Eze SS ND633, Rev. 8/24 (Dropbox /NutriDyn/Sales/Practitioner Resource/NutriDyn Marketing Materials/, id:xHepYs_Ou4AAAAAAAAtRRg), read into scratchpad labels/labels.json: 1 capsule = PEA (Levagen+) 300 mg + alpha lipoic acid (ALA) 150 mg; directions 'Take one capsule twice daily'; caution 'If you are pregnant, nursing, or taking medication, consult your healthcare practitioner before use.' Size: ND144 price list 10/1/26 line 'Nerve Eze R184 60C'. 'Morning and bedtime' is the sheet's schedule. No verified product-page slug, so the link falls back to the nutridyn.com catalog search."
+  },
+  "nrp_gluco_ir": {
+    "name": "Gluco IR",
+    "size": "150 capsules &middot; 30 servings",
+    "img_src": "R960.png",
+    "key": "Per 5 capsules: 100&nbsp;mg dihydroberberine, 300&nbsp;mg ALA, 600&nbsp;mcg chromium, 2,000&nbsp;mcg biotin, 500&nbsp;mg Ceylon cinnamon, plus gymnema, fenugreek, banaba and green tea",
+    "dose": "5 capsules daily",
+    "dosesub": "with meals",
+    "sched": [
+      ["am", 3, "capsules"],
+      ["pm", 2, "capsules"]
+    ],
+    "url": "https://nutridyn.com/gluco-ir",
+    "src": "Product DB scratchpad products/nutridyn_products.json R960 (NutriDyn catalog ND143 10/1/26 as read by the switch charts): Ortho Molecular Diaxinol row 'alpha lipoic acid NutriDyn 300 mg (5 capsules); chromium 600 mcg; biotin 2,000 mcg; cinnamon NutriDyn 500 mg Ceylon cinnamon powder'; Metagenics Insinase row 'NutriDyn 5 capsules = dihydroberberine 100 mg, chromium 600 mcg, biotin 2,000 mcg, Ceylon cinnamon 500 mg, alpha lipoic acid 300 mg'; Metagenics MetaGlycemX row adds green tea leaf extract 200 mg; DFH GlucoSupreme Herbal row adds fenugreek 500 mg, gymnema 200 mg, banaba 50 mg; directions 'Take five capsules daily'; SKU R960 150C = 30 servings (Metagenics row). Same amounts in products/needs.md line 45 (its vitamin C 300 mg, vitamin E 134 mg and B12 150 mcg belong to the Metagenics side of the MetaGlycemX row, which says NutriDyn has 'none beyond chromium and biotin', so they are left out). The repo blast blasts/2026-09-22-gluco-ir-back.html gives the dihydroberberine form (GlucoVantage, left off the printed line for space), 'Five capsules: dihydroberberine, chromium, biotin, Ceylon cinnamon, alpha-lipoic acid and six more', the qualifier 'Promotes healthy blood glucose levels already in the normal range' and the URL. The 3 + 2 split with meals is the sheet's schedule, copied from products.py gluco_ir (sheet-local key so the shared gluco_ir line other sheets print is untouched)."
   },
   "nrp_b12_pro": {
     "name": "B12 Pro",
     "size": "60 quick-dissolve tablets",
     "img_src": "R2181.png",
-    "key": "5,000 mcg vitamin B12 as methylcobalamin per quick-dissolve tablet",
+    "key": "Per tablet: 5,000&nbsp;mcg vitamin B12 as methylcobalamin, <span class=\"nrp-nw\">quick-dissolve</span>",
     "dose": "1 tablet daily",
-    "dosesub": "",
+    "dosesub": "let it dissolve in your mouth",
     "sched": [
-      [
-        "am",
-        1,
-        "tablet"
-      ]
+      ["am", 1, "tablet"]
     ],
-    "src": "Product DB scratchpad products/nutridyn_products.json R2181 (NutriDyn catalog ND143 10/1/26 as read by the NuMedica, Nutri-West, Biotics Research and Apex switch charts): 'Vitamin B12 as methylcobalamin per serving: NutriDyn 5,000 mcg (1 quick-dissolve tablet)'; directions 'Take one quick-dissolve tablet by mouth per day'; SKU R2181 60T."
+    "src": "Product DB scratchpad products/nutridyn_products.json R2181 (NutriDyn catalog ND143 10/1/26 as read by the NuMedica, Nutri-West, Biotics Research and Apex switch charts): 'Vitamin B12 as methylcobalamin per serving: NutriDyn 5,000 mcg (1 quick-dissolve tablet)'; directions 'Take one quick-dissolve tablet by mouth per day'; SKU R2181 60T. No verified product-page slug, so the link falls back to the nutridyn.com catalog search."
+  },
+  "nrp_methyl_complete": {
+    "name": "Methyl Complete",
+    "size": "120 capsules",
+    "img_src": "R187.png",
+    "key": "Per 2 capsules: 1&nbsp;mg B12 (methyl + adenosyl), 800&nbsp;mcg DFE folate (<span class=\"nrp-nw\">L-5-MTHF</span>), 10&nbsp;mg vitamin B6 (as P5P), 700&nbsp;mg TMG (betaine) and 500&nbsp;mg NAC (<span class=\"nrp-nw\">N-acetyl</span> cysteine)",
+    "dose": "2 capsules daily",
+    "dosesub": "with breakfast",
+    "sched": [
+      ["am", 2, "capsules"]
+    ],
+    "url": "https://nutridyn.com/methyl-complete-r187",
+    "src": "Product DB scratchpad products/nutridyn_products.json R187 (NutriDyn catalog ND143 10/1/26 as read by the Pure Homocysteine Factors, DFH Homocysteine Supreme, Ortho Cardio B and Methyl CpG and Metagenics Methyl Care rows): per 2 capsules trimethylglycine (TMG) 700 mg, folate (L-5-MTHF) 800 mcg DFE, B12 1 mg (methylcobalamin and adenosylcobalamin), B6 (pyridoxal 5'-phosphate, P5P) 10 mg, N-acetyl-L-cysteine (NAC) 500 mg; directions 'Take two capsules once daily'; SKU R187 120C. URL slug from products.py SLUGS (NutriDyn 60-day protocol doc); 'with breakfast' from products.py methyl_b. Sheet-local key so this sheet can keep numbers and units together without changing the shared methyl_b line."
+  },
+  "nrp_omega": {
+    "name": "Omega Pure EPA‑DHA 1000",
+    "size": "120 softgels",
+    "img_src": "R243.png",
+    "key": "Per softgel: 1,000&nbsp;mg EPA + DHA (730&nbsp;mg EPA, 270&nbsp;mg DHA)",
+    "dose": "1 softgel daily",
+    "dosesub": "with your evening meal",
+    "sched": [
+      ["pm", 1, "softgel"]
+    ],
+    "url": "https://nutridyn.com/omega-pure-epa-dha-1000",
+    "src": "Product DB scratchpad products/nutridyn_products.json R243 (NutriDyn catalog ND143 10/1/26 as read by the Pure, DFH, Ortho, Metagenics, Integrative Therapeutics, NuMedica, Nutri-West and Biotics switch charts): EPA 730 mg + DHA 270 mg = 1,000 mg per softgel; directions 'Take one softgel up to three times daily with food'; SKU R243 120S. One softgel with the evening meal is the sheet's plan, inside the label directions (same as products.py omega_1000). URL slug from products.py SLUGS. Sheet-local key only so the name and amounts never break between a number and its unit (non-breaking hyphen and space in the name)."
   }
 }

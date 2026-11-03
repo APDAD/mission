@@ -4,16 +4,28 @@ Self-contained sheet module (no legacy / sheets.py / art.py drawing code).
 FRONT, top to bottom:
   intro -> "One woman, every system": a standing woman drawn from mirrored splines (so she is
   exactly symmetric), with the parts each system note points to: hair, breasts, heart, liver,
-  stomach and bowel, ovaries and uterus, bladder, pelvis and hip, thigh muscles.  A gold dot marks
-  each place a change can show up; a magnified circle shows the hypothalamus (the thermostat).
+  stomach and bowel, ovaries and uterus, bladder, pelvis and hip, thigh muscles.  The hip bones are
+  drawn BEHIND the bowel (front view) in a bone colour that reads apart from the skin; the liver,
+  stomach, colon and pelvis are named on small white pills.  The KEY names the gold dot (where a
+  change can show up) and the red and blue vessels at the heart; a magnified circle, joined to the
+  BRAIN note by a leader, shows the hypothalamus (the thermostat).
   -> "Why hot flashes happen" (the comfort zone that narrows) beside "How your hormones change"
   (grey stage bands, a pink estrogen line that swings then falls, a purple dashed progesterone line
-  that falls first, plus the hot-flash and fast-bone-loss windows) -> one KEY for every symbol.
-  -> "Track your symptoms" (the 12 Menopause Map questions, 0 to 3) beside "Hot flashes: what works
-  best" (hormone therapy first, said plainly) -> a "see your provider soon" strip.
-BACK: lifestyle circles, five NutriDyn picks (one per system), daily rhythm, an edition check.
+  that falls first, the MENOPAUSE marker at about age 51, plus the hot-flash and fast-bone-loss
+  windows) -> one KEY for every symbol.
+  -> "Track your symptoms" (the 12 Menopause Map questions, scored on the Map's 0 to 3 scale) beside
+  "Hot flashes: what works best" (hormone therapy first; supplements not proven for hot flashes,
+  said plainly, with a 6-week retest for anyone who tries EstroG-100).  The back's START HERE pick
+  is sold for "comfort through menopause", never for hot flashes, so the two pages agree.
+  The OVARIES AND UTERUS note carries the pregnancy fact and the see-your-doctor bleeding signs.
+BACK: lifestyle circles, five NutriDyn picks (one per system), daily rhythm, and ONE safety check
+that is identical in both editions apart from {who} (pregnancy and cancer label cautions, liver
+signs, warfarin and vitamin K, ashwagandha with thyroid or sedating drugs, the vitamin D upper
+limit, creatine and creatinine, antibiotic and bone-drug spacing from magnesium).
 Every SVG id starts with "mnp-" and every CSS class with "mnp-", so nothing collides with other
-sheets in the all-sheets bundle.  Edition wording: "{who}" / "{Who}" (build.ed_text).
+sheets in the all-sheets bundle; the back page is reached with .sheet.back:has(.mnp-back), which
+also lifts the shared kit's 6.2 to 6.8 pt column text to 7 pt on this sheet.
+Hormone-therapy asks say "your doctor" in both editions (it needs a prescriber).
 
 SOURCES (tags sit in comments next to each number or claim on the page)
   [GOLD11]   Gold EB. Obstet Gynecol Clin North Am 2011;38:425-40. doi:10.1016/j.ogc.2011.05.002
@@ -52,19 +64,31 @@ SOURCES (tags sit in comments next to each number or claim on the page)
              gabapentin, fezolinetant, oxybutynin, weight loss, stellate ganglion block.  NOT
              recommended for hot flashes: supplements/herbal remedies, cooling, avoiding triggers,
              exercise, yoga, soy, acupuncture.  Hormone therapy remains the most effective treatment.)
-  [ESTRO]    EstroG-100 trials.  Snigdha S et al. Menopause 2025;32:1036-45.
-             doi:10.1097/GME.0000000000002608 (n=80, EstroG-100 514 mg + GABA 50 mg, 5 weeks; authors
-             from OLLY PBC / Unilever, the maker of the tested product: industry funded).  Chang A et
+  [ESTRO]    EstroG-100 trials.  Snigdha S et al. Menopause 2025;32:1036-45. PMID 40663563,
+             doi:10.1097/GME.0000000000002608 (n=80, EstroG-100 514 mg + GABA 50 mg, 5 weeks; 3 of 5
+             authors at OLLY PBC, Unilever Wellbeing Collective, a supplement company; the abstract
+             does not state funding, so the sheet says "run by", not "paid for by").  Chang A et
              al. Phytother Res 2012;26:510-6. doi:10.1002/ptr.3597 (n=64, 12 weeks).  Farzaneh F et al.
              Explore 2024;20:334-9. doi:10.1016/j.explore.2023.09.004 (120 randomized, 70 analyzed).
   [ASHW24]   Arumugam V et al. Explore 2024;20:103062. doi:10.1016/j.explore.2024.103062 (9 RCTs:
              ashwagandha lowered perceived stress, anxiety and serum cortisol)
-  [CREA26]   Naddafha S et al. J Int Soc Sports Nutr 2026;23:2668435. doi:10.1080/15502783.2026.2668435
-             (7 RCTs after menopause: +7.5 kg leg press, +0.37 kg lean mass at >=5 g/day with
-             training; bone density unchanged; kidney markers unchanged)
-  [MAP]      Asher's "Menopause Map" protocol artifact: 12 symptom questions scored 0-3 (total /36),
-             retest at 6 weeks; PeriMenopause Support within a year of the last period, Menopause
-             Support after; D3 5000 with K2 for everyone; UltraBiotic Women's for dryness or UTIs.
+  [CREA26]   Naddafha S et al. J Int Soc Sports Nutr 2026;23:2668435. PMID 42141930,
+             doi:10.1080/15502783.2026.2668435 (7 RCTs after menopause: +7.5 kg leg press, +0.37 kg
+             lean mass; benefit when >=5 g/day was combined with resistance training, none at
+             <=3 g/day without training; bone density unchanged; kidney markers unchanged)
+  [MAP]      Asher's "Menopause Map" protocol artifact: 12 symptom questions scored "0 none, 1 mild,
+             2 disrupts some days, 3 disrupts most days" (total /36), retest at 6 weeks; PeriMenopause
+             Support when the last period was within the last year, Menopause Support after; D3 5000
+             with K2 for everyone; UltraBiotic Women's for dryness or UTIs.  Under 45 or cycles under
+             21 days: rule out thyroid, pregnancy and high prolactin first.
+  [ODS]      NIH Office of Dietary Supplements fact sheets: vitamin D (adult upper limit 4,000 IU a
+             day); vitamin K (interacts with warfarin); magnesium (take tetracycline or quinolone
+             antibiotics at least 2 hours before or 4 to 6 hours after it; keep oral bisphosphonates
+             such as alendronate at least 2 hours apart); black cohosh (rare liver injury).  NCCIH
+             ashwagandha (possible interactions with thyroid hormone and sedatives; rare liver injury).
+  [LABELS]   Sell sheets ND564 Menopause Support and ND565 PeriMenopause Support (Rev. 8/24): "Do not
+             use if pregnant or nursing. This product is not recommended for individuals with known
+             or suspected estrogen-dependent cancer."
   [ACOG]     ACOG Committee Opinion 734 (2018): any bleeding after menopause needs evaluation.  ACOG
              patient guidance: bleeding more often than every 3 weeks, or heavier and longer than
              usual, needs a check.  Menopause before 40 is premature and needs a work-up (NAMS).
@@ -73,7 +97,7 @@ import math
 import os
 
 from kit import ICONS
-from svgkit import T, svg
+from svgkit import T, label_bg, svg
 
 SLUG = "menopause"
 
@@ -127,7 +151,8 @@ SKIN, SKIN_EDGE, SKIN_LN = "#F7E4DA", "#EFD0C3", "#C4968A"
 HAIR_A, HAIR_B, HAIR_LN = "#6E4C3E", "#4C3329", "#3A261E"
 GOLD, GOLD_LN = "#F2B632", "#8A5A00"          # gold dot: where a change can show up
 LEAD = "#6F5F66"                              # leader lines
-BONE, BONE_LN = "#F5EDDA", "#BFA57B"
+BONE, BONE_LN = "#EEDDB8", "#A8875A"          # bone: warm cream with a clear brown edge (reads apart from skin)
+SACRUM = "#E6D2A6"
 MUSCLE, MUSCLE_LN = "#E39A8D", "#C47263"
 UTER, UTER_LN = "#E3869C", "#A9506A"
 OVARY, OVARY_LN = "#F6CBD5", "#BE6F86"
@@ -197,8 +222,10 @@ IC_RIBBON = ('<path d="M24 56 39 31c4-7 5-13 1-18-2-3-5-4-8-4s-6 1-8 4c-4 5-3 11
 IC_UTERUS = ('<path d="M22 22c0 11 5 17 7 21v11h6V43c2-4 7-10 7-21 0-5-20-5-20 0z"/>'
              '<path d="M22 22c-5-6-11-6-14-1M42 22c5-6 11-6 14-1"/>'
              '<circle cx="9" cy="29" r="4.5"/><circle cx="55" cy="29" r="4.5"/>')
-IC_BLADDER = ('<path d="M32 10c-10 0-19 9-19 21 0 9 6 15 13 17v6h12v-6c7-2 13-8 13-17 0-12-9-21-19-21z"/>'
-              '<path d="M24 30c0 5 3 8 8 9"/>')
+# bladder: the two tubes from the kidneys come in at the top, one tube leaves below
+IC_BLADDER = ('<path d="M9 5c2 8 6 13 13 18M55 5c-2 8-6 13-13 18"/>'
+              '<path d="M13 37c0-10 8-16 19-16s19 6 19 16-9 15-19 15-19-5-19-15z"/>'
+              '<path d="M32 52v9"/><path d="M21 37c0 4 3 7 7 8"/>')
 
 
 # ============================================================== the figure (local units, head = 80)
@@ -233,9 +260,11 @@ HAIR_BACK_D = _spline(_mirror(HAIR_BACK_R))
 HAIR_FRONT_D = _spline(HAIR_FRONT)
 HAIRLINE_D = _spline(HAIRLINE, closed=False)
 
-# where each gold dot sits (local units)
-DOT = {"hair": (31.5, 50), "breast": (-31, 169), "heart": (8, 158), "gut": (-9, 250), "ovary": (28.6, 275),
-       "bladder": (8, 307), "hip": (-45, 287), "thigh": (-34, 338), "brain": (0, 41)}
+# where each gold dot sits (local units).  The ovary dot sits just below and outside her left
+# ovary (the ovary itself stays visible); the hip dot sits on the bony knob at the outside of her
+# right hip (greater trochanter), clear of the ball of the hip joint.
+DOT = {"hair": (31.5, 50), "breast": (-31, 169), "heart": (8, 158), "gut": (-9, 250), "ovary": (33, 286),
+       "bladder": (8, 307), "hip": (-61.2, 297), "thigh": (-34, 338), "brain": (0, 41)}
 
 
 def _pelvis():
@@ -249,24 +278,24 @@ def _pelvis():
         ring = [(40.5 * s, 287), (35.6 * s, 293.4), (24.6 * s, 297.2), (8.4 * s, 299.6, 0.5), (4.2 * s, 302, 0.5),
                 (4.4 * s, 309.6, 0.5), (9 * s, 312.4), (20 * s, 314), (31.5 * s, 312.4), (38.6 * s, 306),
                 (42.6 * s, 296.5)]
-        o.append(f'<path d="{_spline(wing)}" fill="{BONE}" stroke="{BONE_LN}" stroke-width=".9"/>')
+        o.append(f'<path d="{_spline(wing)}" fill="{BONE}" stroke="{BONE_LN}" stroke-width="1"/>')
         o.append(f'<path d="M{19 * s},{263} C{27 * s},{254.6} {41 * s},{251.4} {52 * s},{256} C{50 * s},{266} '
                  f'{45 * s},{274} {39 * s},{279}" fill="none" stroke="{BONE_LN}" stroke-width=".8" opacity=".55"/>')
-        o.append(f'<path d="{_spline(ring)}" fill="{BONE}" stroke="{BONE_LN}" stroke-width=".9"/>')
+        o.append(f'<path d="{_spline(ring)}" fill="{BONE}" stroke="{BONE_LN}" stroke-width="1"/>')
         o.append(f'<ellipse cx="{21.5 * s}" cy="305.4" rx="8.6" ry="5.6" fill="{SKIN}" stroke="{BONE_LN}" '
                  f'stroke-width=".8" transform="rotate({-12 * s} {21.5 * s} 305.4)"/>')            # obturator hole
         o.append(f'<path d="M{47 * s - 4 * s},{276} A10.5,10.5 0 0 {1 if s > 0 else 0} {47 * s + 3 * s},{296.6}" '
                  f'fill="none" stroke="{BONE_LN}" stroke-width="1.3"/>')                        # hip-socket rim
         shaft = [(57.4 * s, 300), (58.2 * s, 318), (56.8 * s, 343), (52.8 * s, 369, 0.3), (43.4 * s, 369, 0.3),
                  (46.4 * s, 343), (48.6 * s, 318), (49.8 * s, 302)]
-        o.append(f'<path d="{_spline(shaft)}" fill="{BONE}" stroke="{BONE_LN}" stroke-width=".9"/>')
+        o.append(f'<path d="{_spline(shaft)}" fill="{BONE}" stroke="{BONE_LN}" stroke-width="1"/>')
         neck = [(45.2 * s, 280.5), (52.4 * s, 283.2), (59.6 * s, 286.4), (64 * s, 290.6), (64.6 * s, 297.2),
                 (61.4 * s, 302.6), (55.4 * s, 303.2), (50.2 * s, 297.6), (45.6 * s, 294.2)]
-        o.append(f'<path d="{_spline(neck)}" fill="{BONE}" stroke="{BONE_LN}" stroke-width=".9"/>')
-        o.append(f'<circle cx="{46.2 * s}" cy="287.4" r="8.1" fill="{BONE}" stroke="{BONE_LN}" stroke-width=".9"/>')
+        o.append(f'<path d="{_spline(neck)}" fill="{BONE}" stroke="{BONE_LN}" stroke-width="1"/>')
+        o.append(f'<circle cx="{46.2 * s}" cy="287.4" r="8.1" fill="{BONE}" stroke="{BONE_LN}" stroke-width="1"/>')
     sac = [(-14.8, 253.6), (-5, 251.4), (5, 251.4), (14.8, 253.6), (13.2, 266), (7.4, 279), (0, 290, 0.5),
            (-7.4, 279), (-13.2, 266)]
-    o.append(f'<path d="{_spline(sac)}" fill="#EFE4CB" stroke="{BONE_LN}" stroke-width=".9"/>')
+    o.append(f'<path d="{_spline(sac)}" fill="{SACRUM}" stroke="{BONE_LN}" stroke-width="1"/>')
     for y in (259, 267, 275):
         o.append(f'<circle cx="-5.2" cy="{y}" r="1.5" fill="{BONE_LN}" opacity=".45"/>'
                  f'<circle cx="5.2" cy="{y}" r="1.5" fill="{BONE_LN}" opacity=".45"/>')
@@ -392,7 +421,9 @@ def figure():
     fill = "".join(f'<path d="{d}" fill="url(#mnp-skin)"/>' for d in skin)
     collar = "".join(f'<path d="M{7 * s},101.5 C{19 * s},104.6 {35 * s},104.2 {51 * s},108.6" fill="none" stroke="#D7A999" '
                      'stroke-width="1.3" stroke-linecap="round" opacity=".85"/>' for s in (1, -1))
-    inner = (f'<g clip-path="url(#mnp-torso)">{collar}{_breasts()}{_heart()}{_abdomen()}{_pelvis()}'
+    # front view: the hip bones sit BEHIND the bowel, so the pelvis is drawn first; the uterus,
+    # ovaries and bladder stay on top so the notes can point at them
+    inner = (f'<g clip-path="url(#mnp-torso)">{collar}{_breasts()}{_heart()}{_pelvis()}{_abdomen()}'
              f'{_pelvic_organs()}{_thigh_muscles()}</g>')
     head = (f'<path d="{HAIR_BACK_D}" fill="url(#mnp-hair)" stroke="{HAIR_LN}" stroke-width="1.1"/>'
             f'<path d="{HEAD_D}" fill="url(#mnp-face)" stroke="{SKIN_LN}" stroke-width="1.3"/>'
@@ -507,58 +538,108 @@ def _serif(x, y, lines, size, fill, weight=900, ls=0.6, anchor="start", lh=1.22)
 
 
 CALL_TS, CALL_BS, CALL_LH = 11.6, 10.5, 13.2     # title / body size (>= 7.6 pt printed), body line step
+NOTE_W = 210                                      # both note columns are 210 units wide
 
 
-def callout(side, y, title, text, ico, t):
+def callout(side, y, title, text, ico, t, warn=None):
     """One system note.  Left: icon disc at x 20, text x 40 to 250, leader leaves at x 252.
-    Right: text x 520 to 720, icon disc at x 740, leader leaves at x 508."""
+    Right: text x 512 to 722, icon disc at x 740, leader leaves at x 500.  `warn` is an optional
+    second paragraph in the theme's deep colour (a see-your-doctor line)."""
     c1, soft = t["c1"], t["soft"]
     if side == "L":
-        dx, tx, rule, width = 20, 40, (40, 252), 210
+        dx, tx, rule = 20, 40, (40, 252)
     else:
-        dx, tx, rule, width = 740, 520, (508, 722), 200
-    lines = wrap(text, width, CALL_BS, 500)
+        dx, tx, rule = 740, 512, (500, 722)
+    lines = wrap(text, NOTE_W, CALL_BS, 500)
     o = [f'<circle cx="{dx}" cy="{y - 4}" r="14.5" fill="{soft}" stroke="{c1}" stroke-width="1.2"/>',
          _ic(ico, dx, y - 4, 20, c1, 4.6),
          T(tx, y, title, CALL_TS, 800, t["deep"], ls=0.5),
          f'<path d="M{rule[0]},{y + 5} H{rule[1]}" stroke="{c1}" stroke-width="1" opacity=".35"/>',
          T(tx, y + 5 + CALL_LH, lines, CALL_BS, 500, INK, lh=CALL_LH / CALL_BS)]
+    bottom = y + 5 + CALL_LH * len(lines)
+    if warn:
+        wl = wrap(warn, NOTE_W, CALL_BS, 600)
+        y2 = bottom + CALL_LH + 2.5
+        o.append(T(tx, y2, wl, CALL_BS, 600, t["deep"], lh=CALL_LH / CALL_BS))
+        bottom = y2 + CALL_LH * (len(wl) - 1)
     anchor = (rule[1], y + 5) if side == "L" else (rule[0], y + 5)
-    return "".join(o), anchor, y + 5 + CALL_LH * len(lines)
+    return "".join(o), anchor, bottom
 
 
 # ============================================================== picture 1: one woman, every system
 FX, FY = 380, 8             # where the figure's crown sits in the viewBox
 BM_W, BM_H = 760, 372
-INSET_C, INSET_R = (200, 62), 50
+INSET_C, INSET_R = (218, 62), 50
+KEY_BOX = (4, 42, 152, 79)  # x, y, w, h of the KEY (top left, under the heading)
 
-NOTES_L = [  # (title baseline y, title, text, icon, dots)
+# Each note: title baseline y, title, text, icon, the dots its leader goes to.  `via` bends a leader
+# through extra points; `to_inset` draws the BRAIN leader to the magnified circle.
+NOTES_L = [
     # [FREE99] thermostat; [SANT16] sleep, mood and anxiety; brain fog is on the [MAP] checklist
-    (136, "BRAIN", "Its thermostat (the hypothalamus) misfires as estrogen falls: hot flashes, night sweats. "
-                   "Sleep and mood can shift.", "brain", []),
+    dict(y=147, title="BRAIN", text="Its thermostat (the hypothalamus) misfires as estrogen falls: hot flashes, "
+                                    "night sweats. Sleep and mood can shift.", ico="brain", dots=[], to_inset=True),
     # breast tenderness with perimenopause estrogen surges [SANT96]; on the [MAP] checklist
-    (206, "BREASTS", "Can feel tender while hormones swing. Keep up with mammograms and report any new lump.",
-     IC_RIBBON, ["breast"]),
+    dict(y=214, title="BREASTS", text="Can feel tender while hormones swing. Keep up with mammograms and report "
+                                      "any new lump.", ico=IC_RIBBON, dots=["breast"]),
     # [GREEN19] fat gain doubles; [AHA20] belly fat; [PETERS22] gut microbiome shifts after menopause
-    (272, "GUT AND WEIGHT", "Fat gain speeds up and shifts to the belly. Gut bacteria change too.", "gut", ["gut"]),
+    dict(y=279, title="GUT AND WEIGHT", text="Fat gain speeds up and shifts to the belly. Gut bacteria change too.",
+         ico="gut", dots=["gut"]),
     # [GREEN12] fastest bone loss from 1 year before to 2 years after the last period;
     # [GREEN19] lean (muscle) mass starts to fall as the transition begins
-    (328, "BONES AND MUSCLES", "Bone thins fastest around the last period. Muscle and strength slip too.", "bone",
-     ["hip", "thigh"]),
+    dict(y=332, title="BONES AND MUSCLES", text="Bone thins fastest around the last period. Muscle and strength "
+                                                "slip too.", ico="bone", dots=["hip", "thigh"]),
 ]
 NOTES_R = [
     # [THORN13]
-    (28, "SKIN AND HAIR", "Less collagen, so skin gets thinner and drier. Hair can thin.", "hair", ["hair"]),
+    dict(y=28, title="SKIN AND HAIR", text="Less collagen, so skin gets thinner and drier. Hair can thin.",
+         ico="hair", dots=["hair"]),
     # [AHA20]
-    (124, "HEART AND VESSELS", "LDL (bad) cholesterol tends to rise, so heart risk climbs. Know your numbers.", "heart",
-     ["heart"]),
-    # [GOLD11] follicle loss -> less estradiol; [SANT96] uneven estrogen, less progesterone; [ACOG] bleeding
-    (214, "OVARIES AND UTERUS", "Eggs run low, so hormones swing, then fall. Periods change, then stop. "
-                                "Any bleeding after that needs a check.", IC_UTERUS, ["ovary"]),
+    dict(y=100, title="HEART AND VESSELS", text="LDL (bad) cholesterol tends to rise, so heart risk climbs. "
+                                                "Know your numbers.", ico="heart", dots=["heart"]),
+    # [GOLD11] follicle loss -> less estradiol; [SANT96] uneven estrogen, less progesterone.
+    # Pregnancy: ACOG FAQ "The Menopause Years" / NAMS: use birth control until 12 months with no period.
+    # Warning signs [ACOG]: any bleeding after menopause (CO 734); in perimenopause, very heavy or long
+    # bleeding, periods closer than every 3 weeks, bleeding after sex; changes before 40 = premature
+    # menopause, needs a work-up (NAMS).  [MAP]: under 45 or cycles under 21 days, rule out thyroid,
+    # pregnancy and high prolactin first.
+    dict(y=160, title="OVARIES AND UTERUS",
+         text="Eggs run low, so hormones swing, then fall. Periods change, then stop. You can still get pregnant "
+              "until 12 months with no period.",
+         warn="See your doctor for any bleeding after menopause, very heavy periods, periods closer than 3 weeks "
+              "apart, bleeding after sex, or these changes before 40.",
+         ico=IC_UTERUS, dots=["ovary"], via=[(488, 262)]),
     # [GSM20] 27-84% after menopause, treatable; [SANT16] does not go away without treatment
-    (302, "BLADDER AND VAGINA", "Dryness, pain with sex, urgency and bladder infections. Common, and treatable.",
-     IC_BLADDER, ["bladder"]),
+    dict(y=320, title="BLADDER AND VAGINA", text="Dryness, painful sex, urgency and bladder infections. Common and "
+                                                 "treatable.", ico=IC_BLADDER, dots=["bladder"]),
 ]
+
+# organ names, drawn small on white pills where each organ has room (global units, centre of the pill)
+ORGANS = [("liver", 342, 212), ("stomach", 405, 208.5), ("colon", 370, 233.5), ("pelvis", 426, 308)]
+
+
+def _organ_label(text, cx, cy):
+    w = tw(text, 10.2, 600) + 9
+    return (label_bg(cx - w / 2, cy - 6.8, w, 13.4, opacity=.9, rx=6.7)
+            + f'<rect x="{cx - w / 2:.1f}" y="{cy - 6.8:.1f}" width="{w:.1f}" height="13.4" rx="6.7" fill="none" '
+              'stroke="#B9A9A1" stroke-width=".6"/>'
+            + T(cx, cy + 3.6, text, 10.2, 600, INK2, "middle"))
+
+
+def key_box():
+    """KEY for the body map: the gold dot, and the red and blue vessels at the heart."""
+    x, y, w, h = KEY_BOX
+    tx = x + 30
+    o = [f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="8" fill="#fff" stroke="#D9CBD2" stroke-width="1.2"/>',
+         T(x + 10, y + 14, "KEY", 10.4, 800, INK, ls=1.3),
+         _dot(x + 18, y + 29.5, 5),
+         T(tx, y + 26, ["Where a change", "can show up"], 10.4, 600, INK, lh=1.2)]
+    for row, (dark, light, lab) in enumerate((("#7A1820", "#C7363F", "Blood out of the heart"),
+                                              ("#3E4F8C", "#6F84C9", "Blood back to the heart"))):
+        cy = y + 52.5 + row * 13.5
+        o.append(f'<path d="M{x + 10},{cy} H{x + 22}" stroke="{dark}" stroke-width="4.6" stroke-linecap="round"/>'
+                 f'<path d="M{x + 10},{cy} H{x + 22}" stroke="{light}" stroke-width="3" stroke-linecap="round"/>')
+        o.append(T(tx, cy + 3.6, lab, 10.4, 600, INK))
+    return "".join(o)
 
 
 def body_map(t):
@@ -567,12 +648,11 @@ def body_map(t):
     out = [f'<defs>{figure_defs()}<clipPath id="mnp-inset"><circle cx="{INSET_C[0]}" cy="{INSET_C[1]}" '
            f'r="{INSET_R - 1}"/></clipPath></defs>']
     out.append(f'<g transform="translate({FX},{FY})">{figure()}</g>')
+    out += [_organ_label(*o) for o in ORGANS]
 
     # ---- heading and KEY, top left
     out.append(_serif(4, 17, ["ONE WOMAN,", "EVERY SYSTEM"], 14, c1, lh=1.25))
-    out.append(f'<rect x="4" y="46" width="128" height="56" rx="8" fill="#fff" stroke="#D9CBD2" stroke-width="1.2"/>'
-               + T(14, 62, "KEY", 10.4, 800, INK, ls=1.3) + _dot(22, 84, 5)
-               + T(34, 80.4, ["Where a change", "can show up"], 10.4, 600, INK, lh=1.2))
+    out.append(key_box())
 
     # ---- magnified hypothalamus: lens on the head, zoom cone, circle with the side-view brain
     lens_c, lens_r = g("brain"), 7.5
@@ -600,12 +680,17 @@ def body_map(t):
     # ---- the eight system notes and their leaders
     marks = []
     for side, notes in (("L", NOTES_L), ("R", NOTES_R)):
-        for y, title, text, ico, dots in notes:
-            s, (ax, ay), _ = callout(side, y, title, text, ico, t)
+        for n in notes:
+            s, (ax, ay), _ = callout(side, n["y"], n["title"], n["text"], n["ico"], t, n.get("warn"))
             out.append(s)
-            for k in dots:
+            elbow = (ax + (12 if side == "L" else -12), ay)
+            if n.get("to_inset"):                 # BRAIN: rule end -> ring of the magnified circle
+                vx, vy = ax - INSET_C[0], ay - INSET_C[1]
+                k = (INSET_R + 2.2) / math.hypot(vx, vy)
+                out.append(_leader([(ax, ay), (INSET_C[0] + vx * k, INSET_C[1] + vy * k)]))
+            for k in n["dots"]:
                 px, py = g(k)
-                out.append(_leader([(ax, ay), (ax + (12 if side == "L" else -12), ay), (px, py)]))
+                out.append(_leader([(ax, ay), elbow] + n.get("via", []) + [(px, py)]))
                 marks.append((px, py))
     for px, py in marks:
         out.append(_dot(px, py))
@@ -613,7 +698,7 @@ def body_map(t):
     return svg(BM_W, BM_H, "".join(out),
                "A woman's body with notes on the changes menopause can bring: brain and thermostat, skin and hair, "
                "breasts, heart, gut and weight, ovaries and uterus, bladder and vagina, bones and muscles. "
-               "A magnified circle shows the hypothalamus in the brain.")
+               "The liver, stomach, colon and pelvis are named. A magnified circle shows the hypothalamus in the brain.")
 
 
 # ============================================================== picture 2: hot flashes + hormone timeline
@@ -666,8 +751,9 @@ def hotflash_panel(t):
             px, py = min(tr, key=lambda p: p[1])
             o.append(_burst(px, py, 8.4))
             o.append(T(px + 11, py - 3.5, "hot flash", 10, 800, FLASH_LN))
-            qx, qy = max(tr, key=lambda p: p[1])
-            o.append(T(qx + 2, bot + 11.6, "chills", 10, 800, SHIVER, "middle"))
+            qx, qy = max(tr, key=lambda p: p[1])          # the low point of the body-heat line
+            # baseline 12 units under the low point: about 3.5 units of clear space above the letters
+            o.append(T(qx + 2, max(bot + 14.6, qy + 12), "chills", 10, 800, SHIVER, "middle"))
     # [FREE99]: symptomatic women's zone is ~0.0 C vs 0.4 C; small core rises then trigger flushing and sweating
     lines = wrap("Low estrogen shrinks the brain’s comfort zone for body heat, so a small rise sets off a hot "
                  "flash, often followed by chills.", 284, 10.5, 500)
@@ -750,6 +836,8 @@ def timeline_panel(t):
     mw = tw("MENOPAUSE", 10.2, 800, 0.5) + 14
     o.append(f'<rect x="{X_MENO - mw / 2:.1f}" y="{TL_TOP + 22}" width="{mw:.1f}" height="16" rx="8" fill="{c1}"/>'
              + T(X_MENO, TL_TOP + 33.6, "MENOPAUSE", 10.2, 800, "#fff", "middle", ls=0.5))
+    # [GOLD11] median age at menopause 50 to 52 (US average about 51)
+    o.append(T(X_MENO + mw / 2 + 6, TL_TOP + 33.4, "about age 51", 10, 700, deep))
     o.append(T(X_MENO + 6, TL_TOP + 52, ["12 months in a row", "with no period"], 10, 700, deep, lh=1.18))
     # windows under the axis (the final period sits 1 year before the menopause marker):
     # frequent hot flashes [AVIS15] median 7.4 years in all, 4.5 of them after the final period;
@@ -806,8 +894,9 @@ def tracker():
     cells = "".join(f'<div class="mnp-it"><span>{lab}</span><em><i>0</i><i>1</i><i>2</i><i>3</i></em></div>'
                     for lab in TRACK)
     return ('<div class="mnp-track"><div class="mnp-th"><b>Track your symptoms</b>'
-            '<span>Circle <strong>0</strong> none, <strong>1</strong> mild, <strong>2</strong> some days, '
-            '<strong>3</strong> most days.</span></div>'
+            # [MAP] scale: 0 none, 1 mild, 2 disrupts some days, 3 disrupts most days
+            '<span>Circle <strong>0</strong> none, <strong>1</strong> mild, <strong>2</strong> bothers you some days, '
+            '<strong>3</strong> bothers you most days.</span></div>'
             f'<div class="mnp-grid">{cells}</div>'
             '<div class="mnp-tot"><span>Add them up. Bring this to your visit.</span>'
             '<b>Today</b><i></i><small>/ 36</small><b>In 6 weeks</b><i></i><small>/ 36</small></div></div>')
@@ -816,13 +905,18 @@ def tracker():
 def best_box():
     # [HT22] most effective; favorable under 60 or within 10 years of menopause without contraindications.
     # [NH23] recommended nonhormone options; supplements and herbal remedies not recommended for hot flashes.
-    # [ESTRO] small EstroG-100 trials; the 2025 one was run by the tested product's maker (OLLY / Unilever).
+    # [ESTRO] small EstroG-100 trials (64 to 120 women).  The newest (Snigdha 2025, PubMed 40663563) tested
+    # EstroG-100 WITH GABA; 3 of its 5 authors work at OLLY PBC (Unilever), a supplement company.  The abstract
+    # does not say who paid, so the sheet says "run by", not "paid for by".
+    # The 6-week retest is the [MAP] retest, so the patient can see for herself whether it helps.
     return ('<div class="mnp-best"><h4>Hot flashes: what works best</h4><ol>'
             '<li><b>Hormone therapy works best.</b> For most healthy women under 60, the benefits outweigh the '
             'risks. It needs a prescription, so ask your doctor.</li>'
-            '<li><b>Also proven:</b> CBT, clinical hypnosis and some prescriptions.</li>'
-            '<li><b>Supplements</b> are not recommended for hot flashes. EstroG&#8209;100, in Menopause Support, '
-            'helped in small trials; the newest was paid for by a supplement company.</li></ol>'
+            '<li><b>Also proven:</b> CBT (a short course of talk therapy), clinical hypnosis and some '
+            'prescriptions.</li>'
+            '<li><b>Supplements</b> are not proven for hot flashes. EstroG&#8209;100, in Menopause Support, '
+            'helped in small trials; the newest was run by a supplement company and paired it with GABA. '
+            'If you try it, score yourself again at 6 weeks.</li></ol>'
             '<small>Source: The Menopause Society, 2022 and 2023</small></div>')
 
 
@@ -840,13 +934,13 @@ CSS = r"""
 .mnp .mnp-low{display:grid;grid-template-columns:1.72fr 1fr;gap:0.1in;margin-top:0.06in;align-items:stretch}
 .mnp .mnp-track{border:1px solid #E7D3DC;border-radius:9px;background:var(--tint);padding:0.05in 0.1in 0.05in;
   display:flex;flex-direction:column}
-.mnp .mnp-th{display:flex;align-items:baseline;gap:8px;margin-bottom:2px}
+.mnp .mnp-th{display:flex;flex-direction:column;margin-bottom:2px}
 .mnp .mnp-th b{font:900 10.2pt Merriweather,Georgia,serif;color:var(--c1);white-space:nowrap}
-.mnp .mnp-th span{font-size:7.6pt;color:#3F4A50}
+.mnp .mnp-th span{font-size:7.6pt;line-height:1.25;color:#3F4A50;white-space:nowrap}
 .mnp .mnp-th strong{color:var(--deep)}
 .mnp .mnp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0 12px}
 .mnp .mnp-it{display:flex;align-items:center;justify-content:space-between;gap:4px;border-bottom:1px dotted #E2C9D4;
-  padding:3px 0}
+  padding:6.4px 0}
 .mnp .mnp-it span{font-size:7.6pt;line-height:1.1;color:#2B3236;white-space:nowrap}
 .mnp .mnp-it em{display:flex;gap:2px;font-style:normal;flex:none}
 .mnp .mnp-it i{display:inline-flex;align-items:center;justify-content:center;width:0.14in;height:0.14in;border-radius:50%;
@@ -864,8 +958,18 @@ CSS = r"""
 .mnp .mnp-best li b{color:var(--deep)}
 .mnp .mnp-best small{margin-top:1px;font-size:7pt;color:#6A747B}
 /* back page: scoped with :has() to the marker span in this sheet's lifestyle title */
-.sheet.back:has(.mnp-back) .col .need{height:0.56in;min-height:0.56in}
-.sheet.back:has(.mnp-back) .col .need i{white-space:normal}
+.sheet.back:has(.mnp-back) .col .need{height:0.5in;min-height:0.5in;justify-content:flex-start}
+.sheet.back:has(.mnp-back) .col .need i{white-space:normal;font-size:7pt}
+/* the shared kit prints these at 6.2 to 6.8 pt; this sheet keeps every word at 7 pt or more */
+.sheet.back:has(.mnp-back) .col .key,.sheet.back:has(.mnp-back) .col .key b,
+.sheet.back:has(.mnp-back) .col .pick .sz,.sheet.back:has(.mnp-back) .col .dose small,
+.sheet.back:has(.mnp-back) .startt{font-size:7pt}
+.sheet.back:has(.mnp-back) .rhythm em{white-space:nowrap}
+.sheet.back:has(.mnp-back) .col .pick .sz{white-space:nowrap}
+/* the safety panel carries the same four warnings in both editions, so it gets the wider half */
+.sheet.back:has(.mnp-back) .duo{grid-template-columns:1fr 1.25fr}
+/* three writing lines, 0.22in apart, so the full page keeps a few pixels above the footer */
+.sheet.back:has(.mnp-back) .notes .ln{height:0.22in}
 """
 
 # ============================================================== the sheet
@@ -876,8 +980,8 @@ SHEET = {
     # Perimenopause often lasts 4 to 8 years [PARAM17].  Hormone therapy most effective [HT22, NH23].
     "intro": ("Menopause is the day you reach <b>12 months in a row with no period</b>, on average around age 51. "
               "The years before it, <b>perimenopause</b>, often last 4 to 8 years while estrogen and progesterone swing, "
-              "then fall. These hormones act on nearly every tissue, so changes show up from head to toe. "
-              "<b>Hormone therapy is the most effective treatment for hot flashes</b>: ask your doctor if it fits you."),
+              "then fall. These hormones act on nearly every tissue, so changes show up head to toe. "
+              "<b>Hormone therapy works best for hot flashes</b>: ask your doctor if it fits you."),
     "front": front,
     "css": CSS,
     "back": {
@@ -894,58 +998,64 @@ SHEET = {
             ("plate", "Bone-smart plate", "Protein at each meal and calcium foods like yogurt and greens."),
             ("moon", "Guard your sleep", "Same bedtime, a cool dark room, less alcohol and late caffeine."),
             # [NH23]: CBT and clinical hypnosis recommended (Level I) for hot flashes
-            ("brain", "Try CBT", "CBT and clinical hypnosis are proven to ease hot flashes."),
+            ("brain", "Try talk therapy", "CBT (a talk therapy) and hypnosis are proven to ease hot flashes."),
             # [GOLD11] smoking and earlier menopause; NIH NIAMS: smoking is an osteoporosis risk factor
             ("smoke", "Skip smoking", "Smoking speeds bone loss and raises heart risk."),
         ],
         "cols": [
             {"p": "meno_menopause_support", "need": "Menopausal comfort", "needsub": "EstroG&#8209;100, ashwagandha, black cohosh",
              "start": True,
-             # [ESTRO] (the honest caveat is on the front); [ASHW24]; Peri vs Meno by stage [MAP]
+             # Bullet 1 says "through the menopause years", not "hot flashes": the front says plainly that
+             # supplements are not proven for hot flashes [NH23], and the two pages must agree.  [ASHW24]
+             # Peri vs Meno by stage [MAP]: last period within the last year -> PeriMenopause Support R199.
              # PeriMenopause Support R199, sell sheet ND565 Rev. 8/24 (labels.json): per tablet Estro G-100 blend
              # 500 mg, ashwagandha root powder 500 mg, milk thistle seed powder 100 mg; same label caution
-             "bullets": ["Supports comfort during hot flashes",
-                         "Still having periods? Use PeriMenopause Support: 500 mg EstroG&#8209;100, 500 mg "
+             "bullets": ["Supports comfort through menopause",
+                         "Period in the last 12 months? Use PeriMenopause Support: 500 mg EstroG&#8209;100, 500 mg "
                          "ashwagandha, 100 mg milk thistle"],
-             "dose": "1 tablet daily", "dosesub": "with food, same time each day", "sched": [("am", 1, "tablet")]},
+             "dose": "1 tablet daily", "dosesub": "with food, same time daily", "sched": [("am", 1, "tablet")]},
             {"p": "meno_mag_calm_pro", "need": "Sleep and calm", "needsub": "magnesium, myo&#8209;inositol, L&#8209;theanine",
              "bullets": ["Supports relaxation and restful sleep", "Supports a healthy stress response and mood"],
-             "dose": "1 scoop at bedtime", "dosesub": "in 6 oz water; up to 2 a day", "sched": [("bed", 1, "scoop")]},
+             # label (ND1075): 1 scoop with 6 oz water 1 to 2 times daily; "try bedtime" is plan timing
+             "dose": "1 to 2 scoops daily", "dosesub": "in 6 oz water · try bedtime",
+             "sched": [("bed", 1, "scoop")]},
             {"p": "meno_d3_5000_k2", "need": "Bone strength", "needsub": "vitamin D3 with vitamins K2 and K1",
              "bullets": ["Supports calcium absorption for strong bones", "K2 helps put calcium to work in bone"],
-             "dose": "1 softgel daily", "dosesub": "with your evening meal", "sched": [("pm", 1, "softgel")]},
-            {"p": "meno_ultrabiotic_womens", "need": "Healthy flora", "needsub": "women’s probiotic, 9 strains",
-             # sell sheet ND1053 claims: healthy vaginal microbiome, healthy gut microbiome
-             "bullets": ["Supports a healthy vaginal microbiome", "Supports a healthy gut microbiome"],
-             "dose": "2 capsules daily", "dosesub": "at bedtime", "sched": [("bed", 2, "capsules")]},
+             # label (R197): take one softgel daily.  "best with a meal" is a soft cue (vitamin D is fat soluble;
+             # NIH ODS); the evening-meal slot in the rhythm panel is plan timing
+             "dose": "1 softgel daily", "dosesub": "best with a meal", "sched": [("pm", 1, "softgel")]},
+            {"p": "meno_ultrabiotic_womens", "need": "Good bacteria", "needsub": "women’s probiotic, 9 strains",
+             # sell sheet ND1053 claims: healthy vaginal microbiome, healthy gut microbiome (said in plain words)
+             "bullets": ["Supports healthy vaginal bacteria", "Supports healthy gut bacteria"],
+             # label: take two capsules daily; the bedtime slot in the rhythm panel is plan timing
+             "dose": "2 capsules daily", "dosesub": "same time each day", "sched": [("bed", 2, "capsules")]},
             {"p": "meno_creatine", "need": "Muscle and strength", "needsub": "creatine monohydrate",
-             # [CREA26]: >= 5 g a day with resistance training
+             # [CREA26] (PubMed 42141930): benefit when >= 5 g a day was combined with resistance training;
+             # trials of <= 3 g a day without training showed no effect
              "bullets": ["Supports muscle and strength with strength training",
-                         "5 g a day, the amount studied after menopause"],
+                         "5 g a day plus strength training is what helped in studies after menopause"],
              "dose": "1 scoop daily", "dosesub": "in 8 to 16 oz of any drink", "sched": [("am", 1, "scoop")]},
         ],
-        "rx": {
-            "practitioner": [
-                # [HT22] [NH23]
-                "<b>Hot flashes?</b> Hormone therapy works best. Ask your provider whether it fits you.",
-                # label caution (sell sheet ND564); NIH ODS black cohosh: rare liver injury, stop with jaundice or dark urine
-                "<b>Had breast cancer or another estrogen-dependent cancer?</b> The label says not to use Menopause "
-                "Support. Stop it if urine darkens or skin yellows.",
-                # USPSTF osteoporosis screening; NIH ODS vitamin D: upper limit 4,000 IU a day for adults
-                "<b>Ask about</b> a bone density scan, cholesterol, A1c and vitamin D. D3 5000 is above the 4,000 IU "
-                "daily upper limit: use it with level checks.",
-            ],
-            "pharmacy": [
-                "<b>Had breast cancer or another estrogen-dependent cancer?</b> The label says not to use Menopause "
-                "Support. Stop it if urine darkens or skin yellows.",
-                # NIH ODS vitamin K (warfarin); NIH ODS / NCCIH ashwagandha interactions
-                "<b>Warfarin?</b> Vitamin K in D3 5000 with K2 can shift your INR. <b>Thyroid or sedative "
-                "drugs?</b> Ashwagandha can add to them.",
-                # NIH ODS magnesium: separate from bisphosphonates and tetracycline or quinolone antibiotics;
-                # creatine raises serum creatinine (de Souza Almeida 2026, cited in the creatine blast)
-                "<b>Space magnesium</b> 2 hours from bisphosphonates and some antibiotics. <b>Creatine</b> can raise "
-                "creatinine on kidney labs.",
-            ],
-        },
+        # ONE safety core for both editions (the practitioner edition is what MDs and DCs hand out, so it must
+        # carry every warning the pharmacist edition does).  {who} = "your provider" / "your pharmacist".
+        "rx": [
+            # labels ND564 (Menopause Support) and ND565 (PeriMenopause Support): "Do not use if pregnant or
+            # nursing. Not recommended for individuals with known or suspected estrogen-dependent cancer."
+            # NIH ODS black cohosh, NCCIH ashwagandha: rare liver injury; stop with dark urine or jaundice
+            "<b>Pregnant, could be, or nursing? Had breast cancer or another cancer fed by estrogen?</b> The labels "
+            "say not to use Menopause Support or PeriMenopause Support. Stop it and call your doctor if urine darkens "
+            "or skin or eyes turn yellow.",
+            # NIH ODS vitamin K (warfarin); NCCIH / NIH ODS ashwagandha: thyroid hormone, sedatives
+            "<b>Warfarin?</b> The vitamin K in D3 5000 with K2 can shift your INR (clotting test). <b>Thyroid "
+            "pills, or drugs that make you sleepy?</b> Ashwagandha can add to them.",
+            # NIH ODS vitamin D: adult upper limit 4,000 IU a day.  Creatine raises serum creatinine
+            # (de Souza Almeida 2026, cited in the creatine blast) without harming the kidneys [CREA26]
+            "<b>D3 5000 is above the 4,000 IU daily upper limit:</b> ask {who} about a vitamin D test. "
+            "<b>Creatine</b> can make a kidney blood test (creatinine) read higher.",
+            # NIH ODS magnesium: tetracycline and quinolone antibiotics at least 2 hours before or 4 to 6 hours
+            # after magnesium; oral bisphosphonates (alendronate) at least 2 hours apart
+            "<b>Antibiotics?</b> Take some 2 hours before or 4 to 6 hours after magnesium. Keep bone drugs such "
+            "as alendronate 2 hours apart from it.",
+        ],
     },
 }

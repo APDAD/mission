@@ -3,7 +3,7 @@
     "name": "Inflam-Eze Plus",
     "size": "90 or 180 capsules",
     "img_src": "R856.png",
-    "key": "Per 3 capsules: 800 mg ginger, 250 mg curcumin with fenugreek (CurQfen), 250 mg boswellia, 200 mg white willow bark, 150 mg hops, 60 mg devil's claw",
+    "key": "Per 3 capsules: 800&nbsp;mg ginger, 250&nbsp;mg CurQfen <span class=\"ihl-nw\">curcumin-fenugreek</span> (35% curcuminoids), 250&nbsp;mg boswellia, 200&nbsp;mg white willow extract, 150&nbsp;mg hops, 60&nbsp;mg devil's&nbsp;claw",
     "dose": "3 capsules once daily",
     "dosesub": "with food",
     "sched": [
@@ -14,13 +14,13 @@
       ]
     ],
     "url": "https://nutridyn.com/inflam-eze-plus",
-    "src": "Inflam-Eze Plus sell sheet Rev. 5/25 ND516 (Dropbox NutriDyn Marketing Materials, read for labels.json): all six amounts and 'Take 3 capsules once daily with food'. Products DB R856 (catalog ND143 10/1/26 via the switch charts) confirms ginger 800, CurQfen 250 (35%), boswellia 250 (65%), hops 150 and the directions; the DB omits willow and devil's claw, the sell sheet panel is printed. Sizes R856 90C / R856L 180C from the ND144 price list 10/1/26. URL slug from products.py SLUGS (60-day protocol doc)."
+    "src": "Inflam-Eze Plus sell sheet Rev. 5/25 ND516 (Dropbox NutriDyn Marketing Materials, read for labels.json): ginger powder 800 mg; 'Proprietary Mix of Curcumin Extract (35% curcuminoids) and Fenugreek Galactomannans Extract (CurQfen)' 250 mg; Boswellia serrata gum extract (65% boswellic acid) 250 mg; 'White Willow Extract (bark; Salix alba; 25% salicin)' 200 mg; hops extract (2% xanthohumol) 150 mg; devil's claw extract (1.2% harpagosides) 60 mg; 'Take 3 capsules once daily with food'. Products DB R856 (catalog ND143 10/1/26 via the switch charts) confirms ginger 800, CurQfen 250 (35%), boswellia 250 (65%), hops 150 and the directions; the DB omits willow and devil's claw, the sell sheet panel is printed. Sizes R856 90C / R856L 180C from the ND144 price list 10/1/26. URL slug from products.py SLUGS (60-day protocol doc)."
   },
   "ih_prm_resolve": {
     "name": "PRM Resolve",
     "size": "60 or 120 softgels",
     "img_src": "R848.png",
-    "key": "Per 2 softgels: 400 mcg pro-resolving mediators (PRMs), 1,200 mg omega-3 with 580 mg EPA and 420 mg DHA",
+    "key": "Per 2 softgels: 400&nbsp;mcg PRMs (<span class=\"ihl-nw\">pro-resolving</span> mediators), 1,200&nbsp;mg <span class=\"ihl-nw\">omega-3</span> with 580&nbsp;mg EPA and 420&nbsp;mg DHA",
     "dose": "2 softgels daily",
     "dosesub": "with your evening meal",
     "sched": [
@@ -31,13 +31,13 @@
       ]
     ],
     "url": "https://nutridyn.com/prm-resolve",
-    "src": "PRM Resolve sell sheet Rev. 1/25 ND447 (labels.json): total PRMs 400 mcg, total omega-3 1,200 mg, EPA 580 mg, DHA 420 mg per 2 softgels; 'Take two softgels daily'. Same amounts in products DB R848 (Metagenics and Microbiome Labs charts, catalog ND143 10/1/26). Sizes R848 60S / R848L 120S, ND144 price list. URL from the repo blast blasts/2026-09-22-head-injury-six.html. 'With your evening meal' is the sheet's schedule suggestion, not label text."
+    "src": "PRM Resolve sell sheet Rev. 1/25 ND447 (labels.json): 'Total PRMs [including 18-HEPE, 17-HDHA, 14-HDHA]' 400 mcg, total omega-3 1,200 mg, EPA 580 mg, DHA 420 mg per 2 softgels; 'Take two softgels daily'; 'Contains: Fish (anchovy, sardine, squid, and mackerel)' (drives the fish or shellfish line in the check panel). Same amounts in products DB R848 (Metagenics and Microbiome Labs charts, catalog ND143 10/1/26). Sizes R848 60S / R848L 120S, ND144 price list. URL from the repo blast blasts/2026-09-22-head-injury-six.html. 'With your evening meal' is the sheet's schedule suggestion, not label text."
   },
   "ih_collagen_renew": {
     "name": "Collagen Renew",
     "size": "525 g &middot; about 30 scoops",
     "img_src": "R190.png",
-    "key": "Per scoop: 17.5 g collagen peptides (FORTIGEL 5 g, FORTIBONE 5 g, TENDOFORTE 5 g, VERISOL 2.5 g), 15 g protein",
+    "key": "Per scoop: 17.5&nbsp;g collagen peptides (FORTIGEL 5&nbsp;g, FORTIBONE 5&nbsp;g, TENDOFORTE 5&nbsp;g, VERISOL 2.5&nbsp;g), 15&nbsp;g protein",
     "dose": "1 scoop daily",
     "dosesub": "in 8 oz of water or a drink",
     "sched": [
@@ -48,13 +48,13 @@
       ]
     ],
     "url": "https://nutridyn.com/dynamic-multi-collagen-renew",
-    "src": "Collagen Renew sell sheet Rev. 9/24 ND569 (labels.json): 17.5 g collagen peptides per scoop (FORTIGEL 5 g, FORTIBONE 5 g, TENDOFORTE 5 g, VERISOL 2.5 g), 15 g protein, about 30 servings, 'Mix 1 scoop in 8 ounces of water, your favorite beverage, or a recipe'. Products DB R190 (5 charts) agrees. The label states no daily frequency; 1 scoop a day is the sheet's plan. No vitamin C in the formula (blast 2026-10-19-collagen-tendon), so the sheet pairs it with a vitamin C food. Size R190 525G, ND144 price list. URL from that blast."
+    "src": "Collagen Renew sell sheet Rev. 9/24 ND569 (labels.json): 17.5 g collagen peptides per scoop (FORTIGEL 5 g, FORTIBONE 5 g, TENDOFORTE 5 g, VERISOL 2.5 g), 15 g protein, about 30 servings, 'Mix 1 scoop in 8 ounces of water, your favorite beverage, or a recipe'. Products DB R190 (5 charts) agrees. The label states no daily frequency or timing; 1 scoop a day in the morning is the sheet's plan, and the column no longer adds a second timing (before exercise) that could disagree with the rhythm panel. No vitamin C in the formula (blast 2026-10-19-collagen-tendon), so the sheet pairs it with a vitamin C food. Size R190 525G, ND144 price list. URL from that blast."
   },
   "ih_muscle_eze": {
     "name": "Muscle Eze",
     "size": "90 capsules",
     "img_src": "R884.png",
-    "key": "Per 3 capsules: 200 mg magnesium (citrate), 100 mg calcium (lactate), 50 mg L-theanine, 40 mg passion flower",
+    "key": "Per 3 capsules: 200&nbsp;mg magnesium (citrate), 100&nbsp;mg calcium (lactate), 50&nbsp;mg <span class=\"ihl-nw\">L-theanine</span>, 40&nbsp;mg passion flower",
     "dose": "3 capsules at bedtime",
     "dosesub": "may cause drowsiness",
     "sched": [
@@ -71,7 +71,7 @@
     "name": "Nerve Eze",
     "size": "60 capsules",
     "img_src": "R184.png",
-    "key": "Per capsule: 300 mg PEA (palmitoylethanolamide, as Levagen+), 150 mg alpha lipoic acid",
+    "key": "Per capsule: 300&nbsp;mg PEA (palmitoylethanolamide, as Levagen+), 150&nbsp;mg alpha lipoic acid",
     "dose": "1 capsule twice daily",
     "dosesub": "morning and evening",
     "sched": [
@@ -86,6 +86,6 @@
         "capsule"
       ]
     ],
-    "src": "Nerve Eze sell sheet Rev. 8/24 ND633 (labels.json): palmitoylethanolamide (PEA, Levagen+) 300 mg and alpha lipoic acid 150 mg per capsule; 'Take one capsule twice daily'. Size R184 60C, ND144 price list. No verified product-page slug, so the link falls back to the nutridyn.com catalog search."
+    "src": "Nerve Eze sell sheet Rev. 8/24 ND633 (labels.json): palmitoylethanolamide (PEA, Levagen+) 300 mg and alpha lipoic acid 150 mg per capsule; 'Take one capsule twice daily'. Size R184 60C, ND144 price list. SINGLE SOURCE: the products DB has no R184 label facts, and the ND143 10/1/26 catalog (Dropbox Catalog and Order Forms, wCover_ND143_Catalog_All_10_1_26.pdf, 57.7 MB) is over the Dropbox text-read limit and its download host is blocked from this session, so the panel is not yet confirmed against the catalog. No verified product-page slug (nutridyn.com is blocked from this session), so the link falls back to the nutridyn.com catalog search. PHOTO: img-src/R184.png is a 356x640 Lanczos stopgap of an 89x160 thumbnail (soft); the 420 px web render is Dropbox /NutriDyn/Product Images/Product Images (1)/R184_Web (id:xHepYs_Ou4AAAAAAAA5IkQ, 59,744 bytes), to be run through the central text-safe upscale and staged."
   }
 }

@@ -8,19 +8,35 @@ from the topic brief (scratchpad topics/topic-joint-pain.json, research rank 4 o
 FRONT, top to bottom
   intro -> one knee drawn as a front-to-back slice (a coronal section), split down the middle:
   the left half healthy, the right half with osteoarthritis (thin, cracked cartilage with a bald
-  patch, bone spurs, a swollen red lining with extra fluid, a narrowed space, a frayed meniscus).
-  Each half has a magnified circle of its cartilage (cartilage cells in their collagen mesh) and
-  one KEY names every colour and symbol -> how it can feel / get checked promptly -> what raises
-  your risk -> know your numbers.
+  patch, bone spurs growing as lips of bone at the joint edges, a swollen red lining with extra
+  fluid and loose flakes, a squeezed joint space, a torn meniscus pushed out past the rim).
+  Matching I-beam brackets measure the joint space bone end to bone end on both sides.  The four
+  numbered OA steps each have a leader to the tissue they name.  Each half has a magnified circle
+  of its cartilage, and one three-row KEY names every colour and symbol on the knee and in both
+  circles -> how it can feel / get checked promptly -> what raises your risk -> good to know
+  (1 lb -> 4 lb, where OA strikes, 150 min, a pain scale).
   Anatomy: a right knee seen from the front, so the outer (lateral) side with the fibula is on the
   viewer's left and the inner (medial) side is on the right, where knee OA most often starts.
   Proportions: condyle width : femoral shaft about 2.7 : 1; cartilage about 3% of joint width
   (2 to 3 mm on an 80 mm knee), drawn a little thicker so the change reads; meniscus a wedge about
   twice cartilage height at its rim (Sophia Fox 2009, doi:10.1177/1941738109350438, PMID 23015907).
-BACK: lifestyle band, 5 NutriDyn products (label facts in products.d/joint-pain.json, plus the
-  shared omega_1000 entry), daily rhythm, an edition-specific check list.
+BACK: lifestyle band, 5 NutriDyn products (label facts in products.d/joint-pain.json), daily rhythm
+  (morning and evening; no bedtime products, so that empty slot is hidden), one check list that
+  reads right in both editions through {who}.  The back page is reached in CSS through the empty
+  .jpn-bk marker in the lifestyle title (the kit sets several back-page texts below 7 pt; BACK_CSS
+  lifts them to 7 pt on this sheet only).
 
 SOURCES (tags used in the comments next to each number or claim)
+  [GBD21]     GBD 2021 Osteoarthritis Collaborators. Lancet Rheumatol 2023;5:e508-22. PMID 37675071,
+              doi:10.1016/S2665-9913(23)00163-7: 595 million people (7.6% of the world) had OA in 2020;
+              the knee is the most common site.
+  [KHAN04]    Khan AM et al. Ann R Coll Surg Engl 2004;86:119-21. PMID 15005931,
+              doi:10.1308/003588404322827518: groin and buttock pain are significantly more common in
+              hip OA (groin pain 84.3% sensitive); 47% also feel it below the knee.
+  [RODDY15]   Roddy E et al. Ann Rheum Dis 2015;74:156-63. PMID 24255544, doi:10.1136/annrheumdis-2013-203804:
+              symptomatic foot OA in 1 in 6 adults over 50; the big-toe joint (1st MTP) 7.8%, the most common.
+  [KALICH08]  Kalichman L et al. Spine 2008;33:2560-5. PMID 18923337, doi:10.1097/BRS.0b013e318184ef95:
+              lumbar facet-joint (spine) OA on CT in 59.6% of men and 66.7% of women (Framingham).
   [WHO23]     WHO fact sheet "Osteoarthritis", 14 July 2023: 528 million people lived with OA in
               2019 (+113% since 1990); about 73% are older than 55; 60% are female; the knee is the
               most affected joint (365 million), then the hip and the hand.  (who.int is blocked
@@ -61,12 +77,22 @@ SOURCES (tags used in the comments next to each number or claim)
   Caveats:    [WAI25] PMID 40731001 (certainty low); [EULAR22] PMID 35654458 (moderate evidence of
               small effects).  [KNUDSEN08] PMID 18363538 and EFSA 2011 (doi:10.2903/j.efsa.2011.2473):
               glucosamine with warfarin can raise the INR.
+  Check panel (the herbal monographs; ema.europa.eu is blocked from this machine, so these were read
+  through web-search summaries, 2026-11-03, not opened):
+  [EMA-SALIX]   EU herbal monograph, willow bark (EMA/HMPC/80630/2016): not with hypersensitivity to
+                salicylates; use with salicylates and other NSAIDs not recommended without medical advice;
+                may increase the effect of anticoagulants such as coumarins.
+  [EMA-CURCUMA] EU herbal monograph, turmeric (EMA/HMPC/329755/2017, 2018): not recommended with bile-duct
+                obstruction, cholangitis, liver disease or gallstones (it stimulates bile).
+  [COMM-E]      German Commission E, devil's claw: not with stomach or duodenal ulcers; with gallstones
+                only after medical advice (the EU monograph EMA/HMPC/627057/2015 adds a warfarin bleeding
+                caution).  Not re-confirmed this session; the panel line is an "ask first", not a rule.
 """
 import math
 import os
 import random
 
-from kit import icon
+from kit import ICONS, icon
 from svgkit import T, svg, label_bg
 
 SLUG = "joint-pain"
@@ -114,21 +140,24 @@ LIG, LIG_BACK, LIG_EDGE, LIG_FIB = "#FBF5E8", "#EFE2C6", "#B09460", "#D9C79E"   
 FLUID, FLUID_LT = "#F6D26C", "#FCEBB2"                                              # joint fluid (gold)
 LINING, LINING_EDGE, LINING_HI = "#F0A49B", "#C8726A", "#F9D2CC"                    # calm lining (pink)
 INFL, INFL_EDGE, INFL_HI = "#D6443B", "#97261F", "#EF8075"                          # inflamed lining (red)
-SPUR, SPUR_HI, SPUR_EDGE = "#A8A297", "#CFCAC1", "#666057"                          # bone spur (grey)
+SPUR, SPUR_HI, SPUR_BASE = "#9C968A", "#C6BEAD", "#E2CA9C"                          # bone spur (bone greying to its tip)
 CELL, CELL_NUC, LACUNA, LACUNA_EDGE = "#8668BF", "#47307D", "#F7F2FD", "#C3B4E4"     # cartilage cell (violet)
 FIBER = "#5B9BD0"                                                                   # collagen fibers (blue)
 GREEN, GREEN_DK = "#2E8A57", "#1F6B43"
 RED, RED_DK = "#C23A2F", "#9C2B22"
 
 # ============================================================== geometry (viewBox units)
-W, H = 760, 416
+W, H = 760, 418
 CX = 380                       # the split line runs down the middle of the knee
 FEM_TOP, TIB_BOT = 44, 344     # bone ends fade out above and below (local units)
 K, YJ = 1.12, 214              # the knee is drawn in local units and scaled by K about the joint line
 DROP = 10                      # the worn inner condyle sits lower: a narrowed joint space
-KEY_Y, KEY_H = 362, 50
+KEY_Y, KEY_H = 346, 68         # three-row KEY; its white box covers the faded shaft ends
+TOP = 4                        # top margin above the heading pills (the art is drawn TOP units down)
 INS_R = 63
 INS_L, INS_W = (100, 92), (660, 92)   # magnified circles (healthy, worn)
+LENS_U = (-40, 30)             # where the dashed rings sit on the femoral cartilage (local u, healthy / worn)
+SPACE_U = 64                   # the joint-space brackets, at the middle of each condyle
 
 
 def _f(v):
@@ -370,36 +399,106 @@ def _worn_thickness(curve, base, rnd, bald, cracks, full_cracks):
     return th
 
 
-def _meniscus(fem_surf, tib_surf, x_out, x_in, h_out, worn, rnd):
+def _meniscus(fem_surf, tib_surf, x_out, x_in, h_out, worn, rim_y=None):
     """Wedge-shaped meniscus between the cartilage surfaces: in contact with the femur over its inner
-    part, a free wedge at the rim.  x_out -> x_in may run either way."""
+    part, a free wedge at the rim.  x_out -> x_in may run either way.  The worn one is thinner, pushed out
+    past the plateau rim (its outer part rests at rim_y, the height of the plateau edge) and split by one
+    clean tear that opens at its inner edge."""
     n = 40
+    xs = [x_out + (x_in - x_out) * i / n for i in range(n + 1)]
+    ybs = [_y_at(tib_surf, x, min, clamp=True) - 0.9 for x in xs]
+    yfs = [_y_at(fem_surf, x, max) for x in xs]
+    if worn:   # the worn surfaces are frayed: rest the wedge on their smoothed line, so its edges stay clean
+        ybs = [min(ybs[max(0, i - 3):i + 4]) for i in range(n + 1)]
+        ybs = [sum(ybs[max(0, i - 3):i + 4]) / len(ybs[max(0, i - 3):i + 4]) for i in range(n + 1)]
+        yfs = [None if v is None else max(w for w in yfs[max(0, i - 3):i + 4] if w is not None) for i, v in enumerate(yfs)]
     top, bot = [], []
-    for i in range(n + 1):
-        x = x_out + (x_in - x_out) * i / n
-        yb = _y_at(tib_surf, x, min, clamp=True) - 0.9
+    for i, (x, yb, yf) in enumerate(zip(xs, ybs, yfs)):
+        if rim_y is not None:
+            yb = min(yb, rim_y)
         h = h_out * (1 - i / n) ** 0.8 + 1.3
-        yf = _y_at(fem_surf, x, max)
         ytop = yb - h
         if yf is not None:
             ytop = max(ytop, yf + 1.0)
-        if worn and i > n * 0.7:          # frayed inner edge
-            ytop += rnd.uniform(0, 1.6)
-            yb -= rnd.uniform(0, 1.0)
         top.append((x, min(ytop, yb - 0.8)))
         bot.append((x, yb))
     sgn = -1 if x_out < x_in else 1
-    rim = [(x_out + sgn * 2.4, top[0][1] * 0.55 + bot[0][1] * 0.45)]
-    pts = top + list(reversed(bot)) + rim
-    out = [f'<path d="{_poly(pts)}" fill="url(#jp-men)" stroke="{MEN_EDGE}" stroke-width="1" stroke-linejoin="round"/>']
-    for f in (0.36, 0.64):   # circumferential fibres
-        line = [(x, yt + (yb - yt) * f) for (x, yt), (_, yb) in zip(top[:int(n * 0.78)], bot[:int(n * 0.78)])]
+    t0, b0 = top[0][1], bot[0][1]
+    if worn:   # a rounded outer face
+        rim = [(x_out + sgn * 1.6, t0 * 0.72 + b0 * 0.28), (x_out + sgn * 2.3, (t0 + b0) / 2),
+               (x_out + sgn * 1.6, t0 * 0.28 + b0 * 0.72)]
+        step = 2
+        pts = top[::step] + ([top[-1]] if n % step else []) + list(reversed(bot))[::step] + list(reversed(rim))
+        body = path_d(pts)
+    else:
+        rim = [(x_out + sgn * 2.4, t0 * 0.55 + b0 * 0.45)]
+        body = _poly(top + list(reversed(bot)) + rim)
+    out = [f'<path d="{body}" fill="url(#jp-men)" stroke="{MEN_EDGE}" stroke-width="1" stroke-linejoin="round"/>']
+    fibres = (0.36, 0.64) if not worn else (0.34,)
+    for f in fibres:   # circumferential fibres
+        stop = int(n * (0.78 if not worn else 0.4))
+        line = [(x, yt + (yb - yt) * f) for (x, yt), (_, yb) in zip(top[1:stop], bot[1:stop])]
         out.append(f'<path d="{_line(line)}" fill="none" stroke="#FFFFFF" stroke-width=".8" opacity=".6"/>')
-    if worn:   # a tear running into the wedge
-        a, b = int(n * 0.28), int(n * 0.9)
-        line = [(x, yt + (yb - yt) * 0.52) for (x, yt), (_, yb) in zip(top[a:b], bot[a:b])]
-        out.append(f'<path d="{_line(line)}" fill="none" stroke="{MEN_EDGE}" stroke-width="1.2" stroke-linecap="round"/>')
+    if worn:   # one clean tear, running in from the free inner edge
+        a, b = int(n * 0.36), n - 2
+        line = [(x, yt + (yb - yt) * 0.56) for (x, yt), (_, yb) in zip(top[a:b + 1:2], bot[a:b + 1:2])]
+        out.append(f'<path d="{path_d(line, closed=False)}" fill="none" stroke="{MEN_EDGE}" stroke-width="1.15" '
+                   'stroke-linecap="round"/>')
     return "".join(out)
+
+
+def _film(fs, ts, bow=5.0):
+    """Joint fluid between two bone surfaces (the cartilage is drawn over it, so only the thin film between
+    the cartilage shows).  At the notch end the film closes with a curved edge, the way fluid sits in a
+    narrowing gap, instead of a straight cut."""
+    fs, ts = list(fs), list(ts)
+    if abs(fs[0][0] - CX) < abs(fs[-1][0] - CX):    # run both from the rim to the notch
+        fs.reverse()
+    if abs(ts[0][0] - CX) < abs(ts[-1][0] - CX):
+        ts.reverse()
+    a, b = fs[-1], ts[-1]
+    out = -1 if a[0] < CX else 1                     # toward the rim, away from the notch
+    c = ((a[0] + b[0]) / 2 + out * bow, (a[1] + b[1]) / 2)
+    close = [((1 - t) ** 2 * a[0] + 2 * (1 - t) * t * c[0] + t * t * b[0],
+              (1 - t) ** 2 * a[1] + 2 * (1 - t) * t * c[1] + t * t * b[1]) for t in (k / 12 for k in range(1, 12))]
+    return f'<path d="{_poly(fs + close + list(reversed(ts)))}" fill="url(#jp-fluid)"/>'
+
+
+def _lip(outline, sgn, i0, i1, height, peak=0.5, hook=0.0, sink=1.6):
+    """A bone spur (osteophyte) as a lip of extra bone grown out of a bone outline: the outline between sample
+    indices i0..i1 is pushed outward by a smooth bump that peaks at `peak` (0..1) and leans along the outline
+    by `hook` (negative leans toward i0).  It shares the bone's edge stroke and sinks `sink` units into the bone,
+    so no seam shows.  Returns (svg, tip point)."""
+    pts = outline[i0:i1 + 1]
+    n = len(pts)
+    p = math.log(0.5) / math.log(peak)
+    bump = [math.sin(math.pi * (k / (n - 1)) ** p) ** 1.8 for k in range(n)]
+    outer = _offset(pts, [height * v for v in bump], sgn)
+    for k in range(1, n - 1):
+        (xa, ya), (xb, yb) = pts[k - 1], pts[k + 1]
+        m = math.hypot(xb - xa, yb - ya) or 1
+        s = hook * height * bump[k]
+        outer[k] = (outer[k][0] + (xb - xa) / m * s, outer[k][1] + (yb - ya) / m * s)
+    inner = _offset(pts, [-sink] * n, sgn)
+    shell = _offset(outer, [-2.0 * v ** 0.5 for v in bump], sgn)    # the hard outer shell carries on into the lip
+    tip = max(outer, key=lambda q: math.hypot(q[0] - pts[0][0], q[1] - pts[0][1]) + math.hypot(q[0] - pts[-1][0], q[1] - pts[-1][1]))
+    svg_ = (f'<path d="{_poly(outer + list(reversed(inner)))}" fill="url(#jp-spur)"/>'
+            f'<path d="{_line(shell)}" fill="none" stroke="#B5A88E" stroke-width=".6" opacity=".7"/>'
+            f'<path d="{_line(outer)}" fill="none" stroke="{BONE_EDGE}" stroke-width="1.3" stroke-linejoin="round" '
+            'stroke-linecap="round"/>')
+    return svg_, tip
+
+
+def _bracket(x, y0, y1, w=3.4):
+    """A joint-space bracket: an I-beam between two bone ends with arrowheads pressing on its caps."""
+    d = f"M{_f(x - w)},{_f(y0)} H{_f(x + w)} M{_f(x - w)},{_f(y1)} H{_f(x + w)} M{_f(x)},{_f(y0)} V{_f(y1)}"
+    a = min(2.4, (y1 - y0) * 0.42)
+    heads = (f"M{_f(x - 1.9)},{_f(y0 + a)} L{_f(x)},{_f(y0 + 0.5)} L{_f(x + 1.9)},{_f(y0 + a)} Z "
+             f"M{_f(x - 1.9)},{_f(y1 - a)} L{_f(x)},{_f(y1 - 0.5)} L{_f(x + 1.9)},{_f(y1 - a)} Z")
+    return (f'<path d="{d}" stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round" fill="none"/>'
+            f'<path d="{heads}" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"/>'
+            f'<path d="{d}" stroke="{INK}" stroke-width="1.1" stroke-linecap="round" fill="none"/>'
+            f'<path d="{heads}" fill="{INK}"/>')
 
 
 def _syn_band(pts, worn, rnd):
@@ -443,8 +542,9 @@ def _cruciates():
     return "".join(o)
 
 
-def _spur(pts):
-    return (f'<path d="{path_d(pts)}" fill="url(#jp-spur)" stroke="{SPUR_EDGE}" stroke-width="1.1" stroke-linejoin="round"/>')
+def _near(curve, u, y):
+    """Index of the outline sample nearest the local point (CX + u, y)."""
+    return min(range(len(curve)), key=lambda i: (curve[i][0] - CX - u) ** 2 + (curve[i][1] - y) ** 2)
 
 
 def knee(rnd):
@@ -476,7 +576,7 @@ def knee(rnd):
         sp = [(x, y) for x, y, _ in sample(syn, closed=False, per=12)]
         o.append(f'<path d="{_poly(sp + inner)}" fill="url(#jp-fluid)"/>')
     for fs, ts in ((fem_l, tib_l), (fem_r, tib_r)):
-        o.append(f'<path d="{_poly(fs + list(reversed(ts)))}" fill="url(#jp-fluid)"/>')
+        o.append(_film(fs, ts))
 
     # ---- bones; the shafts fade out above and below
     o.append('<g mask="url(#jp-fade)">')
@@ -499,45 +599,66 @@ def knee(rnd):
                 o.append(f'<circle cx="{_f(x)}" cy="{_f(y)}" r="{_f(rnd.uniform(0.6, 1.0))}" fill="{CART_HI}" '
                          f'stroke="{CART_EDGE}" stroke-width=".5"/>')
 
-    # ---- menisci: a healthy wedge at the rim; the worn one thinner, torn and pushed out past the edge
-    o.append(_meniscus(surf_fl, surf_tl, CX - 118.5, CX - 80, 15, False, rnd))
-    o.append(_meniscus(surf_fr, surf_tr, CX + 125, CX + 88, 9, True, rnd))
+    # ---- bone spurs (osteophytes): lips of extra bone growing out of the edges of the worn joint, where the
+    # cartilage ends (femur: a beak hooking down past the cartilage edge; tibia: a shelf below the plateau rim)
+    fpts = [(x, y) for x, y, _ in fem_s]
+    tpts = [(x, y) for x, y, _ in tib_s]
+    lip_f, tip_f = _lip(fpts, sf, _near(fpts, 111.5, 187.0), _near(fpts, 108.9, 165.8), 12.5, peak=0.36, hook=-0.62)
+    lip_t, tip_t = _lip(tpts, st, _near(tpts, 117.9, 236.6), _near(tpts, 113.3, 253.9), 10.0, peak=0.3, hook=-0.5)
+    o += [lip_f, lip_t]
 
-    # ---- bone spurs (osteophytes) at the edges of the worn joint, and a sharpened tibial spine
-    o.append(_spur([(CX + 110.6, 179), (CX + 116.5, 182.5), (CX + 120.5, 189), (CX + 121.5, 196.5, 0.4),
-                    (CX + 116.5, 197.5), (CX + 111, 195)]))
-    o.append(_spur([(CX + 115.5, 229), (CX + 121.5, 228), (CX + 127, 229.5), (CX + 130.5, 233, 0.4), (CX + 126, 238),
-                    (CX + 118.5, 242)]))
-    o.append(_spur([(CX + 9.8, 208), (CX + 13, 199), (CX + 15.5, 191.5, 0.2), (CX + 18, 200), (CX + 20, 211)]))
+    # ---- menisci: a healthy wedge at the rim; the worn one thinner, torn and pushed out past the plateau edge,
+    # where it rests on the tibial spur
+    o.append(_meniscus(surf_fl, surf_tl, CX - 118.5, CX - 80, 15, False))
+    o.append(_meniscus(surf_fr, surf_tr, CX + 127, CX + 93, 6.6, True, rim_y=tip_t[1] - 1.6))
 
     # ---- lining: thin and calm on the healthy side; thick, red and folded where it is inflamed
     o.append(_syn_band(SYN_L, False, rnd))
     o.append(_syn_band(SYN_R, True, rnd))
     # loose bits of worn cartilage floating in the extra fluid
-    for x, y, a in ((CX + 129, 167, 20), (CX + 134, 214, -30), (CX + 136, 224, 55)):
-        o.append(f'<path transform="translate({x},{y}) rotate({a})" d="M-3,-1.5 L1.1,-2.3 L3.2,0.2 L1.3,2.1 L-2.5,1.5 Z" '
-                 f'fill="{CART_HI}" stroke="{CART_EDGE}" stroke-width=".8" stroke-linejoin="round"/>')
+    for x, y, a in FLAKES:
+        o.append(_flake(CX + x, y, a))
     return "".join(o), dict(surf_fl=surf_fl, surf_tl=surf_tl, surf_fr=surf_fr, surf_tr=surf_tr,
-                            fem_l=fem_l, fem_r=fem_r, th_fl=th_fl)
+                            fem_l=fem_l, fem_r=fem_r, tib_l=tib_l, tib_r=tib_r, th_fl=th_fl, th_fr=th_fr,
+                            tip_f=tip_f, tip_t=tip_t, bf=bf)
+
+
+FLAKES = [(124, 203, 20), (127, 214, -30), (131, 194, 55)]   # (u, y, angle): in the swollen pocket, clear of the lining
+
+
+def _flake(x, y, a, s=1.0):
+    return (f'<path transform="translate({_f(x)},{_f(y)}) rotate({a}) scale({s})" d="M-3,-1.5 L1.1,-2.3 L3.2,0.2 L1.3,2.1 '
+            f'L-2.5,1.5 Z" fill="{CART_HI}" stroke="{CART_EDGE}" stroke-width=".8" stroke-linejoin="round"/>')
 
 
 # ============================================================== magnified cartilage
 def _cell(x, y, rx=3.7, ry=3.7, rot=0, lac=1.6, empty=False):
+    edge, w = ("#A08ED2", ".9") if empty else (LACUNA_EDGE, ".7")   # an empty space gets a firmer rim so it reads
     g = (f'<g transform="translate({_f(x)},{_f(y)}) rotate({_f(rot)})">'
-         f'<ellipse rx="{_f(rx + lac)}" ry="{_f(ry + lac)}" fill="{LACUNA}" stroke="{LACUNA_EDGE}" stroke-width=".7"/>')
+         f'<ellipse rx="{_f(rx + lac)}" ry="{_f(ry + lac)}" fill="{LACUNA}" stroke="{edge}" stroke-width="{w}"/>')
     if not empty:
         g += (f'<ellipse rx="{_f(rx)}" ry="{_f(ry)}" fill="{CELL}"/>'
               f'<circle r="{_f(min(rx, ry) * 0.42)}" fill="{CELL_NUC}"/>')
     return g + "</g>"
 
 
+CLUSTER_CELLS = [(-4.6, -2.4), (4.4, -2.6), (-4.4, 3.2), (4.6, 3.0), (0, -6.4), (0.2, 6.6)]
+
+
+def _cluster_box(n):
+    """Centre offset and radii of the shared space around a clump of n cells (cell r 3.2, 1.8 margin)."""
+    xs, ys = [c[0] for c in CLUSTER_CELLS[:n]], [c[1] for c in CLUSTER_CELLS[:n]]
+    return ((min(xs) + max(xs)) / 2, (min(ys) + max(ys)) / 2,
+            (max(xs) - min(xs)) / 2 + 5.0, (max(ys) - min(ys)) / 2 + 5.0)
+
+
 def _cluster(x, y, n, rot=0):
     """A clump of cartilage cells sharing one enlarged space (seen in worn cartilage)."""
-    cells = [(-4.6, -2.4), (4.4, -2.6), (-4.4, 3.2), (4.6, 3.0), (0, -6.4), (0.2, 6.6)][:n]
-    w = 10.5 if n <= 4 else 11.5
+    ox, oy, rx, ry = _cluster_box(n)
     g = [f'<g transform="translate({_f(x)},{_f(y)}) rotate({_f(rot)})">',
-         f'<ellipse rx="{w}" ry="{w - 1.6 if n <= 4 else w}" fill="{LACUNA}" stroke="{LACUNA_EDGE}" stroke-width=".7"/>']
-    for cx, cy in cells:
+         f'<ellipse cx="{_f(ox)}" cy="{_f(oy)}" rx="{_f(rx)}" ry="{_f(ry)}" fill="{LACUNA}" stroke="{LACUNA_EDGE}" '
+         'stroke-width=".7"/>']
+    for cx, cy in CLUSTER_CELLS[:n]:
         g.append(f'<circle cx="{cx}" cy="{cy}" r="3.2" fill="{CELL}" stroke="{LACUNA}" stroke-width=".6"/>'
                  f'<circle cx="{cx}" cy="{cy}" r="1.3" fill="{CELL_NUC}"/>')
     g.append("</g>")
@@ -558,6 +679,14 @@ def _place(rnd, box, n, mind, avoid=(), tries=4000):
     return out
 
 
+# worn close-up (offsets from the circle centre; surface at -10, tidemark at +20, cracks at x -36, -8, 24, 44):
+# every clump, lost cell and deep cell sits between the cracks and clear of its neighbours
+WORN_CLUSTERS = [(-51, 3.6, 4), (-22, 3.0, 3), (8, 4.2, 5), (57, 5.5, 3)]   # (dx, dy, cells)
+WORN_LOST = [(35, 0.5, 3.4), (42, 12.4, 2.6)]                             # (dx, dy, radius)
+WORN_DEEP = [(31, 12.4)]
+WORN_CRACKS = [(-36, 22, 5.5), (-8, 30, 6.5), (24, 25, 5.0), (44, 12, 3.6)]   # (dx, depth, half width)
+
+
 def inset(c, worn):
     """A circle of cartilage magnified: joint fluid on top, cartilage (cells in a collagen mesh),
     the tidemark, then bone.  Healthy: thick, smooth, orderly.  Worn: thin, cracked, cells clumped."""
@@ -576,7 +705,7 @@ def inset(c, worn):
          f'<rect x="{x0}" y="{cy - r - 4}" width="{2 * r + 8}" height="{2 * r + 8}" fill="url(#jp-fluidi)"/>']
     # cartilage outline (top edge); worn: frayed, with V-shaped cracks
     top = []
-    cracks = [(-36, 22, 5.5), (-8, 30, 6.5), (24, 25, 5.0), (46, 15, 4.0)] if worn else []
+    cracks = WORN_CRACKS if worn else []
     x = x0
     while x <= x1:
         y = S + 0.0016 * (x - cx) ** 2
@@ -633,21 +762,31 @@ def inset(c, worn):
 
     cells = []
     if not worn:
-        for xx in range(int(x0) + 6, int(x1), 15):     # surface zone: flat cells along the surface
-            yy = S + 7.5 + 0.0016 * (xx - cx) ** 2
-            cells.append(_cell(xx + rnd.uniform(-2, 2), yy, 5.0, 1.8, rnd.uniform(-6, 6), 1.3))
-        for xx, yy in _place(rnd, (x0 + 4, S + 17, x1 - 4, TM - 21), 12, 15.5):   # middle zone: round, scattered
-            cells.append(_cell(xx, yy + 0.0008 * (xx - cx) ** 2, 3.5, 3.3, rnd.uniform(0, 180), 1.6))
-        for xx in range(int(x0) + 9, int(x1), 17):     # deep zone: little stacks (columns) of cells
-            for j in range(3):
-                cells.append(_cell(xx + rnd.uniform(-1.2, 1.2), TM - 15 + j * 6.4, 3.0, 2.5, 0, 1.2))
-    else:
-        for dx, dy, n in ((-52, 9, 4), (-23, 13, 5), (8, 6, 6), (36, 12, 4), (58, 4, 3)):
-            cells.append(_cluster(cx + dx, cy + dy, n, rnd.uniform(-20, 20)))
-        for dx, dy in ((-62, -1), (-40, 4), (22, -1), (48, -1)):
-            cells.append(_cell(cx + dx, cy + dy, 3.2, 3.0, 0, 1.6, empty=True))   # an empty space: a lost cell
-        for dx in range(-60, 70, 19):
-            cells.append(_cell(cx + dx + rnd.uniform(-2, 2), TM - 6, 3.0, 2.5, 0, 1.2))
+        surf = [(xx + rnd.uniform(-1.2, 1.2), S + 7.5 + 0.0016 * (xx - cx) ** 2)   # surface zone: flat cells
+                for xx in range(int(x0) + 6, int(x1), 15)]
+        deep = [(xx + rnd.uniform(-1.2, 1.2), TM - 15 + j * 6.4)              # deep zone: little stacks (columns)
+                for xx in range(int(x0) + 9, int(x1), 17) for j in range(3)]
+        mid = []   # middle zone: round cells scattered between, each kept clear of the surface row and every column
+        for _ in range(8000):
+            if len(mid) >= 12:
+                break
+            x_ = rnd.uniform(x0 + 4, x1 - 4)
+            y_ = rnd.uniform(S + 17, TM - 24) + 0.0016 * (x_ - cx) ** 2
+            if (any(math.hypot(x_ - a, y_ - b) < 15.5 for a, b in mid)
+                    or any(abs(x_ - a) < 12.4 and abs(y_ - b) < 9.2 for a, b in surf)
+                    or any(math.hypot(x_ - a, y_ - b) < 5.1 + 4.2 + 1.2 for a, b in deep)):
+                continue
+            mid.append((x_, y_))
+        cells += [_cell(a, b, 4.6, 1.8, rnd.uniform(-5, 5), 1.2) for a, b in surf]
+        cells += [_cell(a, b, 3.5, 3.3, rnd.uniform(0, 180), 1.6) for a, b in mid]
+        cells += [_cell(a, b, 3.0, 2.0, 0, 1.0) for a, b in deep]
+    else:   # clumps between the cracks, a few lost cells (empty spaces), a thinned deep row
+        for dx, dy, n in WORN_CLUSTERS:
+            cells.append(_cluster(cx + dx, cy + dy, n, rnd.uniform(-6, 6)))
+        for dx, dy, rr in WORN_LOST:
+            cells.append(_cell(cx + dx, cy + dy, rr, rr * 0.92, 0, 1.4 if rr > 3 else 1.0, empty=True))
+        for dx, dy in WORN_DEEP:
+            cells.append(_cell(cx + dx, cy + dy, 2.6, 2.2, 0, 1.0))
     o.append(f'<g clip-path="url(#jp-cl{uid})">{"".join(cells)}</g>')
     if worn:   # flakes breaking off into the fluid
         for dx, dy, a in ((-42, -38, 15), (-6, -48, -25), (30, -32, 40), (12, -24, 70)):
@@ -666,11 +805,12 @@ def _lens(x, y, col, r=11):
 
 
 # ============================================================== labels
-def _leader(x0, y0, x1, y1):
+def _leader(x0, y0, x1, y1, dot=True):
     d = f"M{_f(x0)},{_f(y0)} L{_f(x1)},{_f(y1)}"
     return (f'<path d="{d}" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round"/>'
             f'<path d="{d}" stroke="#46535D" stroke-width="1.2" stroke-linecap="round"/>'
-            f'<circle cx="{_f(x1)}" cy="{_f(y1)}" r="2.6" fill="#46535D" stroke="#FFFFFF" stroke-width="1.2"/>')
+            + (f'<circle cx="{_f(x1)}" cy="{_f(y1)}" r="2.6" fill="#46535D" stroke="#FFFFFF" stroke-width="1.2"/>'
+               if dot else ""))
 
 
 def _badge(x, y, n, fill):
@@ -717,24 +857,39 @@ def sw_fluid():
             'stroke="#D6A22A" stroke-width="1"/>')
 
 
-def sw_lining():
-    return (f'<path d="M-12,0 H12" stroke="{LINING_EDGE}" stroke-width="6" stroke-linecap="round"/>'
-            f'<path d="M-12,0 H12" stroke="{LINING}" stroke-width="4.2" stroke-linecap="round"/>')
+def sw_lining():   # every swatch spans x -12..12, so the gap to its label is the same in every column
+    return (f'<path d="M-9,0 H9" stroke="{LINING_EDGE}" stroke-width="6" stroke-linecap="round"/>'
+            f'<path d="M-9,0 H9" stroke="{LINING}" stroke-width="4.2" stroke-linecap="round"/>')
 
 
 def sw_infl():
-    return (f'<path d="M-12,-1.6 H12" stroke="{INFL_EDGE}" stroke-width="9" stroke-linecap="round"/>'
-            f'<path d="M-12,-1.6 H12" stroke="{INFL}" stroke-width="7" stroke-linecap="round"/>'
-            + "".join(f'<circle cx="{x}" cy="4.2" r="2.6" fill="{INFL}" stroke="{INFL_EDGE}" stroke-width=".8"/>' for x in (-7, 0, 7)))
+    return (f'<path d="M-7.5,-1.6 H7.5" stroke="{INFL_EDGE}" stroke-width="9" stroke-linecap="round"/>'
+            f'<path d="M-7.5,-1.6 H7.5" stroke="{INFL}" stroke-width="7" stroke-linecap="round"/>'
+            + "".join(f'<circle cx="{x}" cy="4.2" r="2.6" fill="{INFL}" stroke="{INFL_EDGE}" stroke-width=".8"/>' for x in (-6, 0, 6)))
 
 
-def sw_spur():
-    return (f'<path d="M-12,7 C-6,6 -1,3 3,-1 C6,-4 8.5,-6.5 11.5,-7.5 C10,-3 7,1.8 3,4.8 C0,7 -6,8 -12,8 Z" '
-            f'fill="url(#jp-spur)" stroke="{SPUR_EDGE}" stroke-width="1" stroke-linejoin="round"/>')
+def sw_spur():   # the same lip as on the knee: extra bone growing out of a bone edge, greying toward its tip
+    return ('<rect x="-12" y="-8" width="8.2" height="16" rx="2" fill="url(#jp-cortex)"/>'
+            '<path d="M-5,-6.6 C1,-6.1 7.6,-2.4 11.4,5 C6.4,4.3 1,4.9 -5,6.6 Z" fill="url(#jp-spur)"/>'
+            f'<path d="M-5,-8 V-6.6 C1,-6.1 7.6,-2.4 11.4,5 C6.4,4.3 1,4.9 -5,6.6 V8" fill="none" stroke="{BONE_EDGE}" '
+            'stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/>')
+
+
+def sw_space():
+    return _bracket(0, -7, 7, w=4)
+
+
+def sw_ring():   # the dashed rings: green on the healthy side, red on the worn side
+    return (f'<path d="M0,-7 A7,7 0 0 0 0,7" fill="none" stroke="{GREEN_DK}" stroke-width="1.8" stroke-dasharray="2.8 1.9"/>'
+            f'<path d="M0,-7 A7,7 0 0 1 0,7" fill="none" stroke="{RED_DK}" stroke-width="1.8" stroke-dasharray="2.8 1.9"/>')
 
 
 def sw_cell():
     return _cell(0, 0, 4.4, 3.8, 0, 1.9)
+
+
+def sw_lost():
+    return _cell(0, 0, 4.4, 3.8, 0, 1.9, empty=True)
 
 
 def sw_fiber():
@@ -742,16 +897,30 @@ def sw_fiber():
             f'stroke="{FIBER}" stroke-width="1.5"/>')
 
 
-KEY_ROWS = [
+def sw_base():   # the hard (calcified) base layer under cartilage, topped by the wavy tidemark, on bone
+    wav = [(x, -3.2 + 1.2 * math.sin(x / 2.4)) for x in range(-12, 13, 1)]
+    return (f'<path d="{_poly(wav + [(12, 3.6), (-12, 3.6)])}" fill="#C3D8EA"/>'
+            f'<path d="{_line(wav)}" fill="none" stroke="#5B84B0" stroke-width="1.2"/>'
+            '<rect x="-12" y="3.6" width="24" height="3.6" fill="url(#jp-bonei)"/>'
+            f'<path d="M-12,3.6 H12" stroke="{BONE_EDGE}" stroke-width="1" opacity=".7"/>')
+
+
+def sw_flake():
+    return _flake(0, 0, 15, 1.7)
+
+
+KEY_ROWS = [   # every colour and symbol on the knee and in both close-up circles
     [(sw_bone, "Bone"), (sw_cart, "Cartilage"), (sw_men, "Meniscus (cushion)"), (sw_lig, "Ligament"),
      (sw_fluid, "Joint fluid")],
-    [(sw_lining, "Calm lining"), (sw_infl, "Inflamed lining"), (sw_spur, "Bone spur"), (sw_cell, "Cartilage cell"),
-     (sw_fiber, "Collagen fibers")],
+    [(sw_lining, "Calm lining"), (sw_infl, "Inflamed lining"), (sw_spur, "Bone spur"), (sw_space, "Joint space"),
+     (sw_ring, "Shown up close")],
+    [(sw_cell, "Cartilage cell"), (sw_lost, "Lost cell"), (sw_fiber, "Collagen fibers"), (sw_base, "Hard base layer"),
+     (sw_flake, "Loose flake")],
 ]
 
 
 def _key(y):
-    """Two-row KEY; column widths follow the longest label in each column."""
+    """Three-row KEY; column widths follow the longest label in each column."""
     x0, x1, h = 8, W - 8, KEY_H
     fs = 11
     out = [f'<rect x="{x0}" y="{y}" width="{x1 - x0}" height="{h}" rx="9" fill="#FFFFFF" stroke="#CBD5DC" stroke-width="1.2"/>',
@@ -765,7 +934,7 @@ def _key(y):
         xs.append(x)
         x += w + gap
     for r, row in enumerate(KEY_ROWS):
-        cy = y + 14 + r * 22
+        cy = y + 13 + r * 21
         for (sw, lab), x in zip(row, xs):
             out.append(f'<g transform="translate({_f(x + 12)},{_f(cy)})">{sw()}</g>')
             out.append(T(_f(x + 32), _f(cy + 3.9), lab, fs, 600, INK))
@@ -815,8 +984,9 @@ def art_knee():
             '<stop offset="1" stop-color="#C6E1F5"/></linearGradient>',
             '<linearGradient id="jp-mtw" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F1F5F8"/>'
             '<stop offset="1" stop-color="#D5E3EE"/></linearGradient>',
-            f'<linearGradient id="jp-spur" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="{SPUR_HI}"/>'
-            f'<stop offset="1" stop-color="{SPUR}"/></linearGradient>',
+            # bone spur: bone that greys toward its tip, so it reads as bone and still matches the grey KEY swatch
+            f'<linearGradient id="jp-spur" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="{SPUR_BASE}"/>'
+            f'<stop offset=".45" stop-color="{SPUR_HI}"/><stop offset="1" stop-color="{SPUR}"/></linearGradient>',
             f'<linearGradient id="jp-fadeg" gradientUnits="userSpaceOnUse" x1="0" y1="{FEM_TOP}" x2="0" y2="{TIB_BOT}">'
             '<stop offset="0" stop-color="#000"/><stop offset=".13" stop-color="#fff"/>'
             '<stop offset=".84" stop-color="#fff"/><stop offset="1" stop-color="#000"/></linearGradient>',
@@ -841,12 +1011,21 @@ def art_knee():
     o.append(T(CX - 154, 335, "(fibula)", 10, 500, INK2, "end", italic=True))
 
     # magnified circles, and the dashed rings on the knee that mark the spot each one shows
-    lx, ly = tf(CX - 66, _y_at(g["fem_l"], CX - 66, max) + 3.4)
-    rx, ry = tf(CX + 38, _y_at(g["fem_r"], CX + 38, max) + 1.6)
+    lx, ly = tf(CX + LENS_U[0], _y_at(g["fem_l"], CX + LENS_U[0], max) + 3.4)
+    rx, ry = tf(CX + LENS_U[1], _y_at(g["fem_r"], CX + LENS_U[1], max) + 1.6)
     o.append(inset(INS_L, False))
     o.append(inset(INS_W, True))
     o.append(_lens(lx, ly, GREEN_DK))
     o.append(_lens(rx, ry, RED_DK))
+
+    # joint space, bone end to bone end, at the same spot on both sides: full height when healthy, squeezed
+    # where the worn cartilage has gone
+    sp = {}
+    for side, fem, tib in (("h", g["fem_l"], g["tib_l"]), ("w", g["fem_r"], g["tib_r"])):
+        u = CX + (-SPACE_U if side == "h" else SPACE_U)
+        (bx, by0), (_, by1) = tf(u, _y_at(fem, u, max)), tf(u, _y_at(tib, u, min))
+        sp[side] = (bx, by0, by1)
+        o.append(_bracket(bx, by0, by1))
     for (cx, cy), title, sub, col in ((INS_L, "Healthy cartilage, up close", "cells sit in a springy, water-rich mesh", GREEN_DK),
                                       (INS_W, "Worn cartilage, up close", "the mesh frays and cracks, cells clump", RED_DK)):
         o.append(T(cx, cy + INS_R + 18, title, 11.5, 800, col, "middle"))
@@ -863,9 +1042,21 @@ def art_knee():
         o.append(T(xt, y + 13, sub, 10, 500, INK2, "end", italic=True))
         o.append(_leader(xt + 6, y - 4, tx, ty))
 
-    # worn side: numbered markers on the art, explained in a list on the right
-    for i, (x, y) in enumerate([(CX + 62, 191), (CX + 100.5, 184), (CX + 159, 228), (CX + 72, 243)]):
-        o.append(_marker(*tf(x, y), i + 1))
+    # worn side: numbered markers, each with a short leader to the tissue it names, explained in a list on the
+    # right.  1: the mouth of the deep crack beside the red ring; 2: the tip of the femoral spur; 3: sits on the
+    # swollen lining itself; 4: the squeezed joint space at the bald patch.
+    fr, sfr = g["fem_r"], g["surf_fr"]
+    ss = _arclen(fr)
+    ic = min(range(len(ss)), key=lambda i: abs(ss[i] - (g["bf"][0] - 0.05)))
+    mouth = ((sfr[ic - 4][0] + sfr[ic + 4][0]) / 2, (sfr[ic - 4][1] + sfr[ic + 4][1]) / 2)
+    bx, by0, by1 = sp["w"]
+    marks = [(tf(CX + 60, 195), tf(*mouth), True), (tf(CX + 99, 185), tf(*g["tip_f"]), True),
+             (tf(CX + 138.5, 212), None, False), (tf(CX + SPACE_U, 248), (bx, by1 + 1.2), False)]
+    for (mx, my), tgt_, dot in marks:
+        if tgt_:
+            o.append(_leader(mx, my, tgt_[0], tgt_[1], dot))
+    for i, ((mx, my), _, _) in enumerate(marks):
+        o.append(_marker(mx, my, i + 1))
     xl = 566
     for i, (title, sub) in enumerate(WORN_NOTES):
         y = 212 + i * 33
@@ -874,33 +1065,42 @@ def art_knee():
         o.append(T(xl + 23, y + 13, sub, 10, 500, INK2, italic=True))
 
     o.append(_key(KEY_Y))
-    return svg(W, H, "".join(o),
-               "A knee joint seen from the front and split down the middle. Left, healthy: smooth cartilage, an even "
+    # everything sits TOP units down, so the heading pills keep a margin from the top edge of the picture
+    return svg(W, H + TOP, f'<g transform="translate(0,{TOP})">{"".join(o)}</g>',
+               "A knee joint seen from the front and split down the middle. Left, healthy: smooth cartilage, a full "
                "joint space, a thin lining and a little joint fluid, with a magnified circle of orderly cartilage cells. "
-               "Right, osteoarthritis: thin and cracked cartilage, bone spurs, a narrowed space, a swollen red lining "
-               "with extra fluid, and a magnified circle of cracked cartilage with clumped cells.")
+               "Right, osteoarthritis: thin and cracked cartilage, bone spurs growing at the joint edges, a squeezed "
+               "joint space, a swollen red lining with extra fluid and loose flakes, a torn meniscus pushed out past the "
+               "edge, and a magnified circle of cracked cartilage with clumped and lost cells.")
 
 
 # ============================================================== front page blocks
 FEEL = [  # [NICE22] activity-related pain, short morning stiffness; [HUNTER19] crepitus, bony enlargement,
-    # restricted motion, mild swelling, instability
-    "Pain when you use the joint, easing with rest",
-    "Stiff on waking or after sitting, loose within 30 minutes",
+    # restricted motion, mild swelling, instability.  [KHAN04] hip OA pain sits mostly in the groin and buttock.
+    # The 30-minute number lives once, in ALERT, where it is the threshold to act on.
+    "Pain with use (stairs, kneeling, jars) that eases with rest",
+    "Brief stiffness on waking or after sitting still",
     "Creaking, grinding or clicking as it bends",
     "Some swelling, or a joint that feels unsteady",
-    "Stairs, kneeling or opening jars get harder",
     "Hard knobs on the finger joints",
+    "A sore hip often aches in the groin or buttock",
 ]
-ALERT = [  # [NICE22] QS87 atypical features: hot swollen joint, prolonged stiffness, trauma, rapid worsening, deformity
+ALERT = [  # [NICE22] QS87 atypical features: hot swollen joint, prolonged stiffness, trauma, rapid worsening, deformity.
+    # "suddenly" and "fast" keep these apart from the slow, typical signs in FEEL (unsteady joint, finger knobs)
     "A <b>hot, red, very swollen</b> joint, above all with a fever: <b>get care the same day</b>",
     "Morning stiffness <b>over 30 minutes</b>, or many sore joints",
     "It began with a <b>fall or injury</b>, or is worsening fast",
-    "The joint <b>locks, gives way</b> or changes shape",
+    "It <b>suddenly locks or gives way</b>, or <b>changes shape fast</b>",
 ]
 
 IC_WOMAN = '<circle cx="32" cy="23" r="13"/><path d="M32 36v21M23 48h18"/>'
-IC_LIFT = ('<rect x="15" y="33" width="34" height="22" rx="3"/><path d="M15 42h34"/><path d="M27 33v-3h10v3"/>'
-           '<path d="M32 24V7M25 14l7-7 7 7"/>')
+# a person squatting to lift a heavy box
+IC_LIFT = ('<circle cx="20" cy="10" r="5.2"/><path d="M21.4 16.6 27.6 35"/><path d="M27.6 35 40.6 40 36.8 55.2H44"/>'
+           '<path d="M23.4 21.6 42 27"/><rect x="41.4" y="18.5" width="17" height="16" rx="2.2"/><path d="M46.4 23h7"/>')
+# a standing leg (side view: thigh, kneecap, calf, foot) with an arrow pointing down at the thigh muscle
+IC_THIGH = ('<path d="M24 4.5C30.4 9 33.8 15.4 33.2 22.4 32.8 26.6 31 29 31.6 31.6 33.6 33.6 33.2 36.6 31.2 38.6L30.4 52.6'
+            'C33.4 53.6 38.4 54.2 43 55.6 45.2 56.3 45 59 42.8 59H23.6C21.8 59 21.4 57 22 55 23 51 22.8 47.2 21.6 44.2'
+            'C19.4 38.6 19.6 35 20.6 32 21.6 28.6 19.2 20 16.6 13.2L15.4 4.5"/><path d="M46 6.5v13M41 14.5l5 5 5-5"/>')
 RISKS = [  # (icon, label, custom)
     ("age", "Getting older", None),                           # [WHO23] about 73% are older than 55
     ("scale", "Extra body<br>weight", None),                  # [SILVER15] overweight OR 1.98, obesity 2.66
@@ -908,8 +1108,37 @@ RISKS = [  # (icon, label, custom)
     ("woman", "Being<br>a woman", IC_WOMAN),                  # [SILVER15] OR 1.68; [WHO23] 60% female
     ("dna", "Family<br>history", None),                       # [HUNTER19] genetics
     ("lift", "Heavy lifting or<br>kneeling work", IC_LIFT),   # [WANG20] OR 1.52
-    ("dumbbell", "Weak thigh<br>muscles", None),              # [OIESTAD15] OR 1.65
+    ("thigh", "Weak thigh<br>muscles", IC_THIGH),             # [OIESTAD15] OR 1.65
 ]
+
+# back page: a balance pose for "Tai chi or yoga" (the kit has no such figure; a namespaced key cannot collide)
+ICONS.setdefault("jp_taichi", '<circle cx="32" cy="9" r="5"/><path d="M32 15.5V38"/><path d="M32 22 19.5 12.5M32 22l12.5-9.5"/>'
+                               '<path d="M32 38v19.5"/><path d="M32 38l11 6.6-9.6 5.4"/><path d="M24 58h16"/>')
+
+ARROW = ('<svg class="jpn-arr" viewBox="0 0 24 12" role="img" aria-label="becomes"><path d="M1.5 6H20.5M14.6 1.6 '
+         '20.8 6l-6.2 4.4" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" '
+         'stroke-linejoin="round"/></svg>')
+
+# where OA strikes: a standing figure, side view, red dots on the joints OA hits most.  [WHO23] knee, then hip and
+# hand; [GBD21] knee the most common site; [KALICH08] spine facet-joint OA in about 60% of adults (CT, Framingham);
+# [RODDY15] symptomatic big-toe (1st MTP) OA in 7.8% of adults 50+, the most common foot site.
+WHERE_DOTS = [(17.7, 16.4), (15.1, 32.8), (25.9, 41.6), (19.6, 43.8), (22.3, 57.2), (32.6, 76.0)]  # neck, low back,
+# hand, hip, knee, big toe
+
+
+def _where_fig():
+    body = ("M18 14.6C15.2 21.4 14.2 29.6 15.4 37.4 15.6 39.4 14.6 41 15.4 42.8L18.2 57.2 17.2 63.2C17.4 66 18.6 68.4 "
+            "19.3 71L19 77.4H33.9C34.6 75.6 33 74.6 30.6 74.2L26 72.2 25.4 58.6 26.6 56C27.6 52.8 27.8 48.4 27.6 46"
+            "L26.8 40.8C27.8 35 28 27 27.6 21.4 27 17.8 25.6 15.8 23.8 15Z")
+    arm = "M21.4 18.6C23.4 25.6 24.6 33.2 25.8 40.8"
+    dots = "".join(f'<circle cx="{x}" cy="{y}" r="2.6" fill="{RED}" stroke="#FFFFFF" stroke-width="1.1"/>' for x, y in WHERE_DOTS)
+    return ('<svg class="jpn-fig" viewBox="0 0 40 80" role="img" aria-label="A standing figure, side view, with red dots '
+            'on the neck, low back, hand, hip, knee and big toe">'
+            f'<path d="{body}" fill="#B7CFE3" stroke="#577FA2" stroke-width="1" stroke-linejoin="round"/>'
+            '<circle cx="21.2" cy="8.4" r="6.4" fill="#B7CFE3" stroke="#577FA2" stroke-width="1"/>'
+            f'<path d="{arm}" fill="none" stroke="#577FA2" stroke-width="5.8" stroke-linecap="round"/>'
+            f'<path d="{arm}" fill="none" stroke="#D3E3F0" stroke-width="3.8" stroke-linecap="round"/>'
+            f'{dots}</svg>')
 
 
 def _ic(body, size, sw=2.8):
@@ -918,10 +1147,12 @@ def _ic(body, size, sw=2.8):
 
 
 def _scale_0_10():
-    """A 0 to 10 pain scale, green to red, for the patient to circle."""
+    """A 0 to 10 pain scale, green to red, for the patient to circle.  Ink numerals on the light middle cells
+    (2 to 7: 4.2 to 6.4:1), white on the dark ends."""
     cols = ["#2E8A57", "#4E9A45", "#74A73A", "#9CB232", "#C2B52C", "#E0A82A", "#E58E2A", "#E1712B", "#D9552E",
             "#CC3D2F", "#B32A2A"]
-    cells = "".join(f'<span style="background:{c}">{i}</span>' for i, c in enumerate(cols))
+    cells = "".join(f'<span style="background:{c};color:{INK if 2 <= i <= 7 else "#FFFFFF"}">{i}</span>'
+                    for i, c in enumerate(cols))
     return f'<div class="jpn-pain">{cells}</div><div class="jpn-pl"><span>No pain</span><span>Worst</span></div>'
 
 
@@ -933,11 +1164,10 @@ def front(t, ed):
                    for ic, lab, custom in RISKS)
     nums = (
         # [MESSIER05] each pound lost = about a 4-fold drop in knee load per step
-        '<div class="jpn-n"><b class="jpn-big">1 lb <i>&rarr;</i> 4 lb</b><span>Each pound you lose takes about '
+        f'<div class="jpn-n"><b class="jpn-big">1 lb {ARROW} 4 lb</b><span>Each pound you lose takes about '
         '<b>4 pounds</b> of load off your knee with every step.</span></div>'
-        # [NICE22] OA morning stiffness lasts no longer than 30 minutes
-        '<div class="jpn-n"><b class="jpn-big">30 min</b><span>OA stiffness usually eases within <b>30 minutes</b> '
-        'of getting up. Longer? Get checked.</span></div>'
+        f'<div class="jpn-n jpn-where">{_where_fig()}<div><b>Where OA strikes</b><span><b>Red dots:</b> knees, hips '
+        'and hands most; also the spine and big toe.</span></div></div>'
         # [CDC-PA] 150 minutes a week + 2 strength days; 5 or 10 minutes at a time counts
         '<div class="jpn-n"><b class="jpn-big">150 min</b><span>a week of walking, cycling or water exercise, plus '
         '<b>2 days</b> of strength work.</span></div>'
@@ -948,15 +1178,15 @@ def front(t, ed):
             f'<div class="jpn-feel"><div class="jpn-sh">How it can feel</div><ul class="jpn-dots">{feel}</ul></div>'
             f'<div class="jpn-alert"><div class="jpn-ah">Get checked promptly if</div><ul>{alert}</ul></div></div>'
             f'<div class="jpn-sh jpn-sh2">What raises your risk</div><div class="jpn-risk">{risk}</div>'
-            f'<div class="jpn-sh jpn-sh2">Know your numbers</div><div class="jpn-nums">{nums}</div>'
+            f'<div class="jpn-sh jpn-sh2">Good to know</div><div class="jpn-nums">{nums}</div>'
             '</div>')
 
 
 CSS = r"""
 .jpn .jpn-art{margin-top:0.02in}
 .jpn .jpn-sh{font:800 7.6pt Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--c1);margin:0 0 3px}
-.jpn .jpn-sh2{margin-top:0.065in}
-.jpn .jpn-row{display:grid;grid-template-columns:1fr 3.3in;gap:0.18in;margin-top:0.07in;align-items:start}
+.jpn .jpn-sh2{margin-top:0.1in}
+.jpn .jpn-row{display:grid;grid-template-columns:1fr 3.3in;gap:0.18in;margin-top:0.09in;align-items:start}
 .jpn .jpn-dots{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr;gap:1px 0}
 .jpn .jpn-dots li{position:relative;padding-left:12px;font-size:8.2pt;line-height:1.27;color:#2B3236}
 .jpn .jpn-dots li::before{content:"";position:absolute;left:0;top:4px;width:6px;height:6px;border-radius:50%;background:var(--c2)}
@@ -975,76 +1205,115 @@ CSS = r"""
 .jpn .jpn-n{background:var(--tint);border:1px solid #D9E6F0;border-top:3px solid var(--c2);border-radius:7px;
   padding:4px 8px 5px;display:flex;flex-direction:column;gap:1px}
 .jpn .jpn-big{font:900 14pt/1.1 Merriweather,Georgia,serif;color:var(--c1);white-space:nowrap}
-.jpn .jpn-big i{font-style:normal;color:var(--c2);font-family:Inter,sans-serif;font-weight:800}
+.jpn .jpn-arr{display:inline-block;width:0.8em;height:0.4em;margin:0 0.08em;vertical-align:0.2em;color:var(--c2)}
+.jpn .jpn-where{flex-direction:row;align-items:center;gap:6px}
+.jpn .jpn-where>div{display:flex;flex-direction:column;gap:1px}
+.jpn .jpn-where>div>b{font:800 8.4pt Inter,sans-serif;color:var(--deep)}
+.jpn .jpn-fig{flex:none;height:0.64in;width:0.32in}
 .jpn .jpn-n span{font-size:7.8pt;line-height:1.26;color:#2B3236}
 .jpn .jpn-n span b{color:var(--deep)}
 .jpn .jpn-me>b{font:800 8.4pt Inter,sans-serif;color:var(--deep)}
 .jpn .jpn-pain{display:grid;grid-template-columns:repeat(11,1fr);gap:2px;margin-top:2px}
-.jpn .jpn-pain span{display:flex;align-items:center;justify-content:center;height:0.2in;border-radius:3px;color:#fff;
+.jpn .jpn-pain span{display:flex;align-items:center;justify-content:center;height:0.2in;border-radius:3px;
   font:800 7.6pt Inter,sans-serif}
 .jpn .jpn-pl{display:flex;justify-content:space-between;font-size:7pt;color:#5E686F;margin-top:1px}
 .jpn .jpn-me>span{font-size:7.4pt;color:#4A555C}
+"""
+
+BACK_CSS = r"""
+/* ---- this sheet's footers and back page.  The back page has no sheet class, so it is reached through the empty
+   .jpn-bk marker in the lifestyle title.  The shared kit (kit.py .foot/.disc/.col, build.py .startt) still sets
+   these below 7 pt for every sheet; the rules below lift them to 7 pt on this sheet only. ---- */
+.sheet.front:has(.jpn) .foot,.sheet.front:has(.jpn) .foot .code,
+.sheet.back:has(.jpn-bk) .foot,.sheet.back:has(.jpn-bk) .foot .code{font-size:7pt}
+.sheet.back:has(.jpn-bk) .disc{font-size:7pt;line-height:1.28;max-width:none}
+.sheet.back:has(.jpn-bk) .col .need i,.sheet.back:has(.jpn-bk) .col .pick .sz,.sheet.back:has(.jpn-bk) .col .key,
+.sheet.back:has(.jpn-bk) .col .key b,.sheet.back:has(.jpn-bk) .col .dose small{font-size:7pt}
+/* START HERE: a ribbon under the need band, above the photo, so it never covers the bottle cap */
+.sheet.back:has(.jpn-bk) .startt{font-size:7pt;top:0.4in}
 """
 
 SHEET = {
     "slug": SLUG, "code": "ND-MS-602", "order": 13, "theme": "msk", "series": "Pain and Movement Series",
     "title": "Joint Pain and Osteoarthritis", "sub": "Knees, hips and hands",
     # [HUNTER19] most common arthritis, a whole-joint disease (cartilage, bone, lining).
-    # [WHO23] 528 million people in 2019; knee most common, then hip and hand; about 73% over 55.
-    "intro": ("Osteoarthritis (OA) is the most common kind of arthritis, and it changes the whole joint: the smooth "
+    # [GBD21] 595 million people (7.6% of the world) had OA in 2020; [WHO23] knee most common, then hip and hand.
+    "intro": ("Osteoarthritis (OA), the most common arthritis, changes the whole joint: the smooth "
               "<b>cartilage</b> on the ends of the bones thins and cracks, the bone underneath grows <b>spurs</b>, and "
               "the joint lining can swell. It shows up most in <b>knees, hips and hands</b> and affects about "
-              "<b>528 million people</b> worldwide. Moving more, carrying less weight and the right nutrients help "
-              "many people stay active."),
+              "<b>595 million people</b> worldwide. Moving more and carrying less weight help most people stay active."),
     "front": front,
-    "css": CSS,
+    "css": CSS + BACK_CSS,
     "back": {
-        "life_title": "Lifestyle Recommendations",
+        "life_title": 'Lifestyle Recommendations<span class="jpn-bk"></span>',
         "style": "circle",
         "life": [
             ("walk", "Move most days", "Moving feeds cartilage: walk, cycle or swim 150 minutes a week."),  # [FOX09] [CDC-PA] [ACR19]
             ("dumbbell", "Build strength", "Thigh and hip work 2 days a week takes load off the joint."),            # [CDC-PA] [OIESTAD15]
             ("scale", "Lighten the load", "Each pound lost takes about 4 pounds off your knees with every step."),   # [MESSIER05]
-            ("breath", "Tai chi or yoga", "Slow, steady moves ease stiffness and build balance."),                     # [ACR19]
-            ("fish", "Eat Mediterranean", "Fish, olive oil, beans, nuts and colorful plants. Fewer sugary drinks."),
+            ("jp_taichi", "Tai chi or yoga", "Slow, steady moves ease stiffness and build balance."),                  # [ACR19]
+            ("fish", "Calming foods", "Mediterranean style: fish, olive oil, beans, nuts, colorful plants."),
             ("thermo", "Heat and support", "Warmth for stiffness, ice after a flare, a cane in the other hand."),     # [ACR19]
         ],
+        # Picks: boswellia and curcumin lead the evidence [ZHANG25] [BIDESHKI24]; omega-3 did not help knee-OA symptoms
+        # [MATHIEU22], so the fifth column is Curcumin 400X, not fish oil (topics brief: "Omega Pure ... or Curcumin
+        # 400X").  Chondro-Relief's glucosamine 500 mg / chondroitin 400 mg are printed as label facts only, with no
+        # dose claim (they are a third of the 1,500 / 1,200 mg comparator in [LUGO16]).
         "cols": [
             {"p": "jp_inflam_eze", "need": "Inflammatory balance", "needsub": "ginger, curcumin, boswellia", "start": True,
              "bullets": ["Supports a healthy inflammatory response", "Supports joint comfort and movement"],
              "dose": "dose_from_db"},
-            {"p": "jp_chondro_ic", "need": "Building blocks", "needsub": "glucosamine and chondroitin",
-             "bullets": ["Raw materials for cartilage and joint fluid", "Supports joint structure and flexibility"],
+            {"p": "jp_chondro_ic", "need": "Building blocks", "needsub": "glucosamine, chondroitin",
+             "bullets": ["Raw materials for cartilage and joint fluid", "Supports joint structure"],
              "dose": "dose_from_db"},
-            # [LUGO16] UC-II 40 mg a day (this label: 20 mg per capsule, 1 capsule twice daily)
+            # label: UC-II 20 mg per capsule, 1 capsule twice daily = 40 mg a day (the amount used in [LUGO16])
             {"p": "jp_joint_eze", "need": "Joint comfort", "needsub": "UC-II undenatured collagen",
-             "bullets": ["UC-II, studied at 40 mg a day for knee comfort", "Supports mobility and flexibility"],
+             "bullets": ["UC-II, 40 mg a day in 2 capsules", "Supports joint comfort and flexibility"],
              "dose": "dose_from_db"},
             {"p": "jp_collagen_renew", "need": "Collagen support", "needsub": "collagen peptides",
-             "bullets": ["Supports cartilage, tendon and ligament structure", "Pair it with a vitamin C food, like an orange"],
+             "bullets": ["Supports cartilage, tendons and ligaments", "Pair it with a vitamin C food, like an orange"],
              "dose": "dose_from_db"},
-            # label: one softgel up to three times daily with food; 2 at one meal stays inside it
-            {"p": "omega_1000", "need": "Balance fats", "needsub": "omega-3 EPA and DHA",
-             "bullets": ["Supports a healthy inflammatory response", "Supports joint comfort and heart health"],
-             "dose": "2 softgels daily", "dosesub": "with your evening meal", "sched": [("pm", 2, "softgels")]},
+            # label: "Take two softgels daily"; "Liquid-Soluble" is printed on the bottle
+            {"p": "jp_curcumin_400x", "need": "Extra curcumin", "needsub": "liquid-soluble softgels",
+             "bullets": ["Tops up the curcumin in Inflam-Eze Plus", "Supports comfort in hard-working joints"],
+             "dose": "dose_from_db"},
         ],
-        "rx": {
-            "practitioner": [
-                "<b>On a blood thinner?</b> Fish oil, curcumin, ginger, willow and glucosamine can add to bleeding: "
-                "ask {who} first.",
-                "<b>Willow bark is aspirin's cousin.</b> Skip Inflam-Eze Plus with an aspirin allergy; ask before adding "
-                "ibuprofen or naproxen.",
-                "<b>Shellfish allergy?</b> Chondro-Relief Intensive Care has green-lipped mussel. <b>Pregnant or "
-                "nursing?</b> Skip Joint Eze.",
-            ],
-            "pharmacy": [
-                "<b>On a blood thinner?</b> Fish oil, curcumin, ginger, willow and glucosamine can add to bleeding: "
-                "ask {who} first.",
-                "<b>Willow works like mild aspirin:</b> skip it with an aspirin allergy; do not stack it with aspirin, "
-                "ibuprofen or naproxen.",
-                "<b>Shellfish allergy?</b> Chondro-Relief Intensive Care has green-lipped mussel. <b>Pregnant or "
-                "nursing?</b> Skip Joint Eze.",
-            ],
-        },
+        # One list for both editions; {who} reads "your provider" / "your pharmacist".
+        # 1 [KNUDSEN08] glucosamine raises the INR on warfarin; willow [EMA-SALIX], devil's claw [COMM-E], ginger and
+        #   curcumin carry bleeding / anticoagulant cautions.  2 [EMA-SALIX] willow bark: not with salicylate allergy;
+        #   not with aspirin or other NSAIDs without advice.  3 [COMM-E] devil's claw: not with stomach or duodenal
+        #   ulcers, gallstones only after advice; [EMA-CURCUMA] turmeric: not with gallstones or blocked bile ducts.
+        #   4 green-lipped mussel is a shellfish (label).  5 labels: Joint Eze "Do not use if pregnant or nursing";
+        #   Inflam-Eze Plus and Collagen Renew "consult your healthcare practitioner" if pregnant or nursing.
+        "rx": [
+            "<b>On a blood thinner?</b> Ask {who} before Inflam-Eze Plus, Curcumin 400X or Chondro-Relief.",
+            "<b>Inflam-Eze Plus has willow bark, a plant cousin of aspirin.</b> Skip it with an aspirin allergy; ask "
+            "{who} before taking it with aspirin, ibuprofen or naproxen.",
+            "<b>Stomach ulcer or gallstones?</b> Ask {who} before Inflam-Eze Plus or Curcumin 400X.",
+            "<b>Shellfish allergy?</b> Skip Chondro-Relief: it has green-lipped mussel.",
+            "<b>Pregnant or nursing?</b> Skip Joint Eze, and ask {who} before the others.",
+        ],
     },
 }
+
+
+def _slots_used():
+    """Daily-rhythm slots this plan fills (a column's own sched, else its product's sched in products.d)."""
+    import json
+    f = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "products.d", f"{SLUG}.json")
+    try:
+        prods = json.load(open(f))
+    except Exception:
+        return {"am", "pm", "bed"}
+    used = set()
+    for c in SHEET["back"]["cols"]:
+        for slot, *_ in c.get("sched") or prods.get(c["p"], {}).get("sched", [("bed",)]):
+            used.add(slot)
+    return used
+
+
+if "bed" not in _slots_used():   # no bedtime products: show the two slots in use instead of an empty "nothing" box
+    SHEET["css"] += (".sheet.back:has(.jpn-bk) .rhythm{grid-template-columns:1fr 1fr}"
+                     ".sheet.back:has(.jpn-bk) .rhythm .slot:nth-child(3){display:none}"
+                     # two slots need less width, so the five-line check panel gets more and stays short
+                     ".sheet.back:has(.jpn-bk) .duo{grid-template-columns:1fr 1.22fr}")

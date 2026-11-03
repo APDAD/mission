@@ -3,40 +3,85 @@
     "name": "GoodNight",
     "size": "60 capsules &middot; 30 servings",
     "img_src": "R153.png",
-    "key": "Per 2 capsules: 5 mg melatonin, 500 mg L-tryptophan, 300 mg lemon balm, 200 mg L-theanine, 120 mg hops, 100 mg valerian, 40 mg vitamin B6",
+    "key": "Per 2 capsules: 5 mg melatonin, 500 mg L-tryptophan, 300 mg lemon balm, 200 mg L-theanine, 120 mg hops, 100 mg valerian, 40 mg vitamin&nbsp;B6",
     "dose": "1 to 2 capsules",
     "dosesub": "1 hour before bed",
-    "sched": [["bed", 1, "capsule"]],
-    "src": "GoodNight sell sheet ND521 Rev. 8/24 (Dropbox NutriDyn Marketing Materials, read into scratchpad labels/labels.json): per 2 capsules vitamin B6 (as P5P) 40 mg, L-tryptophan 500 mg, lemon balm 4:1 extract 300 mg, L-theanine 200 mg, hops 4:1 extract 120 mg, valerian extract (0.8% valerenic acids) 100 mg, melatonin 5 mg; 30 servings; directions 1 or 2 capsules one hour before bedtime; label caution: pregnant, nursing, SSRIs or MAOIs, may cause drowsiness. Same amounts in products DB R153 (5 switch charts, catalog ND143 10/1/26). Size: ND144 price list 10/1/26 (R153 60C)."
+    "sched": [
+      [
+        "bed",
+        1,
+        "capsule"
+      ]
+    ],
+    "url": "https://nutridyn.com/goodnight",
+    "src": "GoodNight sell sheet ND521 Rev. 8/24 (Dropbox NutriDyn Marketing Materials, read into scratchpad labels/labels.json): per 2 capsules vitamin B6 (as P5P) 40 mg, L-tryptophan 500 mg, lemon balm 4:1 extract 300 mg, L-theanine 200 mg, hops 4:1 extract 120 mg, valerian extract (0.8% valerenic acids) 100 mg, melatonin 5 mg; 30 servings; directions 1 or 2 capsules one hour before bedtime; label caution: pregnant, nursing, SSRIs or MAOIs; 'May cause drowsiness. Use with caution if driving or operating machinery.' Same amounts in products DB R153 (5 switch charts, catalog ND143 10/1/26). Size: ND144 price list 10/1/26 (R153 60C). URL: the 'goodnight' product key was seen through web search on a NutriDyn practitioner storefront (rlchiro.nutridyn.com/goodnight, same catalog); nutridyn.com itself is blocked from the build machine, so the main-site page was not opened. Photo R153 is a 356x640 Lanczos stopgap of the 89x160 chart thumbnail (img-src/soft.json): needs the print master."
   },
   "sleep_stress_calm": {
     "name": "Stress Essentials Calm",
-    "size": "60 capsules",
+    "size": "60 capsules &middot; 30 servings",
     "img_src": "R405.png",
     "key": "550 mg GABA and 200 mg L-theanine per 2 capsules",
     "dose": "2 capsules",
     "dosesub": "in the evening",
-    "sched": [["pm", 2, "capsules"]],
-    "src": "products DB R405 (Designs for Health switch chart label check vs NeuroCalm, catalog ND143 10/1/26): GABA 550 mg, L-theanine 200 mg per 2 capsules; directions two capsules daily; size 60C (ND144 price list 10/1/26). The 2026-11-02 sleep-hour blast calls the theanine Suntheanine; the DB label read does not, so the sheet does not print it."
-  },
-  "sleep_theanine_pro": {
-    "name": "L-Theanine Pro",
-    "size": "60 capsules",
-    "img_src": "R2123.png",
-    "key": "200 mg L-theanine per capsule",
-    "dose": "1 capsule, 1 to 2 times daily",
-    "dosesub": "start in the morning",
-    "sched": [["am", 1, "capsule"]],
-    "src": "products DB R2123 (Thorne switch chart, direct match vs Thorne Theanine, catalog ND143 10/1/26): L-theanine 200 mg per capsule; directions one capsule twice daily; size 60C (ND144 price list 10/1/26)."
+    "sched": [
+      [
+        "pm",
+        2,
+        "capsules"
+      ]
+    ],
+    "url": "https://nutridyn.com/calm-eze-r405",
+    "src": "products DB R405 (Designs for Health switch chart label check vs NeuroCalm, catalog ND143 10/1/26): GABA 550 mg, L-theanine 200 mg per 2 capsules; directions two capsules daily; size 60C (ND144 price list 10/1/26), so 30 servings. The 2026-11-02 sleep-hour blast and the NutriDyn sell sheet ND856 (seen through web search) call the theanine Suntheanine; the DB label read does not, so the sheet does not print it. Formerly sold as Calm Eze. URL nutridyn.com/calm-eze-r405: 'curl-200 8/11' in the repo sleep-hour blast (blasts/2026-11-02-sleep-hour.html). Photo: only the 89x160 chart thumbnail exists (no print master staged in img-src)."
   },
   "sleep_mag_calm_pro": {
     "name": "Mag Calm Pro",
-    "size": "About 60 servings &middot; Raspberry Lemon",
+    "size": "About 60 servings",
     "img_src": "R2122.png",
-    "key": "Per scoop: 200 mg magnesium, 2 g myo-inositol, 500 mg taurine, 100 mg L-theanine (Suntheanine), 5 mg vitamin B6",
+    "key": "Per scoop: 200 mg magnesium, 2 g myo-inositol, 500 mg taurine, 100 mg L-theanine (Suntheanine), 5 mg vitamin&nbsp;B6",
     "dose": "1 scoop in 6 oz water",
     "dosesub": "after dinner",
-    "sched": [["pm", 1, "scoop"]],
-    "src": "Mag Calm Pro sell sheet ND1075 Rev. 11/24 (labels.json): per scoop (4.13 g) vitamin B6 (as P5P) 5 mg, magnesium (as dimagnesium malate) 200 mg, myo-inositol 2 g, taurine 500 mg, L-theanine (Suntheanine) 100 mg; about 60 servings, 247.8 g; directions 1 scoop in 6 oz water 1-2 times daily. Same amounts in products DB R2122 (Metagenics chart, catalog ND143 10/1/26)."
+    "sched": [
+      [
+        "pm",
+        1,
+        "scoop"
+      ]
+    ],
+    "url": "https://nutridyn.com/mag-calm-pro",
+    "src": "Mag Calm Pro sell sheet ND1075 Rev. 11/24 (labels.json): per scoop (4.13 g) vitamin B6 (as P5P) 5 mg, magnesium (as dimagnesium malate) 200 mg, myo-inositol 2 g, taurine 500 mg, L-theanine (Suntheanine) 100 mg; about 60 servings, 247.8 g; directions 1 scoop in 6 oz water 1-2 times daily. Same amounts in products DB R2122 (Metagenics chart, catalog ND143 10/1/26). Raspberry Lemon is printed on the tub, so the size line leaves it off. URL: 'mag-calm-pro' product key seen through web search on NutriDyn storefronts (ihaps, chiroplus, mainstreet .nutridyn.com); also used by the stress-cortisol and menopause sheets. Not opened (nutridyn.com blocked)."
+  },
+  "sleep_mag_glycinate": {
+    "name": "Magnesium Glycinate",
+    "size": "60, 120, 160 or 320 capsules",
+    "img_src": "R872.png",
+    "key": "260 mg magnesium per 2 capsules (Albion magnesium malate and glycinate)",
+    "dose": "1 capsule",
+    "dosesub": "at bedtime (half a serving)",
+    "sched": [
+      [
+        "bed",
+        1,
+        "capsule"
+      ]
+    ],
+    "url": "https://nutridyn.com/magnesium-glycinate",
+    "src": "Sheet-local copy of the shared mag_glycinate entry (so this sheet can use plain key wording without changing other sheets). products DB R871 (13 switch-chart label reads, catalog ND143 10/1/26): 260 mg magnesium per 2 capsules as di-magnesium malate and magnesium lysinate glycinate chelate, plus 660 mg malic acid; directions 'Take two capsules twice daily'; sizes R871 60C, R871L 120C, R872 160C, R872L 320C (ND144 price list 10/1/26). 'Albion' from the live panel read in the repo magnesium blast (blasts/2026-10-12-magnesium-bp.html), which also records nutridyn.com/magnesium-glycinate as 'curl-200 8/11'. The sheet dose (1 capsule) is below the label on purpose, to keep magnesium from both magnesium products at 330 mg a day. Photo R872.png 848x1552 (text-safe 4x upscale of the 244x420 web render, scratchpad hires/manifest.json)."
+  },
+  "sleep_cortisol_pro": {
+    "name": "Stress Essentials Cortisol Pro",
+    "size": "60 capsules &middot; 30 servings",
+    "img_src": "R2182.png",
+    "key": "Per 2 capsules: 300 mg maral, 250 mg rhodiola, 250 mg Relora, 150 mg ashwagandha, 100 mg L-theanine, 100 mg phosphatidylserine",
+    "dose": "2 capsules",
+    "dosesub": "in the morning",
+    "sched": [
+      [
+        "am",
+        2,
+        "capsules"
+      ]
+    ],
+    "url": "https://nutridyn.com/cortisol-pro",
+    "src": "Stress Essentials Cortisol Pro sell sheet ND975 Rev. 2/25 (Dropbox NutriDyn Marketing Materials, labels.json): per 2 capsules maral root extract (Rhaponticum carthamoides) 300 mg, Relora (Magnolia officinalis and Phellodendron amurense bark extracts) 250 mg, Rhodiola rosea root powder 250 mg, ashwagandha root and leaf extract (Sensoril, 10% withanolides) 150 mg, L-theanine (Suntheanine) 100 mg, phosphatidylserine (from sunflower) 100 mg; 30 servings; directions 'Take two capsules daily'; caution 'Do not use if pregnant. If nursing or taking medication, consult your healthcare practitioner before use.' Same phosphatidylserine, Sensoril, L-theanine and Relora amounts in products DB R2182 (Integrative Therapeutics and Nutri-West charts, catalog ND143 10/1/26). Size: ND144 price list 10/1/26 (R2182 60C). The label gives no time of day; the sheet puts both capsules in the morning because rhodiola and maral are energizing adaptogens. Bottle wording 'Adaptogenic Support for Healthy Stress Response' (photo). URL: 'cortisol-pro' product key seen through web search on NutriDyn storefronts (aih, wih .nutridyn.com) and used by the stress-cortisol sheet; not opened. Photo R2182.png 856x1516 (text-safe 4x upscale of the 258x420 web render)."
   }
 }

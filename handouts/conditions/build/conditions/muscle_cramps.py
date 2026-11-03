@@ -1,29 +1,34 @@
 """Muscle Cramps and Spasms (ND-MS-604), Pain and Movement Series.  slug "muscle-cramps".
 
-Self-contained sheet module (no legacy sheets.py / art.py drawing code).  Built 2026-11-03.
+Self-contained sheet module (no legacy sheets.py / art.py drawing code).  Built 2026-11-03, revised the same
+day after an independent review (K2 retraction-and-replacement notice, magnesium grade, calcium message,
+conditional products kept out of the daily plan, guarding angle for chiropractors, medicine checks).
 
 FRONT, top to bottom
-  intro -> "Contract, then let go": one picture that zooms in three steps
-      YOUR CALF (lateral view of a lower leg: calf muscle, soleus, Achilles tendon, motor nerve,
-      the red cramp knot)  ->  ONE MUSCLE FIBER (the nerve ending firing on a striped fiber, one
-      thread of motors pulled out, and the nerve's firing pattern: normal vs cramp)  ->  ONE TINY
-      MOTOR (a sarcomere, RELAXED above and CONTRACTED below: calcium switches it on, magnesium and
-      ATP switch it off)
-  with a KEY for every symbol, a numbered 4-step strip, the common triggers, an honest
+  intro (cramp, spasm and guarding) -> "Contract, then let go": one picture that zooms in three steps
+      YOUR CALF (lateral view of a lower leg: calf muscle, the deeper calf muscle, Achilles tendon, motor nerve,
+      the red cramp knot)  ->  ONE MUSCLE FIBER (the nerve ending firing on a striped fiber, one thread of
+      motors pulled out with the same stripe spacing, and the nerve's firing pattern: normal vs cramp)  ->  ONE
+      TINY MOTOR (a sarcomere, RELAXED above and CONTRACTED below: calcium switches it on, ATP with magnesium's
+      help switches it off)
+  with a KEY for every symbol (the zoom ring included), a numbered 4-step strip, the common triggers, an honest
   "what the research says" panel and the get-checked red flags.
-BACK: lifestyle band, five NutriDyn columns (Muscle Eze is Start here), daily rhythm and the
+BACK: lifestyle band, five NutriDyn columns (Muscle Eze is Start here; Mag Calm Pro and Mag-K are swaps for it,
+  CoQ10 is only for statin users, so none of those three is in the daily rhythm), daily rhythm and the
   edition-specific medicine checks.
 
-Every SVG id starts with "mc-" and every CSS class with "mcr-", so nothing collides with other
-sheets in the all-sheets bundle.  Text inside the SVG is never smaller than 10 viewBox units
-(the 760-unit art prints 7.66 in wide, so 10 units = 7.3 pt).
+Every SVG id starts with "mc-" and every CSS class with "mcr-", so nothing collides with other sheets in the
+all-sheets bundle.  Back-page CSS is scoped with BACK (the back <section> right after the front that holds
+.mcr).  Text inside the SVG is never smaller than 10 viewBox units (the 760-unit art prints 7.66 in wide, so
+10 units = 7.3 pt).
 
 SOURCES (each fact on the page carries one of these tags in a comment beside it)
   [AAFP12]   Allen RE, Kirby KA. Nocturnal leg cramps. Am Fam Physician 2012;86(4):350-5. PMID 22963024.
              "Up to 60 percent of adults"; usually the calf; "probably caused by muscle fatigue and nerve
              dysfunction rather than electrolyte or other abnormalities"; linked conditions (vascular disease,
              lumbar stenosis, cirrhosis, hemodialysis, pregnancy) and medicines (IV iron sucrose, conjugated
-             estrogens, raloxifene, naproxen, teriparatide); quinine no longer recommended.
+             estrogens, raloxifene, naproxen, teriparatide); look-alikes: restless legs, CLAUDICATION, myositis,
+             peripheral neuropathy; quinine no longer recommended.
   [MAISON16] Maisonneuve H et al. Prevalence of cramps in patients over the age of 60 in primary care.
              BMC Fam Pract 2016;17:111. PMID 27520635, doi:10.1186/s12875-016-0509-9 (46%; calves 80%).
   [MINETTO13] Minetto MA et al. Origin and development of muscle cramps. Exerc Sport Sci Rev 2013;41:3-10.
@@ -31,41 +36,72 @@ SOURCES (each fact on the page carries one of these tags in a comment beside it)
   [SCHW09]   Schwellnus MP. Cause of exercise associated muscle cramps. Br J Sports Med 2009;43:401-8.
              PMID 18981039, doi:10.1136/bjsm.2008.050401 (altered neuromuscular control with fatigue).
   [GARR12]   Garrison SR et al. Nocturnal leg cramps and prescription use that precedes them. Arch Intern Med
-             2012;172:120-6. PMID 22157068, doi:10.1001/archinternmed.2011.1029 (LABA inhalers, potassium-sparing
-             and thiazide-like diuretics strongly; statins and loop diuretics weakly).
+             2012;172:120-6. PMID 22157068, doi:10.1001/archinternmed.2011.1029. Adjusted sequence ratios:
+             LABA inhalers 2.42, potassium-sparing diuretics 2.12, thiazide-like 1.48, loop 1.20 (P=.07),
+             statins 1.16 ("statin and loop diuretic associations were small").
   [TAN24]    Tan J et al. Vitamin K2 in managing nocturnal leg cramps: a randomized clinical trial. JAMA Intern
-             Med 2024;184(12):1443-7. PMID 39466236, doi:10.1001/jamainternmed.2024.5726. n=199, age 65+,
-             MK-7 180 mcg nightly for 8 weeks: 2.60 -> 0.96 cramps/week vs placebo 2.71 -> 3.63; warfarin and
-             diuretic users excluded; "vitamin K2 is not recommended for those undergoing warfarin therapy".
+             Med 2024;184(12):1443-7. PMID 39466236, doi:10.1001/jamainternmed.2024.5726. n=199, age 65+, MK-7
+             180 mcg every night for 8 weeks; warfarin and diuretic users excluded; "vitamin K2 is not
+             recommended for those undergoing warfarin therapy".  The ORIGINAL version printed a 95% CI of -2.86
+             to -2.49 for the -2.67 difference; from its own SDs (1.41, 2.20) and n (103, 96) it should be about
+             -3.19 to -2.15, one of the problems raised.
+  [TAN25N]   Notice of Retraction and Replacement. Tan and Zhu. JAMA Intern Med 2025;185(7):904. PMID 40314950,
+             doi:10.1001/jamainternmed.2025.2160. Retracted and replaced 2 May 2025 to fix errors in the
+             intention-to-treat sample sizes after concerns raised by Avenell; the authors state the reduced-cramp
+             finding remains (per web-search snippets; jamanetwork.com and ovid.com are blocked from this
+             session, so the replacement's corrected numbers could NOT be read and none are printed).  DynaMed EBM
+             Focus "Don't Jump at Vitamin K2 for Nocturnal Leg Cramps" questions the data (search snippet only).
+             Still positive after the notice: Shaughnessy AF, AAFP POEM, Am Fam Physician 2025;112(2):217,
+             PMID 40834386.  Hence the neutral EARLY tag and no numbers on the page.
   [COCH20]   Garrison SR et al. Magnesium for skeletal muscle cramps. Cochrane Database Syst Rev 2020;
              CD009402.pub3. PMID 32956536, doi:10.1002/14651858.CD009402.pub3: "unlikely that magnesium
-             supplementation provides clinically meaningful cramp prophylaxis to older adults"; no RCTs in
-             exercise-associated cramps.
-  [RENO22]   Reno AM et al. Effects of magnesium supplementation on muscle soreness and performance. J Strength
-             Cond Res 2022;36(8):2198-203. PMID 33009349, doi:10.1519/JSC.0000000000003827 (350 mg/day, 10 days,
-             n=22: less soreness, better perceived recovery).
-  [QU18]     Qu H et al. Effects of CoQ10 on statin-induced myopathy. J Am Heart Assoc 2018;7:e009835.
-             PMID 30371340, doi:10.1161/JAHA.118.009835 (12 RCTs, 575 people: less pain, weakness, cramp).
-  [BANACH15] Banach M et al. Effects of CoQ10 on statin-induced myopathy. Mayo Clin Proc 2015;90:24-34.
-             PMID 25440725, doi:10.1016/j.mayocp.2014.08.021 (no significant benefit).
+             supplementation provides clinically meaningful cramp prophylaxis to older adults" (moderate to high
+             certainty); pregnancy trials "conflicting"; no RCTs in exercise-associated cramps; GI side effects in
+             11% to 37% of magnesium takers.
   [HALL12]   Hallegraeff JM et al. Stretching before sleep reduces the frequency and severity of nocturnal leg
-             cramps in older adults. J Physiother 2012;58:17-22. PMID 22341378 (n=80, over 55, 6 weeks).
+             cramps in older adults. J Physiother 2012;58:17-22. PMID 22341378, doi:10.1016/S1836-9553(12)70068-1
+             (n=80, over 55, calf AND hamstring stretches nightly for 6 weeks; not blinded).
+  [COPPIN05] Coppin RJ et al. Managing nocturnal leg cramps: calf-stretching exercises and cessation of quinine
+             treatment, a factorial RCT. Br J Gen Pract 2005;55:186-91. PMID 15808033 (191 patients: calf-only
+             stretching "not effective in reducing the frequency or severity of night cramps").
+  [KOVAC25]  Kovacic S et al. Effects of CoQ10 supplementation on myopathy in statin-treated patients. J Nutr Sci
+             2025;14:e72. PMID 41158831, doi:10.1017/jns.2025.10043 (7 RCTs, 389 patients: small drop in muscle
+             pain, WMD -0.96).
+  [KENN20]   Kennedy C et al. Effect of CoQ10 on statin-associated myalgia and adherence. Atherosclerosis
+             2020;299:1-8. PMID 32179207, doi:10.1016/j.atherosclerosis.2020.03.006 (7 RCTs, 321 patients: no
+             benefit, WMD -0.42, 95% CI -1.47 to 0.62).
   [LAU19]    Lau WY et al. Water intake after dehydration makes muscles more susceptible to cramp but
              electrolytes reverse that effect. BMJ Open Sport Exerc Med 2019;5:e000478. PMID 30899546.
   [MAYO]     Mayo Clinic, Muscle cramp: symptoms and causes; diagnosis and treatment (causes: overuse,
              dehydration, holding a position a long time, low potassium, calcium or magnesium, diuretics;
              risk factors: age, dehydration, pregnancy, diabetes, nerve, liver or thyroid disorders; self-care:
              stretch and massage, heat; see a doctor for swelling, redness, weakness, frequent cramps).
+  [SPASM]    Muscle guarding: a muscle tightens to protect an injured or painful back, neck or joint and stays
+             tight (protective spasm), the main reason chiropractors give this sheet out (topic research, Asher's
+             Academy booth plan: "Muscle Eze. Muscle guarding.").
   [ODS-MG]   NIH Office of Dietary Supplements, Magnesium fact sheet for health professionals (nerve impulse
-             conduction and muscle contraction; UL 350 mg/day from supplements; separate from bisphosphonates
-             and tetracycline or quinolone antibiotics; diuretics; kidney disease; food sources).
+             conduction and muscle contraction; UL 350 mg/day from supplements; separate magnesium from oral
+             bisphosphonates by at least 2 hours; take tetracycline or quinolone antibiotics at least 2 hours
+             before or 4 to 6 hours after magnesium; loop and thiazide diuretics raise magnesium loss,
+             potassium-sparing diuretics lower it; kidney disease; food sources; low magnesium raises
+             neuromuscular excitability).
+  [CIPRO]    FDA ciprofloxacin label: take at least 2 hours before or 6 hours after products containing magnesium,
+             calcium, iron or zinc.
+  [LEVO]     FDA levothyroxine (Synthroid) label: take at least 4 hours apart from calcium carbonate and from
+             magnesium-containing antacids.
   [ODS-K]    NIH ODS, Potassium fact sheet (ACE inhibitors, ARBs and potassium-sparing diuretics raise blood
              potassium; loop and thiazide diuretics lower it; food sources).
-  [ODS-VK]   NIH ODS, Vitamin K fact sheet (vitamin K and warfarin; MK-7 is long-acting; bone proteins).
+  [ODS-CA]   NIH ODS, Calcium fact sheet (low blood calcium raises nerve and muscle excitability).
+  [ODS-VK]   NIH ODS, Vitamin K fact sheet (vitamin K and warfarin; MK-7 is long-acting; vitamin K activates
+             bone proteins such as osteocalcin that bind calcium).
   [NCCIH]    NCCIH, Coenzyme Q10 (statins lower blood CoQ10; CoQ10 may make warfarin less effective).
   [FDA-ST]   FDA statin class labeling, Myopathy and Rhabdomyolysis (report unexplained muscle pain, tenderness
              or weakness promptly); MedlinePlus, Rhabdomyolysis (dark, red or cola-colored urine).
   [CDC-DVT]  CDC, Venous thromboembolism (blood clots): signs are swelling, pain, tenderness and redness of the leg.
+  [LABEL]    Product labels (see products.d/muscle-cramps.json src): Muscle Eze and Mag Calm Pro "If pregnant,
+             nursing, or taking medication, consult your healthcare practitioner"; Muscle Eze "may cause
+             drowsiness", caution when driving; Vitamin K2 "one capsule daily with a meal or as directed by your
+             healthcare practitioner".
   [PHYS]     Guyton and Hall Textbook of Medical Physiology, ch. 6, Contraction of skeletal muscle: the nerve
              signal (sodium in, potassium out) releases calcium; calcium lets myosin heads grab actin and pull;
              ATP releases the heads and powers the pump that returns calcium to storage (Mg-ATP is the working
@@ -119,7 +155,8 @@ ACT, ACT_A, ACT_B = "#EDB3AA", "#D6857A", "#F7CEC7"  # thin filament (actin): ro
 MYO, MYO_HEAD, MYO_EDGE = "#6D4FA3", "#9A80CC", "#4A3274"  # thick filament (myosin): violet shaft + heads
 ZLINE = "#2E4057"                                 # Z-line: the anchor at each end of a motor
 KNOT = "#E1332C"                                  # red glow: the cramp knot
-RED_TX, GREEN_TX, ORANGE_TX = "#B42B24", "#17663F", "#A3540A"
+RED_TX, GREEN_TX, ORANGE_TX, ATP_TX = "#B42B24", "#17663F", "#A3540A", "#0A6870"
+ZOOM_LINE = "#6F7C86"                             # white ring + grey lines: zooming in (keyed)
 # anatomy (not coded, so not keyed)
 SKIN_A, SKIN_B, SKIN_EDGE = "#FBE7DA", "#F1CDB8", "#C99579"
 GAS_A, GAS_B, GAS_LN = "#D85B52", "#A93A35", "#7E2522"
@@ -337,11 +374,13 @@ def fiber():
     o = [f'<clipPath id="mc-fibclip"><rect x="{x0}" y="{cy - r}" width="{x1 - x0}" height="{2 * r}"/></clipPath>',
          f'<rect x="{x0}" y="{cy - r}" width="{x1 - x0}" height="{2 * r}" fill="{FIB_I}"/>',
          '<g clip-path="url(#mc-fibclip)">']
+    # striped: dark A bands, light I bands with a thin Z-line in the middle of each I band.  The stripe step is
+    # SARC and the A band is 13 long, exactly as on the thread pulled out of this fiber, so the two match.
     x = x0 + 4
-    while x < x1:                       # striped: dark A bands, light I bands with a thin Z-line between
-        o.append(f'<rect x="{x:.1f}" y="{cy - r}" width="7" height="{2 * r}" fill="{FIB_A}"/>')
-        o.append(f'<path d="M{x + 9.5:.1f},{cy - r} V{cy + r}" stroke="{FIB_Z}" stroke-width=".9" stroke-opacity=".7"/>')
-        x += 12
+    while x < x1:
+        o.append(f'<rect x="{x:.1f}" y="{cy - r}" width="13" height="{2 * r}" fill="{FIB_A}"/>')
+        o.append(f'<path d="M{x + 18.5:.1f},{cy - r} V{cy + r}" stroke="{FIB_Z}" stroke-width="1.1" stroke-opacity=".75"/>')
+        x += SARC
     o.append(f'<rect x="{x0}" y="{cy - r}" width="{x1 - x0}" height="{2 * r}" fill="url(#mc-cyl)"/>')
     o.append("</g>")
     o.append(f'<rect x="{x1 - 40}" y="{cy - r - 1}" width="42" height="{2 * r + 2}" fill="url(#mc-rfade)"/>')
@@ -537,9 +576,11 @@ def panel_sarcomere(t):
     o.append(marker(xo - 24, (ya + yb) / 2, 2))
     o.append(T(xo + 14, (ya + yb) / 2 - 2, "Calcium", 11.5, 800, ORANGE_TX) +
              T(xo + 14, (ya + yb) / 2 + 12, "switches it ON", 11, 600, INK))
-    o.append(v_arrow(xg, yb, ya, MG))
+    # ATP does the letting go (it frees the myosin heads and powers the calcium pump); magnesium helps, because
+    # Mg-ATP is the working form [PHYS].  So the OFF arrow is ATP teal and ATP is named first.
+    o.append(v_arrow(xg, yb, ya, ATP))
     o.append(marker(xg + 24, (ya + yb) / 2, 3))
-    o.append(T(xg - 14, (ya + yb) / 2 - 2, "Magnesium + ATP", 11.5, 800, GREEN_TX, "end") +
+    o.append(T(xg - 14, (ya + yb) / 2 - 2, "ATP + magnesium", 11.5, 800, ATP_TX, "end") +
              T(xg - 14, (ya + yb) / 2 + 12, "switch it OFF", 11, 600, INK, "end"))
     o.append(T(cx + 14, ROW2 + 52, "CONTRACTED", 11.5, 800, ORANGE_TX, ls=0.6)
              + T(cx + 14 + tw("CONTRACTED", 11.5, 800, 0.6) + 6, ROW2 + 52, "the muscle squeezes", 11, 600, INK2))
@@ -582,18 +623,27 @@ def key_strip(y):
     def knot_sw():
         return '<circle r="11" fill="url(#mc-knot)"/>'
 
+    def zoom_sw():
+        """The zoom device used twice in the picture: a white ring on the art with grey lines opening out."""
+        return (f'<path d="M-6,-5.4 L13,-10 M-6,5.4 L13,10" stroke="{ZOOM_LINE}" stroke-width="1.1" stroke-opacity=".8"/>'
+                f'<circle cx="-6" cy="0" r="6.4" fill="{SKIN_B}"/>'
+                '<circle cx="-6" cy="0" r="4.6" fill="none" stroke="#FFFFFF" stroke-width="2.2"/>'
+                '<circle cx="-6" cy="0" r="6.2" fill="none" stroke="#2F2626" stroke-width=".9" stroke-opacity=".6"/>')
+
+    # Columns line up across the two rows, so each column pairs a long label with a short one (it only fits
+    # the 760-unit width that way).  Calcium is ON, ATP is OFF, magnesium helps ATP [PHYS].
     rows = [[(nerve_sw, 13, "Nerve signal"), (lambda: ca_dot(0, 0, 4.2), 5, "Calcium: switch ON"),
-             (lambda: mg_dot(0, 0, 4.2), 5, "Magnesium: switch OFF"), (lambda: drop(0, 0.6, 1.15), 5, "Sodium, potassium"),
-             (lambda: bolt(0, 0, 1.15), 5, "ATP: energy")],
-            [(thin_sw, 12, "Thin filament (actin)"), (thick_sw, 12, "Thick filament (myosin)"),
-             (z_sw, 4, "Z-line: the anchor"), (knot_sw, 11, "Cramp knot")]]
+             (lambda: bolt(0, 0, 1.15), 5, "ATP: energy, switch OFF"), (lambda: mg_dot(0, 0, 4.2), 5, "Magnesium: helps ATP"),
+             (lambda: drop(0, 0.6, 1.15), 5, "Sodium, potassium")],
+            [(knot_sw, 11, "Cramp knot"), (thin_sw, 12, "Thin filament (actin)"), (thick_sw, 12, "Thick filament (myosin)"),
+             (zoom_sw, 13, "Ring and lines: zoom in"), (z_sw, 4, "Z-line: the anchor")]]
     fs, gap_sw = 10.5, 6
     ncol = max(len(r) for r in rows)
     colw = [0.0] * ncol
     for r in rows:
         for c, (_, hw, lab) in enumerate(r):
             colw[c] = max(colw[c], 2 * hw + gap_sw + tw(lab, fs, 600))
-    x0, x1, rh, top = 6, W - 6, 21, 9
+    x0, x1, rh, top = 6, W - 6, 20, 8
     h = top * 2 + rh * len(rows)
     start = x0 + 14 + tw("KEY", 10.5, 800, 1.2) + 16
     space = (x1 - 12 - start - sum(colw)) / (ncol - 1)
@@ -636,6 +686,11 @@ def art_cramp(t):
     o.append(T(8, gy + 4, "Calf muscle", 11, 700, "#8E2E2A"))
     o.append(f'<path d="M{8 + tw("Calf muscle", 11, 700) + 4:.1f},{gy:.1f} H{gx:.1f}" stroke="{INK}" stroke-width="1.1"/>'
              f'<circle cx="{gx:.1f}" cy="{gy:.1f}" r="2.2" fill="{INK}"/>')
+    # the darker strip is the soleus, the deeper calf muscle: label its lower part, below the calf bulge
+    sx, sy = L(5.0, 19.2)
+    o.append(T(8, sy - 2, "Deeper", 11, 700, "#7A2622") + T(8, sy + 11, "calf muscle", 11, 700, "#7A2622"))
+    o.append(f'<path d="M{8 + tw("calf muscle", 11, 700) + 4:.1f},{sy + 7:.1f} L{sx - 9:.1f},{sy + 7:.1f} L{sx:.1f},{sy:.1f}" '
+             f'stroke="{INK}" stroke-width="1.1" fill="none"/><circle cx="{sx:.1f}" cy="{sy:.1f}" r="2.2" fill="{INK}"/>')
     ax, ay = L(2.7, 11.6)
     o.append(T(8, ay + 4, "Achilles tendon", 11, 700, "#7A6648"))
     o.append(f'<path d="M{8 + tw("Achilles tendon", 11, 700) + 4:.1f},{ay:.1f} H{ax:.1f}" stroke="{INK}" stroke-width="1.1"/>'
@@ -647,18 +702,22 @@ def art_cramp(t):
     key, kh = key_strip(KEY_Y)
     o.append(key)
     return svg(W, KEY_Y + kh + 2, "".join(o),
-               "How a muscle tightens and lets go. Left: a calf muscle with a red cramp knot and its motor nerve. "
-               "Middle: one muscle fiber with the nerve ending firing on it, one thread of tiny motors, and the nerve's "
-               "firing pattern, normal versus a cramp that keeps firing. Right: one tiny motor, a sarcomere, relaxed "
-               "with magnesium and ATP, and contracted with calcium.")
+               "How a muscle tightens and lets go. Left: a calf muscle and the deeper calf muscle, with a red cramp knot "
+               "and its motor nerve; a white ring and grey lines zoom in. Middle: one muscle fiber with the nerve ending "
+               "firing on it, one thread of tiny motors, and the nerve's firing pattern, normal versus a cramp that keeps "
+               "firing. Right: one tiny motor, a sarcomere, relaxed when ATP with magnesium's help lets go, and "
+               "contracted with calcium.")
 
 
 # =============================================================== blocks under the picture
-STEPS = [  # [PHYS] for 1-3; [AAFP12] [SCHW09] [MINETTO13] for 4
+STEPS = [  # [PHYS] for 1-3; [ODS-CA] [ODS-MG] enough blood calcium and magnesium keep nerves calm; [AAFP12] [SCHW09] [MINETTO13] for 4
     ("The nerve says &ldquo;squeeze.&rdquo;", "Sodium and potassium carry the signal into the muscle."),
-    ("Calcium switches it ON.", "Thin and thick filaments grab and slide, so the muscle shortens."),
-    ("Magnesium and ATP switch it OFF.", "The filaments let go and calcium goes back into storage."),
-    ("A cramp is the switch stuck ON.", "A tired or over-excited nerve keeps firing."),
+    # inside the fiber calcium is the ON switch; in the blood, too little calcium or magnesium makes nerves over-fire,
+    # which is why low calcium is a cramp trigger even though calcium switches the motor on
+    ("Calcium switches it&nbsp;ON.", "Filaments grab and slide. In your blood, enough calcium and magnesium keep "
+     "nerves calm; too little can set off cramps."),
+    ("ATP switches it&nbsp;OFF.", "With magnesium&rsquo;s help, the filaments let go and calcium goes back into storage."),
+    ("A cramp is the switch stuck&nbsp;ON.", "A tired or over-excited nerve keeps&nbsp;firing."),
 ]
 
 # 64-grid stroke icons drawn for this sheet (kit.icon style)
@@ -666,62 +725,71 @@ IC = {
     "chair": '<path d="M20 8v26h22l2 22M20 34l-4 22M18 34h26"/><path d="M20 22h18"/>',
     "pregnant": ('<circle cx="31" cy="10" r="5"/><path d="M29 17c-3 4-4 10-3 16l2 23M33 17c3 3 4 7 4 11 6 2 9 7 8 13'
                  '-1 5-5 7-10 7l1 8"/>'),
-    "minerals": ('<rect x="6" y="16" width="24" height="26" rx="3"/><rect x="34" y="16" width="24" height="26" rx="3"/>'
-                 '<path d="M10 51h44"/>'),
+    # a blood tube with a low level and a down arrow: low mineral levels (no tiny element letters to print)
+    "lowlevels": ('<path d="M20 8v34a8 8 0 0 0 16 0V8"/><path d="M16 8h24"/><path d="M20 36h16"/>'
+                  '<path d="M50 13v30"/><path d="M43 36l7 7 7-7"/>'),
     "sweat": ('<circle cx="40" cy="20" r="8"/><path d="M40 4v4M40 32v4M24 20h4M52 20h4M29 9l3 3M48 28l3 3M29 31l3-3M48 12l3-3"/>'
               '<path d="M18 30c-4 7-8 11-8 16a8 8 0 0 0 16 0c0-5-4-9-8-16z"/>'),
-    "tired": ('<path d="M12 52c2-12 8-20 16-24 6-3 8-9 6-15"/><path d="M28 28c5 1 10 5 12 11"/><path d="M40 39c5 0 9 3 11 7"/>'
-              '<path d="M47 8l3 6M54 12l-4 4M56 21h-6"/>'),
+    # a bent knee (thigh, round joint, shin) with three short pain rays: an injury or a sore joint
+    "joint": ('<path d="M12 8 24 26"/><circle cx="28" cy="32" r="7"/><path d="M25.8 38.6 20 56"/>'
+              '<path d="M41 24l7-5M43 32h8M41 40l7 5"/>'),
 }
 
 
 def _ic(name, size="0.34in", sw=2.9):
     body = IC.get(name) or ICONS[name]
-    extra = ""
-    if name == "minerals":           # element tiles carry real text, drawn without the icon stroke
-        extra = ('<g stroke="none" fill="currentColor" font-family="Inter, Helvetica, Arial, sans-serif" '
-                 'font-weight="800" text-anchor="middle"><text x="18" y="35" font-size="15">Mg</text>'
-                 '<text x="46" y="35" font-size="15">K</text></g>')
     return (f'<svg class="ic" viewBox="0 0 64 64" style="width:{size};height:{size}" fill="none" stroke="currentColor" '
-            f'stroke-width="{sw}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{body}{extra}</svg>')
+            f'stroke-width="{sw}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{body}</svg>')
 
 
-TRIGGERS = [  # [MAYO] causes and risk factors; [AAFP12]; [GARR12] for the medicines; [SCHW09] fatigue
-    ("dumbbell", "Tired, overused<br>muscles"),
-    ("sweat", "Sweat, heat,<br>too little fluid"),
-    ("chair", "Sitting still<br>for hours"),
-    ("age", "Getting<br>older"),
+TRIGGERS = [  # [MAYO] causes and risk factors; [AAFP12] linked conditions; [SCHW09] fatigue; [SPASM] guarding
+    ("dumbbell", "Tired, overused muscles"),
+    ("sweat", "Sweat, heat, too little fluid"),
+    ("chair", "Sitting still for hours"),
+    ("joint", "Injury or a sore joint"),
+    ("age", "Getting older"),
     ("pregnant", "Pregnancy"),
-    ("rx", "Water pills<br>and statins"),
-    ("minerals", "Low magnesium<br>or potassium"),
-    ("stethoscope", "Diabetes, nerve,<br>thyroid issues"),
+    # [GARR12]: inhalers (LABA 2.42) and some water pills (potassium-sparing 2.12, thiazide-like 1.48) are the strong
+    # links; loop diuretics (1.20) and statins (1.16) are weak ones, so statins come last
+    ("rx", "Some water pills, inhalers, statins"),
+    # [MAYO] too little potassium, calcium or magnesium; [ODS-CA] [ODS-MG] low blood levels make nerves over-fire
+    ("lowlevels", "Low magnesium, calcium or potassium"),
+    # [MAYO] diabetes, nerve, liver, thyroid; [AAFP12] hemodialysis (kidney) and cirrhosis (liver)
+    # (this word order wraps in three lines in the narrow cell)
+    ("stethoscope", "Diabetes, nerve, kidney, liver or thyroid problems"),
 ]
 
-RESEARCH = [
-    # [HALL12] adults over 55, nightly calf + hamstring stretching for 6 weeks: fewer and less painful night cramps
-    ("ok", "Helped", "Stretching at bedtime.",
-     "Adults over 55 who stretched calves and hamstrings nightly for 6 weeks had fewer, milder night cramps."),
-    # [TAN24] 65+, MK-7 180 mcg nightly x 8 weeks: 2.60 -> 0.96 a week; placebo 2.71 -> 3.63; one trial, mild cramps
-    ("pr", "Promising", "Vitamin K2 (MK-7).",
-     "Adults 65+ taking 180 mcg nightly for 8 weeks went from 2.6 cramps a week to about 1; the placebo group "
-     "rose to 3.6. One trial so far."),
-    # [COCH20] unlikely to prevent cramps in older adults; [RENO22] 350 mg/day x 10 days: less soreness after exercise
-    ("mx", "Mixed", "Magnesium.",
-     "Unlikely to prevent ordinary night cramps in older adults (Cochrane review). A small trial tied it to less "
-     "soreness after hard exercise."),
-    # [QU18] positive (12 RCTs, 575 people); [BANACH15] no significant benefit
-    ("mx", "Mixed", "CoQ10 with a statin.",
-     "One review of trials found less muscle pain and cramping; another found no clear benefit."),
+RESEARCH = [  # (css class, tag, tag sub-line, lead, text)
+    # [HALL12] n=80, over 55, calf AND hamstring stretches nightly for 6 weeks (not blinded): fewer, milder cramps.
+    # [COPPIN05] n=191, calf-only stretching: no change.  One positive trial of the routine this sheet recommends.
+    ("ok", "Helped", "1 trial", "Stretching at bedtime.",
+     "Adults over 55 who stretched calves and hamstrings nightly for 6 weeks had fewer, milder night cramps. "
+     "A larger trial of calf-only stretching found no benefit."),
+    # [TAN24] 65+, MK-7 180 mcg nightly for 8 weeks.  [TAN25N] retracted and replaced in 2025; the authors keep the
+    # finding, but the corrected numbers could not be re-checked here, so none are printed (and no placebo detail).
+    ("ea", "Early", "1 trial", "Vitamin K2 (MK-7).",
+     "One trial in adults 65+ taking 180 mcg nightly found fewer night cramps. Its report was withdrawn and "
+     "replaced with a corrected one in 2025, and a second trial is needed."),
+    # [COCH20] only cramp outcomes from the same review: unlikely to prevent cramps in older adults (moderate to high
+    # certainty); pregnancy trials conflict; no trials in exercise-associated cramps.
+    ("np", "Not proven", "", "Magnesium.",
+     "Unlikely to prevent ordinary night cramps in older adults (Cochrane). Studies in pregnancy disagree; "
+     "none tested sports cramps."),
+    # [KOVAC25] 7 RCTs, 389 patients: small drop in statin muscle pain; [KENN20] 7 RCTs, 321 patients: no benefit
+    ("mx", "Mixed", "", "CoQ10 with a statin.",
+     "The newest review (2025) found a little less muscle pain. A 2020 review found no clear benefit."),
 ]
 
 RED_FLAGS = [
     # [CDC-DVT]
     ("A sore calf that is <b>swollen, warm or red</b>.", "It can be a blood clot. Get care today."),
     # [FDA-ST]
-    ("On a statin, with <b>muscle pain or weakness you can&rsquo;t explain</b>, or <b>dark urine</b>.",
-     "Call your prescriber right away."),
-    # [MAYO] see a doctor: frequent, not better with self-care, weakness; [AAFP12] differentials (neuropathy etc.)
-    ("Cramps that come <b>often</b>, wake you most nights, or come with <b>weakness or numbness</b>.",
+    ("On a statin, with <b>unexplained muscle pain or weakness</b>, or <b>dark urine</b>.",
+     "Call your prescriber&nbsp;now."),
+    # [AAFP12] claudication is a look-alike: calf pain on walking that rest relieves means poor blood flow
+    ("<b>Calf pain when you walk</b> that eases when you stop.", "Have your circulation checked."),
+    # [MAYO] see a doctor: frequent, not better with self-care, weakness; [AAFP12] look-alikes (neuropathy etc.)
+    ("Cramps that come <b>often</b>, or with <b>weakness or numbness</b>.",
      "Have a doctor check them."),
 ]
 
@@ -739,10 +807,12 @@ def triggers():
 
 
 def research():
-    rows = "".join(f'<div class="mcr-rr"><span class="mcr-tag {c}">{tag}</span><p><b>{a}</b> {b}</p></div>'
-                   for c, tag, a, b in RESEARCH)
-    # source line: [HALL12] [TAN24] [COCH20] [RENO22] [QU18] [BANACH15]
-    src = "Hallegraeff 2012 &middot; Tan 2024 &middot; Cochrane 2020 &middot; Reno 2022 &middot; Qu 2018 &middot; Banach 2015"
+    rows = "".join(
+        f'<div class="mcr-rr"><span class="mcr-tag {c}">{tag}{f"<small>{sub}</small>" if sub else ""}</span>'
+        f'<p><b>{a}</b> {b}</p></div>' for c, tag, sub, a, b in RESEARCH)
+    # source line: [HALL12] [COPPIN05] [TAN24] [TAN25N] [COCH20] [KOVAC25] [KENN20]
+    src = " &middot; ".join(x.replace(" ", "&nbsp;") for x in (
+        "Hallegraeff 2012", "Coppin 2005", "Tan 2024 (notice 2025)", "Cochrane 2020", "Kovacic 2025", "Kennedy 2020"))
     return (f'<div class="mcr-res"><div class="mcr-ph">What the research says</div>{rows}'
             f'<p class="mcr-src">{src}</p></div>')
 
@@ -750,7 +820,7 @@ def research():
 def red_flags():
     items = "".join(f'<li><span>{a}</span> <em>{b}</em></li>' for a, b in RED_FLAGS)
     return (f'<div class="mcr-flag"><div class="mcr-ph r">{_warn()} Get checked</div><ul>{items}</ul>'
-            '<p class="mcr-q">Quinine pills are no longer advised for leg cramps.</p></div>')   # [AAFP12]
+            '<p class="mcr-q">Quinine pills are no longer advised for leg&nbsp;cramps.</p></div>')   # [AAFP12]
 
 
 def _warn():
@@ -769,9 +839,12 @@ def front(t, ed):
             '</div>')
 
 
+# the back page of THIS sheet: the back <section> that follows the front holding .mcr (per-sheet HTML and bundle)
+BACK = ".sheet.front:has(.mcr) + .sheet.back"
+
 CSS = r"""
 .mcr .mcr-art svg{display:block;width:100%;height:auto}
-.mcr .mcr-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0.08in;margin-top:0.07in}
+.mcr .mcr-steps{display:grid;grid-template-columns:1fr 1.22fr 1fr 0.86fr;gap:0.08in;margin-top:0.06in}
 .mcr .mcr-st{display:flex;gap:6px;align-items:flex-start}
 .mcr .mcr-n{flex:none;width:17px;height:17px;border-radius:50%;background:#fff;border:1.6px solid #23292D;color:#23292D;
   font:800 8pt/1 Inter,sans-serif;display:flex;align-items:center;justify-content:center;margin-top:1px}
@@ -779,23 +852,25 @@ CSS = r"""
 .mcr .mcr-st p{margin:0;font-size:7.8pt;line-height:1.3;color:#2B3236}
 .mcr .mcr-st b{color:var(--deep)}
 .mcr .mcr-h{display:flex;align-items:center;gap:0.1in;font:900 10.5pt/1.2 Merriweather,Georgia,serif;color:var(--c1);
-  letter-spacing:.04em;text-transform:uppercase;margin:0.1in 0 0.06in}
+  letter-spacing:.04em;text-transform:uppercase;margin:0.07in 0 0.05in}
 .mcr .mcr-h::after{content:"";flex:1;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--soft),rgba(227,238,246,0))}
-.mcr .mcr-risk{display:grid;grid-template-columns:repeat(8,1fr);gap:0 0.04in}
+.mcr .mcr-risk{display:grid;grid-template-columns:repeat(9,1fr);gap:0 0.03in}
 .mcr .mcr-rf{display:flex;flex-direction:column;align-items:center;text-align:center}
-.mcr .mcr-disc{width:0.5in;height:0.5in;border-radius:50%;background:var(--soft);color:var(--c1);display:flex;
+.mcr .mcr-disc{width:0.46in;height:0.46in;border-radius:50%;background:var(--soft);color:var(--c1);display:flex;
   align-items:center;justify-content:center;box-shadow:inset 0 0 0 1.5px rgba(31,94,140,.12)}
-.mcr .mcr-rl{display:block;font-size:7.6pt;font-weight:600;line-height:1.22;color:#2F373C;margin-top:0.03in}
-.mcr .mcr-low{display:grid;grid-template-columns:1.5fr 1fr;gap:0.12in;margin-top:0.11in;align-items:stretch}
+.mcr .mcr-rl{display:block;font-size:7.2pt;font-weight:600;line-height:1.2;color:#2F373C;margin-top:0.03in}
+.mcr .mcr-low{display:grid;grid-template-columns:1.95fr 1fr;gap:0.12in;margin-top:0.07in;align-items:stretch}
 .mcr .mcr-ph{font:800 7.6pt Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--c1);margin:0 0 4px}
 .mcr .mcr-ph.r{color:#A5281E}
 .mcr .mcr-res{background:var(--tint);border:1px solid #D9E5EE;border-radius:9px;padding:0.07in 0.11in 0.06in}
-.mcr .mcr-rr{display:grid;grid-template-columns:0.66in 1fr;gap:0.07in;align-items:start;margin:0 0 4px}
-.mcr .mcr-tag{display:block;text-align:center;font:800 7pt/1 Inter,sans-serif;letter-spacing:.07em;text-transform:uppercase;
+.mcr .mcr-rr{display:grid;grid-template-columns:0.64in 1fr;gap:0.07in;align-items:start;margin:0 0 4px}
+.mcr .mcr-tag{display:block;text-align:center;font:800 7pt/1.15 Inter,sans-serif;letter-spacing:.06em;text-transform:uppercase;
   color:#fff;border-radius:4px;padding:3px 2px;margin-top:1px}
+.mcr .mcr-tag small{display:block;font:600 7pt/1.15 Inter,sans-serif;letter-spacing:.02em;text-transform:none;opacity:.95}
 .mcr .mcr-tag.ok{background:#2E7D4F}
-.mcr .mcr-tag.pr{background:var(--c1)}
-.mcr .mcr-tag.mx{background:#8A7A55}
+.mcr .mcr-tag.ea{background:#56687A}
+.mcr .mcr-tag.np{background:#8A4F47}
+.mcr .mcr-tag.mx{background:#756640}
 .mcr .mcr-rr p{margin:0;font-size:7.7pt;line-height:1.3;color:#2B3236}
 .mcr .mcr-rr b{color:var(--deep)}
 .mcr .mcr-src{margin:2px 0 0;font-size:7pt;line-height:1.3;color:#5E686F}
@@ -806,26 +881,52 @@ CSS = r"""
 .mcr .mcr-flag li b{color:#A5281E}
 .mcr .mcr-flag li em{font-style:normal;font-weight:700;color:#2B3236}
 .mcr .mcr-q{margin:2px 0 0;font-size:7.2pt;color:#5E686F;line-height:1.3}
+/* this sheet's footers: shared CSS prints them at 6.6 pt, under the 7 pt minimum */
+.sheet.front:has(.mcr) .foot,.sheet.front:has(.mcr) .foot .code{font-size:7pt}
+""" + f"""
+/* this sheet's back page only: lift the shared 6.2 to 6.8 pt text to the 7 pt minimum */
+{BACK} .startt,{BACK} .col .need i,{BACK} .col .key,{BACK} .col .key b,{BACK} .col .dose small,{BACK} .disc,
+{BACK} .foot,{BACK} .foot .code{{font-size:7pt}}
+{BACK} .col .pick .sz{{font-size:7pt;line-height:1.2}}
+{BACK} .col .dose small{{line-height:1.25}}
+{BACK} .startt{{top:0.53in}}
+/* only Muscle Eze and Vitamin K2 are in the daily plan, while the medicine check is long: a narrow rhythm panel with
+   the three times of day stacked, beside a wide check panel, so neither panel is left half empty */
+{BACK} .duo{{grid-template-columns:2.45in 1fr}}
+{BACK} .rhythm{{grid-template-columns:1fr;gap:4px}}
+{BACK} .slot{{display:flex;align-items:center;gap:6px;padding:4px 6px}}
+{BACK} .ns-title{{margin-top:0.1in}}
+{BACK} .notes .ln{{height:0.22in}}
+{BACK} .slot .when{{flex:none;width:0.84in}}
+{BACK} .slot ul{{margin:0}}
+/* the two Progressive Professional thumbnails come on an opaque white box: let the pale panel show through and
+   drop the shadow that would outline the box */
+{BACK} .pick img[src*="nd-mcr-vitamin-k2"],{BACK} .pick img[src*="nd-mcr-mag-k"]{{mix-blend-mode:multiply;filter:none}}
 """
 
 # =============================================================== back: lifestyle icons (64 grid, kit.icon style)
-# wall calf stretch: hands on the wall, front knee bent, back leg straight with the heel down
-ICONS.setdefault("mcr_stretch", '<path d="M55 6v52M6 58h49"/><circle cx="45" cy="13" r="4.6"/><path d="M43 19 32 36"/>'
-                 '<path d="M41.5 22 54 20"/><path d="M32 36l9 8 1 14"/><path d="M32 36 14 57h8"/>')
-# stop a cramp: a straight leg with the foot pulled up toward the shin (curved arrow)
-ICONS.setdefault("mcr_foot", '<path d="M4 34h34c3 0 4-2 5-6l3-12c1-4 7-3 6 1l-3 26c-1 5-5 9-11 9H4"/>'
-                 '<path d="M58 30c2-9-2-17-10-20"/><path d="M46 4l2 6-6 2"/>')
+# wall calf stretch: both hands on the wall, a clear torso leaning in, front knee bent, back leg straight, heel down
+ICONS.setdefault("mcr_stretch", '<path d="M58 4v54M4 58h54"/><circle cx="41" cy="9" r="5"/><path d="M40 15 34 34"/>'
+                 '<path d="M39 19 57 20M38.5 22 57 27"/><path d="M34 34 44 43 43 56h6"/><path d="M34 34 13 56h8"/>')
+# stop a cramp: side view of a lower leg with the foot flexed up toward the shin, and a bold curved arrow
+ICONS.setdefault("mcr_foot", '<path d="M13 3C8 12 8 24 13 32C15 36 16 40 16 44C16 51 20 54 26 51L49 39C53 37 52 31 47 32.5'
+                 'L30 38C28 27 27 15 27 3"/><path d="M54 41C62 30 59 15 46 10" stroke-width="3.6"/>'
+                 '<path d="M52 4.5 45 10 51.5 16" stroke-width="3.6"/>')
 
 # =============================================================== the sheet
 SHEET = {
     "slug": SLUG, "code": "ND-MS-604", "order": 15, "theme": "msk", "series": "Pain and Movement Series",
     "title": "Muscle Cramps and Spasms", "sub": "Why a muscle locks up, and how to help it let go",
-    # "Up to 60 percent of adults" have had night leg cramps [AAFP12]; 46% of primary-care patients over 60, mostly
-    # in the calves (80%) [MAISON16]; sudden, involuntary contraction, often calf, foot or thigh [MAYO].
-    "intro": ("A <b>cramp</b>, or spasm, is a muscle that suddenly tightens on its own and will not let go. It usually "
-              "grabs the <b>calf</b>, foot or thigh, often at night. Cramps are very common: <b>up to 6 in 10 adults</b> "
-              "have had a night leg cramp, and nearly <b>half of people over 60</b> get them. Most are harmless, and "
-              "simple habits help. Here is what happens inside the muscle."),
+    # [MAYO] sudden, involuntary contraction, most often the calf, foot or thigh; that other muscles (back, neck) can
+    # cramp too is general reference knowledge (MedlinePlus, Muscle cramps; not opened this session).  Duration:
+    # [TAN24] PMC full text, mean 1.15 to 1.3 minutes, so "seconds to minutes", not "will not let go".
+    # [SPASM] guarding a sore back, neck or joint.  [AAFP12] "up to 60 percent of adults"; [MAISON16] 46% of
+    # primary-care patients over 60, mostly in the calves (80%).
+    "intro": ("A <b>cramp</b>, or spasm, is a muscle that suddenly tightens on its own and stays tight for seconds to "
+              "minutes. It usually grabs the <b>calf</b>, foot or thigh, often at night, and it can strike the back or "
+              "neck too. A spasm can also be a muscle <b>guarding</b> a sore back, neck or joint: it tightens to protect "
+              "the sore spot and is slow to let go. Cramps are very common: <b>up to 6 in 10 adults</b> have had a night "
+              "leg cramp, and nearly <b>half of people over 60</b> get them. Most are harmless, and simple habits help."),
     "front": front,
     "css": CSS,
     "back": {
@@ -833,56 +934,83 @@ SHEET = {
         "life": [
             ("mcr_stretch", "Stretch before bed",            # [HALL12]
              "Gently stretch your calves and the backs of your thighs every night before sleep."),
-            ("drop", "Drink, plus salts",                     # [LAU19]; [MAYO] dehydration
+            # "salts" could read as table salt, so the electrolytes are named; the title stays on one line
+            ("drop", "Drink enough",                          # [LAU19]; [MAYO] dehydration
              "Sip water all day. After long, sweaty workouts, add electrolytes, not just water."),
             ("leaf", "Eat your minerals",                     # [ODS-MG] [ODS-K] food sources
-             "Greens, beans, nuts and seeds for magnesium. Potatoes and bananas for potassium."),
+             "Magnesium: greens, beans, nuts and seeds. Potassium: potatoes and bananas."),
             ("dumbbell", "Build up slowly",                   # [SCHW09] [AAFP12] fatigue
              "Add exercise a little at a time. Tired muscles cramp more easily."),
             ("mcr_foot", "Stop a cramp",                      # [MAYO] self-care
              "Straighten the leg, pull your toes toward you, rub the knot, add warmth."),
             ("rx", "Check medicines",                         # [GARR12]
-             "Water pills, statins and some inhalers can play a part. Ask first."),
+             "Water pills, inhalers and statins can play a part. Never stop one without your prescriber."),
         ],
+        # Back-page columns are not passed through ed_text, so no {who} here: edition wording lives in rx.
+        # Only Muscle Eze and Vitamin K2 are in everyone's daily rhythm (4 pills).  Mag Calm Pro and Mag-K replace
+        # Muscle Eze rather than add to it, so supplemental magnesium stays at 200 mg a day, under the 350 mg upper
+        # limit [ODS-MG]; CoQ10 is only for statin users.
         "cols": [
-            {"p": "muscle_eze", "need": "Help muscles let go", "needsub": "magnesium + calcium,<br>theanine, passion flower", "start": True,
-             "bullets": ["Helps relax muscle tissue", "Supports calm before sleep"],
+            # [LABEL] "Targeted Formula for Supporting and Relaxing Healthy Muscle Tissue"; [SPASM] guarding;
+            # not sold as a cramp cure [COCH20]
+            {"p": "mcr_muscle_eze", "need": "Relax guarded muscles", "needsub": "magnesium + calcium,<br>theanine, passion flower",
+             "start": True,
+             "bullets": ["Helps muscles relax", "Supports calm and rest"],
              "dose": "3 capsules at bedtime", "dosesub": "may cause drowsiness", "sched": [("bed", 3, "capsules")]},
-            {"p": "mag_calm_pro", "need": "Calm busy nerves", "needsub": "magnesium, taurine,<br>B6, L-theanine",
-             "bullets": ["Supports relaxed muscles and nerves", "Supports restful sleep"],
-             "dose": "1 scoop in 6 oz water", "dosesub": "in the evening", "sched": [("pm", 1, "scoop")]},
-            {"p": "vitamin_k2", "need": "Balance calcium", "needsub": "vitamin K2 as MK-7",
-             "bullets": ["Helps steer calcium into bone", "Long-acting MK-7 form"],                       # [ODS-VK]
-             "dose": "1 capsule daily", "dosesub": "with your evening meal", "sched": [("pm", 1, "capsule")]},
+            {"p": "mcr_mag_calm_pro", "need": "Calm busy nerves", "needsub": "magnesium, taurine,<br>B6, L-theanine",
+             "bullets": ["Supports relaxed nerves", "Supports restful sleep"],
+             "dose": "1 scoop in 6 oz water", "dosesub": "or in place of Muscle Eze on restless nights", "sched": []},
+            # [ODS-VK] vitamin K activates bone proteins (osteocalcin) that bind calcium; [TAN24] 180 mcg in the trial
+            {"p": "mcr_vitamin_k2", "need": "Bone and calcium balance", "needsub": "vitamin K2 as MK-7",
+             "bullets": ["Helps activate bone proteins that bind calcium", "Long-acting MK-7 form"],
+             "dose": "1 capsule daily", "dosesub": "with dinner. Trial: 180&nbsp;mcg; 1&nbsp;capsule = 100&nbsp;mcg",
+             "sched": [("pm", 1, "capsule")]},
             {"p": "coq10", "need": "On a statin?", "needsub": "CoQ10 for muscle energy",
              "bullets": ["Fuel for energy-making in muscle cells", "Statins lower the body&rsquo;s own CoQ10"],   # [NCCIH]
-             "dose": "1 softgel daily", "dosesub": "with breakfast", "sched": [("am", 1, "softgel")]},
-            # Mag-K is a swap, not an add-on: two magnesium products a day is enough (about 400 mg), so it is left out
-            # of the daily rhythm [ODS-MG UL 350 mg from supplements].
-            {"p": "mag_k", "need": "On a water pill?", "needsub": "magnesium + potassium",
-             "bullets": ["Supports normal muscle and nerve signals", "Water pills can drain both minerals"],      # [ODS-K]
-             "dose": "3 capsules with meals", "dosesub": "in place of Mag Calm Pro", "sched": []},
+             "dose": "1 softgel daily", "dosesub": "with a meal, only if you take a statin", "sched": []},
+            # [ODS-MG] [ODS-K] thiazide and loop water pills raise magnesium and potassium loss; potassium-sparing ones
+            # (spironolactone, triamterene, amiloride) keep both, so the header names the two that drain them
+            {"p": "mcr_mag_k", "need": "On HCTZ or furosemide?", "needsub": "magnesium + potassium",
+             "bullets": ["Supports normal muscle and nerve signals", "These water pills can drain both minerals"],
+             "dose": "3 capsules with meals", "dosesub": "in place of Muscle Eze", "sched": []},
         ],
         "rx": {
             "pharmacy": [
+                # [GARR12] [AAFP12]; pharmacists review the medicine list, so this edition asks them to
+                "<b>Bring your medicine list.</b> {Who} can check it: some water pills, asthma inhalers, statins and "
+                "bone or estrogen medicines are linked to cramps. Never stop one on your own.",
                 # [TAN24] [ODS-VK] [NCCIH]
-                "<b>Warfarin (Coumadin)?</b> Vitamin K2 and CoQ10 can change how it works. Start neither without your prescriber.",
-                # [ODS-K] [ODS-MG]
-                "<b>Kidney disease, spironolactone, an ACE inhibitor or an ARB?</b> Ask {who} before Mag-K or extra "
-                "magnesium. Water pills such as HCTZ can drain both.",
-                # [ODS-MG] separate from bisphosphonates and tetracycline / quinolone antibiotics; levothyroxine spacing
-                "<b>Keep magnesium 4 hours away</b> from thyroid pills, alendronate, and antibiotics such as doxycycline "
-                "or ciprofloxacin.",
+                "<b>On warfarin (Coumadin)?</b> K2 and CoQ10 affect it. Start neither without your prescriber.",
+                # [LABEL] pregnancy, nursing, medication; passion flower and theanine with sedatives; drowsiness
+                "<b>Pregnant or nursing, or on sleep or anxiety medicine?</b> Ask {who} before any of these. "
+                "Muscle Eze can make you drowsy.",
+                # [ODS-K] [ODS-MG] kidney disease, ACE inhibitors, ARBs and potassium-sparing diuretics raise potassium
+                "<b>Kidney disease, an ACE inhibitor or ARB, or spironolactone, triamterene or amiloride?</b> Skip Mag-K "
+                "unless {who} says yes.",
+                # [LEVO] 4 hours; [CIPRO] 2 before or 6 after; [ODS-MG] bisphosphonates 2 hours, tetracyclines 2 before or
+                # 4-6 after; calcium binds these too.  [COCH20] GI side effects.
+                "<b>Thyroid pills:</b> 4 hours apart from magnesium or calcium. <b>Alendronate, doxycycline or "
+                "ciprofloxacin:</b> 2 hours before them or 6 hours after. Loose stools mean too much magnesium.",
+                # [TAN24] 180 mcg; [LABEL] one capsule daily or as directed
+                "<b>K2 dose:</b> 1 capsule is 100 mcg (the trial used 180). Take more only if {who} says so.",
             ],
             "practitioner": [
                 # [GARR12] [AAFP12]
-                "<b>Bring your medicine list.</b> Water pills, statins, some asthma inhalers and some bone or estrogen "
+                "<b>Bring your medicine list.</b> Some water pills, asthma inhalers, statins and bone or estrogen "
                 "medicines are linked to cramps. Never stop one on your own.",
                 # [TAN24] [ODS-VK] [NCCIH]
-                "<b>Warfarin (Coumadin)?</b> Vitamin K2 and CoQ10 can change how it works. Start neither without your prescriber.",
-                # [ODS-K] [ODS-MG]
-                "<b>Kidney disease, spironolactone, an ACE inhibitor or an ARB?</b> Ask {who} before Mag-K or extra "
-                "magnesium. Loose stools mean too much magnesium.",
+                "<b>On warfarin (Coumadin)?</b> K2 and CoQ10 affect it. Start neither without your prescriber.",
+                # [LABEL]
+                "<b>Pregnant or nursing, or on sleep or anxiety medicine?</b> Ask {who} before any of these. "
+                "Muscle Eze can make you drowsy.",
+                # [ODS-K] [ODS-MG]; a DC or ND is not the prescriber, so the drug decision goes to the prescriber
+                "<b>Kidney disease, an ACE inhibitor or ARB, or spironolactone, triamterene or amiloride?</b> Skip Mag-K "
+                "unless your prescriber says yes.",
+                # [LEVO] [CIPRO] [ODS-MG] [COCH20]
+                "<b>Thyroid pills:</b> 4 hours apart from magnesium or calcium. <b>Alendronate, doxycycline or "
+                "ciprofloxacin:</b> 2 hours before them or 6 hours after. Loose stools mean too much magnesium.",
+                # [TAN24] [LABEL]
+                "<b>K2 dose:</b> 1 capsule is 100 mcg (the trial used 180). Take more only if {who} says so.",
             ],
         },
     },

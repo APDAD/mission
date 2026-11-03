@@ -50,10 +50,11 @@ REC_HW = 10.7              # receptor beta rods (with outline) half width where 
 G4_HW = 25.15              # open GLUT4 door half width: outer helix edge + half stroke
 G4_SHUT_HW, G4_HH = 20.15, 27.45   # closed door (pore shut) half width, door half height (with stroke)
 M1 = (176, CY - 74)                          # step 1: next to the insulin pocket (both panels)
-M2 = (142, CY + 72)                          # step 2: under the receptor, where the signal starts (both panels)
+M2 = (152, CY + 75)                          # step 2: under the receptor, where the signal starts (both panels)
 M3N, M3R = (G4_X + 24, CY + 44), (190, VM)   # step 3: glucose entering (normal) / left in the blood (resistance)
-NB, NB_DOORS = (207, 216.8), (-30, 210)      # normal: a storage bubble arriving under the membrane
-RB = [((240, 244.5), (-60, 200)), ((293, 241), (-15, 150))]   # resistance: two bubbles stuck inside
+BUB_R = 18.5                                 # storage bubble: outer head ring radius (heads reach 20.4)
+NB, NB_DOORS = (207, 217.8), (-30, 210)      # normal: a storage bubble arriving under the membrane, 0.8 below it
+RB = [((240, 242), (-65, 165)), ((293, 240.5), (-15, 130))]   # resistance: two bubbles stuck inside
 CAP_X = 266.5                                # resistance caption, centred over the two bubbles
 
 
@@ -172,37 +173,36 @@ def glut4(cx, cy, open_=True, s=1.0):
     return "".join(o)
 
 
-def bubble(cx, cy, doors, R=17.5, s=0.42, L=3.6, ds=0.3):
+def bubble(cx, cy, doors, R=BUB_R, s=0.42, L=3.2, ds=0.21):
     """GLUT4 storage bubble: a closed bilayer built from the same lipid() unit as the cell membrane
     (scaled by s, with short tails), drawn the way the membrane is: a cream wall with a row of heads
-    on each face.  Outer and inner heads share ONE list of angles, so each pair lines up radially
-    with its tails meeting in the wall, and the angles are laid out segment by segment between the
-    doors (like lipid_xs) so every door sits in an even notch.  doors = angles in degrees (SVG: 0 is
-    right, 90 is down) where closed GLUT4 doors are seated through the wall."""
+    on each face and the tails meeting inside it.  Outer and inner heads share ONE list of angles, so
+    every pair lines up radially.  The angles are laid out segment by segment between the doors (like
+    lipid_xs): the outer heads nearly touch and stop 0.5 from each door, so every door sits in an even
+    notch; where a door's inner end needs the room, that pair keeps only its outer lipid.
+    doors = angles in degrees (SVG: 0 is right, 90 is down) of the closed GLUT4 doors seated through
+    the wall."""
     hr = (HEAD_R + 0.3) * s                     # head radius with stroke
     reach = (3.9 + L) * s + 0.73 * s            # head centre to tail tip (round cap included)
     ri = R - 2 * reach - 0.4                    # inner-face head centres (0.4 between tail tips)
     rc = (R + ri) / 2                           # wall centre line: the doors sit here
     dhw, dhh = G4_SHUT_HW * ds, G4_HH * ds
 
-    def clear(a, d):                            # heads at angle a, both faces, 0.5 clear of the door at d?
-        for rr in (R, ri):
-            ux, uy = rr * math.cos(a) - rc * math.cos(d), rr * math.sin(a) - rc * math.sin(d)
-            v = ux * math.cos(d) + uy * math.sin(d)
-            u = -ux * math.sin(d) + uy * math.cos(d)
-            if math.hypot(max(abs(u) - dhw, 0), max(abs(v) - dhh, 0)) < hr + 0.5:
-                return False
-        return True
+    def clear(a, d, rr):                        # a head at angle a on ring rr stays 0.5 clear of the door at d?
+        ux, uy = rr * math.cos(a) - rc * math.cos(d), rr * math.sin(a) - rc * math.sin(d)
+        v = ux * math.cos(d) + uy * math.sin(d)
+        u = -ux * math.sin(d) + uy * math.cos(d)
+        return math.hypot(max(abs(u) - dhw, 0), max(abs(v) - dhh, 0)) >= hr + 0.5
 
     dr = sorted(math.radians(d) % (2 * math.pi) for d in doors)
     half = []
-    for d in dr:                                # smallest angular offset that clears each door
+    for d in dr:                                # smallest angular offset that clears each door (outer face)
         lo, hi = 0.0, math.pi / 2
         for _ in range(40):
             m = (lo + hi) / 2
-            lo, hi = (lo, m) if clear(d + m, d) else (m, hi)
+            lo, hi = (lo, m) if clear(d + m, d, R) else (m, hi)
         half.append(hi)
-    step = (2 * hr + 0.2) / ri                  # inner heads just touch; the outer ones share the angles
+    step = (2 * hr + 0.7) / R                   # outer heads nearly touch (as in the membrane); inner ones share the angles
     angles = []
     for i, d in enumerate(dr):
         j = (i + 1) % len(dr)
@@ -211,10 +211,14 @@ def bubble(cx, cy, doors, R=17.5, s=0.42, L=3.6, ds=0.3):
         angles += [a0 + k * (a1 - a0) / n for k in range(n + 1)]
     o = [f'<circle cx="{cx}" cy="{cy}" r="{R}" fill="{CORE}"/>',
          f'<circle cx="{cx}" cy="{cy}" r="{ri:.2f}" fill="{OUTSIDE}"/>']
+    inner, outer = [], []
     for a in angles:
-        for rr, rot in ((R, 90), (ri, -90)):    # outer heads: tails point in; inner heads: tails point out
-            o.append(f'<g transform="translate({cx + rr * math.cos(a):.2f},{cy + rr * math.sin(a):.2f}) '
-                     f'rotate({math.degrees(a) + rot:.1f}) scale({s})">{lipid(0, 0, True, L)}</g>')
+        for rr, rot, lst in ((R, 90, outer), (ri, -90, inner)):   # outer tails point in, inner tails point out
+            if rr == ri and not all(clear(a, d, ri) for d in dr):
+                continue
+            lst.append(f'<g transform="translate({cx + rr * math.cos(a):.2f},{cy + rr * math.sin(a):.2f}) '
+                       f'rotate({math.degrees(a) + rot:.1f}) scale({s})">{lipid(0, 0, True, L)}</g>')
+    o += inner + outer
     for d in doors:
         a = math.radians(d)
         o.append(f'<g transform="translate({cx + rc * math.cos(a):.2f},{cy + rc * math.sin(a):.2f}) rotate({d + 90})">'
@@ -245,15 +249,17 @@ def place(rng, radii, box, avoid, pad=1.6, tries=8000):
     return out
 
 
-def settle(rng, n, x0, x1, floor, r=GLU_R, gap=1.0):
+def settle(rng, n, x0, x1, floor, r=GLU_R, gap=1.0, slide=4.0, rows=2):
     """Drop n glucose hexagons at random x in [x0, x1] onto the membrane (lowest centre y = floor) and
-    onto each other.  Each falls straight down until a face meets the floor or a hexagon already
-    there.  All hexagons share one orientation, so three axes (the flat faces) decide contact
-    exactly; gap 1.0 lets the 1-unit strokes just touch.  Gives a loose, natural pile."""
+    onto each other, the way sugar would pile up: each falls straight down until a face meets the
+    floor or a hexagon already there, then slides up to `slide` units sideways into the lowest spot it
+    can reach (so it tips off a peak into a groove instead of towering).  All hexagons share one
+    orientation, so three axes (the flat faces) decide contact exactly; gap 1.0 lets the 1-unit strokes
+    just touch.  At most `rows` rows.  Gives a loose, natural pile with a few touching."""
     D = 2 * 0.866 * r + gap
     out = []
-    for _ in range(n):
-        x = rng.uniform(x0 + r, x1 - r)
+
+    def rest(x):
         y = floor
         for px, py, _ in out:
             dx = x - px
@@ -261,13 +267,28 @@ def settle(rng, n, x0, x1, floor, r=GLU_R, gap=1.0):
             hi = min(D, (D - 0.866 * dx) / 0.5, (D + 0.866 * dx) / 0.5)
             if lo < hi:
                 y = min(y, py + lo)
-        out.append((x, y, r))
+        return y
+
+    for _ in range(5000):
+        if len(out) == n:
+            break
+        x = rng.uniform(x0 + r, x1 - r)
+        cand = [x + k * 0.25 for k in range(int(-slide * 4), int(slide * 4) + 1)]
+        y, _, x = max((rest(c), -abs(c - x), c) for c in cand if x0 + r <= c <= x1 - r)
+        if y >= floor - D * (rows - 1) - 0.5:
+            out.append((x, y, r))
     return out
 
 
 # ------------------------------------------------------------------ one panel
+def placed_all(things, want, what):
+    if len(things) < want:      # never drop molecules silently: the counts carry the message
+        print(f"WARNING insulin-resistance art: placed {len(things)} of {want} {what}")
+    return things
+
+
 def panel(x0, normal):
-    rng = random.Random(11 if normal else 23)
+    rng = random.Random(11 if normal else 35)     # seeds checked to place every vessel molecule
     col = GREEN if normal else RED
     cid = "irClipN" if normal else "irClipR"
     o = [f'<g transform="translate({x0},0)">',
@@ -297,7 +318,8 @@ def panel(x0, normal):
     if not normal:
         avoid.append((M3R[0], M3R[1], 8.6 + 5, 8.6 + 5))   # step 3's marker stands well clear of the molecules
     n_ins, n_glu = (4, 6) if normal else (8, 13)            # resistance: more sugar AND more insulin in the blood
-    for x, y, r in place(rng, [INS_R] * n_ins + [GLU_R] * n_glu, (100, V0 + 5, 370, V1 - 5), avoid):
+    for x, y, r in placed_all(place(rng, [INS_R] * n_ins + [GLU_R] * n_glu, (100, V0 + 5, 370, V1 - 5), avoid),
+                              n_ins + n_glu, "vessel molecules"):
         o.append(insulin(x, y) if r == INS_R else glucose(x, y))
     o.append(label_bg(8, VM - 9, 81, 18, "#FFFFFF", 0.92, 5) + T(48.5, VM + 3.8, "Blood vessel", 10.5, 800, "#8E1F28", "middle"))
 
@@ -327,16 +349,16 @@ def panel(x0, normal):
         # the signal brings a storage bubble, doors and all, up to the surface: the arrow sweeps from the
         # receptor's inside end and turns up into the bubble, which is arriving at the membrane by the door
         o.append(bubble(*NB, NB_DOORS))
-        o.append(f'<path d="M157.5,{CY + 35} C172,{CY + 74} {NB[0]},{CY + 86} {NB[0]},{CY + 66.5}" stroke="{GREEN}" '
+        o.append(f'<path d="M157.5,{CY + 35} C172,{CY + 74} {NB[0]},{CY + 86} {NB[0]},{CY + 67.5}" stroke="{GREEN}" '
                  'stroke-width="2.8" fill="none" marker-end="url(#irAg)" stroke-linecap="round"/>')
         o.append(marker(*M1, 1, col) + marker(*M2, 2, col) + marker(*M3N, 3, col))
     else:
         # no door at the surface: glucose piles up on the membrane (2 loose rows), more drifts above it
         floor = CY - HEAD_DY - HEAD_R - 0.3 - 0.866 * GLU_R - 0.5 - 0.3
-        pile = settle(random.Random(PILE_SEED), 13, 166, 368, floor)
+        pile = placed_all(settle(random.Random(PILE_SEED), 13, 166, 368, floor), 13, "pile glucose")
         top = min(y for _, y, _ in pile) - 0.866 * GLU_R
-        drift = place(rng, [GLU_R] * 6, (196, V1 + 8, 366, top - 6), [(M1[0], M1[1], 8.6 + 4, 8.6 + 4)]
-                      + [(x, y, r + 4, r + 4) for x, y, r in pile], pad=5)
+        drift = placed_all(place(rng, [GLU_R] * 6, (196, V1 + 8, 366, top - 6), [(M1[0], M1[1], 8.6 + 4, 8.6 + 4)]
+                                 + [(x, y, r + 4, r + 4) for x, y, r in pile], pad=5), 6, "drifting glucose")
         for x, y, _ in pile + drift:
             o.append(glucose(x, y))
         # weak signal: fades out before it reaches the doors
@@ -365,7 +387,7 @@ def panel(x0, normal):
     return "".join(o)
 
 
-PILE_SEED = 5
+PILE_SEED = 7          # picked by eye from seeds 1-8: two loose rows, a few touching, no towers
 
 
 # ------------------------------------------------------------------ key strip
@@ -490,12 +512,12 @@ def numbers():
     # Fasting insulin write-in: no cutoff is printed because none is set.  The ADA Standards of Care do not
     # use insulin to diagnose anything and insulin assays are not standardized between labs, so the patient
     # copies the lab's own reference range next to the result.
-    return ('<div class="ir-nums"><div class="ir-nh"><b>Know your numbers</b><span class="ir-sub">Write your results '
-            'in the boxes, then go over them with {who}.</span>'
+    return ('<div class="ir-nums"><div class="ir-nh"><b>Know your numbers</b><span class="ir-sub">Fill in your results; '
+            'review them with {who}.</span>'
             '<span class="ir-fi"><b>Fasting insulin</b><i></i>&micro;IU/mL &middot; lab range<i></i></span></div>'
             f'<div class="ir-scales">{scales}</div>'
             '<div class="ir-msh"><b>Metabolic syndrome check</b><span>Tick each sign you have. If you take medicine for '
-            'one of these, tick it. <em>Any 3 of these 5</em> means metabolic syndrome.</span></div>'
+            'one, tick it. <em>Any 3 of these 5</em> means metabolic syndrome.</span></div>'
             f'<div class="ir-ms">{tiles}</div>'
             '<p class="ir-src">Sources: American Diabetes Association (a diabetes result is confirmed with a repeat test); '
             'NHLBI and American Heart Association. Cell drawing not to scale.</p></div>')
@@ -520,12 +542,13 @@ CSS = r"""
 .irf .ir-stat p{margin:0;font-size:8.6pt;line-height:1.36;color:#2B3236}
 .irf .ir-stat p b{font-weight:700;color:var(--deep)}
 .irf .ir-nums{margin-top:0.07in;border:1px solid #E6D5D1;border-radius:10px;padding:0.07in 0.14in 0.07in;background:#FFFFFF}
-.irf .ir-nh{display:flex;align-items:baseline;gap:10px;margin:0 0 5px}
-.irf .ir-nh>b{font:900 12.5pt Merriweather,Georgia,serif;color:var(--c1);white-space:nowrap}
-.irf .ir-nh .ir-sub{font-size:7.8pt;color:#56626A}
-.irf .ir-nh .ir-fi{margin-left:auto;display:flex;align-items:baseline;gap:4px;white-space:nowrap;font-size:7.8pt;color:#2B3236}
-.irf .ir-fi b{font:800 7.8pt Inter,sans-serif;color:#2B3236}
-.irf .ir-fi i{display:inline-block;width:0.46in;height:0.12in;border-bottom:1.2px solid #8F9AA1}
+.irf .ir-nh{display:flex;align-items:baseline;gap:8px;margin:0 0 5px}
+.irf .ir-nh>b{flex:none;font:900 12.5pt Merriweather,Georgia,serif;color:var(--c1);white-space:nowrap}
+.irf .ir-nh .ir-sub{flex:none;font-size:7.8pt;color:#56626A;white-space:nowrap}
+.irf .ir-nh .ir-fi{flex:1 1 auto;min-width:0;display:flex;justify-content:flex-end;align-items:baseline;gap:3px;
+  white-space:nowrap;font-size:7.8pt;color:#2B3236}
+.irf .ir-fi b{flex:none;font:800 7.8pt Inter,sans-serif;color:#2B3236}
+.irf .ir-fi i{flex:0 1 0.5in;min-width:0.34in;height:0.12in;border-bottom:1.2px solid #8F9AA1}
 .irf .ir-scales{display:grid;grid-template-columns:1fr 1fr;gap:0.18in}
 .irf .ir-sc h4{margin:0 0 3px;font:800 8.4pt Inter,sans-serif;color:#2B3236;white-space:nowrap}
 .irf .ir-sc h4 span{font-weight:500;font-size:7.3pt;color:#5E686F}
@@ -542,7 +565,7 @@ CSS = r"""
 .irf .ir-msh b{font:800 8.4pt Inter,sans-serif;color:#2B3236;white-space:nowrap}
 .irf .ir-msh span{font-size:7.6pt;color:#4A555C}
 .irf .ir-msh em{font-style:normal;font-weight:800;color:var(--c1)}
-.irf .ir-ms{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}
+.irf .ir-ms{display:grid;grid-template-columns:1.22fr .9fr 1.1fr .88fr .9fr;gap:5px}
 .irf .ir-m{display:flex;flex-direction:column;background:var(--tint);border:1px solid #EEDDD9;border-radius:6px;padding:3px 6px 4px}
 .irf .ir-mtop{display:flex;justify-content:space-between;align-items:center}
 .irf .ir-m .ic{flex:none;color:var(--c1)}

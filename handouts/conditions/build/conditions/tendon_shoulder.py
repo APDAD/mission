@@ -1,23 +1,29 @@
 """Shoulder and Tendon Pain (ND-MS-603), Pain and Movement Series.  Slug "tendon-shoulder".
 
-Self-contained sheet module (new in wave 2, nothing from the legacy sheets.py / art.py).
+Self-contained sheet module (wave 2, nothing from the legacy sheets.py / art.py).
 
 FRONT, top to bottom
-  intro -> one inline-SVG plate with three panels and a KEY strip:
-     1. the rotator cuff FROM THE FRONT (subscapularis, the supraspinatus tendon, the acromion
-        "roof", the collarbone and the bursa, drawn red, at the pinch point under the roof);
-     2. FROM THE BACK (supraspinatus, infraspinatus, teres minor on the shoulder blade), with a
-        lens on the cuff tendon that opens into panel 3;
-     3. INSIDE A TENDON: healthy collagen (neat, parallel fibers) beside an overloaded tendon
-        (frayed gold fibers, new blood vessels), and "how to help it rebuild": collagen + vitamin C,
-        wait about an hour, then load the tendon (the routine the studies used; loading is the signal).
-  -> where tendon pain shows up (shoulder, elbow, heel; coral dot keyed in the header)
+  intro (it says what the rotator cuff is) -> one inline-SVG plate with three panels and a KEY strip:
+     1. ROTATOR CUFF FROM THE FRONT: subscapularis, the supraspinatus tendon, the acromion "roof", the collarbone
+        and the bursa, drawn red at the pinch point under the roof ("a cushion that can get pinched under the roof");
+     2. ROTATOR CUFF FROM THE BACK: supraspinatus, infraspinatus, teres minor on the shoulder blade, with a lens on
+        the supraspinatus band of the cuff, just lateral to the acromion, that opens into panel 3;
+     3. INSIDE A TENDON ("the circled spot, magnified many times"): healthy collagen (tight, parallel bundles with an
+        even crimp) beside an overloaded tendon (uneven fibers pulled apart, two slipped out of line and crossing the
+        others, two broken with frayed gold ends, new blood vessels).  Under it, in its own box, HOW TENDONS GET
+        STRONGER: plain physiology true of every tendon (load it -> feed it -> sleep on it), the same three habits as
+        the back's lifestyle row.  No product and no timing on the front: the 1-hour collagen timing lives on the
+        back, as the Collagen Renew direction.
+  -> where tendon pain shows up (shoulder, elbow, back of the ankle; coral dot keyed in the header)
   -> what raises your risk (8 icons) -> the exercise pain guide (0-10 traffic light + "12 weeks")
-  -> when to get checked right away (red flags, 911 for arm pain with heart-attack signs).
+  -> when to get checked right away (shoulder AND Achilles red flags; 911 for arm pain with heart-attack signs).
 BACK: six lifestyle circles; five NutriDyn columns (Collagen Renew starts, Vitamin C 1000 is its pair,
 Inflam-Eze Plus, Omega Pure EPA-DHA 1000, D3 5000 with K2); rhythm; three edition-aware checks ({who}).
-Products: ts_* entries live in products.d/tendon-shoulder.json (label facts + "src"); omega_1000 is the
-shared products.py entry; sheet-specific dose lines and schedules are set per column below.
+Products: all five are ts_* entries in products.d/tendon-shoulder.json (label facts + "src"); sheet-specific dose
+lines and schedules are set per column below.
+
+CSS scoping: the front lives inside .tsp.  Back-page rules are scoped with .sheet.back:has(img[src*="/nd-ts-"]),
+the page that shows this sheet's own product photos (nd-ts-*.png), which no other sheet uses.
 
 Geometry: the anatomy is drawn once in "scapula units" (posterior view of a right shoulder blade,
 medial border at x = 0, inferior angle at y = 1.0, about 16 cm in life) and mapped into each panel;
@@ -26,10 +32,19 @@ subscapularis) added.  Every SVG id starts with "ts-", every CSS class with "tsp
 
 SOURCES (each number or fact on the page carries one of these tags in a comment)
   [KANNUS00]  Kannus P. Structure of the tendon connective tissue. Scand J Med Sci Sports 2000;10:312-20.
-              PMID 11085557. Collagen, mostly type I, is 65-80% of tendon dry mass.
+              PMID 11085557. Collagen, mostly type I, is 65-80% of tendon dry mass; fibres packed in bundles.
+  [KHAN99]    Khan KM et al. Histopathology of common tendinopathies. Sports Med 1999;27:393-408. PMID 10418074.
+              Healthy: tightly packed, parallel collagen bundles.  Painful tendon: discontinuous, disorganised
+              fibres, more ground substance between them, prominent capillary (new vessel) growth.
+  [RUI11]     Rui YF et al. Knee Surg Sports Traumatol Arthrosc 2012;20:1409-17. PMID 21946950. Loss of the
+              collagen crimp structure in tendinopathy samples (healthy tendon keeps a regular crimp).
   [MILLAR21]  Millar NL et al. Tendinopathy. Nat Rev Dis Primers 2021;7:1. PMID 33414454. Commonest sites:
               rotator cuff, elbow, patellar, gluteal, Achilles; disorganised collagen fibres, more small
               vessels and sensory nerves.
+  [ANAT]      Standard anatomy (e.g. Gray's Anatomy): the rotator cuff is supraspinatus, infraspinatus, teres minor
+              and subscapularis, whose tendons blend into one cuff over the ball of the arm bone and hold it in the
+              socket; the subacromial bursa lies between the cuff and the acromion, where lifting the arm can pinch
+              it (subacromial pain [LEWIS16]).
   [COOK09]    Cook JL, Purdam CR. Br J Sports Med 2009;43:409-16. PMID 18812414 (load-induced tendinopathy).
   [KHAN02]    Khan KM et al. Time to abandon the "tendinitis" myth. BMJ 2002;324:626-7. PMID 11895810.
   [WHITTLE15] Whittle S, Buchbinder R. In the clinic: rotator cuff disease. Ann Intern Med 2015;162:ITC1-15.
@@ -51,18 +66,26 @@ SOURCES (each number or fact on the page carries one of these tags in a comment)
   [HARVIE04]  Harvie P et al. J Bone Joint Surg Br 2004;86:696-700. PMID 15274266. Siblings RR 2.42.
   [YU19]      Yu X et al. Drug Saf 2019;42:1025-33. PMID 31077091. Fluoroquinolones: tendon disorders OR 1.89.
   [FDA16]     FDA boxed warning on fluoroquinolone antibiotics (2008, updated 2016): tendinitis and tendon
-              rupture, risk higher over age 60 and with corticosteroids.
+              rupture, risk higher over age 60 and with corticosteroids; the 2016 safety communication tells
+              patients to stop the drug and call their health care professional right away at the first tendon pain.
   [XERGIA22]  Xergia SA et al. Phys Sportsmed 2023;51:506-16. PMID 35670156. Achilles rupture: steroids,
               quinolones.
+  [BIGGS21]   Biggs A et al. Achilles tendon rupture: what you need to know. Br J Hosp Med 2021;82:1-7.
+              PMID 33646025. Heel pain and a "pop" are the classic history; often missed or called a sprain.
+  [CHIODO10]  Chiodo CP et al. AAOS guideline, acute Achilles tendon rupture. J Am Acad Orthop Surg
+              2010;18:503-10. PMID 20675643 (exam: weak push-off, i.e. cannot rise on the toes; palpable gap).
   [SHIRI06]   Shiri R et al. Am J Epidemiol 2006;164:1065-74. PMID 16968862. Tennis elbow in 1.3% of adults
               30-64; forceful plus repetitive arm work (OR 5.6); smoking.
   [BISSET15]  Bisset LM, Vicenzino B. J Physiother 2015;61:174-81. PMID 26361816 (lateral elbow pain, gripping).
   [ACH18]     Martin RL et al. APTA midportion Achilles tendinopathy guideline. JOSPT 2018;48(5):A1-A38.
               PMID 29712543. Pain 2-6 cm above the heel insertion, morning stiffness, pain with loading.
   [SHAW17]    Shaw G et al. Am J Clin Nutr 2017;105:136-43. PMID 27852613. Vitamin C-enriched gelatin:
-              amino acids peak 1 h after; 15 g 1 h before exercise doubled a collagen-synthesis marker.
-  [PRAET19]   Praet SFE et al. Nutrients 2019;11:76. PMID 30609761. TENDOFORTE peptides + calf loading.
-  [BISCHOF24] Bischof K et al. Sports Med 2024;54:2865-88. PMID 39060741. 19 RCTs, collagen + training.
+              amino acids peak 1 h after; 15 g 1 h before exercise doubled a collagen-synthesis marker
+              (8 healthy men).  Used only for the back-page Collagen Renew timing, never on the front.
+  [PRAET19]   Praet SFE et al. Nutrients 2019;11:76. PMID 30609761. TENDOFORTE peptides + calf loading (20-patient
+              pilot).  Not cited on the page; the back states the formulation fact only.
+  [BISCHOF24] Bischof K et al. Sports Med 2024;54:2865-88. PMID 39060741. 19 RCTs, collagen + training; tendon
+              outcomes very low certainty.  Not cited on the page.
   [KJAER04]   Kjaer M. Physiol Rev 2004;84:649-98. PMID 15044685. Loading raises collagen synthesis,
               inactivity lowers it; overuse needs adjusted loading, not immobilisation.
   [SILB07]    Silbernagel KG et al. Am J Sports Med 2007;35:897-906. PMID 17307888. Pain-monitoring model:
@@ -87,11 +110,22 @@ from svgkit import T, svg
 
 SLUG = "tendon-shoulder"
 
-# ============================================================== text measuring (Inter metrics via Pillow)
+# ============================================================== text measuring (Inter metrics)
 _FACES = {}
 _WEIGHTS = {400: "Regular", 500: "Medium", 600: "SemiBold", 700: "Bold", 800: "ExtraBold", 900: "Black"}
 _FONT_DIRS = ("/usr/share/fonts/opentype/inter", "/usr/share/fonts/truetype/inter",
               os.path.expanduser("~/Library/Fonts"), "/Library/Fonts")
+_ADV = {  # Inter advance widths, 1/1000 em, for chr(32)..chr(126); generated from the Inter 4 OTFs
+    500: ("267 304 494 639 646 993 653 313 369 369 521 667 303 462 303 370 646 415 616 627 656 618 630 571 629 630 303 315 667 667 667 527 982 709 657 733 722 603 589 748 745 272 575 688 565 913 756 767 "
+          "642 769 648 646 653 740 709 1003 701 696 641 369 370 369 477 463 337 568 618 577 618 587 379 620 602 252 252 559 252 888 602 604 618 618 387 539 340 602 575 829 557 575 559 440 346 440 667"),
+    600: ("252 321 523 644 650 1004 663 326 373 373 540 673 319 465 319 379 660 423 623 636 666 629 640 576 640 640 319 329 673 673 673 543 999 728 659 737 722 605 588 749 746 277 580 703 565 922 759 769 "
+          "645 773 652 650 660 736 728 1020 720 713 652 373 379 373 481 469 351 574 624 583 624 591 389 625 612 262 262 569 262 900 612 609 624 624 397 549 353 612 587 839 569 588 566 455 359 455 673"),
+    700: ("237 338 552 649 655 1016 672 339 377 377 559 679 334 468 334 388 674 431 630 646 676 639 649 582 651 649 334 343 679 679 679 560 1016 747 662 740 722 607 587 750 747 281 584 719 565 932 762 771 "
+          "648 777 657 655 667 732 747 1038 738 731 664 377 388 377 487 476 365 581 630 588 630 596 398 632 623 271 271 580 271 913 623 613 630 630 407 560 366 623 600 850 580 602 573 469 372 469 679"),
+    800: ("219 358 586 655 660 1029 683 354 382 382 583 686 353 471 353 400 692 441 638 657 688 652 662 588 664 662 353 360 686 686 686 579 1036 770 665 744 723 610 585 752 749 286 590 738 565 943 766 773 "
+          "652 782 662 660 677 727 770 1059 761 752 679 382 400 382 493 484 382 588 638 595 638 601 410 639 635 283 283 593 283 927 635 619 638 638 420 573 382 635 615 863 594 618 581 486 388 486 686"),
+}
+_TAB = {}
 
 
 def _face(name):
@@ -108,11 +142,16 @@ def _face(name):
 
 
 def tw(text, size, weight=700, ls=0.0):
-    """Advance width of `text` in Inter at `size` px (generous fallback without Pillow or the font)."""
+    """Advance width of `text` in Inter at `size` px.  The installed Inter OTF through Pillow when it is there;
+    otherwise the embedded Inter width table (_ADV, within 2% of the shaped width), so layout never rests on a guess."""
     try:
         w = _face(_WEIGHTS[weight]).getlength(text) * size / 100
     except Exception:
-        w = len(text) * size * (0.68 if text.isupper() else 0.6)
+        k = min(_ADV, key=lambda v: abs(v - weight))
+        if k not in _TAB:
+            _TAB[k] = [int(v) for v in _ADV[k].split()]
+        tab = _TAB[k]
+        w = sum(tab[ord(c) - 32] if 32 <= ord(c) < 127 else tab[0] for c in text) * size / 1000
     return w + ls * len(text)
 
 
@@ -135,10 +174,10 @@ AX = 0.955                     # anatomy width in scapula units (medial border t
 P1X, P2X, P3X = 0, 256, 518    # panel left edges (front, back, zoom)
 PW, P3W = 252, 242
 PANEL_H = 300
-KEY_Y, KEY_H = 308, 32
-H = KEY_Y + KEY_H + 2
+KEY_Y = 308                    # KEY_H and H follow the KEY layout (key strip section)
 OY = 66                        # anatomy origin y (scapula superior angle)
-FRONT_X = P1X + 34             # screen x of the lateral edge (x = AX) in the mirrored front view
+FRONT_X = P1X + 64             # screen x of the lateral edge (x = AX) in the mirrored front view: leaves a clear
+                               # margin left of the arm bone for the bursa label
 BACK_X = P2X + 60              # screen x of the medial border (x = 0) in the back view
 
 
@@ -176,6 +215,15 @@ def _path(pts, m, closed=True):
     return "".join(d) + ("Z" if closed else "")
 
 
+def _poly(pts):
+    return "M" + " L".join(f"{_f(a)},{_f(b)}" for a, b in pts)
+
+
+def _ribbon(top, bot):
+    """Closed outline of a ribbon from its top and bottom edge points (left to right)."""
+    return _poly(top) + " L" + " L".join(f"{_f(a)},{_f(b)}" for a, b in reversed(bot)) + "Z"
+
+
 # ---- bones (scapula units, posterior view of a right shoulder; third value = curve tension)
 SCAPULA = [
     (0.075, 0.000, 0.5), (0.200, 0.030, 1.0), (0.330, 0.062, 1.0), (0.405, 0.080, 0.8), (0.432, 0.103, 0.4),
@@ -196,11 +244,12 @@ ACROMION = [  # the acromion seen from the front (the roof over the ball)
     (0.640, -0.006, 0.8), (0.700, -0.032, 1.0), (0.780, -0.036, 1.0), (0.840, -0.016, 0.8), (0.866, 0.024, 0.6),
     (0.852, 0.062, 0.8), (0.800, 0.080, 1.0), (0.722, 0.084, 1.0), (0.668, 0.064, 0.8),
 ]
-CLAVICLE = [  # collarbone: a gentle S from the acromion toward the breastbone (runs off the panel)
+CLAVICLE = [  # collarbone: a gentle S from the acromion toward the breastbone; it runs on past the panel edge, where
+    # the panel clip cuts it, so it never ends in a stub inside the picture
     (0.672, -0.020, 0.6), (0.610, -0.030, 1.0), (0.520, -0.040, 1.0), (0.400, -0.058, 1.0), (0.270, -0.060, 1.0),
-    (0.140, -0.050, 1.0), (0.010, -0.040, 1.0), (-0.120, -0.048, 1.0), (-0.300, -0.074, 0.3), (-0.300, -0.006, 0.3),
-    (-0.120, 0.012, 1.0), (0.010, 0.020, 1.0), (0.140, 0.020, 1.0), (0.270, 0.010, 1.0), (0.400, 0.006, 1.0),
-    (0.520, 0.014, 1.0), (0.610, 0.026, 1.0), (0.668, 0.036, 0.6),
+    (0.140, -0.050, 1.0), (0.010, -0.040, 1.0), (-0.120, -0.048, 1.0), (-0.280, -0.066, 1.0), (-0.450, -0.082, 0.3),
+    (-0.450, 0.000, 0.3), (-0.280, 0.006, 1.0), (-0.120, 0.012, 1.0), (0.010, 0.020, 1.0), (0.140, 0.020, 1.0),
+    (0.270, 0.010, 1.0), (0.400, 0.006, 1.0), (0.520, 0.014, 1.0), (0.610, 0.026, 1.0), (0.668, 0.036, 0.6),
 ]
 CORACOID = [  # the hook on the front of the shoulder blade, just under the collarbone
     (0.498, 0.104, 0.7), (0.528, 0.066, 1.0), (0.596, 0.068, 1.0), (0.664, 0.094, 1.0), (0.706, 0.130, 0.6),
@@ -367,12 +416,13 @@ def _humerus(m, uid):
 
 def _label(x, y, text, tx, ty, anchor="start", size=10.5, weight=700, color=INK, side=None, sub=None):
     """Label in clear space with a thin leader to (tx, ty) ending in a dot on the structure.
-    side: where the leader leaves the text ('below', 'above', 'left', 'right')."""
+    side: where the leader leaves the text ('below', 'above', 'left', 'right').  sub: one italic line or a list."""
+    subs = [sub] if isinstance(sub, str) else list(sub or [])
     w = tw(text, size, weight)
     x0 = {"start": x, "middle": x - w / 2, "end": x - w}[anchor]
     cxm = x0 + w / 2
     if side == "below":
-        lx, ly = cxm, y + 3.5 + (12 if sub else 0)
+        lx, ly = cxm, y + 3.5 + 12 * len(subs)
     elif side == "above":
         lx, ly = cxm, y - size * 0.95
     elif side == "left":
@@ -382,8 +432,8 @@ def _label(x, y, text, tx, ty, anchor="start", size=10.5, weight=700, color=INK,
     out = (f'<path d="M{_f(lx)},{_f(ly)} L{_f(tx)},{_f(ty)}" stroke="{LEAD}" stroke-width=".9" fill="none"/>'
            f'<circle cx="{_f(tx)}" cy="{_f(ty)}" r="2.1" fill="{LEAD}" stroke="#fff" stroke-width=".8"/>'
            + T(x, y, text, size, weight, color, anchor))
-    if sub:
-        out += T(x, y + 12, sub, 10, 500, INK2, anchor, italic=True)
+    for i, s in enumerate(subs):
+        out += T(x, y + 12 * (i + 1), s, 10, 500, INK2, anchor, italic=True)
     return out
 
 
@@ -403,7 +453,8 @@ def _ridge(pts_top, m, color="#FFFFFF", op=0.75, sw=1.6):
 # ============================================================== panel 1: from the front
 def panel_front():
     m = _front
-    out = [_panel_card(P1X, PW, "FROM THE FRONT", "big outer shoulder muscle lifted away"),
+    # the four cuff muscles, their tendons over the ball, the roof and the cushion under it [ANAT]
+    out = [_panel_card(P1X, PW, "ROTATOR CUFF FROM THE FRONT", "big outer shoulder muscle lifted away"),
            f'<clipPath id="ts-p1"><rect x="{P1X + 1}" y="1" width="{PW - 2}" height="{PANEL_H - 2}" rx="10"/></clipPath>',
            '<g clip-path="url(#ts-p1)">']
     out.append(_shape(SCAPULA, m, "url(#ts-fossa)", BONE_EDGE, 1.2))
@@ -413,14 +464,15 @@ def panel_front():
     out.append(_muscle("ts-f-subsc", SUBSC, m, [(0.05, 0.10), (0.19, 0.91)], [(0.660, 0.236), (0.670, 0.330)], 16))
     out.append(_hood("ts-t-subsc", T_SUBSC, m, [(0.596, 0.222), (0.606, 0.364)], [(0.838, 0.266), (0.838, 0.344)], 7, bow=-0.010))
     out.append(_shape(bursa_pts(), m, "url(#ts-bur)", BURSA_EDGE, 1.0))
+    # pale ridge along the bursa's crown, only where the bursa is thick enough to hold it
     bh = [(HEAD_C[0] + (HEAD_R + 0.056) * math.cos(math.radians(a)), HEAD_C[1] + (HEAD_R + 0.056) * math.sin(math.radians(a)), 1)
-          for a in (262, 280, 298, 316, 330)]
+          for a in (262, 278, 294, 308)]
     out.append(_ridge(bh, m, "#FFD3CC", 0.8, 1.4))
     out.append(_shape(CORACOID, m, "url(#ts-bone)", BONE_EDGE, 1.1))
     out.append(_shape(ACROMION, m, "url(#ts-spine)", BONE_EDGE, 1.2))
     out.append(_shape(CLAVICLE, m, "url(#ts-spine)", BONE_EDGE, 1.2))
     out.append(_ridge([(0.640, -0.014, 1), (0.520, -0.028, 1), (0.380, -0.044, 1), (0.200, -0.040, 1), (0.000, -0.028, 1),
-                       (-0.200, -0.040, 1)], m))
+                       (-0.200, -0.042, 1), (-0.420, -0.058, 1)], m))
     aj = [m(0.668, -0.020), m(0.664, 0.036)]          # the joint between acromion and collarbone
     out.append(f'<path d="M{_f(aj[0][0])},{_f(aj[0][1])} L{_f(aj[1][0])},{_f(aj[1][1])}" stroke="{BONE_EDGE}" stroke-width="1.3"/>')
     out.append("</g>")
@@ -429,8 +481,11 @@ def panel_front():
     out.append(_label(P1X + 10, 52, "Acromion: the roof", ax, ay, "start", side="below"))
     cx, cy = m(0.05, -0.005)
     out.append(_label(P1X + PW - 10, 52, "Collarbone", cx, cy, "end", side="below"))
-    bx, by = m(0.985, 0.215)
-    out.append(_label(P1X + 9, 156, "Bursa", bx, by, "start", side="above", sub="a cushion"))
+    # the dot sits at mid-thickness of the bursa, clear of the acromion; the label stands in the margin left of the
+    # arm bone, and its leader reaches the bursa without crossing bone [ANAT]
+    bx, by = m(0.926, 0.167)
+    out.append(_label(P1X + 5, 160, "Bursa", bx, by, "start", side="above",
+                      sub=["a cushion", "that can get", "pinched under", "the roof"]))
     sx, sy = m(0.22, 0.78)
     out.append(_label(P1X + PW - 10, 282, "Subscapularis", sx, sy, "end", side="above"))
     hx, hy = m(0.80, 0.86)
@@ -439,12 +494,12 @@ def panel_front():
 
 
 # ============================================================== panel 2: from the back
-LENS = (0.862, 0.262)
+LENS = (0.85, 0.172)           # on the supraspinatus band of the cuff (above the first seam), just lateral to the acromion
 
 
 def panel_back():
     m = _back
-    out = [_panel_card(P2X, PW, "FROM THE BACK", "big outer shoulder muscle lifted away"),
+    out = [_panel_card(P2X, PW, "ROTATOR CUFF FROM THE BACK", "big outer shoulder muscle lifted away"),
            f'<clipPath id="ts-p2"><rect x="{P2X + 1}" y="1" width="{PW - 2}" height="{PANEL_H - 2}" rx="10"/></clipPath>',
            '<g clip-path="url(#ts-p2)">']
     out.append(_shape(SCAPULA, m, "url(#ts-bone)", BONE_EDGE, 1.2))
@@ -467,7 +522,7 @@ def panel_back():
     ix, iy = m(0.14, 0.62)
     out.append(_label(P2X + 9, 282, "Infraspinatus", ix, iy, "start", side="above"))
     tx_, ty_ = m(0.34, 0.66)
-    out.append(_label(P2X + 172, 240, "Teres minor", tx_, ty_, "middle", side="above"))
+    out.append(_label(P2X + 148, 240, "Teres minor", tx_, ty_, "middle", side="above"))   # clear of the arm bone
     bx, by = m(0.205, 0.955)
     out.append(_label(P2X + 140, 282, "Shoulder blade", bx, by, "middle", side="above"))
     # the lens on the cuff tendon that opens into panel 3
@@ -477,10 +532,22 @@ def panel_back():
 
 
 # ============================================================== panel 3: inside a tendon
-def _fiber_band(x0, x1, y, h):
-    return (f'<rect x="{_f(x0)}" y="{_f(y)}" width="{_f(x1 - x0)}" height="{_f(h)}" rx="{_f(h / 2)}" fill="url(#ts-ten)" '
-            f'stroke="{TEN_EDGE}" stroke-width=".7"/>'
-            f'<path d="M{_f(x0 + 3)},{_f(y + h * .38)} H{_f(x1 - 3)}" stroke="#FFFFFF" stroke-width="1.1" opacity=".9"/>')
+def _crimp_band(x0, x1, yc, h, amp=1.2, period=9.5, hi=True):
+    """Healthy fibre bundle: a ribbon whose centre line carries the fine, regular crimp of healthy tendon
+    [KHAN99][RUI11].  Every band starts at the same x, so the crimp lines up from band to band."""
+    n = max(8, int(x1 - x0))
+    top, bot, mid = [], [], []
+    for i in range(n + 1):
+        x = x0 + (x1 - x0) * i / n
+        c = yc + amp * math.sin((x - x0) / period * 2 * math.pi)
+        top.append((x, c - h / 2))
+        bot.append((x, c + h / 2))
+        mid.append((x, c - h * 0.13))
+    out = (f'<path d="{_ribbon(top, bot)}" fill="url(#ts-ten)" stroke="{TEN_EDGE}" stroke-width=".7" '
+           f'stroke-linejoin="round"/>')
+    if hi:
+        out += f'<path d="{_poly(mid[3:-3])}" stroke="#FFFFFF" stroke-width="1.1" opacity=".9" fill="none"/>'
+    return out
 
 
 def _frayed(x0, x1, y, n=4, bulge=5.2, sw=1.2):
@@ -497,10 +564,11 @@ def _frayed(x0, x1, y, n=4, bulge=5.2, sw=1.2):
 
 
 def _wavy(x0, x1, y, amp, period, phase, h, taper=(False, False), y_end=None):
-    """A wavy, swollen fibre: a ribbon whose centre line is a sine.  taper=(left, right) narrows that end to a
-    point over its last 9 units (a fibre coming apart); y_end pins the centre line there to height y_end."""
+    """An uneven, swollen fibre: a ribbon whose centre line is a sine, sampled once per unit so it stays smooth.
+    taper=(left, right) narrows that end to a point over its last 9 units (a fibre coming apart); y_end pins the
+    centre line there to height y_end."""
     top, bot = [], []
-    n = max(8, int((x1 - x0) / 3))
+    n = max(8, int(x1 - x0))
     for i in range(n + 1):
         x = x0 + (x1 - x0) * i / n
         c = y + amp * math.sin((x - x0) / period * 2 * math.pi + phase)
@@ -512,48 +580,59 @@ def _wavy(x0, x1, y, amp, period, phase, h, taper=(False, False), y_end=None):
                     c = y_end + (c - y_end) * dist / 9
         top.append((x, c - hh / 2))
         bot.append((x, c + hh / 2))
-    d = "M" + " L".join(f"{_f(a)},{_f(b)}" for a, b in top) + " L" + " L".join(f"{_f(a)},{_f(b)}" for a, b in reversed(bot)) + "Z"
-    return f'<path d="{d}" fill="url(#ts-ten)" stroke="{TEN_EDGE}" stroke-width=".7" stroke-linejoin="round"/>'
+    return (f'<path d="{_ribbon(top, bot)}" fill="url(#ts-ten)" stroke="{TEN_EDGE}" stroke-width=".7" '
+            f'stroke-linejoin="round"/>')
 
 
 def _vessel(pts, sw=1.6):
-    d = "M" + " ".join(f"{_f(x)},{_f(y)}" for x, y in pts)
-    return f'<path d="{d}" fill="none" stroke="{VESSEL}" stroke-width="{sw}" stroke-linecap="round" stroke-linejoin="round"/>'
+    """A new blood vessel: a smooth curve through pts (Catmull-Rom) with round ends; branches get thinner strokes."""
+    d = _path([(x, y, 1.0) for x, y in pts], lambda x, y: (x, y), closed=False)
+    return (f'<path d="{d}" fill="none" stroke="{VESSEL}" stroke-width="{sw}" stroke-linecap="round" '
+            f'stroke-linejoin="round"/>')
 
 
 def zoom_circle(cx, cy, r, healthy, uid):
     out = [f'<clipPath id="{uid}"><circle cx="{cx}" cy="{cy}" r="{r}"/></clipPath>',
            f'<g clip-path="url(#{uid})"><rect x="{cx - r}" y="{cy - r}" width="{2 * r}" height="{2 * r}" fill="{FIELD}"/>']
     if healthy:
-        y, k = cy - r - 2, 0
+        # tight, parallel bundles with an even crimp [KHAN99][RUI11]
+        y = cy - r - 2
         while y < cy + r:
-            h = 8.6
-            out.append(_fiber_band(cx - r - 8, cx + r + 8, y, h))
-            y += h + 1.6
-            k += 1
+            out.append(_crimp_band(cx - r - 8, cx + r + 8, y + 4.3, 8.6))
+            y += 8.6 + 1.6
     else:
-        rnd = random.Random(7)
-        y, k = cy - r - 1, 0
-        breaks = []
-        while y < cy + r:
-            h = rnd.uniform(6.5, 10)
-            amp = rnd.uniform(1.6, 3.6)
-            per = rnd.uniform(22, 34)
-            ph = rnd.uniform(0, 6.28)
-            if k in (2, 5, 8):          # broken fibres: a gap with frayed ends
-                gx = cx + rnd.uniform(-r * .45, r * .45)
-                out.append(_wavy(cx - r - 6, gx - 14, y + h / 2, amp, per, ph, h, (False, True), y + h / 2))
-                out.append(_wavy(gx + 14, cx + r + 6, y + h / 2, amp, per, ph + 1.3, h, (True, False), y + h / 2))
-                breaks.append((gx, y + h / 2))
+        # overloaded: uneven fibres pulled apart (more ground substance between them), two slipped out of line and
+        # crossing the others, two broken with frayed ends, and new small blood vessels [KHAN99][MILLAR21]
+        rnd = random.Random(5)
+        rows, y = [], cy - r - 3
+        while y < cy + r + 3:
+            h = rnd.uniform(5.4, 8.4)
+            rows.append((y + h / 2, h, rnd.uniform(1.4, 3.4), rnd.uniform(15, 30), rnd.uniform(0, 6.28)))
+            y += h + rnd.uniform(2.8, 5.2)
+        inner = [i for i, row in enumerate(rows) if abs(row[0] - cy) < r - 17]      # breaks stay clear of the rim
+        breaks = {inner[len(inner) // 4]: -0.28, inner[(3 * len(inner)) // 4]: 0.24}
+        frays = []
+        for i, (yc, h, amp, per, ph) in enumerate(rows):
+            x0, x1 = cx - r - 6, cx + r + 6
+            if i in breaks:
+                gx = cx + breaks[i] * r
+                out.append(_wavy(x0, gx - 13, yc, amp, per, ph, h, (False, True), yc))
+                out.append(_wavy(gx + 13, x1, yc, amp, per, ph + 1.3, h, (True, False), yc))
+                frays.append((gx, yc))
             else:
-                out.append(_wavy(cx - r - 6, cx + r + 6, y + h / 2, amp, per, ph, h))
-            y += h + rnd.uniform(2.2, 4.8)
-            k += 1
-        for gx, gy in breaks:
-            out.append(_frayed(gx - 16, gx + 16, gy, 4, 5.0))
-        out.append(_vessel([(cx - r, cy + 16), (cx - 24, cy + 10), (cx - 6, cy + 18), (cx + 14, cy + 6), (cx + r, cy + 10)]))
-        out.append(_vessel([(cx - 6, cy + 18), (cx - 2, cy + 32), (cx + 6, cy + r)], 1.3))
-        out.append(_vessel([(cx - 24, cy + 10), (cx - 30, cy - 4), (cx - 22, cy - 20)], 1.2))
+                out.append(_wavy(x0, x1, yc, amp, per, ph, h))
+        # the two slipped fibres cross well away from the two breaks, so each break reads on its own
+        for ang, oy, h, ph in ((-12, -28, 6.0, 0.6), (9, 33, 5.4, 2.2)):
+            out.append(f'<g transform="rotate({ang} {_f(cx)} {_f(cy + oy)})">'
+                       + _wavy(cx - r - 22, cx + r + 22, cy + oy, 2.0, 21, ph, h) + "</g>")
+        for gx, gy in frays:
+            out.append(_frayed(gx - 15, gx + 15, gy, 4, 4.6))
+        # new vessels grow in from the lower side, along the gaps between fibres and clear of the frayed breaks
+        vessel = lambda pts, sw: _vessel([(cx + a, cy + b) for a, b in pts], sw)
+        out.append(vessel([(-r - 4, 30), (-26, 25), (-8, 31), (10, 27), (28, 31), (r + 4, 24)], 1.9))
+        out.append(vessel([(-8, 31), (-4, 38), (2, r + 4)], 1.3))
+        out.append(vessel([(-26, 25), (-33, 15), (-36, 3), (-35, -8)], 1.05))
+        out.append(vessel([(28, 31), (35, 23), (39, 13)], 0.85))
     out.append("</g>")
     out.append(f'<circle cx="{cx}" cy="{cy}" r="{r + 2}" fill="none" stroke="#FFFFFF" stroke-width="2.4"/>')
     out.append(f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="none" stroke="#2F3A40" stroke-width="2.2"/>')
@@ -569,17 +648,17 @@ def _mini(name, cx, cy, r=17):
             f'stroke-width="{2.1 / s:.2f}" stroke-linecap="round" stroke-linejoin="round">{body}</g>')
 
 
-STEP_ICONS = {
-    "scoop": ('<path d="M19 22h26l-3.5 33a4 4 0 0 1-4 3.5h-11a4 4 0 0 1-4-3.5z"/><path d="M17 14h30v8H17z"/>'
-              '<path d="M28 14V8h8v6"/><path d="M22 36h20"/>'),
-    "clock": '<circle cx="32" cy="34" r="22"/><path d="M32 20v14l9 6"/><path d="M26 6h12"/>',
-    "load": kit.ICONS["dumbbell"],
-}
+STEP_ICONS = {"load": kit.ICONS["dumbbell"], "feed": kit.ICONS["plate"], "sleep": kit.ICONS["moon"]}
+STEPS = [  # how every tendon gets stronger: plain physiology, the same three habits as the back's lifestyle row
+    ("load", "Load it", ["exercise is", "the signal"]),      # loading drives collagen building [KJAER04]
+    ("feed", "Feed it", ["protein and", "vitamin C foods"]),  # vitamin C is needed to make collagen [ODS-C]
+    ("sleep", "Sleep on it", ["7 to 9 hours", "a night"]),   # adults need 7 to 9 hours [NSF15]
+]
 
 
 def panel_zoom():
     x, w = P3X, P3W
-    out = [_panel_card(x, w, "INSIDE A TENDON", "magnified many times")]
+    out = [_panel_card(x, w, "INSIDE A TENDON", "the circled spot, magnified many times")]
     c1, c2, cy, r = x + 64, x + w - 64, 88, 46
     out.append(zoom_circle(c1, cy, r, True, "ts-zh"))
     out.append(zoom_circle(c2, cy, r, False, "ts-zo"))
@@ -587,21 +666,21 @@ def panel_zoom():
     out.append(T(c1, cy + r + 30, ["Neat, parallel", "collagen fibers"], 10, 600, INK, "middle"))
     out.append(T(c2, cy + r + 17, "OVERLOADED", 11, 800, BAD, "middle", ls=0.6))
     out.append(T(c2, cy + r + 30, ["Frayed, tangled fibers;", "new blood vessels"], 10, 600, INK, "middle"))
-    # how tendons rebuild
+    # HOW TENDONS GET STRONGER: true of every tendon, so it sits in its own box under both circles, not under one
     y0 = 188
-    out.append(f'<path d="M{x + 14},{y0} H{x + w - 14}" stroke="#D3DFE8" stroke-width="1.2"/>')
-    out.append(T(x + w / 2, y0 + 16, "HOW TO HELP IT REBUILD", 10.5, 800, "#123F60", "middle", ls=1.0))
-    xs = [x + 42, x + w / 2, x + w - 42]
-    dy = y0 + 40
-    labels = [["Collagen +", "vitamin C"], ["Wait about", "1 hour"], ["Load the", "tendon"]]
-    for i, (sx, lab) in enumerate(zip(xs, labels)):
-        out.append(_mini(["scoop", "clock", "load"][i], sx, dy))
-        out.append(T(sx, dy + 31, lab, 10, 700, INK, "middle"))
+    out.append(f'<rect x="{x + 8}" y="{y0}" width="{w - 16}" height="{PANEL_H - y0 - 8}" rx="8" fill="#EEF5FA" '
+               f'stroke="#D3DFE8" stroke-width="1"/>')
+    out.append(T(x + w / 2, y0 + 15, "HOW TENDONS GET STRONGER", 10.5, 800, "#123F60", "middle", ls=1.0))
+    xs = [x + 44, x + w / 2, x + w - 44]
+    dy = y0 + 39
+    for i, (sx, (ic, head, sub)) in enumerate(zip(xs, STEPS)):
+        out.append(_mini(ic, sx, dy))
+        out.append(T(sx, dy + 31, head, 10.5, 800, INK, "middle"))
+        out.append(T(sx, dy + 43, sub, 10, 500, INK2, "middle", lh=1.15))
         if i < 2:
             ax0, ax1 = sx + 22, xs[i + 1] - 22
             out.append(f'<path d="M{_f(ax0)},{dy} H{_f(ax1 - 6)}" stroke="#2E8FC8" stroke-width="2.2" stroke-linecap="round"/>'
                        f'<path d="M{_f(ax1 - 7)},{dy - 4.5} L{_f(ax1)},{dy} L{_f(ax1 - 7)},{dy + 4.5} Z" fill="#2E8FC8"/>')
-    out.append(T(x + w / 2, PANEL_H - 10, "Exercise is the signal to rebuild.", 10, 600, INK2, "middle", italic=True))
     return "".join(out)
 
 
@@ -634,8 +713,7 @@ def _sw_bursa():
 
 def _sw_fibers():
     return (f'<rect x="-12" y="-8" width="24" height="16" rx="3" fill="{FIELD}"/>'
-            + "".join(f'<rect x="-11" y="{y}" width="22" height="4" rx="2" fill="url(#ts-ten)" stroke="{TEN_EDGE}" stroke-width=".5"/>'
-                      for y in (-7, -2, 3)))
+            + "".join(_crimp_band(-11, 11, yc, 4.2, 0.6, 5.5, hi=False) for yc in (-5, 0, 5)))
 
 
 def _sw_fray():
@@ -645,25 +723,45 @@ def _sw_fray():
 
 
 def _sw_vessel():
-    return _vessel([(-12, 3), (-4, -1), (4, 3), (12, -2)]) + _vessel([(-4, -1), (-1, -7)], 1.2)
+    return _vessel([(-12, 3), (-5, -1), (3, 2.5), (12, -2)], 1.7) + _vessel([(-5, -1), (-3.5, -5), (-1, -8)], 1.1)
 
 
 KEY_ITEMS = [(_sw_muscle, "Muscle"), (_sw_tendon, "Tendon"), (_sw_bone, "Bone"), (_sw_bursa, "Irritated bursa"),
              (_sw_fibers, "Collagen fibers"), (_sw_fray, "Frayed fibers"), (_sw_vessel, "New blood vessels")]
+# The lens is explained where it opens: panel 3 is titled "the circled spot, magnified many times".
+KEY_FS, KEY_SW, KEY_GAP, KEY_X0, KEY_X1, KEY_MIN = 11, 26, 4, 48, W - 14, 8
+
+
+def _key_rows():
+    """One row when every gap between neighbours stays >= KEY_MIN, so each swatch sits clearly nearer its own label
+    (5 units) than the previous one; otherwise two rows."""
+    span = [KEY_SW + KEY_GAP + tw(lab, KEY_FS, 600) for _, lab in KEY_ITEMS]
+    if sum(span) + KEY_MIN * (len(span) - 1) <= KEY_X1 - KEY_X0:
+        return [list(range(len(KEY_ITEMS)))]
+    half = (len(KEY_ITEMS) + 1) // 2
+    return [list(range(half)), list(range(half, len(KEY_ITEMS)))]
+
+
+KEY_ROWS = _key_rows()
+KEY_H = 32 if len(KEY_ROWS) == 1 else 52
+H = KEY_Y + KEY_H + 2
 
 
 def key_strip(y):
-    fs = 11
-    out = [f'<rect x=".6" y="{y}" width="{W - 1.2}" height="{KEY_H}" rx="8" fill="#FFFFFF" stroke="#CFD6DA" stroke-width="1.2"/>',
-           T(14, y + KEY_H / 2 + 3.8, "KEY", 10.5, 800, INK, ls=1.3)]
-    start, sw_w, gap = 54, 26, 7
-    total = sum(sw_w + gap + tw(lab, fs, 600) for _, lab in KEY_ITEMS)
-    space = (W - 14 - start - total) / (len(KEY_ITEMS) - 1)
-    x = start
-    for sw, lab in KEY_ITEMS:
-        out.append(f'<g transform="translate({_f(x + sw_w / 2)},{_f(y + KEY_H / 2)})">{sw()}</g>')
-        out.append(T(_f(x + sw_w + gap), y + KEY_H / 2 + 3.9, lab, fs, 600, INK))
-        x += sw_w + gap + tw(lab, fs, 600) + space
+    out = [f'<rect x=".6" y="{y}" width="{W - 1.2}" height="{KEY_H}" rx="8" fill="#FFFFFF" stroke="#CFD6DA" stroke-width="1.2"/>']
+    row_h = KEY_H if len(KEY_ROWS) == 1 else 22
+    top = y if len(KEY_ROWS) == 1 else y + 4
+    out.append(T(14, _f(top + row_h / 2 + 3.8), "KEY", 10.5, 800, INK, ls=1.3))
+    for ri, row in enumerate(KEY_ROWS):
+        yc = top + ri * row_h + row_h / 2
+        span = [KEY_SW + KEY_GAP + tw(KEY_ITEMS[i][1], KEY_FS, 600) for i in row]
+        space = max(KEY_MIN, (KEY_X1 - KEY_X0 - sum(span)) / max(1, len(row) - 1))
+        x = KEY_X0
+        for i, s in zip(row, span):
+            sw, lab = KEY_ITEMS[i]
+            out.append(f'<g transform="translate({_f(x + KEY_SW / 2)},{_f(yc)})">{sw()}</g>')
+            out.append(T(_f(x + KEY_SW + KEY_GAP), _f(yc + 3.9), lab, KEY_FS, 600, INK))
+            x += s + space
     return "".join(out)
 
 
@@ -671,8 +769,9 @@ def art_cuff(t=None):
     body = [plate_defs(), panel_front(), panel_back(), panel_zoom(), lens_cone(), key_strip(KEY_Y)]
     return svg(W, H, "".join(body),
                "The rotator cuff seen from the front and from the back: four muscles whose tendons wrap the ball "
-               "of the arm bone, the acromion roof and the bursa beneath it; and a magnified view of healthy, "
-               "parallel collagen fibers beside frayed, overloaded fibers with new blood vessels.")
+               "of the arm bone, the acromion roof and the bursa beneath it; a magnified view of healthy, "
+               "parallel collagen fibers beside frayed, overloaded fibers with new blood vessels; and how tendons "
+               "get stronger: load, food and sleep.")
 
 
 # ============================================================== blocks under the art
@@ -696,38 +795,44 @@ SITE_ICONS = {  # 64-grid silhouettes (soft fill, theme outline), each with its 
     "shoulder": ('<circle cx="32" cy="13.5" r="8.5" fill="#E3EEF6"/>'
                  '<path d="M7 62V49C7 37.5 15 31 27 28.6V24h10v4.6C49 31 57 37.5 57 49v13z" fill="#E3EEF6"/>'
                  '<path d="M16 43v19M48 43v19"/>' + _spot(15.5, 35.5)),
-    # a bent arm, fist up (upper arm across, forearm rising to the fist); the spot sits on the outer elbow
-    "elbow": ('<path d="M3 31C10 24.5 21 22 30 26.5c4.5 2.2 7.5 4.3 9.5 6.5L41.5 18c-3-1.5-4-5.5-2.2-9 2-4 7.5-5.4 12.4-4.2'
-              ' 4.6 1.2 7 4.6 6.6 8.7-.3 3.2-1.8 5.4-3.8 6.6L57 41c.4 5.3-2.6 9.6-8.4 10.8-6.6 1.3-14.5.8-23-.6L3 48z" fill="#E3EEF6"/>'
-              '<path d="M43.5 11.5c2.8-1.6 6.6-1.2 8.6.6M41.5 18c3.8 1.5 8.4 1.6 12.4.4"/>' + _spot(52, 45)),
-    # lower leg and foot from the side; the spot sits on the Achilles tendon above the heel
-    "heel": ('<path d="M20 2c-5.5 10-6 20-1.5 30 2.5 5.5 3.5 9 2 14-2 5.5-1 12 5.5 12H55c4.5 0 6-3 4-5.5-2-2.5-9-4-14-7'
-             '-4-2.5-5.5-5.5-6-10.5C38 25 37 14 37 2" fill="#E3EEF6"/>' + _spot(21.5, 40.5)),
+    # a bent arm from the side: the upper arm comes in from the left, the elbow is the lower right corner, the
+    # forearm rises to a narrow wrist and a closed fist (a grip); the spot sits on the outer elbow
+    "elbow": ('<path d="M3 35C10 31 22 30 29 34C31 35 32.5 36.5 33.5 38C35 33 36 28 37 24L36 21C33 20 33 16 33.5 13'
+              'C34 8 38 7 42 7C47 7 50 9 50.5 13C51 17 49.5 20.5 47.5 22C48.5 31 50 40 50.5 46C51 52 48 55.5 43 56'
+              'L3 54z" fill="#E3EEF6"/>'
+              '<path d="M33.6 12.6h5.2M33.4 16.8h5.4"/>' + _spot(46, 49)),
+    # lower leg and foot from the side; the spot sits on the Achilles tendon at the back of the ankle, above the heel
+    "ankle": ('<path d="M20 2c-5.5 10-6 20-1.5 30 2.5 5.5 3.5 9 2 14-2 5.5-1 12 5.5 12H55c4.5 0 6-3 4-5.5-2-2.5-9-4-14-7'
+              '-4-2.5-5.5-5.5-6-10.5C38 25 37 14 37 2" fill="#E3EEF6"/>' + _spot(21.5, 40.5)),
 }
 
 # Where tendon pain shows up.  Shoulder: pain on the outer upper arm with lifting, night pain lying on it,
 # pain reaching behind [LEWIS16][WHITTLE15].  Tennis elbow: pain at the outer bony bump with gripping
-# [BISSET15]; tied to forceful, repetitive arm work, not just tennis [SHIRI06].  Achilles: pain 2 to 6 cm
-# (about 1 to 2 inches) above the heel, morning stiffness, pain with running and jumping [ACH18].
+# [BISSET15]; tied to forceful, repetitive arm work, not just tennis [SHIRI06].  Achilles: pain at the back of the
+# ankle 2 to 6 cm (about 1 to 2 inches) above the heel bone, morning stiffness, pain with running and jumping [ACH18].
 SITES = [
     ("shoulder", "Shoulder", "rotator cuff",
      ["Ache on the outer upper arm", "Worse when you lift your arm", "Hurts to lie on it at night"]),
     ("elbow", "Elbow", "tennis elbow",
      ["Pain on the outer elbow bump", "Worse when you grip or twist", "Common with gripping work"]),
-    ("heel", "Heel", "Achilles tendon",
-     ["Pain just above the heel bone", "Stiff with your first steps", "Sore with running or jumping"]),
+    ("ankle", "Back of the ankle", "Achilles tendon",
+     ["Pain just above the heel bone", "Stiff in the morning", "Sore with running or jumping"]),
 ]
 
 RISK_ICONS = {
     "overhead": ('<circle cx="32" cy="15" r="5"/><path d="M32 21v18M32 39l-7 19M32 39l7 19M32 26 21 12M32 26l11-14"/>'
                  '<path d="M14 9h36"/>'),
-    "spike": '<path d="M8 8v48h48"/><path d="M14 46l9-2 9-2 6-26 7 4"/><path d="M44 14l1 7-6 1" />',
+    # a training line that creeps up, then jumps, ending in a clean arrowhead
+    "spike": '<path d="M8 8v48h48"/><path d="M14 46l9-2 9-2 8-28"/><path d="M35 19l5-5 1.7 6.8"/>',
+    # a lit cigarette with smoke rising (no slash: a slash would read as "no smoking")
+    "ts_cig": ('<rect x="6" y="37" width="40" height="9" rx="2"/><path d="M37 37v9"/>'
+               '<path d="M51 33c-3.2-2.8-3.2-5.6 0-8.4s3.2-5.6 0-8.4"/><path d="M58 31c-2.4-2.1-2.4-4.2 0-6.3s2.4-4.2 0-6.3"/>'),
 }
 # What raises your risk: age over 50, diabetes, work with the arm above shoulder height [LEONG19];
 # a sudden rise in load [COOK09]; high cholesterol [GIRI22]; smoking [BISHOP15][SHIRI06]; family history
 # [HARVIE04]; fluoroquinolone antibiotics and steroids [FDA16][YU19][XERGIA22].
 RISKS = [("age", "Age over 50"), ("overhead", "Overhead work or sports"), ("spike", "A sudden jump in training"),
-         ("bloodsugar", "Diabetes"), ("tube", "High cholesterol"), ("smoke", "Smoking"), ("dna", "Family history"),
+         ("bloodsugar", "Diabetes"), ("tube", "High cholesterol"), ("ts_cig", "Smoking"), ("dna", "Family history"),
          ("rx", "Some antibiotics and steroids")]
 
 
@@ -766,12 +871,14 @@ def pain_block():
 
 
 def flags_block():
-    # Red flags first [CPG24]; heart attack warning signs include arm pain with chest discomfort,
-    # shortness of breath or a cold sweat: call 911 [AHA].
+    # Red flags first [CPG24].  Achilles rupture: a sudden "pop" with pain at the back of the heel [BIGGS21]; weak
+    # push-off, so you cannot rise up on your toes [CHIODO10].  Heart attack warning signs include arm pain with
+    # chest discomfort, shortness of breath or a cold sweat: call 911 [AHA].
     return ('<div class="tsp-flag">' + icon("warning", "0.3in", sw=3.4) +
             '<p><b>Get checked right away</b> for a sudden pop or weakness after a fall or heavy lift, an arm you cannot '
-            'lift, a hot, red, swollen joint or a fever, or numbness running down the arm. <b>Shoulder or arm pain with '
-            'chest pressure, shortness of breath or a cold sweat can be a heart attack: call 911.</b></p></div>')
+            'lift, a hot, red, swollen joint or a fever, or numbness running down the arm, and for a sudden pop at the '
+            'back of the ankle or not being able to stand on tiptoe. <b>Shoulder or arm pain with chest pressure, '
+            'shortness of breath or a cold sweat can be a heart attack: call 911.</b></p></div>')
 
 
 def front(t, ed):
@@ -779,9 +886,10 @@ def front(t, ed):
             f'{sites_block()}{risk_block()}{pain_block()}{flags_block()}</div>')
 
 
+_BK = '.sheet.back:has(img[src*="/nd-ts-"])'     # this sheet's back page: the one showing its nd-ts-*.png photos
 CSS = r"""
 .tsp .tsp-art svg{display:block;width:100%;height:auto}
-.tsp .tsp-h{display:flex;align-items:center;gap:0.1in;margin:0.11in 0 0.05in;font:900 10.5pt/1.2 Merriweather,Georgia,serif;
+.tsp .tsp-h{display:flex;align-items:center;gap:0.1in;margin:0.1in 0 0.05in;font:900 10.5pt/1.2 Merriweather,Georgia,serif;
   color:var(--c1);letter-spacing:.04em;text-transform:uppercase}
 .tsp .tsp-h::after{content:"";flex:1;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--soft),rgba(227,238,246,0));order:1}
 .tsp .tsp-h em{order:2;font:italic 600 7.6pt Inter,sans-serif;letter-spacing:0;text-transform:none;color:#4A555C;
@@ -794,7 +902,7 @@ CSS = r"""
   justify-content:center;box-shadow:inset 0 0 0 1.5px rgba(31,94,140,.14)}
 .tsp .tsp-site p{margin:0 0 2px;line-height:1.15}
 .tsp .tsp-site b{font:800 9.4pt/1.15 Inter,sans-serif;color:var(--deep)}
-.tsp .tsp-site i{font:italic 600 7.6pt/1.15 Inter,sans-serif;color:#4A555C;margin-left:3px}
+.tsp .tsp-site i{font:italic 600 7.6pt/1.15 Inter,sans-serif;color:#4A555C;margin-left:3px;white-space:nowrap}
 .tsp .tsp-site ul{margin:0;padding:0;list-style:none}
 .tsp .tsp-site li{position:relative;padding-left:9px;font-size:7.9pt;line-height:1.28;color:#2B3236;margin:0 0 1px}
 .tsp .tsp-site li::before{content:"";position:absolute;left:0;top:4.5px;width:4px;height:4px;border-radius:50%;background:var(--c2)}
@@ -803,7 +911,7 @@ CSS = r"""
 .tsp .tsp-disc{width:0.46in;height:0.46in;border-radius:50%;background:var(--soft);color:var(--c1);display:flex;align-items:center;
   justify-content:center;box-shadow:inset 0 0 0 1.5px rgba(31,94,140,.10)}
 .tsp .tsp-rl{display:block;font-size:7.7pt;font-weight:600;line-height:1.2;color:#2F373C;margin-top:0.03in}
-.tsp .tsp-pain{display:grid;grid-template-columns:1fr 1.95in;gap:0.14in;align-items:center;margin-top:0.12in;border:1px solid #D9E5EE;
+.tsp .tsp-pain{display:grid;grid-template-columns:1fr 1.95in;gap:0.14in;align-items:center;margin-top:0.11in;border:1px solid #D9E5EE;
   border-radius:9px;padding:0.06in 0.1in 0.07in;background:#fff}
 .tsp .tsp-bh{font:900 9.6pt/1.2 Merriweather,Georgia,serif;color:var(--c1);letter-spacing:.03em;text-transform:uppercase;margin:0 0 0.05in}
 .tsp .tsp-bh span{font:italic 600 7.4pt Inter,sans-serif;letter-spacing:0;text-transform:none;color:#4A555C;margin-left:6px}
@@ -820,30 +928,39 @@ CSS = r"""
 .tsp .tsp-weeks b{font:900 26pt/1 Merriweather,Georgia,serif;color:var(--c1)}
 .tsp .tsp-weeks span{font-size:7.9pt;line-height:1.3;color:#2B3236}
 .tsp .tsp-weeks strong{color:var(--deep);font-size:8.6pt}
-.tsp .tsp-flag{display:flex;gap:0.08in;align-items:center;margin-top:0.11in;border:1.5px solid #C0392B;background:#FDF1EF;
+.tsp .tsp-flag{display:flex;gap:0.08in;align-items:center;margin-top:0.1in;border:1.5px solid #C0392B;background:#FDF1EF;
   border-radius:8px;padding:0.05in 0.1in}
 .tsp .tsp-flag .ic{flex:none;color:#B23A30}
 .tsp .tsp-flag p{margin:0;font-size:7.9pt;line-height:1.33;color:#2B3236}
 .tsp .tsp-flag b{color:#A5281E}
-"""
+/* 7 pt floor for the shared page text that kit.py / build.py print at 6.2 to 6.8 pt, on this sheet's two pages only
+   (front: the page holding .tsp; back: the page showing this sheet's photos).  Delete once the pipeline is raised. */
+.sheet.front:has(.tsp) .foot,.sheet.front:has(.tsp) .foot .code,
+BK .col .need i,BK .col .pick .sz,BK .col .key,BK .col .key b,BK .col .dose small,BK .startt,BK .disc,BK .foot,
+BK .foot .code{font-size:7pt}
+/* the rhythm keeps a count with its unit ("1 softgel"): an inline-block moves to the next line whole */
+BK .slot li em{display:inline-block}
+/* START HERE sits above the wide canister's lid, not on it (same box height, so the row does not grow) */
+.sheet.back .col:has(img[src$="/nd-ts-collagen-renew.png"]) .pick img{height:0.83in;margin-top:0.15in}
+""".replace("BK", _BK)
 
 # ============================================================== back-page icons (registered by name for build.life_block)
-kit.ICONS.setdefault("ts_steps", '<path d="M6 56h14V44h12V32h12V20h14"/><path d="M10 34 30 14"/><path d="M21 14h9v9"/>')
-kit.ICONS.setdefault("ts_ladder", '<path d="M21 58 29 7h6l8 51"/><path d="M24.4 40h15.2M26.6 24h10.8"/><path d="M47 18v20"/>'
-                                  '<path d="M42 23l5-5 5 5"/>')
+kit.ICONS["ts_steps"] = '<path d="M6 56h14V44h12V32h12V20h14"/><path d="M10 34 30 14"/><path d="M21 14h9v9"/>'
+# a high shelf on two brackets, a box held lower down, and a down arrow: keep heavy lifting below shoulder height
+kit.ICONS["ts_lower"] = ('<path d="M7 12h50M13 12v6M51 12v6"/><rect x="15" y="30" width="24" height="20" rx="2"/>'
+                         '<path d="M15 37h24M27 30v7"/><path d="M50 24v25M44 43l6 6 6-6"/>')
 
 SHEET = {
     "slug": SLUG, "code": "ND-MS-603", "order": 14, "theme": "msk", "series": "Pain and Movement Series",
     "title": "Shoulder and Tendon Pain", "sub": "Rotator cuff, tennis elbow and Achilles",
     # Collagen, mostly type I, is 65-80% of tendon [KANNUS00].  Most tendon pain is overuse, a load the tendon
-    # was not ready for [COOK09][MILLAR21], with disorganised (fraying) collagen fibres [MILLAR21].  Shoulder
+    # was not ready for [COOK09][MILLAR21], with disorganised (fraying) collagen fibres [KHAN99][MILLAR21].  Shoulder
     # pain: third most common musculoskeletal reason to see primary care [WHITTLE15]; rotator cuff the most
-    # common cause [ZHANG25].  Load the right way: exercise is first-line in every guideline [CPG20][LEWIS16],
-    # and loading drives collagen building [KJAER04].
-    "intro": ("Tendons are tough cords of <b>collagen</b> that join muscle to bone. Most tendon pain is not one big injury: "
-              "it builds when a tendon does more than it is ready for, and its rope-like fibers fray. Shoulder pain is the "
-              "<b>third most common</b> muscle and joint reason to see a family doctor, usually from the <b>rotator cuff</b>. "
-              "The good news: tendons rebuild with the right load."),
+    # common cause [ZHANG25].  The rotator cuff: 4 muscles whose tendons cover the ball and hold it in the socket [ANAT].
+    "intro": ("Tendons are tough cords of <b>collagen</b> that join muscle to bone. Most tendon pain builds slowly, when a "
+              "tendon does more than it is ready for and its rope-like fibers fray. Shoulder pain is the "
+              "<b>third most common</b> muscle and joint reason to see a family doctor, usually from the "
+              "<b>rotator cuff</b>: 4 muscles whose tendons hug the ball of the arm bone and keep it in its socket."),
     "front": front,
     "css": CSS,
     "back": {
@@ -854,28 +971,31 @@ SHEET = {
             # A sudden rise in load drives tendinopathy [COOK09]
             ("ts_steps", "Build up slowly", "Add weight, miles or reps in small steps."),
             # Work with the arm above shoulder height raises cuff risk [LEONG19]
-            ("ts_ladder", "Lower your reach", "Keep heavy lifting below shoulder height."),
+            ("ts_lower", "Lower your reach", "Keep heavy lifting below shoulder height."),
             # Vitamin C is needed to make collagen [ODS-C]
             ("plate", "Feed the rebuild", "Eat protein and vitamin C foods like citrus."),
-            # Adults need 7 to 9 hours [NSF15]; the day's biggest growth hormone pulse comes in deep sleep [VC96]
-            ("moon", "Sleep 7 to 9 hours", "Growth hormone peaks in deep sleep."),
+            # Adults need 7 to 9 hours [NSF15]; the day's biggest growth hormone (repair hormone) pulse comes in deep
+            # sleep [VC96]
+            ("moon", "Sleep 7 to 9 hours", "Your repair hormone peaks in deep sleep."),
             # Smoking is tied to cuff tears, shoulder pain and poorer function [BISHOP15]
             ("smoke", "Stop smoking", "Smoking is tied to more rotator cuff tears."),
         ],
         "cols": [
             {"p": "ts_collagen_renew", "need": "Tendon building blocks", "needsub": "collagen peptides", "start": True,
              "bullets": ["Supports tendons, ligaments and joints",
-                         "With TENDOFORTE, studied for tendons"],                          # [PRAET19]
-             "dose": "1 scoop daily", "dosesub": "about 1 hour before exercise",          # [SHAW17]
-             "sched": [("am", 1, "scoop")]},
+                         "Includes TENDOFORTE, made for tendons"],               # formulation fact (labels.json R190)
+             "dose": "1 scoop in 8 oz water",                                      # label: 1 scoop in 8 ounces of water
+             "dosesub": "about 1 hour before exercise",                            # [SHAW17]
+             # the rhythm says "before exercise" too, so a later workout does not clash with the Morning slot
+             "sched": [("am", 1, "scoop before exercise")]},
             {"p": "ts_vitamin_c_1000", "need": "Build collagen", "needsub": "vitamin C",
-             "bullets": ["Your body needs it to build collagen",                           # [ODS-C]
-                         "Collagen Renew has none, so pair them"],                        # labels.json R190: no vitamin C
+             "bullets": ["Your body needs it to build collagen",                            # [ODS-C]
+                         "Collagen Renew has none, so pair them"],                         # labels.json R190: no vitamin C
              "dose": "1 capsule daily", "dosesub": "with your collagen", "sched": [("am", 1, "capsule")]},
             {"p": "ts_inflam_eze_plus", "need": "Comfort after activity", "needsub": "ginger, curcumin, boswellia",
              "bullets": ["Supports joint and muscle comfort", "Supports a healthy inflammatory response"],
              "dose": "3 capsules daily", "dosesub": "with food", "sched": [("pm", 3, "capsules")]},
-            {"p": "omega_1000", "need": "Inflammatory balance", "needsub": "omega-3s EPA and DHA",
+            {"p": "ts_omega_1000", "need": "Inflammatory balance", "needsub": "omega-3s EPA and DHA",
              "bullets": ["Supports a balanced inflammatory response", "Supports muscle, joint and heart health"],
              "dose": "2 softgels daily", "dosesub": "with your evening meal",     # label: up to 3 a day with food
              "sched": [("pm", 2, "softgels")]},
@@ -889,12 +1009,13 @@ SHEET = {
             # Omega-3s and these herbs may add to anticoagulant effects; vitamin K counters warfarin (NIH ODS fact sheets)
             "<b>Blood thinner or aspirin?</b> Fish oil and Inflam-Eze Plus herbs can add to bleeding, and the vitamin K in "
             "D3 5000 with K2 affects warfarin. Ask {who}.",
-            # [FDA16][YU19]
+            # [FDA16][YU19]: stop the antibiotic and call at the first tendon pain
             "<b>Fluoroquinolone antibiotics</b> (ciprofloxacin, levofloxacin) can injure tendons, more so after 60 or with "
-            "steroids. Tendon pain on one? Call your prescriber.",
-            # White willow bark carries salicin, a salicylate (labels.json R856: 200 mg, 25% salicin)
-            "<b>Aspirin allergy?</b> White willow in Inflam-Eze Plus is a salicylate: skip it. Ask {who} before pairing it "
-            "with ibuprofen or naproxen.",
+            "steroids. Stop and call your prescriber at the first tendon pain.",
+            # White willow bark carries salicin, a salicylate (labels.json R856: 200 mg, 25% salicin); label caution:
+            # "If you are pregnant, nursing, or taking medication, consult your healthcare practitioner before use"
+            "<b>Aspirin allergy, pregnant or nursing?</b> Skip Inflam-Eze Plus: its white willow is aspirin's cousin "
+            "(a salicylate). Ask {who} before pairing it with ibuprofen or naproxen.",
         ],
     },
 }

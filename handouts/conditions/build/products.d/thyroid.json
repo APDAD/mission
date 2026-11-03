@@ -1,0 +1,85 @@
+{
+  "thy_essential_multi": {
+    "name": "Essential Multi",
+    "size": "90 capsules &middot; 30 servings",
+    "img_src": "R716.png",
+    "key": "Per 3 capsules: 100 mcg selenium, 15 mg zinc, 150 mcg iodine, 1,000 IU vitamin D3, 200 mcg B12; no iron",
+    "dose": "3 capsules with dinner",
+    "dosesub": "4 hours after thyroid medicine",
+    "sched": [
+      [
+        "pm",
+        3,
+        "capsules"
+      ]
+    ],
+    "src": "Products DB scratchpad products/nutridyn_products.json R716 (NutriDyn catalog ND143 10/1/26 as read by 15 switch-chart label checks): per 3 capsules selenium 100 mcg (Integrative Therapeutics Clinical Nutrients HP, Klaire CORE MULTI and VITAPRIME rows), zinc 15 mg (Pure, DFH, Ortho, Thorne, IT, Klaire rows), iodine 150 mcg (Pure PureGenomics row), vitamin D3 25 mcg = 1,000 IU, B12 as methylcobalamin 200 mcg, folate as L-5-MTHF 800 mcg DFE, iron none (every row); directions 'Take 3 capsules once daily with food'. Sizes R716 90C (30 servings) and R716L 180C, ND144 price list 10/1/26. No verified product-page URL, so the link falls back to catalog search. Photo: only the 160 px chart thumbnail exists (LOW-RES)."
+  },
+  "thy_d3_5000_k2": {
+    "name": "D3 5000 with K2",
+    "size": "60 softgels",
+    "img_src": "R197.png",
+    "key": "5,000 IU (125 mcg) vitamin D3, 60 mcg vitamin K2 (MK-7), 15 mcg vitamin K1",
+    "dose": "1 softgel with dinner",
+    "dosesub": "recheck your vitamin D level",
+    "sched": [
+      [
+        "pm",
+        1,
+        "softgel"
+      ]
+    ],
+    "url": "https://nutridyn.com/d3-5000-with-k2",
+    "src": "Products DB R197 (Designs for Health, Ortho Molecular, NuMedica and other chart label checks, catalog ND143 10/1/26): per softgel vitamin D3 125 mcg (5,000 IU), vitamin K2 60 mcg as MK-7, vitamin K1 15 mcg; directions 'Take one softgel daily'; size 60S (ND144 10/1/26). The shared products.py entry d3_5000_k2 says capsules; the label says softgels, so this sheet uses its own entry. URL as used on the menopause sheet (an earlier NutriDyn visit brief) and products.py SLUGS."
+  },
+  "thy_iron_support": {
+    "name": "Iron Support",
+    "size": "180 capsules",
+    "img_src": "R847.png",
+    "key": "29 mg iron (bisglycinate), 80 mg vitamin C, 350 mcg B12, 1,020 mcg DFE folate, 5 mg B6, 1 mg copper",
+    "dose": "1 capsule at bedtime",
+    "dosesub": "4 hours from thyroid medicine",
+    "sched": [
+      [
+        "bed",
+        1,
+        "capsule"
+      ]
+    ],
+    "src": "Products DB R847 (Thorne Iron Bisglycinate chart label check, catalog ND143 10/1/26): iron (bisglycinate) 29 mg per capsule; NutriDyn also lists vitamin C 80 mg, B12 350 mcg, folate 1020 mcg DFE, B6 5 mg, thiamin 5 mg, copper 1 mg; directions 'Take one capsule daily'; size 180C (ND144 10/1/26). No verified product-page URL, so the link falls back to catalog search. Photo: only the 160 px chart thumbnail exists (LOW-RES)."
+  },
+  "thy_ultrabiotic_dms": {
+    "name": "UltraBiotic Daily Multi-Strain",
+    "size": "30 or 60 capsules",
+    "img_src": "R829.png",
+    "key": "30 billion CFU from 7 strains: S. boulardii, L. reuteri, B. lactis, L. plantarum, L. acidophilus, L. gasseri, B. coagulans",
+    "dose": "1 capsule with breakfast",
+    "dosesub": "",
+    "sched": [
+      [
+        "am",
+        1,
+        "capsule"
+      ]
+    ],
+    "url": "https://nutridyn.com/ultrabiotic-daily-multi-strain",
+    "src": "Products DB R829 (Pure Encapsulations and Metagenics chart label checks, catalog ND143 10/1/26): 30 billion CFU per capsule at time of manufacture, 7 strains S. boulardii, L. reuteri, B. lactis, L. plantarum, L. acidophilus, L. gasseri, B. coagulans; directions 'Take one capsule daily'; sizes R829 30C and R829L 60C. Same facts as the shared products.py entry ultrabiotic_dms. URL slug from products.py SLUGS (NutriDyn 60-day protocol doc)."
+  },
+  "thy_omega_1000": {
+    "name": "Omega Pure EPA-DHA 1000",
+    "size": "120 softgels",
+    "img_src": "R243.png",
+    "key": "1,000 mg EPA + DHA per softgel (730 mg EPA, 270 mg DHA)",
+    "dose": "1 softgel with dinner",
+    "dosesub": "",
+    "sched": [
+      [
+        "pm",
+        1,
+        "softgel"
+      ]
+    ],
+    "url": "https://nutridyn.com/omega-pure-epa-dha-1000",
+    "src": "Products DB R243 (Pure, Designs for Health and Ortho Molecular chart label checks, catalog ND143 10/1/26): EPA 730 mg + DHA 270 mg = 1,000 mg per softgel; directions 'Take one softgel up to three times daily with food'; size 120S (ND144 10/1/26). Same facts as the shared products.py entry omega_1000. URL slug from products.py SLUGS (NutriDyn 60-day protocol doc)."
+  }
+}

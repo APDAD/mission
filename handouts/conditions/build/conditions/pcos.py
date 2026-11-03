@@ -11,8 +11,21 @@ Asher's notes on the first draft:
      whose tip touches the ovary.  A zoom circle shows the crowded blood (extra sugar AND extra
      insulin).  The step text sits in its own strip under the art, numbered to match.
   4. The signs-and-symptoms ring and the fact and risk boxes stay.  "Extra facial or body hair"
-     (profile with chin hairs) and "Thinning scalp hair" (front view, sparse parting) now have
-     their own icons.
+     and "Thinning scalp hair" have their own icons.
+Art-director pass (2026-11-03, second round):
+  - Vessel: centrelines are straight runs + true arcs; each branch and its arrowhead are ONE
+    outline (head 1.6 x the vessel width, aimed along the vessel's last direction, tip ray-cast
+    to the ovary outline), and the pale inside tapers into the head.
+  - Close-up circle: 10 sugars, 8 insulin, 3 red cells, all placed (the build asserts it).
+  - "small intestine" sits under the duodenal C-loop, clear of the zoom caption.
+  - Fallopian tubes: funnel end with nine tapered fimbriae of different lengths draping over the
+    ovary; the tube is in the KEY.  The KEY's pancreas is the drawing's own outline in miniature.
+  - Ring: top-of-head "thinning" icon (widened part, lone strands); longer facial-hair strokes;
+    "Low-grade inflammation" replaced by "Dark skin patches (neck, armpits)"; a pregnant
+    profile for "Trouble getting pregnant".
+  - Facts: "About 1 in 8", AMH and "once other causes are ruled out", "Why it matters" moved into
+    the facts box, risk factors relabelled "Can make it worse (you can change)", boxes balanced.
+  - Glosses for ovulation, insulin resistance and sleep apnea.
 Glucose (purple hexagon) and insulin (gold dot) use the same symbols as the insulin-resistance
 sheet, so the Metabolic Health Series reads as one system.
 Every SVG id starts with "pc" and every CSS class with "pc-" (all under .pcf), so nothing
@@ -33,8 +46,14 @@ SOURCES (tags appear in comments next to each number on the page)
              risk, cardiovascular disease, sleep apnoea and mood)
   [PENA25]   Pena AS et al. BMC Med 2025;23:151. doi:10.1186/s12916-025-03901-w (teens: irregular
              cycles AND high androgens; ultrasound and AMH are not used)
+  [OWH]      US Office on Women's Health, "Polycystic ovary syndrome" fact sheet, and NIH NICHD,
+             "What are the symptoms of PCOS?": irregular periods, extra facial and body hair, acne,
+             thinning scalp hair, weight gain, darkened skin along neck creases and body folds
+             (acanthosis nigricans), skin tags, infertility.  Not re-opened from the build machine
+             on 2026-11-03 (outbound sites are blocked); long-standing content of both pages.
 
-BACK: unchanged from the first draft (a later pass revises the products).
+BACK: SHEET["back"] is still the first draft (a later back-page pass revises the products).  The
+Myo-Inositol Complex facts (amounts, 6 capsules a day as 3 + 3) come from build/products.d/pcos.json.
 """
 import math
 import os
@@ -173,13 +192,72 @@ def tangents(c):
     return out
 
 
-def ribbon(c, widths):
-    """Closed outline of a band of varying width around the centreline polyline c."""
+def sides(c, widths):
+    """Left and right edges of a band of varying width around the centreline polyline c."""
     L, R = [], []
     for (x, y), (tx, ty), w in zip(c, tangents(c), widths):
         L.append((x - ty * w / 2, y + tx * w / 2))
         R.append((x + ty * w / 2, y - tx * w / 2))
+    return L, R
+
+
+def ribbon(c, widths):
+    """Closed outline of a band of varying width around the centreline polyline c."""
+    L, R = sides(c, widths)
     return poly_d(L + R[::-1])
+
+
+def arc_pts(c, r, a0, a1, turn, step=1.0):
+    """Points on a circular arc of radius r about c, for travel headings a0 -> a1 (degrees).
+    turn=+1 bends clockwise on screen (heading angle grows), turn=-1 counter-clockwise."""
+    n = max(2, int(abs(math.radians(a1 - a0)) * r / step))
+    out = []
+    for k in range(n + 1):
+        f = math.radians(a0 + (a1 - a0) * k / n)
+        out.append((c[0] + turn * r * math.sin(f), c[1] - turn * r * math.cos(f)))
+    return out
+
+
+def line_pts(p, q, step=1.0):
+    n = max(1, int(math.dist(p, q) / step))
+    return [(p[0] + (q[0] - p[0]) * k / n, p[1] + (q[1] - p[1]) * k / n) for k in range(n + 1)]
+
+
+def ray_ellipse(p, d, c, rx, ry, rot):
+    """Distance along the unit ray p + t*d to where it first meets an ellipse (centre c, radii rx and
+    ry, turned rot degrees as in SVG rotate()), or None when it misses."""
+    a = math.radians(rot)
+    ca, sa = math.cos(a), math.sin(a)
+    qx, qy = p[0] - c[0], p[1] - c[1]
+    qx, qy = qx * ca + qy * sa, -qx * sa + qy * ca
+    dx, dy = d[0] * ca + d[1] * sa, -d[0] * sa + d[1] * ca
+    A = (dx / rx) ** 2 + (dy / ry) ** 2
+    B = 2 * (qx * dx / rx ** 2 + qy * dy / ry ** 2)
+    C = (qx / rx) ** 2 + (qy / ry) ** 2 - 1
+    disc = B * B - 4 * A * C
+    return None if disc < 0 else (-B - math.sqrt(disc)) / (2 * A)
+
+
+def arrow_tube(c, widths, tip, hw, back):
+    """ONE closed outline for a tube that ends in an arrowhead: the band runs to c[-1], flares out to
+    two barbs hw either side of the centreline (swept back by `back`), and closes at tip.  The head is
+    aligned to the tube's last direction, so the outline wraps tube and head without a notch."""
+    L, R = sides(c, widths)
+    tx, ty = tangents(c)[-1]
+    nx, ny = -ty, tx
+    bx, by = c[-1]
+    bl = (bx + nx * hw - tx * back, by + ny * hw - ty * back)
+    br = (bx - nx * hw - tx * back, by - ny * hw - ty * back)
+    return poly_d(L + [bl, tip] + [br] + R[::-1])
+
+
+def arrow_lumen(c, widths, reach):
+    """The pale inside of an arrow_tube: the same band, tapering to a point `reach` units into the
+    head, so the inside flows into the arrow instead of stopping in a flat cut."""
+    L, R = sides(c, widths)
+    tx, ty = tangents(c)[-1]
+    bx, by = c[-1]
+    return poly_d(L + [(bx + tx * reach, by + ty * reach)] + R[::-1])
 
 
 def inside(p, poly):
@@ -371,23 +449,43 @@ def ov_pole(side):
     return (side * (OV_C[0] + OV_RX * math.cos(a)), OV_C[1] + OV_RX * math.sin(a))
 
 
+def frond(x0, y0, ang, length, bw, curl, tw=1.05):
+    """One fimbria: a thin finger from the funnel rim, tapering from bw to a rounded tip tw wide and
+    bending sideways by `curl` (positive = toward the ovary)."""
+    ca, sa = math.cos(math.radians(ang)), math.sin(math.radians(ang))
+
+    def P(u, v):
+        return f"{x0 + u * ca - v * sa:.2f},{y0 + u * sa + v * ca:.2f}"
+    r = tw / 2
+    return (f"M{P(-1.5, -bw / 2)} Q{P(length * .55, -bw * .42 + curl * .55)} {P(length, curl - r)} "
+            f"A{r:.2f},{r:.2f} 0 0 1 {P(length, curl + r)} "
+            f"Q{P(length * .55, bw * .42 + curl * .55)} {P(-1.5, bw / 2)}Z")
+
+
+# fimbriae: (rim position, fan angle, length, base width, bend).  The fan leans toward the ovary
+# (positive angles) and the lengths differ, like a real fringe draping over the ovary.
+FRONDS = [(-8.7, -22, 8.2, 2.5, -0.5), (-6.5, -12, 11.6, 2.7, -0.2), (-4.3, -2, 9.4, 2.8, 0.4), (-2.1, 8, 13.6, 3.0, 0.8),
+          (0.1, 18, 10.4, 3.0, 1.0), (2.3, 28, 14.0, 2.9, 1.3), (4.5, 38, 9.6, 2.8, 1.2), (6.7, 48, 11.8, 2.6, 1.4),
+          (8.8, 58, 7.4, 2.4, 1.1)]
+
+
 def tube_shape():
+    """Fallopian tube (narrow near the uterus, widening outward) and, separately, its funnel end
+    (infundibulum) with the fimbriae, which are drawn later so the fringe drapes over the ovary."""
     c = resample(crs(TUBE, per=16), 1.5)
     n = len(c)
     w = [6.2 + 4.2 * (k / (n - 1)) ** 1.3 for k in range(n)]
-    o = [f'<path d="{ribbon(c, w)}" fill="{U_BASE}" stroke="{U_EDGE}" stroke-width="1.5" stroke-linejoin="round"/>']
-    # infundibulum: the trumpet end, then the finger-like fimbriae fanning over the ovary
+    tube = f'<path d="{ribbon(c, w)}" fill="{U_BASE}" stroke="{U_EDGE}" stroke-width="1.5" stroke-linejoin="round"/>'
     (ex, ey), (tx, ty) = c[-1], tangents(c)[-1]
-    ang = math.atan2(ty, tx)
-    o.append(f'<g transform="translate({ex:.1f},{ey:.1f}) rotate({math.degrees(ang):.1f})">'
-             f'<path d="M-4,-5.4 C2,-7 6,-10 8,-11 L8,11 C6,10 2,7 -4,5.4Z" fill="{U_BASE}" stroke="{U_EDGE}" stroke-width="1.4" '
-             'stroke-linejoin="round"/>')
-    for k in range(5):
-        y = -8.4 + k * 4.2
-        o.append(f'<rect x="6.5" y="{y - 2:.1f}" width="9.5" height="4" rx="2" fill="{U_BASE}" stroke="{U_EDGE}" '
-                 f'stroke-width="1.1" transform="rotate({(k - 2) * 9} 7 {y:.1f})"/>')
-    o.append("</g>")
-    return "".join(o)
+    f = [f'<g transform="translate({ex:.1f},{ey:.1f}) rotate({math.degrees(math.atan2(ty, tx)):.1f})">']
+    for k, (y, ang, ln, bw, curl) in enumerate(FRONDS):
+        f.append(f'<path d="{frond(4.6, y, ang, ln, bw, curl)}" fill="{"#E3929A" if k % 2 else U_BASE}" stroke="{U_EDGE}" '
+                 'stroke-width=".95" stroke-linejoin="round"/>')
+    f.append(f'<path d="M-2.5,-5.3 C1.2,-5.5 3.4,-7.7 5.6,-9.9 Q7,-0 5.6,9.9 C3.4,7.7 1.2,5.5 -2.5,5.3Z" fill="{U_BASE}" '
+             f'stroke="{U_EDGE}" stroke-width="1.3" stroke-linejoin="round"/>')
+    f.append(f'<path d="M5.2,-8.4 Q6.3,0 5.2,8.4" fill="none" stroke="#B9525C" stroke-width=".9" opacity=".7"/>')
+    f.append("</g>")
+    return tube, "".join(f)
 
 
 def ovary(rng):
@@ -407,7 +505,8 @@ def ovary(rng):
 def reproductive(UX, UY, US):
     """Uterus with both tubes and ovaries, mirror-symmetric about x = UX."""
     rng = random.Random(3)
-    right = (tube_shape()
+    tube, fimb = tube_shape()
+    right = (tube
              + f'<path d="M38,36 Q58,46 {OV_C[0] - OV_RX * .96:.1f},{OV_C[1] + 7:.1f}" fill="none" stroke="{U_EDGE}" '
                'stroke-width="6.2" stroke-linecap="round"/>'
              + f'<path d="M38,36 Q58,46 {OV_C[0] - OV_RX * .96:.1f},{OV_C[1] + 7:.1f}" fill="none" stroke="{U_BASE}" '
@@ -419,11 +518,12 @@ def reproductive(UX, UY, US):
     return (f'<g transform="translate({UX},{UY}) scale({US})">'
             f'<g>{right}</g><g transform="scale(-1,1)">{right}</g>{body}'
             f'<g>{ov}</g><g transform="scale(-1,1)">{ov}</g>'
+            f'<g>{fimb}</g><g transform="scale(-1,1)">{fimb}</g>'
             "</g>")
 
 
 # ================================================================== the diagram
-W_ART, H_ART = 760, 236
+W_ART, H_ART = 760, 242
 PX, PY, PS = 16, 98, 0.90           # pancreas group
 UX, UY, US = 566, 82, 0.94           # uterus group
 TY, TW, WALL = 28, 34, 5              # vessel trunk centre line, width, wall thickness
@@ -436,31 +536,49 @@ def art_pcos(t):
     o = [pc_defs()]
 
     # ---------------------------------------------------------- vessel geometry
-    tipR = (UX + ov_pole(1)[0] * US, UY + ov_pole(1)[1] * US)
-    tipL = (UX + ov_pole(-1)[0] * US, UY + ov_pole(-1)[1] * US)
+    # Each branch ends in an arrowhead aimed along the ovary's long axis.  Its tip sits 1.2 units inside
+    # the ovary outline (the ovary is drawn on top), so the arrow visibly touches the ovary.
     a = math.radians(OV_ROT)
-    inR = (-math.cos(a), -math.sin(a))          # direction into the right ovary along its long axis
-    inL = (math.cos(a), -math.sin(a))
-    HL = 14                                     # arrowhead length
-    baseR = (tipR[0] - inR[0] * HL, tipR[1] - inR[1] * HL)
-    baseL = (tipL[0] - inL[0] * HL, tipL[1] - inL[1] * HL)
-    trunk_pts = [(14, TY), (100, TY - 1), (200, TY + 1), (300, TY - 1), (400, TY), (500, TY), (600, TY - 1), (686, TY),
-                 (713, TY + 4), (725, TY + 17), (727, TY + 40), (726, TY + 60), (722, baseR[1] - 10),
-                 (baseR[0] + 8, baseR[1] - 2.2), baseR]
-    left_pts = [(378, TY), (397, TY + 5), (405, TY + 20), (406, TY + 42), (407, baseL[1] - 18), (411, baseL[1] - 7),
-                (417, baseL[1] - 1.6), baseL]
-    tc = resample(crs(trunk_pts, per=16), 2.0)
-    lc = resample(crs(left_pts, per=16), 2.0)
+    HL, HW, BACK = 19.0, 16.0, 2.5      # head length; half-width (head = 1.6 x the 20-unit vessel); barb sweep
+    ends = {}
+    for side in (1, -1):
+        d = (-side * math.cos(a), -math.sin(a))                     # into this ovary, along its long axis
+        oc = (UX + side * OV_C[0] * US, UY + OV_C[1] * US)
+        pole = (UX + ov_pole(side)[0] * US, UY + ov_pole(side)[1] * US)
+        ends[side] = (d, oc, (pole[0] - d[0] * (HL - 1.2), pole[1] - d[1] * (HL - 1.2)))
+    dR, ocR, baseR = ends[1]
+    dL, ocL, baseL = ends[-1]
+
+    # Centrelines are straight runs joined by true circular arcs (no spline wobble), solved backwards
+    # from each head: a straight run of S units into the base, an arc of radius R2 from heading straight
+    # down, a straight drop, and an arc of radius R1 off the horizontal trunk.
+    S, R1, R2, R3 = 14.0, 26.0, 18.0, 22.0
+
+    def branch(base, d, r_top, start_x):
+        hd = math.degrees(math.atan2(d[1], d[0]))
+        e = (base[0] - d[0] * S, base[1] - d[1] * S)
+        turn = 1 if d[0] < 0 else -1                 # right ovary: bend clockwise; left ovary: counter-clockwise
+        c2 = (e[0] - turn * R2 * math.sin(math.radians(hd)), e[1] + turn * R2 * math.cos(math.radians(hd)))
+        xv = c2[0] + turn * R2                       # the straight drop
+        c1 = (xv - r_top, TY + r_top)
+        assert c2[1] > c1[1] + 8, "no room for the vessel's straight drop"
+        return (line_pts((start_x, TY), (c1[0], TY)) + arc_pts(c1, r_top, 0, 90, 1)[1:]
+                + line_pts((xv, c1[1]), (xv, c2[1]))[1:] + arc_pts(c2, R2, 90, hd, turn)[1:] + line_pts(e, base)[1:])
+    wave = crs([(14, TY), (100, TY - 1), (200, TY + 1), (300, TY - 1), (400, TY), (500, TY), (600, TY - 1), (684, TY)], per=16)
+    tc = resample(wave[:-1] + branch(baseR, dR, R1, 684), 2.0)
+    lc = resample(branch(baseL, dL, R3, 352), 2.0)
+    # The head points along the tube's LAST direction; its tip is where that line meets the ovary
+    # outline, plus 1.2 units, so it always touches the ovary whatever the curve does.
+    tips = []
+    for c, oc, side in ((tc, ocR, 1), (lc, ocL, -1)):
+        t_ = tangents(c)[-1]
+        hit = ray_ellipse(c[-1], t_, oc, OV_RX * US, OV_RY * US, side * OV_ROT)
+        assert hit is not None and abs(hit + 1.2 - HL) < 3, "arrowhead does not reach the ovary"
+        tips.append((c[-1][0] + t_[0] * (hit + 1.2), c[-1][1] + t_[1] * (hit + 1.2)))
+    tipR, tipL = tips
     taper0 = next(i for i, p in enumerate(tc) if p[0] > 676)
     tw_ = [TW if i < taper0 else TW - (TW - 20) * min(1, (i - taper0) / 34) for i in range(len(tc))]
     lw_ = [20.0] * len(lc)
-
-    def head(tip, base, d):
-        nx, ny = -d[1], d[0]
-        hw = 12.5
-        return (f'<path d="M{tip[0]:.1f},{tip[1]:.1f} L{base[0] + nx * hw:.1f},{base[1] + ny * hw:.1f} '
-                f'L{base[0] - nx * hw:.1f},{base[1] - ny * hw:.1f}Z" fill="{V_WALL}" stroke="{V_OUT}" stroke-width="1.6" '
-                'stroke-linejoin="round"/>')
 
     # ---------------------------------------------------------- pancreas, then insulin rising into the blood
     o.append(f'<g transform="translate({PX},{PY}) scale({PS})">{duodenum()}{pancreas()}</g>')
@@ -472,16 +590,18 @@ def art_pcos(t):
                 o.append(insulin(x0 + (3.5 if k % 2 else -3.5), yy, 4.4))
 
     # ---------------------------------------------------------- vessel: outline, wall, inside
-    o.append(f'<path d="{ribbon(tc, [w + 2.4 for w in tw_])}" fill="{V_OUT}"/>')
-    o.append(f'<path d="{ribbon(lc, [w + 2.4 for w in lw_])}" fill="{V_OUT}"/>')
-    o.append(head(tipR, baseR, inR) + head(tipL, baseL, inL))
-    o.append(f'<path d="{ribbon(tc, tw_)}" fill="{V_WALL}"/>')
-    o.append(f'<path d="{ribbon(lc, lw_)}" fill="{V_WALL}"/>')
+    # Three layers, so the branch joins the trunk without a seam: every outline first (a 2.4-unit
+    # stroke around the one-piece tube + head shape), then every wall, then every inside.
+    shapes = [arrow_tube(tc, tw_, tipR, HW, BACK), arrow_tube(lc, lw_, tipL, HW, BACK)]
+    for s in shapes:
+        o.append(f'<path d="{s}" fill="{V_OUT}" stroke="{V_OUT}" stroke-width="2.4" stroke-linejoin="round"/>')
+    for s in shapes:
+        o.append(f'<path d="{s}" fill="{V_WALL}"/>')
     tl = [w - 2 * WALL for w in tw_]
     ll = [w - 2 * WALL for w in lw_]
-    o.append(f'<path d="{ribbon(tc[:-3], tl[:-3])}" fill="{V_LUM}"/>')
-    o.append(f'<path d="{ribbon(lc[:-3], ll[:-3])}" fill="{V_LUM}"/>')
-    o.append(f'<path d="{ribbon(tc[:-3], [x * .35 for x in tl[:-3]])}" fill="#FFFFFF" opacity=".35"/>')
+    o.append(f'<path d="{arrow_lumen(tc, tl, HL * .42)}" fill="{V_LUM}" stroke="{V_LUM}" stroke-width=".6" stroke-linejoin="round"/>')
+    o.append(f'<path d="{arrow_lumen(lc, ll, HL * .42)}" fill="{V_LUM}" stroke="{V_LUM}" stroke-width=".6" stroke-linejoin="round"/>')
+    o.append(f'<path d="{arrow_lumen(tc, [x * .35 for x in tl], HL * .2)}" fill="#FFFFFF" opacity=".35"/>')
     # cut end at the far left, so the vessel reads as a tube
     o.append(f'<ellipse cx="14" cy="{TY}" rx="5.4" ry="{TW / 2 + 1.2}" fill="{V_WALL}" stroke="{V_OUT}" stroke-width="1.3"/>'
              f'<ellipse cx="14" cy="{TY}" rx="3.2" ry="{TW / 2 - WALL}" fill="#E7A39B"/>')
@@ -534,18 +654,26 @@ def art_pcos(t):
     o.append(f'<clipPath id="pcZoom"><circle cx="{BX}" cy="{BY}" r="{BR}"/></clipPath>')
     o.append(f'<circle cx="{BX}" cy="{BY}" r="{BR + 2}" fill="#FFFFFF"/>')
     z = [f'<g clip-path="url(#pcZoom)"><rect x="{BX - BR}" y="{BY - BR}" width="{2 * BR}" height="{2 * BR}" fill="url(#pcLu)"/>']
-    zr = random.Random(29)
-    items = [10.5] * 3 + [7.4] * 9 + [7.6] * 12
-    zp = scatter(zr, items, (BX - BR + 2, BY - BR + 2, BX + BR - 2, BY + BR - 2),
-                 lambda x, y, r: math.dist((x, y), (BX, BY)) < BR - r - 2.5, pad=2.2)
-    for x, y, r in zp:
-        if r == 10.5:
-            z.append(red_cell(x, y, zr.uniform(-25, 25), 0.86))
-    for x, y, r in zp:
-        if r == 7.4:
-            z.append(insulin(x, y, 7.4))
-        elif r == 7.6:
-            z.append(glucose(x, y, 7.6))
+    # The close-up magnifies the vessel's mix: more sugar than insulin, both crowded, a few red cells
+    # (the vessel carries 16 sugars, 12 insulin, 6 red cells).  Every symbol asked for must be drawn.
+    kinds = ["r"] * 3 + ["g"] * 10 + ["i"] * 8
+    size = {"r": 9.2, "g": 6.3, "i": 6.0}
+    items = [size[k] for k in kinds]
+    for seed in range(29, 400):
+        zr = random.Random(seed)
+        zp = scatter(zr, items, (BX - BR + 2, BY - BR + 2, BX + BR - 2, BY + BR - 2),
+                     lambda x, y, r: math.dist((x, y), (BX, BY)) < BR - r - 2.5, pad=2.0)
+        if len(zp) == len(items):
+            break
+    assert len(zp) == len(items), f"close-up: placed {len(zp)} of {len(items)} symbols"
+    for (x, y, r), k in zip(zp, kinds):
+        if k == "r":
+            z.append(red_cell(x, y, zr.uniform(-25, 25), 0.72))
+    for (x, y, r), k in zip(zp, kinds):
+        if k == "i":
+            z.append(insulin(x, y, size["i"]))
+        elif k == "g":
+            z.append(glucose(x, y, size["g"]))
     z.append("</g>")
     o.append("".join(z))
     o.append(f'<circle cx="{BX}" cy="{BY}" r="{BR}" fill="none" stroke="#4F5A61" stroke-width="2"/>')
@@ -560,7 +688,8 @@ def art_pcos(t):
 
     # ---------------------------------------------------------- labels and step markers
     o.append(T(214, 162, "Pancreas", 11.5, 800, "#7A4318", "middle"))
-    o.append(T(214, 204, "small intestine", 10, 600, "#8A5A50", "middle", italic=True))
+    # under the C-loop of the duodenum, well away from the zoom caption (no leader needed)
+    o.append(T(PX + 80 * PS, H_ART - 8, "small intestine", 10, 600, "#8A5A50", "middle", italic=True))
     for side in (-1, 1):
         o.append(T(UX + side * 92 * US, UY + 80 * US, "Ovary", 11, 800, "#8A2F3A", "middle"))
     o.append(T(UX, UY + 134 * US + 15, "Uterus", 11, 800, "#8A2F3A", "middle"))
@@ -576,30 +705,58 @@ def sw(markup, w=18, h=16, vb="-9 -8 18 16"):
     return f'<svg width="{w}" height="{h}" viewBox="{vb}" aria-hidden="true">{markup}</svg>'
 
 
+def pan_mini():
+    """The drawing's own pancreas outline (P_OUT) at key size: tan septa fill, lighter lobules, same edge."""
+    s, cx, cy = 0.088, 139, 61
+    out = [((x - cx) * s, (y - cy) * s) for x, y in P_OUT]
+    smooth = crs(out, closed=True, per=10)
+    dots = []
+    for j in range(-3, 4):
+        for i in range(-8, 9):
+            x, y = i * 2.15 + (1.07 if j % 2 else 0), j * 1.9
+            if inside((x, y), smooth) and min(math.dist((x, y), q) for q in smooth) > 1.05:
+                dots.append(f'<circle cx="{x:.2f}" cy="{y:.2f}" r=".82" fill="{P_LOBES[(i + j) % len(P_LOBES)]}"/>')
+    return (f'<path d="{cr_d(out, True)}" fill="{P_SEPTA}"/>{"".join(dots)}'
+            f'<path d="{cr_d(out, True)}" fill="none" stroke="{P_EDGE}" stroke-width=".9" stroke-linejoin="round"/>')
+
+
+def tube_mini():
+    """A Fallopian tube at key size: the tube widening outward to its funnel and fringe."""
+    fr = "".join(f'<path d="{frond(1.2, y, ang, ln, 1.05, curl, .45)}" fill="{U_BASE}" stroke="{U_EDGE}" stroke-width=".45"/>'
+                 for y, ang, ln, curl in ((-2.4, -16, 3.2, -.2), (-.9, 6, 4.2, .2), (.7, 26, 3.8, .4), (2.2, 46, 3.0, .4)))
+    return (f'<path d="M-10.5,5 C-7,-3 -1,-5 4.2,-1.8" fill="none" stroke="{U_EDGE}" stroke-width="4.2" stroke-linecap="round"/>'
+            f'<path d="M-10.5,5 C-7,-3 -1,-5 4.2,-1.8" fill="none" stroke="{U_BASE}" stroke-width="2.5" stroke-linecap="round"/>'
+            f'<g transform="translate(4.2,-1.8) rotate(32)">{fr}'
+            f'<path d="M-1.2,-1.9 C.2,-2 1,-2.6 1.6,-3.3 Q2,0 1.6,3.3 C1,2.6 .2,2 -1.2,1.9Z" fill="{U_BASE}" stroke="{U_EDGE}" '
+            'stroke-width=".6" stroke-linejoin="round"/></g>')
+
+
 def key():
-    pan_mini = ('<g transform="scale(.86)"><path d="M-9,-1 C-9,-5 -5,-5 -3,-4 C1,-4 5,-6 9,-6 C11,-6 11,-3 9,-2 C5,0 1,1 -2,2 '
-                f'C-3,5 -6,6 -8,4 C-10,3 -10,1 -9,-1Z" fill="#F4C796" stroke="{P_EDGE}" stroke-width="1.2"/></g>')
     ves_mini = (f'<rect x="-8.5" y="-5.5" width="17" height="11" rx="2" fill="{V_WALL}" stroke="{V_OUT}" stroke-width="1"/>'
                 f'<rect x="-8.5" y="-2.8" width="17" height="5.6" fill="{V_LUM}"/>')
-    # Row-major in 4 columns; the two longest entries share a column so the key stays 2 rows.
+    # Column-major, 2 rows: what is in the blood, then the blood itself, then the two organs' parts
+    # that need words, then the ovary parts.  Long entries share a column with short ones.
+    # Both entries in a column get the same swatch width, so their words start on one line.
+    W2, VB2 = 24, "-12 -8 24 16"
     items = [
-        (glucose(0, 0, 6.2), "Glucose", "sugar in the blood"),
-        (ves_mini, "Blood vessel", ""),
-        (follicle(0, 0, 5.6), "Follicle", "the &ldquo;cysts&rdquo;: egg sacs that stopped growing"),
-        (pan_mini, "Pancreas", "makes insulin"),
-        (insulin(0, 0, 6), "Insulin", "lets sugar into cells"),
-        (red_cell(0, 0, 0, .64), "Red blood cell", ""),
-        (androgen(0, 0, 6.4), "Androgens", "male-type hormones"),
+        (sw(glucose(0, 0, 6.2)), "Glucose", "sugar in the blood"),
+        (sw(insulin(0, 0, 6)), "Insulin", "lets sugar into cells"),
+        (sw(red_cell(0, 0, 0, .64)), "Red blood cell", ""),
+        (sw(ves_mini), "Blood vessel", ""),
+        (sw(pan_mini(), W2, 16, VB2), "Pancreas", "makes insulin"),
+        (sw(androgen(0, 0, 6.4), W2, 16, VB2), "Androgens", "male-type hormones"),
+        (sw(follicle(0, 0, 5.6), W2, 16, VB2), "Follicle", "the &ldquo;cysts&rdquo;: stalled egg sacs"),
+        (sw(tube_mini(), W2, 16, VB2), "Fallopian tube", "carries eggs to the uterus"),
     ]
-    cells = "".join(f'<span>{sw(m)}<b>{a}</b>{(" " + b) if b else ""}</span>' for m, a, b in items)
+    cells = "".join(f'<span>{m}<b>{a}</b>{(" " + b) if b else ""}</span>' for m, a, b in items)
     return f'<div class="pc-key"><em>KEY</em>{cells}</div>'
 
 
 def steps():
     st = [("The pancreas makes insulin.", "Insulin moves sugar out of the blood and into your cells for fuel."),
           ("Cells stop listening to insulin.", "Sugar stays in the blood, so the pancreas pumps out even more."),
-          ("Extra insulin reaches the ovaries.", "They make extra androgens. Eggs stop ripening and many small "
-                                                 "follicles (the &ldquo;cysts&rdquo;) are left behind.")]
+          ("Extra insulin reaches the ovaries.", "They make extra androgens, and eggs stay stuck in small "
+                                                 "follicles (the &ldquo;cysts&rdquo;).")]
     return '<div class="pc-steps">' + "".join(
         f'<div><span class="pc-n">{i + 1}</span><p><b>{a}</b> {b}</p></div>' for i, (a, b) in enumerate(st)) + "</div>"
 
@@ -609,18 +766,42 @@ def ic(body, size="0.36in", sw_=3):
             f'stroke-width="{sw_}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{body}</svg>')
 
 
-# Extra facial or body hair: a woman's profile (hair in a bun) with a few hairs on the chin.
+# Extra facial or body hair: a woman's profile (hair in a bun) with six long hairs along the upper
+# lip, chin and jaw.
 FACE_HAIR = ('<path d="M42 57v-9c5-3 8-8 8-15 0-11-8-19-18-19-8.5 0-14.5 5.5-16 13l-3.5 8.5 4 1.2v4.3c0 3 2.2 5 5 5h3.5v11"/>'
              '<path d="M24.5 15.5c5-3 13-3.5 19 1.5"/><circle cx="48" cy="15.5" r="5.5"/>'
-             '<path d="M18.6 50.5l-1.6 3.6M22.4 52l-.8 3.8M26 52.2v3.8" stroke-width="2.6"/>')
-# Thinning scalp hair: front view, long hair, the parting gone sparse (dotted).
-SCALP_THIN = ('<path d="M22 33c0 11 4.5 19 10 19s10-8 10-19"/>'
-              '<path d="M28.5 10C20.5 11.5 15 19 15 31v23M35.5 10C43.5 11.5 49 19 49 31v23"/>'
-              '<path d="M28.5 10c-1.5 7-4 13-8.5 17M35.5 10c1.5 7 4 13 8.5 17"/>'
-              '<path d="M32 12.5v2.5M32 19v2.5M32 25.5V27" stroke-width="2.2"/>')
+             '<path d="M15.4 37.8l-3.6 2.4M15.6 40.2l-3.4 2.6M16.4 42.8l-3.6 3.4M18.2 45l-2.4 4.6M21 46.6l-1 5.2M23.4 47l.2 4"'
+             ' stroke-width="2.3"/>')
+# Thinning scalp hair: the head seen from above (ears at the sides, nose at the front).  Hair is a
+# soft mass on both sides; the part has widened into a pale wedge, with two lone strands left in it.
+SCALP_THIN = ('<path d="M32 11c-1.6 0-3 .1-4.4.4C19.6 13.2 14 21.6 14 32.4c0 6.4 2 12 5.4 15.6 2-1.8 5.2-3 8.6-3.4'
+              'C28.8 40 28 35 27.8 30.6 27.6 23.6 29.4 16 32 11z" fill="currentColor" stroke="none" opacity=".5"/>'
+              '<path d="M32 11c1.6 0 3 .1 4.4.4C44.4 13.2 50 21.6 50 32.4c0 6.4-2 12-5.4 15.6-2-1.8-5.2-3-8.6-3.4'
+              'C35.2 40 36 35 36.2 30.6 36.4 23.6 34.6 16 32 11z" fill="currentColor" stroke="none" opacity=".5"/>'
+              '<path d="M32 10c-10 0-18 9.6-18 22.6S22 56 32 56s18-10.4 18-23.4S42 10 32 10z"/>'
+              '<path d="M14.2 29c-2.6.8-2.6 7.4 0 8.4M49.8 29c2.6.8 2.6 7.4 0 8.4"/><path d="M29.5 56.6c1 1.8 4 1.8 5 0"/>'
+              '<path d="M19.6 47.8c3.8-3.2 8.2-3.8 12.4-3.8s8.6.6 12.4 3.8"/>'
+              '<path d="M31.4 20l1.4 4.6M32.8 30.5l-1.2 4.4" stroke-width="2"/>')
+# Dark skin patches (acanthosis nigricans): head and shoulders from behind (hair bun), with a dark,
+# blotchy patch across the back of the neck (no beads or dots, so it cannot read as a necklace).
+DARK_PATCH = ('<path d="M24.6 29.4C27 28.6 29.2 30.2 32 29.8 34.8 29.4 37 28.6 39.4 29.6 40.6 32 39.8 34.6 40.6 37.2 38 38.6 '
+              '35.4 37.6 32.6 38.4 29.8 39 27 37.8 23.8 38 24.6 35.2 23.6 32.2 24.6 29.4Z" fill="currentColor" stroke="none" '
+              'opacity=".6"/>'
+              '<circle cx="32" cy="18.5" r="11"/><circle cx="32" cy="6.2" r="3.6"/>'
+              '<path d="M26.5 28.5v8M37.5 28.5v8"/>'
+              '<path d="M26.5 36.5c-8 .8-14 4.6-16 12.5v8M37.5 36.5c8 .8 14 4.6 16 12.5v8"/>')
+# Trouble getting pregnant: a pregnant woman in profile, hand on the belly.
+PREGNANT = ('<circle cx="29" cy="10.5" r="5.8"/>'
+            '<path d="M26.5 18c-3 7-3.6 15-1.6 22 1.4 5 1.4 11 .6 18"/>'
+            '<path d="M32 18c2.2 3 3 6.6 2.4 10.4 8.4 1.8 13 7.8 12.4 14.2-.6 6.4-6.2 9.4-13.4 9.2l.8 6.2"/>'
+            '<path d="M28 23c.6 6 3.4 11.4 8.6 13.6"/>')
 
 
 def ring():
+    # Signs a reader can notice herself.  [OWH] Office on Women's Health PCOS fact sheet and NIH NICHD
+    # "What are the symptoms of PCOS?": irregular periods, hirsutism, acne, thinning scalp hair, weight
+    # gain, darkened skin along neck creases and body folds (acanthosis nigricans, a sign of insulin
+    # resistance), skin tags, infertility; [GUIDE23] adds anxiety and depression.
     items = [(icon("calendar", "0.34in", sw=3), "Irregular or<br>missed periods"),
              (icon("acne", "0.34in", sw=3), "Acne"),
              (ic(FACE_HAIR, "0.36in"), "Extra facial or<br>body hair"),
@@ -628,8 +809,8 @@ def ring():
              (icon("waist", "0.34in", sw=3), "Weight gain<br>at the waist"),
              (icon("battery", "0.34in", sw=3), "Fatigue"),
              (icon("brain", "0.34in", sw=3), "Mood changes,<br>anxiety"),
-             (icon("baby", "0.34in", sw=3), "Trouble getting<br>pregnant"),
-             (icon("flame", "0.34in", sw=3), "Low-grade<br>inflammation"),
+             (ic(PREGNANT, "0.36in"), "Trouble getting<br>pregnant"),
+             (ic(DARK_PATCH, "0.36in"), "Dark skin patches<br>(neck, armpits)"),
              (icon("meter", "0.34in", sw=3), "Blood sugar<br>swings")]
     cells = "".join(f'<div class="pc-rg"><div class="pc-c">{s}</div><span>{lab}</span></div>' for s, lab in items)
     return f'<div class="pc-head">SIGNS AND SYMPTOMS</div><div class="pc-ring">{cells}</div>'
@@ -638,20 +819,30 @@ def ring():
 def facts():
     return ('<div class="pc-facts">'
             '<div class="pc-fbox"><h4>PCOS facts</h4><p>'
-            # [WHO23] 10-13% of women of reproductive age (Rotterdam 11.9% in [MARCH10]) -> "up to 1 in 8";
+            # [WHO23] 10-13% of women of reproductive age (Rotterdam 11.9% in [MARCH10]) -> "about 1 in 8"
+            # (12.5%, inside the range; "up to 1 in 8" would understate the 13% top);
             # [WHO23] up to 70% undiagnosed ([MARCH10]: 68-69% had no prior diagnosis) -> "up to 7 in 10".
-            'Up to <b>1 in 8</b> women of childbearing age has PCOS, and up to <b>7 in 10</b> of them have never been '
-            'diagnosed. It happens at every body size, even at a healthy weight. '
-            # [GUIDE23] adults: 2 of 3 features; [PENA25] teens: irregular cycles AND high androgens, no ultrasound.
+            'About <b>1 in 8</b> women of childbearing age has PCOS, and up to <b>7 in 10</b> of them have never been '
+            'diagnosed. '
+            # [GUIDE23] adults: 2 of 3 = irregular cycles; clinical or biochemical high androgens; polycystic ovaries
+            # on ultrasound OR a high AMH blood test; other causes excluded.  [PENA25] teens: irregular cycles AND
+            # high androgens (no ultrasound, no AMH), so the 2-of-3 line says "Adults".
             'Adults are diagnosed with <b>2 of 3</b>: irregular periods, high androgens (a blood test or signs like extra '
-            'hair) or many follicles on ultrasound. You can have PCOS without &ldquo;cysts.&rdquo;</p></div>'
+            'hair) or many follicles on ultrasound (or a high AMH blood test), once other causes are ruled out. '
+            'You can have PCOS without&nbsp;&ldquo;cysts.&rdquo;</p>'
+            # [GUIDE23] broader features: metabolic risk (type 2 diabetes), cardiovascular disease, sleep apnoea, mood.
+            '<p class="pc-why"><b>Why it matters:</b> PCOS raises the risk of type 2 diabetes, heart disease and sleep apnea '
+            '(breathing pauses during sleep), so ask {who} about checking your blood sugar.</p></div>'
             '<div class="pc-fbox"><h4>Risk factors</h4><ul>'
+            # [GUIDE23] strong family clustering; first-degree relatives with PCOS or type 2 diabetes.
             '<li><b>Runs in families:</b> a mother or sister with PCOS or type 2 diabetes raises your risk.</li>'
-            '<li><b>You can change:</b> a high-sugar, low-nutrient diet, sitting most of the day, weight gain at the '
-            'waist, poor sleep and chronic stress, hormone-disrupting chemicals.</li>'
-            # [GUIDE23] broader features: metabolic risk, cardiovascular disease, sleep apnoea, mood.
-            '<li><b>Why it matters:</b> PCOS raises the risk of type 2 diabetes, heart disease and sleep apnea, so ask '
-            '{who} about checking your blood sugar.</li></ul></div></div>')
+            # [STEPTO13] insulin resistance in 75% of LEAN women with PCOS; [GUIDE23] PCOS occurs across all BMIs.
+            '<li><b>Not just weight:</b> PCOS happens at every body size, even at a healthy weight.</li>'
+            # [GUIDE23] lifestyle (diet, activity, sleep, stress) worsens or eases PCOS features; it is not shown to
+            # cause PCOS.  Hormone-disrupting chemicals (BPA in some plastics, phthalates in fragrances): higher levels
+            # go with higher androgens in women with PCOS in observational studies only, hence "can make it worse".
+            '<li><b>Can make it worse (you can change):</b> a high-sugar, low-nutrient diet, sitting most of the day, '
+            'poor sleep, chronic stress and hormone-disrupting chemicals (in some plastics and fragrances).</li></ul></div></div>')
 
 
 def front(t, ed):
@@ -666,7 +857,7 @@ CSS = r"""
   display:flex;align-items:center;justify-content:center;margin-top:1px}
 .pcf .pc-steps p{margin:0;font-size:8.2pt;line-height:1.3;color:#2B3236}
 .pcf .pc-steps b{color:var(--deep)}
-.pcf .pc-key{display:grid;grid-template-columns:auto auto auto auto auto;justify-content:space-between;align-items:center;
+.pcf .pc-key{display:grid;grid-template-rows:auto auto;grid-auto-flow:column;justify-content:space-between;align-items:center;
   gap:3px 8px;margin-top:0.07in;padding:5px 10px 5px 12px;border:1px solid #D9DEE2;border-radius:8px;background:#FFFFFF;font-size:7.6pt;
   line-height:1.2;color:#3A4247}
 .pcf .pc-key em{grid-row:span 2;font:800 7.4pt Inter,sans-serif;letter-spacing:.14em;color:#2B3236;font-style:normal}
@@ -679,13 +870,17 @@ CSS = r"""
 .pcf .pc-c{width:0.55in;height:0.55in;border-radius:50%;background:#F1E7E2;display:flex;align-items:center;justify-content:center;
   color:#8A5A52;box-shadow:0 0 0 2px #fff,0 0 0 3px #E8D8D1}
 .pcf .pc-rg span{font-size:7.8pt;line-height:1.2;margin-top:3px;color:#3A4247}
-.pcf .pc-facts{display:grid;grid-template-columns:1fr 1fr;gap:0.14in;margin-top:0.08in}
+.pcf .pc-facts{display:grid;grid-template-columns:1.5fr 1fr;gap:0.14in;margin-top:0.08in}
 .pcf .pc-fbox h4{margin:0 0 4px;background:var(--c1);color:#fff;font:800 8.2pt Inter,sans-serif;letter-spacing:.08em;
   text-transform:uppercase;padding:3px 10px;border-radius:3px}
 .pcf .pc-fbox p,.pcf .pc-fbox li{font-size:8.2pt;line-height:1.33;margin:0;color:#2B3236}
+.pcf .pc-fbox p.pc-why{margin-top:4px}
 .pcf .pc-fbox ul{margin:0;padding-left:13px}
 .pcf .pc-fbox li{margin-bottom:1px}
 .pcf .pc-fbox b{color:var(--deep)}
+/* Back page, this sheet only (keyed to the Myo-Inositol Complex photo, which no other sheet uses):
+   keep each count with its unit in "Your daily rhythm", so "3 capsules" never splits across lines. */
+.sheet.back:has(img[src$="nd-inositol.png"]) .slot li em{white-space:nowrap}
 """
 
 SHEET = {
@@ -693,11 +888,11 @@ SHEET = {
     "order": 6,
     "title": "Polycystic Ovary Syndrome", "sub": "PCOS",
     # [STEPTO13] insulin resistance in 75% of lean and 95% of overweight women with PCOS -> "most women".
-    "intro": ("PCOS is a common hormone condition. The ovaries make more <b>androgens</b> (male-type hormones, such as "
-              "testosterone, that women normally make in small amounts) than usual. That can upset periods, ovulation and "
-              "fertility, and it shows up in skin, hair, weight and mood. Genes play a part, but in most women with PCOS "
-              "<b>insulin resistance</b> helps drive it, which is why food, movement, sleep and stress change how PCOS "
-              "behaves."),
+    "intro": ("PCOS is a common hormone condition. The ovaries make more <b>androgens</b> (male-type hormones such as "
+              "testosterone; women normally make a little) than usual. That can upset periods, ovulation (releasing an egg) "
+              "and fertility, and it shows up in skin, hair, weight and mood. Genes play a part, but in most women with PCOS "
+              "<b>insulin resistance</b> (cells stop answering insulin) helps drive it. That is why food, movement, sleep and "
+              "stress change how PCOS behaves."),
     "front": front,
     "css": CSS,
     # ---- back: kept exactly as the first draft (sheets.py) until the product pass

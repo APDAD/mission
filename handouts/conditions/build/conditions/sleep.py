@@ -4,35 +4,46 @@ Self-contained sheet module (no legacy / sheets.py / art.py drawing code), new o
 
 FRONT, top to bottom
   1. "Your brain's clock": a side view of the head, cut down the middle so the deep midline parts
-     show (cerebrum with the corpus callosum and thalamus, brainstem, cerebellum).  Daylight enters
-     the eye, a nerve signal runs along the optic nerve to the master clock (SCN, sitting just
-     above the optic chiasm), the clock signals the pineal gland, and the pineal gland releases
-     melatonin into the blood.  Beside it, a 24-hour dial: melatonin (navy) rises in the evening
-     and peaks in the small hours; cortisol (gold) climbs before dawn and peaks after waking.
+     show (cerebrum with the corpus callosum and thalamus, brainstem, cerebellum).  BY DAY (sun)
+     daylight enters the eye and a nerve signal runs along the optic nerve to the master clock
+     (SCN, just above the optic chiasm), which keeps melatonin off; AT NIGHT (moon) the clock
+     signals the pineal gland and the pineal gland releases melatonin into the blood.  The single
+     frame is labelled "by day" / "at night" so it never reads as "light makes melatonin".  Beside
+     it, a 24-hour dial: melatonin (navy) rises in the evening and peaks in the small hours;
+     cortisol (gold) climbs before dawn and peaks after waking; the outer ring (yellow day, navy
+     night) is named in the card.
   2. "One night of sleep": a sleep-stage strip (awake, REM, light, deep) for a typical adult
      night of about 5 cycles, with three plain-language notes.  One KEY names every symbol in
      both pictures.
   3. "What can throw your clock off": 8 risk-factor icons.
   4. "Know your sleep": hours needed by age, the 3-part insomnia check, and the STOP-Bang sleep
-     apnea check (tick boxes, "3 or more: ask about a sleep test").
-BACK: "Reset your sleep clock" (CBT-I habits by morning / day / night) and 5 NutriDyn products.
+     apnea check (tick boxes, "3 or more: ask your doctor about a sleep test").  The test is routed
+     to the doctor in both editions: a pharmacist can go over the check but cannot order the study.
+BACK: "Reset your sleep clock" (CBT-I habits by morning / day / night, with sleep drive explained) and
+5 NutriDyn products: GoodNight (start here), Stress Essentials Calm, Mag Calm Pro, Magnesium Glycinate,
+Stress Essentials Cortisol Pro (facts and sources in products.d/sleep.json).
 
 Every SVG id starts with "slp-" and every CSS class with "slp-", so nothing collides with other
 sheets in the all-sheets bundle.  SVG text is never below 10 units (7.3 pt printed; the viewBox is
-760 wide and prints 7.66 in wide).
+760 wide and prints 7.66 in wide).  The back page carries an empty <i class="slp-bk"> in its band
+title so this module's back-page CSS can be scoped with .sheet.back:has(.slp-bk) (the build puts no
+sheet class on the back page).
 
 SOURCES (each number on the page carries one of these tags in a comment)
-  [CDC16]     Liu Y et al. Prevalence of healthy sleep duration among adults, United States, 2014.
-              MMWR 2016;65:137-141. PMID 26890214 (65.2% sleep 7+ h; "more than one third" < 7 h)
+  [CDCFS]     CDC FastStats: Sleep in Adults (BRFSS 2022; seen through web search, cdc.gov is not
+              reachable from the build machine): short sleep (< 7 h) "stayed the same from 2013 to
+              2022"; 2022 state range 30% (VT) to 46% (HI).  National 2022 weighted prevalence 36.1%
+              (UNMC analysis of BRFSS 2022).  Earlier anchor: Liu Y et al. MMWR 2016;65:137, PMID
+              26890214 (2014 BRFSS, 34.8% < 7 h).  So "more than 1 in 3" holds.
   [CDCNEED]   CDC, About Sleep: How much sleep do I need? (18-60 y: 7 or more h; 61-64: 7-9 h;
               65+: 7-8 h), built on the AASM/SRS consensus, Watson NF et al. Sleep 2015;38:843.
               PMID 26039963
   [OHAYON02]  Ohayon MM. Epidemiology of insomnia. Sleep Med Rev 2002;6:97-111. PMID 12531146
               (about 1/3 have insomnia symptoms; 9-15% with daytime consequences)
-  [ICSD3]     AASM International Classification of Sleep Disorders, 3rd ed.; Sateia MJ, Chest
-              2014;146:1387. PMID 25367475 (chronic insomnia: trouble falling or staying asleep or
-              waking too early, despite the chance to sleep, with daytime effects, 3+ nights a week
-              for 3+ months)
+  [ICSD3TR]   AASM International Classification of Sleep Disorders, 3rd ed., text revision
+              (ICSD-3-TR, 2023), same chronic-insomnia criteria as ICSD-3 (Sateia MJ, Chest
+              2014;146:1387, PMID 25367475): trouble falling or staying asleep or waking too early,
+              despite the chance to sleep, with daytime effects, 3+ nights a week for 3+ months
   [ACP16]     Qaseem A et al. Ann Intern Med 2016;165:125. PMID 27136449 (CBT-I is the initial
               treatment for chronic insomnia, strong recommendation)
   [AASM21]    Edinger JD et al. J Clin Sleep Med 2021;17:255. PMID 33164742 (multicomponent CBT-I,
@@ -71,8 +82,14 @@ SOURCES (each number on the page carries one of these tags in a comment)
   [BOYER05]   Boyer EW, Shannon M. The serotonin syndrome. N Engl J Med 2005;352:1112. PMID 15784664
               (L-tryptophan is among the drugs linked with serotonin syndrome).
   [ODSMG]     NIH Office of Dietary Supplements, Magnesium fact sheet (upper limit 350 mg/day from
-              supplements; separate from tetracycline and quinolone antibiotics, bisphosphonates;
-              kidney disease raises the risk of too much).
+              supplements, set because of diarrhea; separate from tetracycline and quinolone
+              antibiotics, bisphosphonates and thyroid pills; kidney disease raises the risk of too
+              much).
+  [BORBELY82] Borbely AA. A two process model of sleep regulation. Hum Neurobiol 1982;1:195,
+              PMID 7185792 (sleep pressure, "sleep drive", builds with time awake and is spent by
+              sleep, naps included); applied in CBT-I sleep restriction [AASM21] (fixed wake time,
+              no long naps).
+  [LABELS]    NutriDyn sell sheets and the products DB, cited per product in products.d/sleep.json.
 """
 import math
 import os
@@ -124,8 +141,10 @@ SKIN, SKIN_EDGE = "#F6E2D4", "#D7B49F"
 BRAIN, BRAIN_EDGE, SULCUS = "#E9E4F2", "#A69EBF", "#C4BCD9"
 STEM, CBL, CBL_LINE = "#DDD6EA", "#DAD3E9", "#B5ACCF"
 THAL, CALLOSUM = "#D6CDE6", "#F7F4FB"
-NERVE, NERVE_EDGE = "#F3E2A6", "#C7A94F"
-PIT, PIT_EDGE = "#D3CAE4", "#A39AC0"
+# optic nerve: a neutral nerve tone, NOT the daylight yellow (a yellow nerve read as light travelling
+# through the head).  No pituitary is drawn: an unlabelled lavender blob under the clock only invited
+# confusion with the SCN.
+NERVE, NERVE_EDGE = "#EDE4D3", "#B3A285"
 PINE, PINE_EDGE = "#E59A50", "#9C571C"
 
 
@@ -260,9 +279,6 @@ def _head_local(uid):
     o.append(f'<path d="M240,155.5 C226,153 214,150.5 203,148.5 L203,153.5 C214,155.5 226,158.5 240,161.5 Z" '
              f'fill="{NERVE}" stroke="{NERVE_EDGE}" stroke-width="1"/>')
     o.append(f'<ellipse cx="{CHIASM[0]}" cy="{CHIASM[1]}" rx="5.2" ry="3.6" fill="{NERVE}" stroke="{NERVE_EDGE}" stroke-width="1"/>')
-    # pituitary on its stalk, just behind and below the chiasm
-    o.append(f'<path d="M193,153 C193,157 194,159 195,161" stroke="{PIT_EDGE}" stroke-width="1.6" fill="none"/>'
-             f'<ellipse cx="195.5" cy="165.5" rx="6.2" ry="5" fill="{PIT}" stroke="{PIT_EDGE}" stroke-width="1"/>')
     # the eye (eyeball, iris and pupil seen from the side, upper and lower lids)
     ex, ey = EYE_C
     o.append(f'<circle cx="{ex}" cy="{ey}" r="{EYE_R}" fill="url(#{uid}eye)" stroke="#AEB6BE" stroke-width="1.2"/>'
@@ -434,8 +450,8 @@ def marker(x, y, n, r=8.4, fill="#FFFFFF", ink=INK):
             + T(_f(x), _f(y + 3.8), str(n), 10.8, 800, ink, "middle"))
 
 
-def step_dot(x, y, n, fill):
-    return (f'<circle cx="{_f(x)}" cy="{_f(y - 3.9)}" r="7.4" fill="{fill}"/>'
+def step_dot(x, y, n, fill, r=7.0):
+    return (f'<circle cx="{_f(x)}" cy="{_f(y - 3.9)}" r="{r}" fill="{fill}"/>'
             + T(_f(x), _f(y), str(n), 10.2, 800, "#FFFFFF", "middle"))
 
 
@@ -452,13 +468,16 @@ def card(x, y, w, h, title, sub, uid, c1):
 # ============================================================== picture 1: clock
 W = 760
 LW, RX = 398, 410            # left card width, right card x
-P1H = 310                    # card height
+P1H = 314                    # card height (the 3-line step strip needs about 4.6 units clear top and bottom)
 ART_B = 258                  # bottom of the drawing area; the step strip sits below
+STEP_Y0, STEP_DY, STEP_R = 15.5, 15.8, 7.0   # strip baselines ART_B + 15.5 + i * 15.8; dot radius
 
 
 def art_clock(t):
     c1 = t["c1"]
-    o = [card(0, 0, LW, P1H, "YOUR BRAIN'S CLOCK", "light in, melatonin out", "slp-c1", c1),
+    # The picture is ONE frame, so the words carry the timing: light acts BY DAY (it switches melatonin
+    # off and sets the clock), melatonin flows AT NIGHT [ZISAPEL18].  Sun = "by day", moon = "at night".
+    o = [card(0, 0, LW, P1H, "YOUR BRAIN'S CLOCK", "light by day, melatonin by night", "slp-c1", c1),
          card(RX, 0, W - RX, P1H, "ONE DAY, TWO SIGNALS", "your 24-hour rhythm", "slp-c2", c1)]
 
     # ---------------- left: the head
@@ -487,6 +506,7 @@ def art_clock(t):
         q = (cornea[0] + nx * off * 0.22 - ux * 6, cornea[1] + ny * off * 0.22 - uy * 6)
         o.append(f'<path d="M{_f(p[0])},{_f(p[1])} L{_f(q[0])},{_f(q[1])}" stroke="#FFFFFF" stroke-width="1" opacity=".7"/>')
     o.append(_sun(*sun, r=10.5))
+    o.append(T(sun[0], 60, "by day", 10.4, 700, INK2, "middle", italic=True))
     # nerve signals: eye -> along the optic nerve -> SCN, then SCN -> pineal (under the thalamus)
     back_eye = m((EYE_C[0] - 11, EYE_C[1] + 1))
     o.append(signal_arrow(back_eye, ((back_eye[0] + chi[0]) / 2, chi[1] + 3.5), (scn[0] + 4.2, scn[1] + 2.4), sw=1.8, head=5.6))
@@ -497,21 +517,33 @@ def art_clock(t):
     for k, (dx, dy) in enumerate(trail):
         r = 2.9 if k < 2 else 2.6
         o.append(f'<circle cx="{_f(pin[0] + dx)}" cy="{_f(pin[1] + dy)}" r="{r}" fill="{MEL}" stroke="#FFFFFF" stroke-width=".7"/>')
-    # labels in clear space, with leader lines
-    o.append(marker(336, 124, 1) + T(348, 128.2, "Daylight", 11.2, 800, INK))
-    lx, ly = 300, 206
-    o.append(f'<path d="M{lx - 4},{ly - 8} L{_f(scn[0] + 1.2)},{_f(scn[1] + 5.6)}" stroke="#7A858C" stroke-width="1.1"/>'
-             f'<circle cx="{_f(scn[0] + 1.2)}" cy="{_f(scn[1] + 5.6)}" r="1.6" fill="#7A858C"/>')
-    o.append(marker(lx + 6, ly - 2, 2) + T(lx + 18, ly + 2, "Master clock", 11.2, 800, INK)
-             + T(lx + 18, ly + 16, "(SCN)", 10.6, 600, INK2))
+    # labels in clear space, with leader lines.  "Daylight" sits 9.7 units inside the card edge and its
+    # marker about 5 units under the beam.
+    o.append(marker(330, 127, 1) + T(342, 131.2, "Daylight", 11.2, 800, INK))
+    # Master clock: the leader runs up from marker 2, passes under the teal arrowhead and ends INSIDE the
+    # clock dot, which is redrawn on top so the line plugs into the dot (not into the chiasm below it).
+    mk = (300, 222)
+    tip = (scn[0] - 1.2, scn[1] + 2.7)
+    dx, dy = tip[0] - mk[0], tip[1] - mk[1]
+    dl = math.hypot(dx, dy)
+    st = (mk[0] + dx / dl * 9.4, mk[1] + dy / dl * 9.4)
+    o.append(f'<path d="M{_f(st[0])},{_f(st[1])} L{_f(tip[0])},{_f(tip[1])}" stroke="#7A858C" stroke-width="1.1"/>'
+             f'<circle cx="{_f(scn[0])}" cy="{_f(scn[1])}" r="{_f(5.4 * s)}" fill="#FFFFFF"/>'
+             f'<circle cx="{_f(scn[0])}" cy="{_f(scn[1])}" r="{_f(3.8 * s)}" fill="{SIG}" stroke="#0B5F63" stroke-width=".7"/>')
+    o.append(marker(*mk, 2) + T(mk[0] + 12, mk[1] + 4, "Master clock", 11.2, 800, INK)
+             + T(mk[0] + 12, mk[1] + 18, "(SCN)", 10.6, 600, INK2))
     px0 = 80
     o.append(f'<path d="M{px0},{_f(pin[1] - 9)} L{_f(pin[0] - 5.5)},{_f(pin[1] - 4.6)}" stroke="#7A858C" stroke-width="1.1"/>'
              f'<circle cx="{_f(pin[0] - 5.5)}" cy="{_f(pin[1] - 4.6)}" r="1.6" fill="#7A858C"/>')
     o.append(marker(18, pin[1] - 16, 3) + T(30, pin[1] - 12, "Pineal", 11.2, 800, INK)
              + T(30, pin[1] + 2, "gland", 11.2, 800, INK))
+    # "at night" (with a moon), then "Melatonin into blood"; the leader runs from the label to the end of
+    # the melatonin trail.  The block stays 20+ units clear of the back-of-head outline.
+    my = pin[1] + 24.3                          # baseline of "at night"
+    o.append(_moon(20.5, my - 3.8, 5.2, MEL) + T(29, my, "at night", 10.4, 700, MEL, italic=True))
     end = (pin[0] - 54, pin[1] + 29)
-    o.append(f'<path d="M78,{_f(pin[1] + 33)} L{_f(end[0] - 4)},{_f(end[1] + 1)}" stroke="#5E6C93" stroke-width="1.1"/>')
-    o.append(T(14, pin[1] + 31, "Melatonin", 11, 800, MEL) + T(14, pin[1] + 44.5, "into the blood", 10.4, 600, MEL, italic=True))
+    o.append(f'<path d="M72,{_f(my + 10.2)} L{_f(end[0] - 4)},{_f(end[1] + 1)}" stroke="#5E6C93" stroke-width="1.1"/>')
+    o.append(T(14, my + 14.6, "Melatonin", 11, 800, MEL) + T(14, my + 27.8, "into blood", 10.4, 600, MEL, italic=True))
 
     # ---------------- right: the dial
     cx, cy, R = RX + 194, 141, 92
@@ -530,43 +562,59 @@ def art_clock(t):
              f'<circle cx="{_f(mpk[0])}" cy="{_f(mpk[1])}" r="1.7" fill="#5E6C93"/>')
     o.append(T(RX + 12, cy + 62, "Melatonin", 11.4, 800, MEL)
              + T(RX + 12, cy + 77, ["peaks about", "2 to 4 am"], 10.4, 600, INK2, lh=1.22))
+    # the outer ring is a colour code too, so it is named here (lower right, clear of the ring and MIDNIGHT)
+    o.append(T(W - 12, 204, "Outer ring:", 10.2, 700, INK2, "end")
+             + T(W - 12, 217.4, ["yellow = day,", "navy = night"], 10.2, 600, INK2, "end", italic=True, lh=1.2))
+    # time runs clockwise, like a clock: a small arrow outside the ring, 2:40 to 4:10 pm
+    ra = R + 7.5
+    a0, a1 = _polar(cx, cy, ra, 14 + 40 / 60), _polar(cx, cy, ra, 16 + 10 / 60)
+    th = _theta(16 + 10 / 60)
+    tx_, ty_ = math.cos(th), math.sin(th)       # clockwise tangent at the arrow tip
+    o.append(f'<path d="M{_f(a0[0])},{_f(a0[1])} A{ra},{ra} 0 0 1 {_f(a1[0] - tx_ * 4)},{_f(a1[1] - ty_ * 4)}" '
+             'fill="none" stroke="#8D979E" stroke-width="1.5" stroke-linecap="round"/>'
+             + _arrowhead(a1[0] + tx_ * 1.5, a1[1] + ty_ * 1.5, tx_, ty_, 6, "#8D979E"))
 
-    # ---------------- step strips
+    # ---------------- step strips (about 4.6 units clear above the first dot and below the last)
     o.append(f'<rect x="1.2" y="{ART_B}" width="{LW - 2.4}" height="{P1H - ART_B - 1.8}" fill="#FFFFFF"/>'
              f'<path d="M1,{ART_B} H{LW - 1} M{RX + 1},{ART_B} H{W - 1}" stroke="#E3E7EA" stroke-width="1"/>')
-    left = ["Morning light reaches your eyes and sets your master clock.",
-            "As daylight fades, the clock signals the pineal gland.",
+    left = ["Morning light sets your master clock and turns melatonin off.",
+            "When it gets dark, the clock signals the pineal gland.",
             "The pineal gland releases melatonin, the body's night signal."]
     for i, txt in enumerate(left):
-        y = ART_B + 16 + i * 16.4
+        y = ART_B + STEP_Y0 + i * STEP_DY
         o.append(step_dot(16, y, i + 1, c1) + T(30, y, txt, 10.6, 600, INK))
     right = [("4", c1, "Before dawn, melatonin fades and cortisol rises."),
              ("!", "#B5452F", "Bright light late at night delays melatonin."),
              ("!", "#B5452F", "Stress can keep cortisol up at bedtime.")]
     for i, (n, c, txt) in enumerate(right):
-        y = ART_B + 16 + i * 16.4
+        y = ART_B + STEP_Y0 + i * STEP_DY
         o.append(step_dot(RX + 16, y, n, c) + T(RX + 30, y, txt, 10.6, 600, INK))
     return svg(W, P1H, "".join(o),
-               "Side view of the head: daylight enters the eye, a nerve signal reaches the master clock (SCN) above the "
-               "optic chiasm, the clock signals the pineal gland, and the pineal gland releases melatonin into the blood. "
-               "Beside it, a 24-hour dial: melatonin rises in the evening and peaks at night, cortisol rises before "
-               "dawn and peaks after waking.")
+               "Side view of the head. By day, light enters the eye and a nerve signal sets the master clock (SCN) above "
+               "the optic chiasm, which keeps melatonin switched off. At night the clock signals the pineal gland, which "
+               "releases melatonin into the blood. Beside it, a 24-hour dial: melatonin rises in the evening and peaks "
+               "at night, cortisol rises before dawn and peaks after waking; the outer ring is yellow by day and navy "
+               "by night.")
 
 
 # ============================================================== picture 2: one night + key
 # A typical adult night, minutes after lights out at 10:30 pm (0) to waking at 6:30 am (480):
 # about 15 minutes to fall asleep, 5 cycles of about 90 minutes, deep sleep in the first cycles,
 # REM periods growing toward morning, short wake-ups between cycles [OHAYON04; AASM manual].
-# Totals: 7.4 h asleep, REM 24%, deep 20%, light 56%.
+# Totals: about 7.3 h asleep, REM 25%, deep 21%, light 55%, a typical young-to-middle-aged adult night
+# [OHAYON04].  The two mid-night wake-ups are drawn 6 minutes long (5.5 units) so they print; real ones
+# are often shorter and go unnoticed.
 NIGHT_SEQ = [("W", 0, 15), ("L", 15, 35), ("D", 35, 75), ("L", 75, 87), ("R", 87, 95),
-             ("L", 95, 115), ("D", 115, 150), ("L", 150, 167), ("R", 167, 185), ("W", 185, 188),
-             ("L", 188, 215), ("D", 215, 230), ("L", 230, 253), ("R", 253, 275),
-             ("L", 275, 337), ("R", 337, 365), ("W", 365, 368),
-             ("L", 368, 426), ("R", 426, 458), ("L", 458, 465), ("W", 465, 480)]
+             ("L", 95, 115), ("D", 115, 150), ("L", 150, 167), ("R", 167, 185), ("W", 185, 191),
+             ("L", 191, 215), ("D", 215, 230), ("L", 230, 253), ("R", 253, 275),
+             ("L", 275, 337), ("R", 337, 365), ("W", 365, 371),
+             ("L", 371, 426), ("R", 426, 458), ("L", 458, 465), ("W", 465, 480)]
 CYCLES = [(15, 95), (95, 188), (188, 275), (275, 368), (368, 465)]
 STAGES = {"W": ("Awake", AWAKE), "R": ("REM (dreams)", REM), "L": ("Light", LITE), "D": ("Deep", DEEP)}
-ROW_Y = {"W": 47, "R": 62, "L": 77, "D": 92}
-P2H, KEY_Y, KEY_H = 115, 120, 26
+ROW_Y = {"W": 45, "R": 59.5, "L": 74, "D": 88.5}
+BAND_Y0, BAND_Y1 = 28.5, 96.5            # shaded cycle bands
+AXIS_Y = 107.8                           # time-axis baseline: 5 units clear of the card's bottom border
+P2H, KEY_Y, KEY_H = 116, 121, 26
 CX0, CX1 = 118, 556          # chart x for minute 0 and minute 480
 
 
@@ -580,8 +628,8 @@ def art_night(t):
     for i, (a, b) in enumerate(CYCLES):
         x0, x1 = _mx(a), _mx(b)
         if i % 2 == 0:
-            o.append(f'<rect x="{_f(x0)}" y="28.5" width="{_f(x1 - x0)}" height="71" rx="4" fill="#F3F5FA"/>')
-        o.append(T(_f((x0 + x1) / 2), 37.6, f"Cycle {i + 1}", 10, 700, "#7A848C", "middle"))
+            o.append(f'<rect x="{_f(x0)}" y="{BAND_Y0}" width="{_f(x1 - x0)}" height="{BAND_Y1 - BAND_Y0}" rx="4" fill="#F3F5FA"/>')
+        o.append(T(_f((x0 + x1) / 2), 36.4, f"Cycle {i + 1}", 10, 700, "#5E686F", "middle"))   # 5.7:1 on the band
     # row labels and guide lines
     for k in ("W", "R", "L", "D"):
         lab, col = STAGES[k]
@@ -596,21 +644,21 @@ def art_night(t):
     o.append(f'<path d="{" ".join(path)}" fill="none" stroke="#9AA4AB" stroke-width="1.2" stroke-linejoin="round"/>')
     for k, a, b in NIGHT_SEQ:
         x0, x1 = _mx(a), _mx(b)
-        o.append(f'<rect x="{_f(x0)}" y="{ROW_Y[k] - 5}" width="{_f(max(x1 - x0, 2.2))}" height="10" rx="2.6" '
+        o.append(f'<rect x="{_f(x0)}" y="{ROW_Y[k] - 5}" width="{_f(max(x1 - x0, 5.0))}" height="10" rx="2.2" '
                  f'fill="{STAGES[k][1]}"/>')
-    # time axis
-    for minute, lab in ((0, "10:30 pm"), (90, "12 am"), (210, "2 am"), (330, "4 am"), (480, "6:30 am")):
+    # time axis: short ticks (2.5 units) that stop 6 units above their labels
+    for minute, lab in ((0, "10:30 pm"), (90, "midnight"), (210, "2 am"), (330, "4 am"), (480, "6:30 am")):
         x = _mx(minute)
         anchor = "start" if minute == 0 else ("end" if minute == 480 else "middle")
-        o.append(f'<path d="M{_f(x)},99 V102.5" stroke="#9AA4AB" stroke-width="1"/>'
-                 + T(_f(x + (-2 if minute == 0 else 2 if minute == 480 else 0)), 110.6, lab, 10, 600, INK2, anchor))
+        o.append(f'<path d="M{_f(x)},{BAND_Y1} V{BAND_Y1 + 2.5}" stroke="#9AA4AB" stroke-width="1"/>'
+                 + T(_f(x + (-2 if minute == 0 else 2 if minute == 480 else 0)), AXIS_Y, lab, 10, 600, INK2, anchor))
     # three notes, right of the chart
     nx = CX1 + 22
     notes = [(DEEP, ["Deep sleep comes mostly", "early in the night."]),
              (REM, ["REM (dream) sleep grows", "longer toward morning."]),
              (AWAKE, ["Short wake-ups between", "cycles are normal."])]
     for i, (c, lines) in enumerate(notes):
-        y = 41 + i * 25
+        y = 40 + i * 25.8
         o.append(f'<circle cx="{nx}" cy="{y - 3.6}" r="4" fill="{c}"/>' + T(nx + 10, y, lines, 10.4, 600, INK, lh=1.17))
     o.append(key_strip(KEY_Y))
     return svg(W, KEY_Y + KEY_H + 1, "".join(o),
@@ -668,8 +716,12 @@ _IC = {
     # this sheet's own line icons (64 x 64, stroked like kit.ICONS)
     "phone": '<rect x="19" y="8" width="24" height="46" rx="5"/><path d="M27 47h8"/><path d="M49 18l7-4M51 29h8M49 40l7 4"/>',
     "wine": '<path d="M21 8h22c0 14-5 22-11 22S21 22 21 8z"/><path d="M32 30v19M23 55h18"/><path d="M23 17h18"/>',
-    "snore": '<path d="M9 34c0-11 8-19 19-19 8 0 14 4 17 10"/><path d="M9 34c0 8 6 13 14 13h6"/>'
-             '<path d="M35 40h9l-9 9h9M47 24h7l-7 7h7"/>',
+    # a sleeping head in profile: closed eye, open mouth, two sound arcs and one Z
+    "snore": '<path d="M20 55C12 49 9 38 12 28C15 17 24 11 33 11C41 11 46 17 47 24L51 31L47.5 33V35.5"/>'
+             '<path d="M47 40.5C47 45 43 47.5 39 47.5L37 55"/>'
+             '<path d="M35 25.5C37 27.5 40 27.5 42 25.5"/>'
+             '<path d="M53 35C55 37 55 39.5 53 41.5M57.5 31.5C61.5 35.5 61.5 41 57.5 45"/>'
+             '<path d="M51 5.5H59L51 13.5H59"/>',
     "shift": '<circle cx="32" cy="34" r="20"/><path d="M32 22v12l8 5"/><path d="M14 10l-5 7M50 10l5 7"/>',
 }
 
@@ -703,15 +755,16 @@ def know_panel():
     # [CDCNEED] hours of sleep by age
     need = "".join(f'<div class="slp-age"><i>{a}</i><b>{b}</b></div>' for a, b in
                    (("Ages 18 to 60", "7+ hours"), ("Ages 61 to 64", "7 to 9 hours"), ("65 and older", "7 to 8 hours")))
-    # [ICSD3] chronic insomnia: all three parts
+    # [ICSD3TR] chronic insomnia: all three parts
     ins = "".join(f'<li><span class="slp-bx"></span><span>{x}</span></li>' for x in (
         "Trouble falling or staying asleep, or waking too early",
         "3 or more nights a week, for 3+ months",
         "Your days suffer: tired, moody or foggy"))
-    # [STOPBANG] the eight yes/no items, in questionnaire order (Chung 2016 wording, shortened)
+    # [STOPBANG] the eight yes/no items, in questionnaire order (Chung 2016 wording, shortened).
+    # B is BMI > 35 kg/m2, glossed in plain words.
     sb = [("S", "Snore loudly"), ("T", "Tired or sleepy by day"),
           ("O", "Seen to stop breathing or gasp"), ("P", "High blood pressure, or pills for it"),
-          ("B", "BMI over 35"), ("A", "Age over 50"),
+          ("B", "BMI over 35 (very heavy)"), ("A", "Age over 50"),
           ("N", "Collar 17 in+ (men), 16 in+ (women)"), ("G", "Male")]
     sbl = "".join(f'<li><span class="slp-bx"></span><em>{a}</em><span>{b}</span></li>' for a, b in sb)
     return ('<div class="slp-know"><div class="slp-kh"><b>Know your sleep</b><span>Tick what fits you, then go over it '
@@ -723,8 +776,9 @@ def know_panel():
             '<p class="slp-act"><b>All 3?</b> Ask about <b>CBT-I</b>, the short sleep-coaching program experts '
             'recommend first.</p></div>'
             f'<div><h4>Sleep apnea check <span>(STOP-Bang)</span></h4><ul class="slp-sb">{sbl}</ul>'
-            '<p class="slp-act"><b>3 or more ticks?</b> Ask {who} about a sleep apnea test.</p></div>'
-            '</div><p class="slp-src">Sources: CDC; American Academy of Sleep Medicine (ICSD-3); STOP-Bang, Chung 2016; '
+            # fixed route in both editions: a doctor orders the sleep study (a pharmacist cannot)
+            '<p class="slp-act"><b>3 or more ticks?</b> Ask your doctor about a sleep apnea test.</p></div>'
+            '</div><p class="slp-src">Sources: CDC; American Academy of Sleep Medicine (ICSD-3-TR); STOP-Bang, Chung 2016; '
             'American College of Physicians 2016.</p></div>')
 
 
@@ -768,14 +822,27 @@ CSS = r"""
 .slp .slp-act{margin:2px 0 0;font-size:7.4pt;line-height:1.25;color:#2B3236;background:var(--soft);border-radius:5px;padding:2px 7px}
 .slp .slp-act b{color:var(--deep)}
 .slp .slp-src{margin:3px 0 0;font-size:7pt;color:#5E686F;line-height:1.3}
+/* Standard 3 (7 pt floor) for the shared kit text on THIS sheet only.  The front is found by its .slp body,
+   the back by the empty <i class="slp-bk"> in its band title; no other sheet carries either class. */
+.sheet.front:has(.slp) .foot,.sheet.front:has(.slp) .foot .code{font-size:7pt}
+.sheet.back:has(.slp-bk) .col .key,.sheet.back:has(.slp-bk) .col .key b,.sheet.back:has(.slp-bk) .col .pick .sz,
+.sheet.back:has(.slp-bk) .col .dose small,.sheet.back:has(.slp-bk) .col .need i,.sheet.back:has(.slp-bk) .startt,
+.sheet.back:has(.slp-bk) .foot .disc,.sheet.back:has(.slp-bk) .foot .code{font-size:7pt}
+/* smaller habit discs give the bullets room, so the band does not grow */
+.sheet.back:has(.slp-bk) .life.l3 .disc2{width:0.64in;height:0.64in}
+.sheet.back:has(.slp-bk) .life.l3 .disc2 svg{width:0.42in!important;height:0.42in!important}
+/* the medicine check carries four notes, so it gets the wider half of the duo row */
+.sheet.back:has(.slp-bk) .duo{grid-template-columns:1fr 1.2fr}
+/* the need headers hold two short lines, so they do not need the kit's 0.5 in minimum */
+.sheet.back:has(.slp-bk) .col .need{min-height:0.44in}
 """
 
 # ============================================================== the sheet
 SHEET = {
     "slug": SLUG, "code": "ND-NR-702", "order": 17, "theme": "neuro", "series": "Brain and Nerve Series",
     "title": "Better Sleep", "sub": "When falling asleep or staying asleep is hard",
-    # "More than 1 in 3" < 7 h: [CDC16].  7+ h for adults: [CDCNEED].  Insomnia definition: [ICSD3].
-    # Body clock, light and melatonin: [ZISAPEL18, BENARROCH08].
+    # "More than 1 in 3" < 7 h: [CDCFS] (BRFSS 2022, unchanged since 2013).  7+ h for adults: [CDCNEED].
+    # Insomnia definition: [ICSD3TR].  Body clock, light and melatonin: [ZISAPEL18, BENARROCH08].
     "intro": ("Adults need <b>7 or more hours</b> of sleep, yet <b>more than 1 in 3</b> U.S. adults usually get less (CDC). "
               "<b>Insomnia</b> means trouble falling asleep, staying asleep, or waking too early, even with time to sleep. "
               "Sleep runs on a <b>body clock</b> in your brain: light sets it each morning, and the hormone "
@@ -783,57 +850,72 @@ SHEET = {
     "front": front,
     "css": CSS,
     "back": {
-        # [AASM21] CBT-I parts (stimulus control, a regular schedule, relaxation) and [AASMHAB] habits
-        "life_title": "Reset Your Sleep Clock",
-        "life_sub": "Habits from CBT-I, the first treatment sleep experts recommend for long-term insomnia",
+        # [AASM21] CBT-I parts (stimulus control, a regular wake time, relaxation), [AASMHAB] habits (bed for
+        # sleep only, out of bed after about 20 minutes awake), [BORBELY82] sleep drive.  The subtitle names
+        # CBT-I as coaching, not as something the products treat.
+        "life_title": 'Reset Your Sleep Clock<i class="slp-bk"></i>',
+        "life_sub": "Habits from CBT-I, the sleep-coaching program experts recommend first",
         "style": "circle3",
         "life": [("sun", "Morning: set the clock",
-                  ["Get up at the same time every day, weekends too", "Get outdoor light within an hour of waking",
-                   "Rise on time, even after a rough night"]),
+                  ["Get up at the same time every day, even after a rough night",
+                   "Get outdoor light within an hour of waking",
+                   "Use your bed only for sleep: no phone, TV or work in bed"]),
                  ("coffee", "Day: build sleep drive",
-                  ["Have caffeine in the morning only", "Move your body most days",
-                   "Skip naps, or keep them short and early"]),
+                  ["Sleep drive builds while you are awake; naps drain it",
+                   "Skip naps, or keep them short and early",
+                   "Caffeine in the morning only", "Move your body most days"]),
                  ("moon", "Night: wind down",
-                  ["Dim lights and put screens away an hour before bed", "No alcohol or big meals late in the evening",
-                   "Keep the bedroom cool, dark and quiet", "Awake 20 minutes? Get up until you feel sleepy"])],
+                  ["Dim lights and put screens away an hour before bed", "No alcohol or big meals late",
+                   "A cool, dark, quiet bedroom",
+                   "Awake 20 minutes? Get up. Go back to bed when sleepy"])],
+        # Doses: every one is inside its label's directions [LABELS], except Magnesium Glycinate, which is held
+        # to 1 capsule (half a 2-capsule serving; label: 2 capsules twice daily) so that magnesium from both
+        # magnesium products stays at 200 + 130 = 330 mg a day, under the 350 mg supplement limit [ODSMG].
+        # L-theanine in the rhythm: GoodNight 1 capsule 100 mg + Stress Essentials Calm 200 mg + Mag Calm Pro
+        # 100 mg + Cortisol Pro 100 mg = 500 mg a day (600 mg with 2 GoodNight).  GoodNight's label says one
+        # hour before bedtime, so its rhythm line says so too.
         "cols": [
             {"p": "sleep_goodnight", "need": "Ease into sleep", "needsub": "melatonin + calming herbs", "start": True,
              "bullets": ["Supports falling asleep and restful sleep",
                          "Melatonin plus lemon balm, hops and valerian"],
-             "dose": "1 to 2 capsules", "dosesub": "1 hour before bed", "sched": [("bed", 1, "capsule")]},
-            {"p": "mag_glycinate", "need": "Relax body and nerves", "needsub": "magnesium",
-             "bullets": ["Helps maintain normal muscle and nerve function", "Supports relaxation at bedtime"],
-             "dose": "2 capsules", "dosesub": "at bedtime", "sched": [("bed", 2, "capsules")]},
+             "dose": "1 to 2 capsules", "dosesub": "1 hour before bed",
+             "sched": [("bed", 1, "capsule, 1 hour before bed")]},
             {"p": "sleep_stress_calm", "need": "Quiet a busy mind", "needsub": "GABA + L-theanine",
              "bullets": ["Supports a calm, relaxed state of mind", "For the wind-down hours before bed"],
              "dose": "2 capsules", "dosesub": "in the evening", "sched": [("pm", 2, "capsules")]},
             {"p": "sleep_mag_calm_pro", "need": "Evening wind-down", "needsub": "magnesium drink",
              "bullets": ["Supports relaxation and a calm mood", "Magnesium, inositol and taurine in one drink"],
              "dose": "1 scoop in 6 oz water", "dosesub": "after dinner", "sched": [("pm", 1, "scoop")]},
-            {"p": "sleep_theanine_pro", "need": "Calm by day", "needsub": "L-theanine",
-             "bullets": ["Supports calm focus without drowsiness", "Supports sleep quality"],
-             "dose": "1 capsule", "dosesub": "1 to 2 times a day", "sched": [("am", 1, "capsule")]},
+            {"p": "sleep_mag_glycinate", "need": "Relax body and nerves", "needsub": "magnesium",
+             "bullets": ["Helps maintain normal muscle and nerve function", "Supports relaxation at bedtime"],
+             "dose": "1 capsule", "dosesub": "at bedtime (half a serving)", "sched": [("bed", 1, "capsule")]},
+            {"p": "sleep_cortisol_pro", "need": "Handle daily stress", "needsub": "cortisol support",
+             "bullets": ["Supports a healthy response to daily stress", "Helps keep cortisol at healthy levels"],
+             "dose": "2 capsules", "dosesub": "in the morning", "sched": [("am", 2, "capsules")]},
         ],
         # [BOYER05] L-tryptophan + serotonergic drugs; GoodNight label caution (pregnant, nursing, SSRIs, MAOIs,
-        # drowsiness); [STOPBANG]; [ODSMG] magnesium (UL 350 mg supplemental; antibiotic, bisphosphonate and
-        # thyroid-pill spacing; kidney disease).  The daily rhythm includes both magnesium products
-        # (Mag Calm Pro 200 mg + Magnesium Glycinate 260 mg = 460 mg, above the 350 mg supplement UL but
-        # under the Magnesium Glycinate label's own 520 mg/day), so the third note names the total.
+        # "May cause drowsiness. Use with caution if driving or operating machinery."); [STOPBANG]; [ODSMG]
+        # magnesium (350 mg supplement limit, kidney disease, spacing from thyroid, bisphosphonate and
+        # antibiotic pills); Cortisol Pro label caution "Do not use if pregnant."  Totals as in the cols note.
         "rx": {
             "pharmacy": [
                 "<b>Ask your pharmacist before GoodNight</b> if pregnant, nursing, or on SSRIs, SNRIs, MAOIs, triptans or "
-                "sleep pills. Its tryptophan, melatonin and valerian add to them.",
+                "sleep pills: its tryptophan adds to serotonin, and its melatonin and valerian add drowsiness. Do not "
+                "drive after taking it.",
                 "<b>Loud snoring, gasping or sleepy days?</b> Your pharmacist can go over the apnea check on page 1. "
-                "Apnea needs a sleep test; sleep aids do not treat it.",
-                "<b>Both magnesium products together give 460 mg.</b> Check first with kidney disease. Ask how to space "
-                "magnesium from thyroid, bone and antibiotic pills."],
+                "Apnea needs a sleep test ordered by your doctor; supplements are no substitute for apnea care.",
+                "<b>Mag Calm Pro plus Magnesium Glycinate: 330 mg magnesium a day</b>, under the 350 mg daily limit for "
+                "supplements. Check first if you have kidney disease. Space it from thyroid, bone and antibiotic pills.",
+                "<b>Do not use Cortisol Pro if pregnant.</b> L-theanine from four products adds up to about 500 mg a day."],
             "practitioner": [
                 "<b>Ask your provider before GoodNight</b> if pregnant, nursing, or on SSRIs, SNRIs, MAOIs, triptans or "
-                "sleep pills. Its tryptophan, melatonin and valerian add to them.",
-                "<b>Loud snoring, gasping or sleepy days?</b> Ask your provider about a sleep apnea test (check on "
-                "page 1). Sleep aids do not treat apnea.",
-                "<b>Both magnesium products together give 460 mg.</b> Check first with kidney disease. Ask how to space "
-                "magnesium from thyroid, bone and antibiotic pills."],
+                "sleep pills: its tryptophan adds to serotonin, and its melatonin and valerian add drowsiness. Do not "
+                "drive after taking it.",
+                "<b>Loud snoring, gasping or sleepy days?</b> Ask your doctor about a sleep apnea test (check on "
+                "page 1). Supplements are no substitute for apnea care.",
+                "<b>Mag Calm Pro plus Magnesium Glycinate: 330 mg magnesium a day</b>, under the 350 mg daily limit for "
+                "supplements. Check first if you have kidney disease. Space it from thyroid, bone and antibiotic pills.",
+                "<b>Do not use Cortisol Pro if pregnant.</b> L-theanine from four products adds up to about 500 mg a day."],
         },
     },
 }

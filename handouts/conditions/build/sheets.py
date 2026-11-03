@@ -29,7 +29,7 @@ EXTRA_CSS = r"""
 .alarm p{margin:2px 0 0;font-size:8.6pt}
 .p{font-size:9.1pt;line-height:1.42;margin:0 0 0.07in;color:#2B3236}
 .p b{color:var(--deep)}
-.fn{font-size:6.6pt;color:#5E686F;line-height:1.3;margin-top:auto}
+.fn{font-size:7pt;color:#5E686F;line-height:1.3;margin-top:auto}
 .bp{width:100%;border-collapse:collapse;font-size:8.4pt}
 .bp th{background:var(--c1);color:#fff;text-align:left;padding:5px 8px;font-size:8pt}
 .bp td{padding:4px 8px;border-bottom:1px solid #EEE3E1}

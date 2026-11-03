@@ -3,33 +3,43 @@
 Self-contained sheet module (no legacy sheets.py / art.py drawing code): the front art, the
 front copy and the back data all live here.  Shared helpers come only from svgkit / kit.
 Every SVG id starts with "ih-" and every CSS class with "ihl-", so nothing collides with the
-other sheets in the all-sheets bundle.
+other sheets in the all-sheets bundle.  The back page is reached with .sheet.back:has(.ihl-back)
+(an empty marker span in this sheet's lifestyle title).
 
 FRONT, top to bottom
-  intro -> THE THREE PHASES OF HEALING: a whiplash inset (head and neck in profile with the
-  cervical spine, the back-then-forward motion, a lens on the overstretched front of the neck)
-  zooms into one magnified ligament drawn three times on a time ribbon:
-    1 INFLAMMATION  torn fibres, clot, swelling, immune cells leaving a small blood vessel
+  intro (sprain = ligament, strain = muscle or tendon) -> THE THREE PHASES OF HEALING: a whiplash
+  inset (head and neck in profile with a side-view cervical spine: C1 front arch, C2 body and dens,
+  pedicles, stacked articular pillars, laminae and spinous processes, the spinal cord in the canal,
+  the skull base; BACK / FORWARD motion tags; a lens on the front of C6-C7) zooms into one magnified
+  ligament with a PARTIAL tear, drawn three times on a time ribbon:
+    1 INFLAMMATION  the middle fibres torn, clot, swelling, immune cells leaving a small blood vessel;
+                    the outer fibres intact but pulled straight (overstretched)
     2 REPAIR        fibroblasts laying new collagen in a loose criss-cross, new vessel sprouts
     3 REMODEL       new fibres lined up along the pull of movement
-  each with "what is happening" and "your part", then a KEY naming every symbol ->
-  "What can slow healing" icon row -> "Get care right away" (911 now / call today).
+  each with "what is happening" and "your part", then a KEY naming every symbol (and the note that
+  the times are typical) -> "What can slow healing" icon row -> "Get care right away".
 BACK
   lifestyle band (circle style) -> 5 NutriDyn products (Start here: Inflam-Eze Plus) ->
-  rhythm -> Provider / Pharmacist check.  Product facts live in products.d/injury-healing.json.
+  rhythm -> Provider / Pharmacist check (the same lines in both editions; only {who} differs).
+  Product facts live in products.d/injury-healing.json.
 
 SOURCES (each number on the page carries one of these tags in a comment)
   [LEONG20]   Leong NL et al. Tendon and ligament healing and current approaches to tendon and
               ligament regeneration. J Orthop Res 2020;38(1):7-12. PMID 31529731,
-              doi:10.1002/jor.24475 (full text read, PMC7307866): three overlapping stages;
-              clot + neutrophils + macrophages first; fibroblasts recruited from about day 2;
-              remodelling from about 2 weeks, fibres "aligned in the direction of stress",
-              type III -> type I collagen, "continues for months and years"; healed tissue
-              "lacks the native biomechanical ... properties"; sprains and strains form scar
-              "which can take years to remodel"; collagen synthesis is oxygen dependent.
+              doi:10.1002/jor.24475 (full text PMC7307866, re-read 2026-11-03): tendons and ligaments
+              connect "muscle to bone, and bone to bone, respectively"; "The inflammatory stage ...
+              begins immediately after acute injury with clot formation"; "Approximately two days
+              following injury ... initiate the proliferative stage by recruitment of fibroblasts";
+              VEGF "stimulating angiogenesis" in the proliferative phase; "About two weeks following
+              injury, remodeling of the injured area begins"; fibres "aligned in the direction of
+              stress"; "This process continues for months and years"; sprains and strains form scar
+              "which can take years to remodel"; "Collagen synthesis is a highly oxygen dependent process".
   [THOMO15]   Thomopoulos S et al. Mechanisms of tendon injury and repair. J Orthop Res
-              2015;33(6):832-839. PMID 25641114, doi:10.1002/jor.22806 (inflammatory, then
-              proliferative and remodelling phases).
+              2015;33(6):832-839. PMID 25641114, doi:10.1002/jor.22806 (full text PMC4418182): "a short
+              inflammatory phase, which lasts about a week, followed by a proliferative phase, which
+              lasts a few weeks, followed by a remodeling phase, which lasts many months".
+  [NIAMS]     NIH NIAMS, Sprains and Strains: a sprain is a stretch or tear of a ligament (the band
+              that connects bones); a strain is an injury to a muscle or tendon.
   [KHAN09]    Khan KM, Scott A. Mechanotherapy: how physical therapists' prescription of exercise
               promotes tissue repair. Br J Sports Med 2009;43(4):247-252. PMID 19244270,
               doi:10.1136/bjsm.2008.054239 (load drives repair and remodelling).
@@ -43,9 +53,14 @@ SOURCES (each number on the page carries one of these tags in a comment)
               barrier restoration with and without "multinutrient" nutrition intervention.
               J Appl Physiol 2018;124(1):190-200. PMID 28912361 (sleep restriction slowed repair).
   [NINDS]     NIH NINDS, Whiplash information page: a soft-tissue neck injury from a sudden
-              backward and/or forward jerk of the head, most often in rear-end car crashes.
-  [CDC-TBI]   CDC HEADS UP, concussion danger signs (worsening headache, repeated vomiting,
-              slurred speech, confusion, unusual drowsiness: call 911 / emergency department).
+              backward and/or forward jerk of the head, most often in rear-end car crashes; most
+              people recover (reassurance matters: the tear drawn here is partial, not a rupture).
+  [CDC-TBI]   CDC HEADS UP, concussion danger signs (a headache that gets worse and does not go away,
+              repeated vomiting, slurred speech, confusion, unusual drowsiness: call 911 / emergency).
+  [AHA-STR]   American Stroke Association, stroke warning signs (F.A.S.T.: face drooping, arm
+              weakness, speech difficulty; also sudden trouble seeing, sudden dizziness or loss of
+              balance).  Neck trauma can rarely tear a neck artery and cause stroke: Biller J et al.,
+              AHA/ASA statement, Stroke 2014;45:3155-3174, PMID 25104849.
   [CDC-VTE]   CDC, Venous thromboembolism (blood clots) signs: leg swelling or pain (call your
               provider as soon as possible); chest pain or trouble breathing (get help now).
   [CDC-SSI]   CDC, Surgical site infection FAQ: redness and pain around the cut, cloudy
@@ -105,23 +120,30 @@ SWELL = "#E44E58"                           # swelling / inflammation haze
 PULL = "#1F5E8C"                            # pull of movement (theme blue)
 BG = "#FFF9F3"                              # loose tissue around the ligament
 SKIN, SKIN_EDGE, SKIN_SH = "#F6DCCB", "#C99782", "#EFC9B4"
-BONE, BONE_EDGE, DISC = "#FBF4E4", "#A8936F", "#9CC3DA"
+BONE, BONE_EDGE, DISC, DISC_EDGE = "#FBF4E4", "#A8936F", "#9CC3DA", "#6E9DBA"
+CORD, CORD_EDGE = "#F7E8A2", "#C7A947"     # spinal cord (pale yellow)
 
 # ============================================================== geometry
-W, H = 760, 410
+W = 760
 IX0, IX1 = 0, 160                 # whiplash inset column
 PX0, PW, PG = 172, 190, 9         # first panel x, panel width, gap between panels
 PXS = [PX0 + i * (PW + PG) for i in range(3)]
-HY = 30                           # phase heading baseline row (badges centred at HY - 4)
-RY = 50                           # time ribbon centre line
-VY0, VH = 64, 176                 # tissue view: top, height
+HY = 26                           # phase heading baseline row (badges centred at HY - 4.6)
+RY = 46                           # time ribbon centre line
+VY0, VH = 60, 166                 # tissue view: top, height
 CAP_Y = VY0 + VH + 15             # first caption baseline
-PART_Y = CAP_Y + 37               # "your part" pill top
-KEY_Y, KEY_H = PART_Y + 44, 72    # key box (3 rows)
-BAND0, NF, FH, FGAP = 56, 8, 9.4, 1.4       # ligament band top (view coords), fibres, fibre height, gap
+CAP_LH = 13.5                     # caption line step (10.8 px text)
+PART_Y = CAP_Y + 2 * CAP_LH + 10 + CAP_LH   # "your part" pill top (3 caption lines + "You may feel")
+KEY_Y = PART_Y + 44               # key box top
+KEY_ROW, KEY_H = 20.5, 87         # key: 4 rows
+H = KEY_Y + KEY_H + 1
+BAND0, NF, FH, FGAP = 54, 8, 9.4, 1.4       # ligament band top (view coords), fibres, fibre height, gap
 BAND1 = BAND0 + NF * FH + (NF - 1) * FGAP
 GAPX = PW / 2                     # tear centre (view coords)
-SC = (BAND1 - BAND0) / 72.4        # detail offsets below were laid out on a 72.4-unit band
+TORN = (2, 3, 4, 5)               # a PARTIAL tear: the middle four fibres; rows 0, 1, 6, 7 stay whole [NINDS]
+TOR0 = BAND0 + TORN[0] * (FH + FGAP)                 # top of the torn rows
+TOR1 = BAND0 + TORN[-1] * (FH + FGAP) + FH           # bottom of the torn rows
+TMID, TRY = (TOR0 + TOR1) / 2, (TOR1 - TOR0) / 2 + 3  # torn zone centre and half-height (+ a little)
 
 
 def ih_defs():
@@ -147,6 +169,8 @@ def ih_defs():
         f'<path d="M0,0 L10,5 L0,10 z" fill="{INK}"/></marker>',
         f'<marker id="ih-ap" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">'
         f'<path d="M0,0 L10,5 L0,10 z" fill="{IMM_EDGE}"/></marker>',
+        f'<marker id="ih-pl" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="3.6" markerHeight="3.6" '
+        f'orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="{PULL}"/></marker>',
     ]
     return "<defs>" + "".join(g) + "</defs>"
 
@@ -243,15 +267,21 @@ def _blob(cx, cy, rx, ry, rnd, n=14, j=0.16):
     return "".join(d) + "Z"
 
 
+def _sprout(sx, y0, depth, wd):
+    """A new capillary: a thin loop hanging from the vessel floor at y0."""
+    return (f"M{sx},{y0} C{sx - 2},{y0 + depth * .6} {sx + wd * .1},{y0 + depth} {sx + wd / 2},{y0 + depth} "
+            f"C{sx + wd * .9},{y0 + depth} {sx + wd + 2},{y0 + depth * .6} {sx + wd},{y0}")
+
+
+def _sprout_draw(d, w=3.4):
+    return (f'<path d="{d}" stroke="{VES_EDGE}" stroke-width="{w}" fill="none" stroke-linecap="round"/>'
+            f'<path d="{d}" stroke="{VES}" stroke-width="{w - 1.5:.1f}" fill="none" stroke-linecap="round"/>')
+
+
 def vessel(y0, x0=0, x1=PW, loops=()):
     """Small blood vessel across the top of a view, with red cells inside (and new capillary loops)."""
     h = 13
-    o = []
-    for sx, depth, wd in loops:            # new capillaries: thin loops hanging into the repair zone
-        d = (f"M{sx},{y0 + h - 1} C{sx - 2},{y0 + h + depth * .6} {sx + wd * .1},{y0 + h + depth} {sx + wd / 2},{y0 + h + depth} "
-             f"C{sx + wd * .9},{y0 + h + depth} {sx + wd + 2},{y0 + h + depth * .6} {sx + wd},{y0 + h - 1}")
-        o.append(f'<path d="{d}" stroke="{VES_EDGE}" stroke-width="3.4" fill="none" stroke-linecap="round"/>'
-                 f'<path d="{d}" stroke="{VES}" stroke-width="1.9" fill="none" stroke-linecap="round"/>')
+    o = [_sprout_draw(_sprout(sx, y0 + h - 1, depth, wd)) for sx, depth, wd in loops]
     o += [f'<rect x="{x0 - 2}" y="{y0}" width="{x1 - x0 + 4}" height="{h}" fill="{VES}" stroke="{VES_EDGE}" stroke-width=".9"/>',
           f'<rect x="{x0 - 2}" y="{y0 + 2.6}" width="{x1 - x0 + 4}" height="{h - 5.2}" fill="{VES_LUM}"/>']
     for k, x in enumerate(range(x0 + 16, x1 - 8, 46)):
@@ -266,20 +296,23 @@ def _ends(rnd):
 
 
 ENDS = _ends(random.Random(5))
+# intact outer fibres: pulled straight just after the injury (overstretched), crimp coming back with time
+AMP_WHOLE = (0.4, 1.0, 1.6)
 
 
 def view(i):
     """Phase i (0, 1, 2) of the same ligament, in view coords (0..PW, 0..VH)."""
     rnd = random.Random(31 + i)
-    mid = (BAND0 + BAND1) / 2
     o = [f'<clipPath id="ih-vc{i}"><rect width="{PW}" height="{VH}" rx="10"/></clipPath>',
          f'<g clip-path="url(#ih-vc{i})"><rect width="{PW}" height="{VH}" fill="{BG}"/>']
-    loops = [(60, 30, 15), (113, 40, 14)] if i == 1 else []
+    loops = [(60, 30, 15), (113, 38, 14)] if i == 1 else []
     o.append(vessel(10, 0, PW, loops))
     for k in range(NF):
         y = BAND0 + k * (FH + FGAP)
         le, re = ENDS[k]
-        if i == 0:
+        if k not in TORN:                      # whole fibre, straightened by the overstretch
+            o.append(fiber(-4, PW + 4, y, FH, amp=AMP_WHOLE[i], ph=k * 0.35))
+        elif i == 0:
             o.append(fiber(-4, le, y, FH, right_end="torn", rnd=rnd))
             o.append(fiber(re, PW + 4, y, FH, left_end="torn", rnd=rnd))
         elif i == 1:
@@ -290,18 +323,19 @@ def view(i):
             o.append(fiber(re - 1, PW + 4, y, FH, left_end="round"))
     if i == 0:
         # swelling haze over the hurt area, the clot between the torn ends, red cells and immune cells
-        o.append(f'<ellipse cx="{GAPX}" cy="{mid}" rx="92" ry="70" fill="url(#ih-swell)"/>')
-        o.append(f'<path d="{_blob(GAPX, mid, 19, (BAND1 - BAND0) / 2 + 3, rnd, 16, 0.2)}" fill="#D9535B" fill-opacity=".5" '
+        o.append(f'<ellipse cx="{GAPX}" cy="{TMID}" rx="88" ry="60" fill="url(#ih-swell)"/>')
+        o.append(f'<path d="{_blob(GAPX, TMID, 19, TRY, rnd, 16, 0.2)}" fill="#D9535B" fill-opacity=".5" '
                  'stroke="#B23A42" stroke-width=".8" stroke-opacity=".75"/>')
-        for _ in range(10):   # fibrin strands of the clot
+        for _ in range(7):   # fibrin strands of the clot
             a = rnd.uniform(0, math.pi)
-            cx, cy = GAPX + rnd.uniform(-9, 9), rnd.uniform(BAND0 + 4, BAND1 - 4)
+            cx, cy = GAPX + rnd.uniform(-9, 9), rnd.uniform(TOR0 + 4, TOR1 - 4)
             o.append(f'<path d="M{cx - 8 * math.cos(a):.1f},{cy - 8 * math.sin(a):.1f} L{cx + 8 * math.cos(a):.1f},{cy + 8 * math.sin(a):.1f}" '
                      'stroke="#FBE0E0" stroke-width=".7" opacity=".9"/>')
-        for x, y, r in [(GAPX - 6, BAND0 + 6 * SC, 20), (GAPX + 7, BAND0 + 16 * SC, -30), (GAPX - 5, BAND0 + 33 * SC, 60),
-                        (GAPX + 6, BAND0 + 44 * SC, 10), (GAPX - 7, BAND0 + 57 * SC, -15), (GAPX + 5, BAND0 + 69 * SC, 35)]:
+        tz = TOR1 - TOR0
+        for x, y, r in [(GAPX - 6, TOR0 + .08 * tz, 20), (GAPX + 7, TOR0 + .30 * tz, -30), (GAPX - 5, TOR0 + .55 * tz, 60),
+                        (GAPX + 6, TOR0 + .78 * tz, 10), (GAPX - 7, TOR0 + .96 * tz, -15)]:
             o.append(red_cell(x, y, r))
-        for x, y in [(GAPX + 3, BAND0 + 25 * SC), (GAPX - 9, BAND0 + 46 * SC), (GAPX + 9, BAND0 + 58 * SC), (GAPX - 1, BAND0 + 76 * SC),
+        for x, y in [(GAPX + 3, TOR0 + .42 * tz), (GAPX - 9, TOR0 + .70 * tz), (GAPX + 9, TOR0 + .90 * tz),
                      (GAPX - 23, BAND0 - 6), (GAPX + 25, BAND0 - 4), (GAPX - 33, BAND1 + 7), (GAPX + 31, BAND1 + 9)]:
             o.append(immune(x, y))
         # two more immune cells squeezing out of the vessel, heading for the tear
@@ -310,24 +344,24 @@ def view(i):
             o.append(f'<path d="M{x + dx * .4:.1f},{y + 5.5} L{x + dx:.1f},{y + 12}" stroke="{IMM_EDGE}" stroke-width="1.3" '
                      'marker-end="url(#ih-ap)" fill="none"/>')
     elif i == 1:
-        o.append(f'<ellipse cx="{GAPX}" cy="{mid}" rx="70" ry="54" fill="url(#ih-swell)" opacity=".35"/>')
-        # a loose criss-cross of thin new collagen bridging the gap
+        o.append(f'<ellipse cx="{GAPX}" cy="{TMID}" rx="66" ry="44" fill="url(#ih-swell)" opacity=".35"/>')
+        # a loose criss-cross of thin new collagen bridging the gap in the torn rows
         segs = []
-        for _ in range(44):
-            cx, cy = GAPX + rnd.uniform(-22, 22), rnd.uniform(BAND0 + 1 * SC, BAND1 - 1)
+        for _ in range(30):
+            cx, cy = GAPX + rnd.uniform(-22, 22), rnd.uniform(TOR0 + 1, TOR1 - 1)
             a = rnd.uniform(-1.25, 1.25) + (math.pi / 2 if rnd.random() < 0.3 else 0)
-            ln = rnd.uniform(10, 19)
+            ln = rnd.uniform(9, 17)
             segs.append((cx - ln / 2 * math.cos(a), cy - ln / 2 * math.sin(a), cx + ln / 2 * math.cos(a), cy + ln / 2 * math.sin(a)))
-        o.append(f'<clipPath id="ih-nc"><ellipse cx="{GAPX}" cy="{mid}" rx="33" ry="{(BAND1 - BAND0) / 2 + 3}"/></clipPath>')
+        o.append(f'<clipPath id="ih-nc"><ellipse cx="{GAPX}" cy="{TMID}" rx="33" ry="{TRY}"/></clipPath>')
         o.append('<g clip-path="url(#ih-nc)">' + "".join(new_collagen(*s, w=1.25) for s in segs) + "</g>")
-        for x, y, r in [(GAPX - 12, BAND0 + 9 * SC, 35), (GAPX + 12, BAND0 + 19 * SC, -25), (GAPX - 5, BAND0 + 38 * SC, -62),
-                        (GAPX + 13, BAND0 + 52 * SC, 18), (GAPX - 15, BAND0 + 63 * SC, -8), (GAPX + 4, BAND0 + 72 * SC, 40)]:
+        tz = TOR1 - TOR0
+        for x, y, r in [(GAPX - 12, TOR0 + .10 * tz, 35), (GAPX + 12, TOR0 + .30 * tz, -25), (GAPX - 6, TOR0 + .55 * tz, -62),
+                        (GAPX + 13, TOR0 + .74 * tz, 18), (GAPX - 13, TOR0 + .92 * tz, -8)]:
             o.append(fibroblast(x, y, r))
-        for x, y in [(GAPX + 5, BAND0 + 31 * SC), (GAPX - 21, BAND0 + 33 * SC)]:
-            o.append(immune(x, y))
+        o.append(immune(GAPX + 4, TOR0 + .46 * tz))
     else:
         # the patch, now made of new fibres lined up with the old ones (green), a few flat fibroblasts
-        for k in range(NF):
+        for k in TORN:
             y = BAND0 + k * (FH + FGAP)
             le, re = ENDS[k]
             a0, a1, f = le - 3.5, re + 3.5, 3.5
@@ -337,11 +371,10 @@ def view(i):
                      f'</linearGradient><mask id="ih-m{k}"><rect x="{a0:.1f}" y="{y - 4}" width="{a1 - a0:.1f}" height="{FH + 8}" '
                      f'fill="url(#ih-gm{k})"/></mask>')
             o.append(f'<g mask="url(#ih-m{k})">{fiber(a0, a1, y, FH, kind="new")}</g>')
-        for x, y in [(GAPX - 9, BAND0 + FH + FGAP / 2), (GAPX + 11, BAND0 + 4 * (FH + FGAP) - FGAP / 2),
-                     (GAPX - 3, BAND0 + 6 * (FH + FGAP) - FGAP / 2)]:
+        for x, y in [(GAPX - 9, BAND0 + 3 * (FH + FGAP) - FGAP / 2), (GAPX + 10, BAND0 + 5 * (FH + FGAP) - FGAP / 2)]:
             o.append(fibroblast(x, y, 0, 0.6))
         # the pull of movement, along the fibres
-        ay = BAND1 + 17
+        ay = BAND1 + 13
         o.append(f'<path d="M{22},{ay} H{PW - 22}" stroke="{PULL}" stroke-width="2.6" marker-start="url(#ih-pl)" '
                  'marker-end="url(#ih-pl)" fill="none"/>')
     o.append("</g>")
@@ -350,9 +383,7 @@ def view(i):
 
 
 # ============================================================== whiplash inset
-# Head and neck in profile, facing right (toward the magnified views).  Proportions from a standard
-# lateral view: the cervical bodies sit just behind the middle of the neck, C1 at the level of the
-# ear lobe, C7 at the base of the neck, with the normal forward (lordotic) curve.
+# Head and neck in profile, facing right (toward the magnified views).
 HEAD_D = ("M23,101 C15,92 8,78 8,60 C8,34 25,12 50,10 C68,9 80,20 82,36 C83,40 83.5,43 82.6,45.8 "
           "C84.6,50 87.4,55 89.6,59.6 C90.4,61.4 89.2,62.8 87,63.2 L84.2,63.8 C84.8,65.4 84.8,66.6 84.2,67.6 "
           "C85.4,68.8 85.2,70.4 83.8,71.2 C84.4,72.8 84,74.4 82.6,75.4 C82.4,77.6 83.6,79.6 83.4,82 "
@@ -361,34 +392,195 @@ HEAD_D = ("M23,101 C15,92 8,78 8,60 C8,34 25,12 50,10 C68,9 80,20 82,36 C83,40 8
           "C23.6,112 24.2,106 23,101 Z")
 EAR_D = ("M34.6,49.6 C32.4,52.6 32.2,58.6 34.4,62.4 C35.6,64.6 37.6,64.4 38.6,62.6 C39.6,60.8 40.8,60.6 41.8,58.6 "
          "C43.2,55.4 42.6,50.6 40,48.6 C38.2,47.2 35.8,47.8 34.6,49.6 Z")
-# C1 at the level of the ear lobe, C7 at the base of the neck, gentle forward curve (lordosis).
-SPINE_PTS = [(47.0, 71.5), (49.0, 78.0), (50.2, 84.6), (50.6, 91.2), (50.0, 97.8), (48.6, 104.4), (46.4, 111.0)]
-PIVOT = (46.0, 114.0)          # rotation point for the motion ghosts (base of the neck)
+
+# ---- cervical spine, side view (figure coords).  Body centres C1..C7 with the normal forward curve
+# (lordosis); C1 sits under the skull base at ear-lobe level, C7 at the base of the neck; T1 fades out.
+# Proportions from a lateral view (1 unit is about 3 mm): bodies about as deep as they are tall,
+# a spinal canal about as deep as a body, short C3-C5 spinous processes, big C2 and longest C7.
+SPINE_PTS = [(47.0, 69.5), (49.0, 76.0), (50.2, 82.6), (50.6, 89.2), (50.0, 95.8), (48.6, 102.4), (46.4, 109.0)]
+COL_PTS = SPINE_PTS + [(43.8, 115.6)]          # + T1
+PIVOT = (46.0, 114.0)          # rotation point for the motion ghost (base of the neck)
+PF, PB = -6.0, -9.4            # front and back of the articular pillars (u: toward the front of the neck)
+CORD_U, CORD_R = -4.65, 0.75   # spinal cord centre line and half-width, in the canal behind the bodies
+
+
+def _tangents(pts):
+    out = []
+    for k in range(len(pts)):
+        a, b = pts[max(k - 1, 0)], pts[min(k + 1, len(pts) - 1)]
+        dx, dy = b[0] - a[0], b[1] - a[1]
+        ln = math.hypot(dx, dy)
+        out.append((dx / ln, dy / ln))
+    return out
+
+
+TANS = _tangents(COL_PTS)
+
+
+def _pt(c, t, u, v):
+    """Point u toward the front of the neck and v down the column from c, in the frame of tangent t."""
+    return (c[0] + u * t[1] + v * t[0], c[1] - u * t[0] + v * t[1])
+
+
+def _rot(t):
+    return math.degrees(math.atan2(-t[0], t[1]))
+
+
+def _joint(j):
+    """Centre and frame of the level between vertebra j and j + 1 (j = 6 is C7/T1)."""
+    a, b = COL_PTS[j], COL_PTS[j + 1]
+    tx, ty = TANS[j][0] + TANS[j + 1][0], TANS[j][1] + TANS[j + 1][1]
+    ln = math.hypot(tx, ty)
+    return ((a[0] + b[0]) / 2, (a[1] + b[1]) / 2), (tx / ln, ty / ln)
+
+
+def _facet(j, side):
+    """Facet joint j as (front, back) points, nudged down (side +1) or up (-1) by half the joint space.
+    Cervical facet joints slope down toward the back; C1/C2 (j = 0) is nearly flat."""
+    c, t = _joint(j)
+    dv = 0.3 if j == 0 else 1.25
+    return _pt(c, t, PF, -dv + side * 0.35), _pt(c, t, PB, dv + side * 0.35)
+
+
+def _poly(pts):
+    return "M" + " L".join(f"{x:.2f},{y:.2f}" for x, y in pts) + " Z"
+
+
+def _smooth(pts, closed=True):
+    """Smooth path through points (quadratic midpoints), like _blob."""
+    n = len(pts)
+    if closed:
+        d = [f"M{(pts[0][0] + pts[-1][0]) / 2:.2f},{(pts[0][1] + pts[-1][1]) / 2:.2f}"]
+        for i in range(n):
+            p, q = pts[i], pts[(i + 1) % n]
+            d.append(f"Q{p[0]:.2f},{p[1]:.2f} {(p[0] + q[0]) / 2:.2f},{(p[1] + q[1]) / 2:.2f}")
+        return "".join(d) + "Z"
+    d = [f"M{pts[0][0]:.2f},{pts[0][1]:.2f}"]
+    for i in range(1, n - 1):
+        p, q = pts[i], pts[i + 1]
+        d.append(f"Q{p[0]:.2f},{p[1]:.2f} {(p[0] + q[0]) / 2:.2f},{(p[1] + q[1]) / 2:.2f}")
+    d.append(f"L{pts[-1][0]:.2f},{pts[-1][1]:.2f}")
+    return "".join(d)
+
+
+# local shapes, drawn in a vertebra's own frame (x: toward the front of the neck, y: down the column)
+BODY_D = ("M-3.3,-1.7 Q-3.3,-2.5 -2.5,-2.5 Q0,-2.2 2.5,-2.55 Q3.3,-2.55 3.3,-1.7 L3.3,1.75 "
+          "Q3.3,2.85 2.3,2.8 L-2.5,2.5 Q-3.3,2.5 -3.3,1.7 Z")
+# C2: a taller body with the dens (odontoid peg) rising behind the front arch of C1; its back is in
+# line with the back of the body.
+C2_D = ("M-3.3,-2.4 L-3.3,1.8 Q-3.3,2.7 -2.3,2.65 L2.0,2.9 Q3.4,3.0 3.4,1.9 L3.3,-1.6 Q3.2,-2.5 2.2,-2.6 "
+        "L1.3,-2.7 Q.55,-3.0 .5,-3.9 L.7,-6.2 Q.6,-8.0 -1.3,-8.1 Q-2.9,-8.0 -3.1,-6.4 Z")
+PED_D = "M-2.9,-2.2 C-4.1,-1.9 -5.2,-1.9 -6.4,-2.1 L-6.4,-.45 C-5.2,-.75 -4.1,-.75 -2.9,-.5 Z"
+C1_POST_D = "M-9.0,-.9 Q-11.4,-.65 -12.9,-.45 Q-14.7,-.6 -14.8,.5 Q-14.7,1.65 -12.9,1.45 Q-11.4,1.05 -9.0,.95 Z"
+# lamina + spinous process from the back of the pillar: (root top, root bottom, length, drop, tip height)
+SPINOUS = {1: (-2.1, 2.9, 6.4, 2.4, 2.7),       # C2: large and blunt
+           2: (-.6, 2.2, 3.0, 1.6, 1.25),        # C3 to C5: short
+           3: (-.6, 2.2, 3.0, 1.6, 1.25),
+           4: (-.6, 2.2, 3.3, 1.7, 1.3),
+           5: (-.5, 2.3, 5.0, 2.1, 1.45),        # C6: longer
+           6: (-.4, 2.5, 8.2, 2.5, 1.9)}         # C7: the longest (vertebra prominens)
+
+
+def _spinous_d(rt, rb, ln, drop, th):
+    x0, x1 = PB + .7, PB - ln          # starts inside the pillar so the pillar hides the join
+    ty = rt + drop
+    return (f"M{x0:.2f},{rt:.2f} Q{(x0 + x1) / 2:.2f},{rt + drop * .42:.2f} {x1:.2f},{ty:.2f} "
+            f"Q{x1 - th * .62:.2f},{ty + th / 2:.2f} {x1:.2f},{ty + th:.2f} "
+            f"Q{(x0 + x1) / 2:.2f},{(rb + ty + th) / 2 + .3:.2f} {x0:.2f},{rb:.2f} Z")
+
+
+BONE_ST = f'fill="{BONE}" stroke="{BONE_EDGE}" stroke-width=".55" stroke-linejoin="round"'
+
+
+def _local(k, d, extra=BONE_ST):
+    c, t = COL_PTS[k], TANS[k]
+    return f'<path transform="translate({c[0]:.2f},{c[1]:.2f}) rotate({_rot(t):.2f})" d="{d}" {extra}/>'
+
+
+def _cord_path():
+    c0, t0 = COL_PTS[0], TANS[0]
+    cl = [(c0, t0, -12.0), (c0, t0, -7.0)]     # on up into the skull (the brainstem), faded out
+    for k in range(len(COL_PTS)):
+        cl.append((COL_PTS[k], TANS[k], 0.0))
+        if k < len(COL_PTS) - 1:
+            c, t = _joint(k)
+            cl.append((c, t, 0.0))
+    cl.append((COL_PTS[-1], TANS[-1], 5.0))
+    left = [_pt(c, t, CORD_U + CORD_R, v) for c, t, v in cl]
+    right = [_pt(c, t, CORD_U - CORD_R, v) for c, t, v in cl]
+    return _smooth(left, closed=False) + " L" + _smooth(right[::-1], closed=False)[1:] + " Z"
+
+
+def _skull_base():
+    """Faint skull base where the column meets the head, at ear-lobe level: the occipital condyle resting on
+    the lateral mass of C1 (the C0/C1 joint), and a thin line along the bottom of the skull from behind the
+    cord (the foramen magnum) back along the occipital bone, fading out toward the back of the head."""
+    c0, t0 = COL_PTS[0], TANS[0]
+    f = lambda u, v: "{:.2f},{:.2f}".format(*_pt(c0, t0, u, v))
+    cond = (f'<path d="M{f(-5.5, -3.6)} C{f(-5.8, -2.25)} {f(-9.6, -2.15)} {f(-9.9, -3.4)} Z" fill="{BONE}" '
+            f'stroke="{BONE_EDGE}" stroke-width=".5" stroke-linejoin="round"/>')
+    pts = [_pt(c0, t0, -5.3, -3.7), _pt(c0, t0, -7.7, -3.62), _pt(c0, t0, -10.3, -3.8), _pt(c0, t0, -13.6, -4.3),
+           (26.0, 68.3), (18.5, 65.2)]
+    fade = ('<linearGradient id="ih-skg" gradientUnits="userSpaceOnUse" x1="44" y1="0" x2="18" y2="0">'
+            '<stop offset="0" stop-color="#fff"/><stop offset=".55" stop-color="#fff"/>'
+            '<stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>'
+            '<mask id="ih-skm"><rect x="10" y="55" width="40" height="20" fill="url(#ih-skg)"/></mask>')
+    line = (f'<path d="{_smooth(pts, closed=False)}" mask="url(#ih-skm)" fill="none" stroke="{BONE_EDGE}" '
+            'stroke-width=".8" stroke-linecap="round" opacity=".85"/>')
+    return fade + line + cond
 
 
 def _spine():
-    """C1 to C7: vertebral bodies (rounded blocks), discs and spinous processes along the curve."""
+    """C1 to C7 (and the top of T1), side view: bodies and discs in front, the spinal cord in the canal
+    behind them, pedicles crossing to the stacked articular pillars (the facet column), then the laminae
+    and spinous processes.  C1 has no body: a small front arch, the lateral mass and a thin back arch."""
     o = []
-    pts = SPINE_PTS
-    angs = []
-    for k, (x, y) in enumerate(pts):
-        a, b = pts[max(k - 1, 0)], pts[min(k + 1, len(pts) - 1)]
-        angs.append(math.degrees(math.atan2(b[1] - a[1], b[0] - a[0])) - 90)
-    for k, ((x, y), ang) in enumerate(zip(pts, angs)):
-        w, h = (8.6, 4.2) if k == 0 else (10.4, 5.0)
-        sp = 9.5 if k == 0 else 11.0 + k * 0.7          # spinous processes lengthen toward C7
-        o.append(f'<g transform="translate({x:.1f},{y:.1f}) rotate({ang:.1f})">'
-                 f'<path d="M-3.4,-1.2 L{-3.4 - sp:.1f},{1.6 + k * .25:.1f} C{-4.6 - sp:.1f},{2.3 + k * .25:.1f} '
-                 f'{-4.2 - sp:.1f},{3.9 + k * .25:.1f} {-2.8 - sp:.1f},{3.7 + k * .25:.1f} L-3.4,2.6 Z" '
-                 f'fill="{BONE}" stroke="{BONE_EDGE}" stroke-width=".55" stroke-linejoin="round"/>'
-                 f'<rect x="{-w / 2:.1f}" y="{-h / 2:.1f}" width="{w}" height="{h}" rx="1.6" fill="{BONE}" '
-                 f'stroke="{BONE_EDGE}" stroke-width=".65"/></g>')
-    for k in range(len(pts) - 1):
-        (x, y), (nx, ny) = pts[k], pts[k + 1]
-        mx, my = (x + nx) / 2, (y + ny) / 2
-        ang = (angs[k] + angs[k + 1]) / 2
-        o.append(f'<ellipse cx="{mx:.1f}" cy="{my:.1f}" rx="4.7" ry=".95" fill="{DISC}" stroke="#6E9DBA" '
-                 f'stroke-width=".35" transform="rotate({ang:.1f} {mx:.1f} {my:.1f})"/>')
+    # spinal cord, fading out at both ends
+    o.append('<linearGradient id="ih-cdg" gradientUnits="userSpaceOnUse" x1="0" y1="60" x2="0" y2="123">'
+             '<stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".11" stop-color="#fff"/>'
+             '<stop offset=".8" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>'
+             '<mask id="ih-cdm"><rect x="0" y="50" width="100" height="80" fill="url(#ih-cdg)"/></mask>')
+    o.append(f'<path d="{_cord_path()}" mask="url(#ih-cdm)" fill="{CORD}" stroke="{CORD_EDGE}" stroke-width=".45"/>')
+    o.append(_skull_base())
+    # T1 and everything that belongs to it fades out toward the shoulders
+    o.append('<linearGradient id="ih-t1g" gradientUnits="userSpaceOnUse" x1="0" y1="111" x2="0" y2="121">'
+             '<stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>'
+             '</linearGradient><mask id="ih-t1m"><rect x="0" y="100" width="100" height="30" fill="url(#ih-t1g)"/></mask>')
+    t1 = []
+    # discs (none between C1 and C2), tucked under the bodies
+    for j in range(1, 7):
+        c, t = _joint(j)
+        disc = (f'<path transform="translate({c[0]:.2f},{c[1]:.2f}) rotate({_rot(t):.2f})" '
+                f'd="M-3.0,-.95 Q0,-1.2 3.15,-.95 L3.2,.95 Q0,1.2 -3.0,.95 Z" fill="{DISC}" stroke="{DISC_EDGE}" stroke-width=".4"/>')
+        (t1 if j == 6 else o).append(disc)
+    # laminae + spinous processes, and the thin back arch of C1
+    o.append(_local(0, C1_POST_D))
+    for k, sp in SPINOUS.items():
+        o.append(_local(k, _spinous_d(*sp)))
+    # pedicles cross the canal (drawn over the cord, under the bodies and pillars)
+    for k in range(1, 7):
+        o.append(_local(k, PED_D))
+    t1.append(_local(7, PED_D))
+    # articular pillars: C1's lateral mass under the skull, then C2 to C7 stacked on the facet joints
+    c0, t0 = COL_PTS[0], TANS[0]
+    f0 = _facet(0, -1)
+    a, b, m = _pt(c0, t0, -5.7, -2.5), _pt(c0, t0, -9.7, -2.2), _pt(c0, t0, -7.7, -1.6)
+    o.append(f'<path d="M{a[0]:.2f},{a[1]:.2f} Q{m[0]:.2f},{m[1]:.2f} {b[0]:.2f},{b[1]:.2f} L{f0[1][0]:.2f},{f0[1][1]:.2f} '
+             f'L{f0[0][0]:.2f},{f0[0][1]:.2f} Z" {BONE_ST}/>')
+    for k in range(1, 7):
+        top, bot = _facet(k - 1, 1), _facet(k, -1)
+        o.append(f'<path d="{_poly([top[0], top[1], bot[1], bot[0]])}" {BONE_ST}/>')
+    top = _facet(6, 1)
+    c7, t7 = COL_PTS[7], TANS[7]
+    t1.append(f'<path d="{_poly([top[0], top[1], _pt(c7, t7, PB, 3.0), _pt(c7, t7, PF, 1.6)])}" {BONE_ST}/>')
+    # bodies: C2 with its dens, C3 to C7, and the front arch of C1 in front of the dens
+    o.append(_local(1, C2_D, f'fill="{BONE}" stroke="{BONE_EDGE}" stroke-width=".6" stroke-linejoin="round"'))
+    for k in range(2, 7):
+        o.append(_local(k, BODY_D, f'fill="{BONE}" stroke="{BONE_EDGE}" stroke-width=".6" stroke-linejoin="round"'))
+    t1.append(_local(7, BODY_D, f'fill="{BONE}" stroke="{BONE_EDGE}" stroke-width=".6" stroke-linejoin="round"'))
+    o.append(f'<ellipse transform="translate({c0[0]:.2f},{c0[1]:.2f}) rotate({_rot(t0):.2f})" cx="2.5" cy="-.1" rx="1.15" '
+             f'ry="1.8" {BONE_ST}/>')
+    o.append('<g mask="url(#ih-t1m)">' + "".join(t1) + "</g>")
     return "".join(o)
 
 
@@ -397,18 +589,34 @@ def _ghost(deg):
     px, py = PIVOT
     return ('<linearGradient id="ih-ghg" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="96">'
             '<stop offset="0" stop-color="#fff"/><stop offset=".62" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>'
-            '</linearGradient><mask id="ih-gm"><rect x="-20" y="-10" width="130" height="106" fill="url(#ih-ghg)"/></mask>'
-            f'<g transform="rotate({deg} {px} {py})"><path d="{HEAD_D}" mask="url(#ih-gm)" fill="#F6E3D7" fill-opacity=".8" '
+            '</linearGradient><mask id="ih-ghm"><rect x="-20" y="-10" width="130" height="106" fill="url(#ih-ghg)"/></mask>'
+            f'<g transform="rotate({deg} {px} {py})"><path d="{HEAD_D}" mask="url(#ih-ghm)" fill="#F6E3D7" fill-opacity=".8" '
             f'stroke="#9AA8B4" stroke-width="1.1" stroke-dasharray="3.2 2.4" stroke-linejoin="round"/></g>')
 
 
-FIG_S, FIG_X, FIG_Y = 1.42, 19.0, 28.0      # figure scale and placement inside the inset
-LENS = (FIG_X + 54.0 * FIG_S, FIG_Y + 108.6 * FIG_S, 8.6)   # lens: front of the neck, C6 to C7
+FIG_S, FIG_X, FIG_Y = 1.42, 19.0, 24.0      # figure scale and placement inside the inset
 
 
-def _arc_arrow(d, n, nx, ny):
-    return (f'<path d="{d}" stroke="{INK}" stroke-width="2.3" fill="none" stroke-linecap="round" marker-end="url(#ih-ar)"/>'
-            f'<circle cx="{nx}" cy="{ny}" r="7.6" fill="{INK}"/>' + T(nx, ny + 3.6, str(n), 10, 800, "#FFFFFF", "middle"))
+def _lens():
+    """Lens on the front of the C6/C7 disc, where an extension injury stretches the front ligament."""
+    c, t = _joint(5)
+    x, y = _pt(c, t, 4.1, 0)
+    return (FIG_X + x * FIG_S, FIG_Y + y * FIG_S, 8.6)
+
+
+LENS = _lens()
+
+
+def _tag(cx, cy, text):
+    """Small word tag (dark pill, white caps) naming a motion arrow."""
+    fs, ls = 9.7, 0.5
+    w = tw(text, fs, 800, ls) + 9
+    return (f'<rect x="{cx - w / 2:.1f}" y="{cy - 6.6:.1f}" width="{w:.1f}" height="13.2" rx="6.6" fill="{INK}"/>'
+            + T(cx, cy + 3.4, text, fs, 800, "#FFFFFF", "middle", ls=ls))
+
+
+def _arrow(d):
+    return f'<path d="{d}" stroke="{INK}" stroke-width="2.3" fill="none" stroke-linecap="round" marker-end="url(#ih-ar)"/>'
 
 
 def whiplash_inset():
@@ -419,42 +627,56 @@ def whiplash_inset():
     fig = [f'<g transform="translate({FIG_X},{FIG_Y}) scale({FIG_S})">',
            _ghost(-19),
            f'<path d="{HEAD_D}" fill="url(#ih-skin)" stroke="{SKIN_EDGE}" stroke-width=".9" stroke-linejoin="round"/>',
-           f'<path d="{EAR_D}" fill="{SKIN_SH}" stroke="{SKIN_EDGE}" stroke-width=".7"/>',
-           f'<path d="M36.6,53 C35.4,55.6 35.8,58.8 37.4,60.4" stroke="{SKIN_EDGE}" stroke-width=".6" fill="none"/>',
-           # soft jaw line: from below the ear to the angle, then forward toward the chin
-           f'<path d="M43,67 C43.4,74 45,79.4 49,82.6 C55,86.6 64,88.4 72.4,88.2" stroke="{SKIN_EDGE}" stroke-width=".7" '
+           # soft jaw line: the lower border of the jaw, in front of the neck bones, out to the chin
+           f'<path d="M55.6,86.3 C60.2,87.9 65.8,88.7 72.4,88.2" stroke="{SKIN_EDGE}" stroke-width=".7" '
            'fill="none" opacity=".55"/>',
            f'<path d="M79.2,47.2 C77.6,48.4 77.4,50.2 78.8,51" stroke="{SKIN_EDGE}" stroke-width=".6" fill="none" opacity=".7"/>',
-           _spine(), "</g>"]
+           _spine(),
+           # the ear is the outermost layer: it sits in front of the deep structures (the brainstem runs behind it)
+           f'<path d="{EAR_D}" fill="{SKIN_SH}" stroke="{SKIN_EDGE}" stroke-width=".7"/>',
+           f'<path d="M36.6,53 C35.4,55.6 35.8,58.8 37.4,60.4" stroke="{SKIN_EDGE}" stroke-width=".6" fill="none"/>',
+           "</g>"]
     o += fig
-    # motion: 1 snaps back, 2 whips forward
-    o.append(_arc_arrow("M70,26 C52,24 33,34 22,54", 1, 81, 23))
-    o.append(_arc_arrow("M141,36 C151,44 156,57 155,73", 2, 131, 25))
-    o.append(T(cx, bot - 70, "WHIPLASH", 12.5, 800, "#123F60", "middle", ls=1.2))
-    o.append(T(cx, bot - 53, ["A crash snaps the head", "back, then forward.", "Neck ligaments and", "muscles overstretch."],
-               10.6, 600, INK, "middle", lh=1.22))
+    # motion: the head snaps BACK (the dashed outline), then whips FORWARD [NINDS]
+    o.append(_arrow("M50,20 C37,20 25,28 17,44"))
+    o.append(_tag(70, 18, "BACK"))
+    o.append(_arrow("M143,26 C151,36 155,50 154,66"))
+    o.append(_tag(124, 18, "FORWARD"))
+    ty = FIG_Y + 136 * FIG_S + 23
+    o.append(T(cx, ty, "WHIPLASH", 12.5, 800, "#123F60", "middle", ls=1.2))
+    o.append(T(cx, ty + 16, ["A crash snaps the head", "back (dashed outline), then", "forward. Neck ligaments",
+                             "and muscles overstretch."], 10.6, 600, INK, "middle", lh=1.22))
     return "".join(o)
 
 
 # ============================================================== headings, ribbon, captions
 PHASES = [
-    # name, time window ([LEONG20]: inflammation starts at once, fibroblasts from about day 2,
-    # remodelling from about 2 weeks and for months to years; windows overlap [THOMO15])
-    ("INFLAMMATION", "Days 0 to 5"),
-    ("REPAIR", "Days 3 to 21"),
+    # name, time window.  [THOMO15]: "a short inflammatory phase, which lasts about a week, followed by a
+    # proliferative phase, which lasts a few weeks, followed by a remodeling phase, which lasts many months".
+    # [LEONG20]: inflammation "begins immediately after acute injury"; "Approximately two days following
+    # injury" fibroblasts start the proliferative stage; "About two weeks following injury, remodeling ...
+    # begins" and "continues for months and years".  The windows overlap on purpose.
+    ("INFLAMMATION", "Days 0 to 7"),
+    ("REPAIR", "Day 2 to a few weeks"),
     ("REMODEL", "Week 3 to a year or more"),
 ]
 PCOL = [P1, P2, P3]
 PTX = [P1_TX, P2_TX, P3_TX]
 CAPS = [
     # [LEONG20]: clot first; neutrophils, then macrophages clear the damaged tissue
-    ["Torn fibers bleed and clot.", "Inflammation brings swelling", "and immune cells that clean up."],
-    ["Repair cells (fibroblasts)", "lay down new collagen, first", "in a loose criss-cross."],
+    ["Torn ligament fibers bleed and", "clot. Swelling and immune cells", "move in to clean up."],
+    # [LEONG20]: fibroblasts lay down scar; VEGF "stimulating angiogenesis" (new vessels)
+    ["Repair cells (fibroblasts) lay", "down new collagen in a loose", "criss-cross. New vessels sprout."],
+    # [LEONG20]: fibres "aligned in the direction of stress"; "continues for months and years"
     ["Steady pull lines the new", "fibers up, so the patch grows", "stronger over many months."],
 ]
-PARTS = [("Protect it.", "Gentle motion as advised."),
-         ("Move it gently.", "Easy, pain-free range."),
-         ("Load it.", "Keep up your exercises.")]
+# What the patient may notice in each phase: the classic signs of inflammation (swelling, warmth, pain);
+# new repair tissue is still weak [LEONG20]; remodelling scar is stiff but gains strength with load [KHAN09].
+FEELS = ["You may feel: swollen, warm, sore", "You may feel: less pain, still weak",
+         "You may feel: stiff, but stronger"]
+PARTS = [("Protect it.", "Gentle motion as advised."),     # [PEACE20] protect early
+         ("Move it gently.", "Easy, pain-free range."),     # [PEACE20] load without making pain worse
+         ("Load it.", "Keep up your exercises.")]          # [KHAN09] load drives remodelling
 
 
 def headings():
@@ -483,7 +705,8 @@ def captions():
     o = []
     for i in range(3):
         x = PXS[i] + 6
-        o.append(T(x, CAP_Y, CAPS[i], 10.8, 600, INK, lh=1.25))
+        o.append(T(x, CAP_Y, CAPS[i], 10.8, 600, INK, lh=CAP_LH / 10.8))
+        o.append(T(x, CAP_Y + 3 * CAP_LH + 1, FEELS[i], 10.4, 600, PTX[i], italic=True))
         y = PART_Y
         o.append(f'<rect x="{PXS[i]}" y="{y}" width="{PW}" height="34" rx="8" fill="#FFFFFF" stroke="{PCOL[i]}" stroke-width="1.4"/>'
                  f'<rect x="{PXS[i]}" y="{y}" width="6" height="34" rx="3" fill="{PCOL[i]}"/>')
@@ -526,6 +749,16 @@ def zoom():
 
 
 # ============================================================== KEY
+def _key_bone():
+    """Swatch: one side-view vertebra (body, pedicle, pillar, short spinous process) over its disc."""
+    sp = _spinous_d(*SPINOUS[2])
+    pil = _poly([(PF, -4.2), (PB, -1.7), (PB, 4.2), (PF, 1.7)])
+    return (f'<g transform="translate(7.3,-.3) scale(1.6)">'
+            f'<path d="M-3.0,2.0 Q0,1.75 3.15,2.0 L3.2,3.9 Q0,4.15 -3.0,3.9 Z" fill="{DISC}" stroke="{DISC_EDGE}" stroke-width=".4"/>'
+            f'<path d="{sp}" {BONE_ST}/><path d="{PED_D}" {BONE_ST}/><path d="{pil}" {BONE_ST}/>'
+            f'<path d="{BODY_D}" transform="translate(0,-.6)" fill="{BONE}" stroke="{BONE_EDGE}" stroke-width=".6"/></g>')
+
+
 def _key_items():
     fib = (f'<g transform="translate(-12,-5)">{fiber(0, 24, 1, 8, amp=1.2, lam=14)}</g>')
     swell = (f'<ellipse rx="12" ry="8" fill="url(#ih-swell)"/><ellipse rx="12" ry="8" fill="none" stroke="{SWELL}" '
@@ -533,21 +766,21 @@ def _key_items():
     clot = (f'<path d="{_blob(0, 0, 11, 7.5, random.Random(3), 12, 0.18)}" fill="#D9535B" fill-opacity=".5" stroke="#B23A42" '
             'stroke-width=".8" stroke-opacity=".75"/><path d="M-6,-3 L5,4 M-4,4 L6,-3" stroke="#FBE0E0" stroke-width=".7"/>'
             + red_cell(1, 0, 20, 0.8))
-    ves = (f'<rect x="-13" y="-6" width="26" height="12" rx="2" fill="{VES}" stroke="{VES_EDGE}" stroke-width=".8"/>'
-           f'<rect x="-13" y="-3.6" width="26" height="7.2" fill="{VES_LUM}"/>')
+    ves = (_sprout_draw(_sprout(-2, 0.5, 6.5, 8), 3.0)
+           + f'<rect x="-13" y="-7.5" width="26" height="9" rx="2" fill="{VES}" stroke="{VES_EDGE}" stroke-width=".8"/>'
+           f'<rect x="-13" y="-5.6" width="26" height="5.2" fill="{VES_LUM}"/>')
     newc = ('<g>' + new_collagen(-11, 5, 9, -6) + new_collagen(-10, -5, 11, 4) + new_collagen(-3, -7, 2, 7) + '</g>')
     grn = (f'<g transform="translate(-12,-4)">{fiber(0, 24, 0, 8, amp=0.8, lam=14, kind="new")}</g>')
     pull = (f'<path d="M-12,0 H12" stroke="{PULL}" stroke-width="2.4" marker-start="url(#ih-pl)" marker-end="url(#ih-pl)"/>')
-    bone = (f'<path d="M-3,-1 L-13,1.6 C-14.4,2.2 -14.2,3.6 -12.8,3.6 L-3,2.6 Z" fill="{BONE}" stroke="{BONE_EDGE}" stroke-width=".6"/>'
-            f'<rect x="-4.2" y="-6.4" width="11" height="5" rx="1.6" fill="{BONE}" stroke="{BONE_EDGE}" stroke-width=".7"/>'
-            f'<ellipse cx="1.3" cy="0.2" rx="5.2" ry="1.1" fill="{DISC}" stroke="#6E9DBA" stroke-width=".4"/>'
-            f'<rect x="-4.2" y="1.6" width="11" height="5" rx="1.6" fill="{BONE}" stroke="{BONE_EDGE}" stroke-width=".7"/>')
+    cord = (f'<path d="M-12,-2.3 Q0,-3.1 12,-2.3 L12,2.3 Q0,1.5 -12,2.3 Z" fill="{CORD}" stroke="{CORD_EDGE}" stroke-width=".6"/>')
     lens = ('<path d="M3,-5 L13,-9 M3,5 L13,9" stroke="#6F7A82" stroke-width="1"/>'
             '<circle cx="-2" r="6.5" fill="#FFFFFF" stroke="#2F3A42" stroke-width="1.4"/>')
-    return [(fib, "Healthy fibers"), (swell, "Swelling (inflammation)"), (clot, "Blood clot"), (ves, "Small blood vessel"),
+    return [(fib, "Healthy ligament fibers"), (swell, "Swelling (inflammation)"), (clot, "Blood clot"),
+            (ves, "Blood vessel, new sprouts"),
             (red_cell(0, 0, 0, 1.15), "Red blood cell"), (immune(0, 0), "Immune cell"),
             (fibroblast(0, 0, -20, 0.85), "Fibroblast (repair cell)"), (newc, "New collagen"),
-            (grn, "Lined-up new fibers"), (pull, "Pull of movement"), (bone, "Neck bone and disc"), (lens, "Magnified spot")]
+            (grn, "Lined-up new fibers"), (pull, "Pull of movement"), (_key_bone(), "Neck bones and disc"),
+            (cord, "Spinal cord"), (lens, "Magnified spot")]
 
 
 def key_box(y):
@@ -561,24 +794,29 @@ def key_box(y):
     for n, (sw, lab) in enumerate(items):
         r, c = divmod(n, cols)
         cx = start + c * col_w
-        cy = y + 14 + r * 22
+        cy = y + 13 + r * KEY_ROW
         o.append(f'<g transform="translate({cx + sw_w / 2:.1f},{cy:.1f})">{sw}</g>')
         o.append(T(round(cx + sw_w + gap, 1), cy + 3.9, lab, 11, 600, INK))
+    # the last row's free cells carry the note on the time ribbon ([LEONG20]: sprains and strains can
+    # take years to remodel; bigger injuries and surgical repairs follow the same phases on a longer clock)
+    r, c = divmod(len(items), cols)
+    o.append(T(round(start + c * col_w + 4, 1), y + 13 + r * KEY_ROW + 3.7,
+               "Times on the ribbon are typical. Bigger injuries and surgery take longer.", 10.5, 500, "#4F5A61",
+               italic=True))
     return "".join(o)
 
 
 def art_phases():
-    pl = (f'<marker id="ih-pl" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="3.6" markerHeight="3.6" '
-          f'orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="{PULL}"/></marker>')
-    body = [ih_defs().replace("</defs>", pl + "</defs>"), whiplash_inset(), zoom(), headings()]
+    body = [ih_defs(), whiplash_inset(), zoom(), headings()]
     for i in range(3):
         body.append(f'<g transform="translate({PXS[i]},{VY0})">{view(i)}</g>')
     body.append(captions())
     body.append(key_box(KEY_Y))
     return svg(W, H, "".join(body),
-               "Whiplash overstretches the soft tissue of the neck. A magnified ligament heals in three overlapping "
-               "phases: inflammation with a clot, swelling and immune cells; repair, with fibroblasts laying new "
-               "collagen in a criss-cross; and remodelling, where steady pull lines the new fibers up.")
+               "Whiplash snaps the head back, then forward, and overstretches the soft tissue of the neck. A magnified "
+               "ligament with a partial tear heals in three overlapping phases: inflammation with a clot, swelling and "
+               "immune cells; repair, with fibroblasts laying new collagen in a criss-cross and new vessels sprouting; "
+               "and remodelling, where steady pull lines the new fibers up.")
 
 
 # ============================================================== front page blocks
@@ -586,8 +824,14 @@ def art_phases():
 IC_COUCH = ('<path d="M13 30v-6a6 6 0 0 1 6-6h26a6 6 0 0 1 6 6v6"/>'
             '<path d="M7 35a5 5 0 0 1 10 0v4h30v-4a5 5 0 0 1 10 0v12H7z"/><path d="M11 47v6M53 47v6"/>'
             '<path d="M27 11h6l-6 6h6M37 5h5l-5 5h5"/>')                       # couch with "zz": too much rest
-IC_RUSH = ('<path d="M14 26v12M20 20v24M44 20v24M50 26v12M20 32h24"/>'
-           '<path d="M8 50h48" stroke-dasharray="2 5"/><path d="M41 9l7-3 3 7"/><path d="M48 6 37 17"/>')  # weights + jump arrow
+IC_RUSH = ('<path d="M7 57h50"/><rect x="11" y="45" width="9" height="12" rx="1.5"/>'
+           '<rect x="25" y="38" width="9" height="19" rx="1.5"/><rect x="39" y="24" width="9" height="33" rx="1.5"/>'
+           '<path d="M9 33 45 7"/><path d="M33 7h12v12"/>')         # bars jumping up with a steep arrow: too much, too soon
+IC_STRESS = ('<circle cx="32" cy="35" r="21"/><path d="M20 27l8 3.5M44 27l-8 3.5"/>'
+             '<circle cx="25" cy="36" r="1.9" fill="currentColor" stroke="none"/>'
+             '<circle cx="39" cy="36" r="1.9" fill="currentColor" stroke="none"/>'
+             '<path d="M21 47l3.7-3 3.7 3 3.6-3 3.7 3 3.7-3 3.6 3"/>'
+             '<path d="M13 8l3 6M32 3v7M51 8l-3 6"/>')               # tense face, gritted teeth, strain lines: stress
 
 
 def _ic(body, size="0.33in", sw=2.8):
@@ -601,26 +845,29 @@ SLOWERS = [  # what can slow healing
     ("egg", "Too little<br>protein"),             # [GUO10] nutrition; Tipton 2015 (PMID 26553492): avoid protein shortfall
     ("bloodsugar", "High blood<br>sugar"),        # [GUO10] diabetes
     ("glass", "Alcohol"),                         # [GUO10] alcohol exposure impairs healing
-    ("breath", "Ongoing<br>stress"),              # [GUO10] stress
+    ("stress", "Ongoing<br>stress"),              # [GUO10] stress
     ("couch", "Too much<br>rest"),                # [KHAN09] load drives repair; [PEACE20] LOVE: load, exercise
     ("rush", "Too much,<br>too soon"),            # [PEACE20] load without making pain worse
 ]
+OWN_ICONS = {"couch": IC_COUCH, "rush": IC_RUSH, "stress": IC_STRESS}
 
 
 def slow_row():
     cells = []
     for ic, lab in SLOWERS:
-        art = (_ic(IC_COUCH) if ic == "couch" else _ic(IC_RUSH) if ic == "rush" else icon(ic, "0.33in", sw=2.8))
+        art = _ic(OWN_ICONS[ic]) if ic in OWN_ICONS else icon(ic, "0.33in", sw=2.8)
         cells.append(f'<div class="ihl-sf"><span class="ihl-disc">{art}</span><span class="ihl-sl">{lab}</span></div>')
     return f'<div class="ihl-slow">{"".join(cells)}</div>'
 
 
 def care_box():
-    # 911 now: [CDC-VTE] chest pain or trouble breathing; [CDC-TBI] danger signs after a head injury;
-    # [AAOS] new weakness or numbness with loss of bladder or bowel control.
+    # 911 now: [CDC-VTE] chest pain or trouble breathing; [AHA-STR] stroke signs (neck trauma can, rarely,
+    # injure a neck artery); [CDC-TBI] danger signs after a head injury (its "slurred speech" is carried by the
+    # stroke line's "trouble speaking"); [AAOS] new weakness or numbness with loss of bladder or bowel control.
     now = ["<b>Chest pain</b> or sudden trouble breathing",
+           "<b>Signs of stroke:</b> face drooping, arm weakness, trouble speaking, sudden vision loss or severe dizziness",
            "<b>After a crash or blow to the head:</b> a headache that keeps getting worse, repeated vomiting, "
-           "slurred speech, confusion or unusual sleepiness",
+           "confusion or unusual sleepiness",
            "<b>New weakness or numbness</b> with loss of bladder or bowel control"]
     # Same day: [CDC-VTE] leg swelling or pain ("contact your provider as soon as possible");
     # [CDC-SSI] redness, pain, cloudy drainage or fever after surgery; [NINDS]/[AAOS] new nerve signs.
@@ -638,10 +885,7 @@ def care_box():
 def front(t, ed):
     return ('<div class="ihl"><h2 class="ihl-h">The three phases of healing</h2>'
             f'<div class="ihl-art">{art_phases()}</div>'
-            '<div class="ihl-h2"><h2 class="ihl-h">What can slow healing</h2>'
-            # [LEONG20]: sprains and strains heal with scar that "can take years to remodel"; bigger
-            # injuries and surgical repairs follow the same phases on a longer clock.
-            '<span>Times above are typical. Bigger injuries and surgery take longer.</span></div>'
+            '<h2 class="ihl-h ihl-h2">What can slow healing</h2>'
             f'{slow_row()}{care_box()}</div>')
 
 
@@ -650,19 +894,17 @@ CSS = r"""
 .ihl-h{display:flex;align-items:center;gap:0.1in;font:900 11pt/1.2 Merriweather,Georgia,serif;color:var(--c1);
   letter-spacing:.04em;text-transform:uppercase;margin:0.02in 0 0.06in}
 .ihl-h::after{content:"";flex:1;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--soft),rgba(227,238,246,0))}
-.ihl-h2{display:flex;align-items:baseline;gap:0.16in;margin-top:0.13in}
-.ihl-h2 .ihl-h{flex:1;margin:0 0 0.06in}
-.ihl-h2>span{flex:none;font-size:7.6pt;font-style:italic;color:#56626A}
+.ihl .ihl-h2{margin-top:0.11in}
 .ihl-slow{display:grid;grid-template-columns:repeat(8,1fr);gap:0 0.04in}
 .ihl-sf{display:flex;flex-direction:column;align-items:center;text-align:center}
-.ihl-disc{width:0.56in;height:0.56in;border-radius:50%;background:var(--soft);color:var(--c1);display:flex;
+.ihl-disc{width:0.54in;height:0.54in;border-radius:50%;background:var(--soft);color:var(--c1);display:flex;
   align-items:center;justify-content:center;box-shadow:inset 0 0 0 1.5px rgba(31,94,140,.12)}
 .ihl-sl{display:block;font-size:7.8pt;font-weight:600;line-height:1.22;color:#2F373C;margin-top:0.03in}
-.ihl-care{margin-top:0.13in;border:1.5px solid #E3B7B2;border-radius:10px;background:#FFFFFF;overflow:hidden}
+.ihl-care{margin-top:0.11in;border:1.5px solid #E3B7B2;border-radius:10px;background:#FFFFFF;overflow:hidden}
 .ihl-ch{display:flex;align-items:baseline;gap:0.14in;padding:0.06in 0.12in 0.04in}
 .ihl-ch b{flex:none;font:900 11pt/1.2 Merriweather,Georgia,serif;color:#A5281E;letter-spacing:.04em;text-transform:uppercase}
 .ihl-ch span{font-size:8.2pt;color:#2B3236}
-.ihl-cc{display:grid;grid-template-columns:1fr 1fr;gap:0.1in;padding:0 0.1in 0.08in}
+.ihl-cc{display:grid;grid-template-columns:1.14fr .86fr;gap:0.1in;padding:0 0.1in 0.08in}
 .ihl-cc>div{border-radius:7px;padding:0.05in 0.1in 0.06in}
 .ihl-now{background:#FDF0EE;border-left:4px solid #C0392B}
 .ihl-today{background:#FEF6E7;border-left:4px solid #D99A1C}
@@ -672,73 +914,120 @@ CSS = r"""
 .ihl-cc ul{margin:0;padding:0 0 0 11px}
 .ihl-cc li{font-size:7.9pt;line-height:1.3;color:#2B3236;margin:0 0 1px}
 .ihl-cc li b{color:#1F2A2E}
+.ihl-nw{white-space:nowrap}
+/* front footer: 7 pt floor */
+.sheet.front:has(.ihl) .foot,.sheet.front:has(.ihl) .foot .code{font-size:7pt}
+/* back page: scoped with :has() to the marker span in this sheet's lifestyle title.  7 pt floor for every
+   label on the page; equal-height need headers; the "In each serving" rows start on one line. */
+.sheet.back:has(.ihl-back) .col .need{height:0.53in;min-height:0.53in}
+.sheet.back:has(.ihl-back) .col .need i{font-size:7pt}
+.sheet.back:has(.ihl-back) .col .pick .sz{font-size:7pt}
+.sheet.back:has(.ihl-back) .col .what ul{min-height:4.2em}
+.sheet.back:has(.ihl-back) .col .key,.sheet.back:has(.ihl-back) .col .key b{font-size:7pt}
+.sheet.back:has(.ihl-back) .col .dose small{font-size:7pt}
+.sheet.back:has(.ihl-back) .startt{font-size:7pt}
+.sheet.back:has(.ihl-back) .slot li em{white-space:nowrap}
+.sheet.back:has(.ihl-back) .foot,.sheet.back:has(.ihl-back) .foot .code,.sheet.back:has(.ihl-back) .disc{font-size:7pt}
+/* back layout: the same blocks as every sheet, re-placed with a grid so the six-line check panel can run
+   full width in two columns; the daily rhythm and the notes box share the row under it. */
+.sheet.back:has(.ihl-back) .inner{display:grid;grid-template-columns:1.6fr 1fr;column-gap:0.1in;
+  grid-template-rows:auto auto auto auto auto auto 1fr auto}
+.sheet.back:has(.ihl-back) .inner>*{grid-column:1/-1}
+.sheet.back:has(.ihl-back) .band{grid-row:1}
+.sheet.back:has(.ihl-back) .ns-title{grid-row:2}
+.sheet.back:has(.ihl-back) .cols{grid-row:3}
+.sheet.back:has(.ihl-back) .duo{display:contents}
+.sheet.back:has(.ihl-back) .duo>.panel,.sheet.back:has(.ihl-back) .notes{margin-top:0.08in}
+.sheet.back:has(.ihl-back) .ns-title{margin-top:0.1in}
+.sheet.back:has(.ihl-back) .duo>.panel.rx{grid-row:4;grid-column:1/-1}
+.sheet.back:has(.ihl-back) .duo>.panel:not(.rx){grid-row:5;grid-column:1}
+.sheet.back:has(.ihl-back) .notes{grid-row:5;grid-column:2}
+.sheet.back:has(.ihl-back) .recby{grid-row:6}
+.sheet.back:has(.ihl-back) .foot{grid-row:8}
+.sheet.back:has(.ihl-back) .panel.rx ul{columns:2;column-gap:0.26in}
+.sheet.back:has(.ihl-back) .panel.rx li{break-inside:avoid}
 """
 
 SHEET = {
     "slug": "injury-healing", "code": "ND-MS-601", "order": 12, "theme": "msk", "series": "Pain and Movement Series",
     "title": "Healing After Injury", "sub": "Sprains, strains, whiplash and recovery from surgery",
-    # Three overlapping phases; inflammation is part of repair, not the enemy [LEONG20]; Tipton 2015
-    # (PMID 26553492): "attempting to drastically reduce inflammation may not be ideal for optimal recovery".
-    # Collagen I is the main protein of tendons and ligaments (65-80% of dry weight) [LEONG20].
-    "intro": ("After a sprain, strain, whiplash or surgery, your body repairs the hurt tissue in three overlapping "
-              "phases. <b>Inflammation</b> comes first, and it is part of healing. Next, repair cells lay down new "
-              "<b>collagen</b>, the rope-like protein that ligaments and tendons are made of. Then, over months, the "
-              "patch is <b>remodeled</b> and grows stronger. How you eat, sleep and move between visits helps each "
-              "phase do its job."),
+    # [NIAMS] sprain = ligament (bone to bone), strain = muscle or tendon; [LEONG20] tendons connect muscle to
+    # bone, ligaments bone to bone.  Three overlapping phases; inflammation is part of repair, not the enemy
+    # [LEONG20]; Tipton 2015 (PMID 26553492): "attempting to drastically reduce inflammation may not be ideal
+    # for optimal recovery".  Collagen I is the main protein of tendons and ligaments [LEONG20].
+    "intro": ("A <b>sprain</b> hurts a ligament, which ties bone to bone. A <b>strain</b> hurts a muscle or the tendon "
+              "that ties it to bone. After a sprain, strain, whiplash or surgery, the body heals in three overlapping "
+              "phases. <b>Inflammation</b> comes first, and it is part of healing. Then repair cells lay down new "
+              "<b>collagen</b>, the rope-like protein of ligaments and tendons. Over months, the patch is "
+              "<b>remodeled</b> and grows stronger. How you eat, sleep and move helps each phase."),
     "front": front,
     "css": CSS,
     "back": {
-        "life_title": "Lifestyle Recommendations", "style": "circle",
+        # the empty span lets this sheet's CSS reach its own back page (see CSS)
+        "life_title": 'Lifestyle Recommendations<span class="ihl-back"></span>', "style": "circle",
         "life": [
             # Tipton 2015 (PMID 26553492): avoid protein and energy shortfalls; higher protein while immobilised.
-            ("egg", "Protein every meal", "A palm-size portion of fish, eggs, chicken or beans. Repair runs on protein."),
+            ("egg", "Protein every meal", "Fish, eggs, chicken or beans, a palm-size portion."),
             # NIH ODS vitamin C fact sheet: vitamin C is required to make collagen.
-            ("apple", "Color for vitamin C", "Citrus, kiwi, berries and peppers. Your body needs vitamin C to build collagen."),
+            ("apple", "Color for vitamin C", "Citrus, kiwi and peppers help you make collagen."),
             # [SMITH18] short sleep delayed wound healing; AASM/SRS: adults need 7 or more hours.
-            ("moon", "Sleep 7 to 9 hours", "Short sleep slows repair. Keep a steady bedtime, even on weekends."),
+            ("moon", "Sleep 7 to 9 hours", "Short sleep slows repair. Keep a steady bedtime."),
             # [KHAN09] mechanotherapy; [LEONG20] fibres align "in the direction of stress".
-            ("walk", "Move as advised", "Gentle motion early, then your exercises. Load lines the new fibers up."),
+            ("walk", "Move as advised", "Gentle motion early, then exercises that line fibers up."),
             # [GUO10] smoking and alcohol impair healing; [LEONG20] collagen synthesis is oxygen dependent.
-            ("smoke", "Skip smoking", "Smoking starves healing tissue of oxygen. Keep alcohol low, too."),
+            ("smoke", "Skip smoking", "Smoking starves tissue of oxygen. Go easy on alcohol."),
         ],
+        # Need headers name what the body needs, not an outcome: 21 CFR 101.93(g) counts damage to a body part
+        # (a torn ligament) as disease, and NutriDyn's own standard bars injury-outcome language.
         "cols": [
-            {"p": "ih_inflam_eze_plus", "need": "Balance inflammation", "needsub": "ginger, curcumin, boswellia + 3 herbs",
+            {"p": "ih_inflam_eze_plus", "need": "Inflammation balance", "needsub": "ginger, curcumin, boswellia + 3 herbs",
              "start": True, "bullets": ["Supports a healthy inflammatory response", "Supports joint and muscle comfort"],
              "dose": "dose_from_db"},
-            {"p": "ih_prm_resolve", "need": "Resolve inflammation", "needsub": "pro-resolving mediators from fish oil",
-             "bullets": ["Supports the natural resolution of inflammation", "Omega-3 EPA and DHA for healthy tissue"],
+            {"p": "ih_prm_resolve", "need": "Resolution support", "needsub": "PRMs from fish oil, the body's finish-up signals",
+             # PRMs = pro-resolving mediators (label: 18-HEPE, 17-HDHA, 14-HDHA), made from omega-3s to wind
+             # inflammation down; glossed in plain words in the needsub.
+             "bullets": ["Supports the natural resolution of inflammation", "EPA and DHA omega-3s"],
              "dose": "dose_from_db"},
-            {"p": "ih_collagen_renew", "need": "Rebuild collagen", "needsub": "collagen peptides for tendon, ligament, bone",
-             # Shaw 2017 (PMID 27852613): vitamin C-enriched gelatin 1 hour before exercise doubled a collagen-synthesis
-             # marker; Bischof 2024 (PMID 39060741): collagen peptides plus training, 19 RCTs.
-             "bullets": ["Building blocks for tendons, ligaments and bone", "Pair with vitamin C, an hour before exercise"],
+            {"p": "ih_collagen_renew", "need": "Collagen support", "needsub": "collagen peptides for tendon, ligament, bone",
+             # No vitamin C in the formula (blast 2026-10-19-collagen-tendon); NIH ODS: vitamin C is needed to make
+             # collagen.  Timing is left to the dose bar and the rhythm (morning), so the sheet gives one instruction.
+             "bullets": ["Supports healthy tendons and ligaments", "Pair with a vitamin C food, like an orange"],
              "dose": "dose_from_db"},
-            {"p": "ih_muscle_eze", "need": "Relax tight muscles", "needsub": "magnesium, L-theanine, passion flower",
+            {"p": "ih_muscle_eze", "need": "Muscle relaxation", "needsub": 'magnesium, <span class="ihl-nw">L-theanine</span>, '
+             'passion flower',
              # NutriDyn's own language (blast 2026-09-22-muscle-guarding): "Helps relax muscle tissue, supports calmness".
              "bullets": ["Helps relax muscle tissue", "Supports calmness at bedtime"], "dose": "dose_from_db"},
-            {"p": "ih_nerve_eze", "need": "Nerve comfort", "needsub": "PEA + alpha lipoic acid",
-             # Vina 2025 (PMID 39798151) and Lang-Illievich 2023 (PMID 36986081) meta-analyses of PEA; PEA is a
-             # naturally occurring fatty acid amide.  NutriDyn: "PEA with alpha lipoic acid for healthy nerve function".
-             "bullets": ["Supports healthy nerve function", "PEA: a natural fat compound your body makes"],
+            {"p": "ih_nerve_eze", "need": "Healthy nerve function", "needsub": "PEA (Levagen+) + alpha lipoic acid",
+             # Sell sheet ND633: "Bioavailable PEA and ALA for Healthy Nerve Function".  PEA is a naturally
+             # occurring fatty acid amide (Vina 2025, PMID 39798151; Lang-Illievich 2023, PMID 36986081).
+             "bullets": ["Supports healthy nerve function", "PEA: a fat compound your body makes"],
              "dose": "dose_from_db"},
         ],
-        # Willow bark is a salicylate (aspirin relative) and, with ginger and fish oil, may add to bleeding risk
-        # (MedlinePlus herb monographs; NIH ODS omega-3 fact sheet).  Surgery: the American Society of
-        # Anesthesiologists advises stopping herbal supplements before surgery (about 2 weeks).  Muscle Eze label:
-        # "may cause drowsiness".  Alpha lipoic acid can lower blood sugar (MedlinePlus).
-        "rx": {
-            "practitioner": [
-                "<b>Blood thinner, aspirin or NSAIDs?</b> White willow (a salicylate), ginger and fish oil may add "
-                "to bleeding risk. Check with {who} first.",
-                "<b>Surgery coming up?</b> Your surgeon may want herbs and fish oil stopped 1 to 2 weeks before.",
-                "<b>Muscle relaxers, opioids, sleep aids:</b> Muscle Eze may add drowsiness. <b>Diabetes medicine:</b> "
-                "alpha lipoic acid can lower blood sugar."],
-            "pharmacy": [
-                "<b>Warfarin, apixaban, clopidogrel or aspirin?</b> White willow, ginger and fish oil may add to "
-                "bleeding risk. Let {who} check your list.",
-                "<b>Allergic to aspirin?</b> Skip Inflam-Eze Plus: white willow contains salicin, a natural relative of aspirin.",
-                "<b>Muscle relaxers, opioids, sleep aids:</b> Muscle Eze may add drowsiness. <b>Diabetes medicine:</b> "
-                "alpha lipoic acid can lower blood sugar."],
-        },
+        # One list for both editions; only {who} changes ("your provider" / "your pharmacist").
+        # Bleeding: willow bark contains salicin (MedlinePlus Willow bark; NCCIH); ginger and turmeric/curcumin may
+        # slow clotting (MedlinePlus); devil's claw has warfarin interaction reports (MedlinePlus); omega-3s and
+        # warfarin (NIH ODS).  Aspirin allergy: avoid willow bark (MedlinePlus).  Surgery: the American Society of
+        # Anesthesiologists asks patients to stop herbal supplements 2 weeks before surgery.  Drowsiness: Muscle
+        # Eze label "may cause drowsiness"; hops can cause sleepiness with sedatives (MedlinePlus Hops).  Alpha
+        # lipoic acid can lower blood sugar (MedlinePlus).  Calcium and magnesium bind tetracycline and quinolone
+        # antibiotics and reduce levothyroxine absorption (NIH ODS magnesium and calcium fact sheets).  Labels: "If
+        # pregnant, nursing..." (all five); Muscle Eze "Adults take..."; willow bark (a salicylate source) is not
+        # advised for children (Reye's syndrome, MedlinePlus); PRM Resolve "Contains: Fish (anchovy, sardine,
+        # squid, and mackerel)".
+        "rx": [
+            "<b>Blood thinner (warfarin, apixaban, clopidogrel), aspirin, or NSAIDs like ibuprofen or naproxen?</b> "
+            "White willow (contains salicin), ginger, curcumin, devil's claw and fish oil may add to bleeding risk. "
+            "Check with {who} and the doctor who prescribes it.",
+            '<b>Allergic to aspirin?</b> Skip <span class="ihl-nw">Inflam-Eze Plus</span>: white willow contains salicin, '
+            'a natural relative of aspirin.',
+            "<b>Surgery coming up?</b> Tell your surgeon about every supplement. Many ask you to stop herbs and fish oil "
+            "2 weeks before.",
+            '<b>Muscle relaxers, opioids, sleep aids:</b> <span class="ihl-nw">Muscle Eze</span> and the hops in '
+            '<span class="ihl-nw">Inflam-Eze Plus</span> may add drowsiness. <b>Diabetes medicine:</b> alpha lipoic acid '
+            'can lower blood sugar.',
+            '<b>Antibiotics or thyroid medicine?</b> The calcium and magnesium in <span class="ihl-nw">Muscle Eze</span> '
+            'can block some of them. Ask {who} how to space them.',
+            "<b>Pregnant, nursing, under 18, or allergic to fish or shellfish?</b> Ask {who} first.",
+        ],
     },
 }

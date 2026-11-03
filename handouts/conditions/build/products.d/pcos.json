@@ -1,0 +1,10 @@
+{
+  "inositol": {
+    "size": "180 capsules &middot; 30 servings",
+    "key": "Per 6 capsules: 3,902 mg myo&#8209;inositol + 97 mg D&#8209;chiro&#8209;inositol (40:1), 200 mcg chromium (picolinate), 500 mg fenugreek, 300 mg Ceylon cinnamon",
+    "dose": "6 capsules daily",
+    "dosesub": "3 morning, 3 evening",
+    "sched": [["am", 3, "capsules"], ["pm", 3, "capsules"]],
+    "src": "Label: scratchpad/labels/labels.json entry R279, from NutriDyn sell sheet 'Myo-Inositol Complex SS ND680' Rev. 2/25 (Dropbox /NutriDyn/Sales/Practitioner Resource/NutriDyn Marketing Materials/, id:xHepYs_Ou4AAAAAAAAzgNA). Serving 6 capsules, 30 servings: chromium (as chromium picolinate) 200 mcg, myo-inositol 3,902 mg, fenugreek extract (seed) 500 mg, Ceylon cinnamon powder (bark) 300 mg, D-chiro-inositol 97 mg (3,902:97 = 40:1). Directions: 'Take six capsules daily in two divided doses'. Size 180C: ND144 price list Rev. 10.1.26 (id:xHepYs_Ou4AAAAAAAA7UcQ). The 3 + 3 split is the NutriDyn GLC 2023 PCOS protocol 'Myo-Inositol Complex: 3 BID' (scratchpad/protocols/metabolic.md section 3). Only the pcos sheet uses the 'inositol' key, so this merge changes no other sheet."
+  }
+}

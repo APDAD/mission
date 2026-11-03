@@ -2,7 +2,8 @@
 
 Self-contained sheet module: the front art, the front copy and the back data all live here.  Shared
 helpers come from svgkit (T, svg) and kit (icon).  Every SVG id and CSS class starts with "gov" because
-all sheets share one document in the bundle PDFs.
+all sheets share one document in the bundle PDFs.  The back page is reached in CSS with
+.sheet.back:has(.gov-back) (a marker span in the lifestyle title).
 
 This is the REMOVE step of NutriDyn's 5R gut plan.  The Intestinal Permeability sheet (ND-GI-101) covers
 Repair and Rebalance; the 5R ribbon on the front points there.  The ribbon uses NutriDyn's own names and
@@ -10,22 +11,28 @@ order from ND584 (Remove, Replace, Reinoculate, Repair, Retain), not the generic
 
 FRONT, top to bottom
   intro -> art: one front-view digestive tract in the centre (esophagus, stomach, the whole small
-  intestine from duodenum to ileum, the colon with its haustra from cecum to rectum, appendix), with
-  lens-and-beam zooms into the small intestine and the colon.  Left column BALANCED, right column
-  OVERGROWTH; small intestine on top, colon below, so the four circles compare at a glance.  Organ
-  names sit on the circle rims; each circle has a one-line caption in clear space ->
-  KEY (every symbol, same drawing code as the art) -> three kinds of overgrowth (SIBO, yeast,
+  intestine from duodenum to ileum as a pile of loops of different sizes, near loops passing over far
+  ones and the far ones a little darker; the colon with its haustra from cecum to rectum, appendix).
+  ONE lens on the small intestine and ONE on the sigmoid colon, each with two beams: the same spot shown
+  BALANCED (left column) and OVERGROWN (right column); small intestine on top, colon below.  The SIBO
+  circle is crowded with the colon's own (green) bacteria plus gas, because SIBO is colon bacteria in the
+  wrong place [NAC17]; red "unfriendly" bacteria appear only in the colon circle.  The colon parasite is
+  a pinworm, the worm that lives in the colon [CDC-PIN].  Organ names sit on the circle rims; each circle
+  has a one-line caption in clear space ->
+  KEY (every symbol, same drawing code as the art, two rows) -> three kinds of overgrowth (SIBO, yeast,
   parasites: clues, risks, which test) -> breath test "know your numbers" strip (consensus cut-offs and a
   write-in box) -> red-flag line -> the 5R ribbon with Remove marked "this sheet".
 Testing is always the practitioner's: the front says "your provider" in both editions (never {who}).
 Anatomy notes: villi are drawn only in the small intestine; the colon lining is flat with crypts (the
 colon has no villi).  The stomach sits on the viewer's right (the patient's left), the cecum and
 appendix on the viewer's lower left, the splenic flexure higher than the hepatic flexure, and the
-transverse colon passes in front of the duodenum.
+transverse colon passes in front of the duodenum.  The jejunum's loops start on the viewer's upper right
+(the patient's upper left) and the ileum ends on the viewer's lower left at the cecum.
 
 SOURCES (each fact on the page carries one of these tags in a comment next to it)
   [ACG20]   Pimentel M, Saad RJ, Long MD, Rao SSC. ACG Clinical Guideline: Small Intestinal Bacterial
             Overgrowth. Am J Gastroenterol 2020;115:165-178. PMID 32023228. doi:10.14309/ajg.0000000000000501
+            (methane excess is renamed intestinal methanogen overgrowth, IMO: methane is made by archaea).
   [NAC17]   Rezaie A et al. Hydrogen and methane-based breath testing in gastrointestinal disorders: the
             North American Consensus. Am J Gastroenterol 2017;112:775-784. PMID 28323273 (full text read,
             PMC5418558): SIBO = microbes "normally found in the large intestine" crowding the small bowel;
@@ -39,16 +46,20 @@ SOURCES (each fact on the page carries one of these tags in a comment next to it
   [MMC12]   Deloose E et al. The migrating motor complex. Nat Rev Gastroenterol Hepatol 2012;9:271-85.
             PMID 22450306: fasting "housekeeper" waves, interrupted by eating; absent MMC goes with SIBO.
   [CANDIDA20] Kumamoto CA, Gresnigt MS, Hube B. Curr Opin Microbiol 2020;56:7-15. PMID 32604030: Candida
-            is a regular gut resident in most people; dysbiosis, immune suppression and a weak barrier
-            let it overgrow.
+            is a regular gut resident in most people (so finding some in stool is normal; the amount
+            matters); dysbiosis, immune suppression and a weak barrier let it overgrow.  Candida grows as
+            round budding cells and as chains of stretched cells (pseudohyphae and hyphae).
   [SAMONIS93] Samonis G et al. Antimicrob Agents Chemother 1993;37:51-53. PMID 8431017: broad-spectrum
             antibiotics raise gut yeast colonization.
   [CDC-CAND] CDC, Candidiasis (thrush; vaginal candidiasis): risk factors antibiotics, corticosteroids,
-            diabetes, weakened immune system.
+            diabetes, weakened immune system.  These are infections elsewhere; there is no single gut sign.
   [CDC-GIA] CDC, Giardia: diarrhea, gas, greasy stools that can float, cramps; spread by untreated or
-            recreational water, food, surfaces, people and animals.
-  [CDC-PIN] CDC, Pinworm: most common worm infection in the US; itching around the anus at night; child
-            care and households; diagnosed with a tape test (stool tests not recommended).
+            recreational water, food, surfaces and people; diagnosed from stool samples.  CDC, Giardia and
+            pets: the chance of getting Giardia from dogs or cats is small (people and pets usually carry
+            different types), so "pets" is not listed as a risk.  Giardia lives in the small intestine.
+  [CDC-PIN] CDC, Pinworm: most common worm infection in the US; adult worms live in the colon and rectum,
+            females lay eggs on the skin around the anus at night (itching); spreads only between people
+            (child care, households); diagnosed with a tape test (stool tests not recommended).
   [SCFA13]  den Besten G et al. J Lipid Res 2013;54:2325-40. PMID 23821742: colon bacteria ferment fiber.
   [ND584]   NutriDyn 5R GI Restoration Program ND584 Rev. 1/22: Remove, Replace, Reinoculate, Repair, then
             Restore & Retain; "The first 4 R's last 10 days and all four steps should be done at the same
@@ -57,14 +68,20 @@ SOURCES (each fact on the page carries one of these tags in a comment next to it
   [ALARM]   NIDDK, Diarrhea (see a doctor for blood or black stools, high fever, dehydration); ACG
             Clinical Guideline: Management of IBS, Lacy BE et al. Am J Gastroenterol 2021;116:17-44,
             PMID 33315591 (alarm features: bleeding, unintended weight loss).
-  Back-page safety notes: berberine CYP3A4/2D6/2C9 inhibition, Guo Y et al. Eur J Clin Pharmacol
-  2012;68:213-7, PMID 21870106; berberine lowers blood sugar like metformin, Yin J et al. Metabolism
-  2008;57:712-7, PMID 18442638; berberine and newborn jaundice (NCCIH/MedlinePlus goldenseal; the
-  Spectrum BR label advises against use in pregnancy and nursing); invasive Saccharomyces infection,
-  catheters the main risk, Enache-Angoulvant A, Hennequin C. Clin Infect Dis 2005;41:1559-68,
-  PMID 16267727; S. boulardii is a yeast, so antibacterial antibiotics do not kill it, Kelesidis T,
-  Pothoulakis C. Ther Adv Gastroenterol 2012;5:111-25, PMID 22423260; garlic and pau d'arco bleeding
-  cautions (NCCIH garlic; pau d'arco interaction monographs); chlorella vitamin K (MedlinePlus).
+  Back-page safety notes (both editions): labels opened in Dropbox 2026-11-03: Spectrum BR ND505 Rev. 8/24
+  "Warning: Do not use if pregnant or nursing" and "If taking medication including cyclosporine, consult your
+  healthcare practitioner"; Nutricidin ND949 Rev. 2/25, UltraBiotic S. boulardii ND170 Rev. 8/25 and Binder
+  Pro ND1141 Rev. 12/25 "If you are pregnant, nursing, or taking medication, consult your healthcare
+  practitioner"; Paradex retail listings (web search, label not opened) "Not to be used by pregnant or
+  lactating women" and "may contain traces of tree nuts".  Berberine CYP3A4/2D6/2C9 inhibition, Guo Y et
+  al. Eur J Clin Pharmacol 2012;68:213-7, PMID 21870106; berberine lowers blood sugar like metformin, Yin J
+  et al. Metabolism 2008;57:712-7, PMID 18442638; invasive Saccharomyces infection, central venous catheters
+  and immune suppression the main risks, Enache-Angoulvant A, Hennequin C. Clin Infect Dis
+  2005;41:1559-68, PMID 16267727; S. boulardii is a yeast, so antibacterial antibiotics do not kill it and
+  antifungals can, Kelesidis T, Pothoulakis C. Ther Adv Gastroenterol 2012;5:111-25, PMID 22423260; garlic
+  and pau d'arco bleeding cautions (NCCIH garlic; pau d'arco interaction monographs); chlorella vitamin K
+  and warfarin (MedlinePlus).  Plan length: ND584 runs the Remove step 10 days within a 24-day program;
+  Chedid 2014 (below) gave herbal therapy for 4 weeks and retested, so "often a few weeks, then may retest".
   Research anchors behind the product picks (not quoted on the page): Chedid V et al. Glob Adv Health
   Med 2014;3:16-24, PMID 24891990 (herbal therapy incl. CandiBactin-BR, which Spectrum BR matches);
   Redondo-Cuevas L et al. Nutrients 2024;16:1083, PMID 38613116; Bustos Fernandez LM et al. Dig Dis
@@ -110,14 +127,16 @@ INK, INK2 = "#23292D", "#56606A"
 OK, OK_TX = "#2F7D59", "#24684A"          # BALANCED
 BAD, BAD_TX = "#B3362B", "#9C2C22"        # OVERGROWTH
 GOOD_E = "#256F43"                        # friendly bacteria: green rods
-OVER_E = "#8E231B"                        # overgrowth bacteria: red rods with short hairs
-YEAST_E = "#4A3290"                       # yeast (Candida): purple budding ovals
+OVER_E = "#8E231B"                        # unfriendly bacteria: red rods with short hairs
+YEAST_E = "#4A3290"                       # yeast (Candida): purple budding cells and chains
 GAS, GAS_E = "#F6C84A", "#B98A12"         # gas (hydrogen, methane): gold bubbles
-EGG, EGG_E, EGG_IN = "#EEDCB4", "#86663A", "#D7B77D"   # parasite egg: tan oval
+WORM_E = "#6E5C42"                        # parasite: a thin white pinworm
 VIL, VIL_E = "#F6C0AE", "#C0735E"         # villi
-SI, SI_E, SI_HI = "#F4BBA6", "#B86E5B", "#FDE4DA"      # small intestine (figure)
+SI, SI_E, SI_HI = "#F4BBA6", "#B86E5B", "#FDE4DA"      # small intestine, near loops
+SI_F, SI_FE, SI_FHI = "#E7A28D", "#A35A48", "#F5CDBF"  # small intestine, far loops (a little darker)
 CO, CO_E, CO_HA, CO_HI = "#E8B58E", "#99673F", "#B57E55", "#FAE0C6"   # colon (figure)
 ST_E = "#A6564A"                          # stomach / esophagus outline
+
 
 # ============================================================== geometry helpers
 def _cr(pts, per=14, closed=False):
@@ -184,9 +203,17 @@ def _smooth_d(pts, closed=True):
     return " ".join(d) + (" Z" if closed else "")
 
 
+def _mix(c1, c2, t):
+    """Blend two #RRGGBB colours (t = 0 gives c1, 1 gives c2)."""
+    t = min(max(t, 0.0), 1.0)
+    a = [int(c1[i:i + 2], 16) for i in (1, 3, 5)]
+    b = [int(c2[i:i + 2], 16) for i in (1, 3, 5)]
+    return "#" + "".join(f"{round(x + (y - x) * t):02X}" for x, y in zip(a, b))
+
+
 # ============================================================== symbols (drawn centred on x, y)
 def rod(x, y, rot=0.0, kind="ok", L=12.5, w=5.4):
-    """One rod-shaped bacterium.  kind ok = friendly (smooth green); bad = overgrowth (red, short hairs:
+    """One rod-shaped bacterium.  kind ok = friendly (smooth green); bad = unfriendly (red, short hairs:
     the hairs let the two kinds be told apart without colour)."""
     edge = GOOD_E if kind == "ok" else OVER_E
     hairs = ""
@@ -236,16 +263,53 @@ def bubble(x, y, r):
             f'<circle cx="{x - r * .36:.1f}" cy="{y - r * .36:.1f}" r="{max(r * .26, .9):.1f}" fill="#FFFFFF" opacity=".85"/>')
 
 
-def egg(x, y, rot=0.0, s=1.0):
-    """A parasite egg: thick oval shell around a grainy embryo."""
-    gran = "".join(f'<circle cx="{gx}" cy="{gy}" r="1.15" fill="#B48E55"/>'
-                   for gx, gy in ((-3.6, -1.2), (-1, 1.6), (1.6, -1.4), (3.9, 1.1), (-.6, -2.6), (2.2, 2.4), (-3, 2.1)))
+def _worm_line(L, bend, n=36):
+    return [(L * (i / n - 0.5), bend * 3.2 * math.sin(math.pi * (1.5 * i / n - 0.25))) for i in range(n + 1)]
+
+
+def pinworm(x, y, rot=0.0, s=1.0, L=56.0, w=3.9, bend=1.8, sw=1.0):
+    """A pinworm (Enterobius), the worm that lives in the colon [CDC-PIN]: thin and white, a blunt head with
+    the small swelling and the round food bulb pinworms have behind it, and a long, finely pointed tail (the
+    female, the one that lays the eggs).  Drawn head left, centred on x, y; sw is the outline width as
+    printed, whatever the scale."""
+    cl = _worm_line(L, bend)
+    n = len(cl) - 1
+    ns = _normals(cl)
+
+    def half(t):
+        if t < 0.06:                                   # rounded head
+            return w / 2 * (0.3 + 0.7 * math.sqrt(t / 0.06))
+        if t < 0.15:                                   # the small head swelling
+            return w / 2 * (1.0 + 0.14 * math.sin(math.pi * (t - 0.06) / 0.09))
+        if t < 0.7:
+            return w / 2
+        f = min((t - 0.7) / 0.3, 1.0)                  # long, finely pointed tail
+        return w / 2 * max(0.04, (1 - f) ** 1.15)
+
+    left = [(p[0] + q[0] * half(i / n), p[1] + q[1] * half(i / n)) for i, (p, q) in enumerate(zip(cl, ns))]
+    right = [(p[0] - q[0] * half(i / n), p[1] - q[1] * half(i / n)) for i, (p, q) in enumerate(zip(cl, ns))]
+    nose = (cl[0][0] - w * 0.12, cl[0][1])
+    body = _smooth_d([nose] + left + right[::-1], closed=True)
+    gut = _poly(cl[8:25])
+    shine = _poly([(p[0] + q[0] * w * 0.2, p[1] + q[1] * w * 0.2) for p, q in zip(cl[2:19], ns[2:19])])
+    bx, by = cl[5]
+    ang = math.degrees(math.atan2(cl[6][1] - cl[4][1], cl[6][0] - cl[4][0]))
+    k = sw / s
     return (f'<g transform="translate({x:.1f},{y:.1f}) rotate({rot:.0f}) scale({s})">'
-            f'<ellipse rx="12" ry="7.7" fill="{EGG}" stroke="{EGG_E}" stroke-width="1.7"/>'
-            '<ellipse rx="10.1" ry="5.9" fill="none" stroke="#BE9D66" stroke-width="1"/>'
-            f'<ellipse rx="7.4" ry="4.4" fill="{EGG_IN}"/>{gran}'
-            '<path d="M-8.4,-4.6 Q-4,-7 1.5,-6.8" stroke="#FFFFFF" stroke-opacity=".7" stroke-width="1.2" fill="none" '
-            'stroke-linecap="round"/></g>')
+            f'<path d="{body}" fill="url(#{U}-wm)" stroke="{WORM_E}" stroke-width="{k:.2f}" stroke-linejoin="round"/>'
+            f'<path d="{gut}" fill="none" stroke="#D6C9AB" stroke-width="{0.7 * k:.2f}" stroke-linecap="round"/>'
+            f'<ellipse cx="{bx:.1f}" cy="{by:.1f}" rx="{w * 0.42:.1f}" ry="{w * 0.27:.1f}" transform="rotate({ang:.0f} {bx:.1f} {by:.1f})" '
+            f'fill="#E3D5B6" stroke="#AD9670" stroke-width="{0.5 * k:.2f}"/>'
+            f'<path d="{shine}" fill="none" stroke="#FFFFFF" stroke-width="{0.9 * k:.2f}" stroke-linecap="round" opacity=".95"/></g>')
+
+
+def _worm_spots(x, y, rot, s=1.0, L=56.0, bend=1.8):
+    """Circles that cover a pinworm, so other symbols are placed clear of it (circle-relative coords)."""
+    a = math.radians(rot)
+    out = []
+    for px, py in _worm_line(L, bend, 10):
+        out.append((x + s * (px * math.cos(a) - py * math.sin(a)), y + s * (px * math.sin(a) + py * math.cos(a)), 3.8 * s))
+    return out
 
 
 def villus(x, base, h, tilt=0.0, w=8.2):
@@ -258,40 +322,105 @@ def villus(x, base, h, tilt=0.0, w=8.2):
             'opacity=".9"/></g>')
 
 
+def crypts(x0, x1, top, bottom, k0=0, gap=11.5, depth=19):
+    """The flat colon lining (no villi) from x0 to x1 with crypt openings, between y = top and y = bottom."""
+    edge = [(min(x0 + k * 6, x1), top + 1.4 * math.sin((k + k0) * 0.9)) for k in range(int((x1 - x0) / 6) + 2)]
+    o = [f'<path d="{_poly(edge)} V{bottom} H{x0} Z" fill="url(#{U}-cw)" stroke="#C27A5F" stroke-width="1"/>']
+    x = x0 + 8.0
+    while x < x1 - 2:
+        yy = top + 1.4 * math.sin(((x - x0) / 6 + k0) * 0.9) + 1
+        o.append(f'<rect x="{x - 2.3:.1f}" y="{yy:.1f}" width="4.6" height="{depth}" rx="2.3" fill="#D68C72"/>'
+                 f'<ellipse cx="{x:.1f}" cy="{yy + 1:.1f}" rx="2.6" ry="1.3" fill="#B96D55"/>')
+        x += gap
+    return "".join(o)
+
+
 # ============================================================== the digestive tract (local 300 x 360 box)
 # Front view, as if facing the person: their right side is on the viewer's left.
 ESO = [(152, -2), (156, 26), (162, 50), (171, 69)]
 STOMACH = [(171, 66), (178, 55), (194, 47), (214, 49), (231, 61), (242, 82), (245, 108), (239, 134), (224, 156),
            (201, 171), (174, 176), (149, 170), (131, 160), (120, 152), (116, 146), (121, 140), (136, 143),
            (153, 143), (168, 134), (176, 116), (176, 95), (172, 80)]
-# Duodenum (C-loop round the pancreas head) then the coiled jejunum and ileum, ending at the cecum.
-DUO = [(118, 148), (104, 150), (94, 159), (90, 176), (93, 192), (104, 202), (122, 207), (146, 206), (170, 201),
-       (192, 196), (209, 199)]
-ROWS = [214, 230, 246, 262, 278]
 COLON = [(60, 302), (55, 288), (53, 270), (53, 248), (54, 226), (56, 204), (60, 185), (67, 171), (79, 163),
          (97, 166), (117, 176), (141, 186), (166, 190), (192, 186), (216, 176), (238, 162), (256, 151), (271, 147),
          (281, 153), (285, 167), (285, 190), (284, 214), (282, 238), (279, 260), (273, 278), (262, 292),
          (246, 301), (226, 305), (208, 301), (192, 302), (179, 310), (170, 321), (165, 333), (163, 343), (162, 350)]
-SI_LENS = (164, 230)          # zoom spots, local coordinates
-CO_LENS_L, CO_LENS_R = (54, 240), (283, 228)
+# The small intestine as ONE tube: the duodenum (start tucked inside the stomach, round the C-loop behind the
+# transverse colon), then the jejunum's loops on the viewer's upper right, then the ileum's loops on the left,
+# ending under the cecum at the ileocecal valve.  Loops differ in size and direction, one loop lies across
+# another, and none of the rows repeat.  Index numbers are used by SI_DEPTH.
+SI_PATH = [
+    (130, 150), (118, 148), (104, 150), (94, 159), (90, 176), (93, 192), (104, 202), (122, 207), (146, 206),  # 0-8
+    (170, 201), (192, 196), (209, 199), (226, 202), (244, 207), (257, 219), (254, 233), (238, 238),           # 9-16
+    (219, 233), (202, 226), (189, 226), (182, 237), (182, 251), (191, 259), (208, 257), (226, 252),           # 17-24
+    (244, 252), (258, 260), (262, 274), (251, 284), (232, 286), (213, 281), (196, 279), (181, 287),           # 25-32
+    (164, 294), (144, 295), (125, 289), (112, 276), (116, 261), (133, 253), (156, 250), (175, 244),           # 33-40
+    (183, 230), (174, 216), (156, 210), (134, 209), (112, 213), (91, 224), (80, 240), (82, 257), (79, 272),   # 41-49
+    (72, 283), (67, 289), (63, 291)]                                                                         # 50-52
+# depth along the tube (0 = far, drawn first and a little darker; 1 = near), keyed by SI_PATH index
+SI_DEPTH = {0: 0.0, 11: 0.0, 19: 0.1, 22: 0.35, 26: 0.3, 32: 0.25, 36: 0.5, 39: 1.0, 42: 1.0, 45: 0.7, 52: 0.8}
+# far loops seen through the gaps between nearer loops; every arm ends ON the centre line of the nearer loop
+# that hides it, so no cut end shows
+SI_GAPS = [
+    [(110, 213), (106, 225), (114, 237), (129, 240), (140, 229), (137, 209)],      # hangs from under the top-left arc
+    [(129, 290), (130, 279), (141, 270), (155, 272), (161, 284), (158, 294)],      # rises from under the bottom arc
+    [(266, 268), (247, 267), (229, 270), (211, 270), (198, 264), (191, 259)],      # between the right-hand loops
+]
+SI_LENS = (146, 251)          # zoom spot on a near loop of the small intestine (local coordinates)
+CO_LENS = (214, 302)          # zoom spot on the sigmoid colon, bottom centre
 
 
-def _si_center():
-    """Centre line of the small intestine: duodenum C-loop, then five rows of coils, then the terminal ileum."""
-    pts = list(DUO)
-    ends = [(212, 97), (97, 249), (249, 93), (93, 246), (246, 104)]      # (start x, end x) per row
-    for i, (y, (xa, xb)) in enumerate(zip(ROWS, ends)):
-        n = 9
-        for k in range(n + 1):
-            x = xa + (xb - xa) * k / n
-            if i == 0 and k == 0:
-                continue
-            pts.append((x, y + 1.7 * math.sin(x / 8.5 + i * 1.9)))
-        if i < len(ROWS) - 1:
-            d = 1 if xb > xa else -1
-            pts.append((xb + d * 7.6, y + 8))
-    pts += [(88, 281), (76, 286), (63, 291)]   # terminal ileum, ending under the cecum (ileocecal valve)
-    return pts
+def _depth(k, anchors):
+    """Depth at fractional path index k: smoothstep between the anchors."""
+    ks = sorted(anchors)
+    if k <= ks[0]:
+        return anchors[ks[0]]
+    for a, b in zip(ks, ks[1:]):
+        if k <= b:
+            f = (k - a) / (b - a)
+            return anchors[a] + (anchors[b] - anchors[a]) * f * f * (3 - 2 * f)
+    return anchors[ks[-1]]
+
+
+def _tube_chunks(center, anchors=None, const=0.0, step=6):
+    """Cut a tube along `center` into short chunks tagged with a depth.  Drawn far to near, every chunk has its
+    own outline, so a nearer loop passes over a farther one with a clean edge.  Outline, fill and highlight
+    reach 1, 2 and 3 samples into the neighbouring chunks, so the joins leave no seam."""
+    per = 10
+    dense = _cr(center, per=per)
+    cum = [0.0]
+    for a, b in zip(dense, dense[1:]):
+        cum.append(cum[-1] + math.hypot(b[0] - a[0], b[1] - a[1]))
+    wp = [cum[k * per] for k in range(len(center))]          # arc length at each waypoint
+    pts, ss = _resample(dense, 1.5)
+    n = len(pts)
+
+    def k_of(s):
+        for k in range(len(wp) - 1):
+            if s <= wp[k + 1]:
+                return k + (s - wp[k]) / max(wp[k + 1] - wp[k], 1e-6)
+        return len(wp) - 1
+
+    out = []
+    for i in range(0, n - 1, step):
+        sl = [pts[max(i - e, 0):min(i + step + e + 1, n)] for e in (1, 2, 3)]
+        d = const if anchors is None else _depth(k_of(ss[min(i + step // 2, n - 1)]), anchors)
+        out.append((d, i, *sl))
+    return out
+
+
+def _small_intestine(w=11.6, ew=1.2):
+    chunks = _tube_chunks(SI_PATH, SI_DEPTH)
+    for g, gap in enumerate(SI_GAPS):
+        chunks += [(-0.01, 10 ** 6 * (g + 1) + c[1]) + c[2:] for c in _tube_chunks(gap)]
+    o = []
+    for d, _i, se, sf, sh in sorted(chunks, key=lambda c: (round(c[0], 3), c[1])):
+        fill, edge = _mix(SI_F, SI, d), _mix(SI_FE, SI_E, d)
+        hi = _mix(fill, _mix(SI_FHI, SI_HI, d), .75)       # solid colour, so overlapping chunks never stack up
+        o.append(f'<path d="{_poly(se)}" fill="none" stroke="{edge}" stroke-width="{w + 2 * ew:.1f}" stroke-linejoin="round"/>'
+                 f'<path d="{_poly(sf)}" fill="none" stroke="{fill}" stroke-width="{w}" stroke-linejoin="round"/>'
+                 f'<path d="{_poly(sh)}" fill="none" stroke="{hi}" stroke-width="{w * .32:.1f}" stroke-linejoin="round"/>')
+    return "".join(o)
 
 
 def _tube_stroke(pts, w, fill, edge, hi, ew=1.2):
@@ -376,8 +505,7 @@ def figure():
     o.append(f'<path d="{eso}" fill="none" stroke="url(#{U}-esoE)" stroke-width="13.4" stroke-linecap="butt"/>'
              f'<path d="{eso}" fill="none" stroke="url(#{U}-esoF)" stroke-width="11" stroke-linecap="butt"/>')
     # small intestine (duodenum, jejunum, ileum) sits behind the stomach and the colon
-    si = _resample(_cr(_si_center(), per=8), 1.5)[0]
-    o.append(_tube_stroke(si, 11.6, SI, SI_E, SI_HI))
+    o.append(_small_intestine())
     # stomach
     sd = _smooth_d(STOMACH)
     o.append(f'<path d="{sd}" fill="url(#{U}-st)" stroke="{ST_E}" stroke-width="1.4" stroke-linejoin="round"/>'
@@ -425,16 +553,13 @@ def si_zoom(cx, cy, R, over):
         for (dx, dy, a) in [(-30, -30, 18), (14, -44, -28), (36, -10, 40), (-6, 2, -12)]:
             o.append(rod(cx + dx, cy + dy, a, "ok"))
         return "".join(o)
+    # SIBO: the colon's own (friendly, green) bacteria crowd in and ferment food into gas [NAC17]
     taken = []
     gas = _place(rng, 4, 6.2, _in_circle(R, tips), taken, 3) + _place(rng, 7, 3.6, _in_circle(R, tips + 6), taken, 2.4)
     taken += gas
-    bad = _place(rng, 26, 5.4, _in_circle(R, tips + 10), taken, 0.8)
-    taken += bad
-    good = _place(rng, 3, 5.4, _in_circle(R, tips + 6), taken, 1.2)
-    for x, y, _ in good:
+    crowd = _place(rng, 30, 5.4, _in_circle(R, tips + 10), taken, 0.8)
+    for x, y, _ in crowd:
         o.append(rod(cx + x, cy + y, rng.uniform(0, 180), "ok"))
-    for x, y, _ in bad:
-        o.append(rod(cx + x, cy + y, rng.uniform(0, 180), "bad"))
     for x, y, r in gas:
         o.append(bubble(cx + x, cy + y, r))
     return "".join(o)
@@ -443,37 +568,30 @@ def si_zoom(cx, cy, R, over):
 def colon_zoom(cx, cy, R, over):
     rng = random.Random(53 if over else 29)
     floor = R * 0.46
-    o = [f'<rect x="{cx - R}" y="{cy - R}" width="{2 * R}" height="{2 * R}" fill="url(#{U}-lc)"/>']
-    # flat lining with crypt openings (the colon has no villi)
-    top = [(cx - R - 4 + k * 6, cy + floor + 1.4 * math.sin(k * 0.9)) for k in range(int((2 * R + 8) / 6) + 2)]
-    o.append(f'<path d="{_poly(top)} V{cy + R + 4} H{cx - R - 4} Z" fill="url(#{U}-cw)" stroke="#C27A5F" stroke-width="1"/>')
-    x = -R + 4.0
-    while x < R:
-        yy = cy + floor + 1.4 * math.sin((x + R + 4) / 6 * 0.9) + 1
-        o.append(f'<rect x="{cx + x - 2.3:.1f}" y="{yy:.1f}" width="4.6" height="19" rx="2.3" fill="#D68C72"/>'
-                 f'<ellipse cx="{cx + x:.1f}" cy="{yy + 1:.1f}" rx="2.6" ry="1.3" fill="#B96D55"/>')
-        x += 11.5
+    o = [f'<rect x="{cx - R}" y="{cy - R}" width="{2 * R}" height="{2 * R}" fill="url(#{U}-lc)"/>',
+         crypts(cx - R - 4, cx + R + 4, cy + floor, cy + R + 4)]     # flat lining with crypts (no villi)
     if not over:
         taken = []
         good = _place(rng, 56, 5.2, _in_circle(R, floor), taken, 0.3)
         for x, y, _ in good:
             o.append(rod(cx + x, cy + y, rng.uniform(0, 180), "ok"))
         return "".join(o)
-    # overgrowth: yeast spreading on the lining, a parasite egg, fewer friendly bacteria, some overgrowth
+    # overgrowth: yeast cells and chains on the lining, a pinworm, fewer friendly and some unfriendly bacteria
     taken = []
-    o.append(egg(cx + 22, cy + floor - 10, -12, 1.0))
-    taken.append((22, floor - 10, 13))
+    wx, wy, wr = 8, -16, 6
+    o.append(pinworm(cx + wx, cy + wy, wr, 1.0))
+    taken += _worm_spots(wx, wy, wr)
     for (dx, a, s) in [(-38, -96, 1.0), (-8, -78, 0.95)]:
         o.append(hypha(cx + dx, cy + floor - 1, a, 3, s))
         taken += [(dx + 4 * math.cos(math.radians(a)) * k, floor - 6 * k, 6) for k in range(1, 6)]
-    for (dx, dy, a, s, b) in [(-24, -6, 15, 1.0, True), (4, -5, -20, 0.95, True), (46, -6, 30, 0.9, False),
-                              (-50, -8, -10, 0.9, True), (8, -17, 40, 0.85, False)]:
+    for (dx, dy, a, s, b) in [(-24, -6, 15, 1.0, True), (6, -5, -20, 0.95, True), (44, -6, 30, 0.9, False),
+                              (-50, -8, -10, 0.9, True), (24, -8, 40, 0.85, True)]:
         o.append(yeast(cx + dx, cy + floor + dy, a, s, b))
         taken.append((dx, floor + dy, 8.5 * s))
-    for (dx, dy, r) in [(-16, -40, 4.2), (30, -46, 3.2)]:
+    for (dx, dy, r) in [(-18, -40, 4.2), (34, -42, 3.2)]:
         o.append(bubble(cx + dx, cy + dy, r))
         taken.append((dx, dy, r))
-    good = _place(rng, 15, 5.2, _in_circle(R, floor - 16), taken, 1.0)
+    good = _place(rng, 14, 5.2, _in_circle(R, floor - 16), taken, 1.0)
     taken += good
     bad = _place(rng, 9, 5.4, _in_circle(R, floor - 16), taken, 1.0)
     for x, y, _ in good:
@@ -520,6 +638,7 @@ FS = 0.905                             # figure scale (local box 300 x 360)
 FX, FY = 380 - 168 * FS, 5             # where the figure's local box sits (centre line x = 168 local)
 LX, RX, R = 96, 664, 61                # zoom circle columns and radius
 SY, CY = 99, 254                       # small-intestine row, colon row
+TOP = 4                                # top margin above the column headers
 
 
 def defs_svg():
@@ -530,6 +649,7 @@ def defs_svg():
     g.append(lin("rbad", "#F49A8A", "#C93A2D"))
     g.append(f'<radialGradient id="{U}-ye" cx=".38" cy=".34" r=".75"><stop offset="0" stop-color="#C8B5EE"/>'
              '<stop offset="1" stop-color="#7556BE"/></radialGradient>')
+    g.append(lin("wm", "#FFFFFF", "#E4D7BD"))
     g.append(lin("vi", "#FAD3C5", "#EDA690"))
     g.append(lin("ti", "#EFA48E", "#D9826C"))
     g.append(lin("lu", "#FFF8F1", "#FDEDE2"))
@@ -559,52 +679,62 @@ def _tag(cx, cy_top, text):
 def art_overgrowth():
     gl = lambda p: (FX + p[0] * FS, FY + p[1] * FS)
     o = [defs_svg()]
-    si_l = gl(SI_LENS)
-    co_l, co_r = gl(CO_LENS_L), gl(CO_LENS_R)
-    # beam fills behind the organs, the figure, beam edges in front, lenses, then the zoom circles
+    si_l, co_l = gl(SI_LENS), gl(CO_LENS)
+    # one lens per organ, two beams from each: the same spot, balanced (left) and overgrown (right).
+    # Beam fills go behind the organs, then the figure, beam edges in front, lenses, then the zoom circles.
     beams = [beam(si_l, 8.5, (LX, SY), R * 0.6), beam(si_l, 8.5, (RX, SY), R * 0.6),
-             beam(co_l, 8.5, (LX, CY), R * 0.6), beam(co_r, 8.5, (RX, CY), R * 0.6)]
+             beam(co_l, 8.5, (LX, CY), R * 0.6), beam(co_l, 8.5, (RX, CY), R * 0.6)]
     o.append("".join(f for f, _ in beams))
     o.append(f'<g transform="translate({FX:.1f},{FY}) scale({FS})">{figure()}</g>')
     o.append("".join(ln for _, ln in beams))
-    o.append(lens(*si_l, 8.5) + lens(*co_l, 8.5) + lens(*co_r, 8.5))
+    o.append(lens(*si_l, 8.5) + lens(*co_l, 8.5))
     o.append(zoom(LX, SY, R, si_zoom, False, "a") + zoom(RX, SY, R, si_zoom, True, "b"))
     o.append(zoom(LX, CY, R, colon_zoom, False, "c") + zoom(RX, CY, R, colon_zoom, True, "d"))
-    # column headers, organ tags on the circle rims, and what each circle shows (clear space only)
-    o.append(_pill(LX, 1, "BALANCED", OK, h=21) + _pill(RX, 1, "OVERGROWTH", BAD, h=21))
+    # column headers (with a top margin), organ tags on the circle rims, and what each circle shows
+    o.append(_pill(LX, TOP, "BALANCED", OK, h=21) + _pill(RX, TOP, "OVERGROWTH", BAD, h=21))
     for cx in (LX, RX):
         o.append(_tag(cx, SY - R, "SMALL INTESTINE") + _tag(cx, CY - R, "COLON"))
-    subs = [(LX, SY, "only a few bacteria", OK_TX), (RX, SY, "crowded with bacteria and gas", BAD_TX),
+    # [NAC17] SIBO = bacteria normally found in the large intestine, in the small intestine
+    subs = [(LX, SY, "only a few bacteria", OK_TX), (RX, SY, "colon bacteria crowd in, make gas", BAD_TX),
             (LX, CY, "a thick, friendly colony", OK_TX), (RX, CY, "yeast and parasites take hold", BAD_TX)]
     for cx, cy, s, col in subs:
-        o.append(T(cx, cy + R + 15.5, s, 11.2, 700, col, "middle", italic=True))
+        half = tw(s, 11.2, 700) / 2 + 1.5           # +1.5: the italic runs a little wider than the upright face
+        x = min(max(cx, 6 + half), W - 6 - half)
+        o.append(T(round(x, 1), cy + R + 15.5, s, 11.2, 700, col, "middle", italic=True))
     # one organ name the zooms do not carry
     sx, sy = gl((246, 92))
     o.append(f'<path d="M{sx - 4:.1f},{sy:.1f} H{sx + 13:.1f}" stroke="#7B848A" stroke-width="1.1"/>'
              + T(sx + 17, sy + 3.9, "Stomach", 11, 700, INK2))
-    return svg(W, H, "".join(o), "The digestive tract with zoomed views of the small intestine and the colon. Balanced: "
-               "only a few bacteria in the small intestine and a thick friendly colony in the colon. Overgrowth: the small "
-               "intestine is crowded with bacteria and gas bubbles, and yeast and a parasite egg sit on the colon lining.")
+    return svg(W, H, "".join(o), "The digestive tract with one spot in the small intestine and one spot in the colon shown "
+               "up close. Balanced: only a few bacteria in the small intestine and a thick friendly colony in the colon. "
+               "Overgrowth: the colon's own bacteria crowd the small intestine and make gas bubbles, and in the colon yeast "
+               "cells and chains, a pinworm and some unfriendly bacteria take hold.")
 
 
 # ============================================================== KEY (HTML, same drawing code as the art)
-def _sw(markup, vb=30):
+def _sw(markup, vb=30, wide=False):
     h = vb / 2
+    if wide:
+        return f'<svg class="{U}-kw" viewBox="{-h * 1.5} {-h} {vb * 1.5} {vb}" aria-hidden="true">{markup}</svg>'
     return f'<svg viewBox="{-h} {-h} {vb} {vb}" aria-hidden="true">{markup}</svg>'
 
 
 def key_html():
     vil = (f'<rect x="-14" y="5" width="28" height="10" fill="url(#{U}-ti)"/>'
            + villus(-7.5, 7, 17, -3, 6.6) + villus(0, 7, 19, 0, 6.6) + villus(7.5, 7, 16, 4, 6.6))
+    lining = crypts(-14, 14, 0, 14, 0, 9.5, 12)
+    spot = (_tube_stroke([(-8.5, 2), (8.5, 2)], 9, SI, SI_E, SI_HI) + lens(0, 2, 7.2))
     items = [
-        (rod(0, 0, -30, "ok", 15, 6.2), "Friendly bacteria"),
-        (rod(0, 0, -30, "bad", 15, 6.2), "Overgrowth bacteria"),
-        (yeast(-2, 1, -10, 1.15), "Yeast (Candida)"),
-        (bubble(-4, 3, 6.5) + bubble(6, -5, 4), "Gas: hydrogen, methane"),
-        (egg(0, 0, -15, 0.95), "Parasite egg"),
-        (vil, "Villi: gut lining"),
+        (_sw(rod(0, 0, -30, "ok", 15, 6.2)), "Friendly bacteria"),
+        (_sw(rod(0, 0, -30, "bad", 15, 6.2)), "Unfriendly bacteria"),
+        (_sw(bubble(-4, 3, 6.5) + bubble(6, -5, 4)), "Gas: hydrogen, methane"),
+        (_sw(yeast(-11, 3, -10, 0.95) + hypha(2, 12, -62, 3, 0.62), wide=True), "Yeast (Candida): cells and chains"),
+        (_sw(pinworm(0, 0, -22, 0.48, w=4.6, sw=0.85)), "Parasite (pinworm)"),
+        (_sw(vil), "Villi: small-intestine lining"),
+        (_sw(lining), "Colon lining (no villi)"),
+        (_sw(spot), "Zoomed spot"),
     ]
-    cells = "".join(f'<div>{_sw(sw)}<b>{a}</b></div>' for sw, a in items)
+    cells = "".join(f'<div>{sw}<b>{a}</b></div>' for sw, a in items)
     return f'<div class="{U}-key"><span class="{U}-kt">Key</span><div class="{U}-kg">{cells}</div></div>'
 
 
@@ -615,11 +745,11 @@ def _mini(markup, vb=34):
 
 
 KINDS = [
-    (_mini(rod(-6, -6, 20, "bad") + rod(6, 2, -35, "bad") + rod(-4, 8, 60, "bad") + bubble(8, -9, 4.2) + bubble(-11, 4, 3)),
+    (_mini(rod(-6, -6, 20, "ok") + rod(6, 2, -35, "ok") + rod(-4, 8, 60, "ok") + bubble(8, -9, 4.2) + bubble(-11, 4, 3)),
      # [NAC17] SIBO = too many microbes "normally found in the large intestine" in the small bowel
      "SIBO", "small intestinal bacterial overgrowth",
-     # [ACG20] [NAC17]: bloating, gas, pain, diarrhea; the methane type is 5x more likely to have constipation
-     ["Bloating and gas after meals", "Belly pain, diarrhea", "Constipation (methane type)"],
+     # [ACG20] [NAC17]: bloating, gas, pain, diarrhea; methane excess (IMO, [ACG20]) goes with constipation
+     ["Bloating and gas after meals", "Belly pain, diarrhea", "Constipation (methane, IMO)"],
      # [SU18] PPIs OR 1.71; [MMC12] [ACG20] slow motility (diabetes; opioids slow the gut); [ACG20] prior surgery
      ["Low stomach acid, acid blockers", "A slow gut (diabetes, opioids)", "Past belly surgery"],
      # [NAC17] [ACG20] glucose or lactulose breath test
@@ -627,20 +757,22 @@ KINDS = [
     (_mini(yeast(-3, 2, -10, 1.35) + yeast(9, -8, 30, 0.8, False)),
      # [CANDIDA20]: Candida is a regular member of the gut flora in most people
      "Yeast", "Candida, normally in small numbers",
-     # [CDC-CAND] thrush and vaginal candidiasis
-     ["White mouth patches (thrush)", "Repeat vaginal yeast infections"],
+     # [CDC-CAND] thrush and vaginal candidiasis are infections elsewhere; there is no single gut sign
+     ["No single gut sign", "White mouth patches (thrush)", "Repeat vaginal yeast infections"],
      # [SAMONIS93] antibiotics; [CDC-CAND] corticosteroids, diabetes, weakened immune system
      ["Antibiotics, steroid medicines", "High blood sugar", "A weakened immune system"],
-     "Stool test (culture or DNA panel)"),
-    (_mini(egg(0, 0, -15, 1.15)),
+     # [CANDIDA20] some Candida in stool is normal, so only the amount means anything
+     "Stool test: the amount matters"),
+    (_mini(pinworm(0, 0, -26, 0.54, w=4.6, sw=0.85)),
      # [CDC-GIA] [CDC-PIN]
      "Parasites", "such as Giardia or pinworm",
      # [CDC-GIA] diarrhea, gas, cramps, greasy stools that can float; [CDC-PIN] itching at night
      ["Diarrhea, cramps and gas", "Greasy stools that float", "Itchy bottom at night (pinworm)"],
-     # [CDC-GIA] untreated or recreational water, travel, food, people, animals; [CDC-PIN] child care, households
-     ["Untreated lake or stream water", "Travel, swimming, child care", "Close contact, pets"],
+     # [CDC-GIA] untreated or recreational water, travel, child care, people; pets are a small risk (CDC);
+     # [CDC-PIN] pinworm spreads only between people (child care, households)
+     ["Untreated lake or stream water", "Travel, swimming, child care", "Someone close to you has it"],
      # [CDC-GIA] stool samples; [CDC-PIN] tape test (stool tests are not recommended for pinworm)
-     "Stool test (tape test for pinworm)"),
+     "Stool test; tape test for pinworm"),
 ]
 
 
@@ -652,8 +784,9 @@ def kinds_html():
                      f'<div class="{U}-kl"><i>Clues</i><ul>{li(clues)}</ul></div>'
                      f'<div class="{U}-kl {U}-kf"><i>Risks</i><ul>{li(feeds)}</ul></div>'
                      f'<div class="{U}-kl {U}-kt2"><i>Test</i><p>{test}</p></div></div>')
-    return (f'<div class="{U}-sh">Three kinds of overgrowth<span>Testing shows which one you have. Ask your provider '
-            'which test fits you.</span></div>'
+    # plan length: ND584 runs the Remove step 10 days in a 24-day program; Chedid 2014 used 4 weeks of herbs
+    return (f'<div class="{U}-sh">Three kinds of overgrowth<span>Testing shows which one you have. Your provider sets '
+            'the plan and its length, often a few weeks.</span></div>'
             f'<div class="{U}-kinds">{"".join(cards)}</div>')
 
 
@@ -662,13 +795,14 @@ def numbers_html():
     tiles = (
         # [NAC17]: a rise of >=20 ppm from baseline in hydrogen by 90 min = positive for SIBO
         f'<div class="{U}-n"><i>Hydrogen</i><b>rises 20 ppm or more</b><span>within 90 minutes: SIBO</span></div>'
-        # [NAC17] / [ACG20]: methane >=10 ppm = methane positive (ACG 2020 calls it intestinal methanogen overgrowth)
-        f'<div class="{U}-n"><i>Methane</i><b>10 ppm or more</b><span>at any point: methane type</span></div>'
+        # [NAC17]: methane >=10 ppm at any point = positive; [ACG20] names it intestinal methanogen overgrowth (IMO)
+        f'<div class="{U}-n"><i>Methane</i><b>10 ppm or more</b><span>at any point: methane overgrowth (IMO)</span></div>'
         f'<div class="{U}-mine"><span>My result</span></div>')
-    # [NAC17]: 8-12 h fast; glucose or lactulose drink; SIBO testing can be limited to 2 hours
+    # [NAC17]: 8-12 h fast; glucose or lactulose drink; SIBO testing can be limited to 2 hours.  "Microbes", not
+    # "bacteria": hydrogen comes from bacteria, methane from archaea [ACG20]
     lead = (f'<div class="{U}-nl">{icon("breath", "0.3in", sw=3.4)}<div><b>Breath test: know your numbers</b>'
             '<span>After an overnight fast you drink a sugar solution, then breathe into tubes for about 2 hours. '
-            'Misplaced bacteria turn the sugar into gas, measured in ppm (parts per million).</span></div></div>')
+            'Misplaced microbes turn the sugar into gas, measured in ppm (parts per million).</span></div></div>')
     # [ALARM]: blood or black stools, high fever, unplanned weight loss; confirmed parasites are treated with medicine
     alarm = (f'<div class="{U}-alarm">{icon("warning", "0.19in", sw=4)}<p><b>Get checked soon</b> for blood or black '
              'stools, a high fever or weight loss you did not try for. Confirmed parasites usually need medicine.</p></div>')
@@ -676,7 +810,9 @@ def numbers_html():
 
 
 # ============================================================== the 5R ribbon
-FIVE = [("Remove", "clear the overgrowth", "This sheet"), ("Replace", "stomach acid, enzymes", None),
+# The Remove step reads "rebalance the gut", not "clear the overgrowth": next to "this sheet" a disease word
+# would tie the back page's products to treating an overgrowth.
+FIVE = [("Remove", "rebalance the gut", "This sheet"), ("Replace", "stomach acid, enzymes", None),
         ("Reinoculate", "friendly bacteria", None), ("Repair", "heal the lining", None),
         ("Retain", "keep the balance", None)]
 
@@ -702,12 +838,13 @@ def front(t, ed):
 
 CSS = r"""
 .gov .gov-art svg{display:block;width:100%;height:auto}
-.gov-key{position:relative;border:1.2px solid #C9D6DA;border-radius:8px;padding:8px 8px 5px;margin-top:6px}
+.gov-key{position:relative;border:1.2px solid #C9D6DA;border-radius:8px;padding:7px 8px 4px;margin-top:6px}
 .gov-kt{position:absolute;top:-7px;left:12px;background:#fff;padding:0 6px;font:800 7.2pt Inter,sans-serif;
   letter-spacing:.16em;text-transform:uppercase;color:var(--deep)}
-.gov-kg{display:flex;justify-content:space-between;align-items:center;gap:6px}
+.gov-kg{display:grid;grid-template-columns:repeat(4,auto);justify-content:space-between;align-items:center;gap:2px 8px}
 .gov-kg>div{display:flex;align-items:center;gap:4px;min-width:0}
-.gov-kg svg{flex:none;width:0.24in;height:0.24in;overflow:visible}
+.gov-kg svg{flex:none;width:0.22in;height:0.22in;overflow:visible}
+.gov-kg svg.gov-kw{width:0.33in}
 .gov-kg b{font-size:7.4pt;line-height:1.2;color:#1F2A2E;white-space:nowrap}
 .gov-sh{display:flex;align-items:baseline;gap:0.12in;font:900 10.6pt/1.2 Merriweather,Georgia,serif;color:var(--c1);
   margin:0.08in 0 0.05in}
@@ -765,6 +902,19 @@ CSS = r"""
 /* the Paradex photo is a flat RGB image: blend its white ground into the column tint (this image only) */
 .col .pick img[src$="nd-go-paradex.png"]{mix-blend-mode:multiply;filter:none}
 .gov-5rr>div.gov-on em{color:#fff;background:#F15F3F;border-radius:3px;padding:1px 5px;align-self:flex-start;text-transform:uppercase}
+/* ---- this sheet's pages only (front: the page holding .gov; back: the page holding the .gov-back marker).
+   Every printed word is at least 7 pt (the shared kit sets some back-page labels at 6.2 to 6.8 pt). */
+.sheet.front:has(.gov) .foot,.sheet.front:has(.gov) .foot .code{font-size:7pt}
+.sheet.back:has(.gov-back) .foot .code,.sheet.back:has(.gov-back) .disc{font-size:7pt}
+.sheet.back:has(.gov-back) .col .need i,.sheet.back:has(.gov-back) .col .pick .sz,
+.sheet.back:has(.gov-back) .col .key,.sheet.back:has(.gov-back) .col .key b,
+.sheet.back:has(.gov-back) .col .dose small,.sheet.back:has(.gov-back) .startt{font-size:7pt}
+/* Nutricidin's label lists 12 lines: its column is wider so the full list fits */
+.sheet.back:has(.gov-back) .cols{grid-template-columns:1fr 1.4fr 1.06fr 1fr .96fr!important}
+/* the check list gets half the row (four cautions); the bedtime box holds one product */
+.sheet.back:has(.gov-back) .duo{grid-template-columns:1fr 1fr}
+.sheet.back:has(.gov-back) .rhythm{grid-template-columns:1.2fr 1.2fr .6fr}
+.sheet.back:has(.gov-back) .life .disc2{width:0.76in;height:0.76in}
 """
 
 
@@ -774,23 +924,26 @@ SHEET = {
     "title": "Gut Overgrowth", "sub": "Yeast, parasites and SIBO",
     # [SENDER16] trillions of bacteria, almost all in the colon.  [ACG20] [MMC12] defences: stomach acid, the
     # fasting "housekeeper" waves, immunity.  [CANDIDA20] Candida is a normal resident.  [CDC-GIA] parasites.
-    "intro": ("Your gut is home to trillions of microbes, and almost all of them live in the <b>colon</b> (large intestine). "
+    # The test sentence lives in the "Three kinds" header just below.
+    "intro": ("Trillions of microbes live in your gut, almost all of them in the <b>colon</b> (large intestine). "
               "Stomach acid, the gut&rsquo;s sweeping waves and your immune system keep the <b>small intestine</b> nearly "
-              "free of bacteria and keep yeast and parasites in check. When those defenses slip, microbes can "
-              "<b>overgrow</b>: bacteria crowd the small intestine (<b>SIBO</b>), <b>Candida</b> yeast multiplies, or a "
-              "<b>parasite</b> moves in. A test ordered by your provider shows which one is behind your symptoms."),
+              "free of bacteria and keep yeast and parasites in check. When those defenses slip, bacteria crowd the "
+              "small intestine (<b>SIBO</b>), <b>Candida</b> yeast multiplies, or a <b>parasite</b> moves in."),
     "front": front,
     "css": CSS,
     "back": {
-        "life_title": "Lifestyle Recommendations", "life_sub": "Starve it, sweep it, and keep new invaders out",
+        # the span marks this sheet's back page for the scoped CSS (.sheet.back:has(.gov-back))
+        "life_title": f'Lifestyle Recommendations<span class="{U}-back"></span>',
+        # no disease words here: the line sits over the product page
+        "life_sub": "Cut the sugar, let your gut sweep, and keep new germs out",
         "style": "circle",
         "life": [
             # [ND584] Remove step: sugar, alcohol, processed food out
             ("sugar", "Cut the sugar", "Skip added sugar, sweet drinks, alcohol and junk food during the plan."),
             # [MMC12] cleaning waves run only in the fasting state; [ND584] no food within 2 hours of bedtime
-            ("clock", "Space your meals", "No grazing: the gut&rsquo;s cleaning waves run between meals. Stop eating 2 hours before bed."),
+            ("clock", "Space your meals", "No grazing: the gut sweeps itself between meals. Stop eating 2 hours before bed."),
             # [CDC-GIA] prevention: hand washing, safe water, food hygiene
-            ("drop", "Wash, cook, filter", "Wash hands and produce, cook meat through, and skip untreated lake or stream water."),
+            ("drop", "Wash, cook, filter", "Wash hands and produce, cook meat through, and skip untreated lake water."),
             # [ND584] "Avoid eating under stress. Eat slowly."
             ("plate", "Eat calm, chew well", "Slow, unhurried meals give stomach acid and enzymes a head start."),
             # [SU18] PPIs raise SIBO risk; stopping is a prescriber decision
@@ -798,22 +951,27 @@ SHEET = {
         ],
         # Products: NutriDyn's own Remove-step picks.  GI-MAP protocol REMOVE line (Asher, Gmail 194b7cdf22b9133b,
         # 2025-01-30): "Nutricidin 1 softgel 3x daily away from probiotics; Spectrum BR 2 tabs 3x; ParaCleanse/Paradex
-        # 1 cap 3x".  ND584 Remove = Spectrum BR (+ Spectrum AR, not in the product DB).  Kristi Hughes' NutriDyn grid
+        # 1 cap 3x".  ND584 Remove = Spectrum BR (+ Spectrum AR, not in the product DB).  NutriDyn's 5R product grid
         # (Drive 1mbYXJNRcry81g...): Berberine Anti-microbial = Spectrum BR, Biofilm Aromatic Aid = NutriCidin,
         # Parasite Botanical = Paradex, BioToxin Binder = Binder Pro; "Sac B Anti-candida Probiotic" for Candida.
-        # Mayfield 5R (GLC 2023): binders GI Defend, Binder Pro.  Facts and sources: products.d/gut-overgrowth.json.
+        # NutriDyn GLC 2023 5R talk: binders GI Defend, Binder Pro.  Facts and sources: products.d/gut-overgrowth.json.
+        # Timing: the herbs go with meals; S. boulardii, a live yeast, sits between meals, 2 hours from the herbs
+        # (Asher's rule: probiotics 2 hours away from antimicrobials); Binder Pro is alone at bedtime, apart from
+        # every other pill, so it cannot carry the probiotic or a medicine out with the stool.
         "cols": [
             {"p": "go_spectrum_br", "need": "Balance the flora", "needsub": "berberine, Oregon grape",
              "start": True, "dose": "dose_from_db",
-             "bullets": ["Supports a healthy balance of gut bacteria and yeast",
-                         "NutriDyn&rsquo;s Remove-step pick in the 5R plan"]},
-            {"p": "go_nutricidin", "need": "Plant oils + enzyme", "needsub": "oregano oil and ginger",
+             "bullets": ["Supports balanced gut bacteria and yeast",
+                         "Step 1 of NutriDyn&rsquo;s 5R gut plan"]},
+            # ND949 Rev. 2/25: ginger plus eight oils; serratiopeptidase and calcium EDTA "support healthy biofilms"
+            {"p": "go_nutricidin", "need": "Plant oils + enzyme", "needsub": "oregano, thyme, clove and more",
              "dose": "dose_from_db",
-             "bullets": ["Oregano oil and ginger support balanced gut flora",
-                         "Adds a protein-digesting enzyme and EDTA"]},
-            {"p": "go_paradex", "need": "Classic cleanse herbs", "needsub": "black walnut, wormwood",
+             "bullets": ["Eight plant oils and ginger support balanced gut flora",
+                         "An enzyme and EDTA (a mineral binder) support healthy biofilms"]},
+            {"p": "go_paradex", "need": "Herbal cleanse", "needsub": "black walnut, sweet wormwood",
              "dose": "dose_from_db",
              "bullets": ["Supports a healthy intestinal environment", "Five traditional cleanse herbs"]},
+            # ND170 Rev. 8/25: one capsule twice daily
             {"p": "go_sboulardii", "need": "A friendly yeast", "needsub": "S. boulardii probiotic",
              "dose": "dose_from_db",
              "bullets": ["Supports a balanced gut microbiome",
@@ -821,31 +979,39 @@ SHEET = {
             {"p": "go_binder_pro", "need": "Bind and carry out", "needsub": "apple pectin, chlorella",
              "dose": "dose_from_db",
              "bullets": ["Binds unwanted compounds so they leave with the stool",
-                         "Take apart from medicines and other pills"]},
+                         "Take apart from all medicines and pills"]},
         ],
         "rx": {
+            # Both editions go to patients: the same four cautions, worded for who checks them.
             "practitioner": [
-                # [NAC17] [ACG20] testing; [CDC-GIA] [CDC-PIN] medicine for confirmed parasites
-                "<b>Test, then treat.</b> A breath or stool test shows what is overgrown, so {who} can match the plan "
-                "and decide how long you stay on it.",
-                # Spectrum BR label: not in pregnancy or nursing; berberine and newborn jaundice (NCCIH/MedlinePlus)
-                "<b>Pregnant or breastfeeding?</b> Skip Spectrum BR, Nutricidin and Paradex. These herbal formulas are "
-                "not for pregnancy or nursing.",
-                # Yin 2008 (berberine lowers glucose); Guo 2012 (CYP inhibition); garlic, pau d'arco bleeding cautions
-                "<b>On diabetes medicine or a blood thinner?</b> Berberine adds to sugar-lowering drugs, and garlic and "
-                "pau d&rsquo;arco can add to bleeding. Ask {who} first.",
+                # [NAC17] [ACG20] testing; plan length (ND584, Chedid 2014).  No disease words next to the products.
+                "<b>Test first.</b> A breath or stool test shows what is overgrown, so {who} can choose your plan and "
+                "how long you stay on it.",
+                # ND505 (Spectrum BR) "Do not use if pregnant or nursing"; Paradex retail label: not in pregnancy or
+                # nursing; ND949, ND170, ND1141: "consult your healthcare practitioner"
+                "<b>Pregnant or nursing?</b> Do not take Spectrum BR or Paradex. Ask {who} before the others.",
+                # Guo 2012 (berberine slows CYP3A4/2D6/2C9; ND505 names cyclosporine); Yin 2008 (adds to glucose
+                # lowering); garlic, pau d'arco bleeding; chlorella vitamin K vs warfarin; all five labels: "taking
+                # medication ... consult"
+                "<b>On any medicine?</b> Berberine changes how many drugs are cleared (cyclosporine, diabetes drugs), "
+                "and garlic, pau d&rsquo;arco and chlorella affect blood thinners. Bring your list to {who}.",
+                # Enache-Angoulvant 2005 (central lines, weak immunity); Paradex: black walnut, "may contain traces
+                # of tree nuts" (retail listing)
+                "<b>Weak immunity, a central IV line or a tree-nut allergy?</b> Ask before S. boulardii or Paradex.",
             ],
             "pharmacy": [
-                # Guo 2012 PMID 21870106; Yin 2008 PMID 18442638
-                "<b>Berberine</b> (Spectrum BR) slows CYP3A4, 2D6 and 2C9 and adds to diabetes medicines. Bring your "
-                "full medicine list.",
+                # Guo 2012 PMID 21870106; ND505 cyclosporine caution; Yin 2008 PMID 18442638
+                "<b>Berberine</b> (Spectrum BR) slows the liver enzymes that clear many medicines (CYP3A4, 2D6, 2C9), "
+                "such as cyclosporine, and adds to diabetes drugs. Show {who} your full medicine list.",
                 # garlic and pau d'arco bleeding cautions; chlorella vitamin K and warfarin (MedlinePlus)
-                "<b>Blood thinners:</b> garlic and pau d&rsquo;arco may add to bleeding, and chlorella (in Binder Pro) "
-                "has vitamin K, which can weaken warfarin.",
-                # Spectrum BR label (not in pregnancy or nursing); Enache-Angoulvant 2005 PMID 16267727 (catheters,
-                # immune suppression); antifungal agents act on yeast, so they may inactivate S. boulardii
-                "<b>Skip the herbs</b> in pregnancy or nursing. Skip <b>S. boulardii</b>, a live yeast, with a central IV "
-                "line or weak immunity; antifungals may stop it working.",
+                "<b>Blood thinners:</b> garlic and pau d&rsquo;arco may add to bleeding, and the vitamin K in chlorella "
+                "(Binder Pro) can weaken warfarin.",
+                # ND505 + Paradex retail label: not in pregnancy or nursing; the other three labels: consult
+                "<b>Pregnant or nursing?</b> Do not take Spectrum BR or Paradex. Ask {who} before the others.",
+                # Enache-Angoulvant 2005 PMID 16267727 (catheters, immune suppression); Kelesidis 2012 (antifungals
+                # act on yeast, so they may inactivate S. boulardii); Paradex tree-nut trace warning (retail listing)
+                "<b>S. boulardii</b> is a live yeast: skip it with a central IV line or weak immunity; antifungals "
+                "stop it. <b>Tree-nut allergy?</b> Ask before Paradex.",
             ],
         },
     },

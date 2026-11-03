@@ -34,14 +34,14 @@ EDITIONS = {
                  "who": "your pharmacist", "Who": "Your pharmacist", "for": "compounding and retail pharmacies"},
 }
 
-DISCLAIMER = ("<span class='mark'>&#9670;</span> These statements have not been evaluated by the Food and Drug "
+DISCLAIMER = (f"<span class='mark'>{kit.DIAMOND}</span> These statements have not been evaluated by the Food and Drug "
               "Administration. These products are not intended to diagnose, treat, cure, or prevent any disease. "
               "Nutrient support works alongside, never instead of, the care and medicines your practitioner prescribes.")
 
 BACK_CSS = r"""
 .col{position:relative}
-.startt{position:absolute;top:0.5in;right:-1px;background:#F15F3F;color:#fff;font:800 6.2pt Inter,sans-serif;letter-spacing:.1em;
-  padding:3px 6px 3px 8px;border-radius:3px 0 0 3px;text-transform:uppercase;z-index:2}
+.startt{position:absolute;top:-1px;right:-1px;background:#F15F3F;color:#fff;font:800 7pt Inter,sans-serif;letter-spacing:.08em;
+  padding:2px 6px 2px 7px;border-radius:0 6px 0 5px;text-transform:uppercase;z-index:2}
 .lifes.c3{grid-template-columns:repeat(3,1fr);gap:0.18in}
 .lifes.c4{grid-template-columns:repeat(4,1fr)}
 .lifes.c5{grid-template-columns:repeat(5,1fr)}
@@ -104,25 +104,30 @@ SLOTS = [("am", "Morning", "sun"), ("pm", "Evening meal", "plate"), ("bed", "Bed
 
 def rhythm_block(cols):
     by = {"am": [], "pm": [], "bed": []}
-    pills = scoops = 0
+    pills = scoops = droppers = 0
     for c in cols:
         p = products.get(c["p"])
         for slot, n, unit in c.get("sched", p["sched"]):
-            by[slot].append(f'{p["name"]} <em>{n} {unit}</em>')
+            by[slot].append(f'{p["name"]} <em>{n}&nbsp;{unit}</em>')
             if unit.startswith("scoop"):
                 scoops += n
-            elif not unit.startswith(("dropper", "serving")):
+            elif unit.startswith("dropper"):
+                droppers += n
+            elif not unit.startswith("serving"):
                 pills += n
     cells = ""
     for key, label, ic in SLOTS:
-        lis = "".join(f"<li>{x}</li>" for x in by[key]) or "<li><em>nothing</em></li>"
+        lis = "".join(f"<li>{x}</li>" for x in by[key]) or "<li><em>nothing to take</em></li>"
         cells += f'<div class="slot"><div class="when">{icon(ic, "13px", sw=4)}{label}</div><ul>{lis}</ul></div>'
     parts = []
     if pills:
         parts.append(f"{pills} pill{'s' if pills != 1 else ''}")
     if scoops:
         parts.append(f"{scoops} scoop{'s' if scoops != 1 else ''}")
-    total = (f'<div class="total">The full plan is <b>{" and ".join(parts)} a day</b>. Overwhelmed? Start with the '
+    if droppers:
+        parts.append(f"{droppers} dropper{'s' if droppers != 1 else ''}")
+    joined = ", ".join(parts[:-1]) + (" and " if len(parts) > 1 else "") + parts[-1] if parts else "nothing"
+    total = (f'<div class="total">The full plan is <b>{joined} a day</b>. Overwhelmed? Start with the '
              f'<b>Start here</b> pick, then add one product a week.</div>')
     return f'<div class="rhythm">{cells}</div>{total}'
 
@@ -261,7 +266,7 @@ document.querySelectorAll('.seg button').forEach(function(b){{b.addEventListener
 function upd(){{var v=i.value.trim();document.querySelectorAll('a[data-k]').forEach(function(a){{var b=a.getAttribute('href').split('?')[0];
 a.setAttribute('href',v?b+'?for='+encodeURIComponent(v):b);}});try{{localStorage.setItem(k,v)}}catch(x){{}}}}
 try{{i.value=localStorage.getItem(k)||'';show(localStorage.getItem(e)||'practitioner')}}catch(x){{}}i.addEventListener('input',upd);upd();}})();</script>"""
-    return kit.page_shell("Condition Sheets · NutriDyn", body, "gut", INDEX_CSS)
+    return kit.page_shell("Condition Sheets · NutriDyn", body, "gut", INDEX_CSS, font_base="fonts/")
 
 
 def main():
@@ -311,6 +316,17 @@ def main():
         jf = os.path.join(tmp, f"render-job-{os.getpid()}.json")
         json.dump(job, open(jf, "w"))
         subprocess.run(["node", os.path.join(HERE, "render.js"), jf], check=True)
+        type3 = []
+        for it in job["items"] + job["bundles"]:
+            try:
+                fonts = subprocess.run(["pdffonts", it["pdf"]], capture_output=True, text=True, timeout=60).stdout
+            except (OSError, subprocess.SubprocessError):
+                break
+            if "Type 3" in fonts:
+                type3.append(os.path.relpath(it["pdf"], OUT))
+        if type3:
+            print("TYPE 3 FONTS (a character outside the Latin set fell back to a glyph print shops reject; "
+                  "draw symbols as inline SVG, e.g. kit.DIAMOND):", ", ".join(type3))
     for b in job["bundles"]:
         if os.path.exists(b["html"]):
             os.remove(b["html"])

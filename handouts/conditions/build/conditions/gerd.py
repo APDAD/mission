@@ -4,8 +4,25 @@ from svgkit / kit; nothing is imported from sheets.py or art.py any more.
 
 Front page, top to bottom:
   intro (SHEET["intro"]) -> anatomy diagram with a zoom on the open LES valve
-  -> KEY row -> how it can feel + get-care-now box -> common-trigger picture
+  -> KEY row -> how it can feel + get-care box -> common-trigger picture
   row -> acid-blocker nutrient strip -> FDA footnote.
+
+Art-director pass (2026-11-03), front only (SHEET["back"] is owned by the
+back-page pass and is left exactly as it was):
+  * one continuous outline from the esophagus through the stomach, a tapered
+    pyloric canal, a pylorus ring the height of the duodenum and the duodenum
+    itself (smooth cross-shading, no stripes);
+  * esophagus starts 4 units below the SVG edge under a fully opaque fade, so
+    the PDF prints no hard cap line;
+  * diaphragm drawn as muscle (diagonal fibres, no dashed line), ending before
+    the zoom, and lifted clear of the dashed source ring (the ring now holds
+    only the LES, which is what the close-up shows);
+  * close-up: the channel at the LES is open wall to wall (+-22.5), the teal
+    ring halves are thinner and sit inside the wall, no droplet is sliced;
+  * reflux arrow and droplets moved into open lumen; "Stomach" now points into
+    the stomach chamber, not at the wall band under the esophagus;
+  * KEY names all four symbols; text fixes from the review (FDA wording, taper
+    advice, alarm list), coin labels spaced, footer at 7 pt.
 
 Sources for every number and claim on the front (also tagged inline):
   [ACG22]  Katz PO et al. ACG Clinical Guideline for the Diagnosis and
@@ -17,8 +34,11 @@ Sources for every number and claim on the front (also tagged inline):
   [ES14]   El-Serag HB et al. Update on the epidemiology of GERD: a systematic
            review. Gut 2014;63:871-80. doi:10.1136/gutjnl-2012-304269
            (prevalence 18.1-27.8% in North America; NIDDK states about 20%).
-  [FDA]    FDA Drug Safety Communications: PPIs and fractures (May 2010,
-           updated Mar 2011); low magnesium with long-term PPI use (Mar 2011).
+  [FDA10]  FDA Drug Safety Communication, 2010-05-25 (updated 2011-03-23):
+           possible increased risk of hip, wrist and spine fractures with PPIs;
+           greatest risk with high doses or use for one year or longer.
+  [FDA11]  FDA Drug Safety Communication, 2011-03-02: low magnesium can follow
+           prolonged PPI use (in most cases longer than one year), any dose.
   [LAM13]  Lam JR et al. JAMA 2013;310:2435-42. doi:10.1001/jama.2013.280490
            (2+ years of PPIs or H2 blockers linked to B12 deficiency).
   [LAM17]  Lam JR et al. Gastroenterology 2017;152:821-9.
@@ -28,6 +48,9 @@ Sources for every number and claim on the front (also tagged inline):
            absorption).
   [FA11]   Farrell CP et al. Gastroenterology Res 2011;4:243-51.
            doi:10.4021/gr379w (long-term PPI users absorbed less zinc; small study).
+  [REB09]  Reimer C et al. Gastroenterology 2009;137:80-7.
+           doi:10.1053/j.gastro.2009.03.058 (acid rebound after stopping 8 weeks
+           of PPI), the reason for "do not stop suddenly".
 """
 import math
 
@@ -43,95 +66,164 @@ ESO_LINING = "#FBE4DB"                                            # esophagus li
 ACID_TOP, ACID_MID, ACID_BOT, ACID_EDGE = "#E1EA7C", "#BCCD3A", "#A2B52C", "#7C8F1E"
 LES, LES_DARK, LES_HI = "#1E9A8E", "#0F6B63", "#7AD6CA"          # teal: the LES valve
 REFLUX = "#D52F1E"                                                # red: reflux direction
-DIA, DIA_EDGE, DIA_FIBRE = "#E8D5CA", "#C7AA9B", "#F7EEE8"        # diaphragm
+DIA, DIA_EDGE, DIA_FIBRE = "#EDCFC2", "#C99F8F", "#D2A897"        # diaphragm muscle
+PYL_EDGE = "#B9563F"                                              # pylorus ring edge
 INK, INK_SOFT, LEAD = "#22292D", "#56626A", "#59646B"
 DEEP = "#8E3110"
 
-W, H = 735, 330          # diagram viewBox: 1 unit = 1 px at the 7.66 in content width
-OX, OY = 215, 8          # anatomy origin inside the diagram
-ZX, ZY, ZR = 614, 152, 108   # zoom circle (ZR in zoom units)
-ZS = 1.06                    # zoom scale: on the page the circle radius is ZR * ZS
+W, H = 735, 322          # diagram viewBox: 1 unit = 1 px at the 7.66 in content width
+OX, OY = 215, 4          # anatomy origin inside the diagram
+ZX, ZY, ZR = 606, 152, 108   # zoom circle (ZR in zoom units); 12 px clear of the right edge
+ZS = 1.04                    # zoom scale: on the page the circle radius is ZR * ZS
 SX, SY, SR = 100, 102, 25    # zoom source ring (local coords, centred on the LES)
+TOP = 0                      # local y where the esophagus starts: SVG y 4, under the opaque fade
 
 
-def _defs():
-    return ("<defs>"
-            # one radial gradient in user space so the silhouette and the wall stroke match exactly
-            '<radialGradient id="gx-wall" gradientUnits="userSpaceOnUse" cx="120" cy="120" r="230">'
-            f'<stop offset="0" stop-color="{WALL_HI}"/><stop offset=".55" stop-color="{WALL_MID}"/>'
-            f'<stop offset="1" stop-color="{WALL_LO}"/></radialGradient>'
-            '<linearGradient id="gx-lining" gradientUnits="userSpaceOnUse" x1="0" y1="100" x2="0" y2="315">'
-            f'<stop offset="0" stop-color="{LINING_TOP}"/><stop offset="1" stop-color="{LINING_BOT}"/></linearGradient>'
-            '<linearGradient id="gx-acid" x1="0" y1="0" x2="0" y2="1">'
-            f'<stop offset="0" stop-color="{ACID_TOP}"/><stop offset=".35" stop-color="{ACID_MID}"/>'
-            f'<stop offset="1" stop-color="{ACID_BOT}"/></linearGradient>'
-            # cylinder shading laid over the outside of the esophagus
-            '<linearGradient id="gx-cyl" x1="0" y1="0" x2="1" y2="0">'
-            '<stop offset="0" stop-color="#7A2A1A" stop-opacity=".16"/>'
-            '<stop offset=".32" stop-color="#FFFFFF" stop-opacity=".42"/>'
-            '<stop offset=".6" stop-color="#FFFFFF" stop-opacity="0"/>'
-            '<stop offset="1" stop-color="#7A2A1A" stop-opacity=".22"/></linearGradient>'
-            '<linearGradient id="gx-topfade" x1="0" y1="0" x2="0" y2="1">'
-            '<stop offset="0" stop-color="#FFFFFF" stop-opacity="1"/>'
-            '<stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/></linearGradient>'
-            '<radialGradient id="gx-zbg" cx=".5" cy=".4" r=".62">'
-            '<stop offset="0" stop-color="#FFF8F4"/><stop offset="1" stop-color="#FBE6DC"/></radialGradient>'
-            '<linearGradient id="gx-les" x1="0" y1="0" x2="1" y2="0">'
-            f'<stop offset="0" stop-color="{LES_DARK}"/><stop offset=".45" stop-color="{LES}"/>'
-            f'<stop offset="1" stop-color="{LES_DARK}"/></linearGradient>'
-            '<radialGradient id="gx-lesz" cx=".5" cy=".45" r=".6">'
-            f'<stop offset="0" stop-color="#2DB3A5"/><stop offset=".7" stop-color="{LES}"/>'
-            f'<stop offset="1" stop-color="{LES_DARK}"/></radialGradient>'
-            + ''.join(f'<linearGradient id="gx-dia{k}" gradientUnits="userSpaceOnUse" x1="28" y1="0" x2="292" y2="0">'
-                      f'<stop offset="0" stop-color="{c}" stop-opacity="0"/><stop offset=".13" stop-color="{c}"/>'
-                      f'<stop offset=".86" stop-color="{c}"/><stop offset="1" stop-color="{c}" stop-opacity="0"/></linearGradient>'
-                      for k, c in (("e", DIA_EDGE), ("f", DIA)))
-            + '<marker id="gx-arr" viewBox="0 0 10 10" refX="5.2" refY="5" markerWidth="3.1" markerHeight="3.1" '
-            f'orient="auto-start-reverse" markerUnits="strokeWidth"><path d="M0,0 L10,5 L0,10 z" fill="{REFLUX}"/></marker>'
-            '<marker id="gx-arrh" viewBox="0 0 10 10" refX="5.2" refY="5" markerWidth="3.1" markerHeight="3.1" '
-            'orient="auto-start-reverse" markerUnits="strokeWidth"><path d="M0,0 L10,5 L0,10 z" fill="#FFFFFF"/></marker>'
-            "</defs>")
+# ------------------------------------------------------------- geometry helpers
+def _bez(s, t):
+    (x0, y0), (x1, y1), (x2, y2), (x3, y3) = s
+    u = 1 - t
+    return (u * u * u * x0 + 3 * u * u * t * x1 + 3 * u * t * t * x2 + t * t * t * x3,
+            u * u * u * y0 + 3 * u * u * t * y1 + 3 * u * t * t * y2 + t * t * t * y3)
+
+
+def _bez_d(s, t):
+    (x0, y0), (x1, y1), (x2, y2), (x3, y3) = s
+    u = 1 - t
+    return (3 * u * u * (x1 - x0) + 6 * u * t * (x2 - x1) + 3 * t * t * (x3 - x2),
+            3 * u * u * (y1 - y0) + 6 * u * t * (y2 - y1) + 3 * t * t * (y3 - y2))
+
+
+def _sample(segs, step=1.5):
+    """(x, y, tx, ty) along a chain of cubic segments, about `step` units apart."""
+    out = []
+    for i, s in enumerate(segs):
+        n = max(4, int(sum(math.dist(_bez(s, k / 24), _bez(s, (k + 1) / 24)) for k in range(24)) / step))
+        for k in range(0 if i == 0 else 1, n + 1):
+            x, y = _bez(s, k / n)
+            dx, dy = _bez_d(s, k / n)
+            m = math.hypot(dx, dy)
+            out.append((x, y, dx / m, dy / m))
+    return out
+
+
+def _pl(pts):
+    return " ".join(f"L{x:.1f},{y:.1f}" for x, y in pts)
+
+
+def _cubic(segs):
+    return "M%g,%g " % segs[0][0] + " ".join("C%g,%g %g,%g %g,%g" % (*a, *b, *c) for _, a, b, c in segs)
 
 
 # ------------------------------------------------------------- anatomy (local coords)
 # Front view.  The esophagus comes down a little left of the stomach's middle and
 # enters at the cardia; the fundus domes up beside it (the angle of His); the body
-# hangs down the right; the antrum hooks left and rises to the pylorus, where the
-# duodenum (first part of the small intestine) leaves and turns down.
+# hangs down the right; the antrum hooks left and tapers into a short pyloric canal.
+# The pylorus (a ring of muscle the height of the duodenum) closes it off, and the
+# duodenum (first part of the small intestine) carries on left and turns down.
 ESO_L, ESO_R = 83, 117
-_STOMACH = ("C82,150 98,196 118,222 C123,229 121,235 111,236 "          # lesser curvature + angular notch
-            "C86,236 58,229 36,229 C31,229 28,229 26,229 L26,255 "       # antrum roof -> pylorus
-            "C52,290 100,315 141,313 C196,311 237,268 243,200 "          # antrum floor, greater curvature
-            "C247,150 237,108 209,90 C187,77 151,75 131,87 "             # up the side, over the fundus
-            "C123,92 119,99 117,106 ")                                  # down into the angle of His
-STOM = "M83,95 L83,106 " + _STOMACH + "L117,95 Z"        # the cut-open stomach (opens into the tube under the LES)
-SILH = "M83,-20 L83,106 " + _STOMACH + "L117,-20 Z"      # esophagus + stomach outline
-DUO = "M44,242 C26,241 8,236 -6,244 C-20,252 -24,272 -19,294 L-16,305"   # duodenum centre line
+_LESSER = ("C82,150 98,196 118,222 C123,229 121,235 111,236 "            # lesser curvature + angular notch
+           "C86,236 62,229.5 48,229.5")                                  # antrum roof tapers into the canal
+_FLOOR = ("C62,256.5 98,312 141,313 C196,311 237,268 243,200 "         # antrum floor, greater curvature
+          "C247,150 238,104 211,86 C188,71 151,70 130,83 "              # up the side, over the fundus
+          "C123.2,87.2 118.5,91 117,97")                                # down into the angle of His (under the LES ring)
+# centre line of the pyloric canal + duodenum; the tube is 2 * R_DUO tall all the way
+DUO_SEGS = [((48, 243), (30, 243), (16, 241.6), (4, 243.2)),
+            ((4, 243.2), (-12, 245.4), (-22, 259), (-21.5, 279)),
+            ((-21.5, 279), (-21.2, 290), (-19, 298.5), (-16.5, 306))]
+R_DUO = 13.5
+_DP = _sample(DUO_SEGS)
+_DTOP = [(x - R_DUO * ty, y + R_DUO * tx) for x, y, tx, ty in _DP]     # outer / upper edge
+_DBOT = [(x + R_DUO * ty, y - R_DUO * tx) for x, y, tx, ty in _DP]     # inner / lower edge
+_TUBE = _pl(_DTOP[1:]) + " " + _pl(_DBOT[::-1])                          # canal + duodenum, out and back
+OUTLINE = f"M{ESO_L},{TOP} L{ESO_L},106 {_LESSER} {_TUBE} {_FLOOR} L{ESO_R},{TOP}"   # open at the top
+SILH = OUTLINE + " Z"
+# the cut-open stomach: opens into the tube under the LES, ends in a funnel at the canal
+_FUNNEL = "C38,229.5 32,238 32,243 C32,248 38,256.5 48,256.5"         # window tip pointing into the canal
+STOM = f"M83,95 L83,106 {_LESSER} {_FUNNEL} {_FLOOR} L117,95 Z"
+# interior edges of the window (not on the outline): painted over in wall colour so the
+# clipped lining cannot leave an anti-aliased seam there
+WINDOW_SEAMS = f"M48,229.5 {_FUNNEL} M83,95 L117,95"
+_I30 = next(i for i, p in enumerate(_DP) if p[0] <= 30)                 # duodenum shading starts here
+DUO_POLY = "M" + _pl(_DTOP[_I30:])[1:] + " " + _pl(_DBOT[_I30:][::-1]) + " Z"
+DUO_AXIS = "M" + _pl([(x, y) for x, y, _, _ in _DP[_I30:]])[1:]
 ACID = ("M20,253 C52,245 80,259 112,251 C140,244 168,257 196,249 C214,244 232,250 260,246")
-DIA_LINE = "M28,97 C68,89 108,82 134,76 C164,66 200,56 240,58 C260,59 276,65 292,74"
+# Diaphragm: a dome over the fundus, crossing behind the esophagus above the LES
+# (clear of the dashed source ring) and fading out before the zoom cone widens.
+DIA_SEGS = [((30, 78.5), (58, 71.5), (82, 65.5), (104, 62.5)),
+            ((104, 62.5), (134, 57), (166, 55), (196, 55.5)),
+            ((196, 55.5), (222, 56), (240, 60.5), (254, 67.5))]
+DIA_LINE = _cubic(DIA_SEGS)
+DIA_W = 11
+# Reflux path: rises out of the pool through open lumen (far clear of the angular
+# notch), eases into the cardia and runs straight up the esophagus.
+ARROW = "M170,262 C168,206 112.8,171.9 110,142 C108.5,126 102.5,112 101,100 L100,42"
 
 
 def _diaphragm():
-    return (f'<path d="{DIA_LINE}" stroke="url(#gx-diae)" stroke-width="12" fill="none"/>'
-            f'<path d="{DIA_LINE}" stroke="url(#gx-diaf)" stroke-width="9" fill="none"/>'
-            f'<path d="{DIA_LINE}" stroke="{DIA_FIBRE}" stroke-width="1.4" fill="none" stroke-dasharray="7 5" '
-            'stroke-linecap="round" opacity=".9"/>')
+    """A band of muscle: edge, body, short diagonal fibres and a soft top highlight.
+    No centre line.  Both ends fade out (gx-dia* gradients run x 30 -> 254)."""
+    fib = []
+    for x, y, tx, ty in _sample(DIA_SEGS, 4.2):
+        nx, ny = -ty, tx
+        h = DIA_W / 2 - 1.5
+        fib.append(f"M{x - 2.4 * tx - h * nx:.1f},{y - 2.4 * ty - h * ny:.1f}"
+                   f"L{x + 2.4 * tx + h * nx:.1f},{y + 2.4 * ty + h * ny:.1f}")
+    # highlight 2.9 units toward the band's upper edge (the -normal side)
+    hl = "".join(f"{'M' if i == 0 else 'L'}{x + 2.9 * ty:.1f},{y - 2.9 * tx:.1f}"
+                 for i, (x, y, tx, ty) in enumerate(_sample(DIA_SEGS, 6)))
+    return (f'<path d="{DIA_LINE}" stroke="url(#gx-diae)" stroke-width="{DIA_W + 2.4}" fill="none"/>'
+            f'<path d="{DIA_LINE}" stroke="url(#gx-diaf)" stroke-width="{DIA_W}" fill="none"/>'
+            f'<path d="{"".join(fib)}" stroke="url(#gx-diak)" stroke-width="1" fill="none" stroke-linecap="round" opacity=".8"/>'
+            f'<path d="{hl}" stroke="url(#gx-diah)" stroke-width="1.6" fill="none" stroke-linecap="round" opacity=".38"/>')
 
 
-def _duodenum():
-    out = []
-    for w, c in ((30, WALL_LO), (25, "#E5866E"), (15, "#F0A28C"), (6, "#F6BBA7")):
-        out.append(f'<path d="{DUO}" stroke="{c}" stroke-width="{w}" fill="none"/>')
-    # cut end of the tube: the small intestine carries on from here
-    out.append(f'<ellipse cx="-16" cy="305" rx="15" ry="5" fill="{LINING_BOT}" stroke="{WALL_LO}" stroke-width="2.4" '
-               'transform="rotate(-16 -16 305)"/>')
+def _mix(a, b, t):
+    """Blend two #RRGGBB colours, t from 0 (a) to 1 (b)."""
+    ra, rb = ([int(c[i:i + 2], 16) for i in (1, 3, 5)] for c in (a, b))
+    return "#%02X%02X%02X" % tuple(round(x + (y - x) * t) for x, y in zip(ra, rb))
+
+
+def _duodenum_shade():
+    """One smooth cross-gradient along the curved duodenum (the curved-tube version
+    of gx-cyl): 27 opaque strokes half a unit apart, so no band edge can show.
+    Darker at both edges, highlight a little up and left of the axis."""
+    edge, mid, hi = "#CC6650", "#E99079", "#F7BFAB"
+    out = [f'<clipPath id="gx-duo"><path d="{DUO_POLY}"/></clipPath>',
+           '<g clip-path="url(#gx-duo)" fill="none" stroke-linejoin="round">']
+    n = 27
+    for k in range(n):
+        t = k / (n - 1)                              # 0 at the tube edge, 1 on the axis
+        b = math.sin(t * math.pi / 2)
+        col = _mix(edge, mid, b / .62) if b < .62 else _mix(mid, hi, (b - .62) / .38)
+        w = 2 * R_DUO + 1 - k * (2 * R_DUO) / n
+        out.append(f'<path d="{DUO_AXIS}" stroke="{col}" stroke-width="{w:.2f}" '
+                   f'transform="translate({-1.5 * t:.2f},{-2 * t:.2f})"/>')
+    out.append("</g>")
     return "".join(out)
 
 
+def _pylorus():
+    """The pylorus: a thickened ring of muscle exactly as tall as the tube."""
+    x, y, tx, ty = min(_DP, key=lambda p: abs(p[0] - 26))
+    a = math.degrees(math.atan2(ty, tx))
+    return (f'<g clip-path="url(#gx-silh)"><ellipse cx="{x:.1f}" cy="{y:.1f}" rx="4.9" ry="{R_DUO + 3}" '
+            f'transform="rotate({a:.1f} {x:.1f} {y:.1f})" fill="url(#gx-pyl)" stroke="{PYL_EDGE}" stroke-width="1.1"/></g>')
+
+
+def _duo_end():
+    """Cut end of the duodenum: the small intestine carries on from here."""
+    x, y, tx, ty = _DP[-1]
+    a = math.degrees(math.atan2(tx, -ty))
+    return (f'<ellipse cx="{x:.1f}" cy="{y:.1f}" rx="{R_DUO - 0.6}" ry="4.4" transform="rotate({a:.1f} {x:.1f} {y:.1f})" '
+            f'fill="{LINING_BOT}" stroke="{WALL_LO}" stroke-width="2.2"/>')
+
+
 def _rugae():
-    folds = ["M152,104 C198,110 226,150 224,214", "M136,120 C178,128 204,168 202,240",
-             "M120,140 C152,152 174,186 174,244", "M108,168 C124,184 136,206 142,244",
-             "M190,96 C216,104 234,128 238,160"]
+    # gastric folds fan down the body; the strip between the lesser curvature and the
+    # arrow stays plain so the "Stomach" leader dot and the droplets sit on clear lining
+    folds = ["M152,100 C198,106 226,150 224,214", "M136,120 C178,128 204,168 202,240",
+             "M126,136 C160,148 186,182 189,228", "M184,90 C214,98 234,124 238,160"]
     out = []
     for f in folds:
         out.append(f'<path d="{f}" stroke="{RUGA_LO}" stroke-width="3.2" fill="none" stroke-linecap="round" '
@@ -141,13 +233,21 @@ def _rugae():
 
 
 def _acid_pool():
-    bubbles = [(150, 272, 3.2), (182, 284, 2.4), (122, 290, 2.8), (204, 266, 2.2), (92, 274, 2.4), (58, 262, 2.0), (165, 300, 2.6)]
-    drops = [(133, 226, 4.2), (121, 200, 3.4), (143, 208, 2.6), (112, 172, 2.8)]
+    bubbles = [(150, 272, 3.2), (182, 284, 2.4), (122, 290, 2.8), (204, 266, 2.2), (92, 278, 2.4), (165, 300, 2.6)]
     out = [f'<path d="{ACID} L260,330 L20,330 Z" fill="url(#gx-acid)"/>',
            f'<path d="{ACID}" stroke="#F3F7C2" stroke-width="2.2" fill="none" opacity=".9"/>']
     out += [f'<circle cx="{x}" cy="{y}" r="{r}" fill="#EEF3A6" opacity=".8"/>' for x, y, r in bubbles]
-    out += [f'<circle cx="{x}" cy="{y}" r="{r}" fill="{ACID_MID}" stroke="{ACID_EDGE}" stroke-width=".9"/>' for x, y, r in drops]
     return "".join(out)
+
+
+# Droplets splashing off the pool where the arrow leaves it and rising beside it, all
+# in open lumen: at least 8 units clear of the arrow's white halo and of the cut wall.
+DROPS = [(150, 242, 3.0), (188, 239, 3.8), (178, 221, 2.8), (167, 197, 3.3), (152, 171, 2.6)]
+
+
+def _drops():
+    return "".join(f'<circle cx="{x}" cy="{y}" r="{r}" fill="{ACID_MID}" stroke="{ACID_EDGE}" stroke-width=".9"/>'
+                   for x, y, r in DROPS)
 
 
 def _les_hoop(part):
@@ -169,28 +269,76 @@ def _arrow(d, w=5.5, halo=True):
     out = ""
     if halo:
         out = (f'<path d="{d}" stroke="#FFFFFF" stroke-width="{w + 4.5}" fill="none" stroke-linecap="round" '
-               'marker-end="url(#gx-arrh)" opacity=".95"/>')
-    return out + f'<path d="{d}" stroke="{REFLUX}" stroke-width="{w}" fill="none" stroke-linecap="round" marker-end="url(#gx-arr)"/>'
+               'stroke-linejoin="round" marker-end="url(#gx-arrh)" opacity=".95"/>')
+    return out + (f'<path d="{d}" stroke="{REFLUX}" stroke-width="{w}" fill="none" stroke-linecap="round" '
+                  'stroke-linejoin="round" marker-end="url(#gx-arr)"/>')
+
+
+def _defs():
+    fade = (lambda k, c, x0, x1: f'<linearGradient id="gx-dia{k}" gradientUnits="userSpaceOnUse" x1="{x0}" y1="0" x2="{x1}" y2="0">'
+            f'<stop offset="0" stop-color="{c}" stop-opacity="0"/><stop offset=".14" stop-color="{c}"/>'
+            f'<stop offset=".86" stop-color="{c}"/><stop offset="1" stop-color="{c}" stop-opacity="0"/></linearGradient>')
+    return ("<defs>"
+            # one radial gradient in user space so the silhouette and the wall rim match exactly
+            '<radialGradient id="gx-wall" gradientUnits="userSpaceOnUse" cx="120" cy="120" r="230">'
+            f'<stop offset="0" stop-color="{WALL_HI}"/><stop offset=".55" stop-color="{WALL_MID}"/>'
+            f'<stop offset="1" stop-color="{WALL_LO}"/></radialGradient>'
+            '<linearGradient id="gx-lining" gradientUnits="userSpaceOnUse" x1="0" y1="100" x2="0" y2="315">'
+            f'<stop offset="0" stop-color="{LINING_TOP}"/><stop offset="1" stop-color="{LINING_BOT}"/></linearGradient>'
+            '<linearGradient id="gx-acid" x1="0" y1="0" x2="0" y2="1">'
+            f'<stop offset="0" stop-color="{ACID_TOP}"/><stop offset=".35" stop-color="{ACID_MID}"/>'
+            f'<stop offset="1" stop-color="{ACID_BOT}"/></linearGradient>'
+            # cylinder shading laid over the outside of the esophagus
+            '<linearGradient id="gx-cyl" x1="0" y1="0" x2="1" y2="0">'
+            '<stop offset="0" stop-color="#7A2A1A" stop-opacity=".16"/>'
+            '<stop offset=".32" stop-color="#FFFFFF" stop-opacity=".42"/>'
+            '<stop offset=".6" stop-color="#FFFFFF" stop-opacity="0"/>'
+            '<stop offset="1" stop-color="#7A2A1A" stop-opacity=".22"/></linearGradient>'
+            # top fade: fully opaque from above the SVG edge to y 8 (the tube starts at y 4), then clear by y 30
+            '<linearGradient id="gx-topfade" gradientUnits="userSpaceOnUse" x1="0" y1="-6" x2="0" y2="30">'
+            '<stop offset="0" stop-color="#FFFFFF" stop-opacity="1"/><stop offset=".39" stop-color="#FFFFFF" stop-opacity="1"/>'
+            '<stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/></linearGradient>'
+            '<radialGradient id="gx-zbg" cx=".5" cy=".4" r=".62">'
+            '<stop offset="0" stop-color="#FFF8F4"/><stop offset="1" stop-color="#FBE6DC"/></radialGradient>'
+            '<linearGradient id="gx-les" x1="0" y1="0" x2="1" y2="0">'
+            f'<stop offset="0" stop-color="{LES_DARK}"/><stop offset=".45" stop-color="{LES}"/>'
+            f'<stop offset="1" stop-color="{LES_DARK}"/></linearGradient>'
+            '<radialGradient id="gx-lesz" cx=".5" cy=".45" r=".6">'
+            f'<stop offset="0" stop-color="#2DB3A5"/><stop offset=".7" stop-color="{LES}"/>'
+            f'<stop offset="1" stop-color="{LES_DARK}"/></radialGradient>'
+            '<linearGradient id="gx-pyl" x1="0" y1="0" x2="1" y2="0">'
+            '<stop offset="0" stop-color="#C9644E"/><stop offset=".42" stop-color="#EE9C84"/>'
+            '<stop offset=".62" stop-color="#E58A72"/><stop offset="1" stop-color="#C25C46"/></linearGradient>'
+            + fade("e", DIA_EDGE, 30, 254) + fade("f", DIA, 30, 254) + fade("k", DIA_FIBRE, 30, 254)
+            + fade("h", "#FFFFFF", 30, 254)
+            + '<marker id="gx-arr" viewBox="0 0 10 10" refX="5.2" refY="5" markerWidth="3.1" markerHeight="3.1" '
+            f'orient="auto-start-reverse" markerUnits="strokeWidth"><path d="M0,0 L10,5 L0,10 z" fill="{REFLUX}"/></marker>'
+            '<marker id="gx-arrh" viewBox="0 0 10 10" refX="5.2" refY="5" markerWidth="3.1" markerHeight="3.1" '
+            'orient="auto-start-reverse" markerUnits="strokeWidth"><path d="M0,0 L10,5 L0,10 z" fill="#FFFFFF"/></marker>'
+            "</defs>")
 
 
 def _anatomy():
     return "".join([
-        f'<g transform="translate({OX},{OY})">', _diaphragm(), _duodenum(),
-        # pylorus: the muscle ring where the stomach empties into the duodenum
-        f'<ellipse cx="25.5" cy="242" rx="5.5" ry="16" fill="{WALL_LO}"/>',
-        _les_hoop("back"),
-        f'<path d="{SILH}" fill="url(#gx-wall)" stroke="{WALL_LO}" stroke-width="1.6" stroke-linejoin="round"/>',
-        f'<rect x="{ESO_L}" y="-20" width="{ESO_R - ESO_L}" height="124" fill="url(#gx-cyl)"/>',
+        f'<g transform="translate({OX},{OY})">', _diaphragm(), _les_hoop("back"),
+        f'<clipPath id="gx-silh"><path d="{SILH}"/></clipPath>',
+        f'<path d="{SILH}" fill="url(#gx-wall)"/>',
+        _duodenum_shade(),
         f'<clipPath id="gx-stom"><path d="{STOM}"/></clipPath>',
         '<g clip-path="url(#gx-stom)">',
         f'<path d="{STOM}" fill="url(#gx-lining)"/>', _rugae(), _acid_pool(),
         # wall rim: a stroke clipped to the outline gives an even 10-unit cut wall all round
         f'<path d="{STOM}" fill="none" stroke="{CUT}" stroke-width="23.5"/>',
         f'<path d="{STOM}" fill="none" stroke="url(#gx-wall)" stroke-width="20"/>',
+        _drops(),
         "</g>",
-        f'<path d="M83,106 {_STOMACH}" fill="none" stroke="{WALL_LO}" stroke-width="1.6" stroke-linejoin="round"/>',
-        _arrow("M152,262 C140,214 108,172 101,126 L100,42"),
-        _les_hoop("front"),
+        f'<path d="{WINDOW_SEAMS}" fill="none" stroke="url(#gx-wall)" stroke-width="2.4" clip-path="url(#gx-silh)"/>',
+        _pylorus(),
+        # cylinder shading on the esophagus, laid after the window so it runs unbroken down to the LES ring
+        f'<rect x="{ESO_L}" y="{TOP}" width="{ESO_R - ESO_L}" height="{104 - TOP}" fill="url(#gx-cyl)"/>',
+        # one continuous outline: esophagus, stomach, canal, pylorus and duodenum (open at the faded top)
+        f'<path d="{OUTLINE}" fill="none" stroke="{WALL_LO}" stroke-width="1.6" stroke-linejoin="round"/>',
+        _duo_end(), _arrow(ARROW), _les_hoop("front"),
         "</g>"])
 
 
@@ -198,22 +346,24 @@ def _anatomy():
 # A slice through the junction, magnified about 3x.  The tube wall thickens into
 # the LES (teal); below it the wall flares out into the stomach and rises on the
 # right into the fundus (the same angle of His as the main view).  The ring is cut
-# in half: its two cut faces sit in the walls and its back half shows across the
-# far wall of the tube.
-Z_SILH = ("M-46,-140 L-46,-72 C-46,-60 -55,-50 -55,-36 C-55,-22 -46,-12 -46,-2 "
+# in half: its two cut faces sit inside the walls.  The valve is relaxed, so the
+# channel stays open wall to wall (+-22.5) and acid surges up through it.
+Z_SILH = ("M-46,-140 L-46,-72 C-46,-60 -54,-50 -54,-37 C-54,-24 -46,-12 -46,-2 "
           "C-46,22 -76,42 -140,54 L-140,140 L140,140 L140,-40 C112,-40 86,-28 68,-14 "
-          "C60,-8 54,-3 50,0 C48,-6 46,-9 46,-14 C46,-22 55,-26 55,-38 C55,-50 46,-60 46,-72 L46,-140 Z")
-Z_LUMEN = ("M-24,-140 L-24,-72 C-24,-60 -13,-50 -13,-36 C-13,-22 -24,-12 -24,-2 "
+          "C60,-8 54,-3 50,0 C48,-6 46,-9 46,-14 C46,-24 54,-26 54,-37 C54,-50 46,-60 46,-72 L46,-140 Z")
+Z_LUMEN = ("M-24,-140 L-24,-72 C-24,-60 -22.5,-50 -22.5,-37 C-22.5,-24 -24,-12 -24,-2 "
            "C-24,26 -60,52 -140,76 L-140,140 L140,140 L140,-20 C112,-18 92,-8 78,2 "
-           "C66,11 54,16 42,16 C32,16 24,8 24,-2 C24,-12 13,-22 13,-36 C13,-50 24,-60 24,-72 L24,-140 Z")
-Z_LES_L = "M-35,-74 C-52,-64 -53,-12 -37,-2 C-21,-9 -17,-60 -35,-74 Z"
-Z_LES_R = "M35,-74 C52,-64 53,-12 37,-2 C21,-9 17,-60 35,-74 Z"
+           "C66,11 54,16 42,16 C32,16 24,8 24,-2 C24,-12 22.5,-24 22.5,-37 C22.5,-50 24,-60 24,-72 L24,-140 Z")
+Z_LES_L = "M-39,-72 C-52,-62 -53,-14 -40,-4 C-27,-12 -26,-62 -39,-72 Z"
+Z_LES_R = "M39,-72 C52,-62 53,-14 40,-4 C27,-12 26,-62 39,-72 Z"
 # The refluxed acid is one liquid body clipped to the lumen: the pool mounds up into
 # the funnel, fills the open valve wall to wall and climbs the tube to a wavy crest.
 Z_ACID = ("M-140,88 C-110,86 -84,80 -62,64 C-42,48 -30,20 -30,-12 L-30,-60 "
           "C-22,-70 -14,-58 -5,-68 C3,-77 12,-60 20,-68 C25,-73 29,-68 30,-64 "
           "L30,-12 C30,12 42,32 62,46 C84,60 110,68 140,68 L140,140 L-140,140 Z")
 Z_CREST = ("M-30,-60 C-22,-70 -14,-58 -5,-68 C3,-77 12,-60 20,-68 C25,-73 29,-68 30,-64")
+# droplets above the crest: every one at least 2 units inside the 22.5-unit channel
+Z_DROPS = [(-14, -84, 3.4), (11, -90, 3.0), (-4, -98, 2.4), (15, -78, 2.4), (-17, -74, 2.0), (7, -96, 1.8)]
 
 
 def _zoom_les(d, side, k):
@@ -227,7 +377,6 @@ def _zoom_les(d, side, k):
 
 def _zoom():
     r = ZR - 4
-    drops = [(-16, -84, 3.6), (12, -90, 3.0), (-4, -96, 2.4), (21, -80, 2.4), (-23, -76, 2.0), (4, -82, 2.2)]
     return "".join([
         f'<circle cx="{ZX + 1.5}" cy="{ZY + 2.5}" r="{ZR * ZS + 3}" fill="#5A2A1A" opacity=".08"/>',
         f'<g transform="translate({ZX},{ZY}) scale({ZS})">',
@@ -249,7 +398,7 @@ def _zoom():
         f'<path d="{Z_CREST}" stroke="#F6F9CF" stroke-width="2.6" fill="none" stroke-linecap="round"/>',
         "".join(f'<circle cx="{x}" cy="{y}" r="{rr}" fill="#EEF3A6" opacity=".85"/>' for x, y, rr in
                 ((-10, 18, 2.6), (12, -2, 2.0), (-14, -30, 1.8), (14, -44, 2.4), (-30, 78, 2.4), (40, 76, 2.0), (86, 86, 2.6), (-70, 96, 2.2))),
-        "".join(f'<circle cx="{x}" cy="{y}" r="{rr}" fill="{ACID_MID}" stroke="{ACID_EDGE}" stroke-width="1"/>' for x, y, rr in drops),
+        "".join(f'<circle cx="{x}" cy="{y}" r="{rr}" fill="{ACID_MID}" stroke="{ACID_EDGE}" stroke-width="1"/>' for x, y, rr in Z_DROPS),
         "</g>",
         # cut face of the walls, then the two cut faces of the LES ring inside the thickened wall
         f'<path d="{Z_LUMEN}" fill="none" stroke="{CUT}" stroke-width="3"/>',
@@ -302,36 +451,49 @@ def _label(x, y, title, sub, tx, ty):
 def art_reflux():
     body = [_defs(), _wedge(), _anatomy(), _source_ring(),
             # fade the esophagus into the page at the top rather than chopping it off
-            f'<rect x="{OX + ESO_L - 6}" y="0" width="{ESO_R - ESO_L + 12}" height="30" fill="url(#gx-topfade)"/>',
+            f'<rect x="{OX + ESO_L - 6}" y="-6" width="{ESO_R - ESO_L + 12}" height="36" fill="url(#gx-topfade)"/>',
             _zoom(),
             T(ZX, 21, "UP CLOSE AT THE VALVE", 10.5, 800, DEEP, "middle", ls=1.6),
-            T(ZX, 297, "The relaxed valve stays open,", 13.5, 800, INK, "middle"),
-            T(ZX, 314, "so acid splashes back up.", 13.5, 800, INK, "middle"),
+            T(ZX, 290, "The relaxed valve stays open,", 13.5, 800, INK, "middle"),
+            T(ZX, 307, "so acid splashes back up.", 13.5, 800, INK, "middle"),
             _label(168, 48, "Esophagus", "your food tube", OX + ESO_L - 1, OY + 36),
-            _label(168, 92, "Diaphragm", "breathing muscle", OX + 70, OY + 89),
-            _label(168, 142, "LES valve", "a ring of muscle", OX + SX - 21, OY + SY + 4),
-            _label(168, 208, "Stomach", None, OX + 97, OY + 196),
-            _label(168, 284, "Small intestine", None, OX - 22, OY + 275)]
+            _label(168, 90, "Diaphragm", "breathing muscle", OX + 64, OY + 70),
+            _label(168, 140, "LES valve", "a ring of muscle", OX + SX - 21, OY + SY + 4),
+            # the dot sits on the stomach lining inside the chamber, between the wall and the arrow
+            _label(168, 205, "Stomach", None, OX + 126, OY + 197),
+            _label(168, 284, "Small intestine", None, OX - 20, OY + 280)]
     return svg(W, H, "".join(body), "How acid reflux happens: the LES valve at the bottom of the esophagus relaxes and stomach acid splashes up")
 
 
 def key_row():
     """KEY for the diagram, using the exact symbols drawn in the art."""
-    def sw(inner, vb="-12 -11 24 22"):
-        return f'<svg viewBox="{vb}" width="24" height="22" aria-hidden="true">{inner}</svg>'
-    acid = sw('<path d="M-11,-2 C-7,-7 -3,1 1,-3 C5,-7 8,-3 11,-4 L11,8 L-11,8 Z" '
+    def sw(inner, w=24):
+        return f'<svg viewBox="{-w / 2} -12 {w} 24" width="{w}" height="24" aria-hidden="true">{inner}</svg>'
+    acid = sw('<path d="M-11,1 C-7,-4 -3,4 1,0 C5,-4 8,0 11,-1 L11,10 L-11,10 Z" '
               f'fill="{ACID_MID}" stroke="{ACID_EDGE}" stroke-width=".9"/>'
-              '<path d="M-11,-2 C-7,-7 -3,1 1,-3 C5,-7 8,-3 11,-4" stroke="#F3F7C2" stroke-width="1.6" fill="none"/>')
-    les = sw(f'<path d="M-10,1 A10,3.4 0 0 1 10,1" stroke="{LES_DARK}" stroke-width="4.6" fill="none"/>'
-             f'<rect x="-6" y="-11" width="12" height="22" fill="{WALL_MID}"/>'
-             f'<path d="M-10,1 A10,3.4 0 0 0 10,1" stroke="{LES_DARK}" stroke-width="5.4" fill="none" stroke-linecap="round"/>'
-             f'<path d="M-10,1 A10,3.4 0 0 0 10,1" stroke="{LES}" stroke-width="3.4" fill="none" stroke-linecap="round"/>')
+              '<path d="M-11,1 C-7,-4 -3,4 1,0 C5,-4 8,0 11,-1" stroke="#F3F7C2" stroke-width="1.6" fill="none"/>'
+              f'<circle cx="-3.5" cy="-6.5" r="2.4" fill="{ACID_MID}" stroke="{ACID_EDGE}" stroke-width=".8"/>'
+              f'<circle cx="4" cy="-9.4" r="1.8" fill="{ACID_MID}" stroke="{ACID_EDGE}" stroke-width=".8"/>')
+    ring = sw(f'<path d="M-10,1 A10,3.4 0 0 1 10,1" stroke="{LES_DARK}" stroke-width="4.6" fill="none"/>'
+              f'<rect x="-6" y="-11" width="12" height="22" fill="{WALL_MID}"/>'
+              f'<path d="M-10,1 A10,3.4 0 0 0 10,1" stroke="{LES_DARK}" stroke-width="5.4" fill="none" stroke-linecap="round"/>'
+              f'<path d="M-10,1 A10,3.4 0 0 0 10,1" stroke="{LES}" stroke-width="3.4" fill="none" stroke-linecap="round"/>')
+    halves = sw(f'<rect x="-10" y="-11" width="20" height="22" rx="2" fill="{WALL_MID}"/>'
+                f'<rect x="-3.4" y="-11" width="6.8" height="22" fill="{ESO_LINING}"/>'
+                f'<path d="M-6,-8 C-9,-5 -9,5 -6,8 C-4.4,5 -4.4,-5 -6,-8 Z" fill="{LES}" stroke="{LES_DARK}" stroke-width=".9"/>'
+                f'<path d="M6,-8 C9,-5 9,5 6,8 C4.4,5 4.4,-5 6,-8 Z" fill="{LES}" stroke="{LES_DARK}" stroke-width=".9"/>', 20)
     arrow = sw(f'<path d="M0,10 V-3" stroke="{REFLUX}" stroke-width="3.6" stroke-linecap="round"/>'
                f'<path d="M-6,-1 L0,-10 L6,-1 Z" fill="{REFLUX}"/>')
+    ring2 = sw('<circle r="8.6" fill="none" stroke="#FFFFFF" stroke-width="3"/>'
+               '<circle r="8.6" fill="none" stroke="#6E787E" stroke-width="1.2" stroke-dasharray="3.4 2.4"/>')
+
+    def item(swatches, name, gloss):
+        return f'<span class="gx-ki">{swatches}<span><em>{name}</em><i>{gloss}</i></span></span>'
     return ('<div class="gx-key"><b>Key</b>'
-            f'<span>{acid}<em>Stomach acid</em></span>'
-            f'<span>{les}<em>LES valve</em><i>the ring of muscle that shuts after you swallow</i></span>'
-            f'<span>{arrow}<em>Reflux</em><i>acid moving up</i></span></div>')
+            + item(acid, "Stomach acid", "the pool and drops")
+            + item(ring + halves, "LES valve", "ring of muscle, cut in half up close")
+            + item(arrow, "Reflux", "acid moving up")
+            + item(ring2, "Dashed circle", "the spot shown up close") + "</div>")
 
 
 # ------------------------------------------------------------- trigger picture row
@@ -380,19 +542,22 @@ def trigger_row(t):
 
 
 # ----------------------------------------------------------- nutrient strip
-NUTRIENTS = [("Mg", "Magnesium"),    # [FDA] 2011: low magnesium with long-term PPI use
-             ("B12", "Vitamin B12"),  # [LAM13]
-             ("Ca", "Calcium"),       # [OC05]; [FDA] fracture warning
-             ("Fe", "Iron"),          # [LAM17]
+NUTRIENTS = [("Mg", "Magnesium"),    # [FDA11]: low magnesium with prolonged PPI use
+             ("B12", "Vitamin B12"),  # [LAM13]: PPIs and H2 blockers
+             ("Ca", "Calcium"),       # [OC05]; [FDA10] fracture warning
+             ("Fe", "Iron"),          # [LAM17]: PPIs and H2 blockers
              ("Zn", "Zinc")]          # [FA11]
 
 
 def depletion_strip(t, ed):
     coins = "".join(f'<div class="gx-coin"><b>{s}</b><span>{n}</span></div>' for s, n in NUTRIENTS)
+    # [FDA11] low magnesium: prolonged use, any dose.  [FDA10] fractures: mostly high doses or 1+ year.
+    # [REB09] acid can rebound when a long-used PPI is stopped suddenly; an OTC 14-day course is not "months".
     return ('<div class="gx-strip"><div class="gx-meds"><div class="gx-h">About acid-blocking medicines</div>'
-            '<p>PPIs (like omeprazole) and H2 blockers (like famotidine) help many people heal. But acid also helps you absorb '
-            'nutrients, and the FDA has warned about low magnesium and broken bones with long-term, high-dose PPI use.'
-            '<sup>1</sup> Never stop one on your own: ask {who} for a plan.</p></div>'
+            '<p>PPIs (like omeprazole) and H2 blockers (like famotidine) help many people heal. But acid also helps you '
+            'absorb nutrients. The FDA has warned about low magnesium with long-term PPI use, and about broken bones, '
+            'mostly at high doses or after a year or more.<sup>1</sup> <b>Taken one for months? Do not stop suddenly:</b> '
+            'ask {who} or your prescriber for a plan.</p></div>'
             f'<div class="gx-dep"><div class="gx-dephead">Long-term acid blockers can lower</div><div class="gx-coins">{coins}</div>'
             '<div class="gx-ask">Ask {who} if a nutrient check makes sense.</div></div></div>')
 
@@ -407,9 +572,10 @@ FEEL = ["Burning behind the breastbone",          # [ACG22] heartburn, the most 
 ALARM = ["Food sticks, or it hurts to swallow",   # [ACG22] dysphagia is an alarm symptom
          "You throw up blood or coffee-ground bits",  # [ACG22] GI bleeding
          "Your stools are black or tarry",
-         "You lose weight without trying",        # [ACG22] weight loss
          # [ACG22]: chest pain needs heart disease ruled out before anyone calls it reflux
          "<b>Chest pain: call 911.</b> It can be the heart."]
+# [ACG22] weight loss is an alarm feature that needs a prompt work-up, not an emergency visit
+SOON = "<b>See a doctor soon</b> if you lose weight without trying."
 
 
 def front(t, ed):
@@ -419,7 +585,7 @@ def front(t, ed):
             '<div class="gx-row">'
             f'<div class="gx-feel"><div class="gx-h">How it can feel</div><ul>{feel}</ul>'
             '<p class="gx-why"><b>Why treat it?</b> Left alone, acid can inflame, narrow or scar the esophagus.</p></div>'
-            f'<div class="gx-alarm"><div class="gx-h">Get care right away if</div><ul>{alarm}</ul></div>'
+            f'<div class="gx-alarm"><div class="gx-h">Get care right away if</div><ul>{alarm}</ul><p>{SOON}</p></div>'
             '</div>'
             f'{trigger_row(t)}{depletion_strip(t, ed)}'
             '<p class="gx-fn">1. U.S. FDA Drug Safety Communications on proton pump inhibitors (PPIs): possible fracture risk '
@@ -427,14 +593,15 @@ def front(t, ed):
 
 
 CSS = r"""
-.gxf{display:flex;flex-direction:column;gap:0.085in}
+.gxf{display:flex;flex-direction:column;gap:0.08in}
 .gxf .gx-art>svg{display:block;width:100%;height:auto}
-.gxf .gx-key{display:flex;align-items:center;justify-content:center;gap:4px 18px;flex-wrap:wrap;margin:2px auto 0;
-  padding:3px 14px;border:1px solid #EAD9CF;border-radius:99px;background:#FFFBF8;width:max-content;max-width:100%}
+.gxf .gx-key{display:flex;align-items:center;justify-content:center;gap:0 15px;flex-wrap:nowrap;margin:3px auto 0;
+  padding:3px 16px 3px 14px;border:1px solid #EAD9CF;border-radius:99px;background:#FFFBF8;width:max-content;max-width:100%}
 .gxf .gx-key>b{font:800 7pt Inter,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--deep)}
-.gxf .gx-key span{display:inline-flex;align-items:center;gap:5px;font-size:8pt;color:#2B3236}
-.gxf .gx-key em{font-style:normal;font-weight:700}
-.gxf .gx-key i{font-style:normal;color:#56626A}
+.gxf .gx-ki{display:inline-flex;align-items:center;gap:5px}
+.gxf .gx-ki>span{display:flex;flex-direction:column;line-height:1.14}
+.gxf .gx-key em{font-style:normal;font-weight:700;font-size:8pt;color:#2B3236}
+.gxf .gx-key i{font-style:normal;font-size:7.4pt;color:#56626A}
 .gxf .gx-key svg{display:block;flex:none}
 .gxf .gx-h{font:800 7.4pt Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--c1);margin:0 0 3px}
 .gxf .gx-h i{font:italic 500 7.6pt Inter,sans-serif;letter-spacing:0;text-transform:none;color:#56626A;margin-left:6px}
@@ -449,26 +616,28 @@ CSS = r"""
 .gxf .gx-alarm ul{margin:0;padding:0 0 0 13px;font-size:8.3pt;line-height:1.3;color:#2B3236}
 .gxf .gx-alarm li{margin:0}
 .gxf .gx-alarm li::marker{color:#C0392B}
-.gxf .gx-alarm p{margin:3px 0 0;font-size:8.3pt;line-height:1.3;color:#2B3236}
-.gxf .gx-alarm p b{color:#A5281E}
+.gxf .gx-alarm p{margin:3px 0 0;padding-top:3px;border-top:1px dashed #E7B3AC;font-size:8.3pt;line-height:1.3;color:#2B3236}
+.gxf .gx-alarm p b{color:#8E3110}
 .gxf .gx-trow{display:grid;grid-template-columns:repeat(10,1fr);gap:0 0.04in}
 .gxf .gx-tr{display:flex;flex-direction:column;align-items:center;text-align:center}
 .gxf .gx-badge{width:0.5in;height:0.5in;border-radius:50%;background:var(--soft);display:flex;align-items:center;justify-content:center;
   box-shadow:inset 0 0 0 1.5px #F3D3BC}
 .gxf .gx-tr>span:last-child{font-size:7.5pt;line-height:1.18;color:#2B3236;margin-top:3px;font-weight:600}
-.gxf .gx-strip{display:grid;grid-template-columns:1.3fr 1fr;gap:0.14in;align-items:center;background:var(--soft);border-radius:10px;
+.gxf .gx-strip{display:grid;grid-template-columns:1.42fr 1fr;gap:0.14in;align-items:center;background:var(--soft);border-radius:10px;
   padding:0.07in 0.12in 0.07in 0.14in}
 .gxf .gx-meds p{margin:0;font-size:8.2pt;line-height:1.34;color:#2B3236}
+.gxf .gx-meds p b{color:var(--deep)}
 .gxf .gx-meds sup{color:var(--c1);font-weight:700;font-size:7.2pt;line-height:0}
-.gxf .gx-dep{background:#fff;border-radius:8px;padding:0.05in 0.08in 0.05in}
+.gxf .gx-dep{background:#fff;border-radius:8px;padding:0.05in 0.09in 0.05in}
 .gxf .gx-dephead{font:800 7.4pt Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--deep);text-align:center;margin:0 0 5px}
-.gxf .gx-coins{display:grid;grid-template-columns:repeat(5,1fr);gap:0.04in}
-.gxf .gx-coin{display:flex;flex-direction:column;align-items:center}
+.gxf .gx-coins{display:flex;justify-content:space-between;gap:0 10px}
+.gxf .gx-coin{display:flex;flex-direction:column;align-items:center;flex:none;min-width:0.4in}
 .gxf .gx-coin b{width:0.4in;height:0.4in;border-radius:50%;background:var(--c1);color:#fff;display:flex;align-items:center;justify-content:center;
   font:800 10pt Inter,sans-serif;box-shadow:0 0 0 2px #fff,0 0 0 3.2px #F0B89A}
 .gxf .gx-coin span{font-size:7pt;font-weight:700;color:#2B3236;margin-top:3px;text-align:center;line-height:1.1;white-space:nowrap}
-.gxf .gx-ask{font-size:7.6pt;color:#3F4A50;text-align:center;margin-top:2px}
+.gxf .gx-ask{font-size:7.6pt;color:#3F4A50;text-align:center;margin-top:3px}
 .gxf .gx-fn{margin:0;font-size:7pt;color:#5E686F;line-height:1.3}
+.gxf~.foot,.gxf~.foot .code{font-size:7pt}
 """
 
 SHEET = {

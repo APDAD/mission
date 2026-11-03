@@ -69,5 +69,22 @@
     ],
     "url": "https://nutridyn.com/dynamic-multi-collagen-renew",
     "src": "NutriDyn sell sheet 'Collagen Renew SS ND569' (Rev. 9/24, Dropbox Marketing Materials), as transcribed in scratchpad labels/labels.json: per scoop (17.5 g) collagen peptides 17.5 g = FORTIGEL 5 g + FORTIBONE 5 g + TENDOFORTE 5 g + VERISOL 2.5 g; protein 15 g; about 30 servings; directions 'Mix 1 scoop in 8 ounces of water, your favorite beverage, or a recipe'. Matches products DB R190 (5 switch charts, catalog ND143 10/1/26) and the repo blast blasts/2026-10-19-collagen-tendon.html (panel read live; no vitamin C in the formula, hence the 'pair with a vitamin C food' line). URL from that blast (curl 200 on 2026-08-11). Size 525G from price list ND144 10/1/26."
+  },
+  "jp_curcumin_400x": {
+    "name": "Curcumin 400X",
+    "size": "60 softgels",
+    "img_src": "R268.png",
+    "key": "2 softgels: BioCurc turmeric extract 800 mg",
+    "dose": "2 softgels daily",
+    "dosesub": "with breakfast",
+    "sched": [
+      [
+        "am",
+        2,
+        "softgels"
+      ]
+    ],
+    "url": "https://nutridyn.com/curcumin-400x-r268",
+    "src": "Products DB R268 label_facts (Pure Encapsulations and Designs for Health switch charts, read from NutriDyn catalog ND143 10/1/26): 'Turmeric extract per serving: NutriDyn 800 mg BioCurc extract (2 softgels, curcuminoid percentage not stated)'; directions 'Take two softgels daily or as directed by your healthcare practitioner.' No curcuminoid amount is printed, so none is stated. 'Liquid-Soluble' is read off the bottle photo (R268: 'Curcumin 400x, Revolutionary Liquid-Soluble Curcumin'). Size 60 softgels from price list ND144 10/1/26 (DB sku R268 60S). Both softgels are scheduled at breakfast, inside 'two softgels daily'. URL slug curcumin-400x-r268 from build/products.py SLUGS (NutriDyn 60-day protocol doc); nutridyn.com is blocked from this machine, so the link was not re-checked. Own key (not the shared curcumin_bcm95, whose line reads '800 mg curcumin') so the In each serving line matches the label wording."
   }
 }

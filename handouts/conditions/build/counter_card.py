@@ -77,7 +77,7 @@ def build():
 <div class="foot"><span>Label facts checked Nov 2026 against Costco's own product listings (Kirkland fish oil 1,000 mg lists 250 mg EPA + DHA per softgel; the daily multi lists folic acid and cyanocobalamin). Recheck a bottle before quoting it.</span><span class="code">ND-RX-401 &middot; staff side</span></div>
 </div></section>"""
     tb = kit.toolbar("Counter card + staff talk track", "warehouse-bottle-counter-card.pdf")
-    html = kit.page_shell("Warehouse Bottle Counter Card", tb + f'<div class="stack">{front}{back}</div>', "gut", sheets.EXTRA_CSS + CSS)
+    html = kit.page_shell("Warehouse Bottle Counter Card", tb + f'<div class="stack">{front}{back}</div>', "gut", sheets.EXTRA_CSS + CSS, font_base="fonts/")
     open(os.path.join(os.path.dirname(HERE), "warehouse-bottle-counter-card.html"), "w").write(html)
 
 if __name__ == "__main__":

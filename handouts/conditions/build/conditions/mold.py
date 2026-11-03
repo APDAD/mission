@@ -12,6 +12,25 @@ need that for everything."):
   * every label prints at 7 pt or more, nothing is clipped.
 Back: kept exactly as draft 1 (sheets.py); a later pass revises the products.
 
+Fix round 2026-11-03 (art director's review):
+  * "Cough, wheeze" uses an in-module LUNGS icon (windpipe, two bronchi, two separate
+    lobes); the kit "lungs" fused its lobes and read as a peach;
+  * step 4 says "Ask a clinician" in both editions (a pharmacist does not examine sinuses);
+  * binder diagram: the gut is an open tube that fades out at both ends, the exit arrow
+    leaves its open end and is labelled "To stool"; every free toxin now sits downstream of
+    the bile duct; the binder capsule opens INSIDE the lumen (cap popped off, binder
+    spilling down the gut) instead of pouring through the wall, labelled from clear space;
+    the Bile swatch is drawn like the duct (dark rim, light core, square ends) with clear
+    space to its words; "Gallbladder" is 10 px and further from the organ, "Gut" sits lower;
+    KEY titles are 10 px;
+  * house: leaders carry a white underlay (the AC leader no longer vanishes over the roof
+    band), the attic has one keyed drop over its puddle (the two merged drops are gone),
+    every puddle sits under a keyed drop, and the window's condensation dots are replaced by
+    fogged glass with keyed drops, so the key's two symbols are the only ones used;
+  * the draft-1 back overflowed its frame (disclaimer cut, page/edition line not printed).
+    SHEET["back"] stays frozen for the back-page pass, so scoped back-only CSS (see
+    BACK-PAGE FIT in CSS) fits it without changing a word.
+
 Every SVG is drawn at 1:1 with its printed CSS size (viewBox width = rendered width
 in CSS px), so an SVG font-size of 9.4 prints at 7.05 pt.
 
@@ -119,7 +138,7 @@ def key_box(x, y, items, w, title="KEY", row_h=19, pad=9, size=10, cols=1):
     h = pad * 2 + 15 + rows * row_h
     out = [f'<g transform="translate({_f(x)},{_f(y)})">',
            f'<rect width="{_f(w)}" height="{_f(h)}" rx="8" fill="#FFFFFF" stroke="#CFD6DA" stroke-width="1.3"/>',
-           T(pad, pad + 9, title, 9.5, 800, INK, ls=1.3)]
+           T(pad, pad + 9.3, title, 10, 800, INK, ls=1.2)]   # 7.5 pt, off the 7 pt floor
     for i, (sw, lab) in enumerate(items):
         c, r = divmod(i, rows)
         cx = pad + c * col_w + 10
@@ -139,7 +158,7 @@ def key_row(cx, y, items, title="KEY", pad=9, size=10, gap=16, widths=None):
     x = cx - w / 2
     out = [f'<g transform="translate({_f(x)},{_f(y)})">',
            f'<rect width="{_f(w)}" height="{h}" rx="8" fill="#FFFFFF" stroke="#CFD6DA" stroke-width="1.3"/>',
-           T(pad, h / 2 + 3.4, title, 9.5, 800, INK, ls=1.3)]
+           T(pad, h / 2 + 3.6, title, 10, 800, INK, ls=1.2)]
     px = pad + title_w
     for (sw, lab), iw in zip(items, item_ws):
         out.append(f'<g transform="translate({_f(px + 10)},{_f(h / 2)})" data-sw="swatch">{sw}</g>')
@@ -150,8 +169,13 @@ def key_row(cx, y, items, title="KEY", pad=9, size=10, gap=16, widths=None):
 
 
 def leader(x1, y1, x2, y2):
-    return (f'<line x1="{_f(x1)}" y1="{_f(y1)}" x2="{_f(x2)}" y2="{_f(y2)}" stroke="{LEAD}" stroke-width=".9" '
-            f'stroke-dasharray="2.6 2"/><circle cx="{_f(x2)}" cy="{_f(y2)}" r="1.8" fill="{LEAD}"/>')
+    """Dashed leader with a white underlay, so it stays visible where it crosses dark art
+    (the AC leader runs over the slate roof band)."""
+    ends = f'x1="{_f(x1)}" y1="{_f(y1)}" x2="{_f(x2)}" y2="{_f(y2)}"'
+    return (f'<line {ends} stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" opacity=".92"/>'
+            f'<line {ends} stroke="{LEAD}" stroke-width=".9" stroke-dasharray="2.6 2"/>'
+            f'<circle cx="{_f(x2)}" cy="{_f(y2)}" r="2.6" fill="#FFFFFF" opacity=".92"/>'
+            f'<circle cx="{_f(x2)}" cy="{_f(y2)}" r="1.8" fill="{LEAD}"/>')
 
 
 # ============================================================ house cutaway
@@ -186,6 +210,8 @@ def art_house(t):
            '<stop offset=".62" stop-color="#5D7843" stop-opacity=".42"/><stop offset="1" stop-color="#6F8A52" stop-opacity="0"/></radialGradient>'
            '<linearGradient id="moGlass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E6F2FA"/>'
            '<stop offset="1" stop-color="#B5D3E7"/></linearGradient>'
+           '<linearGradient id="moFog" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF" stop-opacity=".2"/>'
+           '<stop offset="1" stop-color="#FFFFFF" stop-opacity=".62"/></linearGradient>'
            '<linearGradient id="moRoof" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6A7581"/>'
            '<stop offset="1" stop-color="#4B5561"/></linearGradient>'
            '<clipPath id="moAtticClip"><polygon points="118.9,84 200,26.3 281.1,84"/></clipPath>'
@@ -226,7 +252,7 @@ def art_house(t):
                '<path d="M172,66 v11 M175,66 v11 M178,66 v11" stroke="#9EA6AD" stroke-width=".8"/>')
     out.append(drop(189.5, 79.5, 0.72))
     out.append(colony(241, 59, 6.5, 13))
-    out.append(drop(251, 68.5, 0.78) + drop(251, 76.5, 0.55))
+    out.append(drop(251, 70, 0.8))            # one keyed drop falling from the roof leak onto the attic puddle
     # roof deck line inside the attic, roof band, soffits
     out.append('<polyline points="118.9,84 200,26.3 281.1,84" fill="none" stroke="#C49A6C" stroke-width="3"/>')
     out.append('<polygon points="96,88 200,14 304,88 304,100.3 200,26.3 96,100.3" fill="url(#moRoof)"/>')
@@ -238,12 +264,11 @@ def art_house(t):
     # upstairs left: bedroom with a fogged window and a damp ceiling under the AC pan
     out.append('<rect x="124" y="101" width="36" height="32" fill="#FFFFFF" stroke="#9AAFBD" stroke-width="1.2"/>'
                '<rect x="127" y="104" width="30" height="26" fill="url(#moGlass)"/>'
+               '<rect x="127" y="104" width="30" height="26" fill="url(#moFog)"/>'
                '<path d="M142,104 V130 M127,117 H157" stroke="#FFFFFF" stroke-width="1.6"/>'
                '<rect x="121" y="133" width="42" height="3" fill="#E6DFD2" stroke="#B8AE9E" stroke-width=".6"/>')
-    for (x, y, rx, ry) in [(130, 124, 1.1, 1.4), (134.5, 127.2, .9, 1.2), (147, 125, 1.1, 1.4), (151.5, 121.5, .9, 1.2),
-                           (131.5, 110, .8, 1), (153, 128, .9, 1.2), (138, 121, .8, 1.1)]:
-        out.append(f'<ellipse cx="{x}" cy="{y}" rx="{rx}" ry="{ry}" fill="#6FA6D3"/>')
-    out.append('<path d="M134.5,128.4 v1.6 M147,126.4 v3.6" stroke="#6FA6D3" stroke-width=".8"/>')
+    # fogged glass with the keyed drop running down it (no separate condensation symbol)
+    out.append(drop(134.5, 123.6, 0.55) + drop(149.5, 110.8, 0.5))
     out.append(colony(126.5, 132, 5.8, 21) + colony(158, 132.5, 4.8, 22))
     out.append('<rect x="190" y="124" width="5" height="28" rx="1" fill="#A88B6B"/>'
                '<rect x="162" y="137" width="30" height="8" rx="2" fill="#F4F6F9" stroke="#C9D1DA" stroke-width=".7"/>'
@@ -307,12 +332,12 @@ def art_house(t):
     # labels and leaders: left column ends at x=86, right column starts at x=314
     lab = lambda x, y, lines, anchor: T(x, y, lines, 10, 700, INK, anchor, lh=1.24)
     out.append(lab(86, 57, ["AC units and", "drip pans"], "end") + leader(89, 61, 150.5, 80.5))
-    out.append(lab(86, 112, ["Foggy, wet", "windows"], "end") + leader(89, 116, 125, 130.5))
+    out.append(lab(86, 112, ["Foggy, wet", "windows"], "end") + leader(89, 116, 125.5, 118.5))
     out.append(lab(86, 182, ["Inside walls", "(hidden leaks)"], "end") + leader(89, 186, 126, 185.3))
     out.append(lab(86, 236, ["Crawl spaces", "and basements"], "end") + leader(89, 240, 129, 231))
     out.append(lab(314, 42, "Roof leaks", "start") + leader(311, 38.5, 256, 46.5))
     out.append(lab(314, 96, ["Showers", "and tubs"], "start") + leader(311, 100, 287, 96))
-    out.append(lab(314, 207, "Under sinks", "start") + leader(311, 203.5, 258.5, 212.5))
+    out.append(lab(314, 207, "Under sinks", "start") + leader(311, 203.5, 261.8, 211.5))
     out.append("</g>")
     # key
     out.append(key_row(200, 256, [(colony(0, 0, 8, 7), "Mold growth"), (drop(0, 0, 1.0), "Moisture or leak")],
@@ -328,9 +353,14 @@ def _bez(p0, p1, p2, p3, t):
 
 
 GY = 210   # gut centre-line baseline
-GUT = [((70, GY), (150, GY - 24), (230, GY + 24), (330, GY)),
+# The first and last segments are short straight runs that carry the tube on past both of
+# its faded ends, so its round stroke caps sit wholly in the transparent part of the fade
+# mask and the tube reads as open at both ends (not a sealed sac).
+GUT = [((38.5, GY + 9.45), (49, GY + 6.3), (59.5, GY + 3.15), (70, GY)),
+       ((70, GY), (150, GY - 24), (230, GY + 24), (330, GY)),
        ((330, GY), (420, GY - 22), (480, GY + 22), (560, GY)),
-       ((560, GY), (590, GY - 8), (612, GY - 8), (630, GY - 4))]
+       ((560, GY), (588, GY - 9), (610, GY - 4), (630, GY - 4)),
+       ((630, GY - 4), (643, GY - 4), (656, GY - 4), (669, GY - 4))]
 GUT_D = "M{},{} ".format(*GUT[0][0]) + " ".join(
     "C{},{} {},{} {},{}".format(*seg[1], *seg[2], *seg[3]) for seg in GUT)
 LUMEN = 46.0     # lumen width; the wall band is LUMEN + 22, its outline LUMEN + 25
@@ -373,12 +403,21 @@ def villi(spacing=7.0, r=2.9, skip=16):
     return f'<g fill="#EEC6B2" stroke="#DDA48E" stroke-width=".7">{"".join(out)}</g>'
 
 
-def capsule_art(x, y, rot=-28):
-    """A two-tone capsule (blue and white), about 32 x 14."""
-    return (f'<g transform="translate({_f(x)},{_f(y)}) rotate({rot})">'
-            '<rect x="-16" y="-7" width="32" height="14" rx="7" fill="#FFFFFF" stroke="#2C6FB7" stroke-width="1.6"/>'
-            '<path d="M0,-7 H9 A7,7 0 0 1 9,7 H0 Z" fill="#2C6FB7"/>'
-            '<path d="M-11,-3.2 H-4" stroke="#C9DBEF" stroke-width="1.6" stroke-linecap="round"/></g>')
+def gut_angle(x):
+    """Direction of the gut centre-line at x, in degrees."""
+    return math.degrees(math.atan2(gut_y(x + 1) - gut_y(x - 1), 2))
+
+
+def capsule_open(x, y, rot=0.0):
+    """The binder you take, opening inside the gut: a two-tone capsule (white body, blue cap,
+    about 34 x 15) whose cap has popped off downstream, so the binder spills out along the
+    lumen.  Drawn along the gut's direction (rot)."""
+    return (f'<g transform="translate({_f(x)},{_f(y)}) rotate({_f(rot)})">'
+            '<path d="M1,-7.3 H-9.7 A7.3,7.3 0 0 0 -9.7,7.3 H1 Z" fill="#FFFFFF" stroke="#2C6FB7" stroke-width="1.6" '
+            'stroke-linejoin="round"/>'
+            '<path d="M-13.6,-3.2 H-7" stroke="#C9DBEF" stroke-width="1.6" stroke-linecap="round"/>'
+            '<g transform="translate(6.5,-2.2) rotate(-24)"><path d="M0,-7.3 H8.2 A7.3,7.3 0 0 1 8.2,7.3 H0 Z" '
+            'fill="#2C6FB7"/></g></g>')
 
 
 LIVER_D = ("M28,78 C24,54 48,33 92,31 C124,30 156,34 182,41 C198,45 212,50 214,57 C215,62 208,66 198,70 "
@@ -397,6 +436,12 @@ def art_binder(t, H=288):
            f'<mask id="moRing" maskUnits="userSpaceOnUse" x="0" y="0" width="{_f(W)}" height="{H}">'
            f'<path d="{GUT_D}" stroke="#FFFFFF" stroke-width="{LUMEN + 26}" fill="none" stroke-linecap="round"/>'
            f'<path d="{GUT_D}" stroke="#000000" stroke-width="{LUMEN}" fill="none" stroke-linecap="round"/></mask>'
+           # both ends of the gut fade out: this is a stretch of an open tube, not a sealed sac
+           f'<linearGradient id="moFadeG" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="{_f(W)}" y2="0">'
+           f'<stop offset="{42 / W:.4f}" stop-color="#000000"/><stop offset="{82 / W:.4f}" stop-color="#FFFFFF"/>'
+           f'<stop offset="{614 / W:.4f}" stop-color="#FFFFFF"/><stop offset="{655 / W:.4f}" stop-color="#000000"/></linearGradient>'
+           f'<mask id="moFade" maskUnits="userSpaceOnUse" x="0" y="0" width="{_f(W)}" height="{H}">'
+           f'<rect width="{_f(W)}" height="{H}" fill="url(#moFadeG)"/></mask>'
            '<marker id="moArR" viewBox="0 0 10 10" refX="6.5" refY="5" markerWidth="4.4" markerHeight="4.4" orient="auto-start-reverse">'
            '<path d="M0,0 L10,5 L0,10 z" fill="#C0392B"/></marker>'
            '<marker id="moArK" viewBox="0 0 10 10" refX="6.5" refY="5" markerWidth="3.6" markerHeight="3.6" orient="auto-start-reverse">'
@@ -413,19 +458,23 @@ def art_binder(t, H=288):
                '<path d="M44,52 C58,40 80,35 104,35" stroke="#FFFFFF" stroke-opacity=".42" stroke-width="3.2" fill="none" stroke-linecap="round"/>')
     out.append(T(70, 100, "Liver", 10.5, 700, "#FFFFFF", "middle", italic=True))
     out.append(hexagon(93, 140, 4.8) + hexagon(98, 150.5, 4.8))     # toxins riding in the bile
-    out.append(T(76, 152, "Gallbladder", 9.5, 700, BILE_TXT, "end", italic=True))
+    out.append(T(71, 152, "Gallbladder", 10, 700, BILE_TXT, "end", italic=True))
     # gut tube with its lining: folds are drawn, then the wall band is laid back over their
-    # outer halves so only the part that bulges into the lumen shows
-    out.append(f'<path d="{GUT_D}" stroke="#CF9984" stroke-width="{LUMEN + 25}" fill="none" stroke-linecap="round"/>'
+    # outer halves so only the part that bulges into the lumen shows.  The whole tube fades
+    # out at both ends (moFade).
+    out.append('<g mask="url(#moFade)">'
+               f'<path d="{GUT_D}" stroke="#CF9984" stroke-width="{LUMEN + 25}" fill="none" stroke-linecap="round"/>'
                f'<path d="{GUT_D}" stroke="#EEC6B2" stroke-width="{LUMEN + 22}" fill="none" stroke-linecap="round"/>'
                f'<path d="{GUT_D}" stroke="#FCEBE2" stroke-width="{LUMEN}" fill="none" stroke-linecap="round"/>')
     out.append(villi())
     out.append(f'<path d="{GUT_D}" stroke="#EEC6B2" stroke-width="{LUMEN + 22}" fill="none" stroke-linecap="round" mask="url(#moRing)"/>'
                f'<path d="{GUT_D}" stroke="#DDA48E" stroke-width="{LUMEN + 1.6}" fill="none" stroke-linecap="round" mask="url(#moRing)"/>'
-               f'<path d="{GUT_D}" transform="translate(0,{-(LUMEN / 2 + 5.5)})" stroke="#FFFFFF" stroke-opacity=".38" stroke-width="2.6" fill="none" stroke-linecap="round"/>')
-    out.append(T(86, gut_y(86) + LUMEN / 2 + 26, "Gut", 10.5, 700, "#9A5A45", "middle", italic=True))
-    # unbound toxins in the first stretch; one escaping through the wall
-    for (x, dy) in [(102, 5), (150, -6), (200, 6), (252, -5)]:
+               f'<path d="{GUT_D}" transform="translate(0,{-(LUMEN / 2 + 5.5)})" stroke="#FFFFFF" stroke-opacity=".38" stroke-width="2.6" fill="none" stroke-linecap="round"/>'
+               '</g>')
+    out.append(T(88, gut_y(88) + LUMEN / 2 + 29, "Gut", 10.5, 700, "#9A5A45", "middle", italic=True))
+    # unbound toxins: they enter with the bile (the duct meets the gut at x = 152), so they all
+    # sit downstream of it; one escapes through the wall
+    for (x, dy) in [(172, -6), (222, 6), (272, -5)]:
         out.append(hexagon(x, gut_y(x) + dy, 8.6))
     esc_x = 322
     esc_y = gut_y(esc_x) - LUMEN / 2 - 3
@@ -436,16 +485,21 @@ def art_binder(t, H=288):
                'stroke="#C0392B" stroke-width="3" fill="none" stroke-dasharray="6 4.5" marker-end="url(#moArR)"/>')
     mx, my = _bez(p0, p1, p2, p3, 0.55)
     out.append(hexagon(mx, my, 6.2))
+    # the binder you take: swallowed, it opens inside the gut and the binder spills out down the lumen
+    cap_x = 364
+    cap_y = gut_y(cap_x) + 1
+    out.append(capsule_open(cap_x, cap_y, gut_angle(cap_x)))
+    for (x, dy, R, rot) in [(397, 7, 8, 12), (417, -7, 8.5, -14)]:
+        out.append(crescent(x, gut_y(x) + dy, R, rot=rot))
+    # its label sits in clear space above the gut; a leader points into the lumen
+    out.append(leader(385, 154.5, cap_x - 2, cap_y - 10.8) + T(388, 152, "A binder you take", 10.5, 700, BINDER_TXT))
     # bound toxins in the second stretch
-    for (x, dy, rot) in [(384, -4, -8), (436, 4, 6), (488, -4, -4), (540, 4, 8), (592, -2, 0)]:
+    for (x, dy, rot) in [(450, 4, 6), (500, -4, -4), (550, 4, 8), (598, -2, 0)]:
         out.append(caught(x, gut_y(x) + dy, r=8.6, R=13.6, rot=rot))
-    # the binder you take, spilling into the gut
-    out.append(capsule_art(406, 136) + T(436, 141, "A binder you take", 10.5, 700, BINDER_TXT))
-    for (x, y, rot) in [(398, 151, -20), (408, 160, 10)]:
-        out.append(crescent(x, y, 6.2, rot=rot))
-    # exit
+    # exit: the arrow leaves the open end of the gut, labelled where it points
     ey = gut_y(628)
-    out.append(f'<path d="M674,{_f(ey)} H716" stroke="#2B3236" stroke-width="3.4" marker-end="url(#moArK)"/>')
+    out.append(f'<path d="M624,{_f(ey)} H714" stroke="#2B3236" stroke-width="3.4" marker-end="url(#moArK)"/>')
+    out.append(T(694, ey - 9, "To stool", 10.5, 700, INK, "middle"))
     # captions, numbered in reading order.  Kerkadi et al. 1998: mycotoxins leave the liver in bile, are
     # partly reabsorbed (enterohepatic recirculation), and a bile-acid binder raised their fecal excretion.
     out.append(badge(236, 30, 1, c1) + T(250, 34, "Your liver packs toxins into bile.", 10.5, 700, INK))
@@ -456,7 +510,9 @@ def art_binder(t, H=288):
     # key
     kb, _ = key_box(556, 10, [(hexagon(0, 0, 7), "Mycotoxin"), (crescent(-2.6, 0, 9.5), "Binder"),
                               (caught(-3.4, 0, r=5.2, R=8.2), "Toxin caught by a binder"),
-                              ('<path d="M-9,0 H9" stroke="#86C25E" stroke-width="5" stroke-linecap="round"/>', "Bile"),
+                              # drawn like the duct: dark rim under the light core, square ends
+                              ('<path d="M-8,0 H7" stroke="#4E8A33" stroke-width="9"/>'
+                               '<path d="M-8,0 H7" stroke="#86C25E" stroke-width="5"/>', "Bile"),
                               ('<path d="M-9,0 H5" stroke="#C0392B" stroke-width="2.6" stroke-dasharray="4 3"/>'
                                '<path d="M3,-4.5 L9.5,0 L3,4.5 Z" fill="#C0392B"/>', "Soaks back in")],
                     175)
@@ -467,6 +523,11 @@ def art_binder(t, H=288):
 # ============================================================ front page
 EYE = ('<path d="M6 34c7-11 16-16 26-16s19 5 26 16c-7 11-16 16-26 16S13 45 6 34z"/><circle cx="32" cy="34" r="8"/>'
        '<path d="M19 9l3 5M32 6v6M45 9l-3 5"/>')
+# Lungs: a windpipe that forks into two bronchi, each entering its own tapered lobe.  (The kit
+# icon fused the lobes under one stem and read as a peach at 0.36 in.)
+LUNGS = ('<path d="M32 7v17M32 24l-6 6M32 24l6 6"/>'
+         '<path d="M26 22c-8-1-15 9-16 22-1 7 2 11 7 11 6 0 9-4 9-11V22z"/>'
+         '<path d="M38 22c8-1 15 9 16 22 1 7-2 11-7 11-6 0-9-4-9-11V22z"/>')
 INHALER = ('<path d="M31 25V10a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v15"/>'
            '<path d="M27 25h20v25a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4v-6a4 4 0 0 1 4-4h13z"/><path d="M27 40v14"/><path d="M4 41h.5M2.5 47h.5M4 53h.5"/>')
 
@@ -499,13 +560,38 @@ CSS = r"""
 .mo-front .mo-steps{margin-bottom:8px}
 .mo-front .mo-stat b{font:900 19pt Merriweather,Georgia,serif;color:var(--c1);line-height:1;white-space:nowrap}
 .mo-front .mo-stat span{font-size:8.3pt;line-height:1.3;color:#2B3236}
+/* BACK-PAGE FIT (fix round 2026-11-03).  SHEET["back"] is draft 1 and stays frozen until the
+   back-page product pass.  As built it needed 1061 px in a 1021 px frame: the FDA disclaimer was
+   cut by the bottom bar and the page/edition line did not print.  These rules reach only THIS
+   sheet's back (the .sheet.back right after the .mo-front page, so the all-sheets bundle is
+   safe) and change no words:
+     - lifestyle cells 0.04in apart instead of 0.1in, so "Limit moldy foods" sets on one line
+       (116 px in a 119 px cell) and the tallest cell loses a title line and a body line;
+     - daily-rhythm columns size to their contents, a count never splits from its unit
+       ("Mito Recharge 3 / capsules"), and the rhythm panel takes a little width from the
+       check panel (which was 42 percent blank), so the Morning list stops wrapping;
+     - every dose bar is the same height with its text centred, so the bars form one row
+       (the glutathione line sets on one line at 7.3 pt with tighter side padding);
+     - product size lines get 0.05in side padding so "Practitioner exclusive · powder" stops
+       orphaning "powder";
+     - the GI Defend tub, when it is the Start-here pick, sits 0.12in lower so the ribbon no
+       longer covers its lid (the column has the slack; a narrow bottle needs no rule).
+   Re-check all of these, and drop any that the rebuilt back no longer needs, when it lands. */
+.sheet.front:has(.mo-front)+.sheet.back .lifes{gap:0.04in}
+.sheet.front:has(.mo-front)+.sheet.back .duo{grid-template-columns:1.55fr 1fr}
+.sheet.front:has(.mo-front)+.sheet.back .rhythm{grid-template-columns:auto auto auto}
+.sheet.front:has(.mo-front)+.sheet.back .slot li em{white-space:nowrap}
+.sheet.front:has(.mo-front)+.sheet.back .col .dose{min-height:0.35in;display:flex;flex-direction:column;
+  justify-content:center;font-size:7.3pt;padding-left:0.03in;padding-right:0.03in}
+.sheet.front:has(.mo-front)+.sheet.back .col .pick{padding-left:0.05in;padding-right:0.05in}
+.sheet.front:has(.mo-front)+.sheet.back .col:has(.startt) .pick img[src$="/nd-gi-defend.png"]{margin-top:0.12in}
 """
 
 
 def front(t, ed):
     s = lambda body: own_icon(body, "0.36in", 2.9)
     k = lambda name: icon(name, "0.36in", sw=2.9)
-    grp_a = [(k("nose"), "Stuffy nose"), (k("lungs"), "Cough, wheeze"), (s(EYE), "Itchy, red eyes"),
+    grp_a = [(k("nose"), "Stuffy nose"), (s(LUNGS), "Cough, wheeze"), (s(EYE), "Itchy, red eyes"),
              (s(INHALER), "Asthma flares")]
     grp_b = [(k("battery"), "Fatigue"), (k("brain"), "Brain fog"), (k("headache"), "Headaches"), (k("bone"), "Joint aches")]
     cells = lambda items: "".join(f"<div>{ic}<span>{lab}</span></div>" for ic, lab in items)
@@ -520,7 +606,8 @@ def front(t, ed):
         ("Keep bile flowing", "Your liver packs toxins into bile. Bile carries them into the gut on their way out."),
         ("Bind toxins in the gut", "Fiber and binders hold on to toxins so they leave with stool. "
                                    "Aim for an easy bowel movement every day."),
-        ("Check the sinuses", "Stuffy long after you leave the building? Ask {who} whether your sinuses need care too."),
+        # sinus care is a clinician's call in both editions (a pharmacist does not examine sinuses)
+        ("Check the sinuses", "Stuffy long after you leave the building? Ask a clinician whether your sinuses need care too."),
         ("Treat fungal overgrowth only if found", "Antifungal care is for when a clinician confirms it."),
     ]
     st = "".join(f'<div class="mo-step"><div class="n">{i + 1}</div><div><b>{a}</b><span>{b}</span></div></div>'

@@ -7,8 +7,15 @@ Self-contained: the art below was copied out of art.py / sheets.py and rebuilt o
      the stages are numbered 1 to 4.  The green "often reversible" arcs and the red
      "hardest to reverse" bracket keep the first draft's logic (Asher approved it).
   3. A KEY names everything inside the magnified tissue circles.
-  4. The old empty space at the bottom holds an "Ask about these liver checks" panel.
+  4. The old empty space at the bottom holds an "Ask about liver checks" panel.
   5. The risk-factor icons stay, polished into one row of tinted discs.
+Art-director pass (front only; SHEET["back"] is frozen for the products pass): immune cells
+never stack (a cell is skipped when no free spot exists), scar bands are drawn edges-then-fills
+so they merge into one septum, every arc end and T-bar stops clear of the white ring, the band
+holds the arcs and their labels, the livers sit bottom-aligned 4 units above the band, the key
+reads "KEY TO THE CLOSE-UPS" with a "Zoomed in" tag on the first beam, the sugar icon's slash is
+hidden, all three check cards end in two sourced dots, and the pharmacy edition says the doctor
+orders the checks.
 Shared helpers come only from svgkit / kit.  Every SVG id starts with "fl-" and every
 CSS class with "flv-", so nothing collides with other sheets in the all-sheets bundle.
 
@@ -79,14 +86,19 @@ IMM, IMM_RING = "#FFFFFF", "#E2463E"
 SCAR, SCAR_EDGE = "#D3CAC2", "#968B83"
 
 # ============================================================== geometry
-W = 760                       # viewBox width; rendered 7.66 in wide (scale ~0.968)
+W = 760                       # viewBox width; rendered 7.66 in wide (1 unit = 0.73 pt, so 7 pt text >= 9.7)
 XS = (95, 285, 475, 665)      # stage centres, symmetric about x = 380
-LIVER_CY = 124                # liver bounding-box centre
-LENS_Y, LENS_R = 122, 10      # the magnified spot on each liver
+BAND = (156, 357)             # light arrow band behind the circles (top, bottom); it holds the arcs AND their labels
+LIVER_S = 0.92                # base liver scale (each stage multiplies its own factor below)
+LIVER_BOT = BAND[0] - 4       # every liver's lowest point (stroke included) sits 4 units above the band
+LENS_Y, LENS_R = 116, 10      # the magnified spot, mid-body on all four livers
 CY, R = 258, 54               # magnified tissue circles
-BAND = (150, 326)             # light arrow band behind the circles (top, bottom)
-ARC_DIP = 44                  # how far below the circles the reversal arcs swing
-KEY_Y, KEY_H, H = 357, 28, 390   # key strip and total viewBox height
+ANCHOR = R + 11               # arc ends and bracket bars sit here, so tips and caps stop clear of the
+                              # white ring round each circle (outer edge R + 3.4)
+LOW_Y = 331                   # lowest point of every arc and of the bracket (so the labels share one baseline)
+LABEL_Y = LOW_Y + 18          # baseline of OFTEN REVERSIBLE / HARDEST TO REVERSE (8 above the band bottom)
+KEY_Y, KEY_H = BAND[1] + 6, 28
+H = KEY_Y + KEY_H + 3         # total viewBox height
 
 STAGES = [
     # label, subtitle (2023 names per [DELPHI23]), liver scale (fatty livers enlarge, cirrhotic ones shrink)
@@ -96,10 +108,11 @@ STAGES = [
     ("SCARRING", "fibrosis, then cirrhosis", 0.90),
 ]
 # What pushes each step forward (plain words; mechanisms per [AASLD23] pathogenesis section:
-# insulin resistance raises fat delivery to the liver; lipotoxic stress and products from the
-# gut microbiome drive the inflammation of MASH; ongoing inflammation drives fibrosis).
+# insulin resistance raises fat delivery to the liver; lipotoxic stress on liver cells drives the
+# inflammation of MASH, and "exposure to products derived from the gut microbiome ... may also
+# contribute to the NASH phenotype" [AASLD23]; ongoing inflammation drives fibrosis).
 DRIVERS = [["Insulin resistance", "sends extra fat", "into liver cells"],
-           ["Stressed cells and", "gut toxins spark", "inflammation"],
+           ["Stressed cells and", "gut-bacteria waste", "spark inflammation"],
            ["Years of", "inflammation", "leave scars"]]
 
 # ============================================================== the liver
@@ -112,7 +125,6 @@ _LIVER_PTS = [
     (96, 41, 0.6), (90, 46.5, 0.25), (82, 49, 0.8), (62, 59, 1.0), (40, 69, 1.0),
     (20, 70, 1.0), (7, 58, 1.0),
 ]
-LIVER_BOX = (3, 3, 141, 70)
 
 
 def _spline(pts):
@@ -132,6 +144,30 @@ def _spline(pts):
 
 
 LIVER_D = _spline(_LIVER_PTS)
+
+
+def _cubic(p0, p1, p2, p3, t):
+    m = 1 - t
+    return tuple(m ** 3 * p0[k] + 3 * m * m * t * p1[k] + 3 * m * t * t * p2[k] + t ** 3 * p3[k] for k in (0, 1))
+
+
+def _cubic_d(p0, p1, p2, p3, t):
+    m = 1 - t
+    return tuple(3 * m * m * (p1[k] - p0[k]) + 6 * m * t * (p2[k] - p1[k]) + 3 * t * t * (p3[k] - p2[k]) for k in (0, 1))
+
+
+def _path_extent(d):
+    """(x0, y0, x1, y1) of an M/C path, sampled: the spline bulges a little past its points."""
+    nums = [float(v) for v in d.replace("M", " ").replace("C", " ").replace("Z", " ").replace(",", " ").split()]
+    cur, pts = (nums[0], nums[1]), []
+    for i in range(2, len(nums), 6):
+        c1, c2, end = (nums[i], nums[i + 1]), (nums[i + 2], nums[i + 3]), (nums[i + 4], nums[i + 5])
+        pts += [_cubic(cur, c1, c2, end, k / 32) for k in range(33)]
+        cur = end
+    return (min(p[0] for p in pts), min(p[1] for p in pts), max(p[0] for p in pts), max(p[1] for p in pts))
+
+
+LIVER_EXT = _path_extent(LIVER_D)       # about (2.8, 2.4, 141.0, 71.0) in liver units
 LIVER_FILL = [("#C55B47", "#8C2E24"), ("#EEC468", "#C88E2E"), ("#DE8457", "#A8432A"), ("#A99689", "#6C5D54")]
 LIVER_EDGE = ["#6E241C", "#94661D", "#84331F", "#51463F"]
 
@@ -160,11 +196,11 @@ def _liver_texture(stage):
     return ""
 
 
-def liver(cx, cy, s, stage):
-    """One liver, bounding box centred on (cx, cy) at scale s."""
-    x0, y0, x1, y1 = LIVER_BOX
-    lx, ly = (x0 + x1) / 2, (y0 + y1) / 2
-    return (f'<g transform="translate({cx - lx * s:.1f},{cy - ly * s:.1f}) scale({s:.3f})">'
+def liver(cx, bot, s, stage):
+    """One liver at scale s, centred on cx, its lowest point (half the 1.4 stroke included) on y = bot.
+    Bottom-aligned, so all four sit the same distance above the band whatever their size."""
+    x0, _, x1, y1 = LIVER_EXT
+    return (f'<g transform="translate({cx - (x0 + x1) / 2 * s:.1f},{bot - (y1 + 0.7) * s:.1f}) scale({s:.3f})">'
             f'<path d="{LIVER_D}" fill="url(#fl-lv{stage})" stroke="{LIVER_EDGE[stage]}" stroke-width="1.4"/>'
             f'<g clip-path="url(#fl-lclip)">{_liver_texture(stage)}</g>'
             # falciform ligament, and a soft sheen along the dome
@@ -189,17 +225,54 @@ def sw_fat(r=6.2, x=0, y=0):
             f'<circle cx="{x - r * 0.36:.1f}" cy="{y - r * 0.36:.1f}" r="{r * 0.26:.1f}" fill="{FAT_HI}" opacity=".85"/>')
 
 
+IMM_R = 4.4                   # immune cell radius in the art; its ring's outer edge is IMM_R + 0.9
+IMM_GAP = 11.5                # minimum centre spacing, so rings (10.6 across) never stack
+
+
 def sw_immune(r=5.0, x=0, y=0):
     return f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{r:.1f}" fill="{IMM}" stroke="{IMM_RING}" stroke-width="1.8"/>'
 
 
-def _scar_path(d, w=7.4):
-    return (f'<path d="{d}" fill="none" stroke="{SCAR_EDGE}" stroke-width="{w + 3}" stroke-linecap="round"/>'
-            f'<path d="{d}" fill="none" stroke="{SCAR}" stroke-width="{w}" stroke-linecap="round"/>')
+SCAR_FIBRE = "#B5AAA1"        # faint collagen strands along each scar band
+
+
+def _ribbon(p, w, wobble=0.0, phase=0.0, n=48):
+    """A band of width w (gently swelling and thinning by +-wobble) along the cubic p = (p0, p1, p2, p3).
+    Returns the outline path and two fibre lines that run along it."""
+    left, right, fib = [], [], ([], [])
+    for i in range(n + 1):
+        t = i / n
+        x, y = _cubic(*p, t)
+        dx, dy = _cubic_d(*p, t)
+        m = math.hypot(dx, dy) or 1
+        nx, ny = -dy / m, dx / m
+        hw = w / 2 * (1 + wobble * math.sin(2 * math.pi * (1.3 * t + phase)))
+        left.append((x + nx * hw, y + ny * hw))
+        right.append((x - nx * hw, y - ny * hw))
+        for k, f in enumerate((-0.42, 0.36)):
+            fib[k].append((x + nx * hw * f, y + ny * hw * f))
+    poly = lambda pts: "M" + " L".join(f"{a:.1f},{b:.1f}" for a, b in pts)
+    return poly(left + right[::-1]) + "Z", [poly(f) for f in fib]
+
+
+def _scar_network(bands):
+    """Every band's dark edge first, then every pale fill, then the fibres, so where bands cross
+    they merge into one continuous septum instead of one tube passing over another."""
+    shapes = [_ribbon(p, w, wob, ph) for p, w, wob, ph in bands]
+    return ("".join(f'<path d="{o}" fill="{SCAR_EDGE}" stroke="{SCAR_EDGE}" stroke-width="3" stroke-linejoin="round"/>'
+                    for o, _ in shapes)
+            + "".join(f'<path d="{o}" fill="{SCAR}"/>' for o, _ in shapes)
+            + "".join(f'<path d="{f}" fill="none" stroke="{SCAR_FIBRE}" stroke-width=".8" stroke-linecap="round"/>'
+                      for _, fs in shapes for f in fs))
 
 
 def sw_scar():
-    return _scar_path("M-11,2.5 C-5,-3.5 4,4 11,-2.5", 6)
+    """Key swatch: a short band with the same edge, fill and fibres as the art (round ends, as it is not clipped)."""
+    d = "M-11,2.5 C-5,-3.5 4,4 11,-2.5"
+    return (f'<path d="{d}" fill="none" stroke="{SCAR_EDGE}" stroke-width="9" stroke-linecap="round"/>'
+            f'<path d="{d}" fill="none" stroke="{SCAR}" stroke-width="6" stroke-linecap="round"/>'
+            f'<path d="M-9.5,0.6 C-4.5,-4.3 3.5,2.2 9.5,-3.6" fill="none" stroke="{SCAR_FIBRE}" stroke-width=".8" stroke-linecap="round"/>'
+            f'<path d="M-9.5,4.0 C-4.5,-0.6 4.5,5.6 9.5,0.6" fill="none" stroke="{SCAR_FIBRE}" stroke-width=".8" stroke-linecap="round"/>')
 
 
 def tissue(cx, cy, r, stage):
@@ -230,23 +303,26 @@ def tissue(cx, cy, r, stage):
             if stage in (1, 2) and rnd.random() < 0.55:   # a few small droplets beside the nucleus
                 a = rnd.uniform(0, 2 * math.pi)
                 out.append(sw_fat(rnd.uniform(2.4, 3.4), px + 6.4 * math.cos(a), py + 6.4 * math.sin(a)))
-    if stage == 3:   # bridging bands of scar tissue cut the field into nodules
-        for d in (f"M{cx - 64},{cy - 22} C{cx - 30},{cy - 42} {cx + 8},{cy - 2} {cx + 64},{cy - 24}",
-                  f"M{cx - 64},{cy + 24} C{cx - 26},{cy + 8} {cx + 16},{cy + 42} {cx + 64},{cy + 20}",
-                  f"M{cx - 8},{cy - 64} C{cx - 22},{cy - 26} {cx + 18},{cy + 14} {cx + 2},{cy + 64}"):
-            out.append(_scar_path(d))
-    if stage >= 2:   # immune cells gather in clusters (inflammation)
-        spots = ([(-21, -16, 6), (20, 13, 6), (5, -33, 5), (-10, 30, 5)] if stage == 2
+    if stage == 3:   # bridging bands of scar tissue cut the field into nodules (ends run past the clip)
+        o = lambda dx, dy: (cx + dx, cy + dy)
+        out.append(_scar_network([
+            ((o(-64, -22), o(-30, -42), o(8, -2), o(64, -24)), 7.4, 0.16, 0.0),
+            ((o(-64, 24), o(-26, 8), o(16, 42), o(64, 20)), 7.4, 0.16, 0.37),
+            ((o(-8, -64), o(-22, -26), o(18, 14), o(2, 64)), 7.4, 0.16, 0.71)]))
+    if stage >= 2:   # immune cells gather in small clusters (inflammation)
+        spots = ([(-22, -15, 4), (21, 12, 4), (3, -33, 3), (-11, 31, 3)] if stage == 2
                  else [(-24, -21, 2), (27, -12, 2), (-14, 22, 2)])
         placed = []
         for sx, sy, n in spots:
             for _ in range(n):
-                for _try in range(40):
-                    ix, iy = cx + sx + rnd.uniform(-9, 9), cy + sy + rnd.uniform(-7, 7)
-                    if all(math.hypot(ix - qx, iy - qy) > 9.6 for qx, qy in placed):
-                        break
-                placed.append((ix, iy))
-                out.append(sw_immune(4.4, ix, iy))
+                for _try in range(60):
+                    ix, iy = cx + sx + rnd.uniform(-13, 13), cy + sy + rnd.uniform(-11, 11)
+                    # a free spot only: whole ring inside the circle, never on top of another ring
+                    if (math.hypot(ix - cx, iy - cy) <= r - IMM_R - 2.9
+                            and all(math.hypot(ix - qx, iy - qy) >= IMM_GAP for qx, qy in placed)):
+                        placed.append((ix, iy))
+                        out.append(sw_immune(IMM_R, ix, iy))
+                        break                 # no free spot after 60 tries: skip this cell
     out.append("</g>")
     out.append(f'<circle cx="{cx}" cy="{cy}" r="{r + 2.2}" fill="none" stroke="#FFFFFF" stroke-width="2.4"/>')
     out.append(f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="none" stroke="#2F2222" stroke-width="2.6"/>')
@@ -287,10 +363,16 @@ def _on_circle(cx, deg, rr):
     return cx + rr * math.cos(math.radians(deg)), CY + rr * math.sin(math.radians(deg))
 
 
+def _span(s, e):
+    """Control point that puts the curve's lowest point on LOW_Y (s and e sit at the same height)."""
+    return ((s[0] + e[0]) / 2, 2 * LOW_Y - (s[1] + e[1]) / 2)
+
+
 def _reverse_arc(a, b):
-    """Green arc from under circle a back to circle b (toward healthy), arrowhead at b."""
-    s, e = _on_circle(XS[a], 125, R + 5), _on_circle(XS[b], 55, R + 5)
-    c = ((s[0] + e[0]) / 2, CY + R + ARC_DIP)
+    """Green arc from under circle a back to circle b (toward healthy), arrowhead at b.
+    Both ends stop at ANCHOR, so the tail and the arrow tip sit just clear of the white ring."""
+    s, e = _on_circle(XS[a], 125, ANCHOR), _on_circle(XS[b], 55, ANCHOR)
+    c = _span(s, e)
     ux, uy = _unit(e[0] - c[0], e[1] - c[1])
     tip = (e[0] + ux * 6, e[1] + uy * 6)
     base = (e[0] - ux * 7, e[1] - uy * 7)
@@ -303,9 +385,10 @@ def _reverse_arc(a, b):
 
 
 def _hard_bracket(a, b):
-    """Red bracket spanning circles a..b: the step that is hardest to undo."""
-    s, e = _on_circle(XS[a], 55, R + 5), _on_circle(XS[b], 125, R + 5)
-    c = ((s[0] + e[0]) / 2, CY + R + ARC_DIP)
+    """Red bracket spanning circles a..b: the step that is hardest to undo.  Its T-bars are centred
+    on ANCHOR, so even their round caps stop short of the white ring."""
+    s, e = _on_circle(XS[a], 55, ANCHOR), _on_circle(XS[b], 125, ANCHOR)
+    c = _span(s, e)
     out = [f'<path d="M{s[0]:.1f},{s[1]:.1f} Q{c[0]:.1f},{c[1]:.1f} {e[0]:.1f},{e[1]:.1f}" stroke="{RED}" '
            'stroke-width="6" fill="none" stroke-linecap="round"/>']
     for p, (tx, ty) in ((s, (c[0] - s[0], c[1] - s[1])), (e, (e[0] - c[0], e[1] - c[1]))):
@@ -349,7 +432,7 @@ def _key(y):
     items = [(sw_cell(), 9.5, "Liver cell"), (sw_fat(), 7, "Fat droplet"),
              (sw_immune(), 6, "Immune cell (inflammation)"), (sw_scar(), 16, "Scar tissue")]
     x0, x1, h = 8, W - 8, KEY_H
-    title, fs, base = "KEY TO THE CIRCLES", 11.5, y + h / 2 + 4.1
+    title, fs, base = "KEY TO THE CLOSE-UPS", 11.5, y + h / 2 + 4.1
     tx = x0 + 14
     start = tx + tw(title, 10.5, 800, 1.2) + 24
     widths = [2 * hw + 7 + tw(lab, fs, 600) for _, hw, lab in items]
@@ -362,6 +445,25 @@ def _key(y):
         out.append(T(f"{x + 2 * hw + 7:.1f}", base, lab, fs, 600, INK))
         x += wd + gap
     return "".join(out)
+
+
+def _cone_half(y):
+    """Half-width of a zoom beam at height y (between the tangent points it is a straight taper)."""
+    s = (R - LENS_R) / (CY - LENS_Y)
+    c = math.sqrt(1 - s * s)
+    p1y, p2y = LENS_Y - LENS_R * s, CY - R * s
+    return LENS_R * c + (R - LENS_R) * c * (y - p1y) / (p2y - p1y)
+
+
+def _zoom_tag(cx, y):
+    """'Zoomed in' tag sitting inside the first zoom beam, so a reader knows the circles are
+    close-ups of the liver.  Checked: the pill stays inside the beam (see the assert)."""
+    lab, fs = "Zoomed in", 10.2
+    w, h = tw(lab, fs, 700) + 9, 14.5
+    assert w / 2 + 3 <= _cone_half(y), "zoom tag too wide for the beam"
+    return (f'<rect x="{cx - w / 2:.1f}" y="{y - h / 2:.1f}" width="{w:.1f}" height="{h}" rx="{h / 2}" '
+            'fill="#FFFFFF" stroke="#B9AFA9" stroke-width=".9"/>'
+            + T(cx, y + 3.7, lab, fs, 700, INK2, "middle"))
 
 
 def art_progression(t):
@@ -383,10 +485,11 @@ def art_progression(t):
     out.append(f'<path d="M16,{top} H696 L756,{mid} L696,{bot} H16 Q4,{bot} 4,{bot - 12} V{top + 12} Q4,{top} 16,{top} Z" '
                'fill="url(#fl-band)" stroke="#E2D8D2" stroke-width="1"/>')
     for i, cx in enumerate(XS):
-        out.append(liver(cx, LIVER_CY, 0.95 * STAGES[i][2], i))
+        out.append(liver(cx, LIVER_BOT, LIVER_S * STAGES[i][2], i))
     for cx in XS:
         out.append(_cone(cx))
         out.append(_lens(cx))
+    out.append(_zoom_tag(XS[0], 188))
     for i, cx in enumerate(XS):
         out.append(tissue(cx, CY, R, i))
     for i, lines in enumerate(DRIVERS):
@@ -397,10 +500,10 @@ def art_progression(t):
     for a, b in ((1, 0), (2, 1)):
         arc, low = _reverse_arc(a, b)
         out.append(arc)
-        out.append(T(low[0], low[1] + 18, "OFTEN REVERSIBLE", 12.5, 800, GREEN_TX, "middle", ls=0.4))
+        out.append(T(low[0], LABEL_Y, "OFTEN REVERSIBLE", 12.5, 800, GREEN_TX, "middle", ls=0.4))
     br, low = _hard_bracket(2, 3)
     out.append(br)
-    out.append(T(low[0], low[1] + 18, "HARDEST TO REVERSE", 12.5, 800, RED_TX, "middle", ls=0.4))
+    out.append(T(low[0], LABEL_Y, "HARDEST TO REVERSE", 12.5, 800, RED_TX, "middle", ls=0.4))
     out.append(_key(KEY_Y))
     return svg(W, H, "".join(out), "How fatty liver disease progresses from a healthy liver to scarring, "
                "with magnified views of the liver tissue at each stage")
@@ -415,7 +518,7 @@ RISKS = [  # icons kept from the first draft; each factor is named in [AASLD23]
     ("tube", "High blood fats<br>(triglycerides)"),
     ("calendar", "PCOS (polycystic<br>ovary syndrome)"),       # 2- to 4-fold higher MASLD prevalence
     ("dna", "Family history<br>and genes"),                     # PNPLA3; relatives of NASH cirrhosis
-    ("gut", "Gut imbalance<br>(dysbiosis)"),                    # gut-microbiome products contribute
+    ("gut", "Gut imbalance<br>(dysbiosis)"),                    # [AASLD23]: products from the gut microbiome "may also contribute"
 ]
 
 _STEP_ICONS = {
@@ -438,23 +541,27 @@ _ARROW = ('<svg viewBox="0 0 12 22" style="width:9px;height:17px" aria-hidden="t
           'fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>')
 
 # The three checks, in the order AASLD 2023 lays them out for primary care [AASLD23]:
-#  - ALT/AST "can be normal in patients with diabetes, NASH, and advanced hepatic fibrosis"
+#  - serum aminotransferases "can be normal in patients with diabetes, NASH, and advanced hepatic fibrosis"
+#  - "normal values provided by most laboratories are higher than what should be considered normal in
+#    NAFLD, in which a true normal alanine aminotransferase (ALT) ranges from 29 to 33 U/L in men and
+#    from 19 to 25 U/L in women" (an upper limit, hence "Healthy ALT limit" on the card)
 #  - FIB-4 is "based upon age, ALT, AST, and platelet count"; low risk is "FIB-4 <1.3"
-#  - "normal values provided by most laboratories are higher than what should be considered normal"
-#  - FIB-4 >= 1.3 -> VCTE (eg, FibroScan) favoured as the secondary test in primary care; it
-#    measures liver stiffness, and its CAP reading assesses liver fat
+#  - FIB-4 >= 1.3 -> VCTE (eg, FibroScan) favoured as the secondary test in primary care; it measures
+#    liver stiffness, and its CAP reading "provides a point-of-care semiquantitative assessment of
+#    hepatic steatosis but does not accurately quantify" liver fat (hence "estimates")
 #  - VCTE "LSM <8 kPa can be used to rule out advanced fibrosis"; intermediate or high risk on the
 #    secondary test -> "referred to specialty care"
 CHECKS = [
     ("vial", "Liver enzymes (ALT, AST)",
      "A routine blood test. High levels can mean the liver is irritated, but normal levels do not rule out "
-     "fatty liver. Many labs&rsquo; &ldquo;normal&rdquo; ranges run higher than ideal.", None),
+     "fatty liver.",
+     [(SEV[0], "Healthy ALT limit, women: 19 to 25 U/L"), (SEV[0], "Healthy ALT limit, men: 29 to 33 U/L")]),
     ("gauge", "FIB-4 score",
      "Worked out from your age and routine labs (ALT, AST, platelets) to estimate the risk of advanced scarring.",
      [(SEV[0], "Under 1.3: low risk"), (SEV[1], "1.3 or higher: step 3 is next")]),
     ("probe", "FibroScan (elastography)",
-     "A no-needle scan that measures liver stiffness (scarring) and liver fat. "
-     "Often the next step when FIB-4 is 1.3 or higher.",
+     "A no-needle scan that measures liver stiffness (scarring) and estimates liver fat. "
+     "The next step if FIB-4 is 1.3 or higher.",
      [(SEV[0], "Under 8 kPa: low risk"), (SEV[1], "8 kPa or more: see a liver specialist")]),
 ]
 
@@ -478,10 +585,13 @@ def ask_panel(ed):
         cards.append(f'<div class="flv-step"><div class="flv-sh"><span class="flv-n">{n}</span>{_ico(ic)}<b>{title}</b></div>'
                      f'<p>{body}</p>{extra}</div>')
     steps = f'<div class="flv-arr">{_ARROW}</div>'.join(cards)
-    lead = "Fatty liver is usually silent. Ask {who} which checks fit you."   # [AASLD23] "asymptomatic"
+    # [AASLD23]: "In most patients, NAFLD is asymptomatic or associated with vague symptoms"
+    lead = "You may feel fine. Ask {who} which checks fit you."
+    if "pharmacist" in ed["who"]:    # a pharmacist can advise, but a doctor orders the labs and the scan
+        lead = "You may feel fine. Ask {who} which checks fit you; your doctor can order them."
     # [AASLD23]: ">= 2 metabolic risk factors, particularly prediabetes or T2DM ... FIB-4 every 1-2 years"
-    foot = "<b>Two or more metabolic risks, like prediabetes or belly fat?</b> Repeat FIB-4 every 1 to 2 years."
-    return (f'<div class="flv-ask"><div class="flv-askhd"><b>Ask about these liver checks</b><span>{_ed(lead, ed)}</span></div>'
+    foot = "<b>Two or more metabolic risks, like prediabetes or belly fat?</b> Check FIB-4 every 1 to 2 years."
+    return (f'<div class="flv-ask"><div class="flv-askhd"><b>Ask about liver checks</b><span>{_ed(lead, ed)}</span></div>'
             f'<div class="flv-steps">{steps}</div>'
             f'<div class="flv-foot"><span>{foot}</span><small>AASLD practice guidance, 2023</small></div></div>')
 
@@ -500,6 +610,7 @@ CSS = r"""
 .flv-h::after{content:"";flex:1;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--soft),rgba(246,228,225,0))}
 .flv-art+.flv-h{margin-top:0.08in}
 .flv-risk{display:grid;grid-template-columns:repeat(8,1fr);gap:0 0.04in}
+.flv-risk .x{display:none}
 .flv-rf{display:flex;flex-direction:column;align-items:center;text-align:center}
 .flv-disc{width:0.52in;height:0.52in;border-radius:50%;background:var(--soft);color:var(--c1);display:flex;
   align-items:center;justify-content:center;box-shadow:inset 0 0 0 1.5px rgba(138,27,34,.10)}

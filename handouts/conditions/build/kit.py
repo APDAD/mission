@@ -167,9 +167,9 @@ h1,h2,h3{margin:0}
 .art{display:block;width:100%}
 .art svg{display:block;width:100%;height:auto}
 .foot{margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end;gap:12px;padding-top:6px;
-  font-size:6.6pt;color:#6A747B}
-.foot .code{font:600 6.6pt Inter,sans-serif;letter-spacing:.06em;color:#5B666D;text-align:right;white-space:nowrap}
-.disc{font-size:6.3pt;color:#5E686F;line-height:1.3;max-width:5.2in}
+  font-size:7pt;color:#6A747B}
+.foot .code{font:600 7pt Inter,sans-serif;letter-spacing:.06em;color:#5B666D;text-align:right;white-space:nowrap}
+.disc{font-size:7pt;color:#5E686F;line-height:1.28;max-width:5.4in}
 .disc sup,.mark{color:var(--c1);font-weight:700}
 
 /* back page */
@@ -200,19 +200,19 @@ h1,h2,h3{margin:0}
 .col .need{background:linear-gradient(160deg,var(--c1),var(--c2));color:#fff;padding:0.07in 0.07in 0.06in;text-align:center;
   min-height:0.5in;display:flex;flex-direction:column;justify-content:center}
 .col .need b{font-size:8.2pt;line-height:1.2;display:block}
-.col .need i{font-style:normal;font-size:6.8pt;opacity:.92;display:block;margin-top:2px;line-height:1.2}
+.col .need i{font-style:normal;font-size:7pt;opacity:.92;display:block;margin-top:2px;line-height:1.2}
 .col .pick{display:flex;flex-direction:column;align-items:center;padding:0.06in 0.07in 0.04in;background:var(--tint)}
 .col .pick img{height:0.98in;width:auto;max-width:100%;object-fit:contain;display:block;filter:drop-shadow(0 2px 2px rgba(0,0,0,.12))}
 .col .pick .nm{font:800 8.6pt Inter,sans-serif;color:#1A2226;margin-top:0.04in;text-align:center;line-height:1.15}
-.col .pick .sz{font-size:6.6pt;color:#5E696F;text-align:center}
+.col .pick .sz{font-size:7pt;color:#5E696F;text-align:center}
 .col .what{padding:0.06in 0.08in 0.05in;flex:1;font-size:7.3pt;line-height:1.28;color:#283035}
 .col .what ul{margin:0;padding:0;list-style:none}
 .col .what li{position:relative;padding-left:9px;margin:0 0 2px}
 .col .what li::before{content:"";position:absolute;left:0;top:4px;width:4px;height:4px;border-radius:50%;background:var(--c2)}
-.col .key{border-top:1px dashed #D3DADF;margin-top:4px;padding-top:3px;font-size:6.7pt;color:#3F4A50}
-.col .key b{color:var(--deep);font-size:6.5pt;letter-spacing:.06em;text-transform:uppercase}
+.col .key{border-top:1px dashed #D3DADF;margin-top:4px;padding-top:3px;font-size:7pt;color:#3F4A50}
+.col .key b{color:var(--deep);font-size:7pt;letter-spacing:.06em;text-transform:uppercase}
 .col .dose{background:var(--deep);color:#fff;text-align:center;font:700 7.6pt Inter,sans-serif;padding:0.06in 0.05in;line-height:1.2}
-.col .dose small{display:block;font-weight:500;font-size:6.4pt;opacity:.9}
+.col .dose small{display:block;font-weight:500;font-size:7pt;opacity:.9}
 .duo{display:grid;grid-template-columns:1.35fr 1fr;gap:0.1in;margin-top:0.1in}
 .panel{border:1px solid #DCE2E6;border-radius:8px;padding:0.08in 0.12in;background:#FBFCFC}
 .panel h3{font:800 7.4pt Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--c1);margin:0 0 4px}
@@ -234,7 +234,7 @@ h1,h2,h3{margin:0}
 .recby{display:flex;gap:8px;align-items:flex-end;font-size:7pt;color:#4B565C;margin-top:0.08in}
 .recby .ln2{flex:1;border-bottom:1px solid #9FA9AF;height:0.18in;font:700 9pt Inter,sans-serif;color:#1F2A2E;padding-left:4px}
 .small{font-size:7.2pt;color:#5B666D}
-.tag{display:inline-block;font:800 6.6pt Inter,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#fff;
+.tag{display:inline-block;font:800 7pt Inter,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#fff;
   background:var(--c1);border-radius:3px;padding:2px 6px}
 """
 
@@ -243,15 +243,30 @@ def theme_vars(theme):
     return ";".join(f"--{k}:{v}" for k, v in THEMES[theme].items())
 
 
-def page_shell(title, body, theme="gut", extra_css=""):
+# Drawn symbols. The shipped fonts carry the Latin set only; any other glyph (a diamond, an arrow,
+# a check mark) falls back to a system font that Chromium embeds as Type 3, which print shops reject.
+DIAMOND = ('<svg class="sym" viewBox="0 0 10 10" width="0.62em" height="0.62em" aria-hidden="true" '
+           'style="display:inline-block;width:0.62em;height:0.62em;vertical-align:0;margin:0;overflow:visible"><path d="M5 0 10 5 5 10 0 5z" fill="currentColor"/></svg>')
+
+
+FONT_FILES = [("Inter", w, f"inter-latin-{w}-normal.woff2") for w in (400, 500, 600, 700, 800)] + \
+             [("Merriweather", w, f"merriweather-latin-{w}-normal.woff2") for w in (700, 900)]
+
+
+def font_faces(base):
+    """Static (non-variable) font files shipped in handouts/conditions/fonts/: Chromium embeds
+    them in PDFs as TrueType instead of Type 3, which print shops accept."""
+    return "".join(f"@font-face{{font-family:'{fam}';font-style:normal;font-weight:{w};font-display:block;"
+                   f"src:url('{base}{f}') format('woff2')}}" for fam, w, f in FONT_FILES)
+
+
+def page_shell(title, body, theme="gut", extra_css="", font_base="../fonts/"):
     vars_ = theme_vars(theme)
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{E(title)}</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@700;900&display=swap" rel="stylesheet">
-<style>:root{{{vars_}}}{CSS}{extra_css}</style>
+<style>{font_faces(font_base)}:root{{{vars_}}}{CSS}{extra_css}</style>
 </head><body>
 {body}
 <script>

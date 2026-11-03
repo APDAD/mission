@@ -19,13 +19,13 @@
       ]
     ],
     "url": "https://nutridyn.com/spectrum-br",
-    "src": "Amounts and directions ('two tablets two to three times daily'): products DB R107, NutriDyn catalog ND143 10/1/26 as read by the Metagenics switch chart (Direct match to CandiBactin-BR, 'same six herbs'). The six herbs (ginger, licorice, rhubarb, skullcap, coptis, phellodendron) and the pregnancy/nursing caution: nutridyn.com/spectrum-br and sell sheet ND505, seen through web search only (nutridyn.com hosts are blocked here, page not opened). Sizes R107 90T, R107L 180T: ND144 price list 10/1/26. Sheet dose (2 tablets twice daily, with meals) sits inside the label range. Remove-step use: ND584 5R program (2 tablets 4x daily, days 1-10) and Asher's GI-MAP protocol (Gmail 194b7cdf22b9133b: 2 tabs 3x)."
+    "src": "Sell sheet ND505 Rev. 8/24 (Dropbox /NutriDyn/Sales/Practitioner Resource/NutriDyn Marketing Materials/Spectrum BR SS ND505.pdf, id:xHepYs_Ou4AAAAAAAAtQHQ, opened 2026-11-03), Supplement Facts per 2 tablets: berberine HCl 400 mg; Spectrum BR Blend 300 mg (ginger root, licorice root, Chinese rhubarb root, Chinese skullcap root, coptis root, phellodendron bark extracts); Oregon grape root 4:1 extract 70 mg; coptis root extract (5% berberine) 30 mg. Directions 'Take two tablets two to three times daily'; 'Warning: Do not use if pregnant or nursing'; 'Caution: If taking medication including cyclosporine, consult your healthcare practitioner'; vegetarian. Products DB R107 (catalog ND143 10/1/26 via the Metagenics chart) agrees. Sizes R107 90T, R107L 180T: ND144 price list 10/1/26. Sheet dose (2 tablets twice daily, with meals) sits inside the label range. Remove-step use: ND584 5R program and Asher's GI-MAP protocol (Gmail 194b7cdf22b9133b: 2 tabs 3x). URL: a web search on 2026-11-03 returns nutridyn.com/spectrum-br and the same slug on practitioner storefronts (drhenry., drshah., affinitychiropractic.nutridyn.com/spectrum-br); the page itself was not opened (nutridyn.com is blocked from this session)."
   },
   "go_nutricidin": {
     "name": "Nutricidin",
-    "size": "60 or 120 softgels",
+    "size": "60 or 120 gelatin softgels",
     "img_src": "R176.png",
-    "key": "Per 2 softgels: 400 mg calcium EDTA, 250 mg ginger root, 100 mg oregano oil, 30,000 SPU serratiopeptidase",
+    "key": "Per 2 softgels: 400 mg calcium EDTA, 250 mg ginger root, 30,000 SPU serratiopeptidase, 725 mg of 8 plant oils (100 mg each oregano, coriander, black cumin, basil, fennel; 75 mg each thyme, cinnamon, clove)",
     "dose": "1 softgel twice daily",
     "dosesub": "with meals",
     "sched": [
@@ -41,13 +41,13 @@
       ]
     ],
     "url": "https://nutridyn.com/nutricidin",
-    "src": "Amounts: products DB R176, catalog ND143 10/1/26 as read by the CellCore chart (Para 1 row). Directions: 'Take two softgels daily with food' (same DB). The DB's Para 2 row also lists clove leaf oil 75 mg; a web search ties clove to the 2022 label and shows the Rev. 2/25 label without it, so clove is left off. Label panel not opened (nutridyn.com blocked). GI-MAP protocol (Gmail 194b7cdf22b9133b): 1 softgel 3x daily, away from probiotics. Sizes R176 60S, R176L 120S: ND144 10/1/26."
+    "src": "Sell sheet ND949 Rev. 2/25 (Dropbox /NutriDyn/Sales/Practitioner Resource/NutriDyn Marketing Materials/Nutricidin SS ND949.pdf, id:xHepYs_Ou4AAAAAAAAuOvA, opened 2026-11-03), Supplement Facts per 2 softgels: calcium (as calcium EDTA) 36 mg; calcium EDTA 400 mg; ginger root extract (5% gingerols) 250 mg; oregano oil 100 mg; coriander seed oil 100 mg; black cumin seed oil (Bunium persicum) 100 mg; basil seed oil 100 mg; fennel seed oil 100 mg; red thyme oil 75 mg; cinnamon bark oil 75 mg; clove leaf oil 75 mg; serratiopeptidase 30,000 SPU (8 oils = 725 mg). Other ingredients: gelatin, sunflower seed oil, glycerin, yellow beeswax, purified water, sunflower lecithin, carob. Directions 'Take two softgels daily with food'; caution: pregnant, nursing or taking medication, consult. The sheet's 1 softgel twice daily with meals equals the label's two daily with food. Sizes R176 60S, R176L 120S: ND144 10/1/26. GI-MAP protocol (Gmail 194b7cdf22b9133b): 1 softgel 3x daily, away from probiotics."
   },
   "go_paradex": {
     "name": "Paradex",
-    "size": "Herbal formula &middot; 90 capsules",
+    "size": "90 capsules",
     "img_src": "P433.png",
-    "key": "Per capsule: 250 mg black walnut hulls, 100 mg wormwood, 100 mg pau d&rsquo;arco, 50 mg garlic, 50 mg pumpkin seed",
+    "key": "Per capsule: 250 mg black walnut hulls, 100 mg sweet wormwood, 100 mg pau d&rsquo;arco, 50 mg garlic, 50 mg pumpkin seed",
     "dose": "1 capsule twice daily",
     "dosesub": "with meals",
     "sched": [
@@ -63,32 +63,37 @@
       ]
     ],
     "url": "https://nutridyn.com/gastrointestinal-health/paradextm",
-    "src": "Amounts: products DB P433, catalog ND143 10/1/26 as read by the Apex Energetics chart: black walnut hulls 250 mg, wormwood 100 mg, pau d'arco 100 mg, garlic extract 50 mg, pumpkin seed 50 mg per capsule. Directions: 'Take one capsule daily or more' (DB). The nutridyn.com listing (seen through web search, not opened) names the wormwood as sweet wormwood and the garlic as odorless garlic bulb. Sheet dose (1 capsule twice daily) sits inside the label's 'one capsule daily or more'; Asher's GI-MAP protocol uses 1 cap 3x daily (Gmail 194b7cdf22b9133b). Bottle is the Progressive Professional brand sold through NutriDyn (P433 90C, ND144 10/1/26)."
+    "src": "Amounts: products DB P433 (catalog ND143 10/1/26 as read by the Apex Energetics chart): black walnut hulls 250 mg, wormwood 100 mg, pau d'arco 100 mg, garlic extract 50 mg, pumpkin seed 50 mg per capsule; directions 'Take one capsule daily or more'. The herb is sweet wormwood (Artemisia annua), not wormwood (A. absinthium): the nutridyn.com/gastrointestinal-health/paradextm listing, seen through web search on 2026-11-03 (not opened, nutridyn.com blocked), lists 'Black Walnut Husks 250 mg, Sweet Wormwood (herbs and leaves) 100 mg, Pau D'Arco (inner bark) 100 mg, Odorless Garlic Bulb 50 mg, Pumpkin Seed 50 mg'; retail listings of the same Progressive Labs bottle add 'Not to be used by pregnant or lactating women' and 'may contain traces of tree nuts (walnut)'. Sheet dose (1 capsule twice daily) sits inside 'one capsule daily or more'; Asher's GI-MAP protocol uses 1 cap 3x daily (Gmail 194b7cdf22b9133b). Bottle is the Progressive Professional brand sold through NutriDyn (P433 90C, ND144 10/1/26)."
   },
   "go_sboulardii": {
     "name": "UltraBiotic S. boulardii",
     "size": "60 capsules",
     "img_src": "R226.png",
     "key": "5 billion CFU Saccharomyces boulardii (Lynside) per capsule",
-    "dose": "1 capsule at bedtime",
+    "dose": "1 capsule twice daily",
     "dosesub": "2 hours from the herbs",
     "sched": [
       [
-        "bed",
+        "am",
         1,
-        "capsule"
+        "capsule, mid-morning"
+      ],
+      [
+        "pm",
+        1,
+        "capsule, mid-afternoon"
       ]
     ],
     "url": "https://nutridyn.com/saccharomyces-boulardii",
-    "src": "labels.json: UltraBiotic Saccharomyces boulardii sell sheet ND170 Rev. 8/25 (Dropbox): 5 billion CFU S. boulardii (Lynside) per capsule; label directions 'Take one capsule twice daily ... or as directed by your healthcare practitioner'; products DB R226 agrees on 8 charts. The sheet shows one bedtime capsule so it stays 2 hours from the herbs taken with meals (Asher's rule: probiotics 2 hours away from antimicrobials, Case Studies MB/DK; GI-MAP protocol: Nutricidin away from probiotics); a second capsule away from the herbs is within the label."
+    "src": "Sell sheet ND170 Rev. 8/25 (Dropbox /NutriDyn/Sales/Practitioner Resource/NutriDyn Marketing Materials/UltraBiotic Saccharomyces boulardii SS ND170.pdf, id:xHepYs_Ou4AAAAAAAAzgLQ, opened 2026-11-03; also labels.json): Saccharomyces boulardii (Lynside) 5 billion CFU per capsule; 'Take one capsule twice daily'; caution: pregnant, nursing or taking medication, consult; vegetarian (hypromellose). Products DB R226 agrees on 8 charts. The sheet shows the label dose. Timing: between meals (mid-morning and mid-afternoon), 2 hours from the herbs taken with meals (Asher's rule: probiotics 2 hours away from antimicrobials, Case Studies MB/DK; GI-MAP protocol: Nutricidin away from probiotics) and apart from Binder Pro at bedtime. The rhythm panel has no between-meals slot yet, so the two capsules sit in the Morning and Evening-meal boxes with their time written on them."
   },
   "go_binder_pro": {
     "name": "Binder Pro",
     "size": "60 or 120 capsules",
     "img_src": "R178.png",
-    "key": "Per 2 capsules: 500 mg apple pectin, 300 mg humic-fulvic carbon complex, 300 mg chlorella",
+    "key": "Per 2 capsules: 500 mg apple pectin, 300 mg humic-fulvic complex, 300 mg chlorella",
     "dose": "2 capsules at bedtime",
-    "dosesub": "2 hours from medicines",
+    "dosesub": "2 hours after dinner",
     "sched": [
       [
         "bed",
@@ -97,6 +102,6 @@
       ]
     ],
     "url": "https://nutridyn.com/binder-pro",
-    "src": "labels.json: Binder Pro sell sheet ND1141 Rev. 12/25 (Dropbox): per 2 capsules apple pectin 500 mg, humic fulvic carbon complex (25% humic acid, 6% fulvic acid, Humiplex) 300 mg, chlorella 300 mg; 'Take two capsules daily'; products DB R178 agrees. Some NutriDyn storefront pages still show an older zeolite, activated charcoal and chlorella formula; the 12/25 sell sheet and the 10/1/26 catalog read give this one. Binder role in the 5R: Mayfield GLC 2023 and the Kristi Hughes NutriDyn grid."
+    "src": "Sell sheet ND1141 Rev. 12/25 (Dropbox /NutriDyn/Sales/Practitioner Resource/NutriDyn Marketing Materials/Binder Pro SS ND1141.pdf, id:xHepYs_Ou4AAAAAAAA2ChA, opened 2026-11-03; also labels.json): per 2 capsules apple pectin 500 mg, humic fulvic carbon complex (25% humic acid, 6% fulvic acid, Humiplex) 300 mg, chlorella (Chlorella vulgaris) 300 mg; 'Take two capsules daily'; caution: pregnant, nursing or taking medication, consult; vegetarian. Products DB R178 agrees. Some NutriDyn storefront pages still show an older zeolite, activated charcoal and chlorella formula; the 12/25 sell sheet and the 10/1/26 catalog read give this one. Timing: alone at bedtime, 2 hours after the evening meal and away from the probiotic and medicines (a binder taken with other pills can carry them out). Binder role in the 5R: the NutriDyn GLC 2023 5R protocol and NutriDyn's 5R product grid."
   }
 }
