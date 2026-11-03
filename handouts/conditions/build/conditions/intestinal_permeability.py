@@ -445,6 +445,8 @@ def defs_svg():
         f'<stop offset=".55" stop-color="{TOXIN}"/><stop offset="1" stop-color="#A4232A"/></radialGradient>'
         f'<linearGradient id="{U}-mic" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C2DE8E"/>'
         '<stop offset="1" stop-color="#86B24C"/></linearGradient>'
+        f'<linearGradient id="{U}-klk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="{LEAK}" stop-opacity=".3"/>'
+        f'<stop offset=".55" stop-color="{LEAK}" stop-opacity=".55"/><stop offset=".85" stop-color="{LEAK}"/></linearGradient>'
         "</defs>")
 
 
@@ -631,9 +633,28 @@ def _ext(kind, s=1.0, rot=0.0, r=6.0):
     return 13 * s, 13 * s
 
 
-# Hand nudges (dx, dy, extra rotation) for single stream items, keyed by tag (g<gap><c|m|d|b|f><index>), that clear
-# the tangencies the true-outline clearance check found (2 units minimum between any two objects).
-NUDGE = {}
+# Hand nudges for single stream items, keyed by tag (g<gap> + c crowd / m mouth / d down the gap / b membrane /
+# f fan in the blood + index): (dx, dy, extra rotation[, absolute rotation[, scale]]).  They clear the
+# tangencies the true-outline clearance check found (2 units between any two objects, 1 unit past a cell wall).
+NUDGE = {
+    "g0c1": (-1, -3, 0),
+    "g0c3": (-2, 0, 0),             # off cell 1's top corner
+    "g0m1": (0, 4, 0),              # its tail kissed the toxin above it
+    "g1m1": (0, 2, 0),
+    "g2c1": (0, -5, 0),
+    "g2c2": (-2, 0, 0),
+    "g2c3": (-5, -2, 0),            # it sat on cell 3's top corner
+    "g2m1": (2, 0, 0),              # its white rim touched a snapped junction tip
+    "g3c1": (-2, -3, 0),
+    "g3b": (0, -1, 0),
+    "g4c0": (-4, -4, 0),            # gap 4's crowd was a three-way pile-up
+    "g4c1": (0, -6, 0),
+    "g4c2": (-3, 0, 0),
+    "g4c3": (-2, -9, 0),
+    "g4m0": (-1, 0, 0, 270, 0.57),  # nose straight down, a little smaller, to squeeze between the snapped bars
+    "g4m1": (2, 2.5, 0),
+    "g4f2": (0, 0, 180),            # its tail ended on a food particle: turn it around
+}
 
 
 def _place(kind, x, y, rnd, rot=None, s=None, narrow=False, tail=True, tag=""):
@@ -645,8 +666,12 @@ def _place(kind, x, y, rnd, rot=None, s=None, narrow=False, tail=True, tag=""):
         s = s or (0.6 if narrow else 0.66)
         rot = rot if rot is not None else rnd.uniform(-40, 40)
         v = rnd.randrange(3)
-    dx, dy, dr = NUDGE.get(tag, (0, 0, 0))
+    dx, dy, dr, *fix = NUDGE.get(tag, (0, 0, 0))
     x, y = x + dx, y + dy
+    if fix and fix[0] is not None:
+        rot = fix[0]
+    if len(fix) > 1:
+        s = fix[1]
     if kind == M:
         rot += dr
         x0, x1, y0, y1 = microbe_extent(rot, s, tail)
@@ -887,12 +912,16 @@ def key_html():
     mv = (f'<g fill="url(#{U}-mv)" stroke="#C98670" stroke-width=".6">'
           + "".join(f'<rect x="{-11.6 + k * 4.6:.1f}" y="-12" width="3" height="14" rx="1.5"/>' for k in range(6)) + "</g>"
           f'<rect x="-14" y="-1" width="28" height="13" rx="4" fill="url(#{U}-hc)" stroke="#D2937E"/>')
-    lk = (f'<path d="M-8,-14 H8 L4,2 H-4 Z" fill="{_mix(LEAK, .3, "#FFFFFF")}"/>'
-          f'<path d="M-9,1 H9 L0,13 Z" fill="{LEAK}" stroke="#FFFFFF" stroke-width="1"/>'
-          + toxin(0, -7, 3.6))
+    # the leak as the art draws it: a stream that deepens into a solid neck and one bold head, with a flow mark
+    lk = (f'<path d="M-8.5,-14 H8.5 C8.5,-6 2.6,-4.5 2.6,-0.5 V3.4 H-2.6 V-0.5 C-2.6,-4.5 -8.5,-6 -8.5,-14 Z" '
+          f'fill="url(#{U}-klk)"/>'
+          f'<path d="M-10.2,3.6 H10.2 L0,15.4 Z" fill="#FFFFFF"/>'
+          f'<path d="M-8.4,2.6 H8.4 L0,13.2 Z" fill="{LEAK}" stroke="{LEAK}" stroke-width="1" stroke-linejoin="round"/>'
+          + chevron(0, -6.2, 3.4))
+    mx, mx1, my, my1 = microbe_extent(-34, 0.66)     # centre the key's microbe on its rotated extent
     items = [
         (food(0, 0, 0.95), "Food particle", "not fully digested"),
-        (microbe(-8, 6, -34, 0.66), "Microbe", "germs like bacteria"),
+        (microbe(-(mx + mx1) / 2, -(my + my1) / 2, -34, 0.66), "Microbe", "germs like bacteria"),
         (toxin(0, 0, 9), "Toxin", "made by microbes"),
         (pill(0, 0, -30, 0.85), "Medication", "like ibuprofen"),
         (bolt(0, 0, 0.85, 8), "Stress signal", "stress hormones"),
@@ -911,8 +940,10 @@ def key_html():
         return (f'<circle r="12" fill="{col}" stroke="#fff" stroke-width="2"/><circle r="10.4" fill="url(#{U}-shine)"/>'
                 + T(0, fs * 0.36, sym, fs, 800, "#fff", "middle"))
     nut = "".join(f'<span>{swatch(ktok(s, c), 26)}{name}</span>' for s, c, name in NUTRIENT_NAMES)
-    return (f'<div class="{U}-key"><span class="{U}-kt">Key</span>'
-            f'<div class="{U}-kn"><b>Each letter is a nutrient:</b>{nut}</div>'
+    # The key names the two regions first (recheck 2026-11-03: only the bottom was labelled, so a child had to
+    # guess that the top is the inside of the gut), and says every letter is absorbed, the still ones included.
+    return (f'<div class="{U}-key"><span class="{U}-kt">Key<em>Top: inside your gut &middot; Bottom: your blood</em></span>'
+            f'<div class="{U}-kn"><b>Each letter is a nutrient your gut absorbs:</b>{nut}</div>'
             f'<div class="{U}-kg">{cells}</div></div>')
 
 
@@ -935,11 +966,12 @@ OUTCOMES = [
     # Akdis CA. Nat Rev Immunol 2021;21:739-51 (PMID 33846604): epithelial barrier defects in allergy and
     # atopic dermatitis.  Pike MG et al. J Invest Dermatol 1986;86:101-4 (PMID 3745938): higher gut
     # permeability in children with eczema.
-    (line_icon(SHIELD, "0.34in"), "Immune overload", "Allergies and flare-ups of eczema (itchy, red skin)"),
+    (line_icon(SHIELD, "0.34in"), "Immune reactions", "Allergies and flare-ups of eczema (itchy, red skin)"),
     # Damaged lining cells absorb less, as in celiac disease: Rubio-Tapia A et al. ACG guideline, Am J
     # Gastroenterol 2023;118:59-76 (PMID 36602836); Wierdsma NJ et al. Nutrients 2013;5:3975-92
-    # (PMID 24084055): low zinc in 67 % and low iron stores in 46 % of newly diagnosed celiac patients.
-    (icon("battery", "0.34in", "#fff", 3), "Poor absorption", "Damaged cells take in less iron, zinc and vitamin D"),
+    # (PMID 24084055): low zinc in 67 % and low iron stores in 46 % of newly diagnosed celiac patients.  Low iron
+    # is a common cause of tiredness (NIH ODS iron fact sheet: iron deficiency anemia brings fatigue).
+    (icon("battery", "0.34in", "#fff", 3), "Poor absorption", "Low iron, zinc or vitamin D, which can leave you tired"),
 ]
 
 
@@ -967,6 +999,8 @@ CSS = r"""
 .ipx-key{position:relative;border:1.2px solid #CBD7DB;border-radius:8px;padding:7px 8px 4px;margin-top:14px}
 .ipx-kt{position:absolute;top:-7px;left:12px;background:#fff;padding:0 6px;font:800 7.2pt Inter,sans-serif;
   letter-spacing:.16em;text-transform:uppercase;color:var(--deep)}
+.ipx-kt em{font:700 7.2pt Inter,sans-serif;font-style:normal;letter-spacing:0;text-transform:none;color:#3D474D;
+  margin-left:9px}
 .ipx-kn{display:flex;align-items:center;justify-content:space-between;gap:2px 6px;padding:0 4px 2px;margin:0 0 4px;
   border-bottom:1px dashed #D3DCE0;font-size:7pt;line-height:1.2;color:#3D474D}
 .ipx-kn b{font-size:7.6pt;color:#1F2A2E;white-space:nowrap}

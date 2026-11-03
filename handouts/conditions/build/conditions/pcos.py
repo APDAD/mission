@@ -26,15 +26,43 @@ Art-director pass (2026-11-03, second round):
   - Facts: "About 1 in 8", AMH and "once other causes are ruled out", "Why it matters" moved into
     the facts box, risk factors relabelled "Can make it worse (you can change)", boxes balanced.
   - Glosses for ovulation, insulin resistance and sleep apnea.
+Final front review fixes (2026-11-03, third round; the approved layout is unchanged):
+  - Vessel: one "Bloodstream" runs the full width with a cut end at each side, and BOTH ovaries get
+    the same side branch: same 20-unit width, same corner radius, same rounded fillets where it
+    leaves the trunk, mirrored about the uterus (the uterus group moved 14 units left to make room
+    for the right cut end).  No taper and no L-bend any more, so nothing looks pinched.
+  - Molecules in the bloodstream are half size next to the red cells (9 red cells now); the close-up
+    says "not to scale"; the key reads "Bloodstream: carries insulin everywhere".
+  - Insulin leaving the pancreas: dots sit clear of the dashed lines, and each arrow tip touches
+    the bloodstream's outline.
+  - Fallopian tubes: the tube itself widens into the funnel (no seam), with six soft, wavy fimbriae
+    of different lengths; the longest reaches down onto the ovary.
+  - Ring: new front-view "Thinning scalp hair" (wide bare part, a few strands), "Dark skin patches"
+    as a velvety patch on the side of the neck, a face with raised spots for "Acne", a waist that
+    bulges with a tape measure, a one-line pregnancy test for "Trouble getting pregnant", and
+    "Skin tags" (sourced) in place of "Blood sugar swings" (not in the cited symptom lists).
+  - Words: cells "answer insulin poorly"; the ovaries make the androgens; "every body size" moved
+    to the facts; weight gain and diabetes added to the risk factors; the pharmacy edition sends the
+    blood sugar test to "your doctor".
 Glucose (purple hexagon) and insulin (gold dot) use the same symbols as the insulin-resistance
 sheet, so the Metabolic Health Series reads as one system.
 Every SVG id starts with "pc" and every CSS class with "pc-" (all under .pcf), so nothing
 collides with other sheets in the all-sheets bundle.
 
 SOURCES (tags appear in comments next to each number on the page)
-  [WHO23]    WHO fact sheet "Polycystic ovary syndrome" (2023): about 10-13% of women of
-             reproductive age; up to 70% undiagnosed worldwide.  who.int could not be opened from
-             the build machine on 2026-11-03; both figures were cross-checked against [MARCH10].
+  [GUIDE23H] Teede HJ et al. Recommendations from the 2023 International Evidence-based Guideline
+             for PCOS. Hum Reprod 2023;38:1655-79. doi:10.1093/humrep/dead156, full text PMC10477934
+             (read on PubMed 2026-11-03): "PCOS prevalence is between 10 to 13%" (introduction) and
+             rec 1.6.1 "10-13% globally"; 1.9.8 women with type 1 and type 2 diabetes have an increased
+             risk of PCOS; 1.9.9 the 75-g OGTT is the most accurate glucose test in PCOS; 1.8.3 a lipid
+             profile for all at diagnosis; 1.10.2 sleep apnea symptoms "snoring in combination with
+             waking unrefreshed from sleep, daytime sleepiness or fatigue"; 3.4.5 "at least 30 minutes
+             daily on most days"; 4.7.1 and 5.8.1-5.8.3 inositol (limited harm; experimental for
+             fertility; safety not known).  Same guideline as [GUIDE23].
+  [WHO23]    WHO fact sheet "Polycystic ovary syndrome" (2023): up to 70% of affected women
+             undiagnosed worldwide.  who.int is outside this machine's allowed network (re-tried
+             2026-11-03), so the figure is cross-checked against [MARCH10]; the prevalence figure on
+             the page now cites [GUIDE23H] instead.
   [MARCH10]  March WA et al. Hum Reprod 2010;25:544-51. doi:10.1093/humrep/dep399 (community
              birth cohort: Rotterdam-criteria prevalence 11.9%; 68-69% had no prior diagnosis)
   [STEPTO13] Stepto NK et al. Hum Reprod 2013;28:777-84. doi:10.1093/humrep/des463 (clamp study:
@@ -52,8 +80,29 @@ SOURCES (tags appear in comments next to each number on the page)
              (acanthosis nigricans), skin tags, infertility.  Not re-opened from the build machine
              on 2026-11-03 (outbound sites are blocked); long-standing content of both pages.
 
-BACK: SHEET["back"] is still the first draft (a later back-page pass revises the products).  The
-Myo-Inositol Complex facts (amounts, 6 capsules a day as 3 + 3) come from build/products.d/pcos.json.
+  Back-page safety sources (all read 2026-11-03):
+  [CHAN93]   Chan E. Biol Neonate 1993;63:201-8. doi:10.1159/000243932 (berberine displaces bilirubin;
+             "best avoided in jaundiced neonates and pregnant women").
+  [GUO12]    Guo Y et al. Eur J Clin Pharmacol 2012;68:213-7. doi:10.1007/s00228-011-1108-2 (berberine
+             300 mg three times daily for 2 weeks lowered CYP2D6, 2C9 and 3A4 activity).
+  [AROD16]   Aroda VR et al. J Clin Endocrinol Metab 2016;101:1754-61. doi:10.1210/jc.2015-3754
+             (long-term metformin and B12 deficiency; routine B12 testing should be considered).
+  [PALM13]   Palmery M et al. Eur Rev Med Pharmacol Sci 2013;17:1804-13, PMID 23852908 (oral
+             contraceptives deplete folic acid, B2, B6, B12, C, E, magnesium, selenium and zinc).
+  [GRANT10]  Grant P. Phytother Res 2010;24:186-8. doi:10.1002/ptr.2900 (spearmint tea twice a day,
+             42 women, 30 days: free and total testosterone fell; Kenneth Johnson's NutriDyn GLC 2026
+             PMOS protocol uses it).
+  Labels: the five NutriDyn sell sheets (ND680, ND1130, ND382, ND416, ND460), opened from Dropbox;
+  details and claim wording per product in build/products.d/pcos.json.
+
+BACK (product pass, 2026-11-03): five products, the competitor's count, all from NutriDyn's own PCOS
+protocols (Monique Class GLC 2023; Kenneth Johnson GLC 2026 "PMOS"; Asher's PCOS handout and his
+Myo-Inositol Complex emails).  Competitor categories: vitamin D -> D3 5000 with K2, omega-3 -> Omega
+Pure EPA-DHA 1000, berberine -> Berberine Pro; melatonin and turmeric have no place in these protocols,
+so Myo-Inositol Complex and UltraBiotic Daily Multi-Strain (both protocol picks) take those columns.
+Berberine Pro, not Gluco IR: it is the competitor's own category, it is on both PCOS protocols, it has
+no biotin (biotin can distort the hormone tests PCOS is diagnosed and followed with), and it does not
+double the chromium and fenugreek already in Myo-Inositol Complex.
 """
 import math
 import os
@@ -449,42 +498,77 @@ def ov_pole(side):
     return (side * (OV_C[0] + OV_RX * math.cos(a)), OV_C[1] + OV_RX * math.sin(a))
 
 
-def frond(x0, y0, ang, length, bw, curl, tw=1.05):
-    """One fimbria: a thin finger from the funnel rim, tapering from bw to a rounded tip tw wide and
-    bending sideways by `curl` (positive = toward the ovary)."""
-    ca, sa = math.cos(math.radians(ang)), math.sin(math.radians(ang))
+def frond(p0, d, length, bw, bend, wave, tipw=1.2, n=16):
+    """One fimbria: a soft finger from the funnel rim along unit direction d, tapering from bw to a
+    rounded tip tipw wide.  It droops sideways by `bend` toward its tip (positive = toward the ovary)
+    and ripples by `wave`, so the fringe looks soft rather than like stiff spikes."""
+    px, py = -d[1], d[0]
+    cl, ws = [], []
+    for k in range(n + 1):
+        u = k / n
+        off = bend * u * u + wave * math.sin(2 * math.pi * u)
+        cl.append((p0[0] + d[0] * length * u + px * off, p0[1] + d[1] * length * u + py * off))
+        ws.append(bw + (tipw - bw) * u)
+    L, R = sides(cl, ws)
+    (cx, cy), (tx, ty) = cl[-1], tangents(cl)[-1]
+    nx, ny, r = -ty, tx, tipw / 2
+    tip = [(cx + r * (nx * math.cos(a) + tx * math.sin(a)), cy + r * (ny * math.cos(a) + ty * math.sin(a)))
+           for a in (math.pi * j / 8 for j in range(1, 8))]
+    return poly_d(L + tip + R[::-1])
 
-    def P(u, v):
-        return f"{x0 + u * ca - v * sa:.2f},{y0 + u * sa + v * ca:.2f}"
-    r = tw / 2
-    return (f"M{P(-1.5, -bw / 2)} Q{P(length * .55, -bw * .42 + curl * .55)} {P(length, curl - r)} "
-            f"A{r:.2f},{r:.2f} 0 0 1 {P(length, curl + r)} "
-            f"Q{P(length * .55, bw * .42 + curl * .55)} {P(-1.5, bw / 2)}Z")
+
+# fimbriae: (rim position, fan angle, length, base width, bend, wave).  Six soft fingers of uneven
+# length fan out of the funnel rim; positive angles lean toward the ovary, and the last, longest one
+# (the fimbria that holds the ovary) reaches down onto it.
+FRONDS = [(-7.6, -24, 7.4, 3.0, -0.7, 0.45), (-4.6, -9, 10.6, 3.2, 0.9, -0.55), (-1.5, 5, 8.2, 3.2, -0.6, 0.5),
+          (1.6, 17, 11.4, 3.2, 1.0, -0.5), (4.6, 30, 8.8, 3.1, 0.7, 0.45), (7.4, 44, 15.0, 3.4, 1.7, -0.6)]
+FUNNEL = 9.0      # the tube's last 9 units widen into the funnel (infundibulum)
 
 
-# fimbriae: (rim position, fan angle, length, base width, bend).  The fan leans toward the ovary
-# (positive angles) and the lengths differ, like a real fringe draping over the ovary.
-FRONDS = [(-8.7, -22, 8.2, 2.5, -0.5), (-6.5, -12, 11.6, 2.7, -0.2), (-4.3, -2, 9.4, 2.8, 0.4), (-2.1, 8, 13.6, 3.0, 0.8),
-          (0.1, 18, 10.4, 3.0, 1.0), (2.3, 28, 14.0, 2.9, 1.3), (4.5, 38, 9.6, 2.8, 1.2), (6.7, 48, 11.8, 2.6, 1.4),
-          (8.8, 58, 7.4, 2.4, 1.1)]
+def tube_geom():
+    """Centreline and widths of the Fallopian tube: narrow at the uterus, gently wider outward, then
+    flaring smoothly into the funnel over its last FUNNEL units (one outline, so no seam)."""
+    c = resample(crs(TUBE, per=16), 1.5)
+    n = len(c)
+    cum = [0.0]
+    for a, b in zip(c, c[1:]):
+        cum.append(cum[-1] + math.dist(a, b))
+    w = []
+    for k in range(n):
+        u = max(0.0, (cum[k] - (cum[-1] - FUNNEL)) / FUNNEL)
+        w.append(6.2 + 4.2 * (k / (n - 1)) ** 1.3 + 8.6 * u * u)
+    return c, w, cum
 
 
 def tube_shape():
-    """Fallopian tube (narrow near the uterus, widening outward) and, separately, its funnel end
-    (infundibulum) with the fimbriae, which are drawn later so the fringe drapes over the ovary."""
-    c = resample(crs(TUBE, per=16), 1.5)
-    n = len(c)
-    w = [6.2 + 4.2 * (k / (n - 1)) ** 1.3 for k in range(n)]
+    """The tube (drawn under the ovary) and, separately, the fringe: the fimbriae plus the funnel end
+    of the same tube outline laid over them, drawn after the ovary so the fringe drapes over it."""
+    c, w, cum = tube_geom()
     tube = f'<path d="{ribbon(c, w)}" fill="{U_BASE}" stroke="{U_EDGE}" stroke-width="1.5" stroke-linejoin="round"/>'
     (ex, ey), (tx, ty) = c[-1], tangents(c)[-1]
-    f = [f'<g transform="translate({ex:.1f},{ey:.1f}) rotate({math.degrees(math.atan2(ty, tx)):.1f})">']
-    for k, (y, ang, ln, bw, curl) in enumerate(FRONDS):
-        f.append(f'<path d="{frond(4.6, y, ang, ln, bw, curl)}" fill="{"#E3929A" if k % 2 else U_BASE}" stroke="{U_EDGE}" '
-                 'stroke-width=".95" stroke-linejoin="round"/>')
-    f.append(f'<path d="M-2.5,-5.3 C1.2,-5.5 3.4,-7.7 5.6,-9.9 Q7,-0 5.6,9.9 C3.4,7.7 1.2,5.5 -2.5,5.3Z" fill="{U_BASE}" '
-             f'stroke="{U_EDGE}" stroke-width="1.3" stroke-linejoin="round"/>')
-    f.append(f'<path d="M5.2,-8.4 Q6.3,0 5.2,8.4" fill="none" stroke="#B9525C" stroke-width=".9" opacity=".7"/>')
-    f.append("</g>")
+    nx, ny = -ty, tx
+    f = []
+    for k, (y, ang, ln, bw, bend, wav) in enumerate(FRONDS):
+        a = math.radians(ang)
+        d = (tx * math.cos(a) + nx * math.sin(a), ty * math.cos(a) + ny * math.sin(a))
+        p0 = (ex + nx * y - tx * 1.8, ey + ny * y - ty * 1.8)          # starts just inside the funnel
+        f.append(f'<path d="{frond(p0, d, ln, bw, bend, wav)}" fill="{"#E3929A" if k % 2 else U_BASE}" '
+                 f'stroke="{U_EDGE}" stroke-width=".95" stroke-linejoin="round"/>')
+    # the funnel end of the tube again, on top of the frond roots: fill, plus its two side edges only,
+    # so it continues the tube with no line across it
+    k0 = next(k for k, s in enumerate(cum) if s >= cum[-1] - 13)
+    L, R = sides(c[k0:], w[k0:])
+    f.append(f'<path d="{poly_d(L + R[::-1])}" fill="{U_BASE}"/>')
+    for side in (L, R):
+        f.append(f'<path d="{poly_d(side, closed=False)}" fill="none" stroke="{U_EDGE}" stroke-width="1.5" '
+                 'stroke-linecap="round" stroke-linejoin="round"/>')
+    # the opening (ostium), a soft curve just inside the rim
+    hw = w[-1] / 2 - 2.2
+    a_ = (ex - nx * hw - tx * .9, ey - ny * hw - ty * .9)
+    b_ = (ex + nx * hw - tx * .9, ey + ny * hw - ty * .9)
+    q_ = (ex + tx * 1.6, ey + ty * 1.6)
+    f.append(f'<path d="M{a_[0]:.2f},{a_[1]:.2f} Q{q_[0]:.2f},{q_[1]:.2f} {b_[0]:.2f},{b_[1]:.2f}" fill="none" '
+             'stroke="#B9525C" stroke-width=".9" opacity=".7"/>')
     return tube, "".join(f)
 
 
@@ -525,9 +609,21 @@ def reproductive(UX, UY, US):
 # ================================================================== the diagram
 W_ART, H_ART = 760, 242
 PX, PY, PS = 16, 98, 0.90           # pancreas group
-UX, UY, US = 566, 82, 0.94           # uterus group
-TY, TW, WALL = 28, 34, 5              # vessel trunk centre line, width, wall thickness
+UX, UY, US = 552, 82, 0.94           # uterus group (14 left of centre-right, so the bloodstream can end past it)
+TY, TW, WALL = 28, 34, 5              # bloodstream centre line, width, wall thickness
+TX0, TX1 = 14, 752                    # the bloodstream's two cut ends
+BW, RF = 20.0, 6.0                    # branch width; radius of the fillets where a branch leaves the trunk
 BX, BY, BR = 318, 144, 54             # zoom circle
+
+
+def fillet(xc, yb, half, r, side):
+    """Concave corner piece where a branch (centre x xc, half-width half) leaves the trunk's bottom
+    edge yb: bounded by a quarter circle of radius r tangent to both edges.  side +1 = right corner,
+    -1 = left.  It overlaps the trunk and the branch slightly, so the layers join without a gap."""
+    xe = xc + side * half
+    cx, cy = xe + side * r, yb + r
+    return (f"M{xe - side * .8:.2f},{yb - 1.6:.2f} L{cx:.2f},{yb - 1.6:.2f} L{cx:.2f},{yb:.2f} "
+            f"A{r:.2f},{r:.2f} 0 0 {0 if side > 0 else 1} {xe:.2f},{cy:.2f} L{xe - side * .8:.2f},{cy:.2f}Z")
 
 
 def art_pcos(t):
@@ -549,97 +645,125 @@ def art_pcos(t):
     dR, ocR, baseR = ends[1]
     dL, ocL, baseL = ends[-1]
 
-    # Centrelines are straight runs joined by true circular arcs (no spline wobble), solved backwards
-    # from each head: a straight run of S units into the base, an arc of radius R2 from heading straight
-    # down, a straight drop, and an arc of radius R1 off the horizontal trunk.
-    S, R1, R2, R3 = 14.0, 26.0, 18.0, 22.0
+    # One bloodstream runs the full width (cut ends at both sides: it carries insulin everywhere).  Each
+    # ovary gets the SAME side branch, mirrored about the uterus: it leaves the trunk straight down
+    # through two rounded fillets, then a true arc of radius R2 turns it into a straight run of S units
+    # that ends in the arrowhead.  Solved backwards from each head, so both drops sit at mirrored x.
+    S, R2 = 14.0, 18.0
+    wave = crs([(TX0, TY), (100, TY - 1), (200, TY + 1), (300, TY - 1), (400, TY), (500, TY), (600, TY - 1), (680, TY),
+                (TX1, TY)], per=16)
+    tc = resample(wave, 2.0)
 
-    def branch(base, d, r_top, start_x):
+    def yc(x):
+        """Height of the trunk's centre line at x."""
+        for p, q in zip(tc, tc[1:]):
+            if p[0] <= x <= q[0]:
+                return p[1] + (q[1] - p[1]) * (x - p[0]) / ((q[0] - p[0]) or 1.0)
+        return TY
+
+    def branch(base, d):
         hd = math.degrees(math.atan2(d[1], d[0]))
         e = (base[0] - d[0] * S, base[1] - d[1] * S)
         turn = 1 if d[0] < 0 else -1                 # right ovary: bend clockwise; left ovary: counter-clockwise
         c2 = (e[0] - turn * R2 * math.sin(math.radians(hd)), e[1] + turn * R2 * math.cos(math.radians(hd)))
         xv = c2[0] + turn * R2                       # the straight drop
-        c1 = (xv - r_top, TY + r_top)
-        assert c2[1] > c1[1] + 8, "no room for the vessel's straight drop"
-        return (line_pts((start_x, TY), (c1[0], TY)) + arc_pts(c1, r_top, 0, 90, 1)[1:]
-                + line_pts((xv, c1[1]), (xv, c2[1]))[1:] + arc_pts(c2, R2, 90, hd, turn)[1:] + line_pts(e, base)[1:])
-    wave = crs([(14, TY), (100, TY - 1), (200, TY + 1), (300, TY - 1), (400, TY), (500, TY), (600, TY - 1), (684, TY)], per=16)
-    tc = resample(wave[:-1] + branch(baseR, dR, R1, 684), 2.0)
-    lc = resample(branch(baseL, dL, R3, 352), 2.0)
-    # The head points along the tube's LAST direction; its tip is where that line meets the ovary
+        y0 = yc(xv)
+        assert c2[1] > y0 + TW / 2 + RF + 8, "no room for the branch's straight drop"
+        return xv, resample(line_pts((xv, y0), (xv, c2[1])) + arc_pts(c2, R2, 90, hd, turn)[1:] + line_pts(e, base)[1:], 2.0)
+    xR, rc = branch(baseR, dR)
+    xL, lc = branch(baseL, dL)
+    assert abs((xR - UX) - (UX - xL)) < 0.05, "the two branches are not mirrored about the uterus"
+    # The head points along the branch's LAST direction; its tip is where that line meets the ovary
     # outline, plus 1.2 units, so it always touches the ovary whatever the curve does.
     tips = []
-    for c, oc, side in ((tc, ocR, 1), (lc, ocL, -1)):
+    for c, oc, side in ((rc, ocR, 1), (lc, ocL, -1)):
         t_ = tangents(c)[-1]
         hit = ray_ellipse(c[-1], t_, oc, OV_RX * US, OV_RY * US, side * OV_ROT)
         assert hit is not None and abs(hit + 1.2 - HL) < 3, "arrowhead does not reach the ovary"
         tips.append((c[-1][0] + t_[0] * (hit + 1.2), c[-1][1] + t_[1] * (hit + 1.2)))
     tipR, tipL = tips
-    taper0 = next(i for i, p in enumerate(tc) if p[0] > 676)
-    tw_ = [TW if i < taper0 else TW - (TW - 20) * min(1, (i - taper0) / 34) for i in range(len(tc))]
-    lw_ = [20.0] * len(lc)
+    tw_ = [TW] * len(tc)
+    bw_ = {id(rc): [BW] * len(rc), id(lc): [BW] * len(lc)}
 
-    # ---------------------------------------------------------- pancreas, then insulin rising into the blood
+    # ---------------------------------------------------------- pancreas
     o.append(f'<g transform="translate({PX},{PY}) scale({PS})">{duodenum()}{pancreas()}</g>')
-    for x0, y0 in ((160, 120), (204, 108)):
-        o.append(f'<path d="M{x0},{y0} V{TY + TW / 2 + 5}" stroke="{INS_EDGE}" stroke-width="1.8" stroke-dasharray="3 3" '
-                 'marker-end="url(#pcAy)" fill="none"/>')
-        for k, yy in enumerate((y0 - 14, y0 - 34, y0 - 54)):
-            if yy > TY + TW / 2 + 14:          # keep the top dot clear of the arrowhead
-                o.append(insulin(x0 + (3.5 if k % 2 else -3.5), yy, 4.4))
 
     # ---------------------------------------------------------- vessel: outline, wall, inside
-    # Three layers, so the branch joins the trunk without a seam: every outline first (a 2.4-unit
-    # stroke around the one-piece tube + head shape), then every wall, then every inside.
-    shapes = [arrow_tube(tc, tw_, tipR, HW, BACK), arrow_tube(lc, lw_, tipL, HW, BACK)]
+    # Three layers, so the branches join the trunk without a seam: every outline first (a 2.4-unit
+    # stroke around each one-piece shape), then every wall, then every inside.  The fillets have their
+    # own wall and inside pieces, concentric with each other.
+    shapes = [ribbon(tc, tw_), arrow_tube(rc, bw_[id(rc)], tipR, HW, BACK), arrow_tube(lc, bw_[id(lc)], tipL, HW, BACK)]
+    lumens = [ribbon(tc, [w - 2 * WALL for w in tw_])]
+    for xv, c in ((xR, rc), (xL, lc)):
+        yb = yc(xv) + TW / 2
+        for side in (1, -1):
+            shapes.append(fillet(xv, yb, BW / 2, RF, side))
+            lumens.append(fillet(xv, yb - WALL, BW / 2 - WALL, RF + WALL, side))
+        lumens.append(arrow_lumen(c, [w - 2 * WALL for w in bw_[id(c)]], HL * .42))
     for s in shapes:
         o.append(f'<path d="{s}" fill="{V_OUT}" stroke="{V_OUT}" stroke-width="2.4" stroke-linejoin="round"/>')
     for s in shapes:
         o.append(f'<path d="{s}" fill="{V_WALL}"/>')
+    for s in lumens:
+        o.append(f'<path d="{s}" fill="{V_LUM}" stroke="{V_LUM}" stroke-width=".6" stroke-linejoin="round"/>')
     tl = [w - 2 * WALL for w in tw_]
-    ll = [w - 2 * WALL for w in lw_]
-    o.append(f'<path d="{arrow_lumen(tc, tl, HL * .42)}" fill="{V_LUM}" stroke="{V_LUM}" stroke-width=".6" stroke-linejoin="round"/>')
-    o.append(f'<path d="{arrow_lumen(lc, ll, HL * .42)}" fill="{V_LUM}" stroke="{V_LUM}" stroke-width=".6" stroke-linejoin="round"/>')
-    o.append(f'<path d="{arrow_lumen(tc, [x * .35 for x in tl], HL * .2)}" fill="#FFFFFF" opacity=".35"/>')
-    # cut end at the far left, so the vessel reads as a tube
-    o.append(f'<ellipse cx="14" cy="{TY}" rx="5.4" ry="{TW / 2 + 1.2}" fill="{V_WALL}" stroke="{V_OUT}" stroke-width="1.3"/>'
-             f'<ellipse cx="14" cy="{TY}" rx="3.2" ry="{TW / 2 - WALL}" fill="#E7A39B"/>')
+    o.append(f'<path d="{ribbon(tc, [x * .35 for x in tl])}" fill="#FFFFFF" opacity=".35"/>')
+    # cut ends at both sides, so the bloodstream reads as a tube that carries on past the picture
+    for xe in (TX0, TX1):
+        o.append(f'<ellipse cx="{xe}" cy="{TY}" rx="5.4" ry="{TW / 2 + 1.2}" fill="{V_WALL}" stroke="{V_OUT}" stroke-width="1.3"/>'
+                 f'<ellipse cx="{xe}" cy="{TY}" rx="3.2" ry="{TW / 2 - WALL}" fill="#E7A39B"/>')
 
-    # what the blood carries: glucose, insulin, red blood cells
-    lab_w = tw("Blood vessel", 10.5, 800) + 14
+    # ---------------------------------------------------------- insulin rising from the pancreas into the blood
+    # Dots sit fully clear of the dashed lines; each arrow tip lands on the bloodstream's outline.
+    # The marker head reaches (10 - refX) / 10 * markerWidth * stroke = 3.5/10 * 4.4 * 1.8 = 2.77 units
+    # past the end of its path.
+    for k0, (x0, y0) in enumerate(((160, 120), (204, 108))):
+        yb = yc(x0) + TW / 2
+        o.append(f'<path d="M{x0},{y0} V{yb + 0.6 + 2.77:.2f}" stroke="{INS_EDGE}" stroke-width="1.8" stroke-dasharray="3 3" '
+                 'marker-end="url(#pcAy)" fill="none"/>')
+        for k, yy in enumerate((y0 - 8, y0 - 26, y0 - 44)):
+            if yy > yb + 13:                   # keep the top dot clear of the arrowhead
+                o.append(insulin(x0 + (7 if (k + k0) % 2 else -7), yy, 3.4))
+
+    # what the blood carries: glucose, insulin, red blood cells.  Sugar and insulin are drawn at half
+    # the size of the red cells (still far larger than life: the close-up says "not to scale").
+    lab_w = tw("Bloodstream", 10.5, 800) + 14
     lab_x0 = 34
 
     tg = tangents(tc)
     placed = []
-    kinds = ["g"] * 16 + ["i"] * 12 + ["r"] * 6
+    kinds = ["g"] * 16 + ["i"] * 12 + ["r"] * 9
     rng.shuffle(kinds)
-    idx = list(range(12, taper0 - 6))
+    idx = list(range(12, len(tc) - 12))
     for kind in kinds:
-        r = 7.6 if kind == "r" else 4.7
-        for _ in range(400):
+        r = 7.6 if kind == "r" else 3.2
+        for _ in range(600):
             i = rng.choice(idx)
             (x, y), (tx, ty) = tc[i], tg[i]
             lim = (tl[i] / 2) - (3.6 if kind == "r" else r) - 1.2
             u = rng.uniform(-lim, lim)
             px, py = x - ty * u, y + tx * u
-            if lab_x0 - 4 < px < lab_x0 + lab_w + 4:       # keep the "Blood vessel" label clear
+            if lab_x0 - 4 < px < lab_x0 + lab_w + 4:       # keep the "Bloodstream" label clear
+                continue
+            if any(abs(px - xv) < BW / 2 + RF + 3 for xv in (xR, xL)):   # keep the branch openings clear
                 continue
             if any(math.dist((px, py), (qx, qy)) < r + qr + 2.4 for qx, qy, qr, _ in placed):
                 continue
             placed.append((px, py, r, kind))
             break
+    assert len(placed) == len(kinds), f"bloodstream: placed {len(placed)} of {len(kinds)} symbols"
     for px, py, r, kind in placed:
-        o.append(glucose(px, py) if kind == "g" else insulin(px, py) if kind == "i" else
+        o.append(glucose(px, py, 3.0) if kind == "g" else insulin(px, py, 2.9) if kind == "i" else
                  red_cell(px, py, rng.uniform(-12, 12), 0.6))
-    # insulin riding the branches all the way to the ovaries
-    for c in (lc, tc[taper0 + 8:]):
-        n = len(c)
-        for f in (0.3, 0.55, 0.8):
-            x, y = c[int(n * f)]
-            o.append(insulin(x, y, 3.7))
+    # insulin riding both branches all the way to the ovaries (the same three spots on each)
+    for xv, c in ((xR, rc), (xL, lc)):
+        run = [p for p in c if p[1] > yc(xv) + TW / 2 + RF + 3]
+        n = len(run)
+        for f in (0.12, 0.45, 0.78):
+            x, y = run[int(n * f)]
+            o.append(insulin(x, y, 2.9))
     o.append(label_bg(lab_x0, TY - 9, lab_w, 18, "#FFFFFF", 0.94, 5)
-             + T(lab_x0 + lab_w / 2, TY + 3.8, "Blood vessel", 10.5, 800, "#8E1F28", "middle"))
+             + T(lab_x0 + lab_w / 2, TY + 3.8, "Bloodstream", 10.5, 800, "#8E1F28", "middle"))
 
     # ---------------------------------------------------------- zoom circle: the crowded blood
     r_ind = 21
@@ -677,7 +801,7 @@ def art_pcos(t):
     z.append("</g>")
     o.append("".join(z))
     o.append(f'<circle cx="{BX}" cy="{BY}" r="{BR}" fill="none" stroke="#4F5A61" stroke-width="2"/>')
-    o.append(T(BX, BY + BR + 15, "close-up of the blood", 10, 600, "#56626A", "middle", italic=True))
+    o.append(T(BX, BY + BR + 15, "close-up of the blood (not to scale)", 10, 600, "#56626A", "middle", italic=True))
 
     # ---------------------------------------------------------- uterus, tubes, ovaries, androgens
     o.append(reproductive(UX, UY, US))
@@ -722,7 +846,8 @@ def pan_mini():
 
 def tube_mini():
     """A Fallopian tube at key size: the tube widening outward to its funnel and fringe."""
-    fr = "".join(f'<path d="{frond(1.2, y, ang, ln, 1.05, curl, .45)}" fill="{U_BASE}" stroke="{U_EDGE}" stroke-width=".45"/>'
+    fr = "".join(f'<path d="{frond((1.0, y), (math.cos(math.radians(ang)), math.sin(math.radians(ang))), ln, 1.05, curl, 0, .45, 8)}" '
+                 f'fill="{U_BASE}" stroke="{U_EDGE}" stroke-width=".45"/>'
                  for y, ang, ln, curl in ((-2.4, -16, 3.2, -.2), (-.9, 6, 4.2, .2), (.7, 26, 3.8, .4), (2.2, 46, 3.0, .4)))
     return (f'<path d="M-10.5,5 C-7,-3 -1,-5 4.2,-1.8" fill="none" stroke="{U_EDGE}" stroke-width="4.2" stroke-linecap="round"/>'
             f'<path d="M-10.5,5 C-7,-3 -1,-5 4.2,-1.8" fill="none" stroke="{U_BASE}" stroke-width="2.5" stroke-linecap="round"/>'
@@ -742,7 +867,7 @@ def key():
         (sw(glucose(0, 0, 6.2)), "Glucose", "sugar in the blood"),
         (sw(insulin(0, 0, 6)), "Insulin", "lets sugar into cells"),
         (sw(red_cell(0, 0, 0, .64)), "Red blood cell", ""),
-        (sw(ves_mini), "Blood vessel", ""),
+        (sw(ves_mini), "Bloodstream", "carries insulin everywhere"),
         (sw(pan_mini(), W2, 16, VB2), "Pancreas", "makes insulin"),
         (sw(androgen(0, 0, 6.4), W2, 16, VB2), "Androgens", "male-type hormones"),
         (sw(follicle(0, 0, 5.6), W2, 16, VB2), "Follicle", "the &ldquo;cysts&rdquo;: stalled egg sacs"),
@@ -753,10 +878,12 @@ def key():
 
 
 def steps():
+    # [STEPTO13] insulin resistance = cells respond poorly; the extra insulin keeps blood sugar near
+    # normal for years, which is why the risk of diabetes comes later (facts box).
     st = [("The pancreas makes insulin.", "Insulin moves sugar out of the blood and into your cells for fuel."),
-          ("Cells stop listening to insulin.", "Sugar stays in the blood, so the pancreas pumps out even more."),
-          ("Extra insulin reaches the ovaries.", "They make extra androgens, and eggs stay stuck in small "
-                                                 "follicles (the &ldquo;cysts&rdquo;).")]
+          ("Cells answer insulin poorly.", "So the pancreas pumps out more to keep sugar in check."),
+          ("Extra insulin reaches the ovaries.", "The ovaries then make extra androgens, and eggs stay stuck in "
+                                                 "small follicles (the &ldquo;cysts&rdquo;).")]
     return '<div class="pc-steps">' + "".join(
         f'<div><span class="pc-n">{i + 1}</span><p><b>{a}</b> {b}</p></div>' for i, (a, b) in enumerate(st)) + "</div>"
 
