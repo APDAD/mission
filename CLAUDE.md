@@ -382,4 +382,14 @@ Never hand-edit the generated HTML or PDFs. Binding rules (his words, 2026-11-03
 - Two editions: pharmacy ("Pharmacist check") for Morgan-type accounts, practitioner ("Provider
   check") for MDs, DCs, NDs. Write rx notes with {who}/{Who} tokens or a per-edition dict.
 - Back-page claims are structure/function only; the FDA disclaimer is automatic. Public repo: no
-  account names, prices or patient data in any sheet.
+  account names, prices or patient data in any sheet, and none in the "src" notes or code comments
+  either (a customer doctor's name in a src note was caught and scrubbed 2026-11-03).
+- PRINT-SAFE PDFs (2026-11-03): sheets load the static Inter + Merriweather files in
+  handouts/conditions/fonts/ (SIL OFL), never Google's variable fonts, because Chromium embeds
+  variable fonts and fallback glyphs as Type 3, which print shops reject. Any symbol outside the
+  Latin set (a diamond, check mark, arrow) is drawn as inline SVG (kit.DIAMOND); kit.print_safe
+  swaps no-break hyphens and drops zero-width joiners. build.py prints TYPE 3 FONTS when a PDF
+  still has one: that line means the sheet is not done. Shared fine print is 7 pt minimum.
+- Photos are pooled per product (same code or name), the most real detail wins (an enlargement of
+  a 160 px thumbnail counts a quarter of its height), identical photos are stored once, and a full
+  build deletes img/nd-*.png that no sheet uses.

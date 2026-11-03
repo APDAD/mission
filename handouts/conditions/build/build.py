@@ -223,51 +223,96 @@ body{background:#F1EFE8}
 .how h3{font:900 18px Merriweather,Georgia,serif;margin:0 0 6px;color:#14664D}
 .how ol{margin:0;padding-left:20px;font-size:14px;line-height:1.55}
 .src{font-size:12px;color:#6B6B66;margin-top:18px;line-height:1.5}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-top:4px}
+.st{background:#F1EFE8;color:#2C2C2A;border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:2px}
+.st b{font:900 30px/1 Merriweather,Georgia,serif;color:#14664D}
+.st span{font:700 11px Inter;letter-spacing:.12em;text-transform:uppercase;color:#5B5B55}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 0}
+.chip{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 14px;border-radius:99px;background:#FBFAF6;color:#2C2C2A;
+  text-decoration:none;font:700 13px Inter;box-shadow:0 1px 0 #E2DED4}
+.chip i{font-style:normal;background:#14664D;color:#fff;border-radius:99px;padding:1px 7px;font-size:12px}
+.edbar{justify-content:space-between}
+.edbar div{display:flex;flex-direction:column;gap:2px}
+.edbar b{font:800 14px Inter;color:#2C2C2A}
+.edbar span{font-size:13px;color:#5B5B55}
+.grp{margin:22px 0 0}
+.grp h2{display:flex;align-items:center;gap:10px;font:900 22px/1.2 Merriweather,Georgia,serif;color:#2C2C2A;margin:0 0 10px}
+.grp h2 small{font:700 12px Inter;letter-spacing:.1em;text-transform:uppercase;color:#6B6B66}
+.grp .dot{width:14px;height:14px;border-radius:50%;background:var(--fc);flex:none}
+.card{border-top:4px solid var(--fc)}
+.card h3{font:900 18px/1.2 Merriweather,Georgia,serif;margin:0;color:#2C2C2A}
+.card .fam{color:var(--fc)}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:8px}
+.step{background:#fff;border-radius:10px;border-left:5px solid #1D9E75;padding:12px 14px;display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start}
+.step .n{font:900 24px/1 Merriweather,Georgia,serif;color:#1D9E75}
+.step b{display:block;font:800 14px Inter;color:#2C2C2A;margin-bottom:2px}
+.step p{margin:0;font-size:13.5px;line-height:1.45;color:#4A4A45}
+@media (max-width:600px){.chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding-bottom:2px}.chips::-webkit-scrollbar{display:none}.chip{flex:none}}
+@media (max-width:420px){.st b{font-size:24px}.grp h2{font-size:19px}.seg{display:grid;grid-template-columns:1fr 1fr;justify-self:stretch}.seg button{padding:0 8px}.seg .xl{display:none}.edbar .btn{width:100%}}
 """
 
-FAM = {"gut": ("#0E6A7A", "Gut"), "teal": ("#13827C", "Gut"), "gerd": ("#CF4A1C", "Gut"),
-       "metab": ("#8A1B22", "Metabolic"), "immune": ("#4A2B80", "Immune"), "msk": ("#1F5E8C", "Pain and movement"),
-       "neuro": ("#4B5563", "Brain and nerves"), "hormone": ("#9B3F68", "Hormones")}
+SERIES_ORDER = ["Gut Health Series", "Metabolic Health Series", "Immune Health Series", "Hormone Health Series",
+                "Pain and Movement Series", "Brain and Nerve Series", "Energy and Stress Series"]
 
 
 def index_html(sheets):
+    by_series = {}
+    for s in sheets:
+        by_series.setdefault(s.get("series") or "More sheets", []).append(s)
+    order = [x for x in SERIES_ORDER if x in by_series] + [x for x in by_series if x not in SERIES_ORDER]
+    n_products = len({products.get(c["p"])["name"] for s in sheets for c in s["back"]["cols"]})
+    stats = "".join(f'<div class="st"><b>{v}</b><span>{k}</span></div>' for v, k in (
+        (len(sheets), "two-sided sheets"), (len(order), "series"), (n_products, "NutriDyn products"), (2, "editions")))
+    jump = "".join(f'<a class="chip" href="#practitioner-{i}" data-i="{i}">{E(name.replace(" Series", ""))} <i>{len(by_series[name])}</i></a>'
+                   for i, name in enumerate(order))
     secs = ""
     for edkey, ed in EDITIONS.items():
-        cards = ""
-        for s in sheets:
-            c, f = FAM.get(s["theme"], ("#14664D", "Health"))
-            names = ", ".join(products.get(x["p"])["name"] for x in s["back"]["cols"])
-            cards += (f'<article class="card"><a class="th" href="{edkey}/{s["slug"]}.html"><img src="img/thumb-{edkey}-{s["slug"]}-1.jpg" alt="Front of the {E(s["title"])} sheet" loading="lazy">'
-                      f'<img src="img/thumb-{edkey}-{s["slug"]}-2.jpg" alt="Back of the {E(s["title"])} sheet" loading="lazy"></a>'
-                      f'<div class="bd"><span class="fam" style="color:{c}">{f} &middot; {s["code"]}</span><h2>{s["title"]}</h2>'
-                      f'<p class="pp">{len(s["back"]["cols"])} NutriDyn picks: {E(names)}.</p>'
-                      f'<div class="row"><a class="btn" data-k href="{edkey}/{s["slug"]}.html">Open</a><a class="btn g" href="{edkey}/{s["slug"]}.pdf">PDF</a></div></div></article>')
-        secs += (f'<section data-ed="{edkey}"{" hidden" if edkey != "practitioner" else ""}><div class="bar"><b style="font:800 13px Inter">{ed["label"]}</b>'
-                 f'<span style="font-size:13px;color:#5B5B55">for {ed["for"]}. The back says &ldquo;{ed["rx_title"]}&rdquo;.</span>'
-                 f'<a class="btn c" href="{edkey}/all-condition-sheets.pdf">All {len(sheets)} sheets, one PDF</a></div><div class="grid">{cards}</div></section>')
+        groups = ""
+        for i, name in enumerate(order):
+            cards = ""
+            for s in by_series[name]:
+                c1 = kit.THEMES.get(s["theme"], kit.THEMES["gut"])["c1"]
+                names = ", ".join(products.get(x["p"])["name"] for x in s["back"]["cols"])
+                cards += (f'<article class="card" style="--fc:{c1}"><a class="th" href="{edkey}/{s["slug"]}.html">'
+                          f'<img src="img/thumb-{edkey}-{s["slug"]}-1.jpg" alt="Front of the {E(s["title"])} sheet" loading="lazy">'
+                          f'<img src="img/thumb-{edkey}-{s["slug"]}-2.jpg" alt="Back of the {E(s["title"])} sheet" loading="lazy"></a>'
+                          f'<div class="bd"><span class="fam">{s["code"]}</span><h3>{s["title"]}</h3>'
+                          f'<p class="pp"><b>{len(s["back"]["cols"])} NutriDyn picks:</b> {E(names)}.</p>'
+                          f'<div class="row"><a class="btn" data-k href="{edkey}/{s["slug"]}.html">Open</a>'
+                          f'<a class="btn g" href="{edkey}/{s["slug"]}.pdf">PDF</a></div></div></article>')
+            c1 = kit.THEMES.get(by_series[name][0]["theme"], kit.THEMES["gut"])["c1"]
+            groups += (f'<div class="grp" id="{edkey}-{i}" style="--fc:{c1}"><h2><span class="dot"></span>{E(name)}'
+                       f'<small>{len(by_series[name])} sheet{"s" if len(by_series[name]) != 1 else ""}</small></h2>'
+                       f'<div class="grid">{cards}</div></div>')
+        secs += (f'<section data-ed="{edkey}"{" hidden" if edkey != "practitioner" else ""}><div class="bar edbar">'
+                 f'<div><b>{ed["label"]}</b><span>for {ed["for"]}. The back page says &ldquo;{ed["rx_title"]}&rdquo;.</span></div>'
+                 f'<a class="btn c" href="{edkey}/all-condition-sheets.pdf">All {len(sheets)} sheets, one PDF</a></div>{groups}</section>')
+    steps = [("Pick the sheet", "Match it to the conversation. Write the patient's name and the date at the top."),
+             ("Tick and circle", "On the back, tick the lifestyle steps that apply and circle the products you recommend."),
+             ("Make it theirs", "Write the dose and anything specific under <i>Special considerations</i>. The <b>Start here</b> pick is the one to begin with."),
+             ("Send them to the bottle", "Product photos and names link to the product page in the web and PDF versions.")]
+    how = "".join(f'<div class="step"><span class="n">{i + 1}</span><div><b>{a}</b><p>{b}</p></div></div>' for i, (a, b) in enumerate(steps))
     body = f"""<div class="wrap">
 <div class="hero"><span class="k">NutriDyn &middot; Patient education &middot; November 2026</span>
 <h1>Condition sheets</h1>
-<p>{len(sheets)} two-sided handouts. The front explains the condition with a picture and a key. The back has the lifestyle steps,
-the NutriDyn products that deliver each nutrient (photo, what is in it, how to take it, linked to the product page), a daily
-schedule and a medicine and nutrient check. Print double-sided, flip on the long edge.</p>
-<div class="seg" role="group" aria-label="Edition"><button id="ed-practitioner" aria-pressed="true" data-ed="practitioner">Practitioner edition</button>
-<button id="ed-pharmacy" aria-pressed="false" data-ed="pharmacy">Pharmacy edition</button></div></div>
+<p>Front: the condition as a picture, with a key. Back: lifestyle steps, the NutriDyn products for each nutrient, a daily
+schedule and a medicine check. Print double-sided, flip on the long edge.</p>
+<div class="stats">{stats}</div>
+<div class="seg" role="group" aria-label="Edition"><button id="ed-practitioner" aria-pressed="true" data-ed="practitioner">Practitioner<span class="xl"> edition</span></button>
+<button id="ed-pharmacy" aria-pressed="false" data-ed="pharmacy">Pharmacy<span class="xl"> edition</span></button></div></div>
+<div class="chips" aria-label="Jump to a series">{jump}</div>
 <div class="bar"><label for="pr">Practice name for the "Recommended by" line</label>
 <input id="pr" placeholder="e.g. your clinic or pharmacy name" autocomplete="organization">
 <a class="btn g" href="warehouse-bottle-counter-card.html">Warehouse-bottle counter card</a></div>
 {secs}
-<div class="how"><h3>How to use them</h3><ol>
-<li>Pick the sheet, write the patient's name and date at the top.</li>
-<li>On the back, tick the lifestyle steps that apply and circle the products you recommend.</li>
-<li>Write the dose and anything specific in <i>Special considerations</i>. The "Start here" pick is the one to begin with.</li>
-<li>Product photos and names link to the product page in the web and PDF versions.</li></ol></div>
+<div class="how"><h3>How to use them</h3><div class="steps">{how}</div></div>
 <p class="src">Built from NutriDyn label facts and NutriDyn protocols. Condition facts from the CDC, WHO, FDA, AASLD, ACG and
 AHA/ACC. Every product statement is structure/function and carries the FDA disclaimer. Generated by
 handouts/conditions/build/build.py; do not hand-edit.</p></div>
 <script>(function(){{var k='mc_sheet_practice',e='mc_sheet_edition',i=document.getElementById('pr');
 function show(ed){{document.querySelectorAll('section[data-ed]').forEach(function(s){{s.hidden=s.getAttribute('data-ed')!==ed;}});
 document.querySelectorAll('.seg button').forEach(function(b){{b.setAttribute('aria-pressed',b.getAttribute('data-ed')===ed);}});
+document.querySelectorAll('.chip[data-i]').forEach(function(c){{c.setAttribute('href','#'+ed+'-'+c.getAttribute('data-i'));}});
 try{{localStorage.setItem(e,ed)}}catch(x){{}}}}
 document.querySelectorAll('.seg button').forEach(function(b){{b.addEventListener('click',function(){{show(b.getAttribute('data-ed'));}});}});
 function upd(){{var v=i.value.trim();document.querySelectorAll('a[data-k]').forEach(function(a){{var b=a.getAttribute('href').split('?')[0];
