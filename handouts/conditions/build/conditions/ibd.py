@@ -33,6 +33,47 @@ organic, grown coil (tools note below); the duodenum dives under the colon and t
 jejunum comes out below it; stomach in front of the colon; cecum is a real pouch; no bed
 slivers; KEY airier; VS out of the red; head and neck re-proportioned.
 
+Final front review (2026-11-03), answered without redesigning the page: the two "End of
+the small intestine" callouts are an exact pair (same baseline, same offset from the hips,
+same route under the cecum, TI_VIA), with the VS and the KEY raised so the KEY ends well
+above the Crohn's one; the rectum is drawn after the colon from the colon's own end and
+end tangent, cut flat there and flaring from the colon's widths (rectum_tube()), so the
+joint reads as one bowel; the sigmoid meets it higher, so the rectum is 21 units long, not
+a stub; the cecum's highlight starts on the colon stripe (no kink); the Crohn's stomach dot
+sits inside the stomach; the heading bars clear the head crowns; the flare band runs deep to
+c1 (white caps 4.6:1 or better); the capsule icon is full size and the germ is a round cell
+with pili and a flagellum; curly apostrophes throughout; the Fistulas cell says what a
+fistula is.  check_inside(), check_leaders() and check_text() run clean at import.
+
+Back page (2026-11-03): NutriDyn's IBD program (sources below) in the competitor's five
+nutrient slots, the medicine line under the band title, protocol-aligned lifestyle steps,
+and edition-specific checks.  Sources for the back:
+  [ND584]  NutriDyn 5R GI Restoration Program guide ND584 Rev. 1/22: REPAIR (days 1-10,
+           with the IBD note "If the patient exhibits significant GI inflammation, replace
+           the Dynamic GI Integrity with Dynamic Inflam-Eze"), RESTORE & RETAIN (GI Restore,
+           days 11-24), clean-eating, reintroduction, exercise and stress sections.
+  [AUTO23] Asher's Autoimmune Diseases protocol email, 2023-05-08 (lists IBD; Inflam-Eze,
+           UltraBiotic Defense, D3 with K2; Mediterranean-type diet; know the vitamin D level;
+           90-120 days before judging the plan).
+  [BLAST26] NutriDyn Direct Mail blast "New Research on Inflammation", 2026-04-06 (wild-caught
+           fish; olive, flax and walnut oils; 5-7 vegetable servings a day).
+  [AGA24]  Hashash JG et al. AGA Clinical Practice Update on Diet and Nutritional Therapies in
+           Patients With IBD. Gastroenterology 2024;166:521-532. doi:10.1053/j.gastro.2023.11.303
+           (BPA 1 Mediterranean diet low in ultraprocessed food and added sugar; BPA 2 soft
+           texture with strictures; BPA 9 malnutrition screening; BPA 10 vitamin D, iron, B12).
+  [ESPEN17] Forbes A et al. ESPEN guideline: Clinical nutrition in IBD. Clin Nutr
+           2017;36:321-347. doi:10.1016/j.clnu.2016.12.027 (protein needs rise in some
+           patients; exclusion diets generally not recommended).
+  [ACR17]  Buckley L et al. 2017 ACR Guideline for Glucocorticoid-Induced Osteoporosis.
+           Arthritis Care Res 2017;69:1095-1110. doi:10.1002/acr.23279 (calcium and vitamin D
+           for long-term glucocorticoid users).
+  [SKV11]  Skversky AL et al. J Clin Endocrinol Metab 2011;96:3838-45. doi:10.1210/jc.2011-1600
+           (steroid users had twice the odds of 25(OH)D under 10 ng/mL, NHANES 2001-2006).
+  [ODSK]   NIH Office of Dietary Supplements, Vitamin K fact sheet (vitamin K and warfarin).
+  [DRUGS-C] Drugs.com interaction checker: curcumin with warfarin, moderate (bleeding); web
+           search 2026-11-03.
+  Label facts and product sources: build/products.d/ibd.json.
+
 Sources for every number and claim on the front (also tagged inline):
   [LEW23]  Lewis JD et al. Incidence, prevalence, and racial and ethnic distribution
            of IBD in the United States. Gastroenterology 2023;165:1197-1205.
@@ -523,8 +564,9 @@ def figure(mode, x, y, s=1.0):
     draw the identical body and anatomy; only the red differs.  Layers, back to front:
     skin; esophagus; duodenum (shaded where it goes behind the colon); the red halos;
     the small intestine coil; an inflamed terminal ileum (Crohn's); the colon's soft contact
-    shadow; rectum; colon and its red stretches; cecum; stomach, which lies in front of
-    the transverse colon in a real belly."""
+    shadow; colon and its red stretches; rectum (after the colon, so it hides the colon's
+    round end cap); cecum; stomach, which lies in front of the transverse colon in a real
+    belly."""
     k = f"{U}-{mode}"
     body = body_d()
     g = [f'<g transform="translate({x},{y}) scale({s})">',
@@ -932,19 +974,13 @@ CSS = r"""
 /* every header keeps a little band for the START HERE badge, so it never touches the title under it, and all
    five are one height (two of the sub-lines wrap), so the photos and names start on one line */
 .sheet.back:has(.ibx-back) .col .need{padding-top:10px;min-height:0.56in}
-/* smaller hex discs and slightly tighter gaps between the back page's blocks, so the footer and the FDA
-   line keep their room */
-.sheet.back:has(.ibx-back) .life.hex .disc2{width:0.86in;height:0.75in}
-.sheet.back:has(.ibx-back) .life .disc2 svg{width:0.44in!important;height:0.44in!important}
-.sheet.back:has(.ibx-back) .band{padding-top:0.24in!important;padding-bottom:0.14in}
-.sheet.back:has(.ibx-back) .band h2{margin-bottom:0.08in}
+/* a little less air above the band title and the Nutrient Solutions title, so the footer keeps its margin
+   (the same two tweaks as the Intestinal Permeability sheet) */
+.sheet.back:has(.ibx-back) .band{padding-top:0.24in!important}
 .sheet.back:has(.ibx-back) .ns-title{margin-top:0.1in}
-.sheet.back:has(.ibx-back) .cols{margin-top:0.07in}
-.sheet.back:has(.ibx-back) .duo{margin-top:0.08in}
-.sheet.back:has(.ibx-back) .notes{margin-top:0.08in}
 /* the daily rhythm gets the wider half: morning and evening hold three and four products, bedtime one */
 .sheet.back:has(.ibx-back) .duo{grid-template-columns:1.5fr 1fr}
-.sheet.back:has(.ibx-back) .rhythm{grid-template-columns:1.3fr 1.3fr .72fr}
+.sheet.back:has(.ibx-back) .rhythm{grid-template-columns:1.3fr 1.3fr .8fr}
 """
 
 
@@ -977,8 +1013,8 @@ SHEET = {
     "front": front,
     "css": CSS,
     # ------------------------------------------------------------------------- back page
-    # NutriDyn's IBD program is the 5R with its IBD switch [ND584] plus the autoimmune core [AUTO23] (sources at
-    # the top of the back-page notes below).  The five columns are the five program products that fill the
+    # NutriDyn's IBD program is the 5R with its IBD switch [ND584] plus the autoimmune core [AUTO23] (sources in
+    # the module docstring).  The five columns are the five program products that fill the
     # competitor's five nutrient slots: high-potency probiotic -> UltraBiotic Defense; complete turmeric matrix
     # -> Dynamic Inflam-Eze; vitamin D3 -> D3 5000 with K2; L-glutamine + DGL + aloe -> GI Restore (ND584 takes
     # GI Integrity out of an inflamed gut, so its DGL formula is not on this sheet); serum-derived bovine
@@ -1016,7 +1052,7 @@ SHEET = {
         ],
         "cols": [
             {"p": "ibd_inflam_eze", "need": "Inflammatory balance", "needsub": "turmeric shake, days 1 to 10", "start": True,
-             "bullets": ["Supports healthy inflammatory markers", "Turmeric, quercetin and ginger in a protein shake"],
+             "bullets": ["Supports a healthy inflammatory response", "Turmeric, quercetin and ginger in a protein shake"],
              "dose": "dose_from_db"},
             {"p": "ibd_gi_defend", "need": "Gut barrier support", "needsub": "antibody proteins from cow serum",
              "bullets": ["Helps bind microbial toxins in the gut", "Supports gut barrier function"],
@@ -1027,7 +1063,7 @@ SHEET = {
             {"p": "ibd_ultrabiotic_defense", "need": "Microbiome balance", "needsub": "3 strains, with S.&nbsp;boulardii",
              "bullets": ["Supports a balanced gut microbiome", "Take it 2 hours away from antibiotics"],
              "dose": "dose_from_db"},
-            {"p": "ibd_d3_5000_k2", "need": "Vitamin D levels", "needsub": "D3 with K2",
+            {"p": "ibd_d3_5000_k2", "need": "Vitamin D support", "needsub": "D3 with K2",
              "bullets": ["Supports healthy vitamin D levels", "Supports bone and immune health"],
              "dose": "dose_from_db"},
         ],
@@ -1045,7 +1081,7 @@ SHEET = {
                 # [ODSK] vitamin K can blunt warfarin (D3 5000 with K2: 60 mcg K2 + 15 mcg K1 a softgel);
                 # [DRUGS-C] curcumin with warfarin rated a moderate interaction (bleeding).
                 "<b>On warfarin or another blood thinner?</b> The vitamin K in D3 5000 with K2 can weaken warfarin, "
-                "and the turmeric in Inflam-Eze may add to bleeding. Ask {who} first.",
+                "and the turmeric in Dynamic Inflam-Eze may add to bleeding. Ask {who} first.",
             ],
             "practitioner": [
                 # [AGA24] BPA 10: monitor every IBD patient for vitamin D and iron deficiency, and B12 with ileal

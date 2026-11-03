@@ -23,9 +23,10 @@ around thyroid medicine (nothing in the morning but the probiotic, after the thy
 minerals 4 hours later; the two lab-gated picks say "if ... is low" in the rhythm too), and the
 medicine check: five Pharmacist notes or four Provider notes (timing and bedtime dosing, biotin incl.
 Essential Multi, the 6,000 IU D3 total, blood thinners: no D3 5000 with K2 (its label says so) with
-plain D3 5000 as the vitamin-K-free route, and the multi's vitamin K; glandulars, pregnancy).  Dose
-matters go to "your prescriber" in both editions (a DC or ND who hands over the sheet may not be the
-one who prescribes levothyroxine).  The notes box keeps two writing lines to make room for them.
+plain D3 5000 as the vitamin-K-free route, and the multi's vitamin K; glandulars, pregnancy).  Thyroid
+dose matters never go to {who}: pregnancy goes to "your prescriber" in both editions, and the Provider
+notes name "your prescriber" for dose changes and glandulars too (a DC or ND who hands over the sheet
+may not be the one who prescribes levothyroxine).  The notes box keeps two writing lines for them.
 Front and back say the same thing about iodine: no kelp or drops, 150 mcg (salt or a multi) is plenty.
 Every SVG id and CSS class starts with "thy", so nothing collides in the all-sheets bundle.
 Edition wording: "{who}" / "{Who}" become "your provider" or "your pharmacist" (build.ed_text).
@@ -1237,8 +1238,8 @@ SHEET = {
                 # and names the vitamin-K-free route: plain D3 5000 (products DB R195: 5,000 IU D3 per softgel, no K).
                 # Essential Multi has vitamin K (phytonadione, K1) 120 mcg per 3 capsules (products DB R716, catalog
                 # ND143): a pharmacist question, since warfarin patients need a steady vitamin K intake.
-                "<b>On warfarin or another blood thinner?</b> Skip D3 5000 with K2 (its label says so); ask {who} "
-                "about plain D3 5000 and the multi&#8217;s vitamin K.",
+                "<b>On warfarin or another blood thinner?</b> Skip D3 5000 with K2 (its label says&nbsp;so); ask {who} "
+                "about plain D3&nbsp;5000 and the multi&#8217;s vitamin K.",
                 # One bullet for the thyroid dose, with two bold leads: [KANG13] thyroid supplements with T4/T3, never
                 # self-adjust (kelp / iodine drops: the hex tile).  [ATA17] [CHAK17] once pregnant, treated women need
                 # about 20 to 30% more levothyroxine and should call their prescriber at once (so "your prescriber"
@@ -1256,7 +1257,7 @@ SHEET = {
                 # in Essential Multi: 120 mcg K1 per 3 capsules (products DB R716).
                 "<b>Test first:</b> TSH, free T4, TPO antibodies, ferritin, vitamin D. Iron and D3: low levels only. "
                 "With the multi, D3 is 6,000 IU a day, over the 4,000 IU limit: recheck. On warfarin? Not D3 5000 with "
-                "K2 (its label says so); use plain D3 5000. The multi has vitamin K.",
+                "K2 (its label says so); use plain D3&nbsp;5000. The multi has vitamin K.",
                 # [LT4-PI] [ATA14] (bedtime dosing is accepted; then the iron / multi times move); the binders patients
                 # take most (iron, calcium, antacids) named, as in the pharmacy edition; [LI17];
                 # [ND-LABEL] biotin 500 mcg in Essential Multi.  "Alone ... water only ... before breakfast" is the

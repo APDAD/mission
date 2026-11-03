@@ -2,16 +2,17 @@
 
 Self-contained sheet module: the front art, the front copy and the back data all live
 here (no legacy sheets.py / art.py imports).  Front, top to bottom:
-  intro -> nitric-oxide pathway (4 numbered steps) beside a tight-vs-relaxed artery
-  with its KEY -> risk-factor icons -> "reading your numbers" + "measure it right"
-  beside the AHA/ACC category table.
+  intro -> nitric-oxide pathway (4 numbered steps) beside a tight-vs-relaxed artery (cut ends,
+  inner lining that makes NO, NO molecules in the relaxed wall) with its KEY -> risk-factor
+  icons -> "reading your numbers" + "measure it right" beside the AHA/ACC category table.
 Back (2026-11-03 back-page pass): six lifestyle tiles aligned with the NutriDyn protocols
-(nitrate foods and no antiseptic mouthwash from Chad Oler's HBP slide, sodium, weight,
-movement with isometric holds, sleep, smoking and alcohol); five NutriDyn formulas from
-Asher's High Blood Pressure Protocol and the Oler / Johnson GLC protocols (Cardio Essentials
-BP Support = Start here, Nitric Boost, Magnesium Glycinate, Omega Pure EPA-DHA 1000, CoQ10
-100 mg; label facts and sources in products.d/high-blood-pressure.json); a 10-pill daily
-rhythm; three medicine-and-nutrient notes worded per edition.
+(nitrate foods and no antiseptic mouthwash from the NutriDyn GLC 2025 endothelial-dysfunction
+protocol, sodium, weight, movement with isometric holds, sleep, smoking and alcohol); five
+NutriDyn formulas from Asher's Hypertension protocol email and the NutriDyn GLC 2019 / 2025 /
+2026 protocols (Cardio Essentials BP Support = Start here, Nitric Boost, Magnesium Glycinate,
+Omega Pure EPA-DHA 1000, CoQ10 100 mg; label facts and sources in
+products.d/high-blood-pressure.json); an 11-pill daily rhythm; three medicine-and-nutrient
+notes worded per edition.
 
 Every number stated on the sheet carries a source comment next to it.
 Edition wording: "{who}" / "{Who}" become "your provider" or "your pharmacist" (build.ed_text).
@@ -30,10 +31,16 @@ TIGHT = "#9A2924"      # tight (contracted) muscle wall
 TIGHT_LN = "#741A16"   # muscle-fibre lines, tight wall
 RELAX = "#D27A6C"      # relaxed muscle wall
 RELAX_LN = "#B85A4D"   # muscle-fibre lines, relaxed wall
+LINING = "#FFF3DA"     # inner lining (endothelium), the layer that makes NO: cream, dE 11.8 from LUMEN and OUTER
+LINING_LN = "#D7B98E"  # its edge on the blood side
+NUC = "#9A6B86"        # the lining cells' nuclei: small mauve dashes, as on a stained slide
 LUMEN = "#F9E1DA"      # blood inside the vessel (shown in the "Blood flow" swatch)
 LUMEN_LN = "#E3B4A8"   # outline of the pale "Blood flow" swatch, so it shows on the white KEY
+HOLE = "#EDBFB4"       # the channel seen end-on in a cut face: a shade darker than LUMEN, so it reads as an opening
 PUSH = "#3A1411"       # arrows: blood pushing on the vessel wall (pressure)
 INK = "#2B3236"
+LIN = 3.6              # lining thickness in units: the inner edge of each muscle band is drawn as lining
+FR = 10                # half-width of the elliptical cut face at each outer end of the artery
 
 # ------------------------------------------------------------------ this sheet's icons (64 x 64 grid, stroke style)
 # Open mouth with the tongue out: upper lip, mouth line, a lower lip the tongue hangs over (so the mouth
@@ -127,15 +134,6 @@ def _tag(x, y, w, h, text, size=12):
             + T(x + (w - tip) / 2 + r * 0.35, y + size * 0.36, text, size, 800, "#2B1412", "middle"))
 
 
-def _seg_path(x0, x1, y0, y1, r, left_round):
-    """Vessel segment outline: one end rounded (the vessel's end), the other cut square."""
-    if left_round:
-        return (f"M{x0 + r},{y0} H{x1} V{y1} H{x0 + r} A{r},{r} 0 0 1 {x0},{y1 - r} "
-                f"V{y0 + r} A{r},{r} 0 0 1 {x0 + r},{y0} Z")
-    return (f"M{x0},{y0} H{x1 - r} A{r},{r} 0 0 1 {x1},{y0 + r} V{y1 - r} "
-            f"A{r},{r} 0 0 1 {x1 - r},{y1} H{x0} Z")
-
-
 def _fibres(x0, x1, y_out, y_in, gap, slant, color, sw):
     """Muscle-fibre lines across one wall band (rings of muscle wrapping the vessel)."""
     out, x = [], x0 - abs(slant) - gap
@@ -145,25 +143,63 @@ def _fibres(x0, x1, y_out, y_in, gap, slant, color, sw):
     return f'<path d="{" ".join(out)}" stroke="{color}" stroke-width="{sw}" stroke-linecap="round" opacity=".6"/>'
 
 
-def _segment(uid, x0, x1, top, bot, wall, left_round, fill, ln, gap, sw):
-    """Outer layer + muscle wall (top and bottom bands) + lumen, clipped to the outline."""
-    po = _seg_path(x0, x1, top, bot, 22, left_round)
-    o_in = top + 10                    # outer layer is 10 units thick
-    l_top, l_bot = o_in + wall, bot - 10 - wall
+def _nuclei(x0, x1, y, step=13.0, dx=0.0):
+    """The lining cells' nuclei: one small flat mauve dash per cell along a lining band."""
+    out, x = [], x0 + step / 2 + dx
+    while x < x1 - 2:
+        out.append(f'<ellipse cx="{x:.1f}" cy="{y:.2f}" rx="2.5" ry="1" fill="{NUC}"/>')
+        x += step
+    return "".join(out)
+
+
+def _segment(uid, x0, x1, top, bot, wall, fill, ln, gap, sw, face):
+    """One straight artery segment in long section, cut square at the divider: outer layer (10 units),
+    muscle wall (its inner LIN units drawn as the cream lining, with nuclei) and the channel.
+    face = "left" or "right" adds the cut face at that outer end: an ellipse FR wide with the same rings
+    (outer layer, muscle, lining) round the channel opening, so the artery reads as a cut tube, not a
+    capped one.  Returns (markup, channel top, channel bottom)."""
+    o_in = top + 10
+    l_top, l_bot = o_in + wall, bot - 10 - wall          # channel (blood) edges
+    m_top, m_bot = l_top - LIN, l_bot + LIN              # muscle / lining boundaries
     slant = wall * 0.13
-    return (f'<clipPath id="{uid}"><path d="{po}"/></clipPath>'
-            f'<path d="{po}" fill="{OUTER}" stroke="{OUTER_LN}" stroke-width="1"/>'
-            f'<g clip-path="url(#{uid})">'
-            f'<rect x="{x0 - 2}" y="{o_in}" width="{x1 - x0 + 4}" height="{bot - 10 - o_in}" fill="{fill}"/>'
-            + _fibres(x0, x1, o_in + 1.5, l_top - 1.5, gap, slant, ln, sw)
-            + _fibres(x0, x1, bot - 11.5, l_bot + 1.5, gap, slant, ln, sw)
-            + f'<rect x="{x0 - 2}" y="{l_top}" width="{x1 - x0 + 4}" height="{l_bot - l_top}" fill="{LUMEN}"/>'
-            f'<path d="M{x0 - 2},{l_top} H{x1 + 2} M{x0 - 2},{l_bot} H{x1 + 2}" stroke="{ln}" stroke-width="1.2" opacity=".55"/>'
-            '</g>'), l_top, l_bot
+    w = x1 - x0
+    out = [f'<clipPath id="{uid}"><rect x="{x0}" y="{top}" width="{w}" height="{bot - top}"/></clipPath>',
+           f'<rect x="{x0}" y="{top}" width="{w}" height="{bot - top}" fill="{OUTER}" stroke="{OUTER_LN}" stroke-width="1"/>',
+           f'<g clip-path="url(#{uid})">',
+           f'<rect x="{x0 - 2}" y="{o_in}" width="{w + 4}" height="{bot - 10 - o_in}" fill="{fill}"/>',
+           _fibres(x0, x1, o_in + 1.5, m_top - 1.2, gap, slant, ln, sw),
+           _fibres(x0, x1, bot - 11.5, m_bot + 1.2, gap, slant, ln, sw),
+           f'<rect x="{x0 - 2}" y="{m_top}" width="{w + 4}" height="{LIN}" fill="{LINING}"/>',
+           f'<rect x="{x0 - 2}" y="{l_bot}" width="{w + 4}" height="{LIN}" fill="{LINING}"/>',
+           _nuclei(x0, x1, m_top + LIN / 2 + 0.2), _nuclei(x0, x1, l_bot + LIN / 2 - 0.2, dx=6.5),
+           f'<rect x="{x0 - 2}" y="{l_top}" width="{w + 4}" height="{l_bot - l_top}" fill="{LUMEN}"/>',
+           f'<path d="M{x0 - 2},{m_top} H{x1 + 2} M{x0 - 2},{m_bot} H{x1 + 2}" stroke="{ln}" stroke-width="1" opacity=".55"/>',
+           f'<path d="M{x0 - 2},{l_top} H{x1 + 2} M{x0 - 2},{l_bot} H{x1 + 2}" stroke="{LINING_LN}" stroke-width=".9"/>',
+           '</g>']
+    if face:
+        xf, cy, r0 = (x0 if face == "left" else x1), (top + bot) / 2, (bot - top) / 2
+        r_m, r_l, r_c = r0 - 10, r0 - 10 - wall + LIN, r0 - 10 - wall   # muscle, lining, channel radii
+
+        def ell(ry, fill_, stroke="none", sw_=0, op=1):
+            o = f' opacity="{op}"' if op != 1 else ""
+            return (f'<ellipse cx="{xf}" cy="{cy}" rx="{FR * ry / r0:.2f}" ry="{ry:.2f}" fill="{fill_}" '
+                    f'stroke="{stroke}" stroke-width="{sw_}"{o}/>')
+        rings = [r_l + (r_m - r_l) * f for f in ((1 / 3, 2 / 3) if wall > 30 else (0.5,))]
+        out += [ell(r0, OUTER, OUTER_LN, 1), ell(r_m, fill), *[ell(r, "none", ln, 0.9, 0.5) for r in rings],
+                ell(r_l, LINING), ell(r_c, HOLE, LINING_LN, 0.9)]
+    return "".join(out), l_top, l_bot
+
+
+def _no_dot(x, y, rot, c1, c2):
+    """A small nitric oxide molecule for the vessel and its KEY: the N and O discs of step 3, side by side,
+    on a white halo so they read on the red muscle wall."""
+    return (f'<g transform="translate({x},{y}) rotate({rot})">'
+            '<circle cx="-3.6" r="4.4" fill="#fff"/><circle cx="3.6" r="4.4" fill="#fff"/>'
+            f'<circle cx="-3.6" r="3.2" fill="{c1}"/><circle cx="3.6" r="3.2" fill="{c2}"/></g>')
 
 
 # ------------------------------------------------------------------ the picture
-W, H = 760, 296
+W, H = 760, 300
 
 
 def art_bp(t):
@@ -181,7 +217,8 @@ def art_bp(t):
         ("no", "Your body makes NO", ["Nitrite becomes nitric oxide", "in your blood and tissues."]),
         ("vessel", "NO relaxes vessel walls", ["Vessels widen and blood", "flows with less pressure."]),
     ]
-    CX, CW, CH, GAP, Y0 = 6, 236, 58, 18, 6
+    # four cards and three 18-unit gaps fill the 298-unit column, level with the KEY's bottom edge
+    CX, CW, CH, GAP, Y0 = 6, 236, 59.5, 18, 6
     bodies = {"beet": ICONS["beet"], "tongue": IC_TONGUE.replace("currentColor", c1), "vessel": IC_VESSEL,
               "no": _no_molecule(c1, c2)}
     for i, (ic, title, lines) in enumerate(steps):
@@ -198,24 +235,27 @@ def art_bp(t):
         out.append(f'<circle cx="{bx}" cy="{by}" r="7" fill="{c1}" stroke="#fff" stroke-width="2"/>'
                    + T(bx, by + 3.6, str(i + 1), 10, 800, "#fff", "middle"))
         tx = CX + 66
-        out.append(T(tx, y + 17.5, title, 12.5, 800, deep))
-        out.append(T(tx, y + 33.5, lines, 11, 500, "#33404A", lh=1.24))
+        out.append(T(tx, y + 18, title, 12.5, 800, deep))
+        out.append(T(tx, y + 34, lines, 11, 500, "#33404A", lh=1.24))
         if i < 3:
             ay, mx = y + CH, CX + CW / 2
             out.append(f'<path d="M{mx},{ay + 1.5} V{ay + 8}" stroke="{c1}" stroke-width="3" stroke-linecap="round"/>'
                        f'<path d="M{mx - 6.5},{ay + 7.5} L{mx},{ay + 15.5} L{mx + 6.5},{ay + 7.5} Z" fill="{c1}"/>')
 
-    # ---- right: one artery, tightened (left) vs relaxed (right)
-    X0, X1 = 262, 756
+    # ---- right: one artery, tightened (left half) vs relaxed (right half).  Layers, outside in: outer layer,
+    # muscle, the thin inner lining (endothelium, which makes NO: Lundberg 2008 above; NIH NHLBI "What is
+    # the endothelium"), then the blood channel.  Each outer end is a cut face showing the same rings.
+    X0, X1 = 262, 756                  # outer extent, faces included (the KEY box spans the same width)
     XM = (X0 + X1) / 2
-    TOP, BOT = 46, 234
+    TOP, BOT = 46, 230
     vy = (TOP + BOT) / 2
     lx1, rx0 = XM - 5, XM + 5
+    XL, XR = X0 + FR, X1 - FR          # face centres
     # A tightened artery narrows as a whole: the left tube is 8 units slimmer top and bottom (outer
-    # diameter 172 vs 188) and its thick muscle wall (44 vs 24) squeezes the channel down.
+    # diameter 168 vs 184) and its thick muscle wall (44 vs 24, lining included) squeezes the channel down.
     SQ = 8
-    seg_l, lt, lb = _segment("hbp-cl", X0, lx1, TOP + SQ, BOT - SQ, 44, True, TIGHT, TIGHT_LN, 7.5, 1.7)
-    seg_r, rt, rb = _segment("hbp-cr", rx0, X1, TOP, BOT, 24, False, RELAX, RELAX_LN, 15, 1.6)
+    seg_l, lt, lb = _segment("hbp-cl", XL, lx1, TOP + SQ, BOT - SQ, 44, TIGHT, TIGHT_LN, 7.5, 1.7, "left")
+    seg_r, rt, rb = _segment("hbp-cr", rx0, XR, TOP, BOT, 24, RELAX, RELAX_LN, 15, 1.6, "right")
     out += [seg_l, seg_r]
     out.append(f'<path d="M{XM},{TOP - 3} V{BOT + 3}" stroke="#AEB5BA" stroke-width="2" stroke-dasharray="5 4"/>')
 
@@ -229,35 +269,45 @@ def art_bp(t):
     out.append(f'<path d="M{XM - 46},30.5 H{XM + 40}" stroke="{c1}" stroke-width="2.4" stroke-linecap="round"/>'
                f'<path d="M{XM + 38},25 L{XM + 48},30.5 L{XM + 38},36 Z" fill="{c1}"/>')
 
-    # pressure arrows: blood pushing out on the wall; bigger where pressure is high
-    # six denser columns at x 302 to 462, so both red cells (x 284 and 483) sit between columns and the
-    # arrows never seem to sprout from a cell
+    # pressure arrows: blood pushing out on the wall; bigger where pressure is high.  Tips touch the lining.
+    # Six columns at x 318 to 468, so the two red cells (x 297 and 487) sit outside them and the arrows
+    # never seem to sprout from a cell.
     for k in range(6):
-        x = 302 + k * 32
+        x = 318 + k * 30
         out.append(_varrow(x, vy - 15.5, lt, 3.2, 11, 9))
         out.append(_varrow(x, vy + 15.5, lb, 3.2, 11, 9))
-    for k in range(5):
-        x = rx0 + 27 + k * 47
+    acols = [rx0 + 25 + k * 45 for k in range(5)]
+    for x in acols:
         out.append(_varrow(x, rt + 13, rt, 2.2, 8, 6.5))
         out.append(_varrow(x, rb - 13, rb, 2.2, 8, 6.5))
 
+    # nitric oxide on the healthy side only: made by the lining, moving out into the muscle it relaxes.
+    # One molecule between each pair of arrow columns, alternately just off the lining and further out.
+    for j, x in enumerate((a + 22.5 for a in acols[:-1])):
+        near = j % 2 == 0
+        out.append(_no_dot(x, rt - LIN - (5.2 if near else 12.4), (-18, 14, -9, 22)[j], c1, c2))
+        out.append(_no_dot(x + 1.5, rb + LIN + (12.4 if near else 5.2), (16, -12, 9, -20)[j], c1, c2))
+
     # red blood cells: squeezed into the narrow vessel, roomy in the relaxed one
-    for (x, dy, r) in [(X0 + 22, 1, 8), (lx1 - 21, -1, -10)]:
+    for (x, dy, r) in [(XL + FR + 15, 1, 8), (lx1 - 17, -1, -10)]:
         out.append(_cell(x, vy + dy, 0.9, r))
-    for (x, dy, r) in [(rx0 + 40, -27, 12), (rx0 + 128, -32, -8), (rx0 + 206, -25, 16),
-                       (rx0 + 70, 28, -14), (rx0 + 158, 33, 6), (rx0 + 222, 26, -6)]:
+    for (x, dy, r) in [(rx0 + 36, -27, 12), (rx0 + 122, -32, -8), (rx0 + 200, -25, 16),
+                       (rx0 + 70, 28, -14), (rx0 + 156, 33, 6), (rx0 + 204, 26, -6)]:
         out.append(_cell(x, vy + dy, 0.9, r))
 
     # flow arrows, labelled as flow (the KEY's "Blood flow"); only the dark arrows stand for pressure
-    out.append(_tag(lc - 75, vy, 150, 21, "Flow: high pressure", 11))
+    out.append(_tag((XL + FR + lx1) / 2 - 75, vy, 150, 21, "Flow: high pressure", 11))
     out.append(_tag(rc - 80.5, vy, 161, 21, "Flow: normal pressure", 11))
 
-    # ---- KEY: names every symbol and colour in the vessel
-    KY, KH = 244, 48
+    # ---- KEY: names every symbol and colour in the vessel.  Three rows, three columns: what is in the
+    # blood | the wall from the inside out | nitric oxide and the outer layer.  Column starts give a 15-unit
+    # gap after each column's longest label (Inter 600, 11 units: "Pressure (big = high)" 111.1,
+    # "Inner lining (makes NO)" 124.6, measured in the browser) and a 15-unit right pad.
+    KY, KH = 240, 58
     out.append(f'<rect x="{X0}" y="{KY}" width="{X1 - X0}" height="{KH}" rx="8" fill="#fff" stroke="#CFD6DA" stroke-width="1.4"/>')
     out.append(T(X0 + 14, KY + KH / 2 + 3.8, "KEY", 10.5, 800, INK, ls=1.2))
     out.append(f'<path d="M{X0 + 50},{KY + 9} V{KY + KH - 9}" stroke="#DDE2E5" stroke-width="1.2"/>')
-    r1, r2 = KY + 15, KY + 33
+    r1, r2, r3 = KY + 13, KY + 29, KY + 45
 
     def item(x, y, sw, label):
         return f'<g transform="translate({x + 12},{y})">{sw}</g>' + T(x + 30, y + 3.9, label, 11, 600, INK)
@@ -267,34 +317,41 @@ def art_bp(t):
                         for j in range(n))
         return f'<rect x="-12" y="-6.5" width="24" height="13" rx="2" fill="{fill}"/>{lines}'
 
-    flow_sw = (f'<rect x="-13" y="-7.5" width="26" height="15" rx="3" fill="{LUMEN}" stroke="{LUMEN_LN}" stroke-width="1"/>'
+    flow_sw = (f'<rect x="-13" y="-6.5" width="26" height="13" rx="3" fill="{LUMEN}" stroke="{LUMEN_LN}" stroke-width="1"/>'
                '<path d="M-8,-3 H3 L8,0 L3,3 H-8 Z" fill="#fff" stroke="#C9B3AD" stroke-width=".8"/>')
-    # gaps label -> next swatch and the right padding measured even (about 27 units each, 400 dpi proof)
-    c_1, c_2, c_3 = X0 + 62, X0 + 211, X0 + 379
+    lining_sw = (f'<rect x="-12" y="-4.5" width="24" height="9" rx="2" fill="{LINING}" stroke="{LINING_LN}" stroke-width="1"/>'
+                 + "".join(f'<ellipse cx="{x}" cy="0" rx="2.5" ry="1" fill="{NUC}"/>' for x in (-6.5, 0, 6.5)))
+    c_1, c_2, c_3 = X0 + 62, X0 + 218, X0 + 388
     out.append(item(c_1, r1, _cell(0, 0, 0.72), "Red blood cell"))
-    out.append(item(c_1, r2, band(TIGHT, TIGHT_LN, 4), "Tight muscle wall"))
+    out.append(item(c_1, r2, flow_sw, "Blood flow"))
     # big + small arrow; the label says what the size means (big arrow = high pressure on the wall)
-    out.append(item(c_2, r1, _varrow(-5, 7.5, -7.5, 2.8, 9, 7.5) + _varrow(7, 7.5, -2.5, 2, 6.5, 5.5), "Pressure (big = high)"))
-    out.append(item(c_2, r2, band(RELAX, RELAX_LN, 2), "Relaxed muscle wall"))
-    out.append(item(c_3, r1, flow_sw, "Blood flow"))
+    out.append(item(c_1, r3, _varrow(-5, 7, -7, 2.8, 9, 7.5) + _varrow(7, 7, -2.5, 2, 6.5, 5.5), "Pressure (big = high)"))
+    out.append(item(c_2, r1, lining_sw, "Inner lining (makes NO)"))
+    out.append(item(c_2, r2, band(TIGHT, TIGHT_LN, 4), "Tight muscle wall"))
+    out.append(item(c_2, r3, band(RELAX, RELAX_LN, 2), "Relaxed muscle wall"))
+    out.append(item(c_3, r1, _no_dot(0, 0, 0, c1, c2), "Nitric oxide"))
     out.append(item(c_3, r2, f'<rect x="-12" y="-6.5" width="24" height="13" rx="2" fill="{OUTER}" stroke="{OUTER_LN}" stroke-width="1"/>',
                     "Outer layer"))
-    return svg(W, H, "".join(out), "How nitric oxide relaxes a blood vessel: a tight vessel under high pressure beside a relaxed one")
+    return svg(W, H, "".join(out), "How nitric oxide relaxes a blood vessel: a tight artery under high pressure beside a "
+                                   "relaxed one, whose inner lining makes nitric oxide")
 
 
 # ------------------------------------------------------------------ front page
 # Risk factors: AHA "Know Your Risk Factors for High Blood Pressure" (family history, age, chronic kidney
 # disease; inactivity, high-sodium diet, overweight, too much alcohol, sleep apnea, diabetes, smoking, stress)
-# and CDC "High Blood Pressure Risk Factors".  "High BP in pregnancy, birth control pills": pregnancy itself
-# is not the risk; high blood pressure during pregnancy (gestational hypertension, preeclampsia, which also
-# raises later risk) and estrogen birth control pills, which can raise blood pressure, are: 2017 ACC/AHA
-# guideline (Hypertension 2018;71:e13-e115, Table 13, oral contraceptives) and the 2025 AHA/ACC guideline
-# (Hypertension 2025;82:e212-e316, hypertension in pregnancy); AHA "Know Your Risk Factors" (preeclampsia).
+# and CDC "High Blood Pressure Risk Factors".  Tile 10 names two separate risks, joined by "or" so it never
+# reads as one causing the other: estrogen birth control pills, which can raise blood pressure (2017 ACC/AHA
+# guideline, Hypertension 2018;71:e13-e115, Table 13, oral contraceptives), and high blood pressure during an
+# earlier pregnancy (gestational hypertension, preeclampsia), which raises later risk (2025 AHA/ACC guideline,
+# Hypertension 2025;82:e212-e316, hypertension in pregnancy; AHA "Know Your Risk Factors", preeclampsia).
+# Pregnancy itself is not the risk.  The breaks are set by hand: every clear wording needs 3 lines in a
+# 1.24 in tile at 8.2 pt (measured: "Birth control pills," 90 px, "or high BP in a" 83, "past pregnancy" 75).
 RISKS = [
     ("scale", "Extra weight"), ("salt", "High-sodium,<br>processed food"), ("sofa", "Sitting most<br>of the day"),
     ("glass", "Too much<br>alcohol"), ("smoke", "Smoking"), ("headache", "Chronic stress"),
     ("moon", "Poor sleep or<br>sleep apnea"), ("bloodsugar", "Diabetes"), ("kidney", "Kidney<br>disease"),
-    ("pills", "High BP in pregnancy,<br>birth control pills"), ("dna", "Family<br>history"), ("age", "Increasing age")]
+    ("pills", "Birth control pills,<br>or high BP in a<br>past pregnancy"), ("dna", "Family<br>history"),
+    ("age", "Increasing age")]
 # Icons drawn here rather than straight from the kit: no "avoid" slash on the salt and glass (this row
 # lists risks, not rules), a full cigarette with smoke, separated kidney beans, a birth control blister
 # card.  The slashed kit versions stay on the back's lifestyle band.
@@ -317,12 +374,13 @@ def front(t, ed):
     table = ('<div class="hbp-sh">What the numbers mean</div>'
              '<table class="hbp-bp"><tr><th>Category</th><th>Top number</th><th></th>'
              f'<th>Bottom number</th></tr>{rows}</table>'
-             # AHA: over 180/120, wait a few minutes and test again; still high, contact your doctor right away;
-             # with chest or back pain, shortness of breath, numbness, weakness, vision change or trouble
-             # speaking, call 911 (do not wait for it to come down).
-             '<div class="hbp-alarm"><b>Over 180/120?</b> Rest a few minutes and check again. Still that high: call your '
-             'doctor right away. With chest or back pain, shortness of breath, numbness, weakness, or trouble seeing or '
-             'speaking, <b>call 911</b>.</div>'
+             # AHA "When to call 911 about high blood pressure": over 180/120 with chest pain, shortness of
+             # breath, back pain, numbness or weakness, change in vision or difficulty speaking, do not wait to see
+             # if it comes down: call 911.  No symptoms: wait five minutes and test again; still unusually high,
+             # contact your doctor immediately.  The 911 case leads, so nobody re-checks first with symptoms.
+             '<div class="hbp-alarm"><b>Over 180/120</b> with chest or back pain, shortness of breath, numbness, weakness, '
+             'or trouble seeing or speaking? <b>Call 911 now.</b> No symptoms? Wait 5 minutes and check again. '
+             'Still that high: call your doctor right away.</div>'
              # 2017 ACC/AHA guideline, Table 13 (carried into 2025): decongestants and NSAIDs can raise blood pressure.
              '<div class="hbp-note"><b>Some medicines raise blood pressure,</b> like decongestants in cold remedies and pain relievers '
              'such as ibuprofen and naproxen. Ask {who} first.</div>'

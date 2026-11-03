@@ -921,7 +921,7 @@ def risk_strip():
 # STOP-Bang belongs to University Health Network (see the docstring): until NutriDyn has UHN's permission
 # the sheet must not go to print.  If UHN says no, set APNEA_PANEL = "signs" and rebuild; the fallback was
 # rendered in both editions on 2026-11-03 and fits the same box.
-APNEA_PANEL = "stopbang"
+APNEA_PANEL = "signs"  # STOP-Bang (UHN) needs written permission for a commercial handout: none on file, 2026-11-03
 APNEA_SIGNS = ["Loud snoring", "Sleepy or tired by day", "Gasping or breathing pauses in sleep",
                "High blood pressure", "Large collar size"]
 
@@ -943,7 +943,7 @@ def know_panel(mode=APNEA_PANEL):
         # not in questionnaire order [AASMOSA].  Ordered so the two-column grid reads row by row.
         apnea = (f'<div><h4>Sleep apnea warning signs</h4><ul class="slp-sb">'
                  + "".join(f'<li><span class="slp-bx"></span><span>{x}</span></li>' for x in APNEA_SIGNS)
-                 + '</ul><p class="slp-act"><b>Any of these?</b> Ask about a sleep test (a doctor orders it).</p></div>')
+                 + '</ul><p class="slp-act"><b>Snoring or breathing pauses, plus one more box?</b> Ask about a sleep test (a doctor orders it).</p></div>')
         src = "Sources: CDC; AASM (ICSD-3-TR; sleep apnea guideline 2009); American College of Physicians 2016."
     else:
         # [STOPBANG] the eight yes/no items, in questionnaire order (Chung 2016 wording, shortened).
@@ -1036,20 +1036,21 @@ CSS = r"""
 # upper limits, with the tingling caution the stress and neuropathy sheets carry [EFSA23].  "(up to 40 mg)"
 # because the dose is 1 or 2 capsules.
 _RX_GOODNIGHT = ("<b>Ask {who} before GoodNight</b> if you take antidepressants (SSRIs, SNRIs, MAOIs), migraine "
-                 "triptans or sleep pills: its tryptophan adds to serotonin, and its melatonin and valerian add "
-                 "drowsiness. Do not drive after taking it. Its B6 (up&nbsp;to&nbsp;40&nbsp;mg) adds up: tingling hands "
-                 "or feet? Tell {who}.")
+                 "triptans or sleep pills: it adds to them. Do not drive after a dose. Its B6 (up&nbsp;to&nbsp;40&nbsp;mg) "
+                 "adds up: tingling hands or feet? Stop it and ask.")
 # Magnesium: one source, never both [LABELS]; the 350 mg supplement limit and kidney disease [ODSMG]; "at least
-# 4 hours" meets the levothyroxine label's 4 hours [LT4LBL], ODS's 2 hours for bisphosphonates and its 2 hours
-# before / 4-6 hours after for tetracycline and quinolone antibiotics [ODSMG].  No-break spaces keep "260 mg"
-# and "350 mg" whole.
+# 4 hours" meets the levothyroxine label's 4 hours [LT4LBL] and ODS's 2 hours for bisphosphonates [ODSMG].
+# Antibiotic spacing varies by drug (ODS: tetracyclines and quinolones 2 hours before or 4 to 6 hours after
+# magnesium; ciprofloxacin label 6 hours after, moxifloxacin 8), so antibiotics get "ask first", not a number.
+# No-break spaces keep "260 mg" and "350 mg" whole.
 _RX_MAG = ("<b>Pick Mag Calm Pro (200&nbsp;mg magnesium) or Magnesium Glycinate (260&nbsp;mg), not both:</b> either "
-           "stays under the 350&nbsp;mg daily limit for supplements. Kidney disease? Ask first. Keep it at least 4 hours "
-           "from thyroid, bone or antibiotic pills.")
+           "stays under the 350&nbsp;mg daily limit for supplements. Kidney disease or an antibiotic? Ask first. Keep it "
+           "4+ hours from thyroid or bone pills.")
 # Pregnancy and medicines: the three label cautions [LABELS]; Cortisol Pro's 150 mg Sensoril ashwagandha can
-# raise thyroid hormone [SHARMA18] and may add to sedatives [ODSASH], the same note as the stress sheet.
+# raise thyroid hormone [SHARMA18] and may add to sedatives [ODSASH], and carries a rare liver-injury signal
+# (Bjornsson HK et al., Liver Int 2020;40:825, PMID 31991029; NIH LiverTox), the same notes as the stress sheet.
 _RX_PREG = ("<b>Pregnant, nursing or on medicine?</b> Ask {who} first. <b>No Cortisol Pro if pregnant.</b> Its "
-            "ashwagandha can raise thyroid levels and add to sleep pills.")
+            "ashwagandha can raise thyroid levels and add to sleep pills. Yellow skin or eyes? Stop it and call a doctor.")
 
 SHEET = {
     "slug": SLUG, "code": "ND-NR-702", "order": 17, "theme": "neuro", "series": "Brain and Nerve Series",
