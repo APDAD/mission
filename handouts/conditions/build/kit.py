@@ -194,10 +194,10 @@ h1,h2,h3{margin:0}
 .ns-title{font-family:Merriweather,Georgia,serif;font-weight:900;color:var(--c1);font-size:19pt;margin:0.14in 0 0.02in;
   display:flex;align-items:baseline;gap:10px}
 .ns-title span{font:600 8pt Inter,sans-serif;color:#56626A;letter-spacing:.02em}
-.cols{display:grid;gap:0.08in;margin-top:0.06in}
-.col{display:flex;flex-direction:column;background:#fff;border-radius:6px;overflow:hidden;
+.cols{display:grid;gap:0.08in;margin-top:0.09in}
+.col{display:flex;flex-direction:column;background:#fff;border-radius:6px;overflow:visible;
   box-shadow:0 1px 0 #E3E7EA,0 2px 6px rgba(20,30,40,.10);border:1px solid #E1E5E8}
-.col .need{background:linear-gradient(160deg,var(--c1),var(--c2));color:#fff;padding:0.07in 0.07in 0.06in;text-align:center;
+.col .need{background:linear-gradient(160deg,var(--c1),var(--c2));color:#fff;padding:0.07in 0.07in 0.06in;text-align:center;border-radius:5px 5px 0 0;
   min-height:0.5in;display:flex;flex-direction:column;justify-content:center}
 .col .need b{font-size:8.2pt;line-height:1.2;display:block}
 .col .need i{font-style:normal;font-size:7pt;opacity:.92;display:block;margin-top:2px;line-height:1.2}
@@ -211,7 +211,7 @@ h1,h2,h3{margin:0}
 .col .what li::before{content:"";position:absolute;left:0;top:4px;width:4px;height:4px;border-radius:50%;background:var(--c2)}
 .col .key{border-top:1px dashed #D3DADF;margin-top:4px;padding-top:3px;font-size:7pt;color:#3F4A50}
 .col .key b{color:var(--deep);font-size:7pt;letter-spacing:.06em;text-transform:uppercase}
-.col .dose{background:var(--deep);color:#fff;text-align:center;font:700 7.6pt Inter,sans-serif;padding:0.06in 0.05in;line-height:1.2}
+.col .dose{background:var(--deep);color:#fff;text-align:center;font:700 7.6pt Inter,sans-serif;padding:0.06in 0.05in;line-height:1.2;border-radius:0 0 5px 5px}
 .col .dose small{display:block;font-weight:500;font-size:7pt;opacity:.9}
 .duo{display:grid;grid-template-columns:1.35fr 1fr;gap:0.1in;margin-top:0.1in}
 .panel{border:1px solid #DCE2E6;border-radius:8px;padding:0.08in 0.12in;background:#FBFCFC}
@@ -260,7 +260,24 @@ def font_faces(base):
                    f"src:url('{base}{f}') format('woff2')}}" for fam, w, f in FONT_FILES)
 
 
+# Characters the shipped Latin fonts have no glyph for, even though they sit inside the Latin
+# subset's unicode-range: Chromium falls back and the PDF gets a Type 3 font. Swap them for
+# glyphs the fonts do carry (a plain hyphen) or drop them (zero-width joiners).
+PRINT_SAFE = {"\u2011": "-", "&#8209;": "-", "&#x2011;": "-", "\u2060": "", "&#8288;": "", "&NoBreak;": "",
+              "\u200b": "", "&#8203;": ""}
+
+
+def print_safe(doc):
+    for a, b in PRINT_SAFE.items():
+        doc = doc.replace(a, b)
+    return doc
+
+
 def page_shell(title, body, theme="gut", extra_css="", font_base="../fonts/"):
+    return print_safe(_page_shell(title, body, theme, extra_css, font_base))
+
+
+def _page_shell(title, body, theme, extra_css, font_base):
     vars_ = theme_vars(theme)
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8">

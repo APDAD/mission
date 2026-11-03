@@ -40,8 +40,9 @@ DISCLAIMER = (f"<span class='mark'>{kit.DIAMOND}</span> These statements have no
 
 BACK_CSS = r"""
 .col{position:relative}
-.startt{position:absolute;top:-1px;right:-1px;background:#F15F3F;color:#fff;font:800 7pt Inter,sans-serif;letter-spacing:.08em;
-  padding:2px 6px 2px 7px;border-radius:0 6px 0 5px;text-transform:uppercase;z-index:2}
+.col.st{border-color:#F15F3F;box-shadow:0 0 0 1px #F15F3F,0 2px 6px rgba(20,30,40,.10)}
+.startb{position:absolute;top:-8px;right:6px;z-index:3;background:#F15F3F;color:#fff;font:800 7pt/1 Inter,sans-serif;
+  letter-spacing:.08em;padding:3px 6px 2px;border-radius:3px;text-transform:uppercase;box-shadow:0 0 0 1.5px #fff;white-space:nowrap}
 .lifes.c3{grid-template-columns:repeat(3,1fr);gap:0.18in}
 .lifes.c4{grid-template-columns:repeat(4,1fr)}
 .lifes.c5{grid-template-columns:repeat(5,1fr)}
@@ -89,10 +90,16 @@ def col_block(c):
     dose, dosesub = c.get("dose"), c.get("dosesub")
     if dose in (None, "dose_from_db"):
         dose, dosesub = p["dose"], p.get("dosesub", "")
-    lis = "".join(f"<li>{x}</li>" for x in c["bullets"])
-    start = '<span class="startt">Start here</span>' if c.get("start") else ""
+    bullets = list(c["bullets"])
+    # Tie the column's structure/function statements to the FDA disclaimer in the footer with the
+    # same drawn diamond, unless the sheet already marks them itself.
+    if bullets and not any(m in "".join(bullets) for m in ('class="mark"', "class='mark'", "-dia", kit.DIAMOND)):
+        bullets[-1] = f'{bullets[-1]}&nbsp;<span class="mark">{kit.DIAMOND}</span>'
+    lis = "".join(f"<li>{x}</li>" for x in bullets)
+    # The badge straddles the column's top edge (half above it), so it never covers the title or the photo.
+    start = '<span class="startb">Start here</span>' if c.get("start") else ""
     href = E(p["href"])
-    return (f'<div class="col">{start}<div class="need"><b>{c["need"]}</b><i>{c["needsub"]}</i></div>'
+    return (f'<div class="col{" st" if c.get("start") else ""}">{start}<div class="need"><b>{c["need"]}</b><i>{c["needsub"]}</i></div>'
             f'<div class="pick"><a class="plink" href="{href}"><img src="{p["img"]}" alt="NutriDyn {E(p["name"])} bottle">'
             f'<div class="nm">{p["name"]}</div></a><div class="sz">{p["size"]}</div></div>'
             f'<div class="what"><ul>{lis}</ul><div class="key"><b>In each serving</b><br>{p["key"]}</div></div>'
@@ -311,6 +318,13 @@ def main():
             job["bundles"].append({"html": bf, "pdf": os.path.join(d, "all-condition-sheets.pdf")})
     if not only:
         open(os.path.join(OUT, "index.html"), "w").write(index_html(sheets))
+        # A full build knows every sheet, so it can drop product photos no sheet uses any more.
+        keep = {os.path.basename(products.get(c["p"])["img"]) for s in sheets for c in s["back"]["cols"]}
+        keep.add("nd-missing.png")
+        for f in sorted(os.listdir(os.path.join(OUT, "img"))):
+            if f.startswith("nd-") and f.endswith(".png") and f not in keep:
+                os.remove(os.path.join(OUT, "img", f))
+                print("removed unused photo", f)
     if pdf:
         os.makedirs(tmp, exist_ok=True)
         jf = os.path.join(tmp, f"render-job-{os.getpid()}.json")

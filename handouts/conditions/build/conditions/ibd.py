@@ -310,8 +310,8 @@ CEC_TOP, CEC_BOT, CEC_W = (-34.6, 218.0), (-35.1, 230.2), 14.3
 # starts under the transverse colon just left of the midline (the duodenojejunal flexure),
 # coils as jejunum through the upper left of the belly (the viewer's upper right), crosses to
 # the lower right as ileum, and its last run, the terminal ileum, enters the cecum's side.
-SI_PTS = [(5.2, 170.5), (5.4, 172.7), (5.7, 174.9), (6.0, 177.1), (6.3, 179.2), (6.3, 181.4), (4.7, 182.7),
-          (2.6, 183.5), (0.4, 183.4), (-1.8, 183.6), (-3.1, 185.2), (-3.4, 187.4), (-2.6, 189.3), (-0.9, 190.7),
+SI_PTS = [(5.2, 170.5), (5.5, 172.8), (5.8, 175.0), (6.0, 177.2), (5.9, 179.4), (5.2, 181.4), (3.8, 183.0),
+          (1.9, 183.8), (-0.1, 183.8), (-1.8, 183.6), (-3.1, 185.2), (-3.4, 187.4), (-2.6, 189.3), (-0.9, 190.7),
           (1.2, 191.4), (3.3, 190.9), (5.3, 189.9), (7.4, 189.3), (9.2, 190.4), (10.9, 191.8), (12.8, 192.6),
           (14.5, 191.3), (15.7, 189.4), (15.6, 187.4), (14.4, 185.6), (13.4, 183.6), (13.6, 181.4), (15.1, 179.9),
           (17.1, 179.1), (19.3, 178.9), (20.3, 180.8), (21.2, 182.8), (22.7, 184.5), (24.5, 185.6), (26.4, 186.6),
@@ -327,8 +327,8 @@ SI_PTS = [(5.2, 170.5), (5.4, 172.7), (5.7, 174.9), (6.0, 177.1), (6.3, 179.2), 
           (-14.0, 206.4), (-16.2, 206.7), (-18.1, 205.8), (-19.1, 203.8), (-19.9, 201.8), (-21.6, 200.5), (-23.7, 200.5),
           (-25.4, 201.7), (-25.9, 203.8), (-25.9, 206.0), (-25.6, 208.2), (-25.1, 210.4), (-24.6, 212.5), (-23.7, 214.5),
           (-21.9, 215.7), (-19.7, 215.8), (-17.5, 215.5), (-15.5, 214.7), (-13.5, 213.7), (-11.5, 212.8), (-9.4, 212.3),
-          (-7.4, 213.1), (-5.8, 214.6), (-5.4, 216.6), (-6.5, 218.5), (-8.1, 220.0), (-10.3, 220.1), (-12.4, 220.7),
-          (-14.4, 221.6), (-16.5, 222.2), (-18.7, 222.5), (-20.9, 222.6), (-23.1, 222.8), (-25.3, 222.9), (-27.5, 223.1),
+          (-7.4, 213.1), (-5.9, 214.6), (-5.2, 216.7), (-5.6, 218.9), (-7.1, 220.6), (-9.2, 221.5), (-11.5, 221.8),
+          (-13.8, 222.0), (-16.2, 222.2), (-18.7, 222.5), (-20.9, 222.6), (-23.1, 222.8), (-25.3, 222.9), (-27.5, 223.1),
           (-29.6, 223.4), (-31.8, 223.7), (-34.0, 224.0)]
 SI = _cr(SI_PTS)
 W_SI = 5.8
@@ -338,7 +338,7 @@ SI_LOOP = 23.0          # the coil is drawn as separate loops about this long, e
 UC_COLON = (0.47, 1.0)          # mid-transverse colon -> splenic flexure -> descending -> sigmoid
 CD_COLON = [(0.12, 0.25), (0.40, 0.49), (0.62, 0.69)]   # ascending; transverse; descending (splenic flexure healthy)
 CD_SI = (frac_at(SI, -36.0), 1.0)   # terminal ileum: its last 36 units, into the cecum
-TI_DOT = (-13.0, 221.3)             # where both "End of the small intestine" leaders land (on the terminal ileum)
+TI_DOT = nearest(SI, (-13.0, 221.8))   # where both "End of the small intestine" leaders land (on the terminal ileum)
 
 
 # ----------------------------------------------------------------------------- drawing
@@ -524,7 +524,7 @@ def defs_svg():
             f'<stop offset="0" stop-color="{GI["shadow"]}" stop-opacity="0"/>'
             f'<stop offset="1" stop-color="{GI["shadow"]}" stop-opacity=".55"/></linearGradient>'
             # thighs fade into the page instead of being chopped off
-            f'<linearGradient id="{U}-fadeg" gradientUnits="userSpaceOnUse" x1="0" y1="250" x2="0" y2="281">'
+            f'<linearGradient id="{U}-fadeg" gradientUnits="userSpaceOnUse" x1="0" y1="247" x2="0" y2="272">'
             '<stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#000"/></linearGradient>'
             f'<mask id="{U}-fade" maskUnits="userSpaceOnUse" x="-80" y="-10" width="160" height="320">'
             f'<rect x="-80" y="-10" width="160" height="320" fill="url(#{U}-fadeg)"/></mask>'
@@ -590,7 +590,7 @@ def check_inside(margin=3.0):
 
 # ----------------------------------------------------------------------------- the art
 FX1, FX2, FY, FS = 190, 570, 4, 1.0     # figure centres sit at 25% and 75% of the width
-AW, AH = 760, 286
+AW, AH = 760, 280
 LAB_X = 70.0     # labels end (left figure) or start (right figure) this far from the midline
 NAME, GLOSS = 11.6, 10.0                 # label sizes (8.4 pt and 7.3 pt printed)
 
@@ -758,7 +758,7 @@ COMPARE = [   # (row, ulcerative colitis, Crohn's disease)
     ("Where", "Colon and rectum only",                                          # [ACGUC]
      "Anywhere from mouth to anus, most often the end of the small intestine"),  # [ACGCD]
     ("Depth", "The inner lining of the bowel", "Can go through the whole bowel wall"),   # [ACGUC] [ACGCD]
-    ("Fistulas", "Uncommon", "Can form: tunnels from the bowel to skin or organs"),       # [CCUK] [ACGCD]
+    ("Fistulas", "Uncommon", "Can form: tunnels through the bowel wall"),                  # [CCUK] [ACGCD]
     ("Pain", "Often the left side of the belly", "Often the lower right belly"),         # [CCF-T]
     ("Bleeding", "Common, with bowel movements", "Less common"),                         # [ACGUC] [ACGCD]
 ]
@@ -782,11 +782,11 @@ NUTRIENTS = [("Fe", "Iron", "lost with bleeding"),
 # Line icons this sheet needs that kit.ICONS lacks (64x64, stroked with currentColor).
 MY_ICONS = {
     # a rod-shaped germ with whip tails, so "Gut infections" cannot be read as a sun
-    "germ": '<rect x="11" y="23" width="34" height="17" rx="8.5" transform="rotate(-24 28 31.5)"/>'
-            '<path d="M43.5 21.5c3.5-4 6.5-.5 9.5-4.5s6.5-1 8.5-4"/><path d="M46 28c4 .5 5.5 4.5 9.5 3.5s5 2.5 7.5 1.5"/>'
-            '<path d="M12.5 41.5c-3 3.5-.5 7-4.5 9.5"/>'
-            '<circle cx="22" cy="34.5" r="2" fill="currentColor" stroke="none"/>'
-            '<circle cx="31.5" cy="29.5" r="2" fill="currentColor" stroke="none"/>',
+    "germ": '<rect x="15" y="23.5" width="34" height="17" rx="8.5" transform="rotate(-24 32 32)"/>'
+            '<path d="M47.6 22.4c2.4-3.6 5.6-1.8 7.6-5.2s5-2.4 6.4-5"/><path d="M50 28.8c3.6-.4 5.2 3 8.6 2.2"/>'
+            '<path d="M16.4 41.6c-2.4 3.6-5.6 1.8-7.6 5.2s-5 2.4-6.4 5"/><path d="M14 35.2c-3.6.4-5.2-3-8.6-2.2"/>'
+            '<circle cx="26.5" cy="34.5" r="2" fill="currentColor" stroke="none"/>'
+            '<circle cx="36" cy="30" r="2" fill="currentColor" stroke="none"/>',
 }
 
 
@@ -828,19 +828,19 @@ CSS = r"""
 .ibx-heads b{font:900 13.5pt Merriweather,Georgia,serif;color:var(--deep);letter-spacing:-.005em}
 .ibx-heads div{display:flex;flex-direction:column;align-items:center}
 .ibx-heads div::after{content:"";width:0.42in;height:3px;border-radius:2px;background:var(--c1);margin-top:3px}
-.ibx-caps p{margin:1px auto 0;max-width:3.0in;font-size:8.6pt;line-height:1.3;color:#2B3236;text-wrap:balance}
+.ibx-caps p{margin:1px auto 0;max-width:3.0in;font-size:8.6pt;line-height:1.25;color:#2B3236;text-wrap:balance}
 .ibx-cmp{margin-top:0.06in}
 .ibx-chips{display:grid;grid-template-columns:1fr 1fr;justify-items:center;padding-bottom:2px;border-bottom:1px solid #D5E4E2}
 .ibx-chips span{font:800 7.4pt Inter,sans-serif;color:var(--deep);background:var(--soft);border-radius:99px;padding:1.5px 10px 1.5px}
 .ibx-row{position:relative;display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid #D5E4E2}
 .ibx-row:nth-child(odd){background:var(--tint)}
-.ibx-row>div{padding:2px 0.54in;text-align:center;font-size:8.4pt;line-height:1.25;color:#2B3236;
-  display:flex;align-items:center;justify-content:center;min-height:0.205in;text-wrap:balance}
+.ibx-row>div{padding:1.5px 0.54in;text-align:center;font-size:8.4pt;line-height:1.22;color:#2B3236;
+  display:flex;align-items:center;justify-content:center;min-height:0.19in;text-wrap:balance}
 .ibx-row>span{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:0.9in;text-align:center;
   font:800 7.1pt Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:var(--c1);
-  border-radius:99px;padding:2.5px 0}
+  border-radius:99px;padding:1.6px 0}
 .ibx-h{font:800 7.5pt Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--deep);
-  text-align:center;margin:0.075in 0 0.035in}
+  text-align:center;margin:0.065in 0 0.032in}
 .ibx-kick{margin:0 0 0.03in}
 .ibx-trig{display:grid;grid-template-columns:repeat(8,1fr);background:linear-gradient(90deg,var(--c1),var(--c2));
   border-radius:6px;padding:0.035in 0.04in}
@@ -854,10 +854,10 @@ CSS = r"""
 .ibx-coins{display:grid;grid-template-columns:repeat(5,1fr);gap:0.05in}
 .ibx-ask{text-align:center;font-size:7.6pt;color:#3F4A50;margin-top:2px}
 .ibx-coins>div{display:flex;flex-direction:column;align-items:center;text-align:center}
-.ibx-coins b{width:0.33in;height:0.33in;border-radius:50%;background:var(--c1);color:#fff;display:flex;align-items:center;
+.ibx-coins b{width:0.32in;height:0.32in;border-radius:50%;background:var(--c1);color:#fff;display:flex;align-items:center;
   justify-content:center;font:800 9.4pt Inter,sans-serif;box-shadow:0 0 0 2px #fff,0 0 0 3.2px #9FD0CB}
 .ibx-coins em{font-style:normal;font:800 7.7pt Inter,sans-serif;color:#1F2A2E;margin-top:3px}
-.ibx-coins span{font-size:7.1pt;line-height:1.18;color:#3F4A50}
+.ibx-coins span{font-size:7.1pt;line-height:1.15;color:#3F4A50}
 .ibx-scope{margin:0.065in auto 0;text-align:center;font-size:8.4pt;line-height:1.3;color:#2B3236;background:var(--soft);
   border-radius:6px;padding:0.04in 0.16in;width:100%}
 .ibx-scope b{color:var(--deep)}

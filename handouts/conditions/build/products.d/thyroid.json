@@ -13,7 +13,7 @@
         "capsules"
       ]
     ],
-    "src": "Products DB scratchpad products/nutridyn_products.json R716 (NutriDyn catalog ND143 10/1/26 as read by 15 switch-chart label checks): per 3 capsules selenium 100 mcg (Integrative Therapeutics Clinical Nutrients HP, Klaire CORE MULTI and VITAPRIME rows), zinc 15 mg (Pure, DFH, Ortho, Thorne, IT, Klaire rows), iodine 150 mcg (Pure PureGenomics row), vitamin D3 25 mcg = 1,000 IU, B12 as methylcobalamin 200 mcg, folate as L-5-MTHF 800 mcg DFE, iron none (every row); directions 'Take 3 capsules once daily with food'. Sizes R716 90C (30 servings) and R716L 180C, ND144 price list 10/1/26. No verified product-page URL, so the link falls back to catalog search. Photo: only the 160 px chart thumbnail exists (LOW-RES)."
+    "src": "NutriDyn sell sheet 'Essential Multi SS ND476' Rev. 08/25, Supplement Facts panel (Dropbox /NutriDyn/Sales/Practitioner Resource/NutriDyn Marketing Materials/, id:xHepYs_Ou4AAAAAAAAz2rg, read 2026-11-03): serving 3 capsules, 30/60 servings; selenium (aspartate) 100 mcg, zinc (citrate) 15 mg, iodine (potassium iodide) 150 mcg, vitamin D3 25 mcg (1,000 IU), B12 (methylcobalamin) 200 mcg, biotin 500 mcg, no iron listed; directions 'Take three capsules once daily with food'. Same amounts as the products DB R716 chart label checks (catalog ND143 10/1/26). Sizes R716 90C (30 servings) and R716L 180C, ND144 price list 10/1/26. No verified product-page URL, so the link falls back to catalog search. Photo: only the 160 px chart thumbnail is staged (LOW-RES); better sources for the central stager: scratchpad/hires/_dl/art_switchkit/img/r716.png (254x420) and Dropbox '/NutriDyn/Product Images/Product Images (1)/R716_Web' (id:xHepYs_Ou4AAAAAAAA5Jjg)."
   },
   "thy_d3_5000_k2": {
     "name": "D3 5000 with K2",
@@ -30,7 +30,7 @@
       ]
     ],
     "url": "https://nutridyn.com/d3-5000-with-k2",
-    "src": "Products DB R197 (Designs for Health, Ortho Molecular, NuMedica and other chart label checks, catalog ND143 10/1/26): per softgel vitamin D3 125 mcg (5,000 IU), vitamin K2 60 mcg as MK-7, vitamin K1 15 mcg; directions 'Take one softgel daily'; size 60S (ND144 10/1/26). The shared products.py entry d3_5000_k2 says capsules; the label says softgels, so this sheet uses its own entry. URL as used on the menopause sheet (an earlier NutriDyn visit brief) and products.py SLUGS."
+    "src": "NutriDyn sell sheet 'D3 5000 with K2 SS ND382' Rev. 6/24, Supplement Facts panel (Dropbox Marketing Materials, id:xHepYs_Ou4AAAAAAAAnbug, read 2026-11-03): serving 1 softgel, 60 servings; vitamin D3 125 mcg (5,000 IU), vitamin K1 15 mcg, vitamin K2 as MK-7 (MenaQ7) 60 mcg; directions 'Take one softgel daily with food'; label warnings: 'contains vitamin D at a level that exceeds the adult tolerable upper intake level', use 'should be short-term and include regular monitoring' of vitamin D levels, and vitamin K2 'is not recommended for patients on blood-thinning medications'. Matches the products DB R197 chart label checks (catalog ND143 10/1/26). The shared products.py entry d3_5000_k2 says capsules; the label says softgels, so this sheet uses its own entry. URL as used on the menopause sheet (an earlier NutriDyn visit brief) and products.py SLUGS."
   },
   "thy_iron_support": {
     "name": "Iron Support",
@@ -46,13 +46,13 @@
         "capsule"
       ]
     ],
-    "src": "Products DB R847 (Thorne Iron Bisglycinate chart label check, catalog ND143 10/1/26): iron (bisglycinate) 29 mg per capsule; NutriDyn also lists vitamin C 80 mg, B12 350 mcg, folate 1020 mcg DFE, B6 5 mg, thiamin 5 mg, copper 1 mg; directions 'Take one capsule daily'; size 180C (ND144 10/1/26). No verified product-page URL, so the link falls back to catalog search. Photo: only the 160 px chart thumbnail exists (LOW-RES)."
+    "src": "NutriDyn sell sheet 'Iron Support SS ND563' Rev. 12/25, Supplement Facts panel (Dropbox Marketing Materials, id:xHepYs_Ou4AAAAAAAA1WGw, read 2026-11-03): serving 1 capsule, 180 servings; iron (as ferrous bisglycinate chelate, Ferrochel) 29 mg, vitamin C 80 mg, thiamin 5 mg, vitamin B6 (P5P) 5 mg, folate 1,020 mcg DFE (BioFolate), B12 (methylcobalamin) 350 mcg, copper (lysinate) 1 mg, L-glycine 100 mg, succinic acid 100 mg; directions 'Take one capsule daily'. Matches the products DB R847 (Thorne chart label check, catalog ND143 10/1/26). No verified product-page URL, so the link falls back to catalog search. Photo: only the 160 px chart thumbnail is staged (LOW-RES); better source for the central stager: Dropbox '/NutriDyn/Product Images/Product Images (1)/R847_Web' (id:xHepYs_Ou4AAAAAAAA5Jmw)."
   },
   "thy_ultrabiotic_dms": {
     "name": "UltraBiotic Daily Multi-Strain",
     "size": "30 or 60 capsules",
     "img_src": "R829.png",
-    "key": "30 billion CFU from 7 strains: S. boulardii, L. reuteri, B. lactis, L. plantarum, L. acidophilus, L. gasseri, B. coagulans",
+    "key": "30 billion CFU from 7 strains: S. boulardii, L. reuteri, B. lactis, L. plantarum, L. acidophilus, L. gasseri, Bacillus coagulans",
     "dose": "1 capsule with breakfast",
     "dosesub": "",
     "sched": [
@@ -63,7 +63,7 @@
       ]
     ],
     "url": "https://nutridyn.com/ultrabiotic-daily-multi-strain",
-    "src": "Products DB R829 (Pure Encapsulations and Metagenics chart label checks, catalog ND143 10/1/26): 30 billion CFU per capsule at time of manufacture, 7 strains S. boulardii, L. reuteri, B. lactis, L. plantarum, L. acidophilus, L. gasseri, B. coagulans; directions 'Take one capsule daily'; sizes R829 30C and R829L 60C. Same facts as the shared products.py entry ultrabiotic_dms. URL slug from products.py SLUGS (NutriDyn 60-day protocol doc)."
+    "src": "NutriDyn sell sheet 'UltraBiotic Daily Multi-Strain SS ND460' Rev. 7/24, Supplement Facts panel (Dropbox Marketing Materials, id:xHepYs_Ou4AAAAAAAAlbgg, read 2026-11-03): serving 1 capsule, 30/60 servings, CFU at time of manufacture: Saccharomyces boulardii (Lynside) 5 billion, Lactobacillus reuteri (LRC) 5 billion, Bifidobacterium lactis UABla-12, Lactobacillus plantarum UALp-05, L. acidophilus UALa-01, L. gasseri UALg-05 and Bacillus coagulans UABc-20 at 4.167 billion each (30 billion total); directions 'Take one capsule daily'. B. lactis is Bifidobacterium; Bacillus coagulans is spelled out so the two B. genera cannot be confused. Matches products DB R829 and the shared products.py entry ultrabiotic_dms. URL slug from products.py SLUGS (NutriDyn 60-day protocol doc)."
   },
   "thy_omega_1000": {
     "name": "Omega Pure EPA-DHA 1000",
@@ -80,6 +80,6 @@
       ]
     ],
     "url": "https://nutridyn.com/omega-pure-epa-dha-1000",
-    "src": "Products DB R243 (Pure, Designs for Health and Ortho Molecular chart label checks, catalog ND143 10/1/26): EPA 730 mg + DHA 270 mg = 1,000 mg per softgel; directions 'Take one softgel up to three times daily with food'; size 120S (ND144 10/1/26). Same facts as the shared products.py entry omega_1000. URL slug from products.py SLUGS (NutriDyn 60-day protocol doc)."
+    "src": "NutriDyn sell sheet 'Omega Pure EPA-DHA 1000 SS ND416' Rev. 4/25, Supplement Facts panel (Dropbox Marketing Materials, id:xHepYs_Ou4AAAAAAAAyHow, read 2026-11-03): serving 1 softgel, 120 servings; total omega-3 1.1 g, EPA 730 mg, DHA 270 mg, additional omega-3 100 mg, triglyceride form; directions 'Take one softgel 1-3 times daily with food'. Matches products DB R243 and the shared products.py entry omega_1000. URL slug from products.py SLUGS (NutriDyn 60-day protocol doc)."
   }
 }

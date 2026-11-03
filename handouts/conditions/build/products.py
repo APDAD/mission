@@ -155,28 +155,92 @@ MIN_PRINT_PX = 600
 
 def stage_images(dst, report=None):
     """Copy the best image per product into img/ and set p['img'] (relative to
-    the edition folder) and p['img_px'] (pixel height)."""
+    the edition folder) and p['img_px'] (pixel height).
+
+    Sheets often give one bottle its own key (sleep_mag_calm_pro, mcr_mag_calm_pro ...), each with
+    its own img_src. Keys that share a product code or a product name are pooled, so every key
+    gets the best photo any of them can find. Best means the most real detail: a photo enlarged
+    from a thumbnail (listed in img-src/soft.json) counts for a quarter of its height, so a crisp
+    420 px original beats a 640 px enlargement of a 160 px chart thumbnail."""
     from PIL import Image
+    import hashlib
+    import re
+    soft_f = os.path.join(HIRES, "soft.json")
+    soft = set(json.load(open(soft_f))) if os.path.exists(soft_f) else set()
+
+    def code_of(p):
+        c = os.path.splitext(os.path.basename(p.get("img_src") or ""))[0].upper()
+        return c if re.fullmatch(r"[A-Z]{1,2}\d{2,5}[A-Z]?", c) else ""
+
+    def name_of_p(p):
+        return re.sub(r"[^a-z0-9]", "", (p.get("name") or "").lower())
+
+    # union-find over keys that share a code or a name
+    parent = {k: k for k in P}
+
+    def find(k):
+        while parent[k] != k:
+            parent[k] = parent[parent[k]]
+            k = parent[k]
+        return k
+
+    seen = {}
     for k, p in P.items():
-        cands = []
+        for tag in (("c", code_of(p)), ("n", name_of_p(p))):
+            if not tag[1]:
+                continue
+            if tag in seen:
+                parent[find(k)] = find(seen[tag])
+            else:
+                seen[tag] = k
+
+    def cands_of(k, p):
+        out = []
         code = (p.get("img_src") or "").replace(".png", "")
+        slug = re.sub(r"[^a-z0-9]+", "-", (p.get("name") or "").lower()).strip("-")
         for base, names in ((HIRES, [f"{k}.png", f"{code}.png", p.get("img_src") or ""]),
-                            (ASSETS, [p.get("img_src") or ""]), (EXTRACTED, [p.get("img_src") or ""])):
+                            (ASSETS, [p.get("img_src") or "", f"{slug}.png" if slug else ""]),
+                            (EXTRACTED, [p.get("img_src") or ""])):
             for n in names:
                 if base and n:
                     c = os.path.join(base, n)
-                    if os.path.exists(c):
-                        cands.append(c)
-        best, best_h = None, 0
-        for c in cands:
+                    if os.path.exists(c) and c not in out:
+                        out.append(c)
+        return out
+
+    pool = {}
+    for k, p in P.items():
+        pool.setdefault(find(k), []).extend(cands_of(k, p))
+    best_of_root = {}
+    for root, cands in pool.items():
+        best, best_h, best_q = None, 0, -1
+        for c in dict.fromkeys(cands):
             try:
                 h = Image.open(c).size[1]
             except Exception:
                 continue
-            if h > best_h:
-                best, best_h = c, h
-        name = f"nd-{k.replace('_', '-')}.png"
+            is_soft = os.path.basename(c).replace(".png", "") in soft
+            q = h / 4 if is_soft else h
+            if (q, h) > (best_q, best_h):
+                best, best_h, best_q = c, h, q
+        best_of_root[root] = (best, best_h)
+    best_of = {k: best_of_root[find(k)] for k in P}
+    # One file per distinct photo, named after the shortest, then alphabetically first, key that
+    # uses it, so the name depends only on which keys share the photo, never on load order.
+    groups = {}
+    for k, (best, _h) in best_of.items():
         if best:
+            digest = hashlib.md5(open(best, "rb").read()).hexdigest()
+            groups.setdefault(digest, []).append(k)
+    file_of = {}
+    for keys in groups.values():
+        canon = sorted(keys, key=lambda x: (len(x), x))[0]
+        for k in keys:
+            file_of[k] = f"nd-{canon.replace('_', '-')}.png"
+    for k, p in P.items():
+        best, best_h = best_of[k]
+        if best:
+            name = file_of[k]
             out = os.path.join(dst, name)
             if not (os.path.exists(out) and os.path.getsize(out) == os.path.getsize(best)):
                 tmpf = out + f".{os.getpid()}.tmp"
@@ -187,10 +251,7 @@ def stage_images(dst, report=None):
         else:
             p["img"] = "../img/nd-missing.png"
             p["img_px"] = 0
-        soft_f = os.path.join(HIRES, "soft.json")
-        soft = set(json.load(open(soft_f))) if os.path.exists(soft_f) else set()
-        if best and os.path.basename(best).replace(".png", "") in soft:
-            p["img_soft"] = True
+        p["img_soft"] = bool(best and os.path.basename(best).replace(".png", "") in soft)
         if report is not None:
             report[k] = (best_h, best)
     PLACEHOLDER["img"] = "../img/nd-missing.png"

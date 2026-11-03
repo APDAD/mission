@@ -1,0 +1,12 @@
+{
+  "d3_5000_k2": {
+    "size": "60 softgels",
+    "dose": "1 softgel daily",
+    "sched": [["pm", 1, "softgel"]],
+    "src": "Product DB R197 (Designs for Health, Ortho Molecular, NuMedica, Nutritional Frontiers, Microbiome Labs, Biotics and Apex chart label reads; NutriDyn Catalog ND143 10/1/26): SKU R197 is 60S, 60 softgels, as the bottle photo prints; per softgel vitamin D3 125 mcg (5,000 IU), vitamin K2 60 mcg as MK-7, vitamin K1 15 mcg; label directions 'Take one softgel daily'. products.py said capsules. Shared key, so this also corrects the PCOS sheet; the key line is left at its old length so no sheet's layout moves."
+  },
+  "curcumin_bcm95": {
+    "key": "800 mg BioCurc turmeric root extract per 2 softgels, an enhanced-absorption form (curcumin amount not stated on the label)",
+    "src": "Product DB R268, all nine chart label reads: NutriDyn 800 mg BioCurc extract per 2 softgels, curcuminoid percentage not stated on the label; directions two softgels daily. Same wording as products.d/lyme.json (Curcumin 400x sell sheet ND466), kept identical so the load order of the two files cannot change what prints. Replaces '800 mg curcumin', which turned an extract weight into a curcumin amount."
+  }
+}

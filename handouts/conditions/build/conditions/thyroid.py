@@ -91,7 +91,31 @@ SOURCES (tags sit in comments next to each number or claim on the page; PubMed r
              argued)
   [ODS]      NIH Office of Dietary Supplements fact sheets: tolerable upper intake levels for
              adults, vitamin D 4,000 IU (100 mcg), zinc 40 mg, selenium 400 mcg, iron 45 mg;
-             food sources of selenium, zinc and iron.
+             food sources of selenium, zinc and iron.  (ods.od.nih.gov is outside this session's
+             network allow-list; the ULs are the published IOM values.)
+  [WYNE22]   Wyne KL et al. J Endocr Soc 2022;7:bvac172. PMID 36466005, doi:10.1210/jendso/bvac172
+             (hypothyroidism about 9.6% of the U.S. in NHANES 2009-12 and 9.5% -> 11.7% in 2012-19
+             claims data, counting people already treated; TSH cut-off 4.0 in the NHANES arm; the
+             rise is probably more mild (subclinical) cases).  Replaces [HOLL02]'s older 4.6%.
+  [IOM11]    Ross AC et al. J Clin Endocrinol Metab 2011;96:53-8. PMID 21118827,
+             doi:10.1210/jc.2010-2704 (a 25-hydroxyvitamin D level of at least 20 ng/mL meets the
+             needs of 97.5% of people; below that is low).  Holick MF et al. JCEM 2011;96:1911-30,
+             PMID 21646368 (Endocrine Society: deficiency below 20 ng/mL).
+  [BSG21]    Snook J et al. Gut 2021;70:2030-51. PMID 34497146, doi:10.1136/gutjnl-2021-325210
+             (British Society of Gastroenterology: "SF levels of less than 30 ug/L are generally
+             indicative of low body iron stores"; lab lower limits run 15-30; ug/L = ng/mL).
+  [KOTW20]   Kotwal A et al. J Clin Endocrinol Metab 2020;105:dgaa672. PMID 32954428,
+             doi:10.1210/clinem/dgaa672 ("hypothyroidism is associated with hypercholesterolemia and
+             hypertriglyceridemia"; levothyroxine improves the lipid profile)
+  [NSF15]    Hirshkowitz M et al. Sleep Health 2015;1:40-3. PMID 29073412,
+             doi:10.1016/j.sleh.2014.12.010 (National Sleep Foundation: 7 to 9 hours for adults,
+             7 to 8 for older adults).  AASM/SRS (Watson NF, Sleep 2015;38:843-4, PMID 26039963)
+             says 7 or more.
+  [ND-LABEL] NutriDyn sell sheets (Supplement Facts panels) in Dropbox /NutriDyn/Sales/Practitioner
+             Resource/NutriDyn Marketing Materials/: Essential Multi ND476 Rev. 08/25 (per 3 capsules
+             includes biotin 500 mcg, iodine 150 mcg, D3 1,000 IU, selenium 100 mcg, zinc 15 mg, no
+             iron); D3 5000 with K2 ND382 Rev. 6/24 (label: exceeds the adult upper limit, monitor
+             levels; K2 not for people on blood thinners); Iron Support ND563 Rev. 12/25.
 """
 import math
 import os
@@ -488,8 +512,8 @@ BR_C, BR_R = (398, 84), 50          # brain inset
 ORG = (404, 148, 566, 208)          # liver / kidneys / muscles node (x0, y0, x1, y1)
 CELL_C, CELL_R = (690, 176), 24     # every cell
 P1_STEPS = 222
-P1_KEY = 274
-P1_H = P1_KEY + 30
+P1_KEY = 279                        # 5 units of air under badge 3 of the step strip
+P1_H = P1_KEY + 35                  # KEY strip (27 tall) + 8 units of margin above the panel border
 
 
 def _fig(x, y):
@@ -546,10 +570,16 @@ def picture1(t):
     o.append(label_left(10, 62, "VOICE BOX", "(larynx)", _fig(-12, 104)))
     o.append(label_left(10, 104, "THYROID GLAND", "butterfly shape", _fig(-42, 156), c1))
     o.append(label_left(10, 148, "WINDPIPE", "(trachea)", _fig(-5, 221)))
-    cx_, cy_ = _fig(-96, 249)
+    # COLLARBONE: label on a white pill under the bone, with a real leader up to a dot on the
+    # middle of the left clavicle (local (-96, 233.6): the bone runs about y 229.5-237.7 there)
+    cx_, cy_ = _fig(-96, 258)
+    bone = _fig(-96, 233.6)
+    o.append(_halo_line(f"M{cx_:.1f},{cy_ - 9:.1f} L{bone[0]:.1f},{bone[1]:.1f}", "#4F4549", 1.1, 3.2))
+    o.append(f'<circle cx="{bone[0]:.1f}" cy="{bone[1]:.1f}" r="2.3" fill="#4F4549" stroke="#fff" stroke-width="1"/>')
     o.append(f'<rect x="{cx_ - 38:.1f}" y="{cy_ - 9:.1f}" width="76" height="15" rx="5" fill="#fff" opacity=".92"/>'
              + T(cx_, cy_ + 2.4, "COLLARBONE", 9.8, 800, INK, "middle", ls=0.4))
-    o.append(_halo_line(f"M{cx_:.1f},{cy_ - 9:.1f} L{_fig(-96, 236)[0]:.1f},{_fig(-96, 236)[1]:.1f}", "#4F4549", 1.1, 3.2))
+    if cy_ + 6 > P1_ART - 2:
+        raise ValueError("thyroid sheet: COLLARBONE label runs past the art band")
 
     # ---- 1 and 2: the brain inset (hypothalamus -> TRH, pituitary -> TSH)
     bx, by = BR_C
@@ -587,10 +617,15 @@ def picture1(t):
         o.append(t4(*_q(b0, bc, b1, tt)))
     tx_, ty_ = _q(b0, bc, b1, 0.6)
     o.append(_tag(tx_, ty_ - 15, "T4", T4C))
-    gx = 256
-    g1, _ = gear_tag(gx, 115, "I", "iodine")
-    g2, _ = gear_tag(gx, 138, "Fe", "iron")
+    # gx 280: badge 3 (x 245-265) clears the neck/shoulder contour (about x 237 at that height), the
+    # Fe gear clears the shoulder, the labels end left of the brain lens, the TSH tag sits above
+    gx = 280
+    g1, r1x = gear_tag(gx, 115, "I", "iodine")
+    g2, r2x = gear_tag(gx, 138, "Fe", "iron")
     o += [g1, g2, badge(gx - 25, 126.5, 3, c1)]
+    lens_x = BR_C[0] - math.sqrt(BR_R ** 2 - (115 - BR_C[1]) ** 2)
+    if max(r1x, r2x) > lens_x - 8:
+        raise ValueError("thyroid sheet: step-3 gear labels run into the brain lens")
 
     # ---- 4: liver, kidneys and muscles turn T4 into active T3 (need selenium and zinc)
     x0, y0, x1, y1 = ORG
@@ -600,9 +635,13 @@ def picture1(t):
     for xx, lab in ((x0 + 36, "liver"), (mid + 2, "kidneys"), (x1 - 30, "muscles")):
         o.append(T(xx, y1 - 8, lab, 10.2, 700, deep, "middle"))
     o.append(badge(x0 + 3, y0 + 3, 4, c1))
-    g3, _ = gear_tag(x0 + 36, y0 - 16, "Se", "selenium")
-    g4, _ = gear_tag(x0 + 122, y0 - 16, "Zn", "zinc")
+    # x0+44 / x0+130: the Se gear now clears the brain lens's white halo (r + 2.4) by about 5 units
+    gse = (x0 + 44, y0 - 16)
+    g3, _ = gear_tag(*gse, "Se", "selenium")
+    g4, r4x = gear_tag(x0 + 130, y0 - 16, "Zn", "zinc")
     o += [g3, g4]
+    if math.hypot(gse[0] - BR_C[0], gse[1] - BR_C[1]) - 11.8 < BR_R + 2.4 + 3 or r4x > W - 12:
+        raise ValueError("thyroid sheet: selenium / zinc gears collide with the brain lens or the edge")
 
     # ---- T3 to every cell (5)
     cxc, cyc = CELL_C
@@ -629,7 +668,7 @@ def picture1(t):
     # ---- step strip: the words live here, not on the art
     o.append(f'<path d="M12,{P1_STEPS} H{W - 12}" stroke="#EADDE3" stroke-width="1"/>')
     B = "<tspan font-weight='800'>"
-    steps = [f"{B}Hypothalamus:</tspan> checks your hormone levels, sends TRH.",
+    steps = [f"{B}Hypothalamus:</tspan> checks levels, sends TRH, a wake-up signal.",
              f"{B}Pituitary:</tspan> answers with TSH, the &#8220;make more&#8221; signal.",
              f"{B}Thyroid:</tspan> uses iodine and iron to make T4 (and a little T3).",
              f"{B}Liver, kidneys, muscles:</tspan> turn T4 into active T3.",
@@ -682,7 +721,7 @@ def key1(y, c1):
 
 # ============================================================== picture 2: Hashimoto's, magnified
 P2_HDR = 24
-P2_H = 171
+P2_H = 174
 CR = 52
 CIRC = [((68, 94), "HEALTHY", "#2F7D59"), ((206, 94), "HASHIMOTO&#8217;S", "#A5281E")]
 FOLLICLES = [(-30, -30, 20), (12, -36, 17), (42, -8, 17), (-40, 10, 16), (-6, 4, 19), (28, 30, 18), (-20, 40, 15),
@@ -766,24 +805,30 @@ def picture2(t):
                  'stroke="#fff" stroke-width="1.6"/>' + T(cx, cy + CR + 3.8, lab, 10.2, 800, "#fff", "middle", ls=0.6))
     ax0, ax1 = CIRC[0][0][0] + CR + 6, CIRC[1][0][0] - CR - 8
     o.append(f'<path d="M{ax0},{CIRC[0][0][1]} H{ax1}" stroke="#A5281E" stroke-width="2.4" marker-end="url(#thy-ah-red)"/>')
-    # steps: [CATU14] lymphocytes infiltrate between follicles, cells atrophy, antibodies; [SURKS04] TSH rises
-    # first (mild = high TSH with normal free T4)
+    # steps: [CATU14] lymphocytes infiltrate between follicles, cells atrophy, TPO / Tg antibodies; [HU17]
+    # TPO (thyroid peroxidase) is the gland's hormone-making enzyme.  [SURKS04] on a routine panel a high
+    # TSH with normal free T4 (mild disease) comes first; TPO antibodies often appear years earlier, but
+    # only show if someone tests for them, so step 4 says "routine blood test".
     sx, sy, sw = 282, P2_HDR + 22, 286
     steps = ["Immune cells mistake the thyroid for a threat.",
-             "They move in, and TPO antibodies tag the gland.",
+             "They move in, and antibodies tag TPO, the gland&#8217;s hormone-making enzyme.",
              "Over months or years, the gland makes less hormone.",
-             "The pituitary pushes harder, so TSH rises. This is often the first sign on a blood test."]
+             "The pituitary pushes harder, so TSH rises. On a routine blood test, this is usually the first sign."]
     y = sy
     for i, s in enumerate(steps):
         lines = _wrap(s, sw, 10.6, 500)
         o.append(badge(sx, y - 3.8, i + 1, "#A5281E", 7.4, 9.8))
         o.append(T(sx + 13, y, lines, 10.6, 500, INK, lh=1.2))
         y += 12.7 * len(lines) + 5.6
-    # [HU17]: high iodine intake and low selenium and iron implicated, vitamin D possibly relevant
+    # [HU17] [TENG06]: high iodine intake is linked to Hashimoto's.  The nutrients are framed as what the
+    # gland and immune cells need ([KNEZ20]: iron for hormone synthesis, selenium for T4 -> T3 and gland
+    # protection, vitamin D helps regulate the immune response), not as causes, so the back's columns do
+    # not read as a disease claim.
     ly = y + 2
     o.append(f'<rect x="{sx - 10}" y="{ly - 11}" width="{sw + 22}" height="31" rx="7" fill="#FFF7E2" stroke="#E9C979" stroke-width="1"/>')
-    l1 = fit("<tspan font-weight='800'>Linked to Hashimoto&#8217;s:</tspan> too much iodine,", 10.2, 600, sw + 6, "linked")
-    l2 = fit("and too little selenium, iron or vitamin D.", 10.2, 500, sw + 6, "linked")
+    l1 = fit("<tspan font-weight='800'>Linked to Hashimoto&#8217;s:</tspan> too much iodine. Your thyroid", 10.2, 500,
+             sw + 6, "linked")
+    l2 = fit("relies on selenium and iron; immune cells rely on vitamin D.", 10.2, 500, sw + 6, "linked")
     o.append(T(sx - 2, ly + 1.6, l1, 10.2, 500, "#5A4300") + T(sx - 2, ly + 14, l2, 10.2, 500, "#5A4300"))
     if ly + 20 > P2_H - 6:
         raise ValueError("thyroid sheet: Hashimoto steps run past the panel")
@@ -828,35 +873,43 @@ SIGNS = [("battery", "Tired, low<br>energy"), ("thermo", "Always<br>cold"), ("sc
 def signs_block():
     cells = "".join(f'<div class="thy-sg"><span class="thy-disc">{_ico(ic, "0.27in")}</span><span>{lab}</span></div>'
                     for ic, lab in SIGNS)
-    # [HOLL02] 4.6% of the U.S. aged 12+, 4.3% mild; [NIDDK] higher-risk groups; [ATA] women 5 to 8 times
-    return ('<div class="thy-signs"><div class="thy-sh"><b>Common signs of an underactive thyroid</b>'
-            '<span>They creep in slowly. About 1 in 20 Americans has it, most often mildly.</span></div>'
+    # [WYNE22] about 9.6% (NHANES 2009-12) to 11.7% (2019 claims) of the U.S., counting people already treated
+    # (the older 1 in 20 is [HOLL02], NHANES III 1988-94); [NIDDK] [CATU14] it develops slowly, over years;
+    # [NIDDK] higher-risk groups; [ATA] women 5 to 8 times; [KOTW20] [NIDDK] a slow thyroid raises cholesterol
+    return ('<div class="thy-signs"><div class="thy-sh"><b>Signs of an underactive thyroid</b>'
+            '<span>They creep in slowly. About 1 in 10 Americans has it, counting those already treated.</span></div>'
             f'<div class="thy-sgrow">{cells}</div>'
             '<p class="thy-risk"><b>Higher risk:</b> women (5 to 8 times more likely than men), age 60 or older, a family '
             'history, type 1 diabetes, celiac or another autoimmune disease, a baby in the past 6 months, past thyroid '
-            'surgery, radioactive iodine or neck radiation.</p></div>')
+            'surgery, radioactive iodine or neck radiation. <b>It can also</b> raise cholesterol.</p></div>')
 
 
 def numbers_block():
     # [SURKS04] TSH reference range 0.45 to 4.5 mIU/L; high TSH with normal free T4 = mild (subclinical)
     tsh = ('<div class="thy-tsh"><h4>TSH <span>the &#8220;make more&#8221; signal, mIU/L</span></h4>'
            '<div class="thy-tl"><div class="thy-t lo"><i>Below 0.45</i><em>may be overactive, or too much medicine</em></div>'
-           '<div class="thy-t ok"><i>0.45 to 4.5</i><em>the usual range at most labs</em></div>'
+           '<div class="thy-t ok"><i>0.45 to 4.5</i><em>a common normal range; your lab&#8217;s may differ a little</em></div>'
            '<div class="thy-t hi"><i>Above 4.5</i><em>may be underactive: the brain pushes harder</em></div>'
            '<div class="thy-mine"><span>My result</span></div></div></div>')
-    # [CATU14] TPO antibodies mark Hashimoto's; [HU17] check iron (ferritin) and vitamin D
-    boxes = [("Free T4", "the main thyroid hormone"), ("TPO antibodies", "positive: a sign of Hashimoto&#8217;s"),
-             ("Ferritin", "your iron stores"), ("Vitamin D", "25-hydroxy vitamin D")]
-    cells = "".join(f'<div class="thy-bx"><div><b>{a}</b><span>{b}</span></div><i></i></div>' for a, b in boxes)
-    # [LI17] biotin makes thyroid immunoassays read falsely high or low; stop window per FDA / ATA advice
+    # [CATU14] TPO antibodies mark Hashimoto's; [HU17] check iron (ferritin) and vitamin D.
+    # Low cut-offs: [BSG21] ferritin under 30 ng/mL "generally indicative of low body iron stores";
+    # [IOM11] [ODS] 25-hydroxy vitamin D under 20 ng/mL is below what 97.5% of people need.
+    boxes = [("Free T4", "the main thyroid hormone", ""), ("TPO antibodies", "positive: a sign of Hashimoto&#8217;s", ""),
+             ("Ferritin", "your iron stores", "low: under 30 ng/mL"),
+             ("Vitamin D", "25-hydroxy vitamin D", "low: under 20 ng/mL")]
+    cells = "".join(f'<div class="thy-bx"><div><b>{a}</b><span>{b}</span>'
+                    + (f'<span class="thy-low">{c}</span>' if c else "") + '</div><i></i></div>' for a, b, c in boxes)
+    # [LI17] biotin makes thyroid immunoassays read falsely high or low; stop window per FDA / ATA advice.
+    # [ND-LABEL] Essential Multi (the Start-here pick on the back) has 500 mcg biotin per 3 capsules.
     biotin = ('<div class="thy-bio"><b>Before any thyroid blood test</b><span>Stop <strong>biotin</strong> 2 to 3 days '
-              'ahead. It is in many hair, skin and nail formulas and multivitamins, and it can make results look falsely '
-              'high or low.</span></div>')
+              'ahead, Essential Multi too. Many multis and hair, skin and nail formulas have it. It can make results '
+              'look falsely high or low.</span></div>')
+    # Edition-neutral on purpose: results go back to whoever ordered the test, not to the pharmacist.
     return ('<div class="thy-nums"><div class="thy-nh"><b>Know your numbers</b><span>Write your results in the boxes, '
-            'then go over them with {who}.</span></div>'
+            'then go over them with the provider who ordered them.</span></div>'
             f'<div class="thy-ngrid">{tsh}{biotin}<div class="thy-bxs">{cells}</div></div>'
-            '<p class="thy-src">Sources: NIDDK; American Thyroid Association; Surks, JAMA 2004; Hollowell, JCEM 2002; '
-            'Hu and Rayman, Thyroid 2017; Li, JAMA 2017.</p></div>')
+            '<p class="thy-src">Sources: NIDDK; American Thyroid Association; Surks, JAMA 2004; Wyne, J Endocr Soc 2022; '
+            'Hu and Rayman, Thyroid 2017; Li, JAMA 2017; IOM 2011; BSG 2021; Kotwal, JCEM 2020.</p></div>')
 
 
 def front(t, ed):
@@ -902,22 +955,28 @@ CSS = r"""
   border:1px solid #EEDDE5;border-radius:6px;padding:2px 4px 2px 6px}
 .thy .thy-bx b{display:block;font:800 7.6pt/1.15 Inter,sans-serif;color:#2B3236;white-space:nowrap}
 .thy .thy-bx span{display:block;font-size:7pt;line-height:1.15;color:#4A555C}
-.thy .thy-bx i{flex:none;width:0.5in;height:0.22in;border-radius:4px;background:#fff;border:1.2px dashed #9AA5AC}
+.thy .thy-bx span.thy-low{font-weight:700;color:var(--deep)}
+.thy .thy-bx i{flex:none;width:0.5in;height:0.28in;border-radius:4px;background:#fff;border:1.2px dashed #9AA5AC}
 .thy .thy-bio{background:#F6ECD6;border:1px solid #E3C88C;border-radius:7px;padding:3px 7px 4px;color:#5A3B00}
 .thy .thy-bio b{display:block;font:800 7.2pt/1.2 Inter,sans-serif;color:#814800;text-transform:uppercase;letter-spacing:.05em}
 .thy .thy-bio span{display:block;font-size:7.4pt;line-height:1.26;margin-top:1px}
 .thy .thy-bio strong{color:#814800}
 .thy .thy-src{margin:3px 0 0;font-size:7pt;color:#5E686F;line-height:1.3}
-/* back page: scoped with :has() to the marker span in this sheet's lifestyle title */
+/* back page: scoped with :has() to the marker span in this sheet's lifestyle title.  (The kit now sets
+   every back-page text run, footer and disclaimer at 7 pt or more, so no size overrides are needed.) */
 .sheet.back:has(.thy-back) .col .need{height:0.5in;min-height:0.5in}
 .sheet.back:has(.thy-back) .life b{font-size:9.2pt}
+/* the kit has no rule for class="x": draw this sheet's "avoid" slash in NutriDyn coral */
+.sheet.back:has(.thy-back) .life svg .x{stroke:#F15F3F}
 """
 
 # ============================================================== lifestyle icon (registered under a thy_ prefix)
-# A kelp frond with the kit's coral "avoid" slash: skip kelp and iodine supplements unless prescribed.
-ICONS.setdefault("thy_kelp", '<path d="M33 58c-3-9 2-14 0-22s-6-12-2-22"/><path d="M31 18c5-2 9-1 11 3-4 2-8 1-11-3z"/>'
-                             '<path d="M32 33c-6-3-11-1-13 4 5 2 10 0 13-4zM32 45c5-3 10-2 12 3-5 2-9 0-12-3z"/>'
-                             '<path class="x" d="M10 56 54 10"/>')
+# A dropper bottle (iodine drops) with a drop on its label and a coral "avoid" slash (CSS rule above):
+# skip high-dose iodine unless prescribed.
+ICONS.setdefault("thy_drops", '<path d="M27.5 15v-4.5a4.5 4.5 0 0 1 9 0V15"/><rect x="24" y="15" width="16" height="7" rx="2"/>'
+                              '<path d="M26 22v3.5l-5 5V52a5 5 0 0 0 5 5h12a5 5 0 0 0 5-5V30.5l-5-5V22"/>'
+                              '<path d="M32 35.5c-3.2 4.2-4.8 6.6-4.8 8.8a4.8 4.8 0 0 0 9.6 0c0-2.2-1.6-4.6-4.8-8.8z"/>'
+                              '<path class="x" d="M9 57 55 11"/>')
 
 # ============================================================== the sheet
 SHEET = {
@@ -925,7 +984,7 @@ SHEET = {
     "title": "Thyroid Health", "sub": "Underactive thyroid and Hashimoto&#8217;s",
     # [NIDDK] Hashimoto's is the most common cause in the U.S. ([HUW24]: in iodine-sufficient areas).
     "intro": ("Your <b>thyroid</b>, a butterfly-shaped gland in your neck, sets the pace of nearly every cell. Too little "
-              "hormone slows the body down: an <b>underactive thyroid</b>. In the U.S. the usual cause is "
+              "hormone slows the body down: an <b>underactive thyroid</b> (hypothyroidism). In the U.S. the usual cause is "
               "<b>Hashimoto&#8217;s</b>, an immune attack on the gland."),
     "front": front,
     "css": CSS,
@@ -936,11 +995,13 @@ SHEET = {
         "life": [
             # [ODS] food sources: seafood, meat, eggs, beans, nuts and seeds bring selenium, zinc and iron
             ("plate", "Whole-food plate", "Fish, eggs, beans, nuts and seeds bring selenium, zinc and iron."),
-            # [PEAR13] the U.S. is generally iodine-sufficient; [TENG06] [HU17] [ATA15] extra iodine can harm
-            ("thy_kelp", "No extra iodine", "Food and iodized salt are enough. Skip kelp and iodine drops."),
+            # [PEAR13] the U.S. is generally iodine-sufficient; [TENG06] [HU17] [ATA15] high or excess iodine can
+            # harm.  150 mcg is the adult RDA [ODS], the amount in Essential Multi [ND-LABEL], so the tile and the
+            # Start-here pick agree.
+            ("thy_drops", "No high-dose iodine", "Skip kelp and iodine drops. Iodized salt or a basic multi (150 mcg) is plenty."),
             # Physical Activity Guidelines for Americans, 2nd ed. (HHS 2018)
             ("walk", "Move every day", "Walk most days. Add strength work 2 to 3 days a week."),
-            # AASM / Sleep Research Society 2015: 7 or more hours for adults
+            # [NSF15] National Sleep Foundation 2015: 7 to 9 hours for adults (7 to 8 at 65+)
             ("moon", "Sleep 7 to 9 hours", "Steady sleep helps energy, mood and weight."),
             # [ROY16] about 1 in 62 people with autoimmune thyroid disease has celiac disease; test while eating gluten
             ("wheat", "Ask about celiac", "More common with thyroid disease. Test before you cut gluten."),
@@ -953,47 +1014,60 @@ SHEET = {
              # [HUW24] [ZHANG25] selenium; [HU17] 50-100 mcg selenium a day where intake is low; [KNEZ20] zinc for
              # T4 to T3; 150 mcg iodine = the adult RDA, not a high dose ([ATA15] warns about high doses)
              "bullets": ["Selenium and zinc support healthy thyroid function",
-                         "Iodine at a normal daily amount, not a high dose"],
+                         "Iodine at a normal daily amount (150 mcg), not a high dose"],
              "dose": "3 capsules with dinner", "dosesub": "4 hours after thyroid medicine", "sched": [("pm", 3, "capsules")]},
             {"p": "thy_d3_5000_k2", "need": "Vitamin D", "needsub": "only if your level is low",
              # [HU17] check vitamin D and correct a deficiency; [WANG18]; [KNEZ20] vitamin D and immune regulation
              "bullets": ["Supports healthy immune function", "K2 helps put calcium to work in bone"],
-             "dose": "1 softgel with dinner", "dosesub": "recheck your vitamin D level", "sched": [("pm", 1, "softgel")]},
+             "dose": "1 softgel with dinner", "dosesub": "recheck your vitamin D level",
+             "sched": [("pm", 1, "softgel, if vitamin D is low")]},
             {"p": "thy_iron_support", "need": "Iron", "needsub": "only if ferritin is low",
              # [HU17] TPO is a heme (iron) enzyme; Hashimoto's patients are often iron deficient; check and correct
-             "bullets": ["Supports healthy iron levels and energy", "The thyroid&#8217;s hormone-making enzyme needs iron"],
-             "dose": "1 capsule at bedtime", "dosesub": "4 hours from thyroid medicine", "sched": [("bed", 1, "capsule")]},
-            {"p": "thy_ultrabiotic_dms", "need": "Gut balance", "needsub": "7-strain probiotic",
-             # [KNEZ20] the thyroid-gut axis; label directions one capsule daily
+             "bullets": ["Supports healthy iron levels and energy", "TPO, the thyroid&#8217;s hormone-making enzyme, needs iron"],
+             "dose": "1 capsule at bedtime", "dosesub": "4 hours from thyroid medicine",
+             "sched": [("bed", 1, "capsule, if ferritin is low")]},
+            {"p": "thy_ultrabiotic_dms", "need": "Gut balance", "needsub": "the gut-thyroid link",
+             # [KNEZ20] the thyroid-gut axis (gut microbes take part in thyroid hormone and mineral handling);
+             # constipation is one of the front's signs [NIDDK]; label directions one capsule daily [ND-LABEL]
              "bullets": ["Supports a healthy gut microbiome", "Supports regular, comfortable digestion"],
              "dose": "1 capsule with breakfast", "dosesub": "", "sched": [("am", 1, "capsule")]},
-            {"p": "thy_omega_1000", "need": "Omega-3s", "needsub": "EPA and DHA",
-             # [SURKS04] a high TSH goes with higher cholesterol; EPA/DHA: triglycerides (structure/function)
+            {"p": "thy_omega_1000", "need": "Omega-3s", "needsub": "for heart health",
+             # front: a slow thyroid can raise cholesterol [KOTW20]; EPA/DHA and triglycerides, structure/function
+             # wording only (no thyroid-population claim on the back)
              "bullets": ["Supports a healthy inflammatory response", "Supports heart health and healthy triglycerides"],
              "dose": "1 softgel with dinner", "dosesub": "", "sched": [("pm", 1, "softgel")]},
         ],
         "rx": {
             "pharmacy": [
-                # [LT4-PI] empty stomach, half to one hour before breakfast, 4 hours from binders; [ATA14]
+                # [LT4-PI] empty stomach, half to one hour before breakfast, 4 hours from binders; [ATA14] bedtime dosing
+                # is also accepted, and then the iron / multi times shift
                 "<b>Thyroid medicine first, alone:</b> water only, empty stomach, 30 to 60 minutes before breakfast. "
-                "Iron, calcium, magnesium, antacids and multis 4 hours later.",
-                # [LI17] biotin interference; FDA biotin safety communication
-                "<b>Biotin skews thyroid labs.</b> It is in many hair, skin and nail formulas. Stop it 2 to 3 days "
-                "before a blood test.",
+                "Iron, calcium, magnesium, antacids and multis 4 hours later. Take it at bedtime? Ask {who} to re-time "
+                "the iron and multi.",
+                # [LI17] biotin interference; FDA biotin safety communication; [ND-LABEL] Essential Multi 500 mcg biotin
+                "<b>Biotin skews thyroid labs.</b> It is in many hair, skin and nail formulas and multivitamins, "
+                "Essential Multi too. Stop it 2 to 3 days before a blood test.",
+                # [HU17] check and correct low levels; [ODS] vitamin D UL 4,000 IU; [ND-LABEL] D3 5000 label: exceeds the
+                # UL, monitor levels; K2 not recommended with blood thinners.  5,000 + 1,000 (Essential Multi) = 6,000 IU
+                "<b>D3 5000 and Iron Support are for low lab levels.</b> D3 5000 plus the multi is 6,000 IU a day, above "
+                "the 4,000 IU upper limit, so recheck your level. On a blood thinner? Skip the K2 formula.",
                 # [KANG13] thyroid supplements with T4/T3; [TENG06] [ATA15] iodine; never self-adjust
                 "<b>Never change your thyroid dose on your own.</b> Skip kelp and iodine drops with Hashimoto&#8217;s. "
                 "Glandular thyroid products can hold real hormone: use them only if your prescriber says so.",
             ],
             "practitioner": [
-                # [HU17] check iron and vitamin D; [ODS] vitamin D upper limit 4,000 IU
+                # [HU17] check iron and vitamin D; [ODS] vitamin D UL 4,000 IU; [ND-LABEL] D3 label warnings; the
+                # multi adds 1,000 IU, so the plan totals 6,000 IU
                 "<b>Test first:</b> TSH, free T4, TPO antibodies, ferritin, vitamin D. Iron Support and D3 5000 are for "
-                "low levels; D3 5000 is above the 4,000 IU upper limit, so recheck.",
-                # [LT4-PI] [ATA14]; [LI17]
+                "low levels. With Essential Multi&#8217;s 1,000 IU that is 6,000 IU a day, above the 4,000 IU upper limit, "
+                "so recheck. K2 is not for people on blood thinners.",
+                # [LT4-PI] [ATA14] (bedtime dosing accepted); [LI17]; [ND-LABEL] biotin 500 mcg in Essential Multi
                 "<b>Thyroid medicine alone:</b> water, empty stomach, 30 to 60 minutes before breakfast; minerals and "
-                "multis 4 hours later. Stop biotin 2 to 3 days before labs.",
+                "multis 4 hours later. Taken at bedtime? Ask {who} to re-time the iron and multi. Stop biotin, Essential "
+                "Multi too, 2 to 3 days before labs.",
                 # [KANG13] [TENG06] [ATA15]
                 "<b>Never change thyroid medicine without {who}.</b> Skip kelp and iodine drops with Hashimoto&#8217;s. "
-                "Glandular thyroid products can hold active hormone.",
+                "Glandular thyroid products can hold active hormone: use them only under {who}&#8217;s care.",
             ],
         },
     },

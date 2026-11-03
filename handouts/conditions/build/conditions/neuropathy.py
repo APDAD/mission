@@ -94,6 +94,7 @@ import math
 import os
 import random
 
+import kit
 from kit import ICONS, icon
 from svgkit import T, svg
 
@@ -744,7 +745,7 @@ def front(t, ed):
 
 
 # The ◆ that ties each structure/function statement to the FDA disclaimer in the footer [CFR93].
-DIA = '<span class="nrp-dia">&#9670;</span>'
+DIA = '<span class="nrp-dia">' + kit.DIAMOND + '</span>'  # drawn, not a font glyph (no Type 3 in the PDF)
 
 CSS = r"""
 .nrp .nrp-art svg{display:block;width:100%;height:auto}
