@@ -28,8 +28,8 @@ Fix round 2026-11-03 (art director's review):
     every puddle sits under a keyed drop, and the window's condensation dots are replaced by
     fogged glass with keyed drops, so the key's two symbols are the only ones used;
   * the draft-1 back overflowed its frame (disclaimer cut, page/edition line not printed).
-    SHEET["back"] stays frozen for the back-page pass, so scoped back-only CSS (see
-    BACK-PAGE FIT in CSS) fits it without changing a word.
+    SHEET["back"] stayed frozen for the back-page pass, so scoped back-only CSS fitted it
+    without changing a word (superseded by the back-page pass below).
 
 Back-page pass 2026-11-03 (the front's design is approved and unchanged; only the final
 front review's small fixes are applied):
@@ -43,9 +43,9 @@ front review's small fixes are applied):
     (Lipo-Flow, glutathione, Mito Recharge).  Binder Pro is the Start-here pick, the binder
     the front's diagram shows.  Five columns, the competitor's count.  Facts and sources:
     products.d/mold.json (mold-owned keys, each label re-opened this pass);
-  * binder spacing rule: Binder Pro goes 2 hours after breakfast and 2 hours after supper
-    (the educator's grids: mid-morning and mid-evening), so every other product sits at a meal and
-    the check panel's rule and the daily rhythm agree;
+  * binder spacing rule: Binder Pro goes mid-morning and mid-evening (the educator's grids), 2 hours
+    from food, other supplements and medicine, and every other product sits at a meal, so the check
+    panel's rule, the dose bar and the daily rhythm agree;
   * lifestyle band: protocol advice added where it is real ("Test home & work" from the educator's
     "Preparation Plan (While Waiting on Labs and Home/Work Samples)"; "Stay regular" from
     ND1610's "elimination through the stool" and her optional magnesium citrate); "Fix fast"
@@ -616,19 +616,20 @@ CSS = r"""
 .mo-front .mo-stat span{font-size:8.3pt;line-height:1.3;color:#2B3236}
 /* BACK PAGE (back-page pass 2026-11-03).  Reached through the marker span in the lifestyle title,
    so the rules touch only this sheet's back, in its own file and in the all-sheets bundle.
-     - lifestyle cells 0.04in apart, so every title sets on one line;
-     - every column's header is one height, so the photos and product names share a line, and
-       each "In each serving" block sits on its dose bar (the .what box is a column with the
-       facts pushed to its foot);
+     - lifestyle cells keep the kit's 0.1in gap (closer, the long lines of two cells read across as
+       one) and the grid reaches 0.1in into the band's side padding, so every title sets on one line;
+     - each "In each serving" block sits on its dose bar (the .what box is a column with the
+       facts pushed to its foot), so the five facts blocks end on one line;
      - every dose bar is one height with its text centred, so the bars form one row;
-     - daily-rhythm columns size to their contents. */
-.sheet.back:has(.mo-back) .lifes{gap:0.04in}
-.sheet.back:has(.mo-back) .col .need{min-height:0.54in}
+     - the Morning box takes its natural width (its longest line, "Binder Pro 2 capsules,
+       mid-morning", is 159 px), so its five lines never wrap; the other two share the rest. */
+.sheet.back:has(.mo-back) .lifes{gap:0.1in;margin:0 -0.1in}
 .sheet.back:has(.mo-back) .col .what{display:flex;flex-direction:column}
 .sheet.back:has(.mo-back) .col .what .key{margin-top:auto}
 .sheet.back:has(.mo-back) .col .dose{min-height:0.35in;display:flex;flex-direction:column;justify-content:center}
 .sheet.back:has(.mo-back) .col .pick{padding-left:0.05in;padding-right:0.05in}
-.sheet.back:has(.mo-back) .rhythm{grid-template-columns:auto auto auto}
+.sheet.back:has(.mo-back) .duo{grid-template-columns:1.55fr 1fr}
+.sheet.back:has(.mo-back) .rhythm{grid-template-columns:max-content 1fr 1fr}
 """
 
 
@@ -686,51 +687,52 @@ SHEET = {
         "life": [
             # NutriDyn educator: "Mold Care ~ Preparation Plan (While Waiting on Labs and Home/Work
             # Samples)": support starts while the home and the workplace are checked
-            ("house", "Test home &amp; work", "Start your plan while your home and workplace are checked for damp and mold."),
+            ("house", "Test home &amp; work", "Start the plan while home and work are checked for mold."),
             # EPA, A Brief Guide to Mold, Moisture, and Your Home: indoor humidity ideally 30 to 50 percent
             ("meter", "Dry the air", "Keep indoor humidity at 30 to 50 percent. A dehumidifier helps."),
             # EPA, Guide to Air Cleaners in the Home: HEPA filters capture mold spores; HEPA vacuums in cleanup
             ("filter", "Filter it", "HEPA air purifiers and HEPA vacuums trap mold spores."),
-            # WHO, Mycotoxins fact sheet: maize, groundnuts, stored cereals, dried vine fruit, spices, wine
-            ("jar", "Limit risky foods", "Peanuts, corn, long-stored grains, dried fruit, spices and wine can carry mycotoxins."),
+            # WHO, Mycotoxins fact sheet: maize and groundnuts (aflatoxins), cereals in storage and dried
+            # vine fruit (ochratoxin A) are the main sources; spices, coffee and wine are smaller ones
+            ("jar", "Limit risky foods", "Peanuts, corn, stored grains and dried fruit can carry mycotoxins."),
             # Dietary Guidelines 2020-2025: 22 to 34 g fiber a day for adults; front step 3: fiber binds
-            ("wheat", "More fiber", "Fiber holds on to toxins in bile. Aim for about 30 g a day."),
+            ("wheat", "More fiber", "Fiber holds on to toxins in bile. Aim for about 30&nbsp;g a day."),
             # ND1610: binders work by "elimination through the stool"; the educator's preparation plan:
             # "OPTIONAL Cape Aloe/Mag Citrate 1-4 before sleep"
-            ("gut", "Stay regular", "Binders leave with stool. Drink water. Constipated? Ask about magnesium citrate."),
+            ("gut", "Stay regular", "Binders leave with stool. Constipated? Ask about magnesium citrate."),
         ],
         # NutriDyn's own mold protocols first: KBMO Mycotoxin Protocol ND1610 (Binder Pro, GI Defend) and
-        # a NutriDyn educator's mold plans (Lipo-Flow, "Glutathione/NAC", Mito Recharge).  They also cover the
-        # competitor's five categories: binders (Binder Pro), bitter herbs and bile (Lipo-Flow: artichoke,
+        # a NutriDyn educator's mold plans (Lipo-Flow, "Glutathione/NAC", Mito Recharge).  They also cover
+        # the competitor's categories: binders (Binder Pro), bitter herbs and bile (Lipo-Flow: artichoke,
         # dandelion, gentian), mitochondrial support (Mito Recharge); NutriDyn has no phosphatidylcholine
-        # product, and the protocol's glutathione takes that place.  Timing: Binder Pro goes 2 hours after
-        # breakfast and 2 hours after supper (educator grid: mid-morning, mid-evening), so every other product sits
-        # at a meal, 2 hours from the binder.  Claim bullets start with their verb, so the kit ends each one
-        # with the diamond tied to the FDA line.  Facts, doses and sources: products.d/mold.json.
+        # product, and the protocol's glutathione takes that place.  Timing: Binder Pro goes mid-morning and
+        # mid-evening (the educator's grids), 2 hours from food, other supplements and medicine; every other
+        # product sits at a meal, GI Defend in the morning.  Claim bullets start with their verb, so the kit
+        # ends each one with the diamond tied to the FDA line.  Facts, doses, sources: products.d/mold.json.
         "cols": [
             # ND1610's lead product; ND1141 Rev. 12/25 "Supports healthy detoxification"; Asher's email to a
             # practice, 2026-10-29: "Binder Pro has no charcoal or clay"
-            {"p": "mo_binder_pro", "need": "Bind toxins in the gut", "needsub": "apple pectin, Humiplex, chlorella",
+            {"p": "mo_binder_pro", "need": "Bind toxins in the gut", "needsub": "pectin, Humiplex, chlorella",
              "start": True, "dose": "dose_from_db",
-             "bullets": ["Helps hold on to toxins in the gut so they leave with stool", "No charcoal or clay"]},
+             "bullets": ["Helps carry toxins out with stool", "No charcoal or clay"]},
             # ND850 Rev. 12/24: "Supports healthy gut barrier function"; "binding, neutralizing, and removing
-            # toxins from the gut"; Asher 2023-12-21: "stays in the gut"
-            {"p": "mo_gi_defend", "need": "Guard the gut lining", "needsub": "serum-derived bovine immunoglobulins",
+            # toxins from the gut".  Not called a binder here: the 2-hour rule is Binder Pro's alone
+            {"p": "mo_gi_defend", "need": "Guard the gut lining", "needsub": "bovine immunoglobulins",
              "dose": "dose_from_db",
-             "bullets": ["Supports a healthy gut barrier", "Helps neutralize gut toxins, and stays in the gut"]},
+             "bullets": ["Supports a healthy gut barrier", "Helps neutralize toxins in the gut"]},
             # ND606 Rev. 4/26: "Promote healthy bile processes", "Promote healthy liver function"
-            {"p": "mo_lipo_flow", "need": "Keep bile flowing", "needsub": "artichoke, dandelion, gentian",
+            {"p": "mo_lipo_flow", "need": "Keep bile flowing", "needsub": "artichoke, gentian bitters",
              "dose": "dose_from_db",
-             "bullets": ["Promotes healthy bile flow, the liver&rsquo;s way out", "Supports healthy liver function"]},
+             "bullets": ["Promotes healthy bile flow", "Supports healthy liver function"]},
             # ND971 Rev. 8/24: "Supports healthy glutathione levels", "Detox Support"; glutathione is the
             # liver's packing step (conjugation) before toxins leave in bile (front caption 1)
-            {"p": "mo_glutathione", "need": "Top up glutathione", "needsub": "antioxidant and detox support",
+            {"p": "mo_glutathione", "need": "Top up glutathione", "needsub": "the detox antioxidant",
              "dose": "dose_from_db",
              "bullets": ["Helps the liver pack toxins into bile", "Supports healthy glutathione levels"]},
             # ND812 Rev. 2/25: "Promote healthy mitochondria", "Support healthy detoxification capacity"
             {"p": "mo_mito", "need": "Fuel your cells", "needsub": "mitochondrial support",
              "dose": "dose_from_db",
-             "bullets": ["Promotes healthy mitochondria and energy", "Supports healthy detox capacity"]},
+             "bullets": ["Promotes healthy mitochondria", "Supports healthy detox capacity"]},
         ],
         "rx": {
             # Both editions go to patients, worded for who checks them: a pharmacist checks interactions and
@@ -738,18 +740,18 @@ SHEET = {
             "pharmacy": [
                 # Binder spacing rule: the educator's grids keep the binder between meals, away from the meal-time
                 # supplements; humic-fulvic acids and chlorella are chelators (ND1141), pectin a soluble fiber
-                "<b>Binders can catch medicines and nutrients too.</b> Take Binder Pro 2 hours apart from food, "
+                "<b>Binders can catch medicines and nutrients too.</b> Keep Binder Pro 2 hours from food, "
                 "other supplements and every medicine. {Who} can help you time it.",
                 # ND812: 250 mcg vitamin K1 per 3 capsules; Ohkawa 1995 (chlorella blunted warfarin);
                 # Rohde 2007 (over 250 mcg a day lowers warfarin sensitivity)
-                "<b>On warfarin?</b> Vitamin K can weaken it. Mito Recharge has 250&nbsp;mcg vitamin K1, and the "
-                "chlorella in Binder Pro carries some too. Ask {who} before you start.",
+                "<b>On warfarin?</b> Vitamin K can weaken it: Mito Recharge has 250&nbsp;mcg vitamin K1, and "
+                "Binder Pro&rsquo;s chlorella adds some. Ask {who} first.",
                 # FDA labels: azole antifungals are strong CYP3A4 inhibitors with long interaction lists
                 "<b>Prescribed an antifungal?</b> Many interact with other medicines. Show {who} your full list, "
                 "supplements included.",
             ],
             "practitioner": [
-                "<b>Binders can catch medicines and nutrients too.</b> Take Binder Pro 2 hours apart from food, "
+                "<b>Binders can catch medicines and nutrients too.</b> Keep Binder Pro 2 hours from food, "
                 "other supplements and every medicine.",
                 # the educator's "Areas to Further Assess": Mycotoxin Urine Assessment, Mold Antibody Assessment,
                 # Organic Acid Testing (NutriDyn sells the KBMO kits; ND1610 is the KBMO follow-up sheet);
@@ -757,8 +759,8 @@ SHEET = {
                 "<b>Testing guides the plan.</b> {Who} may order a urine mycotoxin, mold antibody or organic "
                 "acids test, then adjust your plan or refer you to a specialist.",
                 # ND812 K1; Ohkawa 1995; Rohde 2007; Sconce 2007 (a steady daily intake steadies the INR)
-                "<b>On warfarin?</b> Vitamin K can weaken it. Mito Recharge has 250&nbsp;mcg vitamin K1, and the "
-                "chlorella in Binder Pro carries some too. {Who} may check your INR (a clotting test) sooner.",
+                "<b>On warfarin?</b> Vitamin K can weaken it: Mito Recharge has 250&nbsp;mcg vitamin K1, and "
+                "Binder Pro&rsquo;s chlorella adds some. {Who} may check your INR sooner.",
             ],
         },
     },

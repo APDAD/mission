@@ -42,7 +42,8 @@ SOURCES (each number on the page carries one of these tags in a comment)
               management of NAFLD. Hepatology 2023;77:1797-1835.
               doi:10.1097/HEP.0000000000000323 (full text read via PubMed Central, PMC10735173)
   [DELPHI23]  Rinella ME et al. A multisociety Delphi consensus statement on new fatty liver
-              disease nomenclature, June 2023 (NAFLD -> MASLD, NASH -> MASH).
+              disease nomenclature, June 2023 (NAFLD -> MASLD, NASH -> MASH; the same scheme names MetALD,
+              MASLD plus greater alcohol intake, so alcohol and MASLD can travel together).
               doi:10.1016/j.aohep.2023.101133 (published jointly in Hepatology / J Hepatol)
   [NHANES25]  Kim D et al. Current burden of steatotic liver disease and fibrosis among adults
               in the United States, 2017-2023. Clin Mol Hepatol 2025;31:382-393.
@@ -65,9 +66,11 @@ SOURCES (each number on the page carries one of these tags in a comment)
   [BANACH15]  Banach M et al. Statin therapy and plasma coenzyme Q10 concentrations: meta-analysis of
               placebo-controlled trials. Pharmacol Res 2015;99:329-336. doi:10.1016/j.phrs.2015.07.008
   [USP20]     Oketch-Rabah HA et al. USP comprehensive review of the hepatotoxicity of green tea extracts.
-              Toxicol Rep 2020;7:386-402. doi:10.1016/j.toxrep.2020.02.008 (fasting bolus doses raise EGCG
-              exposure; case reports at 140 to about 1000 mg/day EGCG; USP label: take with food, stop
-              and call if dark urine or yellow skin or eyes)
+              Toxicol Rep 2020;7:386-402. doi:10.1016/j.toxrep.2020.02.008, PMC7044683 (fasting bolus doses
+              raise EGCG exposure; case reports at 140 to about 1000 mg/day EGCG; the review supports a caution
+              on green tea extract "especially when ingested under fasting conditions or in cases where there is
+              underlying liver vulnerability"; the USP monograph caution opens "Do not take on an empty stomach.
+              Take with food." and ends on liver-trouble signs, "(yellowing of the skin or eyes)")
   [CSO26] NutriDyn CSO, GLC 2026 protocol PDF, Dropbox
               /NutriDyn/Public Share Folder/GLC 2026 Notes/ (CSO folder) (id:xHepYs_Ou4AAAAAAAA7oHg),
               read 2026-11-03: "Metabolic Fatty Liver (MAFLD, MASLD, MASH)": PPC Silymarin (coming soon),
@@ -78,11 +81,32 @@ SOURCES (each number on the page carries one of these tags in a comment)
   [CSO24] NutriDyn CSO, GLC 2024 protocols PDF (id:xHepYs_Ou4AAAAAAAArn1w, per
               scratchpad/wf/protocol-fatty-liver.json): UltraBiotic Prebiotic's polyphenols "all reduce LPS",
               listed as an Akkermansia booster.  Asher's Direct Mail blast "NutriDyn New Formula: Akkermansia
-              Plus" (Gmail 18f5f05aa7b72a44, 2024-05-09) ties Akkermansia to "colon and liver health".
+              Plus" (2024-05-09) ties Akkermansia to "colon and liver health".
   [LABELS]    NutriDyn sell sheets read 2026-11-03 (Dropbox NutriDyn Marketing Materials): Berberine Pro
               ND1130 Rev. 11/25, Lipo-Flow ND606 Rev. 4/26, Milk Thistle Complex ND764 Rev. 2/25,
-              Mito Recharge ND812 Rev. 2/25.  Amounts are in products.d/fatty-liver.json.
+              Mito Recharge ND812 Rev. 2/25.  Amounts are in products.d/fatty-liver.json.  Berberine Pro's
+              caution reads "If you are pregnant, nursing, or taking medication, consult your healthcare
+              practitioner before use" (the source of the check panel's pregnancy line).
+
+Reviewer pass (2026-11-03, round 2), what changed and why:
+  - Check panel, both editions: the green tea extract caution has its own bullet (it used to sit under
+    "Statins"); berberine's drug-enzyme note (CYP2D6, 2C9, 3A4) is in both editions under "Other medicines,
+    warfarin too", never called "liver enzymes" (on this sheet that phrase means the ALT/AST blood test);
+    the practitioner edition names the doctor who prescribes or manages the medicine, since a DC or ND
+    usually does not adjust diabetes medicines or warfarin; a pregnancy and nursing line for Berberine Pro.
+  - Lipo-Flow prints its label dose (2 tablets 3 times daily); no lunch dose sits under "Evening meal".
+  - Milk Thistle Complex mirrors its panel without a silymarin total (300 vs 600 mg is an open question).
+  - Need headers avoid liver-fat and disease readings; every claim bullet carries the FDA diamond.
+  - Intro and the alcohol tile no longer say alcohol plays no part [AASLD23][DELPHI23]; ALT dots say U/L.
+  - Caption 2 between close-ups 2 and 3 is rewrapped so its widest line sits where the zoom beams are apart.
+  - Fit: five checks need room, so the check panel takes the wider part of the duo, the empty Bedtime box is
+    hidden (no bedtime doses; asserted), the lifestyle discs are 0.68 in and the "Nutrient Solutions" title sits
+    0.04 in higher.  Measured both editions in the build's Chromium: no overflow, 8 px or more above the footer,
+    no bullet ending on a single word.
+  - Open questions are in products.d/fatty-liver.json "src": total silymarin (NutriDyn), and whether a
+    green-tea-extract product belongs on a liver sheet (Asher or the CSO).
 """
+import json
 import math
 import os
 import random
@@ -160,9 +184,11 @@ STAGES = [
 # insulin resistance raises fat delivery to the liver; lipotoxic stress on liver cells drives the
 # inflammation of MASH, and "exposure to products derived from the gut microbiome ... may also
 # contribute to the NASH phenotype" [AASLD23], hence the hedge "may add to it"; ongoing inflammation
-# drives fibrosis).
+# drives fibrosis).  Wrapped so the widest line sits where the two zoom beams are farthest apart: the
+# beams close in going down, so caption 2's last line is its shortest (checked: every line clears both beam
+# edges by 7 units or more, about 1.8 mm printed; "bacteria may add to it" there cleared by only 3).
 DRIVERS = [["Insulin resistance", "sends extra fat", "into liver cells"],
-           ["Stressed cells spark", "inflammation; gut", "bacteria may add to it"],
+           ["Stressed cells spark", "inflammation; the gut", "may add to it"],
            ["Years of", "inflammation", "leave scars"]]
 
 # ============================================================== the liver
@@ -846,7 +872,9 @@ CHECKS = [
     ("vial", "Liver enzymes (ALT, AST)",
      "A routine blood test. High levels can mean the liver is irritated, but normal levels do not rule out "
      "fatty liver.",
-     [(SEV[0], "Healthy ALT, women: about 25 or less"), (SEV[0], "Healthy ALT, men: about 33 or less")]),
+     # U/L, the unit lab reports print (some print IU/L, the same number) [AASLD23].  "Up to" gives the top of
+     # each true-normal range (women 19-25, men 29-33 U/L) and keeps each dot on one line in the card.
+     [(SEV[0], "Healthy ALT, women: up to 25 U/L"), (SEV[0], "Healthy ALT, men: up to 33 U/L")]),
     ("gauge", "FIB-4 score",
      "Worked out from your age and routine labs (ALT, AST, platelets) to estimate the risk of advanced scarring.",
      [(SEV[0], "Under 1.3: low risk"), (SEV[1], "1.3 or higher: a FibroScan is next")]),
@@ -925,11 +953,18 @@ CSS = r"""
 .flv-foot{display:flex;justify-content:space-between;align-items:baseline;gap:0.2in;margin-top:0.06in;font-size:7.4pt;color:#3F4A50}
 .flv-foot b{color:var(--deep)}
 .flv-foot small{font-size:7.2pt;color:#6A747B;white-space:nowrap}
-/* back page, scoped by the marker span in the lifestyle title */
-.sheet.back:has(.flv-back) .life .disc2{width:0.74in;height:0.74in}
-.sheet.back:has(.flv-back) .life .disc2 svg{width:0.44in!important;height:0.44in!important}
+/* back page, scoped by the marker span in the lifestyle title.  The check panel holds five checks (green tea
+   extract, diabetes medicines, other medicines and warfarin, statins, pregnancy), so it takes the wider part of
+   the duo.  Nothing on this plan is taken at bedtime (asserted after COLS), so the kit's Bedtime box, which would
+   only say "nothing to take", is hidden and the two meal boxes share the rhythm panel.  Measured in the build's
+   Chromium: both editions keep 8 px or more of clear space above the footer. */
+.sheet.back:has(.flv-back) .life .disc2{width:0.68in;height:0.68in}
+.sheet.back:has(.flv-back) .life .disc2 svg{width:0.41in!important;height:0.41in!important}
 .sheet.back:has(.flv-back) .band h2{margin-bottom:0.07in}
-.sheet.back:has(.flv-back) .rhythm{grid-template-columns:1fr 1fr .5fr}
+.sheet.back:has(.flv-back) .ns-title{margin-top:0.1in}
+.sheet.back:has(.flv-back) .duo{grid-template-columns:1fr 1.4fr}
+.sheet.back:has(.flv-back) .rhythm{grid-template-columns:1fr 1fr}
+.sheet.back:has(.flv-back) .rhythm .slot:nth-child(3){display:none}
 """
 
 # ============================================================== back page
@@ -954,55 +989,88 @@ LIFE = [
     ("gut", "Feed your gut",
      "Fiber and colorful plants feed helpful gut bacteria, like Akkermansia, that help keep the gut lining strong."),
     # [EASL24]: people with steatotic liver disease "should be discouraged from consuming alcohol"; "All alcohol
-    # consumption should be stopped completely and permanently in individuals with advanced fibrosis or cirrhosis"
+    # consumption should be stopped completely and permanently in individuals with advanced fibrosis or cirrhosis".
+    # [AASLD23]: "Moderate alcohol use increases the probability of advanced fibrosis, particularly in patients with
+    # obesity or T2DM"; [DELPHI23] names MetALD (MASLD plus greater drinking), so the tile never says alcohol played
+    # no part: "even if" leaves room for the reader who drinks.
     ("glass", "Go easy on alcohol",
-     "It did not cause this, but alcohol adds to the liver's load. Less is better; none at all if there is scarring."),
+     "Even if alcohol did not cause this, it adds to the liver's load. Less is better; none at all if there is scarring."),
 ]
 
+# Need headers say BLOOD sugar and BLOOD fats, and antioxidant support, so that on a page about liver fat and liver
+# damage no header reads as "removes liver fat" or "protects against the disease" (implied disease claims).  Each
+# fits the header bar on one line (measured), so all four bars stay 0.5 in and the photos line up.
 COLS = [
     # [CSO26]; label [LABELS] ND1130 via products.d (fl_berberine).  The first driver on the front is insulin
     # resistance, and berberine is the competitor's first nutrient, so this is the one to start with.
-    {"p": "fl_berberine", "need": "Steady sugar and fat", "needsub": "berberine (as dihydroberberine)", "start": True,
-     "bullets": ["Supports healthy glucose metabolism", "Supports lipid levels already in a normal range"],
+    {"p": "fl_berberine", "need": "Steady blood sugar, blood fats", "needsub": "berberine (as dihydroberberine)",
+     "start": True,
+     "bullets": ["Supports healthy glucose&nbsp;metabolism", "Supports lipid levels already in a normal range"],
      "dose": "dose_from_db"},
     # NutriDyn science-team lipotropic; 400 mg artichoke + tangerine peel = the competitor's bergamot + artichoke
     {"p": "fl_lipo_flow", "need": "Help the liver process fat", "needsub": "artichoke, citrus peel, inositol",
      "bullets": ["Supports healthy fat metabolism in the liver", "Supports healthy bile flow"], "dose": "dose_from_db"},
     # [CSO26]; antioxidant liver-cell support, the stand-in for the competitor's aged black garlic.
-    # Claims stay structure/function: [AASLD23] calls silymarin's effect in NASH "inconclusive".
-    {"p": "fl_milk_thistle", "need": "Protect liver cells", "needsub": "milk thistle (silymarin), NAC",
-     "bullets": ["Antioxidant support for healthy liver function", "Supports the liver's natural detox processes"],
+    # Claims stay structure/function: [AASLD23] calls silymarin's effect in NASH "inconclusive".  Both bullets are
+    # the sell sheet's own claims ("Promote healthy liver function"; "promoting the liver's natural detoxification
+    # processes") and start with a verb, so build.py ties each to the FDA line with the diamond.  The header carries
+    # the antioxidant idea, so the first bullet does not repeat it.
+    {"p": "fl_milk_thistle", "need": "Antioxidant liver support", "needsub": "milk thistle (silymarin), NAC",
+     "bullets": ["Promotes healthy liver function", "Supports the liver's natural detox processes"],
      "dose": "dose_from_db"},
     # [CSO26]; alpha lipoic acid (75 mg + 45 mg R-lipoic) = the competitor's ALA
     {"p": "fl_mito", "need": "Help cells make energy", "needsub": "alpha lipoic acid, CoQ10, NAC",
-     "bullets": ["Supports energy production in cells", "Promotes healthy antioxidant status"], "dose": "dose_from_db"},
+     "bullets": ["Supports energy production in&nbsp;cells", "Promotes healthy antioxidant&nbsp;status"],
+     "dose": "dose_from_db"},
 ]
 
+# The CSS hides the rhythm's Bedtime box (the kit draws Morning, Evening meal, Bedtime in that order).  That is only
+# right while no product on this page has a bedtime dose, so the build stops if one ever does.
+_PRODUCTS_D = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "products.d", "fatty-liver.json")
+with open(_PRODUCTS_D) as _f:
+    _OWN = json.load(_f)
+assert all(slot != "bed" for c in COLS for slot, _n, _u in c.get("sched", _OWN[c["p"]]["sched"])), \
+    "fatty-liver: a bedtime dose exists, so drop the .rhythm .slot:nth-child(3) rule in CSS"
+
 # Medicine-and-nutrient checks for this page's own products.  Pharmacists check interactions and depletions;
-# providers order labs and adjust doses.
-#  - berberine lowers blood sugar [ZHANG08], so it adds to diabetes medicines; it slowed CYP2D6, 2C9 and 3A4 in
-#    people [GUO12]; Berberine Pro label: "If you are ... taking medication, consult your healthcare practitioner"
-#  - Mito Recharge: 250 mcg vitamin K1 per 3 capsules [LABELS ND812]; vitamin K works against warfarin and intake
-#    should stay steady [ODSK]
-#  - statins are safe "across the disease spectrum" [AASLD23] and lower plasma CoQ10 [BANACH15]; Mito Recharge has
-#    100 mg CoQ10 and 100 mg EGCG from green tea extract [LABELS ND812]; take green tea extract with food, stop if
-#    dark urine or yellow skin [USP20]
+# the doctor who prescribes a medicine is the one who adjusts it (a DC or ND handing out the practitioner edition
+# usually does not manage diabetes medicines or warfarin, and a pharmacist does not either).
+#  - Green tea extract first: it applies to everyone on Mito Recharge, and fatty liver is the "underlying liver
+#    vulnerability" the USP review names.  Mito Recharge has 100 mg EGCG from green tea extract [LABELS ND812];
+#    take it with food, never fasting, and stop at signs of liver trouble [USP20].  "Liver enzymes" here means the
+#    ALT/AST blood test, as on the front.
+#  - berberine lowers blood sugar [ZHANG08], so it adds to diabetes medicines.
+#  - berberine slowed CYP2D6, 2C9 and 3A4 in people (300 mg three times daily for 2 weeks) [GUO12]; "can slow"
+#    because Berberine Pro gives 300 mg dihydroberberine a day, not the study's form and dose.  Slowing CYP2C9
+#    can raise warfarin levels while vitamin K1 works against warfarin (250 mcg per 3 capsules [LABELS ND812];
+#    [ODSK]), so the plan can move warfarin either way: one bullet, the full medicine list, an INR recheck.
+#    CYP450 is never called "liver enzymes" on this sheet.
+#  - statins lower plasma CoQ10 [BANACH15]; Mito Recharge has 100 mg CoQ10 [LABELS ND812].
+#  - Berberine Pro label caution: "If you are pregnant, nursing, or taking medication, consult your healthcare
+#    practitioner before use" [LABELS ND1130]; PCOS is on the front's risk list.
 RX = {
     "pharmacy": [
-        "<b>Diabetes medicines:</b> Berberine Pro adds to their sugar-lowering effect, and it can slow the liver "
-        "enzymes that clear some drugs (CYP2D6, 2C9, 3A4), so {who} checks your other medicines.",
-        "<b>Warfarin:</b> Mito Recharge has 250 mcg vitamin K1, which works against it. Take it the same way every "
-        "day, and tell {who} before you start.",
-        "<b>Statins</b> are safe with fatty liver but lower CoQ10; Mito Recharge has 100 mg. It has green tea "
-        "extract: take it with food. Dark urine or yellow skin? Stop it and call your doctor.",
+        # &nbsp; joins keep each bullet from ending on a single word (checked in both editions)
+        "<b>Green tea extract:</b> Mito Recharge has 100 mg EGCG. Take it with food, never on an empty stomach. "
+        "Dark urine, belly pain, or yellow skin or eyes? Stop it and call&nbsp;your&nbsp;doctor.",
+        "<b>Diabetes medicines:</b> Berberine Pro adds to their sugar-lowering effect; your doctor may check your "
+        "blood sugar more often.",
+        "<b>Other medicines, warfarin too:</b> Berberine Pro can slow the enzymes that clear some drugs (CYP2D6, 2C9, "
+        "3A4), and Mito Recharge&rsquo;s 250 mcg vitamin K1 works against warfarin. Show {who} your full medicine list.",
+        "<b>Statins</b> lower CoQ10; Mito Recharge has 100 mg.",
+        "<b>Pregnant, planning to be, or nursing?</b> Skip Berberine Pro unless your doctor&nbsp;says&nbsp;otherwise.",
     ],
     "practitioner": [
-        "<b>Diabetes medicines:</b> Berberine Pro adds to their sugar-lowering effect, so {who} may check your "
-        "blood sugar more often and adjust doses.",
-        "<b>Warfarin:</b> Mito Recharge has 250 mcg vitamin K1, which works against it. Keep the dose steady; "
-        "{who} may recheck your INR after you start.",
-        "<b>Statins</b> are safe with fatty liver but lower CoQ10; Mito Recharge has 100 mg. It has green tea "
-        "extract: take it with food. Dark urine or yellow skin? Stop it and call {who}.",
+        "<b>Green tea extract:</b> Mito Recharge has 100 mg EGCG. Take it with food, never on an empty stomach. "
+        "Dark urine, belly pain, or yellow skin or eyes? Stop it and call {who}. {Who} may recheck your liver "
+        "enzymes after you start.",
+        "<b>Diabetes medicines:</b> Berberine Pro adds to their sugar-lowering effect, so the doctor who prescribes "
+        "them may check your blood sugar more often and adjust doses.",
+        "<b>Other medicines, warfarin too:</b> Berberine Pro can slow the enzymes that clear some drugs (CYP2D6, 2C9, "
+        "3A4), and Mito Recharge&rsquo;s 250 mcg vitamin K1 works against warfarin. Show {who} your full medicine "
+        "list; the doctor who manages your warfarin may recheck your INR after you start.",
+        "<b>Statins</b> lower CoQ10; Mito Recharge has 100 mg.",
+        "<b>Pregnant, planning to be, or nursing?</b> Skip Berberine Pro unless {who}&nbsp;says&nbsp;otherwise.",
     ],
 }
 
@@ -1014,7 +1082,11 @@ SHEET = {
     # 38% in 2016-2019 [YOUNOSSI23] (AASLD 2023 gives 25-30% [AASLD23]).  Usually silent [AASLD23].
     # "Most common liver condition": "MASLD has become the most common chronic liver disease" [EASL24].
     # Often reversible: "weight loss of 3%-5% improves steatosis ... (>10%) ... NASH and fibrosis" [AASLD23].
-    "intro": ("Fatty liver disease means extra fat is stored inside liver cells, and it is <b>not caused by heavy drinking</b>. "
+    # "This kind": MASLD is the fatty liver that heavy drinking does not cause, but alcohol-related fatty liver and
+    # MetALD (MASLD plus greater drinking) sit in the same 2023 scheme [DELPHI23], and moderate drinking raises the
+    # odds of advanced fibrosis [AASLD23], so the intro never says alcohol plays no part.
+    "intro": ("Fatty liver disease means extra fat is stored inside liver cells. This kind of fatty liver (MASLD) is "
+              "<b>not caused by heavy drinking</b>. "
               "In 2023, liver specialists renamed it <b>MASLD</b> (metabolic dysfunction-associated steatotic liver disease) "
               "because it goes hand in hand with insulin resistance, belly fat, high triglycerides and high blood pressure. "
               "It is the most common liver condition in the world, affecting about <b>1 in 3 adults</b>, and most people "

@@ -55,12 +55,19 @@ SOURCES (each number on the page carries one of these tags in a comment)
   [NINDS]     NIH NINDS, Whiplash information page: a soft-tissue neck injury from a sudden
               backward and/or forward jerk of the head, most often in rear-end car crashes; most
               people recover (reassurance matters: the tear drawn here is partial, not a rupture).
-  [CDC-TBI]   CDC HEADS UP, concussion danger signs (a headache that gets worse and does not go away,
-              repeated vomiting, slurred speech, confusion, unusual drowsiness: call 911 / emergency).
-  [AHA-STR]   American Stroke Association, stroke warning signs (F.A.S.T.: face drooping, arm
-              weakness, speech difficulty; also sudden trouble seeing, sudden dizziness or loss of
-              balance).  Neck trauma can rarely tear a neck artery and cause stroke: Biller J et al.,
-              AHA/ASA statement, Stroke 2014;45:3155-3174, PMID 25104849.
+  [CDC-TBI]   CDC HEADS UP, concussion danger signs, call 911 or go to the emergency department:
+              "Loss of consciousness (passed out/knocked out)", "convulsions or seizures", "A headache
+              that gets worse and does not go away", "Repeated vomiting or nausea", "increased
+              confusion", "Drowsiness or inability to wake up", and "Slurred speech, weakness,
+              numbness, or decreased coordination".
+  [AHA-STR]   American Stroke Association, stroke warning signs.  F.A.S.T.: "Face Drooping", "Arm
+              Weakness: Is one arm weak or numb?", "Speech Difficulty", "Time to call 911"; the
+              other sudden signs: "Sudden numbness or weakness of face, arm, or leg, especially on
+              one side of the body", sudden trouble seeing, sudden dizziness or loss of balance,
+              sudden severe headache.  Neck trauma can rarely tear a neck artery and cause stroke:
+              Biller J et al., AHA/ASA statement, Stroke 2014;45:3155-3174, PMID 25104849.
+              (CDC and stroke.org wording as published; those hosts are outside this build
+              session's network, so the quotes were not re-opened on 2026-11-03.)
   [CDC-VTE]   CDC, Venous thromboembolism (blood clots) signs: leg swelling or pain (call your
               provider as soon as possible); chest pain or trouble breathing (get help now).
   [CDC-SSI]   CDC, Surgical site infection FAQ: redness and pain around the cut, cloudy
@@ -77,30 +84,47 @@ from kit import icon
 from svgkit import T, svg
 
 # ============================================================== text measuring (layout only)
+# Widths come from the fonts the page itself embeds (handouts/conditions/fonts/inter-latin-<weight>-normal.woff2,
+# the files the HTML loads), so the BACK / FORWARD tags, the ribbon pills and the YOUR PART line fit their text on
+# every machine.  A system Inter install is the second choice (same widths here); the character-count guess is the
+# last resort, and tw() prints TEXT MEASURE FALLBACK before using it, because a guessed pill can be narrower than
+# its letters (FORWARD: 58.7 guessed against 62.5 real).
 _FACES = {}
 _WEIGHTS = {400: "Regular", 500: "Medium", 600: "SemiBold", 700: "Bold", 800: "ExtraBold", 900: "Black"}
+_EMBED_DIR = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "fonts"))
 _FONT_DIRS = ("/usr/share/fonts/opentype/inter", "/usr/share/fonts/truetype/inter",
               os.path.expanduser("~/Library/Fonts"), "/Library/Fonts")
+_WARNED = set()
 
 
-def _face(name):
-    if name not in _FACES:
+def _face(weight):
+    if weight not in _FACES:
         from PIL import ImageFont
-        for d in _FONT_DIRS:
-            for ext in ("otf", "ttf"):
-                f = os.path.join(d, f"Inter-{name}.{ext}")
-                if os.path.exists(f):
-                    _FACES[name] = ImageFont.truetype(f, 100)
-                    return _FACES[name]
-        raise FileNotFoundError(name)
-    return _FACES[name]
+        files = [os.path.join(_EMBED_DIR, f"inter-latin-{weight}-normal.woff2")]
+        files += [os.path.join(d, f"Inter-{_WEIGHTS[weight]}.{ext}") for d in _FONT_DIRS for ext in ("otf", "ttf")]
+        for f in files:
+            if not os.path.exists(f):
+                continue
+            try:
+                _FACES[weight] = ImageFont.truetype(f, 100)
+                break
+            except OSError:       # e.g. a FreeType built without WOFF2 (brotli) support: try the next file
+                continue
+        else:
+            raise FileNotFoundError(f"no Inter {weight} in {_EMBED_DIR} or the system font folders")
+    return _FACES[weight]
 
 
 def tw(text, size, weight=600, ls=0.0):
-    """Advance width of `text` in Inter at `size` px (falls back to a generous guess)."""
+    """Advance width of `text` in Inter at `size` px, measured with the embedded page fonts (a warned guess if
+    no Inter file opens)."""
     try:
-        w = _face(_WEIGHTS[weight]).getlength(text) * size / 100
-    except Exception:
+        w = _face(weight).getlength(text) * size / 100
+    except Exception as e:
+        if weight not in _WARNED:
+            _WARNED.add(weight)
+            print(f"TEXT MEASURE FALLBACK (injury-healing): Inter {weight} would not open ({e}); tag, ribbon and "
+                  "YOUR PART widths are guessed from character counts and may not fit their text")
         w = len(text) * size * (0.68 if text.isupper() else 0.6)
     return w + ls * len(text)
 
@@ -110,7 +134,7 @@ INK = "#23292D"
 P1, P1_TX = "#C8343B", "#A8262D"            # phase 1, inflammation (red)
 P2, P2_TX = "#D99A1C", "#8C5F05"            # phase 2, repair (gold)
 P3, P3_TX = "#2F8F5B", "#1E6B42"            # phase 3, remodel (green)
-FIB, FIB_EDGE = "#EBDDC6", "#B49C78"     # healthy collagen fibres (ivory)
+FIB, FIB_EDGE = "#EBDDC6", "#B49C78"     # the ligament's own collagen fibres (ivory)
 NEW, NEW_EDGE = "#E2A82E", "#B57C0A"        # new collagen (gold criss-cross)
 GRN, GRN_EDGE = "#3E9B66", "#1E6B42"     # remodelled fibres (green)
 FB, FB_EDGE, FB_NUC = "#F2C14E", "#A8740C", "#7E5304"       # fibroblast (gold spindle cell)
@@ -793,9 +817,13 @@ def _key_items():
     cord = (f'<path d="M-12,-2.3 Q0,-3.1 12,-2.3 L12,2.3 Q0,1.5 -12,2.3 Z" fill="{CORD}" stroke="{CORD_EDGE}" stroke-width=".6"/>')
     lens = ('<path d="M3,-5 L13,-9 M3,5 L13,9" stroke="#6F7A82" stroke-width="1"/>'
             '<circle cx="-2" r="6.5" fill="#FFFFFF" stroke="#2F3A42" stroke-width="1.4"/>')
-    return [(fib, "Healthy ligament fibers"), (swell, "Swelling (inflammation)"), (clot, "Blood clot"),
+    # the purple dot with the same purple arrow panel 1 draws on the cells leaving the vessel
+    imm = (immune(-4, 0) + f'<path d="M1,-3 L8,3" stroke="{IMM_EDGE}" stroke-width="1.3" marker-end="url(#ih-ap)" '
+           'fill="none"/>')
+    # ivory = the ligament's own fibers, whole or torn (panel 1 shows them torn), so not "healthy"
+    return [(fib, "Ligament fibers"), (swell, "Swelling (inflammation)"), (clot, "Blood clot"),
             (ves, "Blood vessel, new sprouts"),
-            (red_cell(0, 0, 0, 1.15), "Red blood cell"), (immune(0, 0), "Immune cell"),
+            (red_cell(0, 0, 0, 1.15), "Red blood cell"), (imm, "Immune cell, moving in"),
             (fibroblast(0, 0, -20, 0.85), "Fibroblast (repair cell)"), (newc, "New collagen"),
             (grn, "Lined-up new fibers"), (pull, "Pull of movement"), (_key_bone(), "Neck bones and disc"),
             (cord, "Spinal cord"), (lens, "Magnified spot")]
@@ -894,22 +922,34 @@ def slow_row():
 
 def care_box():
     # 911 now: [CDC-VTE] chest pain or trouble breathing; [AHA-STR] stroke signs (neck trauma can, rarely,
-    # injure a neck artery); [CDC-TBI] danger signs after a head injury (its "slurred speech" is carried by the
-    # stroke line's "trouble speaking"); [AAOS] new weakness or numbness with loss of bladder or bowel control.
-    # Stroke line: F.A.S.T. plus sudden trouble seeing and dizziness [AHA-STR]; a sudden, severe headache or
-    # neck pain is the earliest warning of a torn neck artery (Biller 2014: headache and neck pain are the most
-    # common presenting symptoms of cervical artery dissection) and is on the ASA list ("sudden severe headache").
+    # injure a neck artery); [CDC-TBI] danger signs after a head injury; [AAOS] new weakness or numbness with
+    # loss of bladder or bowel control.
+    # Stroke line [AHA-STR]: F.A.S.T. asks "Is one arm weak or numb?", and the ASA list adds "Sudden numbness or
+    # weakness of face, arm, or leg, especially on one side of the body", sudden trouble seeing and sudden
+    # dizziness.  So SUDDEN numbness is a 911 sign and lives here, never in the same-day column.  The line names
+    # the leg as well as the F.A.S.T. arm, so sudden one-sided leg numbness is not left with no column now that
+    # the same-day line says "builds slowly"; the short "Stroke signs:" lead is what keeps it to two lines.
+    # CDC HEADS UP also lists "Slurred speech, weakness, numbness, or decreased coordination" as a call-911
+    # danger sign after a head injury [CDC-TBI] (its slurred speech is the stroke line's "trouble speaking"), and
+    # a torn neck artery after neck trauma can show up exactly this way (Biller 2014).  A sudden, severe headache
+    # or neck pain is the earliest warning of a torn neck artery (Biller 2014: headache and neck pain are the
+    # most common presenting symptoms of cervical artery dissection) and is on the ASA list ("sudden severe
+    # headache").
+    # Head-injury line [CDC-TBI]: "Loss of consciousness (passed out/knocked out)", "convulsions or seizures",
+    # "A headache that gets worse and does not go away", "Repeated vomiting", "increased confusion",
+    # "Drowsiness or inability to wake up".
     now = ["<b>Chest pain</b> or sudden trouble breathing",
-           "<b>Signs of stroke:</b> face drooping, arm weakness, trouble speaking or seeing, severe dizziness, "
-           "or a sudden, severe headache or neck pain",
-           "<b>After a crash or blow to the head:</b> a headache that keeps getting worse, repeated vomiting, "
-           "confusion or unusual sleepiness",
+           "<b>Stroke signs:</b> face drooping, a weak or numb arm or leg, trouble speaking or seeing, severe "
+           "dizziness, or a sudden, severe headache or neck pain",
+           "<b>After a crash or blow to the head:</b> passing out, a seizure, a worsening headache, repeated "
+           "vomiting, confusion or unusual sleepiness",
            "<b>New weakness or numbness</b> with loss of bladder or bowel control"]
     # Same day: [CDC-VTE] leg swelling or pain ("contact your provider as soon as possible");
-    # [CDC-SSI] redness, pain, cloudy drainage or fever after surgery; [NINDS]/[AAOS] new nerve signs.
+    # [CDC-SSI] redness, pain, cloudy drainage or fever after surgery; [NINDS]/[AAOS] nerve signs that come on
+    # slowly (sudden numbness is the 911 stroke line above).
     today = ["<b>Calf pain or swelling</b> in one leg",
              "<b>Fever,</b> or redness, warmth or cloudy drainage at a surgery cut",
-             "<b>New numbness or tingling</b> in an arm or leg",
+             "<b>Numbness or tingling</b> that builds slowly",
              "<b>Pain or swelling getting worse</b> instead of better, or you cannot put weight on it"]
     li = lambda xs: "".join(f"<li>{x}</li>" for x in xs)
     return ('<div class="ihl-care"><div class="ihl-ch"><b>Get care right away</b><span>Healing should get a little better '
@@ -1004,7 +1044,11 @@ SHEET = {
             # NIH ODS vitamin C fact sheet: vitamin C is required to make collagen; citrus fruits, red and
             # green peppers, kiwifruit and strawberries are among the best food sources.  Icon: an orange slice.
             ("ih-citrus", "Vitamin C every day", "Oranges, kiwi and peppers help you make collagen."),
-            # [SMITH18] short sleep delayed wound healing; AASM/SRS: adults need 7 or more hours.
+            # [SMITH18] short sleep delayed wound healing.  "7 to 9": National Sleep Foundation recommendation,
+            # Hirshkowitz M et al., Sleep Health 2015;1(1):40-43, PMID 29073412, doi:10.1016/j.sleh.2014.12.010
+            # ("7 to 9 hours for young adults and adults", ages 18 to 64; "7 to 8 hours of sleep for older adults",
+            # and "Sleep durations outside the recommended range may be appropriate").  AASM/SRS sets the same
+            # floor (adults need 7 or more hours).
             ("moon", "Sleep 7 to 9 hours", "Short sleep slows repair. Keep a steady bedtime."),
             # [KHAN09] mechanotherapy; [LEONG20] fibres align "in the direction of stress".
             ("walk", "Move as advised", "Gentle motion early, then exercises that line fibers up."),
@@ -1044,11 +1088,19 @@ SHEET = {
         # One list for both editions; only {who} changes ("your provider" / "your pharmacist").
         # Bleeding: willow bark contains salicin (MedlinePlus Willow bark; NCCIH); ginger and turmeric/curcumin may
         # slow clotting (MedlinePlus); devil's claw has warfarin interaction reports (MedlinePlus); omega-3s and
-        # warfarin (NIH ODS).  Aspirin allergy: avoid willow bark (MedlinePlus).  Surgery: the American Society of
-        # Anesthesiologists asks patients to stop herbal supplements 2 weeks before surgery; after surgery the
-        # same bleeding cautions apply to a fresh wound and to clot-prevention medicines, so the line asks the
-        # surgeon when to start.  Drowsiness: Muscle Eze label "may cause drowsiness"; hops can cause sleepiness
-        # with sedatives (MedlinePlus Hops).  Diabetes: ginger and turmeric might lower blood sugar, and with
+        # warfarin (NIH ODS).  Bleeding disorders: MedlinePlus lists them as a caution for willow bark, ginger and
+        # turmeric, so the line asks about a bleeding problem, not only about drugs.  Aspirin allergy: avoid willow
+        # bark (MedlinePlus).  Surgery: the American Society of Anesthesiologists asks patients to stop herbal
+        # supplements 2 weeks before surgery; after surgery the same bleeding cautions apply to a fresh wound and to
+        # clot-prevention medicines, so the line asks the surgeon both when to stop and when to restart (it speaks to
+        # the reader before an operation and the reader after one).  Liver disease: turmeric/curcumin is a known
+        # cause of supplement liver injury: the US Drug-Induced Liver Injury Network (DILIN) found 10 turmeric
+        # cases, 5 hospitalised and 1 death from acute liver failure (Halegoua-DeMarzio D et al., Am J Med
+        # 2023;136(2):200-206, PMID 36252717, doi:10.1016/j.amjmed.2022.09.026), and a DILIN review names turmeric
+        # among the major implicated supplements (Halegoua-DeMarzio D, Navarro V, Liver Int 2025;45(3):e16071,
+        # PMID 39136211, doi:10.1111/liv.16071); Inflam-Eze Plus carries curcumin as CurQfen (sell sheet ND516).
+        # Drowsiness: Muscle Eze label "may cause drowsiness"; hops can cause sleepiness with sedatives
+        # (MedlinePlus Hops).  Diabetes: ginger and turmeric might lower blood sugar, and with
         # diabetes medicines it might drop too low (MedlinePlus Ginger and Turmeric, interactions with
         # antidiabetes drugs).  Calcium and magnesium bind tetracycline and quinolone antibiotics and reduce
         # levothyroxine absorption (NIH ODS magnesium and calcium fact sheets).  Kidney disease: magnesium builds
@@ -1059,20 +1111,21 @@ SHEET = {
         # (Reye's syndrome, MedlinePlus); PRM Resolve "Contains: Fish (anchovy, sardine, squid, and mackerel)"
         # (squid is a mollusk, so shellfish); Whey Protein is a milk protein (products DB: "dairy-based").
         "rx": [
-            "<b>Blood thinner (warfarin, apixaban, clopidogrel), aspirin, or NSAIDs like ibuprofen or naproxen?</b> "
-            "White willow (contains salicin), ginger, curcumin, devil's claw and fish oil may add to bleeding risk. "
-            "Ask {who} and your prescriber.",
+            "<b>Bleeding problem or blood thinner (warfarin, apixaban, clopidogrel), aspirin, or NSAIDs like ibuprofen "
+            "or naproxen?</b> White willow (salicin), ginger, curcumin, devil's claw and fish oil may add to bleeding "
+            "risk. Ask {who} and your prescriber.",
             '<b>Allergic to aspirin?</b> Skip <span class="ihl-nw">Inflam-Eze Plus</span>: white willow contains salicin, '
             'a natural relative of aspirin.',
-            "<b>Surgery coming up, or just had one?</b> Tell your surgeon about every supplement and ask when to start. "
-            "Many ask you to stop herbs and fish oil 2 weeks before surgery.",
+            "<b>Surgery coming up, or just had one?</b> Tell your surgeon about every supplement and ask when to stop "
+            "and restart. Many ask you to stop herbs and fish oil 2 weeks before surgery.",
             '<b>Muscle relaxers, opioids or sleep aids?</b> <span class="ihl-nw">Muscle Eze</span> and the hops in '
             '<span class="ihl-nw">Inflam-Eze Plus</span> may add drowsiness. <b>Diabetes medicine?</b> The ginger and '
             'curcumin in <span class="ihl-nw">Inflam-Eze Plus</span> may lower blood sugar; ask {who} about checking it.',
-            '<b>Antibiotics or thyroid medicine?</b> The calcium and magnesium in <span class="ihl-nw">Muscle Eze</span> '
-            'can block some of them. Ask {who} how to space them.',
-            "<b>Pregnant, nursing, under 18, allergic to fish, shellfish or milk, or have kidney disease, stomach "
-            "ulcers or gallstones?</b> Ask {who} first.",
+            '<b>Antibiotics or thyroid medicine?</b> Calcium and magnesium in <span class="ihl-nw">Muscle Eze</span> '
+            'can block some of them; ask {who} how to space them.',
+            # the ask stays in one piece, so neither edition ends on a lone "first." (3 lines either way)
+            "<b>Pregnant, nursing, under 18, allergic to fish, shellfish or milk, or have liver or kidney disease, "
+            'stomach ulcers or gallstones?</b> <span class="ihl-nw">Ask {who} first.</span>',
         ],
     },
 }

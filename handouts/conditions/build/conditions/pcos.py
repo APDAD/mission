@@ -498,7 +498,7 @@ def ov_pole(side):
     return (side * (OV_C[0] + OV_RX * math.cos(a)), OV_C[1] + OV_RX * math.sin(a))
 
 
-def frond(p0, d, length, bw, bend, wave, tipw=1.2, n=16):
+def frond(p0, d, length, bw, bend, wave, tipw=1.6, n=16):
     """One fimbria: a soft finger from the funnel rim along unit direction d, tapering from bw to a
     rounded tip tipw wide.  It droops sideways by `bend` toward its tip (positive = toward the ovary)
     and ripples by `wave`, so the fringe looks soft rather than like stiff spikes."""
@@ -520,8 +520,8 @@ def frond(p0, d, length, bw, bend, wave, tipw=1.2, n=16):
 # fimbriae: (rim position, fan angle, length, base width, bend, wave).  Six soft fingers of uneven
 # length fan out of the funnel rim; positive angles lean toward the ovary, and the last, longest one
 # (the fimbria that holds the ovary) reaches down onto it.
-FRONDS = [(-7.6, -24, 7.4, 3.0, -0.7, 0.45), (-4.6, -9, 10.6, 3.2, 0.9, -0.55), (-1.5, 5, 8.2, 3.2, -0.6, 0.5),
-          (1.6, 17, 11.4, 3.2, 1.0, -0.5), (4.6, 30, 8.8, 3.1, 0.7, 0.45), (7.4, 44, 15.0, 3.4, 1.7, -0.6)]
+FRONDS = [(-7.4, -24, 7.4, 3.4, -0.7, 0.6), (-4.4, -9, 10.6, 3.6, 0.9, -0.7), (-1.4, 5, 8.2, 3.6, -0.6, 0.65),
+          (1.6, 17, 11.4, 3.6, 1.0, -0.65), (4.6, 30, 8.8, 3.5, 0.7, 0.6), (7.3, 44, 15.0, 3.8, 1.7, -0.75)]
 FUNNEL = 9.0      # the tube's last 9 units widen into the funnel (infundibulum)
 
 
@@ -819,9 +819,9 @@ def art_pcos(t):
     o.append(T(UX, UY + 134 * US + 15, "Uterus", 11, 800, "#8A2F3A", "middle"))
     o.append(marker(120, 78, 1, c1) + marker(BX, 72, 2, c1) + marker(UX, 60, 3, c1))
     return svg(W_ART, H_ART, "".join(o),
-               "The pancreas makes insulin. A blood vessel carries sugar and insulin from the pancreas to both ovaries; "
-               "each branch ends in an arrow touching an ovary. A zoom circle shows extra sugar and extra insulin in the "
-               "blood. The ovaries hold many small follicles and release extra androgens.")
+               "The pancreas makes insulin. The bloodstream carries sugar and insulin from the pancreas all over the body; "
+               "a branch to each ovary ends in an arrow touching it. A zoom circle shows extra sugar and extra insulin "
+               "in the blood. The ovaries hold many small follicles and release extra androgens.")
 
 
 # ================================================================== HTML blocks under the art
@@ -859,19 +859,20 @@ def tube_mini():
 def key():
     ves_mini = (f'<rect x="-8.5" y="-5.5" width="17" height="11" rx="2" fill="{V_WALL}" stroke="{V_OUT}" stroke-width="1"/>'
                 f'<rect x="-8.5" y="-2.8" width="17" height="5.6" fill="{V_LUM}"/>')
-    # Column-major, 2 rows: what is in the blood, then the blood itself, then the two organs' parts
-    # that need words, then the ovary parts.  Long entries share a column with short ones.
+    # Column-major, 2 rows: what is in the blood; the red cell with the pancreas; the bloodstream with the
+    # androgens; the ovary parts.  Paired so the four columns fit the page width with "Bloodstream:
+    # carries insulin all over" in (the widths are measured with the real font: 640 of 657 px).
     # Both entries in a column get the same swatch width, so their words start on one line.
     W2, VB2 = 24, "-12 -8 24 16"
     items = [
         (sw(glucose(0, 0, 6.2)), "Glucose", "sugar in the blood"),
         (sw(insulin(0, 0, 6)), "Insulin", "lets sugar into cells"),
-        (sw(red_cell(0, 0, 0, .64)), "Red blood cell", ""),
-        (sw(ves_mini), "Bloodstream", "carries insulin everywhere"),
+        (sw(red_cell(0, 0, 0, .64), W2, 16, VB2), "Red blood cell", ""),
         (sw(pan_mini(), W2, 16, VB2), "Pancreas", "makes insulin"),
+        (sw(ves_mini, W2, 16, VB2), "Bloodstream", "carries insulin all over"),
         (sw(androgen(0, 0, 6.4), W2, 16, VB2), "Androgens", "male-type hormones"),
-        (sw(follicle(0, 0, 5.6), W2, 16, VB2), "Follicle", "the &ldquo;cysts&rdquo;: stalled egg sacs"),
-        (sw(tube_mini(), W2, 16, VB2), "Fallopian tube", "carries eggs to the uterus"),
+        (sw(follicle(0, 0, 5.6), W2, 16, VB2), "Follicle", "egg sac, the &ldquo;cyst&rdquo;"),
+        (sw(tube_mini(), W2, 16, VB2), "Fallopian tube", "carries eggs"),
     ]
     cells = "".join(f'<span>{m}<b>{a}</b>{(" " + b) if b else ""}</span>' for m, a, b in items)
     return f'<div class="pc-key"><em>KEY</em>{cells}</div>'
@@ -882,8 +883,8 @@ def steps():
     # normal for years, which is why the risk of diabetes comes later (facts box).
     st = [("The pancreas makes insulin.", "Insulin moves sugar out of the blood and into your cells for fuel."),
           ("Cells answer insulin poorly.", "So the pancreas pumps out more to keep sugar in check."),
-          ("Extra insulin reaches the ovaries.", "The ovaries then make extra androgens, and eggs stay stuck in "
-                                                 "small follicles (the &ldquo;cysts&rdquo;).")]
+          ("Extra insulin reaches the ovaries.", "The ovaries make extra androgens, and eggs get stuck in "
+                                                 "follicles (the &ldquo;cysts&rdquo;).")]
     return '<div class="pc-steps">' + "".join(
         f'<div><span class="pc-n">{i + 1}</span><p><b>{a}</b> {b}</p></div>' for i, (a, b) in enumerate(st)) + "</div>"
 
@@ -899,58 +900,102 @@ FACE_HAIR = ('<path d="M42 57v-9c5-3 8-8 8-15 0-11-8-19-18-19-8.5 0-14.5 5.5-16 
              '<path d="M24.5 15.5c5-3 13-3.5 19 1.5"/><circle cx="48" cy="15.5" r="5.5"/>'
              '<path d="M15.4 37.8l-3.6 2.4M15.6 40.2l-3.4 2.6M16.4 42.8l-3.6 3.4M18.2 45l-2.4 4.6M21 46.6l-1 5.2M23.4 47l.2 4"'
              ' stroke-width="2.3"/>')
-# Thinning scalp hair: the head seen from above (ears at the sides, nose at the front).  Hair is a
-# soft mass on both sides; the part has widened into a pale wedge, with two lone strands left in it.
-SCALP_THIN = ('<path d="M32 11c-1.6 0-3 .1-4.4.4C19.6 13.2 14 21.6 14 32.4c0 6.4 2 12 5.4 15.6 2-1.8 5.2-3 8.6-3.4'
-              'C28.8 40 28 35 27.8 30.6 27.6 23.6 29.4 16 32 11z" fill="currentColor" stroke="none" opacity=".5"/>'
-              '<path d="M32 11c1.6 0 3 .1 4.4.4C44.4 13.2 50 21.6 50 32.4c0 6.4-2 12-5.4 15.6-2-1.8-5.2-3-8.6-3.4'
-              'C35.2 40 36 35 36.2 30.6 36.4 23.6 34.6 16 32 11z" fill="currentColor" stroke="none" opacity=".5"/>'
-              '<path d="M32 10c-10 0-18 9.6-18 22.6S22 56 32 56s18-10.4 18-23.4S42 10 32 10z"/>'
-              '<path d="M14.2 29c-2.6.8-2.6 7.4 0 8.4M49.8 29c2.6.8 2.6 7.4 0 8.4"/><path d="M29.5 56.6c1 1.8 4 1.8 5 0"/>'
-              '<path d="M19.6 47.8c3.8-3.2 8.2-3.8 12.4-3.8s8.6.6 12.4 3.8"/>'
-              '<path d="M31.4 20l1.4 4.6M32.8 30.5l-1.2 4.4" stroke-width="2"/>')
-# Dark skin patches (acanthosis nigricans): head and shoulders from behind (hair bun), with a dark,
-# blotchy patch across the back of the neck (no beads or dots, so it cannot read as a necklace).
-DARK_PATCH = ('<path d="M24.6 29.4C27 28.6 29.2 30.2 32 29.8 34.8 29.4 37 28.6 39.4 29.6 40.6 32 39.8 34.6 40.6 37.2 38 38.6 '
-              '35.4 37.6 32.6 38.4 29.8 39 27 37.8 23.8 38 24.6 35.2 23.6 32.2 24.6 29.4Z" fill="currentColor" stroke="none" '
-              'opacity=".6"/>'
-              '<circle cx="32" cy="18.5" r="11"/><circle cx="32" cy="6.2" r="3.6"/>'
-              '<path d="M26.5 28.5v8M37.5 28.5v8"/>'
-              '<path d="M26.5 36.5c-8 .8-14 4.6-16 12.5v8M37.5 36.5c8 .8 14 4.6 16 12.5v8"/>')
-# Trouble getting pregnant: a pregnant woman in profile, hand on the belly.
-PREGNANT = ('<circle cx="29" cy="10.5" r="5.8"/>'
-            '<path d="M26.5 18c-3 7-3.6 15-1.6 22 1.4 5 1.4 11 .6 18"/>'
-            '<path d="M32 18c2.2 3 3 6.6 2.4 10.4 8.4 1.8 13 7.8 12.4 14.2-.6 6.4-6.2 9.4-13.4 9.2l.8 6.2"/>'
-            '<path d="M28 23c.6 6 3.4 11.4 8.6 13.6"/>')
+# Thinning scalp hair (Ludwig pattern), seen from the front: long hair still frames the face, but the
+# part has widened into a bare band across the top of the head, crossed by only four thin strands.
+SCALP_THIN = ('<path d="M29.6 22.4c-2.4-3.6-5-6.6-8.6-8.4-4.8 3.6-7.2 9.4-7.2 16.2 0 8.4 1 15.6-2.2 22.6 3.4 1.6 7 1.4 10.4-.4'
+              '-1.8-5-2.6-10.6-2.4-16.6.2-6.8 3.4-11.4 10-13.4z" fill="currentColor" stroke="none" opacity=".6"/>'
+              '<path d="M34.4 22.4c2.4-3.6 5-6.6 8.6-8.4 4.8 3.6 7.2 9.4 7.2 16.2 0 8.4-1 15.6 2.2 22.6-3.4 1.6-7 1.4-10.4-.4'
+              ' 1.8-5 2.6-10.6 2.4-16.6-.2-6.8-3.4-11.4-10-13.4z" fill="currentColor" stroke="none" opacity=".6"/>'
+              '<path d="M32 8.6c-9.4 0-15.4 8-15.4 18.6 0 11.6 6.6 20.6 15.4 20.6s15.4-9 15.4-20.6C47.4 16.6 41.4 8.6 32 8.6z"/>'
+              '<path d="M27.6 46.6v4.2c-6.6 1.2-12.4 3.8-15.2 8.6M36.4 46.6v4.2c6.6 1.2 12.4 3.8 15.2 8.6"/>'
+              '<path d="M24.6 13.4c1.6 2.4 2.8 5 3.4 7.8M39.4 13.4c-1.6 2.4-2.8 5-3.4 7.8M29.4 10c.6 2.6 1 5.2 1 8'
+              'M34.6 10c-.6 2.6-1 5.2-1 8" stroke-width="1.6"/>'
+              '<path d="M26.2 30h2.6M35.2 30h2.6M29.6 39c1.6 1 3.2 1 4.8 0" stroke-width="2.2"/>')
+# Dark skin patches (acanthosis nigricans): the same profile language as FACE_HAIR (bun, hairline), no
+# facial hair, an ear, and an irregular dark velvety patch on the side and back of the neck below the
+# ear, with two skin creases and a speckled edge.  It stops short of the throat, so it cannot read as
+# a collar or a scarf.
+DARK_PATCH = ('<path d="M33.2 41.6c2.6-1.4 5.6-1.6 8.8-1.2v12.8c-2.2 1.2-4.8.6-6.8 1.6-2 1-4.2.4-5-1.6-1-2.4 1-3.6.4-5.8'
+              '-.6-2.4.4-4.6 2.6-5.8z" fill="currentColor" stroke="none" opacity=".82"/>'
+              '<path d="M33.6 46.2c2-.8 4.6-1 7-.6M32.6 50.2c2.4-.8 5.4-1 8-.6" stroke="#F4EAE6" stroke-width="1.1"/>'
+              '<g fill="currentColor" stroke="none" opacity=".75"><circle cx="30.6" cy="44.2" r=".9"/>'
+              '<circle cx="29.2" cy="48.4" r=".8"/><circle cx="31.4" cy="55.6" r=".8"/><circle cx="36.6" cy="56.2" r=".9"/>'
+              '<circle cx="31.6" cy="40.8" r=".7"/></g>'
+              '<path d="M42 57v-9c5-3 8-8 8-15 0-11-8-19-18-19-8.5 0-14.5 5.5-16 13l-3.5 8.5 4 1.2v4.3c0 3 2.2 5 5 5h3.5v11"/>'
+              '<path d="M24.5 15.5c5-3 13-3.5 19 1.5"/><circle cx="48" cy="15.5" r="5.5"/>'
+              '<path d="M36.6 27.6c2.6-1.4 5.4.4 5.2 3.4-.2 2.6-2.4 3.6-4.4 3.4" stroke-width="2.4"/>')
+# Acne: a face from the front with raised spots on the cheeks, chin and forehead (the two biggest
+# carry a faint red-ring halo).
+ACNE = ('<path d="M32 9c-10.4 0-17 8.6-17 20.4C15 42 22.6 55 32 55s17-13 17-25.6C49 17.6 42.4 9 32 9z"/>'
+        '<path d="M15.4 25c3.2-7.6 9.4-11.6 16.6-11.6S45.4 17.4 48.6 25" stroke-width="2.2"/>'
+        '<path d="M24.4 30.6h3.4M36.2 30.6h3.4M28.8 44.2c2 1.2 4.4 1.2 6.4 0" stroke-width="2.4"/>'
+        '<g fill="currentColor" stroke="none"><circle cx="22.4" cy="38.6" r="2.4"/><circle cx="41.8" cy="37.6" r="2.7"/>'
+        '<circle cx="45" cy="43.4" r="1.9"/><circle cx="37.4" cy="50" r="2"/><circle cx="35.6" cy="21.4" r="1.9"/></g>'
+        '<g fill="none" stroke-width="1.2" opacity=".55"><circle cx="22.4" cy="38.6" r="4.4"/><circle cx="41.8" cy="37.6" r="4.8"/></g>')
+# Weight gain at the waist: a torso whose sides bulge outward at the middle, with a tape measure
+# around the widest part.
+WAIST = ('<path d="M22.6 6.6c-1.2 7-4.4 11.4-7.4 16.4-3 5-4.2 9.6-3.2 15 1 5.6 4.6 10.6 5.6 19.4"/>'
+         '<path d="M41.4 6.6c1.2 7 4.4 11.4 7.4 16.4 3 5 4.2 9.6 3.2 15-1 5.6-4.6 10.6-5.6 19.4"/>'
+         '<path d="M11.2 29.6c13.6 3.4 28 3.4 41.6 0v7.6c-13.6 3.4-28 3.4-41.6 0z" fill="currentColor" stroke="none" opacity=".3"/>'
+         '<path d="M11.2 29.6c13.6 3.4 28 3.4 41.6 0M11.2 37.2c13.6 3.4 28 3.4 41.6 0"/>'
+         '<path d="M18 31.6v3M24.6 32.8v3M32 33.2v3M39.4 32.8v3M46 31.6v3" stroke-width="2"/>'
+         '<path d="M52.8 33.4h4.4v8.6h-4.4" stroke-width="2.6"/>'
+         '<circle cx="32" cy="45.4" r="1.4" fill="currentColor" stroke="none"/>')
+# Trouble getting pregnant: a pregnancy test whose window shows only one line (not pregnant yet).
+PREG_TEST = ('<g transform="rotate(-38 32 32)">'
+             '<path d="M25 13a7 7 0 0 1 14 0v24H25z"/>'
+             '<path d="M26.4 37h11.2l-1.2 20a4.2 4.2 0 0 1-8.8 0z" fill="currentColor" stroke="none" opacity=".45"/>'
+             '<path d="M25 37h14l-1.4 20.4a5.6 5.6 0 0 1-11.2 0z"/>'
+             '<rect x="27.8" y="15.4" width="8.4" height="15" rx="2.6" stroke-width="2.4"/>'
+             '<path d="M28.8 20.2h6.4" stroke-width="3"/></g>')
+# Skin tags: a close-up of a patch of skin (shaded, with pores) with three small soft growths on short
+# stalks rising from its surface.
+SKIN_TAG = ('<g transform="translate(0 -7)">'
+            '<path d="M7 41.4c8.4-3.6 41.6-3.6 50 0V51a7 7 0 0 1-7 7H14a7 7 0 0 1-7-7z" fill="currentColor" stroke="none" opacity=".2"/>'
+            '<path d="M7 41.4c8.4-3.6 41.6-3.6 50 0"/>'
+            '<g fill="currentColor" fill-opacity=".55" stroke-width="2.4">'
+            '<path d="M18.4 39.6c0-3.2-3-4.6-3-8.6a4.6 4.6 0 0 1 9.2 0c0 4-3 5.4-3 8.6z"/>'
+            '<path d="M30.4 38.8c0-4-3.6-5.8-3.6-10.6a5.2 5.2 0 0 1 10.4 0c0 4.8-3.6 6.6-3.6 10.6z"/>'
+            '<path d="M43.2 39.4c0-2.6-2.4-3.8-2.4-7.2a3.8 3.8 0 0 1 7.6 0c0 3.4-2.4 4.6-2.4 7.2z"/></g>'
+            '<g fill="currentColor" stroke="none" opacity=".5"><circle cx="15" cy="48" r="1"/><circle cx="25.6" cy="51.6" r="1"/>'
+            '<circle cx="36" cy="47.4" r="1"/><circle cx="47.6" cy="50.4" r="1"/></g></g>')
 
 
 def ring():
     # Signs a reader can notice herself.  [OWH] Office on Women's Health PCOS fact sheet and NIH NICHD
     # "What are the symptoms of PCOS?": irregular periods, hirsutism, acne, thinning scalp hair, weight
     # gain, darkened skin along neck creases and body folds (acanthosis nigricans, a sign of insulin
-    # resistance), skin tags, infertility; [GUIDE23] adds anxiety and depression.
+    # resistance), skin tags, infertility.  [GUIDE23] adds anxiety and depression (2.2.1-2.2.2), and
+    # [GUIDE23H] 1.10.2 lists "daytime sleepiness or fatigue" among the sleep-apnea symptoms every woman
+    # with PCOS should be asked about (the source for "Fatigue").  "Blood sugar swings" is gone: it is in
+    # none of these lists.
     items = [(icon("calendar", "0.34in", sw=3), "Irregular or<br>missed periods"),
-             (icon("acne", "0.34in", sw=3), "Acne"),
+             (ic(ACNE, "0.36in"), "Acne"),
              (ic(FACE_HAIR, "0.36in"), "Extra facial or<br>body hair"),
              (ic(SCALP_THIN, "0.36in"), "Thinning<br>scalp hair"),
-             (icon("waist", "0.34in", sw=3), "Weight gain<br>at the waist"),
+             (ic(WAIST, "0.36in"), "Weight gain<br>at the waist"),
              (icon("battery", "0.34in", sw=3), "Fatigue"),
              (icon("brain", "0.34in", sw=3), "Mood changes,<br>anxiety"),
-             (ic(PREGNANT, "0.36in"), "Trouble getting<br>pregnant"),
+             (ic(PREG_TEST, "0.36in"), "Trouble getting<br>pregnant"),
              (ic(DARK_PATCH, "0.36in"), "Dark skin patches<br>(neck, armpits)"),
-             (icon("meter", "0.34in", sw=3), "Blood sugar<br>swings")]
+             (ic(SKIN_TAG, "0.36in"), "Skin tags")]
     cells = "".join(f'<div class="pc-rg"><div class="pc-c">{s}</div><span>{lab}</span></div>' for s, lab in items)
     return f'<div class="pc-head">SIGNS AND SYMPTOMS</div><div class="pc-ring">{cells}</div>'
 
 
-def facts():
+def facts(ed):
+    # Glucose tests ([GUIDE23H] 1.9.9-1.9.10: an OGTT, or fasting glucose / A1c) are ordered by a doctor;
+    # most pharmacists cannot order them, so the pharmacy edition points the reader to her doctor.
+    test_who = "your doctor" if (ed or {}).get("who") == "your pharmacist" else "{who}"
     return ('<div class="pc-facts">'
             '<div class="pc-fbox"><h4>PCOS facts</h4><p>'
-            # [WHO23] 10-13% of women of reproductive age (Rotterdam 11.9% in [MARCH10]) -> "about 1 in 8"
+            # [GUIDE23H] "PCOS prevalence is between 10 to 13%" (Rotterdam 11.9% in [MARCH10]) -> "about 1 in 8"
             # (12.5%, inside the range; "up to 1 in 8" would understate the 13% top);
             # [WHO23] up to 70% undiagnosed ([MARCH10]: 68-69% had no prior diagnosis) -> "up to 7 in 10".
             'About <b>1 in 8</b> women of childbearing age has PCOS, and up to <b>7 in 10</b> of them have never been '
             'diagnosed. '
+            # [STEPTO13] insulin resistance in 75% of LEAN women with PCOS; [GUIDE23] PCOS occurs across all BMIs.
+            'It happens at every body size, even at a healthy weight. '
             # [GUIDE23] adults: 2 of 3 = irregular cycles; clinical or biochemical high androgens; polycystic ovaries
             # on ultrasound OR a high AMH blood test; other causes excluded.  [PENA25] teens: irregular cycles AND
             # high androgens (no ultrasound, no AMH), so the 2-of-3 line says "Adults".
@@ -959,21 +1004,24 @@ def facts():
             'You can have PCOS without&nbsp;&ldquo;cysts.&rdquo;</p>'
             # [GUIDE23] broader features: metabolic risk (type 2 diabetes), cardiovascular disease, sleep apnoea, mood.
             '<p class="pc-why"><b>Why it matters:</b> PCOS raises the risk of type 2 diabetes, heart disease and sleep apnea '
-            '(breathing pauses during sleep), so ask {who} about checking your blood sugar.</p></div>'
+            f'(breathing pauses during sleep), so ask {test_who} about a blood sugar test.</p></div>'
             '<div class="pc-fbox"><h4>Risk factors</h4><ul>'
             # [GUIDE23] strong family clustering; first-degree relatives with PCOS or type 2 diabetes.
             '<li><b>Runs in families:</b> a mother or sister with PCOS or type 2 diabetes raises your risk.</li>'
-            # [STEPTO13] insulin resistance in 75% of LEAN women with PCOS; [GUIDE23] PCOS occurs across all BMIs.
-            '<li><b>Not just weight:</b> PCOS happens at every body size, even at a healthy weight.</li>'
-            # [GUIDE23] lifestyle (diet, activity, sleep, stress) worsens or eases PCOS features; it is not shown to
-            # cause PCOS.  Hormone-disrupting chemicals (BPA in some plastics, phthalates in fragrances): higher levels
-            # go with higher androgens in women with PCOS in observational studies only, hence "can make it worse".
-            '<li><b>Can make it worse (you can change):</b> a high-sugar, low-nutrient diet, sitting most of the day, '
-            'poor sleep, chronic stress and hormone-disrupting chemicals (in some plastics and fragrances).</li></ul></div></div>')
+            # [GUIDE23H] 1.9.8: women with type 1 and type 2 diabetes have an increased risk of PCOS.
+            '<li><b>Diabetes:</b> women with type 1 or type 2 diabetes are more likely to have PCOS.</li>'
+            # [GUIDE23] weight gain worsens insulin resistance and androgen excess (hence the guideline's focus on
+            # preventing weight gain, 3.1.2); lifestyle (diet, activity, sleep, stress) worsens or eases PCOS
+            # features but is not shown to cause it.  Hormone-disrupting chemicals (BPA in some plastics,
+            # phthalates in fragrances): higher levels go with higher androgens in women with PCOS in observational
+            # studies only, hence "can make it worse".
+            '<li><b>Can make it worse (you can change):</b> weight gain at the waist, a high-sugar diet, '
+            'sitting most of the day, poor sleep, stress and hormone-disrupting chemicals (in some plastics and '
+            'fragrances).</li></ul></div></div>')
 
 
 def front(t, ed):
-    return (f'<div class="pcf"><div class="pc-art">{art_pcos(t)}</div>{steps()}{key()}{ring()}{facts()}</div>')
+    return (f'<div class="pcf"><div class="pc-art">{art_pcos(t)}</div>{steps()}{key()}{ring()}{facts(ed)}</div>')
 
 
 CSS = r"""
@@ -985,7 +1033,7 @@ CSS = r"""
 .pcf .pc-steps p{margin:0;font-size:8.2pt;line-height:1.3;color:#2B3236}
 .pcf .pc-steps b{color:var(--deep)}
 .pcf .pc-key{display:grid;grid-template-rows:auto auto;grid-auto-flow:column;justify-content:space-between;align-items:center;
-  gap:3px 8px;margin-top:0.07in;padding:5px 10px 5px 12px;border:1px solid #D9DEE2;border-radius:8px;background:#FFFFFF;font-size:7.6pt;
+  gap:3px 8px;margin-top:0.07in;padding:5px 10px 5px 12px;border:1px solid #D9DEE2;border-radius:8px;background:#FFFFFF;font-size:7.4pt;
   line-height:1.2;color:#3A4247}
 .pcf .pc-key em{grid-row:span 2;font:800 7.4pt Inter,sans-serif;letter-spacing:.14em;color:#2B3236;font-style:normal}
 .pcf .pc-key span{display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
@@ -1005,9 +1053,11 @@ CSS = r"""
 .pcf .pc-fbox ul{margin:0;padding-left:13px}
 .pcf .pc-fbox li{margin-bottom:1px}
 .pcf .pc-fbox b{color:var(--deep)}
-/* Back page, this sheet only (keyed to the Myo-Inositol Complex photo, which no other sheet uses):
-   keep each count with its unit in "Your daily rhythm", so "3 capsules" never splits across lines. */
-.sheet.back:has(img[src$="nd-inositol.png"]) .slot li em{white-space:nowrap}
+/* Back page, this sheet only: nothing is taken at bedtime, so the Bedtime slot of "Your daily rhythm"
+   gets a narrow column, and the rhythm panel takes a little more of the row from the check panel, so
+   each product and its count fit on one line where they can. */
+.sheet.back:has(.pc-back) .duo{grid-template-columns:1.86fr 1fr}
+.sheet.back:has(.pc-back) .rhythm{grid-template-columns:1.4fr 1.4fr .46fr}
 """
 
 SHEET = {
@@ -1015,34 +1065,104 @@ SHEET = {
     "order": 6,
     "title": "Polycystic Ovary Syndrome", "sub": "PCOS",
     # [STEPTO13] insulin resistance in 75% of lean and 95% of overweight women with PCOS -> "most women".
-    "intro": ("PCOS is a common hormone condition. The ovaries make more <b>androgens</b> (male-type hormones such as "
-              "testosterone; women normally make a little) than usual. That can upset periods, ovulation (releasing an egg) "
+    "intro": ("PCOS is a common hormone condition. The ovaries make extra <b>androgens</b>. These are male-type hormones "
+              "like testosterone; women normally make a little. Too much can upset periods, ovulation (releasing an egg) "
               "and fertility, and it shows up in skin, hair, weight and mood. Genes play a part, but in most women with PCOS "
-              "<b>insulin resistance</b> (cells stop answering insulin) helps drive it. That is why food, movement, sleep and "
+              "<b>insulin resistance</b> (cells answer insulin poorly) helps drive it. That is why food, movement, sleep and "
               "stress change how PCOS behaves."),
     "front": front,
     "css": CSS,
-    # ---- back: kept exactly as the first draft (sheets.py) until the product pass
     "back": {
-        "life_title": "Lifestyle Recommendations", "style": "circle",
-        "life": [("plate", "Diet", "Protein and fiber at every meal. Limit refined sugar and starch to steady blood sugar."),
-                 ("dumbbell", "Exercise", "150 minutes a week of activity plus 2 strength days improves insulin sensitivity."),
-                 ("moon", "Sleep", "Seven to eight hours a night supports weight and healthy hormone production."),
-                 ("plastic", "Limit hormone disruptors", "Glass or steel containers, never heat food in plastic, fragrance-free products.")],
-        "cols": [
-            {"p": "gluco_ir", "need": "Blood sugar and insulin", "needsub": "dihydroberberine, chromium, ALA", "start": True,
-             "bullets": ["Supports healthy glucose metabolism", "Supports insulin sensitivity"], "dose": "dose_from_db"},
-            {"p": "inositol", "need": "Insulin signaling", "needsub": "inositol",
-             "bullets": ["Supports healthy ovarian function", "Supports insulin signaling"], "dose": "dose_from_db"},
-            {"p": "d3_5000_k2", "need": "Vitamin D", "needsub": "D3 with K2",
-             "bullets": ["Low vitamin D is common in PCOS", "Supports hormone and immune health"], "dose": "dose_from_db"},
-            {"p": "omega_1000", "need": "Calm inflammation", "needsub": "omega-3 fatty acids",
-             "bullets": ["Supports a healthy inflammatory response", "Supports healthy triglycerides"], "dose": "dose_from_db"},
-            {"p": "ultrabiotic_dms", "need": "Gut and hormones", "needsub": "multi-strain probiotic",
-             "bullets": ["Your gut bacteria help process hormones", "Seven strains, one capsule"], "dose": "1 capsule daily", "dosesub": "same time each day"},
+        # the span marks this sheet's back page for the scoped CSS (.sheet.back:has(.pc-back))
+        "life_title": 'Lifestyle Recommendations<span class="pc-back"></span>',
+        "style": "circle",
+        "life": [
+            # PCOS handout "Always avoid": sugar-sweetened drinks; carbohydrates eaten on their own, without
+            # protein or fat; "Protein ... start here at every meal" (low-glycemic eating, Sun X 2026, 25 RCTs).
+            ("plate", "Protein first", "Start every meal with protein. Never eat carbs on their own, and skip sugary drinks."),
+            # PCOS handout food table: fermented foods 1 to 2 servings a day (plain kefir, live-culture yogurt,
+            # sauerkraut ...); non-starchy vegetables 4 to 6 servings ("the fiber your gut bacteria feed on").
+            ("jar", "Feed your gut", "Plain kefir, yogurt or sauerkraut daily, plus 4 to 6 servings of vegetables."),
+            # [GUIDE23H] 3.4.2-3.4.5: activity per population guidelines, "at least 30 minutes daily on most
+            # days"; muscle strengthening on 2 days a week (US Physical Activity Guidelines, 2nd ed., 2018).
+            ("dumbbell", "Move and lift", "At least 30 minutes on most days, plus strength work 2 days a week."),
+            # 7 to 9 hours: National Sleep Foundation adult range.  [GUIDE23H] 1.10.2: ask about snoring with
+            # waking unrefreshed, daytime sleepiness or fatigue (sleep apnea, named on the front).
+            ("moon", "Sleep 7 to 9 hours", "Snoring or always tired? Ask about sleep apnea."),
+            # [GRANT10]: spearmint tea twice a day for 30 days, 42 women with PCOS: free and total testosterone
+            # fell (the hair score itself did not change in that time, hence "small study" and no promise).
+            # In Kenneth Johnson's NutriDyn GLC 2026 PMOS protocol.
+            ("leaf", "Spearmint tea", "Two cups a day. In a small 30-day study, testosterone came down."),
         ],
-        "rx": ["<b>Birth control pills</b> can lower B6, B12, folate, magnesium and zinc. Ask about a quality multi.",
-               "<b>Metformin</b> lowers B12 over time. Ask for a yearly check.",
-               "<b>Spironolactone</b> raises potassium: avoid potassium supplements unless prescribed."],
+        # Five products (the competitor sheet's count), all from NutriDyn PCOS protocols: Monique Class GLC
+        # 2023 (Myo-Inositol Complex 3 BID, Berberine Pro TID, Vit D3 5000 IU, fish oils), Kenneth Johnson GLC
+        # 2026 "PMOS" (Berberine Pro, Omega Pure EPA-DHA 1000 for the triglycerides) and Asher's own PCOS
+        # handout and blast (UltraBiotic Daily Multi-Strain, give it 12 weeks).  Label facts, doses and claim
+        # sources per product: products.d/pcos.json (the five sell sheets, opened 2026-11-03).
+        # Start here: Myo-Inositol Complex, the one formula made for this condition ("Support for Healthy Ovarian
+        # Function"), the product Asher offers by name for PCOS patients, and the one Johnson calls "the
+        # best-supported supplement here"; [GUIDE23H] 4.7.1 notes inositol's limited harm.
+        "cols": [
+            # ND680: "Support healthy ovarian function", "Support healthy menstrual cycles", "Support optimal blood
+            # glucose balance"
+            {"p": "pc_inositol", "need": "Ovaries and cycles", "needsub": "myo- + D-chiro-inositol",
+             "start": True, "dose": "dose_from_db",
+             "bullets": ["Supports healthy ovaries and cycles", "Supports optimal blood glucose balance"]},
+            # ND1130: "Promotes healthy glucose metabolism", "Supports heart health & optimal lipid balance";
+            # GlucoVantage is dihydroberberine, a form of berberine (the serving line names it exactly)
+            {"p": "pc_berberine", "need": "Blood sugar and insulin", "needsub": "berberine + cinnamon",
+             "dose": "dose_from_db",
+             "bullets": ["Promotes healthy glucose metabolism", "Supports heart health and lipid balance"]},
+            # ND382: "help ensure users obtain adequate amounts"; "Supports healthy mood and stress levels",
+            # "Supports bone and skin tissues", "Supports immune function"
+            {"p": "pc_d3_5000_k2", "need": "Vitamin D", "needsub": "D3 5,000 IU with K2", "dose": "dose_from_db",
+             "bullets": ["Supports healthy vitamin D levels", "Supports mood, bone and immune health"]},
+            # Johnson GLC 2026 uses it "for the triglycerides"; ND416: "Healthy cardiovascular function",
+            # "Healthy immune function", "Skin vitality"
+            {"p": "pc_omega", "need": "Healthy blood fats", "needsub": "omega-3 fish oil", "dose": "dose_from_db",
+             "bullets": ["Supports healthy triglyceride levels", "Supports heart, skin and immune health"]},
+            # ND460: "Support a healthy gut microbiome"; its text: "promote healthy hormone functions"
+            {"p": "pc_ultrabiotic", "need": "Gut and hormones", "needsub": "7-strain probiotic",
+             "dose": "dose_from_db",
+             "bullets": ["Supports a healthy gut microbiome", "Promotes healthy hormone function"]},
+        ],
+        # Three notes per edition.  Pharmacists check interactions and depletions; providers order labs and adjust.
+        # Pregnancy: [CHAN93] berberine displaces bilirubin from albumin, "best avoided in jaundiced neonates and
+        # pregnant women"; every one of the five labels says to consult a practitioner if pregnant or nursing;
+        # [GUIDE23H] 5.8.1-5.8.3: inositol is experimental for fertility and its safety is not known.
+        # Sugar-lowering: dihydroberberine (ND1130) and the chromium in Myo-Inositol Complex (ND680) add to diabetes
+        # medicines; low blood sugar is mainly a risk with insulin or a sulfonylurea (glipizide).  Yin J et al.
+        # Metabolism 2008;57:712-7, doi:10.1016/j.metabol.2008.01.013: berberine added to existing diabetes
+        # treatment lowered fasting and after-meal glucose and A1c further (read on PubMed 2026-11-03).
+        # Nursing: the berberine-bilirubin concern [CHAN93] is for newborns; the LactMed goldenseal (berberine)
+        # record, PMID 30000926, could not be opened from this machine.
+        # Warfarin, not "blood thinners": vitamin K weakens warfarin (a vitamin K antagonist), not the newer
+        # anticoagulants; the ND382 label itself warns against K2 with any blood-thinning medication.
+        # [GUO12] berberine lowered CYP2D6, 2C9 and 3A4 activity.  [AROD16] metformin and B12.  [PALM13] the pill
+        # and B6, B12, folate, magnesium and zinc.  Vitamin D: the D3 5000 label (ND382) says it exceeds the adult
+        # upper intake level (4,000 IU, NIH Office of Dietary Supplements) and asks for regular 25-OH vitamin D
+        # monitoring; its K2 "is not recommended for patients on blood-thinning medications".
+        # Labs: [GUIDE23H] 1.9.9 (OGTT, or A1c), 1.8.3 (lipids); Asher's handout: recheck testosterone and
+        # triglycerides at months 1 to 3.
+        # "Keep any prescribed medicine" leads the medicine note in both editions (Asher's PCOS handout: "If you
+        # are on medication for PCOS, keep taking it exactly as prescribed").
+        "rx": {
+            "practitioner": [
+                "<b>Trying to get pregnant, pregnant or nursing?</b> Do not take Berberine Pro (not considered safe "
+                "then). Ask {who} about the rest.",
+                "<b>Keep any prescribed medicine.</b> Berberine Pro adds to metformin or insulin, so {who} may adjust "
+                "the dose. Metformin lowers B12.",
+                "<b>Labs now and at 3 months:</b> vitamin D (5,000&nbsp;IU is over the 4,000&nbsp;IU daily limit), "
+                "blood sugar (glucose tolerance or A1c), lipids, testosterone.",
+            ],
+            "pharmacy": [
+                "<b>Trying to get pregnant, pregnant or nursing?</b> Do not take Berberine Pro (not considered safe "
+                "then). Ask {who} about the rest.",
+                "<b>Keep any prescribed medicine.</b> Berberine Pro adds to diabetes medicines and slows CYP3A4, 2D6 "
+                "and 2C9, which clear many drugs.",
+                "<b>The pill</b> can lower B6, B12, folate, magnesium and zinc; metformin lowers B12. <b>On "
+                "warfarin?</b> Vitamin K2 (in D3 5000) can weaken it.",
+            ],
+        },
     },
 }

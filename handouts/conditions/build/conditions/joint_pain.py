@@ -10,10 +10,11 @@ FRONT, top to bottom
   the left half healthy, the right half with osteoarthritis (thin, cracked cartilage with a bald
   patch, bone spurs growing as lips of bone at the joint edges, a swollen red lining with extra
   fluid and loose flakes, a squeezed joint space, a torn meniscus pushed out past the rim).
-  Matching I-beam brackets measure the joint space bone end to bone end on both sides.  The four
-  numbered OA steps each have a leader to the tissue they name.  Each half has a magnified circle
-  of its cartilage, tied to a dashed ring on the knee by a dashed connector, and one three-row KEY
-  names every colour and symbol on the knee and in both circles.  Each meniscus rim meets the joint
+  Matching I-beam brackets measure the joint space bone end to bone end on both sides (the squeezed
+  one without arrowheads, so it stays an I-beam).  The four numbered OA steps each have a leader to
+  the tissue they name.  Each half has a magnified circle of its shin-bone (tibial) cartilage, the
+  same way up as the circle (fluid, cartilage, bone), tied to a dashed ring on the knee by a dashed
+  connector, and one three-row KEY names every colour and symbol on the knee and in both circles.  Each meniscus rim meets the joint
   lining (the capsule holds it), with fluid pockets above it; on the worn side the pushed-out
   meniscus presses into the swollen lining -> how it can feel / get checked promptly -> what raises
   your risk -> good to know (1 lb -> 4 lb, where OA strikes as a front-view figure, 150 min, a pain
@@ -27,8 +28,9 @@ BACK: lifestyle band, 5 NutriDyn products (label facts in products.d/joint-pain.
   daily plan and the fifth, Curcumin 400X, is the willow-free choice instead of Inflam-Eze Plus, so it
   stays out of the daily rhythm (morning and evening; no bedtime products, so that empty slot is
   hidden).  One check list reads right in both editions through {who}.  The back page is reached in
-  CSS through the empty .jpn-bk marker in the lifestyle title; BACK_CSS only tightens spacing there
-  so the longer check list fits (all fine print, the START HERE badge and the diamond come from the kit).
+  CSS through the empty .jpn-bk marker in the lifestyle title; BACK_CSS gives every product name a
+  two-line band (so all five columns line up row by row) and tightens spacing so that band and the
+  six-point check list fit (all fine print, the START HERE badge and the diamond come from the kit).
 
 SOURCES (tags used in the comments next to each number or claim)
   [GBD21]     GBD 2021 Osteoarthritis Collaborators. Lancet Rheumatol 2023;5:e508-22. PMID 37675071,
@@ -106,8 +108,22 @@ SOURCES (tags used in the comments next to each number or claim)
                 PMID 11448284: tell the surgical team about herbal products and stop them about two weeks
                 before surgery; ginger, turmeric, willow and devil's claw carry bleeding cautions.
   [CDC-AGS]     CDC "Products that may contain alpha-gal": gelatin and other products made from mammals (beef,
-                pork) can trigger alpha-gal syndrome, the red-meat allergy spread by lone star tick bites.
-                Collagen Renew's only other ingredient is "Bovine Collagen Peptides" (labels.json R190).
+                pork) can trigger alpha-gal syndrome, the red-meat allergy spread by lone star tick bites.  CDC
+                "Fast Facts: Products That May Contain Alpha-gal" (cdc.gov/alpha-gal-syndrome, read through a
+                web-search summary 2026-11-03): there is no full list; providers can look for gelatin, glycerin,
+                magnesium stearate and bovine extract, and each person's tolerance varies, so the panel says "ask
+                first" for those and "skip" only for a product made from beef.  The CDC provider sheet
+                (stacks.cdc.gov/view/cdc/131337) and University of Missouri Extension N1352 (2026, citing CDC) list
+                gelatin capsules and magnesium stearate; both hosts are blocked from this machine, so neither was
+                opened.  The products: Collagen Renew's only other ingredient is "Bovine Collagen Peptides"
+                (labels.json R190), hence "skip".  Chondro-Relief Intensive Care: chondroitin sulfate is usually made
+                from cow, pig, chicken or shark cartilage and no NutriDyn document here states its source; its only
+                printed other ingredients are "Silicon dioxide, magnesium stearate, and gelatin" (2014 catalog,
+                labels.json R160), the stearate not stated as vegetable.  Curcumin 400X: "Softgel (gelatin, sorbitol,
+                glycerin, purified water, carob), coconut oil" (NutriDyn sell sheet Curcumin 400x SS ND466, Rev. 7/24,
+                Dropbox Marketing Materials, read 2026-11-03).  Inflam-Eze Plus and Joint Eze use hypromellose
+                (plant) capsules with vegetable magnesium stearate (their sell sheets, labels.json), so they are
+                not named.
 """
 import math
 import os
@@ -170,16 +186,20 @@ RED, RED_DK = "#C23A2F", "#9C2B22"
 # ============================================================== geometry (viewBox units)
 W, H = 760, 418
 CX = 380                       # the split line runs down the middle of the knee
-FEM_TOP, TIB_BOT = 44, 344     # bone ends fade out above and below (local units)
+FEM_TOP, TIB_BOT = 44, 344     # bone ends fade out above and below (local units): where the fade mask starts
+FEM_CUT = FEM_TOP - 20         # the femur's cut top edge sits above the fade, in the fully masked zone, so the
+                               # inner shell line that runs across it never shows as a pale "lid"
 K, YJ = 1.12, 214              # the knee is drawn in local units and scaled by K about the joint line
 DROP = 10                      # the worn inner condyle sits lower: a narrowed joint space
 KEY_Y, KEY_H = 346, 68         # three-row KEY; its white box covers the faded shaft ends
 TOP = 4                        # top margin above the heading pills (the art is drawn TOP units down)
 INS_R = 63
 INS_L, INS_W = (100, 92), (660, 92)   # magnified circles (healthy, worn)
-# where the dashed rings sit on the femoral cartilage (local u, healthy / worn): each in the clear window between
-# its joint-space bracket (u -64 / +64) and the cartilage end or the meniscus tip, so a dashed connector can rise
-# from it to its circle (the worn one between markers 1 and 2)
+# where the dashed rings sit on the TIBIAL cartilage (local u, healthy / worn), centred halfway through its thickness:
+# the close-up circles show joint fluid on top, then cartilage, then bone, which is the shin bone's way up (the
+# thigh bone's cartilage hangs under it, the other way up).  Each ring is in the clear window between its
+# joint-space bracket (u -64 / +64) and the cartilage end or the meniscus tip, so a dashed connector can rise from
+# it to its circle (the worn one between markers 1 and 2)
 LENS_U = (-47, 80)
 LENS_R = 10
 SPACE_U = 64                   # the joint-space brackets, at the middle of each condyle
@@ -307,7 +327,7 @@ def _s_at_x(curve, x):
 
 
 # ---- bone outlines: left half (u = x - CX), mirrored for the right.  A right knee from the front.
-FEM_L = [(-42, FEM_TOP, 0), (-42, 84), (-45, 104), (-53, 121), (-67, 136), (-86, 149), (-103, 159), (-111, 170),
+FEM_L = [(-42, FEM_CUT, 0), (-42, 84), (-45, 104), (-53, 121), (-67, 136), (-86, 149), (-103, 159), (-111, 170),
          (-112, 180), (-109, 190), (-101, 200), (-86, 207), (-64, 210), (-44, 207), (-31, 199), (-25, 188),
          (-22, 175), (-17, 162), (-9, 154), (0, 151)]
 FEM_ART = (8, 14)              # segments covered by cartilage on the outer condyle (rim -> notch edge)
@@ -519,8 +539,13 @@ def _lip(outline, sgn, i0, i1, height, peak=0.5, hook=0.0, sink=1.6):
 
 
 def _bracket(x, y0, y1, w=3.4):
-    """A joint-space bracket: an I-beam between two bone ends with arrowheads pressing on its caps."""
+    """A joint-space bracket: an I-beam between two bone ends with arrowheads pressing on its caps.  A squeezed
+    gap (under 6 units, about 1.5 mm printed) keeps only the caps and the stem: arrowheads that short meet in the
+    middle and the mark reads as an X, not as the KEY's I-beam."""
     d = f"M{_f(x - w)},{_f(y0)} H{_f(x + w)} M{_f(x - w)},{_f(y1)} H{_f(x + w)} M{_f(x)},{_f(y0)} V{_f(y1)}"
+    if y1 - y0 < 6:
+        return (f'<path d="{d}" stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round" fill="none"/>'
+                f'<path d="{d}" stroke="{INK}" stroke-width="1.1" stroke-linecap="round" fill="none"/>')
     a = min(2.4, (y1 - y0) * 0.42)
     heads = (f"M{_f(x - 1.9)},{_f(y0 + a)} L{_f(x)},{_f(y0 + 0.5)} L{_f(x + 1.9)},{_f(y0 + a)} Z "
              f"M{_f(x - 1.9)},{_f(y1 - a)} L{_f(x)},{_f(y1 - 0.5)} L{_f(x + 1.9)},{_f(y1 - a)} Z")
@@ -622,14 +647,9 @@ def knee(rnd):
 
     o.append(_cruciates())
     # ---- cartilage
+    # (the worn surfaces show their fraying through the uneven thickness, the cracks and the keyed loose flakes;
+    # no extra fray dots, which read as the KEY's "Lost cell" or as bubbles)
     o += [cart_fl, cart_tl, cart_fr, cart_tr]
-    # worn surface: tiny frays where the cartilage is breaking up
-    for surf, th in ((surf_fr, th_fr), (surf_tr, th_tr)):
-        for i in range(3, len(surf) - 3, 5):
-            if th[i] > 1.0 and rnd.random() < 0.5:
-                x, y = surf[i]
-                o.append(f'<circle cx="{_f(x)}" cy="{_f(y)}" r="{_f(rnd.uniform(0.6, 1.0))}" fill="{CART_HI}" '
-                         f'stroke="{CART_EDGE}" stroke-width=".5"/>')
 
     # ---- bone spurs (osteophytes): lips of extra bone growing out of the edges of the worn joint, where the
     # cartilage ends (femur: a beak hooking down past the cartilage edge; tibia: a shelf below the plateau rim)
@@ -1052,9 +1072,9 @@ def art_knee():
     o.append(_pill(CX - 62, 2, "HEALTHY", GREEN))
     o.append(_pill(CX + 80, 2, "OSTEOARTHRITIS", RED))
 
-    # bone names, in clear space on the shafts
+    # bone names, in clear space on the shafts (solid white boxes, so the dashed split line does not ghost through)
     for y, lines in ((68, ["Thigh bone", "(femur)"]), (314, ["Shin bone", "(tibia)"])):
-        o.append(label_bg(CX - 36, y - 12, 72, 30, "#FFFFFF", 0.9, 6))
+        o.append(label_bg(CX - 36, y - 12, 72, 30, "#FFFFFF", 1, 6))
         o.append(T(CX, y, lines[0], 10.5, 700, INK, "middle"))
         o.append(T(CX, y + 13, lines[1], 10, 500, INK2, "middle", italic=True))
     o.append(T(CX - 154, 322, "Calf bone", 10.5, 700, INK, "end"))
@@ -1063,8 +1083,11 @@ def art_knee():
     # magnified circles, and the dashed rings on the knee that mark the spot each one shows, each tied to its
     # circle by a dashed connector that rises from the ring and bends over to the circle through clear space (the
     # worn one passes between markers 1 and 2 and above the swollen lining)
-    lx, ly = tf(CX + LENS_U[0], _y_at(g["fem_l"], CX + LENS_U[0], max) + 3.4)
-    rx, ry = tf(CX + LENS_U[1], _y_at(g["fem_r"], CX + LENS_U[1], max) + 1.6)
+    def _tib_mid(bone, top, u):   # halfway between the tibial bone surface and the cartilage's top at u
+        x = CX + u
+        return tf(x, (_y_at(bone, x, min) + _y_at(top, x, min)) / 2)
+    lx, ly = _tib_mid(g["tib_l"], g["surf_tl"], LENS_U[0])
+    rx, ry = _tib_mid(g["tib_r"], g["surf_tr"], LENS_U[1])
     o.append(inset(INS_L, False))
     o.append(inset(INS_W, True))
     o.append(_connector((lx, ly), LENS_R, INS_L, 66, (lx - 32, 104), GREEN_DK))
@@ -1157,10 +1180,17 @@ IC_LIFT = ('<circle cx="20" cy="10" r="5.2"/><path d="M21.4 16.6 27.6 35"/><path
 IC_THIGH = ('<path d="M24 4.5C30.4 9 33.8 15.4 33.2 22.4 32.8 26.6 31 29 31.6 31.6 33.6 33.6 33.2 36.6 31.2 38.6L30.4 52.6'
             'C33.4 53.6 38.4 54.2 43 55.6 45.2 56.3 45 59 42.8 59H23.6C21.8 59 21.4 57 22 55 23 51 22.8 47.2 21.6 44.2'
             'C19.4 38.6 19.6 35 20.6 32 21.6 28.6 19.2 20 16.6 13.2L15.4 4.5"/><path d="M46 6.5v13M41 14.5l5 5 5-5"/>')
+# an injured joint: the knee's two bone ends (thigh bone with its knobs, shin bone with its flat top) with a
+# band-aid stuck across the joint; the band-aid is filled with the disc colour so it covers the bone lines under it
+IC_INJURY = ('<path d="M24 3V13C24 18 15 18.5 15 25.5C15 30 19 32.5 23.5 31.5C27 30.7 29 29 32 29C35 29 37 30.7 40.5 31.5'
+             'C45 32.5 49 30 49 25.5C49 18.5 40 18 40 13V3"/>'
+             '<path d="M24 61V49C24 44.5 15 44 15 39.5C15 37 22 36 32 36C42 36 49 37 49 39.5C49 44 40 44.5 40 49V61"/>'
+             '<g transform="rotate(-32 32 33)"><rect x="10" y="26.5" width="44" height="13" rx="6.5" '
+             'style="fill:var(--soft)"/><rect x="25.5" y="29.5" width="13" height="7" rx="1.6"/></g>')
 RISKS = [  # (icon, label, custom)
     ("age", "Getting older", None),                           # [WHO23] about 73% are older than 55
     ("scale", "Extra body<br>weight", None),                  # [SILVER15] overweight OR 1.98, obesity 2.66
-    ("bone", "An old joint<br>injury", None),                 # [SILVER15] previous knee injury OR 2.83
+    ("jp_injury", "An old joint<br>injury", IC_INJURY),       # [SILVER15] previous knee injury OR 2.83
     ("woman", "Being<br>a woman", IC_WOMAN),                  # [SILVER15] OR 1.68; [WHO23] 60% female
     ("dna", "Family<br>history", None),                       # [HUNTER19] genetics
     ("lift", "Heavy lifting or<br>kneeling work", IC_LIFT),   # [WANG20] OR 1.52
@@ -1213,9 +1243,11 @@ def _ic(body, size, sw=2.8):
 
 
 def _scale_0_10():
-    """A 0 to 10 pain scale, green to red, for the patient to circle.  Ink numerals on the light middle cells
-    (2 to 7: 4.2 to 6.4:1), white on the dark ends."""
-    cols = ["#2E8A57", "#4E9A45", "#74A73A", "#9CB232", "#C2B52C", "#E0A82A", "#E58E2A", "#E1712B", "#D9552E",
+    """A 0 to 10 pain scale, green to red, for the patient to circle.  Every numeral reaches 4.5:1 (WCAG AA for
+    small text; measured with kit._lum): white on the dark ends, 0 and 1 at 5.1 and 4.7:1, 8 to 10 at 4.8, 4.9 and
+    6.4:1; ink on the light middle cells 2 to 7 at 4.7, 5.7, 6.4, 6.3, 5.3 and 4.6:1.  Cells 0, 1, 7 and 8 were
+    darkened or lightened just enough to pass (they measured 4.3, 3.5, 4.25 and 4.0:1), keeping the ramp."""
+    cols = ["#2A7D50", "#3A8237", "#74A73A", "#9CB232", "#C2B52C", "#E0A82A", "#E58E2A", "#E37A38", "#C8482A",
             "#CC3D2F", "#B32A2A"]
     cells = "".join(f'<span style="background:{c};color:{INK if 2 <= i <= 7 else "#FFFFFF"}">{i}</span>'
                     for i, c in enumerate(cols))
@@ -1297,6 +1329,15 @@ BACK_CSS = r"""
 .sheet.back:has(.jpn-bk) .life .disc2 svg{width:0.46in!important;height:0.46in!important}
 .sheet.back:has(.jpn-bk) .band{padding-bottom:0.13in}
 .sheet.back:has(.jpn-bk) .ns-title{margin-top:0.11in}
+/* every product name gets a two-line band (one-line names sit centred in it), so the photos, names, sizes and
+   bullet lists line up across all five columns; column 2's "Chondro-Relief Intensive Care" needs both lines */
+.sheet.back:has(.jpn-bk) .col .pick .nm{min-height:2.1em;line-height:1.05;display:flex;align-items:center;
+  justify-content:center}
+/* room for that band and the two-line alpha-gal check: the same small trims other sheets use (measured: 3.4px
+   left above the footer in both editions) */
+.sheet.back:has(.jpn-bk) .duo{margin-top:0.07in}
+.sheet.back:has(.jpn-bk) .notes{margin-top:0.07in}
+.sheet.back:has(.jpn-bk) .notes .ln{height:0.22in}
 """
 
 SHEET = {
@@ -1338,7 +1379,10 @@ SHEET = {
              "bullets": ["Supports a healthy inflammatory response", "Supports joint comfort and movement"],
              "dose": "dose_from_db"},
             {"p": "jp_chondro_ic", "need": "Building blocks", "needsub": "glucosamine, MSM, green‑lipped mussel",
-             "bullets": ["Raw materials for cartilage and joint fluid", "Supports joint tissues"],
+             # both bullets start with an S/F verb, so build.py ties each to the FDA line with the diamond.  The first
+             # runs to 3 lines on purpose: with the two-line name band (BACK_CSS) this column's 3 + 1 bullet lines
+             # match the 2 + 2 of the others, so the bullets AND the IN EACH SERVING rows line up in all five
+             "bullets": ["Provides raw materials for cartilage and joint fluid", "Supports joint tissues"],
              "dose": "dose_from_db"},
             # label: "Undenatured Collagen Blend (UC-II) 20 mg" per capsule, 1 capsule twice daily = 40 mg of the
             # blend a day.  [LUGO16] used 40 mg of UC-II itself; the label does not say the blend is all UC-II, so the
@@ -1364,9 +1408,16 @@ SHEET = {
         #   blocked bile ducts; [COMM-E] devil's claw: not with stomach or duodenal ulcers; [TGA23] rare liver injury,
         #   higher risk with enhanced-absorption curcumin, stop and see a doctor if the skin or eyes turn yellow or the
         #   urine dark; [MN-UL] Chondro-Relief Intensive Care's manganese clears through the liver.  4 green-lipped
-        #   mussel is a shellfish (label).  5 [CDC-AGS] Collagen Renew is bovine collagen peptides (label).  6 labels:
+        #   mussel is a shellfish (label).  5 [CDC-AGS] Collagen Renew is bovine collagen peptides (label): skip it.
+        #   Chondro-Relief Intensive Care (chondroitin of unstated source, gelatin capsule and magnesium stearate in
+        #   the 2014 panel) and Curcumin 400X (gelatin softgel with glycerin, sell sheet ND466): ask first, since
+        #   the source is not stated and tolerance varies.  Inflam-Eze Plus and Joint Eze are plant capsules.  6 labels:
         #   Joint Eze "Do not use if pregnant or nursing"; Inflam-Eze Plus and Collagen Renew "consult your healthcare
-        #   practitioner" if pregnant or nursing.
+        #   practitioner" if pregnant or nursing.  [EMA-SALIX] willow bark is not recommended in pregnancy or while
+        #   nursing (salicylate), so the start pick is named with Joint Eze.  Manganese: Clinical Guide ND181 (2022)
+        #   confirms it is in the formula but gives no amount; the only amount (2014 catalog) is 15 mg per 4 capsules,
+        #   above the 11 mg adult upper limit [MN-UL], and the current catalog could not be opened from this session,
+        #   so no number is printed and the multivitamin line asks before stacking more manganese.
         "rx": [
             "<b>On a blood thinner, or surgery coming up?</b> Ask {who} before Inflam‑Eze&nbsp;Plus, Curcumin&nbsp;400X "
             "or Chondro‑Relief Intensive&nbsp;Care: you may need to pause them.",
@@ -1376,8 +1427,11 @@ SHEET = {
             "Curcumin&nbsp;400X or Chondro‑Relief Intensive&nbsp;Care. Yellow skin or eyes, or dark urine? Stop them "
             "and call your doctor.",
             "<b>Shellfish allergy?</b> Skip Chondro‑Relief Intensive&nbsp;Care: it has green‑lipped mussel.",
-            "<b>Red-meat (alpha-gal) allergy?</b> Skip Collagen&nbsp;Renew: it is made from beef collagen.",
-            "<b>Pregnant or nursing?</b> Skip Joint&nbsp;Eze; ask {who} about the rest.",
+            "<b>Red-meat (alpha-gal) allergy?</b> Skip Collagen&nbsp;Renew (beef). Chondro‑Relief Intensive&nbsp;Care "
+            "and Curcumin&nbsp;400X may contain cow or pig gelatin or chondroitin: ask {who}.",
+            "<b>Pregnant or nursing?</b> Skip Joint&nbsp;Eze and Inflam‑Eze&nbsp;Plus (willow bark); ask {who} "
+            "about the rest. <b>Already take a multivitamin?</b> Chondro‑Relief Intensive&nbsp;Care adds manganese: "
+            "ask {who}.",
         ],
     },
 }

@@ -19,16 +19,21 @@ FRONT, top to bottom:
   -> "Track your symptoms" (the 12 Menopause Map questions in the Map's order, scored on the Map's 0 to
   3 scale, circled in pen today and in a new color at 6 weeks) beside "Hot flashes: what works best"
   (hormone therapy first; supplements not proven for hot flashes, said plainly, with a 6-week retest
-  for anyone who tries EstroG-100; that product sentence carries the drawn diamond and the box ends
-  with the short FDA line).  The back's START HERE pick is sold for "comfort through menopause",
-  never for hot flashes, so the two pages agree.  The OVARIES AND UTERUS note carries the pregnancy
-  fact (use birth control until 12 months with no period) and the see-your-doctor bleeding signs.
+  for anyone who tries EstroG-100, which is in BOTH formulas on the back; that product sentence carries
+  the drawn diamond and the box ends with the short FDA line).  The back's START HERE pick is sold for
+  "comfort through menopause", never for hot flashes, so the two pages agree.  The OVARIES AND UTERUS
+  note carries the pregnancy fact (use birth control until 12 months with no period) and the
+  see-your-doctor bleeding signs, with the [MAP]'s "under 45" age line.
 BACK: lifestyle circles, five NutriDyn picks (one per system), daily rhythm, and ONE safety check
-that is identical in both editions apart from {who} (pregnancy and cancer label cautions; liver
-signs, on their own line; warfarin and vitamin K, ashwagandha with thyroid or sedating drugs; the
-vitamin D upper limit and kidney disease; antibiotic and bone-drug spacing from Mag Calm Pro).  The
+that is identical in both editions apart from {who} (pregnancy and cancer label cautions, in the
+labels' own strength; liver disease or liver signs, on their own line; the K2 label's blood-thinner
+caution, ashwagandha with thyroid or sedating drugs; vitamin D test-first, short-term and the upper
+limit, kidney disease; antibiotic, bone-drug and thyroid-pill spacing from Mag Calm Pro).  The
 START column carries two tick boxes ({who} marks Menopause Support or PeriMenopause Support by stage)
-and both formulas' amounts; D3 5000 is "only if your level is low", as on the thyroid sheet.
+and both formulas' amounts; D3 5000 is "only if your level is low", as on the thyroid sheet.  Every
+claim bullet on the back ends with the drawn diamond (kit.DIAMOND) tied to the FDA line; the D3 and
+Creatine columns mark theirs by hand (MARK), because their second bullets do not start with an S/F
+verb and the kit stops auto-marking a column once the module marks any bullet in it.
 Every SVG id starts with "mnp-" and every CSS class with "mnp-", so nothing collides with other
 sheets in the all-sheets bundle; the back page is reached with .sheet.back:has(.mnp-back).
 Hormone-therapy asks say "your doctor" in both editions (it needs a prescriber).
@@ -82,7 +87,8 @@ SOURCES (tags sit in comments next to each number or claim on the page)
   [ESTRO]    EstroG-100 trials.  Snigdha S et al. Menopause 2025;32:1036-45. PMID 40663563,
              doi:10.1097/GME.0000000000002608 (n=80, EstroG-100 514 mg + GABA 50 mg, 5 weeks; 3 of 5
              authors at OLLY PBC, Unilever Wellbeing Collective, a supplement company; the abstract
-             does not state funding, so the sheet says "run by", not "paid for by").  Chang A et
+             does not state funding, so the sheet says "from a supplement maker", not "paid for by").
+             Chang A et
              al. Phytother Res 2012;26:510-6. doi:10.1002/ptr.3597 (n=64, 12 weeks).  Farzaneh F et al.
              Explore 2024;20:334-9. doi:10.1016/j.explore.2023.09.004 (120 randomized, 70 analyzed).
   [ASHW24]   Arumugam V et al. Explore 2024;20:103062. doi:10.1016/j.explore.2024.103062 (9 RCTs:
@@ -103,6 +109,15 @@ SOURCES (tags sit in comments next to each number or claim on the page)
              such as alendronate at least 2 hours apart; the risk of magnesium toxicity rises with
              impaired kidney function); black cohosh (rare liver injury).  NCCIH ashwagandha (possible
              interactions with thyroid hormone and sedatives; rare liver injury).
+  [USPBC]    Mahady GB et al. Menopause 2008;15:628-38. PMID 18340277, doi:10.1097/gme.0b013e31816054bf
+             (US Pharmacopeia review of the black cohosh liver case reports: products should carry a
+             caution; USP's cautionary label says to stop and consult a practitioner if you HAVE a
+             liver disorder or develop signs of liver trouble, such as dark urine or jaundice)
+  [LT4LBL]   Levothyroxine sodium tablets, FDA prescribing information (DailyMed; sections 2 and 7):
+             give it at least 4 hours before or after agents that interfere with its absorption;
+             antacids (aluminum and magnesium hydroxides), calcium carbonate and iron are listed.
+             Pharmacists keep it 4 hours from mineral supplements (magnesium, calcium, iron).  Same
+             citation and spacing as the sleep, muscle-cramps and GERD sheets.
   [BURT19]   Burt LA et al. JAMA 2019;322:736-45. PMID 31454046, doi:10.1001/jama.2019.11889 (311
              healthy adults aged 55 to 70, 3 years: 4,000 IU a day left radial bone density LOWER than
              400 IU; "do not support a benefit of high-dose vitamin D supplementation for bone health")
@@ -112,14 +127,17 @@ SOURCES (tags sit in comments next to each number or claim on the page)
              109:1961-74, PMID 38828942, doi:10.1210/clinem/dgae312 (no significant effect in healthy
              adults 19 to 74)
   [ND382]    D3 5000 with K2 sell sheet ND382 Rev. 6/24 (as read for the thyroid sheet): one softgel daily
-             with food; exceeds the adult upper limit, use short-term with regular monitoring; K2 not
-             for people on blood thinners
+             with food; exceeds the adult upper limit, "use should be short-term and include regular
+             monitoring"; "Vitamin K2 may counteract the effects of anticoagulation therapy and is not
+             recommended for patients on blood-thinning medications" (quoted in products.d/pcos.json)
   [LABELS]   Sell sheets ND564 Menopause Support and ND565 PeriMenopause Support (Rev. 8/24): "Do not
              use if pregnant or nursing. This product is not recommended for individuals with known
-             or suspected estrogen-dependent cancer."
+             or suspected estrogen-dependent cancer."  (So the sheet says the formulas are "not for
+             you" in both cases, never that the labels say "do not use" for cancer.)
   [ACOG]     ACOG Committee Opinion 734 (2018): any bleeding after menopause needs evaluation.  ACOG
              patient guidance: bleeding more often than every 3 weeks, or heavier and longer than
-             usual, needs a check.  Menopause before 40 is premature and needs a work-up (NAMS).
+             usual, needs a check.  Menopause before 40 is premature and needs a work-up; 40 to 45 is
+             early menopause (The Menopause Society).  The sheet uses the [MAP]'s "under 45" line.
 """
 import math
 import os
@@ -297,7 +315,9 @@ HAIRLINE_D = _spline(HAIRLINE, closed=False)
 # dot sits on the bladder's right edge, where its leader comes in, so the yellow sac stays visible;
 # the hip dot sits on the bony knob at the outside of her right hip (greater trochanter), clear of
 # the ball of the hip joint.  The two pelvic dots are a little smaller: it is the most crowded spot.
-DOT = {"hair": (31.5, 50), "breast": (-31, 169), "heart": (8, 158), "gut": (-9, 250), "ovary": (35, 276),
+# The heart dot sits on the ventricles of the 1.4x heart (local (1.4, 2.9), on the groove between them),
+# well below where the aorta and pulmonary trunk leave, so the vessels stay in view.
+DOT = {"hair": (31.5, 50), "breast": (-31, 169), "heart": (8, 156), "gut": (-9, 250), "ovary": (35, 276),
        "bladder": (12.2, 305.4), "hip": (-61.2, 297), "thigh": (-34, 338), "brain": (0, 41)}
 DOT_R = {"ovary": 4.2, "bladder": 4.4}
 
@@ -356,24 +376,38 @@ def _thigh_muscles():
     return "".join(o)
 
 
+# The heart is drawn 1.4x its first-draft size (reviewer, polish round 2): about 40 of the 125 units the
+# body outline spans at that level, 0.32 of the outer chest (the rib cage inside it is narrower; a chest
+# x-ray's heart-to-chest ratio is about 0.45), up from 0.23, so it no longer reads as an icon pasted on the
+# breastbone.  1.4x is the most the space allows: the apex sits about 2 units above the stomach's top edge
+# (at y 154 it touched it, and the HEART AND VESSELS leader grazed the end of the arch), the base clears
+# the liver, and the arch's branches stay about 6 units under the collar line.  It is drawn in its own
+# units and scaled HEART_K about its centre; vessel widths scale with it (they are anatomy) and every
+# outline is divided back by HEART_K so its printed weight matches the other organs (0.8 to 0.9).
+HEART_K, HEART_AT = 1.4, (6, 152)
+
+
 def _heart():
     """Front view: ventricles with the apex down and to her left, the aortic arch with its three
     branches, the superior vena cava (blue) and the pulmonary trunk (blue) in front."""
+    k = HEART_K
+    edge = 1.6 / k                    # a tube's two edges together: 0.8 units each once scaled
+
+    def tube(d, outer, dark, light):
+        return (f'<path d="{d}" fill="none" stroke="{dark}" stroke-width="{outer}" stroke-linecap="round"/>'
+                f'<path d="{d}" fill="none" stroke="{light}" stroke-width="{outer - edge:.2f}" stroke-linecap="round"/>')
+
     body = [(-12.8, -6.5), (-13.6, 3), (-9.2, 11.4), (-1.6, 17.6), (6.4, 21.2), (11.6, 19.6), (14.6, 12),
             (14, 1), (10, -7.2), (3, -11), (-5.2, -10.6)]
     arch = "M0.5,-10 C-0.5,-21 7,-26 12.5,-21.5 C14.6,-19.6 15,-16 14.6,-12"
-    return ('<g transform="translate(6,160)">'
-            '<path d="M-7,-8 V-24" stroke="#3E4F8C" stroke-width="6.6" stroke-linecap="round"/>'
-            '<path d="M-7,-8 V-24" stroke="#6F84C9" stroke-width="5" stroke-linecap="round"/>'
-            + "".join(f'<path d="M{x},{y0} V{y1}" stroke="#7A1820" stroke-width="3.4" stroke-linecap="round"/>'
-                      f'<path d="M{x},{y0} V{y1}" stroke="#C7363F" stroke-width="2" stroke-linecap="round"/>'
+    return (f'<g transform="translate({HEART_AT[0]},{HEART_AT[1]}) scale({k})">'
+            + tube("M-7,-8 V-24", 6.6, "#3E4F8C", "#6F84C9")
+            + "".join(tube(f"M{x},{y0} V{y1}", 3.4, "#7A1820", "#C7363F")
                       for x, y0, y1 in ((3.2, -21.5, -26.6), (6.8, -23.6, -28.4), (10.2, -23.2, -27.4)))
-            + f'<path d="{arch}" fill="none" stroke="#7A1820" stroke-width="7" stroke-linecap="round"/>'
-            f'<path d="{arch}" fill="none" stroke="#C7363F" stroke-width="5.4" stroke-linecap="round"/>'
-            f'<path d="{_spline(body)}" fill="url(#mnp-heart)" stroke="#7A1820" stroke-width=".9"/>'
-            '<path d="M3.6,-9.4 C5,-14 8.6,-16.4 13,-16.6" fill="none" stroke="#3E4F8C" stroke-width="6" stroke-linecap="round"/>'
-            '<path d="M3.6,-9.4 C5,-14 8.6,-16.4 13,-16.6" fill="none" stroke="#6F84C9" stroke-width="4.4" stroke-linecap="round"/>'
-            '<path d="M-2.6,-8.6 C1.4,0 5,9 8.6,19.4" fill="none" stroke="#8E1D25" stroke-width="1" opacity=".5"/>'
+            + tube(arch, 7, "#7A1820", "#C7363F")
+            + f'<path d="{_spline(body)}" fill="url(#mnp-heart)" stroke="#7A1820" stroke-width="{.9 / k:.2f}"/>'
+            + tube("M3.6,-9.4 C5,-14 8.6,-16.4 13,-16.6", 6, "#3E4F8C", "#6F84C9")
+            + f'<path d="M-2.6,-8.6 C1.4,0 5,9 8.6,19.4" fill="none" stroke="#8E1D25" stroke-width="{1 / k:.2f}" opacity=".5"/>'
             '<ellipse cx="-6.6" cy="-2.6" rx="3.6" ry="2.2" fill="#fff" opacity=".22" transform="rotate(-30 -6.6 -2.6)"/>'
             '</g>')
 
@@ -643,14 +677,15 @@ NOTES_R = [
     # [GOLD11] follicle loss -> less estradiol; [SANT96] uneven estrogen, less progesterone.
     # Pregnancy: ACOG FAQ "The Menopause Years" / NAMS: use birth control until 12 months with no period.
     # Warning signs [ACOG]: any bleeding after menopause (CO 734); in perimenopause, very heavy or long
-    # bleeding, periods closer than every 3 weeks, bleeding after sex; changes before 40 = premature
-    # menopause, needs a work-up (NAMS).  [MAP]: under 45 or cycles under 21 days, rule out thyroid,
-    # pregnancy and high prolactin first.
+    # bleeding, periods closer than every 3 weeks, bleeding after sex.  Age line "before 45" = the [MAP]
+    # rule the practitioners handing this out follow ("Under 45, or periods more often than every 21 days:
+    # rule out thyroid, pregnancy, and hyperprolactinemia first"); The Menopause Society calls 40 to 45
+    # early menopause and before 40 premature, both worth a work-up.
     dict(y=160, title="OVARIES AND UTERUS",
          text="Eggs run low, so hormones swing, then fall. Periods change, then stop. You can still get pregnant, "
               "so use birth control until 12 months with no period.",
          warn="See your doctor for any bleeding after menopause, very heavy periods, periods closer than 3 weeks "
-              "apart, bleeding after sex, or these changes before 40.",
+              "apart, bleeding after sex, or these changes before 45.",
          ico=IC_UTERUS, dots=["ovary"], via=[(488, 262)]),
     # [GSM20] 27-84% after menopause, treatable; [SANT16] does not go away without treatment
     dict(y=320, title="BLADDER AND VAGINA", text="Dryness, painful sex, urgency and bladder infections. Common and "
@@ -789,7 +824,8 @@ def _burst(cx, cy, r=8.5, n=9):
 
 def hotflash_panel(t):
     c1 = t["c1"]
-    o = [T(0, 13, "WHY HOT FLASHES HAPPEN", 12.4, 800, c1, ls=0.6)]
+    # x = 4: the same left edge as the charts and caption below it and the "ONE WOMAN" heading above
+    o = [T(4, 13, "WHY HOT FLASHES HAPPEN", 12.4, 800, c1, ls=0.6)]
     y0, y1, mid = 36, 104, 69
     # "PLENTY OF" (not "STEADY"): the timeline beside it shows estrogen rising and falling every month
     for x0, title, top, bot in ((4, "PLENTY OF ESTROGEN", 48, 90), (152, "LOW ESTROGEN", 62, 76)):
@@ -974,7 +1010,9 @@ def best_box():
     # [NH23] recommended nonhormone options; supplements and herbal remedies not recommended for hot flashes.
     # [ESTRO] small EstroG-100 trials (64 to 120 women).  The newest (Snigdha 2025, PubMed 40663563) tested
     # EstroG-100 WITH GABA; 3 of its 5 authors work at OLLY PBC (Unilever), a supplement company.  The abstract
-    # does not say who paid, so the sheet says "run by", not "paid for by".
+    # does not say who paid, so the sheet says "from a supplement maker", not "paid for by".
+    # "in both formulas on the back": Menopause Support (ND564) and PeriMenopause Support (ND565) each carry
+    # 500 mg EstroG-100 blend per tablet (labels.json), so the evidence line fits whichever box is ticked.
     # The 6-week retest is the [MAP] retest, so the patient can see for herself whether it helps.
     # The EstroG-100 sentence is a product statement, so it carries the drawn diamond and page 1 carries
     # the short DSHEA disclaimer it points to (the full one is on page 2).
@@ -983,8 +1021,10 @@ def best_box():
             '<li><b>Hormone therapy works best.</b> For most healthy women under 60, the benefits outweigh the '
             'risks. It needs a prescription, so ask your doctor.</li>'
             '<li><b>Also proven:</b> CBT (a brief talk therapy), clinical hypnosis and some prescriptions.</li>'
-            '<li><b>Supplements</b> are not proven for hot flashes. In small trials, EstroG&#8209;100 (in Menopause '
-            'Support) helped; the newest was run by a supplement company and added GABA.&nbsp;'
+            # "the newest, from a supplement maker, added GABA" (not "came from ... and added"): the longer form
+            # pushed "6 weeks." onto a fifth line and the bottom row into the footer (measured, round 2)
+            '<li><b>Supplements</b> are not proven for hot flashes. In small trials, EstroG&#8209;100 (in both '
+            'formulas on the back) helped; the newest, from a supplement maker, added GABA.&nbsp;'
             f'{mark} If you try it, score again at 6 weeks.</li></ol>'
             '<small>Source: The Menopause Society, 2022 and 2023.<br>'
             f'{mark} Not evaluated by the FDA; not intended to diagnose, treat, cure, or prevent any '
@@ -1042,12 +1082,18 @@ CSS = r"""
 .sheet.back:has(.mnp-back) .mnp-pk i{position:absolute;left:0;top:2.4px;width:7.2px;height:7.2px;box-sizing:border-box;
   border:1.3px solid var(--deep);border-radius:1.5px;background:#fff}
 .sheet.back:has(.mnp-back) .rhythm .mnp-or{color:#283035}
-/* a little more room for the evening slot, so "Evening meal" stays on one line */
-.sheet.back:has(.mnp-back) .rhythm{grid-template-columns:1fr 1.14fr 1fr}
+/* the rhythm slots in the narrower rhythm panel: Morning cannot go under "PeriMenopause" (83 px), the evening
+   slot needs 93.3 px for "Evening meal" on one line and the bedtime slot 77 px for "Mag Calm Pro"; a 4 px gap
+   (kit: 6 px) is what lets all three hold at 1.5fr (measured, polish round 2) */
+.sheet.back:has(.mnp-back) .rhythm{grid-template-columns:1fr 1.22fr 1fr;gap:4px}
 /* the START column holds two formulas, so it gets a little more width (the others still fit their text) */
 .sheet.back:has(.mnp-back) .cols{grid-template-columns:1.25fr 1fr 1fr 1fr 1fr!important}
-/* the safety panel carries the same five warnings in both editions, so it gets the wider part */
-.sheet.back:has(.mnp-back) .duo{grid-template-columns:1fr 1.4fr}
+/* the safety panel carries the same five warnings in both editions, so it gets the wider part.  At 1.5fr
+   four of the five checks hold two lines (the liver line needs 396 of its 398 px); the rhythm panel beside
+   it was 0.17 in shorter than the safety panel anyway, so it only gets taller inside spare room. */
+.sheet.back:has(.mnp-back) .duo{grid-template-columns:1fr 1.5fr}
+/* 1 px between checks (kit: 2 px) buys back the room the fifth check's third line takes */
+.sheet.back:has(.mnp-back) .rx li{margin-bottom:1px}
 /* two writing lines, 0.22in apart (the five-line safety check needs the third line's room) */
 .sheet.back:has(.mnp-back) .notes .ln{height:0.22in}
 .sheet.back:has(.mnp-back) .notes .ln:last-child{display:none}
@@ -1057,6 +1103,12 @@ CSS = r"""
 # last year: PeriMenopause Support; longer ago: Menopause Support"); {who} ticks one.  Product names link
 # to the product page, like the photo above them (PeriMenopause Support URL from the same earlier NutriDyn visit
 # brief that gives this sheet its Menopause Support URL; nutridyn.com cannot be opened from this session).
+# The drawn diamond that ties a back-page claim to the FDA line in the footer (the kit's own mark, same
+# markup).  21 CFR 101.93: every structure/function statement carries it.  The kit adds it by itself only
+# to bullets that START with an S/F verb, and stops once the module marks any bullet in a column, so a
+# column whose claim bullets do not all start that way (D3, Creatine) marks every one of them here.
+MARK = f'&nbsp;<span class="mark">{DIAMOND}</span>'
+
 PICK = ('<span class="mnp-pk"><i></i><a href="https://nutridyn.com/menopause-support"><b>Menopause Support</b></a>: '
         'no period for a year or more</span>'
         '<span class="mnp-pk"><i></i><a href="https://nutridyn.com/womens-health/perimenopause-support">'
@@ -1090,7 +1142,7 @@ SHEET = {
             # [NH23]: CBT and clinical hypnosis recommended (Level I) for hot flashes
             ("brain", "Try talk therapy", "CBT (a talk therapy) and hypnosis are proven to ease hot flashes."),
             # [GOLD11] smoking and earlier menopause; NIH NIAMS: smoking is an osteoporosis risk factor
-            ("smoke", "Skip smoking", "Smoking speeds bone loss and raises heart risk."),
+            ("smoke", "Skip smoking", "Smoking speeds bone loss and raises heart&nbsp;risk."),   # no lone "risk."
         ],
         "cols": [
             {"p": "meno_menopause_support", "need": "Menopausal comfort", "needsub": "EstroG&#8209;100 and ashwagandha",
@@ -1125,13 +1177,15 @@ SHEET = {
              # above the daily intake (DRI) for healthy adults under 75, untested [ES24].  So it is for a low
              # level found on a blood test [ND382].
              # The [MAP] gives D3 5000 to everyone: this is a deviation for Asher to approve.
-             "bullets": ["Supports bone health when a blood test shows low vitamin D",
-                         "K2 helps put calcium to work in bone"],
+             # Both bullets are S/F claims, so both carry the drawn diamond (marked here: see MARK).
+             "bullets": ["Supports bone health when a blood test shows low vitamin D" + MARK,
+                         "K2 helps put calcium to work in bone" + MARK],
              # label (ND382): one softgel daily with food; "test first" = the blood test bullet 1 names (one line,
              # so this dose bar lines up with its neighbours); the evening-meal slot in the rhythm is plan timing
              "dose": "1 softgel daily", "dosesub": "test first · with a meal",
              "sched": [("pm", 1, "softgel, if vitamin&nbsp;D is low")]},
-            {"p": "meno_ultrabiotic_womens", "need": "Good bacteria", "needsub": "women’s probiotic, 9 strains",
+            # "9&nbsp;strains": the number stays with its noun when the subtitle wraps
+            {"p": "meno_ultrabiotic_womens", "need": "Good bacteria", "needsub": "women’s probiotic, 9&nbsp;strains",
              # [MAP]: UltraBiotic Women's for dryness or UTIs.  Sell sheet ND1053 claims: healthy vaginal
              # microbiome, healthy gut microbiome (said in plain words)
              "bullets": ["Supports healthy vaginal bacteria", "Supports healthy gut bacteria"],
@@ -1144,37 +1198,50 @@ SHEET = {
              # resistance training; trials of <= 3 g a day without training showed no effect
              # Creatine raises serum creatinine without harming the kidneys (de Souza Almeida 2026, cited in the
              # creatine blast; [CREA26] kidney markers unchanged), so a kidney blood test can read high: said here,
-             # at the product, in plain words.  The evening-meal slot is plan timing (label: any drink, any time).
-             "bullets": ["Supports muscle and strength with strength training",
-                         "5 g a day plus training helped in studies after menopause",
-                         "Can raise creatinine, a kidney blood test"],
+             # at the product, in plain words (creatinine is the waste product the test measures, not the test).
+             # The evening-meal slot is plan timing (label: any drink, any time).
+             # Bullets 1 and 2 are S/F claims and carry the drawn diamond (marked here: see MARK); bullet 3 is a
+             # safety note, not a claim, so it stays unmarked.
+             "bullets": ["Supports muscle and strength with strength training" + MARK,
+                         "5 g a day plus training helped in studies after menopause" + MARK,
+                         "Can raise creatinine on kidney blood tests"],
              "dose": "1 scoop daily", "dosesub": "in 8 to 16 oz of any drink", "sched": [("pm", 1, "scoop")]},
         ],
         # ONE safety core for both editions (the practitioner edition is what MDs and DCs hand out, so it must
         # carry every warning the pharmacist edition does).  {who} = "your provider" / "your pharmacist".
         "rx": [
-            # labels ND564 (Menopause Support) and ND565 (PeriMenopause Support): "Do not use if pregnant or
+            # [LABELS] ND564 (Menopause Support) and ND565 (PeriMenopause Support): "Do not use if pregnant or
             # nursing. This product is not recommended for individuals with known or suspected estrogen-dependent
-            # cancer."
+            # cancer."  "Not for you" is true of both ("do not use" and "not recommended"), so the sheet never
+            # puts "do not use" in the labels' mouth for cancer.  The wider "ever had breast cancer" screen
+            # errs on the cautious side.
             "<b>Pregnant, could be, or nursing? Ever had breast cancer or another estrogen-fed cancer?</b> The "
-            "labels say do not use Menopause or PeriMenopause Support.",
+            "labels say Menopause and PeriMenopause Support are not for you.",
             # NIH ODS black cohosh and NCCIH ashwagandha: rare liver injury; dark urine and yellow skin or eyes are
-            # the signs.  Its own line, so every woman taking either formula reads it.
-            "<b>Dark urine, or yellow skin or eyes?</b> Stop Menopause or PeriMenopause Support and call your "
-            "doctor: black cohosh and ashwagandha can rarely harm the liver.",
-            # NIH ODS vitamin K (warfarin); NCCIH / NIH ODS ashwagandha: thyroid hormone, sedatives
-            "<b>Warfarin?</b> The vitamin K in D3 5000 with K2 can shift your INR (clotting test). <b>Thyroid "
+            # the signs.  [USPBC] USP's black cohosh caution covers a liver disorder she already HAS as well as new
+            # signs, so liver disease leads the line.  Its own line, so every woman taking either formula reads it.
+            "<b>Liver disease, dark urine, or yellow skin or eyes?</b> Stop Menopause or PeriMenopause Support and "
+            "call your doctor: black cohosh and ashwagandha can rarely harm the liver.",
+            # [ND382] the D3 5000 with K2 label: K2 "may counteract the effects of anticoagulation therapy and is not
+            # recommended for patients on blood-thinning medications" (every blood thinner, not only warfarin; the
+            # thyroid sheet's check for this bottle says the same).  NCCIH / NIH ODS ashwagandha: thyroid hormone,
+            # sedatives.
+            "<b>Warfarin or another blood thinner?</b> The label does not recommend D3 5000 with K2. <b>Thyroid "
             "pills, or drugs that make you sleepy?</b> Ashwagandha can add to them.",
-            # [ODS] vitamin D: adult upper limit 4,000 IU a day; ND382 label: exceeds the upper limit, monitor
-            # levels (the D3 column says "only if your level is low" and "after a vitamin D test").  NIH ODS
-            # magnesium: the risk of too much magnesium rises with poor kidney function; creatine is cleared by
-            # the kidneys and raises creatinine (the Creatine column says so in plain words).
-            "<b>Vitamin D:</b> test first, then recheck; 5,000 IU is over the 4,000 IU daily upper limit. "
+            # [ODS] vitamin D: adult upper limit 4,000 IU a day; [ND382] label: exceeds the upper limit, "use should
+            # be short-term and include regular monitoring" (test first, use short-term, recheck; the D3 column
+            # says "only if your level is low" and its dose bar "test first").  NIH ODS magnesium: the risk of too
+            # much magnesium rises with poor kidney function; creatine is cleared by the kidneys and raises
+            # creatinine (the Creatine column says so in plain words).
+            "<b>Vitamin D:</b> test first, use short-term, recheck; 5,000 IU is over the 4,000 IU upper limit. "
             "<b>Kidney disease?</b> Ask {who} before Mag Calm Pro or Creatine.",
             # NIH ODS magnesium: tetracyclines (doxycycline) and quinolones (ciprofloxacin) at least 2 hours before
-            # or 4 to 6 hours after magnesium; oral bisphosphonates (alendronate) at least 2 hours apart
+            # or 4 to 6 hours after magnesium; oral bisphosphonates (alendronate) at least 2 hours apart.
+            # [LT4LBL] levothyroxine: at least 4 hours from magnesium antacids and other mineral products (the
+            # most common thyroid pill in women at menopause; ashwagandha's thyroid line is in bullet 3).
+            # The no-break tail keeps "thyroid pills 4 hours." together on the bullet's third line.
             "<b>Doxycycline, ciprofloxacin or similar antibiotics?</b> Take them 2 hours before or 4 to 6 hours "
-            "after Mag Calm Pro. Keep alendronate (a bone drug) 2 hours apart too.",
+            "after Mag Calm Pro. Keep alendronate (a bone drug) 2 hours apart, and thyroid&nbsp;pills&nbsp;4&nbsp;hours.",
         ],
     },
 }

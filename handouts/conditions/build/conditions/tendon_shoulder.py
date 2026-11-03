@@ -5,7 +5,8 @@ Self-contained sheet module (wave 2, nothing from the legacy sheets.py / art.py)
 FRONT, top to bottom
   intro (it says what the rotator cuff is) -> one inline-SVG plate with three panels and a KEY strip:
      1. ROTATOR CUFF FROM THE FRONT: subscapularis, the supraspinatus tendon, the acromion "roof", the collarbone
-        and the bursa, drawn red under the roof ("a cushion between the roof and cuff; it can get sore and swollen");
+        and the bursa, drawn red under the roof and keyed "Sore bursa" ("a cushion between the roof and cuff; it can
+        get sore and swollen, as shown"); the bicipital groove is drawn in this view only, on the shaft below the ball;
      2. ROTATOR CUFF FROM THE BACK: supraspinatus, infraspinatus, teres minor along the outer border of the shoulder
         blade (the lower third of that border and the inferior angle left bare), with a lens on
         the supraspinatus band of the cuff, just lateral to the acromion, that opens into panel 3;
@@ -20,8 +21,11 @@ FRONT, top to bottom
   -> when to get checked right away (shoulder AND Achilles red flags; 911 for arm pain with heart-attack signs).
 BACK: six lifestyle circles; five NutriDyn columns (Collagen Renew starts, Vitamin C 1000 is its pair,
 Inflam-Eze Plus, Omega Pure EPA-DHA 1000, D3 5000 with K2) on a shared four-row subgrid, so names, bullets, serving
-facts and dose bars line up; a two-slot rhythm (no bedtime products); four edition-aware checks ({who}) that match
-the sibling Pain and Movement sheets for the same products.
+facts and dose bars line up; a two-slot rhythm (no bedtime products) in which Vitamin C 1000 rides with the scoop;
+five edition-aware checks ({who}) that carry every caution the sibling Pain and Movement sheets give for the same
+products (bleeding and surgery, aspirin allergy, red-meat alpha-gal and fish allergy, diabetes medicine, yellow skin
+or dark urine means stop, under 18, pregnancy and nursing, sleep aids and other medicines, ulcer, gallstones, liver
+and kidney disease), plus the fluoroquinolone tendon warning.
 Products: all five are ts_* entries in products.d/tendon-shoulder.json (label facts + "src"); sheet-specific dose
 lines and schedules are set per column below.
 
@@ -168,7 +172,7 @@ INK, INK2 = "#23292D", "#56616A"
 MUS, MUS_D, MUS_EDGE, MUS_FIB = "#F2A39A", "#CF625C", "#9E3F3B", "#B5504B"      # muscle: pink
 TEN, TEN_D, TEN_EDGE, TEN_FIB = "#FFFDF7", "#EADFCB", "#B9A989", "#D9CCB2"      # tendon: white / ivory
 BONE, BONE_D, BONE_EDGE = "#F7EAD0", "#DDC296", "#A9864F"                       # bone: tan
-BURSA, BURSA_D, BURSA_EDGE = "#EC5A50", "#C12F2A", "#8F1F1B"                    # irritated bursa: red
+BURSA, BURSA_D, BURSA_EDGE = "#EC5A50", "#C12F2A", "#8F1F1B"                    # sore bursa: red
 FRAY = "#E3A21F"                                                               # frayed fibers: gold
 VESSEL = "#C8343B"                                                             # new blood vessels: red
 FIELD = "#F2E9DA"                                                              # tendon tissue background
@@ -241,6 +245,12 @@ SCAPULA = [
     (0.105, 0.860, 1.0), (0.055, 0.640, 1.0), (0.018, 0.420, 1.0), (0.000, 0.256, 0.6), (0.018, 0.120, 1.0),
     (0.045, 0.035, 0.8),
 ]
+# The front view's shoulder blade: the same outline, except that its neck (points 8 and 9) reaches out under the
+# coracoid to the ball, as the bone does in life, so no bare paper shows between the ball, the coracoid and the blade
+# where the socket sits.  Both moved points lie under the coracoid and the arm bone, so the new outline stays hidden.
+# The back view keeps SCAPULA: there the cuff covers this corner, and teres minor's border samples (_LAT, points
+# 12-16) come from it, so nothing there moves.
+SCAPULA_FRONT = SCAPULA[:8] + [(0.650, 0.128, 1.0), (0.700, 0.175, 1.0)] + SCAPULA[10:]
 SPINE = [  # spine of the scapula rising into the acromion (back view only)
     (0.024, 0.228, 0.6), (0.100, 0.206, 1.0), (0.240, 0.176, 1.0), (0.380, 0.141, 1.0), (0.500, 0.106, 1.0),
     (0.570, 0.072, 1.0), (0.612, 0.020, 1.0), (0.680, -0.012, 1.0), (0.770, -0.020, 1.0), (0.836, -0.004, 0.8),
@@ -272,9 +282,11 @@ HUMERUS = [
 HEAD_C, HEAD_R = (0.785, 0.285), 0.145      # ball of the arm bone
 
 # ---- muscles
-SUPRA = [  # supraspinatus belly, above the spine (runs under the acromion)
+SUPRA = [  # supraspinatus belly, above the spine.  It runs on under the acromion, so its rounded tip (x = 0.60) ends
+    # where the spine covers it completely (the spine spans y 0.035-0.16 there) and no stub shows below the roof; its
+    # tendon comes out from under the acromion as the top band of the cuff hood.
     (0.060, 0.030, 0.7), (0.180, 0.028, 1.0), (0.320, 0.050, 1.0), (0.450, 0.066, 1.0), (0.560, 0.070, 1.0),
-    (0.668, 0.086, 1.0), (0.668, 0.128, 1.0), (0.560, 0.122, 1.0), (0.450, 0.152, 1.0), (0.320, 0.186, 1.0),
+    (0.600, 0.080, 0.8), (0.602, 0.118, 0.8), (0.560, 0.122, 1.0), (0.450, 0.152, 1.0), (0.320, 0.186, 1.0),
     (0.180, 0.214, 1.0), (0.050, 0.236, 0.7), (0.028, 0.130, 1.0),
 ]
 SUPRA_FRONT = [  # the same muscle seen from the front: a strip above the shoulder blade, behind the collarbone
@@ -383,14 +395,19 @@ T_SUPRA_FRONT = [(0.600, 0.090, 0.8), (0.700, 0.118, 1.0), (0.785, 0.127, 1.0), 
 T_SUBSC = [(0.600, 0.212, 0.7), (0.700, 0.214, 1.0), (0.780, 0.232, 1.0), (0.834, 0.258, 0.7), (0.849, 0.302, 1.0),
            (0.836, 0.350, 0.7), (0.780, 0.368, 1.0), (0.700, 0.380, 1.0), (0.612, 0.372, 0.7), (0.588, 0.330, 1.0),
            (0.586, 0.260, 1.0)]
-GROOVE = [(0.872, 0.232, 1), (0.874, 0.300, 1), (0.868, 0.400, 1), (0.858, 0.520, 1)]   # bicipital groove (front)
+# Bicipital groove, FRONT VIEW ONLY (it lies on the front of the arm bone, so the back view never shows it).  It runs
+# down from between the two bony bumps (greater and lesser tubercles), so it starts just below the ball (the ball's
+# lower rim is at y 0.40 at this x) and stays 2-5 px inside the outer edge of the shaft: start, control, end.
+GROOVE = [(0.862, 0.425), (0.851, 0.540), (0.844, 0.760)]
 
 
 def bursa_pts():
-    """The bursa as a soft pillow following the ball: thin under the acromion, fullest over the outer side."""
+    """The bursa as a soft pillow following the ball: thin under the acromion, fullest over the outer side.
+    It starts at 236 degrees, where its inner tip lies under the coracoid (x 0.69, y 0.145), so no red speck shows
+    below the coracoid's hook."""
     cx, cy = HEAD_C
     ri = HEAD_R + 0.024
-    a0, a1, n = 226.0, 352.0, 20
+    a0, a1, n = 236.0, 352.0, 20
     outer, inner = [], []
     for i in range(n + 1):
         u = i / n
@@ -476,9 +493,13 @@ def _strap(uid, pts, inner, outer, m, n):
             + f'<path d="{d}" fill="url(#ts-mhi)" stroke="none"/>')
 
 
-def _hood(uid, pts, m, src, dst, n, seams=(), bow=-0.022, fade=0.07):
+def _hood(uid, pts, m, src, dst, n, seams=(), bow=-0.022, fade=0.07, top=None):
     """Tendon that wraps the ball: ivory, lit from the upper left, fine collagen lines curving over the ball.
-    Its first `fade` scapula units (from the muscle end, src) fade in, so the muscle flows into the tendon."""
+    Its first `fade` scapula units (from the muscle end, src) fade in, so the muscle flows into the tendon.
+    top = (seam, x0, x1): the band above `seam` (one of `seams`) belongs to a muscle that ends under a bone, not in the
+    open (the supraspinatus, under the acromion).  Its muscle cannot show through, so a long fade there would only
+    let the ball and its outline show through as a pale strip; that band gets its own short fade, from x0 to x1
+    (scapula units, at its very edge), and is solid beyond it."""
     out = [_shape(pts, m, "url(#ts-cuff)", TEN_EDGE, 1.0),
            _fibers(uid, pts, m, src, dst, n, TEN_FIB, 0.8, 0.95, bow)]
     for sm in seams:
@@ -487,24 +508,42 @@ def _hood(uid, pts, m, src, dst, n, seams=(), bow=-0.022, fade=0.07):
     ln = math.hypot(sx1 - sx0, sy1 - sy0)
     a, b = m(sx0, sy0), m(sx0 + (sx1 - sx0) * fade / ln, sy0 + (sy1 - sy0) * fade / ln)
     big = 400
-    return (f'<linearGradient id="{uid}-g" gradientUnits="userSpaceOnUse" x1="{_f(a[0])}" y1="{_f(a[1])}" '
-            f'x2="{_f(b[0])}" y2="{_f(b[1])}"><stop offset="0" stop-color="#fff" stop-opacity="0"/>'
-            f'<stop offset="1" stop-color="#fff"/></linearGradient>'
+    grads = (f'<linearGradient id="{uid}-g" gradientUnits="userSpaceOnUse" x1="{_f(a[0])}" y1="{_f(a[1])}" '
+             f'x2="{_f(b[0])}" y2="{_f(b[1])}"><stop offset="0" stop-color="#fff" stop-opacity="0"/>'
+             f'<stop offset="1" stop-color="#fff"/></linearGradient>')
+    band = ""
+    if top:
+        seam, x0, x1 = top
+        (tx0, _), (tx1, _) = m(x0, 0), m(x1, 0)
+        grads += (f'<linearGradient id="{uid}-t" gradientUnits="userSpaceOnUse" x1="{_f(tx0)}" y1="0" x2="{_f(tx1)}" '
+                  f'y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#fff"/>'
+                  f'</linearGradient>')
+        # the region above the seam: the seam's own curve (traced right to left) is its lower edge, so the solid band
+        # ends exactly on the drawn seam line
+        (lx, ly), (rx, ry) = m(seam[0][0] - 0.10, seam[0][1]), m(seam[-1][0] + 0.10, seam[-1][1])
+        (ux, uy), (vx, vy) = m(seam[0][0] - 0.10, -0.40), m(seam[-1][0] + 0.10, -0.40)
+        back = _path(list(reversed(seam)), m, closed=False).replace("M", "L", 1)
+        band = (f'<path d="M{_f(ux)},{_f(uy)} L{_f(vx)},{_f(vy)} L{_f(rx)},{_f(ry)} {back} L{_f(lx)},{_f(ly)}Z" '
+                f'fill="url(#{uid}-t)"/>')
+    return (grads +
             f'<mask id="{uid}-m" maskUnits="userSpaceOnUse" x="{-big}" y="{-big}" width="{3 * big}" height="{3 * big}">'
-            f'<rect x="{-big}" y="{-big}" width="{3 * big}" height="{3 * big}" fill="url(#{uid}-g)"/></mask>'
+            f'<rect x="{-big}" y="{-big}" width="{3 * big}" height="{3 * big}" fill="url(#{uid}-g)"/>{band}</mask>'
             f'<g mask="url(#{uid}-m)">{"".join(out)}</g>')
 
 
-def _humerus(m, uid):
+def _humerus(m, uid, groove=False):
+    """The arm bone and its ball; groove=True (front view only) adds the bicipital groove on the shaft."""
     hx, hy = m(*HEAD_C)
     r = HEAD_R * S
-    gx = [m(p[0], p[1]) for p in GROOVE]
+    g = ""
+    if groove:
+        (ax, ay), (bx, by), (cx, cy) = (m(*p) for p in GROOVE)
+        g = (f'<path d="M{_f(ax)},{_f(ay)} Q{_f(bx)},{_f(by)} {_f(cx)},{_f(cy)}" stroke="{BONE_EDGE}" '
+             f'stroke-width=".9" opacity=".45" fill="none" stroke-linecap="round"/>')
     return (f'<mask id="{uid}" maskUnits="userSpaceOnUse"><rect x="{_f(hx - 70)}" y="{OY - 10}" width="140" '
             f'height="{_f(1.11 * S + 12)}" fill="url(#ts-fade)"/></mask>'
             f'<g mask="url(#{uid})">' + _shape(HUMERUS, m, "url(#ts-bone)", BONE_EDGE, 1.2)
-            + f'<circle cx="{_f(hx)}" cy="{_f(hy)}" r="{_f(r - 1.5)}" fill="url(#ts-ball)"/>'
-            + f'<path d="M{_f(gx[1][0])},{_f(gx[1][1])} Q{_f(gx[2][0])},{_f(gx[2][1])} {_f(gx[3][0])},{_f(gx[3][1] + 40)}" '
-              f'stroke="{BONE_EDGE}" stroke-width=".9" opacity=".45" fill="none"/></g>')
+            + f'<circle cx="{_f(hx)}" cy="{_f(hy)}" r="{_f(r - 1.5)}" fill="url(#ts-ball)"/>' + g + '</g>')
 
 
 def _label(x, y, text, tx, ty, anchor="start", size=10.5, weight=700, color=INK, side=None, sub=None):
@@ -550,9 +589,9 @@ def panel_front():
     out = [_panel_card(P1X, PW, "ROTATOR CUFF FROM THE FRONT", "big outer shoulder muscle lifted away"),
            f'<clipPath id="ts-p1"><rect x="{P1X + 1}" y="1" width="{PW - 2}" height="{PANEL_H - 2}" rx="10"/></clipPath>',
            '<g clip-path="url(#ts-p1)">']
-    out.append(_shape(SCAPULA, m, "url(#ts-fossa)", BONE_EDGE, 1.2))
+    out.append(_shape(SCAPULA_FRONT, m, "url(#ts-fossa)", BONE_EDGE, 1.2))
     out.append(_muscle("ts-f-supf", SUPRA_FRONT, m, [(0.085, -0.008), (0.088, 0.02)], [(0.640, 0.066), (0.646, 0.108)], 5))
-    out.append(_humerus(m, "ts-hm1"))
+    out.append(_humerus(m, "ts-hm1", groove=True))
     out.append(_hood("ts-t-supf", T_SUPRA_FRONT, m, [(0.600, 0.092), (0.600, 0.132)], [(0.926, 0.196), (0.916, 0.236)], 3))
     out.append(_muscle("ts-f-subsc", SUBSC, m, [(0.05, 0.10), (0.19, 0.91)], [(0.660, 0.236), (0.670, 0.330)], 16))
     out.append(_hood("ts-t-subsc", T_SUBSC, m, [(0.596, 0.222), (0.606, 0.364)], [(0.838, 0.266), (0.838, 0.344)], 7, bow=-0.010))
@@ -577,8 +616,9 @@ def panel_front():
     # the dot sits at mid-thickness of the bursa, clear of the acromion; the label stands in the margin left of the
     # arm bone, and its leader reaches the bursa without crossing bone [ANAT]
     bx, by = m(0.926, 0.167)
+    # "as shown" ties the caption to the red drawing and to the KEY's "Sore bursa", so the two never disagree
     out.append(_label(P1X + 5, 160, "Bursa", bx, by, "start", side="above",       # [ANAT][LEWIS16]
-                      sub=["a cushion", "between the", "roof and cuff;", "it can get sore", "and swollen"]))
+                      sub=["a cushion", "between the", "roof and cuff;", "it can get sore", "and swollen,", "as shown"]))
     sx, sy = m(0.22, 0.78)
     out.append(_label(P1X + PW - 10, 282, "Subscapularis", sx, sy, "end", side="above"))
     hx, hy = m(0.80, 0.86)
@@ -599,9 +639,11 @@ def panel_back():
     out.append(_humerus(m, "ts-hm2"))
     out.append(_muscle("ts-f-infra", INFRA, m, [(0.05, 0.31), (0.11, 0.80)], [(0.664, 0.222), (0.680, 0.300)], 15))
     out.append(_strap("ts-f-tmin", TMINOR, TM_IN, TM_OUTER, m, 4))
-    out.append(_muscle("ts-f-supra", SUPRA, m, [(0.040, 0.040), (0.050, 0.232)], [(0.664, 0.090), (0.664, 0.124)], 7))
+    out.append(_muscle("ts-f-supra", SUPRA, m, [(0.040, 0.040), (0.050, 0.232)], [(0.598, 0.084), (0.598, 0.116)], 7))
+    # the supraspinatus band comes out from under the acromion, so it is solid where it shows (short fade at its edge);
+    # the infraspinatus and teres minor bands keep the long fade, so their muscles flow into them
     out.append(_hood("ts-t-cuff", CUFF_BACK, m, [(0.600, 0.090), (0.642, 0.348)], [(0.930, 0.200), (0.928, 0.346)], 11,
-                     seams=SEAMS_BACK, bow=-0.016))
+                     seams=SEAMS_BACK, bow=-0.016, top=(SEAMS_BACK[0], 0.600, 0.628)))
     out.append(f'<path d="{_path(SPINE, m)}" fill="#6B4A22" opacity=".18" transform="translate(0.8,2.4)"/>')
     out.append(_shape(SPINE, m, "url(#ts-spine)", BONE_EDGE, 1.2))
     out.append(_ridge([(0.034, 0.234, 1), (0.120, 0.208, 1), (0.260, 0.178, 1), (0.400, 0.142, 1), (0.520, 0.104, 1),
@@ -836,7 +878,7 @@ def _sw_vessel():
     return _vessel([(-12, 3), (-5, -1), (3, 2.5), (12, -2)], 1.7) + _vessel([(-5, -1), (-3.5, -5), (-1, -8)], 1.1)
 
 
-KEY_ITEMS = [(_sw_muscle, "Muscle"), (_sw_tendon, "Tendon"), (_sw_bone, "Bone"), (_sw_bursa, "Irritated bursa"),
+KEY_ITEMS = [(_sw_muscle, "Muscle"), (_sw_tendon, "Tendon"), (_sw_bone, "Bone"), (_sw_bursa, "Sore bursa"),
              (_sw_fibers, "Collagen fibers"), (_sw_fray, "Frayed fibers"), (_sw_vessel, "New blood vessels")]
 # The lens is explained where it opens: panel 3 is titled "the circled spot, magnified many times".
 KEY_FS, KEY_SW, KEY_GAP, KEY_X0, KEY_X1, KEY_MIN = 11, 26, 4, 48, W - 14, 8
@@ -965,7 +1007,8 @@ def risk_block():
 
 def pain_block():
     # Pain-monitoring model [SILB07]: 0-2 safe, up to 5 acceptable if it settles by the next morning,
-    # above 5 too much; morning pain and stiffness should not build from week to week.
+    # above 5 too much, which means lowering the load right then, not only next session; morning pain and stiffness
+    # should not build from week to week.
     zone = lambda n: "g" if n <= 2 else ("a" if n <= 5 else "r")
     cells = "".join(f'<span class="tsp-c {zone(n)}">{n}</span>' for n in range(11))
     return ('<div class="tsp-pain"><div><div class="tsp-bh">Your pain guide during exercise '
@@ -973,7 +1016,7 @@ def pain_block():
             f'<div class="tsp-scale">{cells}</div>'
             '<div class="tsp-zones"><div class="g"><b>0 to 2: safe</b>Keep going.</div>'
             '<div class="a"><b>3 to 5: OK</b>if it settles by the next morning.</div>'
-            '<div class="r"><b>6 or more: too much</b>Ease off next time.</div></div></div>'
+            '<div class="r"><b>6 or more: too much</b>Stop or go lighter now, and do less next time.</div></div></div>'
             # 12-week loading programs [ALF98][BEYER15] (cuff trials run 4 to 16 weeks, Dube 2024 JOSPT PMID 38832666);
             # gains held at a year [BEYER15]
             '<div class="tsp-weeks"><b>12</b><span><strong>weeks</strong> is a typical length for a tendon exercise plan. '
@@ -982,13 +1025,14 @@ def pain_block():
 
 def flags_block():
     # Red flags first [CPG24].  Achilles rupture: a sudden "pop" with pain at the back of the heel [BIGGS21]; weak
-    # push-off, so you cannot rise up on your toes [CHIODO10].  Heart attack warning signs include arm pain with
-    # chest discomfort, shortness of breath or a cold sweat: call 911 [AHA].
+    # push-off on the hurt side, so you cannot rise up on the toes of THAT foot (a single-leg heel raise) [CHIODO10].
+    # Many people with a rupture can still rise on both feet, so the line says "on that foot".  Heart attack warning
+    # signs include arm pain with chest discomfort, shortness of breath or a cold sweat: call 911 [AHA].
     return ('<div class="tsp-flag">' + icon("warning", "0.3in", sw=3.4) +
             '<p><b>Get checked right away for:</b> a pop or sudden weakness after a fall or heavy lift. An arm you cannot '
             'lift. A hot, red, swollen joint, or a fever. Numbness running down the arm. A pop at the back of the ankle, '
-            'or not being able to stand on tiptoe. <b>Shoulder or arm pain with chest pressure, shortness of breath or a '
-            'cold sweat can be a heart attack: call 911.</b></p></div>')
+            'or not being able to stand on tiptoe on that foot. <b>Shoulder or arm pain with chest pressure, shortness '
+            'of breath or a cold sweat can be a heart attack: call 911.</b></p></div>')
 
 
 def front(t, ed):
@@ -1028,12 +1072,13 @@ CSS = r"""
 .tsp .tsp-bh span{font:italic 600 7.4pt Inter,sans-serif;letter-spacing:0;text-transform:none;color:#4A555C;margin-left:6px}
 .tsp .tsp-scale{display:grid;grid-template-columns:repeat(11,1fr);gap:2px}
 .tsp .tsp-c{display:flex;align-items:center;justify-content:center;height:0.2in;font:800 8pt Inter,sans-serif;color:#fff;border-radius:3px}
-.tsp .tsp-c.g{background:#2F8A5E}.tsp .tsp-c.a{background:#B67A0B}.tsp .tsp-c.r{background:#C2392E}
+/* amber #9A6508: white 8 pt bold numbers on it measure about 4.9:1 (the old #B67A0B was about 3.6:1) */
+.tsp .tsp-c.g{background:#2F8A5E}.tsp .tsp-c.a{background:#9A6508}.tsp .tsp-c.r{background:#C2392E}
 .tsp .tsp-zones{display:grid;grid-template-columns:3fr 3fr 5fr;gap:2px;margin-top:3px}
 .tsp .tsp-zones div{font-size:7.5pt;line-height:1.25;color:#2B3236;padding:2px 4px 0;border-top:3px solid}
 .tsp .tsp-zones b{display:block;font-size:7.7pt}
 .tsp .tsp-zones .g{border-color:#2F8A5E}.tsp .tsp-zones .g b{color:#1F6B47}
-.tsp .tsp-zones .a{border-color:#B67A0B}.tsp .tsp-zones .a b{color:#7E5300}
+.tsp .tsp-zones .a{border-color:#9A6508}.tsp .tsp-zones .a b{color:#7E5300}
 .tsp .tsp-zones .r{border-color:#C2392E}.tsp .tsp-zones .r b{color:#9A2620}
 .tsp .tsp-weeks{display:flex;align-items:center;gap:0.08in;background:var(--soft);border-radius:8px;padding:0.06in 0.1in;align-self:stretch}
 .tsp .tsp-weeks b{font:900 26pt/1 Merriweather,Georgia,serif;color:var(--c1)}
@@ -1057,6 +1102,19 @@ BK .col .pick .nm{margin-top:auto;padding-top:0.04in}
 BK .col .dose{display:flex;flex-direction:column;justify-content:center}
 /* two write-in lines instead of three pay for the aligned name row and the safety lines */
 BK .notes .ln:last-child{display:none}
+/* The eleven-line check panel is paid for with the spacing its Pain and Movement siblings already use (joint_pain,
+   gut_overgrowth, intestinal_permeability, insulin_resistance, lyme, neuropathy, stress_cortisol, thyroid): a 0.14 in
+   band foot, 0.07 to 0.11 in heading gaps, 0.08 in panel gaps, 0.22 in write-in lines and the notes padding of
+   neuropathy; the check panel's leading is 1.25 (neuropathy's is 1.26).  Measured in print media, page 2 keeps
+   about 5 px above its footer in both editions. */
+BK .band{padding-bottom:0.14in}
+BK .band h2{margin-bottom:0.07in}
+BK .ns-title{margin-top:0.11in}
+BK .cols{margin-top:0.07in}
+BK .duo{margin-top:0.08in}
+BK .notes{margin-top:0.08in;padding-top:0.05in;padding-bottom:0.055in}
+BK .notes .ln{height:0.22in}
+BK .rx li{line-height:1.25}
 """.replace("BK", _BK)
 
 # ============================================================== back-page icons (registered by name for build.life_block)
@@ -1086,7 +1144,7 @@ SHEET = {
         "style": "circle",
         "life": [
             # Loading raises collagen building; inactivity lowers it; overuse needs adjusted loading, not rest [KJAER04]
-            ("dumbbell", "Load, don't rest", "Exercise most days. Full rest weakens tendons."),
+            ("dumbbell", "Load, don&rsquo;t rest", "Exercise most days. Full rest weakens tendons."),   # curly apostrophe
             # A sudden rise in load drives tendinopathy [COOK09]
             ("ts_steps", "Build up slowly", "Add weight, miles or reps in small steps."),
             # Work with the arm above shoulder height raises cuff risk [LEONG19]
@@ -1102,8 +1160,12 @@ SHEET = {
         ],
         "cols": [
             {"p": "ts_collagen_renew", "need": "Tendon building blocks", "needsub": "collagen peptides", "start": True,
+             # bullet 2 is a plain fact about the formula, not a claim (labels.json R190: Gelatin Hydrolysate
+             # (TENDOFORTE), a collagen peptide, in each scoop), so only bullet 1 carries the FDA diamond.  The 5 g sits
+             # in the serving box just below; with it, the bullet would wrap to 3 lines and drop this column's
+             # IN EACH SERVING head out of line with the other four.
              "bullets": ["Supports tendons, ligaments and joints",
-                         "Includes TENDOFORTE, made for tendons"],               # formulation fact (labels.json R190)
+                         "Includes TENDOFORTE collagen peptides"],
              "dose": "1 scoop in 8 oz water",                                      # label: 1 scoop in 8 ounces of water
              # the timing is the sheet's, not the label's [SHAW17]: about 1 hour before exercise; on a rest day the
              # time does not matter.  The rhythm says the same, so a later workout never clashes with the Morning slot.
@@ -1112,7 +1174,9 @@ SHEET = {
             {"p": "ts_vitamin_c_1000", "need": "Build collagen", "needsub": "vitamin C",
              "bullets": ["Your body needs it to build collagen",                            # [ODS-C]
                          "Collagen Renew has none, so pair them"],                         # labels.json R190: no vitamin C
-             "dose": "1 capsule daily", "dosesub": "with your collagen", "sched": [("am", 1, "capsule")]},
+             # the rhythm says "with the scoop" too, so on a day the scoop moves to before exercise, the pair moves
+             # together (the unit still starts "capsule", so the rhythm still counts it as a pill)
+             "dose": "1 capsule daily", "dosesub": "with your collagen", "sched": [("am", 1, "capsule, with the scoop")]},
             {"p": "ts_inflam_eze_plus", "need": "Comfort after activity", "needsub": "ginger, curcumin, boswellia",
              "bullets": ["Supports joint and muscle comfort", "Supports a healthy inflammatory response"],
              "dose": "3 capsules daily", "dosesub": "with food", "sched": [("pm", 3, "capsules")]},
@@ -1124,38 +1188,75 @@ SHEET = {
             {"p": "ts_d3_5000_k2", "need": "Muscle and bone", "needsub": "vitamin D3 with K2",
              # Why vitamin D on a tendon sheet: a tendon joins muscle to bone, and both need vitamin D (NIH ODS
              # Vitamin D fact sheet: bones need it to absorb calcium; muscles need it to move).  Structure/function only.
-             "bullets": ["Supports the muscles and bones that tendons join",
+             # The wording fits two lines, so this column's IN EACH SERVING head lines up with the other four.
+             "bullets": ["Supports muscle and bone health",
                          "High dose: check your vitamin D level first"],   # 5,000 IU is above the 4,000 IU adult UL (NIH ODS)
              # label: "Take one softgel daily"; taken with the evening meal (fat helps absorption), which also keeps the
              # Morning and Evening rhythm slots the same height
              "dose": "1 softgel daily", "dosesub": "with your evening meal", "sched": [("pm", 1, "softgel")]},
         ],
-        # Edition-aware via {who}: "your provider" (practitioner) / "your pharmacist" (pharmacy).  The same cautions, in
-        # substance, as the sibling Pain and Movement sheets that carry these products (injury-healing: surgery and
-        # "the doctor who prescribes it"; joint-pain: stomach ulcer or gallstones), so a pharmacy holding both sees
-        # one story for Inflam-Eze Plus and fish oil.
+        # Edition-aware via {who}: "your provider" (practitioner) / "your pharmacist" (pharmacy).
+        # PARITY (checked line by line against both sibling panels, 2026-11-03): every caution the sibling Pain and
+        # Movement sheets print for the products this sheet shares with them (Inflam-Eze Plus, Collagen Renew, fish
+        # oil) is here, so a pharmacy holding both sees one story.
+        #   joint_pain.py: blood thinner or surgery (check 1); willow bark and aspirin allergy, aspirin, ibuprofen or
+        #   naproxen (checks 3, 1); liver or gallbladder trouble, stomach ulcer, and yellow skin or eyes or dark urine
+        #   means stop (checks 5, 4); red-meat (alpha-gal) allergy and Collagen Renew (check 3); pregnant or nursing (5).
+        #   injury_healing.py: blood thinners, aspirin, NSAIDs (1); aspirin allergy (3); surgery (1); diabetes medicine
+        #   (4); under 18, pregnant, nursing, fish allergy, kidney disease, stomach ulcers, gallstones (3, 5); and its
+        #   drowsiness line (muscle relaxers, opioids or sleep aids, with Muscle Eze and the hops in Inflam-Eze Plus),
+        #   carried here as "On sleep aids or other medicines? Ask first" (5): Muscle Eze is not on this sheet, and
+        #   the line has no room to name the hops.
+        # Plus this sheet's own two: the vitamin K in D3 5000 with K2 and warfarin, and the fluoroquinolone tendon
+        # warning.  The whole panel fits 11 lines: the duo split, the panel's 1.25 leading and the spacing in CSS above
+        # pay for it.  Product names carry no-break spaces and hyphens (U+2011, printed as a plain hyphen) so none
+        # splits across lines.
         "rx": [
-            # Bleeding: omega-3s and warfarin (NIH ODS Omega-3 fact sheet); willow bark contains salicin and may increase
+            # 1 Bleeding: omega-3s and warfarin (NIH ODS Omega-3 fact sheet); willow bark contains salicin and may increase
             # the effect of coumarin anticoagulants [EMA-SALIX: EMA/HMPC/80630/2016]; ginger and turmeric/curcumin may
-            # slow clotting (MedlinePlus).  Vitamin K counters warfarin (NIH ODS Vitamin K fact sheet).  Surgery: the
+            # slow clotting, and MedlinePlus (Ginger; Turmeric) names aspirin, ibuprofen and naproxen among the
+            # medicines that slow clotting.  Vitamin K counters warfarin (NIH ODS Vitamin K fact sheet).  Surgery: the
             # American Society of Anesthesiologists asks patients to stop herbal supplements 2 weeks before surgery.
-            # The EMA, Commission E, MedlinePlus and ASA points are as cited in conditions/joint_pain.py and
+            # The EMA, MedlinePlus and ASA points are as cited in conditions/joint_pain.py and
             # conditions/injury_healing.py (ema.europa.eu is blocked here; not re-opened for this sheet).
-            "<b>Blood thinner, aspirin, or surgery coming up?</b> Fish oil and the Inflam-Eze Plus herbs can add to "
-            "bleeding; many surgeons stop them 2 weeks before. The vitamin K in D3 5000 with K2 affects warfarin. "
-            "Ask {who} and the doctor who prescribes it.",
-            # [FDA16][YU19]: stop the antibiotic and call at the first tendon pain
+            "<b>Blood thinner, aspirin, ibuprofen, naproxen, or surgery soon?</b> Fish oil and the Inflam‑Eze&nbsp;Plus "
+            "herbs can add to bleeding; many surgeons stop them 2 weeks before. D3&nbsp;5000 with&nbsp;K2&rsquo;s "
+            "vitamin K affects warfarin. Ask {who} first.",
+            # 2 [FDA16][YU19]: stop the antibiotic and call at the first tendon pain
             "<b>Fluoroquinolone antibiotics</b> (ciprofloxacin, levofloxacin) can injure tendons, more so after 60 or on "
             "steroids. Stop and call your doctor if a tendon hurts.",
-            # White willow bark carries salicin, a salicylate (labels.json R856: 200 mg, 25% salicin): not with a
-            # salicylate allergy, and not with aspirin or other NSAIDs without advice [EMA-SALIX].
-            "<b>Aspirin allergy?</b> Skip Inflam-Eze Plus: its white willow is aspirin's cousin (a salicylate). Ask {who} "
-            "before pairing it with ibuprofen or naproxen.",
-            # Devil's claw: not with stomach or duodenal ulcers, gallstones only after advice (German Commission E);
-            # turmeric: not with gallstones or blocked bile ducts (EMA/HMPC/329755/2017).  Label caution (labels.json
-            # R856, R190): "If you are pregnant, nursing, or taking medication, consult your healthcare practitioner
-            # before use"; the line covers all five products.
-            "<b>Stomach ulcer, gallstones, pregnant or nursing?</b> Ask {who} first.",
+            # 3 Aspirin allergy: white willow bark carries salicin, a salicylate (labels.json R856: 200 mg, 25% salicin),
+            # so not with a salicylate allergy [EMA-SALIX]; "aspirin's cousin" says salicylate in plain words.  The
+            # "aspirin or other NSAIDs" half of that caution is in check 1.  Red meat: Collagen Renew's only other
+            # ingredient is "Bovine Collagen Peptides" (labels.json R190), and products made from mammals can trigger
+            # alpha-gal syndrome, the red-meat allergy spread by lone star tick bites (CDC "Products that may contain
+            # alpha-gal", as cited in conditions/joint_pain.py [CDC-AGS]).  Fish: Omega Pure EPA-DHA 1000 is "omega-3
+            # fish oil (anchovy, sardine, mackerel)", "Contains: Fish" (NutriDyn sell sheet ND416, as recorded in
+            # products.d/neuropathy.json and in this sheet's ts_omega_1000 "src").
+            # (two questions, one per line in both editions: the break falls between the sentences)
+            "<b>Allergic to aspirin?</b> Skip Inflam‑Eze&nbsp;Plus: its white willow is aspirin&rsquo;s cousin. "
+            "<b>Red&nbsp;meat (alpha-gal) or fish?</b> Skip Collagen&nbsp;Renew (beef) or Omega&nbsp;Pure (fish oil).",
+            # 4 Diabetes: ginger and turmeric might lower blood sugar, and with diabetes medicines it might drop too low
+            # (MedlinePlus Ginger and Turmeric, as cited in conditions/injury_healing.py); Inflam-Eze Plus carries both
+            # (labels.json R856: ginger 800 mg, CurQfen curcumin-fenugreek 250 mg).  Liver: rare liver injury with
+            # turmeric or curcumin, more likely with enhanced-absorption forms (CurQfen is one); watch for yellow skin
+            # or eyes and dark urine, and stop [TGA23: TGA safety alert 2023, as cited in conditions/joint_pain.py].
+            # The stop line names the product, so "it" can never be read as the diabetes medicine.
+            "<b>Diabetes medicine?</b> Ask {who}: Inflam‑Eze&nbsp;Plus may lower blood sugar. <b>Yellow skin or eyes, "
+            "or dark urine?</b> Stop Inflam‑Eze&nbsp;Plus and call your doctor.",
+            # 5 Under 18: willow bark, a salicylate, is not advised for children (Reye's syndrome; MedlinePlus Willow
+            # bark, as cited in conditions/injury_healing.py).  Label caution (labels.json R856 and R190; ND416 for the
+            # omega): "If you are pregnant, nursing, or taking medication, consult your healthcare practitioner before
+            # use"; this line carries all of it and covers all five products.  Stomach ulcer: devil's claw, not with
+            # stomach or duodenal ulcers (German Commission E [COMM-E]).  Gallstones: devil's claw only after advice
+            # [COMM-E]; turmeric not with gallstones or blocked bile ducts [EMA-CURCUMA: EMA/HMPC/329755/2017].  Liver
+            # disease: turmeric not with liver disease [EMA-CURCUMA]; people with liver problems should avoid
+            # enhanced-absorption curcumin [TGA23].  Kidney disease: willow bark may harm weak kidneys (MedlinePlus, as
+            # cited in conditions/injury_healing.py).  Sleep aids: hops can add sleepiness with sedatives (MedlinePlus
+            # Hops, as cited in conditions/injury_healing.py; labels.json R856: hops extract 150 mg).  (The COMM-E, EMA
+            # and TGA points are as cited in joint_pain.py.)
+            "<b>Under 18, pregnant or nursing? On sleep aids or other medicines? Stomach ulcer, gallstones, or liver or "
+            "kidney disease?</b> Ask {who} first.",
         ],
     },
 }
@@ -1174,7 +1275,9 @@ def _slots_used():
 
 if "bed" not in _slots_used():
     # No bedtime products: two rhythm slots instead of an empty "nothing to take" box, and the freed width goes to
-    # the check panel, which carries the most text on the page.
+    # the check panel, which carries the most text on the page.  1fr 1.38fr is as far as the rhythm can narrow
+    # without a new wrap (its widest unbreakable run, "1 scoop, or before exercise", needs 119 px of a 123 px slot);
+    # the checks keep the same 11 lines anywhere from 1.34fr to 1.40fr in both editions.
     SHEET["css"] += (f"{_BK} .rhythm{{grid-template-columns:1fr 1fr}}"
                      f"{_BK} .rhythm .slot:nth-child(3){{display:none}}"
-                     f"{_BK} .duo{{grid-template-columns:1fr 1.22fr}}")
+                     f"{_BK} .duo{{grid-template-columns:1fr 1.38fr}}")

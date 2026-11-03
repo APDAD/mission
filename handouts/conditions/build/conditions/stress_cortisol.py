@@ -8,17 +8,21 @@ FRONT, top to bottom:
   pituitary; a magnified adrenal shows its outer layer (cortex, makes cortisol) and core (medulla,
   makes adrenaline).  Blue arrows = the brain's stress signals (CRH, ACTH); gold dots = cortisol; a grey
   dashed loop = the brake (cortisol's feedback to the brain).  Four numbered steps and a KEY (which also names the
-  yellow adrenal glands); the kidneys and spine carry their own labels.  Both zoom cones are drawn under the
-  figure, every brain-inset label sits inside its circle (_check_inset fails the build otherwise), and the
-  adrenal inset's labels sit to its left, clear of its cone.  No SVG text is stroked (stroked text prints as a
-  Type 3 font): labels sit in clear space instead of on white halos.
+  yellow adrenal glands); the kidneys and spine carry their own labels.  Both zoom cones are drawn over the figure
+  (under the arrows, dots, labels and lens rings), so each one runs unbroken to its lens ring, callout style; the
+  kidneys and adrenals are drawn after the cones, so the adrenal cone passes behind the kidney; every
+  brain-inset label sits inside its circle (_check_inset fails the build otherwise), and the adrenal inset's labels
+  sit to its left, clear of its cone.  No SVG text is stroked (stroked text prints as a Type 3 font): labels sit in
+  clear space instead of on white halos.
   -> "Your cortisol clock": a healthy daily curve (green) beside a flattened stressed curve (red dashed),
   with its own KEY cards -> "Signs your stress system is working overtime" (tick tiles)
   -> "Is it 'adrenal fatigue'?" beside "See {who} soon" (too-low and too-high cortisol signs, steroid
   medicines, 988).
-BACK: hex lifestyle band (deepened for 4.5:1 contrast), five NutriDyn picks with full label lines, daily rhythm,
-one medicine check for both editions ({who} is the only difference), and a bold, boxed FDA disclaimer tied by a
-diamond to every structure/function statement [CFR93].  Back-page CSS is scoped by the empty <i class="scx-bk">
+BACK: hex lifestyle band and product headers (both deepened for 4.5:1 contrast), five NutriDyn picks with full
+label lines, daily rhythm (four products: Adrenal Renew, a glandular, is only for people already stepping off one,
+so it is left out of the rhythm and its daily total; its column says it REPLACES the current glandular, and its dose
+bar gives the time and the step-down), one medicine check for both editions ({who} is the only
+difference), and a bold, boxed FDA disclaimer tied by a diamond to every structure/function statement [CFR93].  Back-page CSS is scoped by the empty <i class="scx-bk">
 in the band title.
 Every SVG id starts with "scx-" and every CSS class with "scx-", so nothing collides with other sheets
 in the all-sheets bundle.  Edition wording: "{who}" / "{Who}" (build.ed_text).
@@ -94,18 +98,21 @@ SOURCES (tags sit in comments next to each number or claim on the page)
   [PICK20]   Pickering G et al. Nutrients 2020;12:3672. PMID 33260549 (stress and low magnesium can feed
              each other: the magnesium-stress vicious circle)
   [SHARMA18] Sharma AK et al. J Altern Complement Med 2018;24:243-8. PMID 28829155 (ashwagandha 600 mg/d
-             raised T3 and T4 and lowered TSH) -> "can raise thyroid hormone levels"
-  [BJORN20]  Bjornsson HK et al. Liver Int 2020;40:825-9. PMID 31991029 (rare ashwagandha liver injury)
+             raised T3 and T4 and lowered TSH) -> "can make ... thyroid pills stronger" in the medicine check
+  [BJORN20]  Bjornsson HK et al. Liver Int 2020;40:825-9. PMID 31991029. doi:10.1111/liv.14393 (rare ashwagandha
+             liver injury: five cases, all with jaundice after 2-12 weeks) -> the "yellow skin or eyes" line on the back
+  [VDIER09]  van Diermen D et al. J Ethnopharmacol 2009;122:397-401. PMID 19168123. doi:10.1016/j.jep.2009.01.007
+             (rhodiola root extracts inhibit MAO-A and MAO-B in vitro) -> antidepressants in the medicine check
   [JAMS17]   Jamshidi N, Cohen MM. Evid Based Complement Alternat Med 2017;2017:9217567. PMID 28400848 (holy basil
              / tulsi in 24 human studies: lowered blood sugar in metabolic studies) and [SINGH01] Singh S et al.
              J Ethnopharmacol 2001;78:139-43. PMID 11694358 (holy basil oil lengthened clotting time in animals)
              -> holy basil (Adrenal Renew) beside ginseng in the warfarin / diabetes line
   [EFSA23]   EFSA NDA Panel. EFSA J 2023;21(5):e08006. PMID 37207271. doi:10.2903/j.efsa.2023.8006 (vitamin B6
              upper limit 12 mg a day for adults, set on peripheral neuropathy; the US limit is 100 mg a day, IOM 1998)
-             -> "B6 adds up to 65 mg a day here" with the tingling caution
+             -> "With Adrenal Renew, B6 reaches 65 mg" with the tingling caution (5 mg a day without it)
   [DRAKE13]  Drake C et al. J Clin Sleep Med 2013;9:1195-200. PMID 24235903. doi:10.5664/jcsm.3170 (400 mg of
              caffeine at bedtime, 3 h or even 6 h before bed disrupted sleep and cut total sleep time) -> "Coffee by
-             noon: a late cup can cost you sleep."  [LOV05] Lovallo WR et al. Psychosom Med 2005;67:734-9 (caffeine
+             noon: late coffee can cost you sleep."  [LOV05] Lovallo WR et al. Psychosom Med 2005;67:734-9 (caffeine
              raises cortisol, but daily users are partly tolerant) is no longer quoted on the page.
   [LEP01]    Leproult R et al. J Clin Endocrinol Metab 2001;86:151-7. PMID 11231993 (bright light in the
              early morning raised cortisol by more than 50%; afternoon light did not)
@@ -336,8 +343,9 @@ def _adrenals(k):
     return spline(scale_pts(ra, k)), spline(scale_pts(la, k))
 
 
-def figure(k):
-    """The person, in viewBox units with the centre line at x 0 and the crown at y 0 (k = head height)."""
+def figure(k, kidneys=True):
+    """The person, in viewBox units with the centre line at x 0 and the crown at y 0 (k = head height).
+    kidneys=False leaves out the kidneys and adrenals, so the caller can draw them later, over the zoom cones."""
     S = lambda pts: scale_pts(pts, k)
     body = spline(S(mirror(BODY_R)))
     arms = [spline(S(ARM_R)), spline(S(flip(ARM_R)))]
@@ -355,7 +363,7 @@ def figure(k):
         o.append(f'<path d="M{s * 0.655 * k:.1f},{1.62 * k:.1f} C{s * 0.665 * k:.1f},{1.70 * k:.1f} {s * 0.668 * k:.1f},'
                  f'{1.76 * k:.1f} {s * 0.664 * k:.1f},{1.82 * k:.1f}" fill="none" stroke="#D5AE9F" stroke-width="1.1" '
                  'stroke-linecap="round" opacity=".7"/>')
-    o.append(f'<g clip-path="url(#scx-torso)">{_spine(k)}{_kidneys(k)}</g>')
+    o.append(f'<g clip-path="url(#scx-torso)">{_spine(k)}{_kidneys(k) if kidneys else ""}</g>')
     o.append("</g>")
     # head on top of the neck
     o += [f'<path d="{d}" fill="{SKIN}" stroke="{SKIN_LN}" stroke-width="1.6" stroke-linecap="round"/>' for d in ears]
@@ -526,6 +534,7 @@ FX, FY, FK = 352, 5, 76.0        # figure centre line, crown, head height (viewB
 BI_C, BI_R = (104, 86), 80       # brain inset: big enough that every label sits inside its frame
 AI_C, AI_R = (214, 244), 44      # adrenal inset, beside the figure; its labels sit to its LEFT, clear of its cone
 NX, NW = 486, 274                # notes column: left edge and width
+KEY_PAD = 27                     # KEY box height = KEY_PAD + 15.5 per row (title band plus bottom padding)
 
 # The four steps of the stress response [SMITH06][SAP00].  "Pea-sized" pituitary: NIH MedlinePlus.
 # Each step is two lines, so the KEY below has room for its fourth row (the yellow adrenal glands).
@@ -569,7 +578,9 @@ def key_col(x, y, w):
          "Grey dashed arrow: the brake"),
         (_adrenal_swatch, "Yellow: adrenal glands, on the kidneys"),
     ]
-    h = 21 + 15.5 * len(rows)
+    # 27 + 15.5 per row: about as much clear space under the last row as above "KEY" (21 left the adrenal row's
+    # swatch and descenders 2 units off the bottom border).  art_axis sizes the box with the same formula.
+    h = KEY_PAD + 15.5 * len(rows)
     o = [f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="8" fill="#FFFFFF" stroke="#D9CFBF" stroke-width="1.3"/>',
          T(x + 12, y + 15, "KEY", 10, 800, INK, ls=1.3)]
     for i, (sw, lab) in enumerate(rows):
@@ -581,7 +592,7 @@ def key_col(x, y, w):
 def art_axis(t):
     c1, deep = t["c1"], t["deep"]
     k = FK
-    fig, body_d = figure(k)
+    fig, body_d = figure(k, kidneys=False)      # the kidneys and adrenals go on after the zoom cones, below
     out = [f'<defs>{figure_defs()}'
            f'<clipPath id="scx-torso"><path d="{body_d}"/></clipPath>'
            f'<linearGradient id="scx-fadeg" x1="0" y1="{3.2 * k:.1f}" x2="0" y2="{3.56 * k:.1f}" gradientUnits="userSpaceOnUse">'
@@ -593,7 +604,11 @@ def art_axis(t):
            '</defs>']
     G = lambda x, y: (FX + x * k, FY + y * k)          # head units -> viewBox
 
-    # ---- zoom cones: fill AND edge lines go down first, so the body covers them where they pass behind it
+    out.append(f'<g transform="translate({FX},{FY})">{fig}</g>')
+
+    # ---- zoom cones, callout style: drawn OVER the figure (and under the arrows, dots, labels and lens rings
+    # that follow), so each cone runs unbroken from its inset to its lens ring.  Drawn under the figure, the
+    # adrenal cone vanished at the arm, seemed to point at the elbow, and left stubs in the arm-to-torso gap.
     lens_c, lens_r = G(0, LENS_Y + 0.012), 9.5
     adr_c, adr_r = G(-0.205, 2.23), 11.5
     for (c, r), (ic, ir) in (((lens_c, lens_r), (BI_C, BI_R)), ((adr_c, adr_r), (AI_C, AI_R))):
@@ -603,7 +618,11 @@ def art_axis(t):
         for a, b in ((a1, b1), (a2, b2)):
             out.append(f'<path d="M{a[0]:.1f},{a[1]:.1f} L{b[0]:.1f},{b[1]:.1f}" stroke="{c1}" stroke-width="1" '
                        'stroke-opacity=".45"/>')
-    out.append(f'<g transform="translate({FX},{FY})">{fig}</g>')
+    # The kidneys and adrenals are drawn here, over the cones (and only here: a second copy would double their
+    # see-through highlights), so the adrenal cone's lower edge passes BEHIND the viewer's-left kidney instead of
+    # crossing it like a stray leader line; the lens rings, arrows, dots and labels drawn below stay on top.  The
+    # kidneys sit above the hip fade and inside the torso, so they need neither the fade mask nor the torso clip.
+    out.append(f'<g transform="translate({FX},{FY})">{_kidneys(k)}</g>')
 
     # ---- ACTH: the blue signal runs from the pituitary down to both adrenals
     top, fork = G(0, LENS_Y + 0.075), G(0, 1.90)
@@ -696,7 +715,7 @@ def art_axis(t):
     # ---- the four steps and the KEY
     notes, _ = notes_col(t, 12)
     out.append(notes)
-    kh = 21 + 15.5 * 4
+    kh = KEY_PAD + 15.5 * 4
     kmark, _ = key_col(NX, A_H - kh - 2, NW)
     out.append(kmark)
     return svg(A_W, A_H, "".join(out),
@@ -792,7 +811,10 @@ def art_clock(t):
     # (plain text, no stroked halo: stroked text prints as a Type 3 font)
     px_, py_ = _hx(7.15), _vy(1.0)
     o.append(f'<circle cx="{px_:.1f}" cy="{py_:.1f}" r="3.4" fill="{HEALTHY}" stroke="#fff" stroke-width="1.4"/>')
-    o.append(T(round(px_ + 9, 1), round(py_ + 4, 1), "Healthy peak, 30 to 45 min after waking", 10.2, 700, HEALTHY))
+    # The peak label sits ABOVE the falling curve: baseline 2 units above the peak (y 24; caps from about y 16.6,
+    # inside the day band that starts at y 14), so the green line and its halo pass under the text with a clear gap.
+    # At py_ + 4 the label's baseline sat on the curve and the green stroke ran into the foot of "He".
+    o.append(T(round(px_ + 10, 1), round(py_ - 2, 1), "Healthy peak, 30 to 45 min after waking", 10.2, 700, HEALTHY))
     o.append(f'<circle cx="{_hx(24):.1f}" cy="{_vy(0.065):.1f}" r="3.4" fill="{HEALTHY}" stroke="#fff" stroke-width="1.4"/>')
     o.append(T(round(_hx(7.7), 1), round(_vy(0.5) + 12, 1), "Tired in the morning", 10.2, 700, STRESSED))
     o.append(T(round(_hx(23.6), 1), round(_vy(0.5) + 11, 1), "Wired at night", 10.2, 700, STRESSED, "end"))
@@ -847,11 +869,14 @@ def _ic(name, size="0.3in", sw=3.3):
 # ============================================================== front page blocks
 # Signs that the stress system is working overtime: [MAYO] for sleep, tiredness, headache and muscle tension,
 # focus, anxiety, irritability or low mood, stomach upset; [SEGER04] immunity; [EPEL00] belly fat.
+# "Sick more often" wears the thermometer: the kit's microbe (a ring with straight rays) read as a sun, and the back
+# page's "Morning light" hexagon is a sun.
 SIGNS = [("moon", "Trouble<br>sleeping"), ("sc-tired", "Tired, even<br>after sleep"),
          ("headache", "Headaches,<br>tight muscles"), ("brain", "Foggy, hard<br>to focus"),
          ("sc-mood", "Anxious, cranky<br>or low"), ("gut", "Upset<br>stomach"),
-         ("microbe", "Sick more<br>often"), ("waist", "Slow belly<br>weight gain")]
-# "Slow" on purpose: FAST weight gain in the face and belly is a red flag on the same page (too much cortisol).
+         ("thermo", "Sick more<br>often"), ("waist", "Slow belly<br>weight gain")]
+# "Slow" on purpose.  The red flag on the same page names the telling signs instead of only the speed: a rounder,
+# redder face (moon face, facial plethora [ES08CS]) with FAST belly weight gain, so a patient can tell them apart.
 
 
 def signs_block():
@@ -866,17 +891,18 @@ def low_block():
     # endocrinology society.  Habits that move the rhythm: [LEP01] light, [LEP97] sleep, [DRAKE13] caffeine and sleep.
     myth = ('<div class="scx-myth"><h4>Is it &ldquo;adrenal fatigue&rdquo;?</h4>'
             '<p>You may hear stress-tiredness called that, but it is <b>not a medical diagnosis</b>. A review of 58 '
-            'studies found no proof that stress wears out the adrenal glands. What can change is the stress signal and '
-            'its rhythm, and the daily habits on the back can help reset it.</p></div>')
+            'studies found no proof that stress wears out the adrenal glands. What can change is your cortisol rhythm, '
+            'and the daily habits on the back can help reset it.</p></div>')
     # [ES16AI] too little cortisol: fatigue with weight loss, dizziness or fainting on standing (low blood
     # pressure), salt craving, darker skin (primary disease), nausea, vomiting, belly pain.
-    # [ES08CS] too much cortisol: central weight gain and a round face, wide reddish-purple stretch marks,
-    # easy bruising, weak thigh and upper-arm muscles, new high blood pressure or blood sugar.
+    # [ES08CS] too much cortisol: central weight gain with a round, red face (facial plethora is one of the most
+    # telling signs), wide reddish-purple stretch marks, easy bruising, weak thigh and upper-arm muscles, new high
+    # blood pressure or blood sugar.
     # Steroid medicines: never stop suddenly [ES16AI][BEUS24].  [988] crisis line.  Signs of too much cortisol
     # are checked against [FLES21] as well as [ES08CS].
     low = ["Weight loss with deep tiredness", "Dizzy or faint when you stand", "Craving salt, darkening skin",
            "Nausea, vomiting or belly pain"]
-    high = ["Fast weight gain in the face and belly", "Wide purple stretch marks",
+    high = ["A rounder, redder face with fast belly weight gain", "Wide purple stretch marks",
             "Easy bruising, weak thigh muscles", "New high blood pressure or blood sugar"]
     li = lambda xs: "".join(f"<li>{x}</li>" for x in xs)
     flags = ('<div class="scx-flag"><h4>See a doctor soon if you notice</h4><div class="scx-cols">'
@@ -921,7 +947,9 @@ CSS = r"""
 .scx .scx-myth b{color:var(--deep)}
 .scx .scx-flag{border:1.5px solid #C0392B;background:#FDF3F1;border-radius:8px;padding:0.06in 0.12in 0.06in}
 .scx .scx-flag h4{color:#A5281E}
-.scx .scx-cols{display:grid;grid-template-columns:1fr 1.15fr;gap:0.12in}
+/* the "too much" list carries the longest line ("A rounder, redder face with fast belly weight gain"), so it gets
+   the wider share; every item in both lists stays on one line */
+.scx .scx-cols{display:grid;grid-template-columns:1fr 1.36fr;gap:0.12in}
 .scx .scx-cols b{display:block;font:800 7.6pt Inter,sans-serif;color:#7A2219;letter-spacing:.02em}
 .scx .scx-cols em{font-style:normal;text-decoration:underline;text-underline-offset:1.5px}
 .scx .scx-cols ul{margin:1px 0 0;padding:0;list-style:none}
@@ -933,12 +961,8 @@ CSS = r"""
 /* ---- footers and the back page.  The kit gives the back page no sheet class, so the band title carries an empty
    <i class="scx-bk"> marker and every back rule is scoped by .sheet.back:has(.scx-bk); the front is found by its
    .scx body.  No other sheet carries either class. ---- */
-/* Standard 3 (7 pt floor): the kit sets this fine print to 7 pt; it is pinned here too so this sheet can never
-   drop below it, and the label facts (the most-read small text) get a little more. */
-.sheet.front:has(.scx) .foot,.sheet.front:has(.scx) .foot .code,.sheet.back:has(.scx-bk) .foot .code,
-.sheet.back:has(.scx-bk) .startb,.sheet.back:has(.scx-bk) .col .need i,.sheet.back:has(.scx-bk) .col .pick .sz,
-.sheet.back:has(.scx-bk) .col .key b,.sheet.back:has(.scx-bk) .col .dose small,.sheet.back:has(.scx-bk) .slot li,
-.sheet.back:has(.scx-bk) .total{font-size:7pt}
+/* Standard 3 (7 pt floor): the shared kit sets all fine print (footers, badge, header sub-lines, sizes, dose
+   sub-lines, rhythm) to 7 pt, so nothing is pinned here; the label facts, the most-read small text, get 7.2 pt. */
 .sheet.back:has(.scx-bk) .col .key{font-size:7.2pt;line-height:1.3}
 /* FDA disclaimer [CFR93]: bold, boxed, and linked by the diamond that ends every product statement.  8 pt, not
    7: Inter Bold's lowercase o is 0.564 em, so 8 pt gives a 4.5 pt (1/16 in) o, which meets the rule even read the
@@ -954,6 +978,11 @@ CSS = r"""
 .sheet.back:has(.scx-bk) .band{background:linear-gradient(120deg,#8C510B,#A65F0E)}
 .sheet.back:has(.scx-bk) .band h2 small{color:#FFF6EE}
 .sheet.back:has(.scx-bk) .life p{color:#FFFFFF}
+/* product headers: the same deeper amber, so the white titles and 7 pt sub-lines clear 4.5:1 everywhere on the
+   gradient (white on #A65F0E about 4.9:1, on #7A480A about 7.6:1); the theme's gold measured 2.5-3.3:1 on paper.
+   Sub-lines at full opacity, not the kit's .92. */
+.sheet.back:has(.scx-bk) .col .need{background:linear-gradient(160deg,#7A480A,#A65F0E)}
+.sheet.back:has(.scx-bk) .col .need i{opacity:1}
 /* room for the full label lines and the longer check: smaller hexes, tighter gaps, two write-in lines */
 .sheet.back:has(.scx-bk) .band{padding-bottom:.13in}
 .sheet.back:has(.scx-bk) .band h2{margin-bottom:.07in}
@@ -967,17 +996,18 @@ CSS = r"""
 .sheet.back:has(.scx-bk) .recby{margin-top:.06in}
 /* need headers: every title and every sub-line is one line here, so one short height lines them all up */
 .sheet.back:has(.scx-bk) .col .need{min-height:.42in;padding-left:.05in;padding-right:.05in}
-/* column widths follow the content: Calm's label is two lines, Adrenal Renew's is ten ingredients long, so
-   Calm gives up a little width (its name, photo and dose still fit) and Adrenal Renew takes it */
+/* column widths follow the content: Calm's label is two lines (plus its old name), Adrenal Renew's is ten
+   ingredients long, so Calm gives up a little width (its name, photo and dose still fit) and Adrenal Renew takes it */
 .sheet.back:has(.scx-bk) .cols{grid-template-columns:1fr 1fr .84fr 1fr 1.16fr!important}
 /* every column has three name-and-size lines; one line height for both keeps the bullets level */
 .sheet.back:has(.scx-bk) .col .pick .nm,.sheet.back:has(.scx-bk) .col .pick .sz{line-height:9.9pt}
-/* daily rhythm: a count never splits from its unit.  Morning holds three products, so it gets a full-height
-   left slot and Evening sits over Bedtime on the right; the medicine check gets the wider half of the row */
+/* daily rhythm: a count never splits from its unit.  Morning holds two products (one wraps), so it gets a
+   full-height left slot and Evening sits over Bedtime on the right.  The medicine check gets 1.5 parts of the row:
+   its five lines need the width, and the rhythm, with four products, still ends above it */
 .sheet.back:has(.scx-bk) .slot li em{white-space:nowrap}
 .sheet.back:has(.scx-bk) .rhythm{grid-template-columns:1.2fr 1fr;grid-auto-rows:auto}
 .sheet.back:has(.scx-bk) .rhythm .slot:first-child{grid-row:span 2}
-.sheet.back:has(.scx-bk) .duo{grid-template-columns:1fr 1.25fr}
+.sheet.back:has(.scx-bk) .duo{grid-template-columns:1fr 1.5fr}
 """
 
 # ============================================================== back page helpers
@@ -1013,7 +1043,7 @@ SHEET = {
                  ("breath", "Slow breathing", "Five minutes a day of long, slow exhales."),
                  ("walk", "Move daily", "150 minutes a week. A brisk walk counts."),
                  ("moon", "Protect sleep", "7+ hours. Short nights raise cortisol."),
-                 ("coffee", "Coffee by noon", "A late cup can cost you sleep."),
+                 ("coffee", "Coffee by noon", "Late coffee can cost you sleep."),
                  ("sc-people", "Lean on people", "Friends soften your stress response.")],
         # Every structure/function statement ends in the diamond (sf), which points to the boxed FDA disclaimer.
         "cols": [
@@ -1022,10 +1052,13 @@ SHEET = {
              "start": True,
              "bullets": [sf("Supports a healthy stress response"), sf("Helps maintain healthy cortisol levels")],
              "dose": "dose_from_db"},
-            {"p": "sc_balance", "need": "Daytime energy", "needsub": "cordyceps plus stress herbs",
+            # Header sub-lines are the plain-language layer, so no ingredient jargon there: cordyceps is a mushroom
+            # (Cordyceps militaris fruiting body, ND422); GABA and L-theanine are both amino acids (ND856).  Each
+            # sub-line stays one line in its column, so the headers stay one height.
+            {"p": "sc_balance", "need": "Daytime energy", "needsub": "mushroom plus stress herbs",
              "bullets": [sf("Supports energy and stamina under stress"), sf("Helps your body adapt to daily demands")],
              "dose": "dose_from_db"},
-            {"p": "sc_calm", "need": "Quiet a busy mind", "needsub": 'GABA and <span class="scx-nw">L-theanine</span>',
+            {"p": "sc_calm", "need": "Quiet a busy mind", "needsub": "calming amino acids",
              "bullets": [sf("Promotes a calm, relaxed mood"), sf("Helps you unwind in the evening")],
              "dose": "dose_from_db"},
             # [PICK20] stress and low magnesium feed each other (the magnesium-stress vicious circle)
@@ -1034,34 +1067,63 @@ SHEET = {
              "dose": "dose_from_db"},
             # Framed around its real use (topic research: Asher's 2026-10-05 advice to step a patient down from
             # Ortho's Adren-All), so the back never says the adrenals need "renewing" after the front's myth box
-            # [CADE16].  [PATAK04] vitamin C in the adrenal gland; pantothenic acid builds coenzyme A for steroid
-            # synthesis; [AKTURK18] why glandulars are not a first step.
-            {"p": "sc_adrenal_renew", "need": "Coming off a glandular?", "needsub": "switch, then step down",
-             "bullets": ["Not a first step", sf("B vitamins and vitamin C for a healthy stress response")],
-             "dose": "dose_from_db"},
+            # [CADE16].  It is itself a glandular (300 mg dried cow adrenal), the product class [AKTURK18] found
+            # carrying unlabelled thyroid and steroid hormones, so it is ONLY for someone who already takes one and is
+            # coming off it: "sched": [] keeps it out of the daily rhythm and its pill total (7 pills and 1 scoop),
+            # and the header says "only".  Bullet 1 says it REPLACES the glandular the patient is on (taken on top of
+            # another brand's glandular it would double the glandular dose), and the medicine check repeats "never with
+            # another".  The dose bar (products.d) gives the one patient it is for a time and a way off: "2 capsules at
+            # breakfast" (label: two capsules daily; NutriDyn's Stress Essentials chart V3, 10/2024: with food, earlier
+            # in the day) / "then step down as directed".  Wording sized to the column: both bullets fit four lines like
+            # every other column, so "In each serving" stays level, and each dose line fits one line, so the dose bars do.
+            # [PATAK04] vitamin C in the adrenal gland; pantothenic acid builds coenzyme A for steroid synthesis.
+            {"p": "sc_adrenal_renew", "need": "Coming off a glandular?", "needsub": "only if you already take one",
+             "bullets": ["Replaces your current glandular (dried cow adrenal)",
+                         sf("B vitamins and vitamin C for a healthy stress response")],
+             "sched": [], "dose": "dose_from_db"},
         ],
-        # One list for both editions; {who} is the only difference.
-        # Ashwagandha: [AKH22] 300-600 mg/d studied (mostly root extracts); Sensoril's own stress trials used
-        # 125-500 mg/d.  150 mg (Cortisol Pro) + 400 mg (Balance at half its label dose) = 550 mg a day as scheduled;
-        # at the label dose it would be 950 mg.  Labels: Cortisol Pro "Do not use if pregnant", Balance "Do not use if
-        # pregnant or nursing" and "If taking heart medications... inform your healthcare practitioner".
-        # [SHARMA18] raises T3/T4; adds to sedatives (benzodiazepines, sleep pills).  Glandulars: [AKTURK18] hidden
-        # thyroid and steroid hormones; steroids are never stopped suddenly [ES16AI][BEUS24].  Asian ginseng can lower
-        # blood sugar, with mixed evidence that it changes warfarin's effect (NCCIH herb-drug interaction digest, seen
-        # through web search); holy basil lowers blood sugar [JAMS17] and lengthened clotting time in animals
-        # [SINGH01].  Daily totals as scheduled: B6 65 mg (Adrenal Renew 60 + Mag Calm Pro 5) against the US upper
-        # limit of 100 mg and EFSA's 12 mg [EFSA23]; rhodiola 350 mg (Cortisol Pro 250 + Balance 100); L-theanine
-        # 400 mg (Cortisol Pro 100 + Calm 200 + Mag Calm Pro 100).
+        # One list for both editions; {who} is the only difference.  Each line is sized to the panel (1.5 parts of
+        # the row): eleven lines in both editions, the same height the four-line list had, so the page keeps its
+        # footer room.
+        # 1. Ashwagandha: [AKH22] 300-600 mg/d studied (mostly root extracts); Sensoril's own stress trials used
+        #    125-500 mg/d.  150 mg (Cortisol Pro) + 400 mg (Balance at 3 capsules once a day, half its label dose,
+        #    which the dose bar says) = 550 mg a day as scheduled; at the label dose it would be 950 mg.  It can add
+        #    to sedatives (benzodiazepines, sleep pills) and [SHARMA18] raised T3/T4, so on thyroid pills it can push
+        #    levels higher: "can make sleep, anxiety or thyroid pills stronger".  [BJORN20] Bjornsson HK et al.
+        #    Liver Int 2020;40:825-9, PMID 31991029, doi:10.1111/liv.14393 (five cases of ashwagandha liver injury,
+        #    all with jaundice after 2-12 weeks; one also took rhodiola) and NIH LiverTox (ashwagandha entry, named
+        #    source, not reopened here: nih.gov is blocked) -> "Yellow skin or eyes, or dark urine? Stop both and call
+        #    a doctor" ("both": the bullet names two ashwagandha products, and stopping only one would leave the herb
+        #    in; a doctor in both editions: possible liver injury needs a medical visit, not a pharmacy call).
+        # 2. Glandulars: [AKTURK18] hidden thyroid and steroid hormones; steroids are never stopped suddenly
+        #    [ES16AI][BEUS24].  Who Adrenal Renew is for sits in its column ("only if you already take one", "Replaces
+        #    your current glandular"); "never with another" says it here too, so nobody doubles a glandular dose by
+        #    adding it on top of another brand's.  Sized to stay two lines in both editions (page 2 keeps its footer room).
+        # 3. Antidepressants: [VDIER09] van Diermen D et al. J Ethnopharmacol 2009;122:397-401, PMID 19168123,
+        #    doi:10.1016/j.jep.2009.01.007 (rhodiola root extracts inhibit MAO-A and MAO-B, so rhodiola may add to
+        #    MAOIs and other antidepressants).  Asian ginseng can lower blood sugar, with mixed evidence that it
+        #    changes warfarin's effect (NCCIH herb-drug interaction digest, seen through web search); holy basil lowers
+        #    blood sugar [JAMS17] and lengthened clotting time in animals [SINGH01].  "Heart medicine": Balance's label
+        #    caution, "If taking heart medications... inform your healthcare practitioner".  Hence "can change how
+        #    some of these work".
+        # 4. Daily totals as scheduled (Adrenal Renew is outside the rhythm): rhodiola 350 mg (Cortisol Pro 250 +
+        #    Balance 100); L-theanine 400 mg (Cortisol Pro 100 + Calm 200 + Mag Calm Pro 100); B6 5 mg (Mag Calm
+        #    Pro), 65 mg only with Adrenal Renew's 60 mg, against the US upper limit of 100 mg and EFSA's 12 mg
+        #    [EFSA23], hence the tingling caution on that clause.
+        # 5. Pregnancy: Cortisol Pro's label "Do not use if pregnant" (nursing: consult), Balance's "Do not use if
+        #    pregnant or nursing", and "If pregnant, nursing... consult your healthcare practitioner" on Calm, Mag
+        #    Calm Pro and Adrenal Renew; none of the five labels claims pregnancy safety, so the line covers them all.
         "rx": [
-            "<b>Ashwagandha</b> (Cortisol Pro, Balance): 550 mg a day, with Balance at half its label dose "
-            "(3 capsules, not 6). Not for pregnancy or breastfeeding. It adds to sedatives (sleep or anxiety pills). "
-            "On thyroid medicine? Tell {who}: it can raise thyroid levels.",
-            "<b>Adrenal Renew is a glandular</b> (dried cow adrenal), not a first step. On prednisone, hydrocortisone "
+            "<b>Ashwagandha</b> (Cortisol Pro, Balance): 550 mg a day. It can make sleep, anxiety or thyroid pills "
+            "stronger: tell {who} if you take any. Yellow skin or eyes, or dark urine? Stop both and call a doctor.",
+            "<b>Adrenal Renew is a glandular</b> (dried cow adrenal): never with another. On prednisone, hydrocortisone "
             "or thyroid pills? Ask {who} first, and stop glandulars slowly.",
-            "<b>On warfarin, diabetes or heart medicine?</b> Ginseng (in Balance) and holy basil (in Adrenal Renew) "
-            "can change how they work. Ask {who} first.",
-            "<b>A day adds up to</b> 65 mg vitamin B6, 350 mg rhodiola and 400 mg L-theanine. Tingling or numb hands "
-            "or feet? Tell {who}.",
+            "<b>On warfarin, an antidepressant, or diabetes or heart medicine?</b> Rhodiola, ginseng and holy basil can "
+            "change how some of these work. Ask {who} first.",
+            "<b>A day adds up to</b> 350 mg rhodiola and 400 mg L-theanine. With Adrenal Renew, B6 reaches 65 mg: "
+            "tingling or numb hands or feet? Tell {who}.",
+            "<b>Pregnant, trying to get pregnant or breastfeeding?</b> Skip Cortisol Pro and Balance, and ask {who} "
+            "before the others.",
         ],
     },
 }

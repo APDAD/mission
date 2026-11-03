@@ -7,30 +7,38 @@ Front page, top to bottom:
   -> KEY row -> how it can feel + get-care box -> common-trigger picture
   row -> acid-blocker nutrient strip -> FDA footnote.
 
-Art-director pass (2026-11-03), front only (SHEET["back"] is owned by the
-back-page pass and is left exactly as it was):
-  * one continuous outline from the esophagus through the stomach, a tapered
-    pyloric canal, a pylorus ring the height of the duodenum and the duodenum
-    itself (smooth cross-shading, no stripes);
-  * esophagus starts 4 units below the SVG edge under a fully opaque fade, so
-    the PDF prints no hard cap line;
-  * diaphragm drawn as muscle (diagonal fibres, no dashed line), ending before
-    the zoom, and lifted clear of the dashed source ring (the ring now holds
-    only the LES, which is what the close-up shows);
-  * close-up: the channel at the LES is open wall to wall (+-22.5), the teal
-    ring halves are thinner and sit inside the wall, no droplet is sliced;
-  * reflux arrow and droplets moved into open lumen; "Stomach" now points into
-    the stomach chamber, not at the wall band under the esophagus;
-  * KEY names all four symbols; text fixes from the review (FDA wording, taper
-    advice, alarm list), coin labels spaced, footer at 7 pt.
+Back page (2026-11-03 back pass): Asher's own GERD protocol (Gmail 16eec3cc434c5ff7,
+2019-12-12: Zinc-Carnosine first, Licorice DGL Pro for meals, GI Integrity when it is
+chronic; Gmail 16d01aaf2b11528e, 2019-09-05: a spore probiotic while on a PPI) plus
+Magnesium Glycinate for the FDA's PPI magnesium warning.  Five columns, the same count
+as the competitor's sheet.  Every "In each serving" line is copied from NutriDyn's own
+sell-sheet Supplement Facts panel (build/products.d/gerd.json names each one).
+
+Why there is no multi with iron on the back, although the PPI protocol names one: four
+of the five protocol products carry zinc.  Per the sell sheets: Zinc-Carnosine 17 mg a
+capsule (ND414), GI Integrity 16.1 mg a scoop (ND431), Licorice DGL Pro 5 mg per 3
+tablets (ND1337), Essential Multi with Iron 15 mg per 3 capsules (ND475).  Capsule +
+scoop + multi is already 48 mg, over the 40 mg adult upper limit [ODS-ZN], before any
+DGL.  So the plan pairs one Zinc-Carnosine capsule with one GI Integrity scoop (together
+they equal the label's twice-daily zinc carnosine), adds 3 DGL tablets a day (about 38 mg
+zinc in all) and covers the acid-blocker gap with zinc-free magnesium.
+
+Front review fixes (2026-11-03, front_rechecks_A): zoom left wall now runs down like the
+lesser curvature; refluxed acid is a jet that narrows through the valve with lining
+showing on both sides, the stomach acid a layer low in the circle; the diaphragm crosses
+just above the LES ring and domes 4 units over the fundus, and the zoom shows the two
+cut ends of the crus beside the valve (named in the KEY); white arrowhead halo sized in
+user units; LES leader dot on the teal ring; whole figure centred; trigger icons cleaned
+up; caption, Barrett's line, edition-aware taper line; coins on a grid; aligned headings.
 
 Sources for every number and claim on the front (also tagged inline):
   [ACG22]  Katz PO et al. ACG Clinical Guideline for the Diagnosis and
            Management of GERD. Am J Gastroenterol 2022;117:27-56.
            doi:10.14309/ajg.0000000000001538 (trigger foods; alcohol, smoking,
            chocolate, peppermint and fatty food lower LES pressure; meals 2-3 h
-           before bed; alarm symptoms; chest pain needs a heart check first;
-           hoarseness, throat clearing, cough, dental erosions).
+           before bed; head-of-bed elevation; weight loss; tobacco cessation;
+           alarm symptoms; chest pain needs a heart check first; hoarseness,
+           throat clearing, cough, dental erosions; Barrett's esophagus).
   [ES14]   El-Serag HB et al. Update on the epidemiology of GERD: a systematic
            review. Gut 2014;63:871-80. doi:10.1136/gutjnl-2012-304269
            (prevalence 18.1-27.8% in North America; NIDDK states about 20%).
@@ -51,6 +59,24 @@ Sources for every number and claim on the front (also tagged inline):
   [REB09]  Reimer C et al. Gastroenterology 2009;137:80-7.
            doi:10.1053/j.gastro.2009.03.058 (acid rebound after stopping 8 weeks
            of PPI), the reason for "do not stop suddenly".
+  [MIT97]  Mittal RK, Balaban DH. N Engl J Med 1997;336:924-32 (the crural
+           diaphragm wraps the LES at the hiatus; together they make the
+           anti-reflux barrier), drawn as the crus beside the valve.
+Back-page sources:
+  [ODS-ZN] NIH Office of Dietary Supplements, Zinc fact sheet: adult upper limit
+           40 mg a day; excess zinc can lower copper; quinolone and tetracycline
+           antibiotics: take them 2 h before or 4-6 h after zinc.
+  [ODS-MG] NIH ODS, Magnesium fact sheet: upper limit for supplemental magnesium
+           350 mg a day; same antibiotic spacing; PPIs over about a year can
+           cause low magnesium.
+  [LT4]    Levothyroxine prescribing information: take it 4 hours apart from
+           calcium, iron and magnesium products.
+  [FUJ05]  Fujiwara Y et al. Am J Gastroenterol 2005;100:2633-6 (dinner within
+           3 h of bed: about 7 times the reflux risk), quoted in Asher's protocol.
+  [ZAL17]  Zalvan CH et al. JAMA Otolaryngol Head Neck Surg 2017;143:1023-9
+           (plant-based Mediterranean-style diet vs PPI in reflux), quoted in
+           Asher's protocol, with its "don't eat heavy meals" and "avoid bending,
+           lying down or jarring exercise soon after a meal".
 """
 import math
 
@@ -67,16 +93,19 @@ ACID_TOP, ACID_MID, ACID_BOT, ACID_EDGE = "#E1EA7C", "#BCCD3A", "#A2B52C", "#7C8
 LES, LES_DARK, LES_HI = "#1E9A8E", "#0F6B63", "#7AD6CA"          # teal: the LES valve
 REFLUX = "#D52F1E"                                                # red: reflux direction
 DIA, DIA_EDGE, DIA_FIBRE = "#EDCFC2", "#C99F8F", "#D2A897"        # diaphragm muscle
+CRUS, CRUS_LO, CRUS_EDGE = "#EECBBB", "#DDB09C", "#B48979"        # diaphragm cut up close (zoom)
 PYL_EDGE = "#B9563F"                                              # pylorus ring edge
 INK, INK_SOFT, LEAD = "#22292D", "#56626A", "#59646B"
 DEEP = "#8E3110"
 
-W, H = 735, 322          # diagram viewBox: 1 unit = 1 px at the 7.66 in content width
-OX, OY = 215, 4          # anatomy origin inside the diagram
-ZX, ZY, ZR = 606, 152, 108   # zoom circle (ZR in zoom units); 12 px clear of the right edge
+W, H = 735, 316          # diagram viewBox: 1 unit = 1 px at the 7.66 in content width
+LX = 138                 # labels end here (right-aligned)
+OX, OY = 185, 0          # anatomy origin inside the diagram (stomach floor at SVG y 314)
+ZX, ZY, ZR = 576, 149, 108   # zoom circle (ZR in zoom units); the figure is centred in the 735 width
 ZS = 1.04                    # zoom scale: on the page the circle radius is ZR * ZS
 SX, SY, SR = 100, 102, 25    # zoom source ring (local coords, centred on the LES)
-TOP = 0                      # local y where the esophagus starts: SVG y 4, under the opaque fade
+TOP = 4                      # local y where the esophagus starts: 4 units below the SVG edge, under the
+                             # opaque fade (a tube cut by the SVG edge itself prints a hairline, checked at 600 dpi)
 
 
 # ------------------------------------------------------------- geometry helpers
@@ -148,11 +177,15 @@ _I30 = next(i for i, p in enumerate(_DP) if p[0] <= 30)                 # duoden
 DUO_POLY = "M" + _pl(_DTOP[_I30:])[1:] + " " + _pl(_DBOT[_I30:][::-1]) + " Z"
 DUO_AXIS = "M" + _pl([(x, y) for x, y, _, _ in _DP[_I30:]])[1:]
 ACID = ("M20,253 C52,245 80,259 112,251 C140,244 168,257 196,249 C214,244 232,250 260,246")
-# Diaphragm: a dome over the fundus, crossing behind the esophagus above the LES
-# (clear of the dashed source ring) and fading out before the zoom cone widens.
-DIA_SEGS = [((30, 78.5), (58, 71.5), (82, 65.5), (104, 62.5)),
-            ((104, 62.5), (134, 57), (166, 55), (196, 55.5)),
-            ((196, 55.5), (222, 56), (240, 60.5), (254, 67.5))]
+# Diaphragm [MIT97]: crosses behind the esophagus just above the LES ring (centre y 87.6 at
+# the tube's left edge, 88.5 mid-tube: the band's lower edge stays 1 unit over the ring's
+# top), rises over the angle of His and domes 4 units above the fundus top (170, 74).
+# Checked numerically: the band's lower edge clears the fundus outline by 2.9 units or more.
+DIA_SEGS = [((30, 73), (50, 75.5), (68, 81), (83, 87.5)),
+            ((83, 87.5), (96, 90.5), (108, 88.5), (117, 82)),
+            ((117, 82), (121, 79.5), (129, 68.5), (151, 65.5)),
+            ((151, 65.5), (165, 62.5), (192, 63.5), (211, 75.5)),
+            ((211, 75.5), (226, 80.5), (242, 87), (254, 92))]
 DIA_LINE = _cubic(DIA_SEGS)
 DIA_W = 11
 # Reflux path: rises out of the pool through open lumen (far clear of the angular
@@ -265,13 +298,29 @@ def _les_hoop(part):
 
 
 def _arrow(d, w=5.5, halo=True):
-    """Red reflux arrow; the white halo keeps it readable on any tissue."""
+    """Red reflux arrow; the white halo keeps it readable on any tissue.  The halo's
+    head (gx-arrh) is the red head grown 2.5 units on every side, in user units."""
     out = ""
     if halo:
         out = (f'<path d="{d}" stroke="#FFFFFF" stroke-width="{w + 4.5}" fill="none" stroke-linecap="round" '
                'stroke-linejoin="round" marker-end="url(#gx-arrh)" opacity=".95"/>')
     return out + (f'<path d="{d}" stroke="{REFLUX}" stroke-width="{w}" fill="none" stroke-linecap="round" '
                   'stroke-linejoin="round" marker-end="url(#gx-arr)"/>')
+
+
+def _halo_head(w=5.5, grow=2.5):
+    """White halo arrowhead in user units: the red marker triangle (viewBox 10, refX 5.2,
+    markerWidth 3.1 stroke widths) offset outward by `grow` on all three sides."""
+    s = w * 3.1 / 10                                  # user units per marker viewBox unit
+    base, tip, half = -5.2 * s, 4.8 * s, 5 * s
+    ang = math.atan2(half, tip - base)                # half-angle at the tip
+    tip2 = tip + grow / math.sin(ang)
+    base2 = base - grow
+    half2 = (tip2 - base2) * math.tan(ang)
+    box = math.ceil(max(tip2, -base2, half2)) + 1
+    return (f'<marker id="gx-arrh" viewBox="{-box} {-box} {2 * box} {2 * box}" refX="0" refY="0" '
+            f'markerWidth="{2 * box}" markerHeight="{2 * box}" markerUnits="userSpaceOnUse" orient="auto-start-reverse">'
+            f'<path d="M{base2:.2f},{-half2:.2f} L{tip2:.2f},0 L{base2:.2f},{half2:.2f} z" fill="#FFFFFF"/></marker>')
 
 
 def _defs():
@@ -288,6 +337,10 @@ def _defs():
             '<linearGradient id="gx-acid" x1="0" y1="0" x2="0" y2="1">'
             f'<stop offset="0" stop-color="{ACID_TOP}"/><stop offset=".35" stop-color="{ACID_MID}"/>'
             f'<stop offset="1" stop-color="{ACID_BOT}"/></linearGradient>'
+            # the zoom's jet: one gradient in zoom units, so jet and pool meet without a seam
+            '<linearGradient id="gx-jet" gradientUnits="userSpaceOnUse" x1="0" y1="-90" x2="0" y2="140">'
+            f'<stop offset="0" stop-color="{ACID_TOP}"/><stop offset=".45" stop-color="{ACID_MID}"/>'
+            f'<stop offset="1" stop-color="{ACID_BOT}"/></linearGradient>'
             # cylinder shading laid over the outside of the esophagus
             '<linearGradient id="gx-cyl" x1="0" y1="0" x2="1" y2="0">'
             '<stop offset="0" stop-color="#7A2A1A" stop-opacity=".16"/>'
@@ -298,8 +351,11 @@ def _defs():
             '<linearGradient id="gx-topfade" gradientUnits="userSpaceOnUse" x1="0" y1="-6" x2="0" y2="30">'
             '<stop offset="0" stop-color="#FFFFFF" stop-opacity="1"/><stop offset=".39" stop-color="#FFFFFF" stop-opacity="1"/>'
             '<stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/></linearGradient>'
-            '<radialGradient id="gx-zbg" cx=".5" cy=".4" r=".62">'
-            '<stop offset="0" stop-color="#FFF8F4"/><stop offset="1" stop-color="#FBE6DC"/></radialGradient>'
+            # zoom background: a cool, darker beige, so the pale lining inside the tube reads as lining
+            '<radialGradient id="gx-zbg" cx=".5" cy=".42" r=".62">'
+            '<stop offset="0" stop-color="#F3EFEB"/><stop offset="1" stop-color="#E2D9D2"/></radialGradient>'
+            '<linearGradient id="gx-crus" x1="0" y1="0" x2="0" y2="1">'
+            f'<stop offset="0" stop-color="{CRUS}"/><stop offset="1" stop-color="{CRUS_LO}"/></linearGradient>'
             '<linearGradient id="gx-les" x1="0" y1="0" x2="1" y2="0">'
             f'<stop offset="0" stop-color="{LES_DARK}"/><stop offset=".45" stop-color="{LES}"/>'
             f'<stop offset="1" stop-color="{LES_DARK}"/></linearGradient>'
@@ -313,9 +369,8 @@ def _defs():
             + fade("h", "#FFFFFF", 30, 254)
             + '<marker id="gx-arr" viewBox="0 0 10 10" refX="5.2" refY="5" markerWidth="3.1" markerHeight="3.1" '
             f'orient="auto-start-reverse" markerUnits="strokeWidth"><path d="M0,0 L10,5 L0,10 z" fill="{REFLUX}"/></marker>'
-            '<marker id="gx-arrh" viewBox="0 0 10 10" refX="5.2" refY="5" markerWidth="3.1" markerHeight="3.1" '
-            'orient="auto-start-reverse" markerUnits="strokeWidth"><path d="M0,0 L10,5 L0,10 z" fill="#FFFFFF"/></marker>'
-            "</defs>")
+            + _halo_head()
+            + "</defs>")
 
 
 def _anatomy():
@@ -343,27 +398,44 @@ def _anatomy():
 
 
 # ------------------------------------------------------------------ zoom circle
-# A slice through the junction, magnified about 3x.  The tube wall thickens into
-# the LES (teal); below it the wall flares out into the stomach and rises on the
-# right into the fundus (the same angle of His as the main view).  The ring is cut
-# in half: its two cut faces sit inside the walls.  The valve is relaxed, so the
-# channel stays open wall to wall (+-22.5) and acid surges up through it.
+# A slice through the junction, magnified about 3x.  The tube wall thickens into the LES
+# (teal); below it the left wall runs on down like the lesser curvature, and on the right
+# it turns out into the fundus (the same angle of His as the main view).  The ring is cut
+# in half: its two cut faces sit inside the walls.  The crus of the diaphragm hugs the
+# valve from outside, cut through on both sides [MIT97].  The valve has relaxed: a jet of
+# acid rises off the pool low in the stomach and squeezes up through it, with lining
+# showing on both sides of the jet.
 Z_SILH = ("M-46,-140 L-46,-72 C-46,-60 -54,-50 -54,-37 C-54,-24 -46,-12 -46,-2 "
-          "C-46,22 -76,42 -140,54 L-140,140 L140,140 L140,-40 C112,-40 86,-28 68,-14 "
+          "C-46,40 -40,90 -30,140 L140,140 L140,-40 C112,-40 86,-28 68,-14 "
           "C60,-8 54,-3 50,0 C48,-6 46,-9 46,-14 C46,-24 54,-26 54,-37 C54,-50 46,-60 46,-72 L46,-140 Z")
 Z_LUMEN = ("M-24,-140 L-24,-72 C-24,-60 -22.5,-50 -22.5,-37 C-22.5,-24 -24,-12 -24,-2 "
-           "C-24,26 -60,52 -140,76 L-140,140 L140,140 L140,-20 C112,-18 92,-8 78,2 "
+           "C-24,40 -18,90 -8,140 L140,140 L140,-20 C112,-18 92,-8 78,2 "
            "C66,11 54,16 42,16 C32,16 24,8 24,-2 C24,-12 22.5,-24 22.5,-37 C22.5,-50 24,-60 24,-72 L24,-140 Z")
 Z_LES_L = "M-39,-72 C-52,-62 -53,-14 -40,-4 C-27,-12 -26,-62 -39,-72 Z"
 Z_LES_R = "M39,-72 C52,-62 53,-14 40,-4 C27,-12 26,-62 39,-72 Z"
-# The refluxed acid is one liquid body clipped to the lumen: the pool mounds up into
-# the funnel, fills the open valve wall to wall and climbs the tube to a wavy crest.
-Z_ACID = ("M-140,88 C-110,86 -84,80 -62,64 C-42,48 -30,20 -30,-12 L-30,-60 "
-          "C-22,-70 -14,-58 -5,-68 C3,-77 12,-60 20,-68 C25,-73 29,-68 30,-64 "
-          "L30,-12 C30,12 42,32 62,46 C84,60 110,68 140,68 L140,140 L-140,140 Z")
-Z_CREST = ("M-30,-60 C-22,-70 -14,-58 -5,-68 C3,-77 12,-60 20,-68 C25,-73 29,-68 30,-64")
-# droplets above the crest: every one at least 2 units inside the 22.5-unit channel
-Z_DROPS = [(-14, -84, 3.4), (11, -90, 3.0), (-4, -98, 2.4), (15, -78, 2.4), (-17, -74, 2.0), (7, -96, 1.8)]
+# The two cut ends of the crus: each band's rounded end tucks under the tube wall beside
+# the upper half of the LES.  Left: nearly level, rising a little outward; right: rising
+# steeply over the fundus, as in the main view.
+Z_CRUS_L = "M-140,-92 L-48,-71 C-40,-67 -42,-49 -52,-45 L-140,-64 Z"
+Z_CRUS_R = "M118,-132 L47,-71 C40,-67 42,-49 52,-45 L136,-108 Z"
+# Stomach acid: a layer low in the circle (the cardia above it shows lining, as in the
+# main view) and a jet that narrows through the valve: about +-14 inside it (8 units of
+# lining each side), +-18 above it (6 units of lining each side of the +-24 tube).
+Z_POOL_TOP = "M-40,64 C-20,58 2,68 24,62 C46,56 66,66 88,60 C104,56 122,61 140,58"
+Z_POOL = Z_POOL_TOP + " L140,140 L-40,140 Z"
+# Left edge stays at about -16.6 down to the pool, so 4-5 units of stomach lining show between the
+# jet and the lesser-curvature wall (lumen edge about -22.5 there), as on the right.
+Z_JET = ("M-24,66 C-19,60 -16.8,48 -16.6,34 C-16.4,18 -15,-4 -14.5,-16 C-14,-30 -14,-46 -14.5,-58 "
+         "C-15,-66 -17,-72 -18,-79 C-12,-87 -6,-79 0,-86 C6,-92 12,-80 18,-81 "
+         "C17,-73 15.5,-65 15,-58 C14.5,-46 14.5,-30 15,-16 C15.5,-4 17,8 18.5,20 C20,40 28,59 44,67 Z")
+Z_CREST = "M-18,-79 C-12,-87 -6,-79 0,-86 C6,-92 12,-80 18,-81"
+# droplets above the crest: each one at least 4 units inside the tube's +-24 lining and
+# 3 units inside the white frame (radius 100.5)
+Z_DROPS = [(-12, -92, 2.8), (7, -94, 2.4), (14, -88, 2.0), (-3, -95, 2.0), (-17, -86, 1.8)]
+Z_BUBBLES = [(-7, 36, 2.4), (8, 4, 2.0), (-6, -30, 1.8), (7, -56, 1.8),
+             (-10, 96, 2.4), (36, 86, 2.2), (70, 92, 2.6), (8, 118, 2.0), (52, 112, 2.2)]
+Z_RUGAE = ("M34,32 C46,24 58,18 74,16 M46,48 C62,38 82,32 104,32 M70,2 C84,-4 100,-8 118,-10 "
+           "M60,16 C76,8 94,4 114,2")
 
 
 def _zoom_les(d, side, k):
@@ -375,6 +447,19 @@ def _zoom_les(d, side, k):
             f'<g clip-path="url(#gx-zles{k})">{fibres}</g>')
 
 
+def _zoom_crus(d, k, ang):
+    """One cut end of the crus: muscle band with fibres at right angles to its length."""
+    ca, sa = math.cos(math.radians(ang)), math.sin(math.radians(ang))
+    fib = []
+    for i in range(-30, 31):
+        cx, cy = 50 * (1 if k else -1) + i * 4.6 * ca, -58 + i * 4.6 * sa
+        fib.append(f"M{cx - 16 * sa:.1f},{cy + 16 * ca:.1f}L{cx + 16 * sa:.1f},{cy - 16 * ca:.1f}")
+    return (f'<clipPath id="gx-zcr{k}"><path d="{d}"/></clipPath>'
+            f'<path d="{d}" fill="url(#gx-crus)" stroke="{CRUS_EDGE}" stroke-width="1.4" stroke-linejoin="round"/>'
+            f'<g clip-path="url(#gx-zcr{k})"><path d="{"".join(fib)}" stroke="{CRUS_EDGE}" stroke-width="1" '
+            'opacity=".45" fill="none"/></g>')
+
+
 def _zoom():
     r = ZR - 4
     return "".join([
@@ -384,28 +469,29 @@ def _zoom():
         f'<clipPath id="gx-zl"><path d="{Z_LUMEN}"/></clipPath>',
         '<g clip-path="url(#gx-zc)">',
         f'<rect x="-{ZR}" y="-{ZR}" width="{2 * ZR}" height="{2 * ZR}" fill="url(#gx-zbg)"/>',
+        # the crus first: its rounded ends tuck under the tube wall
+        _zoom_crus(Z_CRUS_L, 0, 192), _zoom_crus(Z_CRUS_R, 1, -40),
         f'<path d="{Z_SILH}" fill="{WALL_MID}" stroke="{WALL_LO}" stroke-width="1.6" stroke-linejoin="round"/>',
         '<g clip-path="url(#gx-zl)">',
         f'<rect x="-140" y="-140" width="280" height="280" fill="{LINING_TOP}"/>',
         # pale esophagus lining above a soft wavy Z-line; deep-rose stomach lining below
         f'<path d="M-40,-140 L40,-140 L40,6 C30,2 22,10 12,6 C2,2 -6,10 -16,6 C-24,3 -32,8 -40,5 Z" fill="{ESO_LINING}"/>',
-        '<path d="M-12,-140 V-86 M0,-140 V-92 M12,-140 V-86" stroke="#F2D3C8" stroke-width="1.5" stroke-linecap="round"/>',
-        f'<path d="M-66,50 C-52,42 -44,32 -38,20 M-108,70 C-88,64 -72,56 -60,44 M70,22 C84,10 100,2 124,-2 '
-        f'M66,36 C86,24 108,18 138,16 M92,48 C106,40 120,36 140,34" stroke="{RUGA_HI}" stroke-width="3" fill="none" '
-        'stroke-linecap="round" opacity=".9"/>',
-        # acid: the pool mounds up into the funnel and surges through the open valve
-        f'<path d="{Z_ACID}" fill="url(#gx-acid)"/>',
+        '<path d="M-12,-140 V-98 M0,-140 V-100 M12,-140 V-98" stroke="#F2D3C8" stroke-width="1.5" stroke-linecap="round"/>',
+        f'<path d="{Z_RUGAE}" stroke="{RUGA_HI}" stroke-width="3" fill="none" stroke-linecap="round" opacity=".9"/>',
+        # acid: the pool low in the stomach, then the jet squeezing up through the relaxed valve
+        f'<path d="{Z_POOL}" fill="url(#gx-jet)"/>',
+        f'<path d="{Z_POOL_TOP}" stroke="#F3F7C2" stroke-width="2.4" fill="none"/>',
+        f'<path d="{Z_JET}" fill="url(#gx-jet)"/>',
         f'<path d="{Z_CREST}" stroke="#F6F9CF" stroke-width="2.6" fill="none" stroke-linecap="round"/>',
-        "".join(f'<circle cx="{x}" cy="{y}" r="{rr}" fill="#EEF3A6" opacity=".85"/>' for x, y, rr in
-                ((-10, 18, 2.6), (12, -2, 2.0), (-14, -30, 1.8), (14, -44, 2.4), (-30, 78, 2.4), (40, 76, 2.0), (86, 86, 2.6), (-70, 96, 2.2))),
+        "".join(f'<circle cx="{x}" cy="{y}" r="{rr}" fill="#EEF3A6" opacity=".85"/>' for x, y, rr in Z_BUBBLES),
         "".join(f'<circle cx="{x}" cy="{y}" r="{rr}" fill="{ACID_MID}" stroke="{ACID_EDGE}" stroke-width="1"/>' for x, y, rr in Z_DROPS),
         "</g>",
         # cut face of the walls, then the two cut faces of the LES ring inside the thickened wall
         f'<path d="{Z_LUMEN}" fill="none" stroke="{CUT}" stroke-width="3"/>',
         _zoom_les(Z_LES_L, -1, 0), _zoom_les(Z_LES_R, 1, 1),
-        f'<path d="M1,44 C1,14 -1,-14 0,-40 L0,-78" stroke="#FFFFFF" stroke-width="7.4" fill="none" stroke-linecap="round" '
+        f'<path d="M1,50 C1,20 -1,-14 0,-40 L0,-70" stroke="#FFFFFF" stroke-width="7.4" fill="none" stroke-linecap="round" '
         'opacity=".75"/>',
-        _arrow("M1,44 C1,14 -1,-14 0,-40 L0,-78", 4.4, halo=False),
+        _arrow("M1,50 C1,20 -1,-14 0,-40 L0,-70", 4.4, halo=False),
         "</g>",
         f'<circle r="{r}" fill="none" stroke="#FFFFFF" stroke-width="7"/>',
         f'<circle r="{ZR}" fill="none" stroke="#D8C7BE" stroke-width="1.3"/>',
@@ -453,15 +539,18 @@ def art_reflux():
             # fade the esophagus into the page at the top rather than chopping it off
             f'<rect x="{OX + ESO_L - 6}" y="-6" width="{ESO_R - ESO_L + 12}" height="36" fill="url(#gx-topfade)"/>',
             _zoom(),
-            T(ZX, 21, "UP CLOSE AT THE VALVE", 10.5, 800, DEEP, "middle", ls=1.6),
-            T(ZX, 290, "The relaxed valve stays open,", 13.5, 800, INK, "middle"),
-            T(ZX, 307, "so acid splashes back up.", 13.5, 800, INK, "middle"),
-            _label(168, 48, "Esophagus", "your food tube", OX + ESO_L - 1, OY + 36),
-            _label(168, 90, "Diaphragm", "breathing muscle", OX + 64, OY + 70),
-            _label(168, 140, "LES valve", "a ring of muscle", OX + SX - 21, OY + SY + 4),
+            T(ZX, 18, "UP CLOSE AT THE VALVE", 10.5, 800, DEEP, "middle", ls=1.6),
+            # transient LES relaxations [ACG22]: it opens at the wrong time, not all the time
+            T(ZX, 287, "The valve relaxes when it should not,", 13.5, 800, INK, "middle"),
+            T(ZX, 304, "so acid splashes back up.", 13.5, 800, INK, "middle"),
+            _label(LX, OY + 44, "Esophagus", "your food tube", OX + ESO_L - 1, OY + 36),
+            # leader dot on the band itself (the band's centre line passes (64, 80.3))
+            _label(LX, OY + 86, "Diaphragm", "breathing muscle", OX + 64, OY + 80),
+            # dot on the teal front of the ring, inside the dashed circle and clear of its stroke
+            _label(LX, OY + 136, "LES valve", "a ring of muscle", OX + SX - 12, OY + SY + 6),
             # the dot sits on the stomach lining inside the chamber, between the wall and the arrow
-            _label(168, 205, "Stomach", None, OX + 126, OY + 197),
-            _label(168, 284, "Small intestine", None, OX - 20, OY + 280)]
+            _label(LX, OY + 201, "Stomach", None, OX + 126, OY + 197),
+            _label(LX, OY + 280, "Small intestine", None, OX - 20, OY + 280)]
     return svg(W, H, "".join(body), "How acid reflux happens: the LES valve at the bottom of the esophagus relaxes and stomach acid splashes up")
 
 
@@ -482,6 +571,10 @@ def key_row():
                 f'<rect x="-3.4" y="-11" width="6.8" height="22" fill="{ESO_LINING}"/>'
                 f'<path d="M-6,-8 C-9,-5 -9,5 -6,8 C-4.4,5 -4.4,-5 -6,-8 Z" fill="{LES}" stroke="{LES_DARK}" stroke-width=".9"/>'
                 f'<path d="M6,-8 C9,-5 9,5 6,8 C4.4,5 4.4,-5 6,-8 Z" fill="{LES}" stroke="{LES_DARK}" stroke-width=".9"/>', 20)
+    band = sw(f'<path d="M-11,3 C-5,-1 4,-4 11,-5" stroke="{DIA_EDGE}" stroke-width="8.4" fill="none" stroke-linecap="round"/>'
+              f'<path d="M-11,3 C-5,-1 4,-4 11,-5" stroke="{DIA}" stroke-width="6.2" fill="none" stroke-linecap="round"/>'
+              f'<path d="M-7,4 L-9,-1 M-3,2.2 L-4.6,-3 M1,0.6 L-0.3,-4.6 M5,-0.8 L4,-6 M9,-2 L8.2,-7" stroke="{DIA_FIBRE}" '
+              'stroke-width=".9" stroke-linecap="round"/>')
     arrow = sw(f'<path d="M0,10 V-3" stroke="{REFLUX}" stroke-width="3.6" stroke-linecap="round"/>'
                f'<path d="M-6,-1 L0,-10 L6,-1 Z" fill="{REFLUX}"/>')
     ring2 = sw('<circle r="8.6" fill="none" stroke="#FFFFFF" stroke-width="3"/>'
@@ -490,10 +583,11 @@ def key_row():
     def item(swatches, name, gloss):
         return f'<span class="gx-ki">{swatches}<span><em>{name}</em><i>{gloss}</i></span></span>'
     return ('<div class="gx-key"><b>Key</b>'
-            + item(acid, "Stomach acid", "the pool and drops")
-            + item(ring + halves, "LES valve", "ring of muscle, cut in half up close")
+            + item(acid, "Stomach acid", "pool, jet and drops")
+            + item(ring + halves, "LES valve", "cut in half up close")
+            + item(band, "Diaphragm", "hugs the valve")
             + item(arrow, "Reflux", "acid moving up")
-            + item(ring2, "Dashed circle", "the spot shown up close") + "</div>")
+            + item(ring2, "Dashed circle", "shown up close") + "</div>")
 
 
 # ------------------------------------------------------------- trigger picture row
@@ -509,14 +603,20 @@ TRIGGERS = [
     ("Chocolate",
      '<rect x="17" y="8" width="30" height="48" rx="3"/><path d="M17 20h30M17 32h30M32 8v24"/>'
      '<path d="M14 36h36v18a3 3 0 0 1-3 3H17a3 3 0 0 1-3-3z"/><path d="M14 36l6 5 6-5 6 5 6-5 6 5 6-5"/>'),
+    # swirl arms end at radius 12.1, inside the r-13 candy
     ("Peppermint",
-     '<circle cx="32" cy="32" r="13"/><path d="M32 32c0-6 4-11 10-12M32 32c6 0 11 4 12 10M32 32c0 6-4 11-10 12M32 32c-6 0-11-4-12-10"/>'
+     '<circle cx="32" cy="32" r="13"/><path d="M32 32c0-5 3-8.5 7.5-9.5M32 32c5 0 8.5 3 9.5 7.5'
+     'M32 32c0 5-3 8.5-7.5 9.5M32 32c-5 0-8.5-3-9.5-7.5"/>'
      '<path d="M19 32l-11-7v14zM45 32l11-7v14z"/>'),
     ("Coffee", ICONS["coffee"]),
+    # the stem now reaches the foot
     ("Alcohol",
-     '<path d="M21 8h22c0 13-5 21-11 21S21 21 21 8z"/><path d="M22 16h20"/><path d="M32 29v20M23 55h18"/>'),
+     '<path d="M21 8h22c0 13-5 21-11 21S21 21 21 8z"/><path d="M22 16h20"/><path d="M32 29v26M23 55h18"/>'),
+    # tomato: a flat five-leaf calyx lying on the fruit, with a short stem
     ("Citrus and tomato",
-     '<circle cx="40" cy="36" r="15"/><path d="M40 21l-5-5M40 21l5-5M40 21v-7M40 21l-8 1M40 21l8 1"/>'
+     '<circle cx="40" cy="36" r="15"/><path d="M40 19.5v-4.5c0-2 1-3.5 3-4"/>'
+     '<path d="M40 18.9 41.8 21.4 47.6 21.4 42.9 22.9 44.7 25.4 40 23.9 35.3 25.4 37.1 22.9 32.4 21.4 38.2 21.4z" '
+     'fill="currentColor" stroke-width="1.2"/>'
      '<path d="M6 54a13 13 0 0 1 26 0z"/><path d="M19 54V43M19 54l-8-6M19 54l8-6"/>'),
     ("Fizzy drinks",
      '<path d="M19 20h26l-4 36a2 2 0 0 1-2 2H25a2 2 0 0 1-2-2z"/><path d="M36 20l6-13h7"/>'
@@ -524,7 +624,7 @@ TRIGGERS = [
     ("Big or late meals",
      '<circle cx="27" cy="38" r="18"/><circle cx="27" cy="38" r="9.5"/><path d="M53 8a9 9 0 1 0 7 14 7.5 7.5 0 1 1-7-14z"/>'),
     ("Smoking",
-     '<rect x="7" y="38" width="42" height="9" rx="2"/><path d="M38 38v9"/><path d="M55 38v9"/>'
+     '<rect x="7" y="38" width="42" height="9" rx="2"/><path d="M38 38v9"/>'
      '<path d="M53 31c-3-4 2-6 0-10s2-6 0-10"/><path d="M45 30c-2-3 2-5 0-8"/>'),
 ]
 
@@ -542,22 +642,28 @@ def trigger_row(t):
 
 
 # ----------------------------------------------------------- nutrient strip
+# Order keeps the two long names (Magnesium, Vitamin B12) apart on the equal 5-column grid.
 NUTRIENTS = [("Mg", "Magnesium"),    # [FDA11]: low magnesium with prolonged PPI use
-             ("B12", "Vitamin B12"),  # [LAM13]: PPIs and H2 blockers
              ("Ca", "Calcium"),       # [OC05]; [FDA10] fracture warning
+             ("B12", "Vitamin B12"),  # [LAM13]: PPIs and H2 blockers
              ("Fe", "Iron"),          # [LAM17]: PPIs and H2 blockers
              ("Zn", "Zinc")]          # [FA11]
 
 
 def depletion_strip(t, ed):
     coins = "".join(f'<div class="gx-coin"><b>{s}</b><span>{n}</span></div>' for s, n in NUTRIENTS)
+    # In the practitioner edition {who} is "your provider", who is often the prescriber too.
+    if ed.get("who") == "your provider":
+        plan = "ask your provider, or whoever prescribed it, for a plan."
+    else:
+        plan = "ask {who} or your prescriber for a plan."
     # [FDA11] low magnesium: prolonged use, any dose.  [FDA10] fractures: mostly high doses or 1+ year.
     # [REB09] acid can rebound when a long-used PPI is stopped suddenly; an OTC 14-day course is not "months".
     return ('<div class="gx-strip"><div class="gx-meds"><div class="gx-h">About acid-blocking medicines</div>'
             '<p>PPIs (like omeprazole) and H2 blockers (like famotidine) help many people heal. But acid also helps you '
             'absorb nutrients. The FDA has warned about low magnesium with long-term PPI use, and about broken bones, '
             'mostly at high doses or after a year or more.<sup>1</sup> <b>Taken one for months? Do not stop suddenly:</b> '
-            'ask {who} or your prescriber for a plan.</p></div>'
+            f'{plan}</p></div>'
             f'<div class="gx-dep"><div class="gx-dephead">Long-term acid blockers can lower</div><div class="gx-coins">{coins}</div>'
             '<div class="gx-ask">Ask {who} if a nutrient check makes sense.</div></div></div>')
 
@@ -584,7 +690,9 @@ def front(t, ed):
     return (f'<div class="gxf"><div class="gx-art">{art_reflux()}{key_row()}</div>'
             '<div class="gx-row">'
             f'<div class="gx-feel"><div class="gx-h">How it can feel</div><ul>{feel}</ul>'
-            '<p class="gx-why"><b>Why treat it?</b> Left alone, acid can inflame, narrow or scar the esophagus.</p></div>'
+            # [ACG22]: esophagitis, strictures and Barrett's esophagus (a minority of chronic GERD; surveillance)
+            '<p class="gx-why"><b>Why treat it?</b> Left alone, acid can inflame, narrow or scar the esophagus, and in a '
+            'few people it changes the lining (Barrett&rsquo;s esophagus), <span class="nw">which needs checkups.</span></p></div>'
             f'<div class="gx-alarm"><div class="gx-h">Get care right away if</div><ul>{alarm}</ul><p>{SOON}</p></div>'
             '</div>'
             f'{trigger_row(t)}{depletion_strip(t, ed)}'
@@ -593,10 +701,10 @@ def front(t, ed):
 
 
 CSS = r"""
-.gxf{display:flex;flex-direction:column;gap:0.08in}
+.gxf{display:flex;flex-direction:column;gap:0.065in}
 .gxf .gx-art>svg{display:block;width:100%;height:auto}
-.gxf .gx-key{display:flex;align-items:center;justify-content:center;gap:0 15px;flex-wrap:nowrap;margin:3px auto 0;
-  padding:3px 16px 3px 14px;border:1px solid #EAD9CF;border-radius:99px;background:#FFFBF8;width:max-content;max-width:100%}
+.gxf .gx-key{display:flex;align-items:center;justify-content:center;gap:0 13px;flex-wrap:nowrap;margin:10px auto 0;
+  padding:3px 15px 3px 13px;border:1px solid #EAD9CF;border-radius:99px;background:#FFFBF8;width:max-content;max-width:100%}
 .gxf .gx-key>b{font:800 7pt Inter,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--deep)}
 .gxf .gx-ki{display:inline-flex;align-items:center;gap:5px}
 .gxf .gx-ki>span{display:flex;flex-direction:column;line-height:1.14}
@@ -604,18 +712,19 @@ CSS = r"""
 .gxf .gx-key i{font-style:normal;font-size:7.4pt;color:#56626A}
 .gxf .gx-key svg{display:block;flex:none}
 .gxf .gx-h{font:800 7.4pt Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--c1);margin:0 0 3px}
-.gxf .gx-h i{font:italic 500 7.6pt Inter,sans-serif;letter-spacing:0;text-transform:none;color:#56626A;margin-left:6px}
-.gxf .gx-row{display:grid;grid-template-columns:1.22fr 1fr;gap:0.14in;align-items:stretch}
+.gxf .gx-h i{font:500 7.6pt Inter,sans-serif;font-style:normal;letter-spacing:0;text-transform:none;color:#56626A;margin-left:6px}
+.gxf .gx-row{display:grid;grid-template-columns:1.3fr 1fr;gap:0.14in;align-items:stretch}
+.gxf .gx-feel{padding-top:0.06in}
 .gxf .gx-feel ul{margin:0;padding:0;list-style:none;columns:2;column-gap:0.14in}
-.gxf .gx-feel li{position:relative;padding-left:12px;font-size:8.4pt;line-height:1.3;margin:0 0 3px;break-inside:avoid;color:#2B3236}
+.gxf .gx-feel li{position:relative;padding-left:12px;font-size:8.4pt;line-height:1.3;margin:0 0 2px;break-inside:avoid;color:#2B3236}
 .gxf .gx-feel li::before{content:"";position:absolute;left:0;top:4px;width:6px;height:6px;border-radius:50%;background:var(--c2)}
-.gxf .gx-why{margin:4px 0 0;font-size:8.4pt;line-height:1.32;color:#2B3236}
+.gxf .gx-why{margin:3px 0 0;font-size:8.4pt;line-height:1.32;color:#2B3236}
 .gxf .gx-why b{color:var(--deep)}
 .gxf .gx-alarm{border:1.6px solid #C0392B;border-radius:8px;background:#FDF1EF;padding:0.05in 0.12in 0.06in}
 .gxf .gx-alarm .gx-h{color:#A5281E}
-.gxf .gx-alarm ul{margin:0;padding:0 0 0 13px;font-size:8.3pt;line-height:1.3;color:#2B3236}
-.gxf .gx-alarm li{margin:0}
-.gxf .gx-alarm li::marker{color:#C0392B}
+.gxf .gx-alarm ul{margin:0;padding:0;list-style:none;font-size:8.3pt;line-height:1.3;color:#2B3236}
+.gxf .gx-alarm li{margin:0;position:relative;padding-left:12px}
+.gxf .gx-alarm li::before{content:"";position:absolute;left:0;top:4px;width:6px;height:6px;border-radius:50%;background:#C0392B}
 .gxf .gx-alarm p{margin:3px 0 0;padding-top:3px;border-top:1px dashed #E7B3AC;font-size:8.3pt;line-height:1.3;color:#2B3236}
 .gxf .gx-alarm p b{color:#8E3110}
 .gxf .gx-trow{display:grid;grid-template-columns:repeat(10,1fr);gap:0 0.04in}
@@ -630,8 +739,8 @@ CSS = r"""
 .gxf .gx-meds sup{color:var(--c1);font-weight:700;font-size:7.2pt;line-height:0}
 .gxf .gx-dep{background:#fff;border-radius:8px;padding:0.05in 0.09in 0.05in}
 .gxf .gx-dephead{font:800 7.4pt Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--deep);text-align:center;margin:0 0 5px}
-.gxf .gx-coins{display:flex;justify-content:space-between;gap:0 10px}
-.gxf .gx-coin{display:flex;flex-direction:column;align-items:center;flex:none;min-width:0.4in}
+.gxf .gx-coins{display:grid;grid-template-columns:repeat(5,1fr);justify-items:center;gap:0}
+.gxf .gx-coin{display:flex;flex-direction:column;align-items:center;min-width:0}
 .gxf .gx-coin b{width:0.4in;height:0.4in;border-radius:50%;background:var(--c1);color:#fff;display:flex;align-items:center;justify-content:center;
   font:800 10pt Inter,sans-serif;box-shadow:0 0 0 2px #fff,0 0 0 3.2px #F0B89A}
 .gxf .gx-coin span{font-size:7pt;font-weight:700;color:#2B3236;margin-top:3px;text-align:center;line-height:1.1;white-space:nowrap}
@@ -652,30 +761,76 @@ SHEET = {
               "that shields it from acid; the esophagus does not, so it burns (<b>heartburn</b>)."),
     "front": front,
     "css": CSS,
-    # Back page: unchanged from the first draft (a later pass revises the products).
     "back": {
         "life_title": "Lifestyle Modifications", "style": "hex",
-        "life": [("clock", "Close the kitchen early", "Finish eating 3 hours before you lie down."),
-                 ("bed", "Raise the head", "Lift the head of your bed 6 to 8 inches."),
-                 ("portion", "Smaller meals", "Eat slowly and stop before full."),
-                 ("scale", "A healthy weight", "Even a few pounds lighter eases pressure on the valve."),
-                 ("coffee", "Know your triggers", "Fried food, chocolate, mint, caffeine, alcohol, citrus, tomato, fizzy drinks."),
-                 ("smoke", "Stop smoking", "Smoking relaxes the valve and slows healing.")],
+        # Asher's GERD protocol (Gmail 16eec3cc434c5ff7) lines up with [ACG22]; the trigger foods live on the front.
+        "life": [("clock", "Early dinner", "Finish eating 3 hours before you lie down."),     # [ACG22] 2-3 h; [FUJ05]
+                 ("bed", "Raise the head", "Lift the head of your bed 6 to 8 inches."),        # [ACG22]; protocol "about six inches"
+                 ("portion", "Smaller meals", "Eat slowly, with plenty of plants."),           # protocol: no heavy meals; [ZAL17]
+                 ("walk", "Stay upright", "No bending or hard exercise after meals."),         # protocol: bending, jarring exercise
+                 ("scale", "A healthy weight", "A few pounds lighter eases the valve."),       # [ACG22] weight loss, strong
+                 ("smoke", "Stop smoking", "Smoking loosens the valve.")],                     # [ACG22] tobacco; lowers LES pressure
         "cols": [
-            {"p": "gi_integrity", "need": "Coat and soothe", "needsub": "DGL, aloe, slippery elm, marshmallow, glutamine", "start": True,
-             "bullets": ["Sip it slowly so it coats your throat on the way down", "Zinc carnosine supports the stomach lining"],
-             "dose": "1 scoop daily", "dosesub": "sip over 10 minutes"},
-            {"p": "zinc_carnosine", "need": "Protect the stomach lining", "needsub": "zinc carnosine",
-             "bullets": ["Supports the stomach's natural mucosal defenses", "Studied for gastric comfort"], "dose": "dose_from_db"},
-            {"p": "ultrabiotic_dms", "need": "Balance the gut", "needsub": "probiotic + S. boulardii",
-             "bullets": ["Seven friendly strains", "Supports comfortable digestion"], "dose": "1 capsule daily", "dosesub": "at bedtime"},
-            {"p": "mag_glycinate", "need": "Refill magnesium", "needsub": "chelated magnesium",
-             "bullets": ["Acid blockers can drain magnesium", "Chelated forms are gentle on the stomach"], "dose": "dose_from_db"},
-            {"p": "methyl_b", "need": "Refill B12", "needsub": "active B vitamins",
-             "bullets": ["Stomach acid is needed to absorb B12", "Methylated forms, ready to use"], "dose": "dose_from_db"},
+            # Asher's first line: "For many individuals, the utilization of the Zinc-Carnosine alone is
+            # sufficient" (2019-12-12).  Label: 1 capsule twice daily between meals.  One capsule here because
+            # GI Integrity's scoop carries 78 mg zinc carnosine, the other capsule's worth (ND431 vs ND414).
+            {"p": "gerd_zinc_carnosine", "need": "Shield the lining", "needsub": "zinc carnosine", "start": True,
+             "bullets": ["Supports the stomach&rsquo;s own protective lining",
+                         "Only 1 a day: GI Integrity has a second dose"],
+             "dose": "1 capsule daily", "dosesub": "at bedtime, between meals", "sched": [("bed", 1, "capsule")]},
+            # Protocol: "Chew three tablets as needed ... or 1-3 tablets before each meal"; label: 3 after each meal.
+            # Once a day here keeps the plan's zinc near 38 mg (5 mg per 3 tablets).
+            {"p": "gerd_dgl_pro", "need": "Calm after meals", "needsub": "chewable DGL licorice",
+             "bullets": ["Supports the stomach&rsquo;s soothing mucus layer",
+                         "The licorice part that can raise blood pressure is removed"],
+             "dose": "Chew 3 tablets", "dosesub": "after your biggest meal", "sched": [("pm", 3, "tablets")]},
+            # Protocol: chronic reflux, GI Integrity "Features 78 mg of zinc-carnosine"; label: Do not use if
+            # pregnant or nursing (ND431).
+            {"p": "gerd_gi_integrity", "need": "Coat and soothe", "needsub": "glutamine, DGL, aloe, slippery elm, marshmallow",
+             "bullets": ["Sip it slowly so it coats your food tube",
+                         "Skip it if pregnant or nursing"],
+             "dose": "1 scoop daily", "dosesub": "in 6 to 8 oz water", "sched": [("am", 1, "scoop")]},
+            # Protocol (pantoprazole patient, 2019-09-05): "Spore Probio" while on the PPI.  PPIs shift the gut
+            # microbiome (Imhann F et al. Gut 2016;65:740-8).
+            {"p": "gerd_spore_probio", "need": "Balance the gut", "needsub": "spore probiotic",
+             "bullets": ["Acid blockers can shift your gut bacteria",
+                         "Supports a healthy, balanced gut"],
+             "dose": "2 capsules daily", "dosesub": "with breakfast", "sched": [("am", 2, "capsules")]},
+            # [FDA11] PPIs and low magnesium.  2 capsules = 260 mg, under the 350 mg supplement limit [ODS-MG]
+            # (label: 2 capsules twice daily).
+            {"p": "gerd_mag_glycinate", "need": "Refill magnesium", "needsub": "if you take a PPI",
+             "bullets": ["Long-term PPIs can drain magnesium",
+                         "Supports calm muscles and nerves"],
+             "dose": "2 capsules daily", "dosesub": "at bedtime", "sched": [("bed", 2, "capsules")]},
         ],
-        "rx": ["<b>PPIs and H2 blockers</b> can lower magnesium, B12, calcium and iron over time. Ask for levels once a year.",
-               "<b>Take soothing powders 2 hours apart</b> from other medicines: coating herbs can slow their absorption.",
-               "<b>Want to taper an acid blocker?</b> Plan it with your prescriber; stopping suddenly can bring a rebound."],
+        "rx": {
+            "practitioner": [
+                # [LAM13] [LAM17] [OC05] [FA11]: acid blockers and B12, iron, calcium, zinc; [FDA11] PPIs and magnesium.
+                # "Once a year": [FDA11] asks for magnesium levels before and periodically during long-term PPI use;
+                # yearly is the practical cadence, worded as "may"
+                "<b>Acid blockers</b> used long term can lower B12, iron, calcium and zinc; PPIs, magnesium too. "
+                "{Who} may check levels once a year.",
+                # ND414 17 mg + ND431 16.1 mg + ND1337 5 mg = 38 mg; [ODS-ZN] 40 mg limit, copper
+                "<b>Zinc adds up.</b> Zinc-Carnosine, GI Integrity and Licorice DGL Pro make about 38 mg a day, near "
+                "the 40 mg adult limit. No other zinc unless {who} says so; long use can lower copper.",
+                # Asher's protocol (HCl challenge; "not ... if there is gastritis or any recent history of gastric
+                # ulceration"); betaine HCl with NSAIDs or an acid blocker: not without the prescriber
+                "<b>Stomach acid check.</b> {Who} may test your stomach acid (an HCl challenge). Never take HCl on "
+                "your own, with an ulcer or with NSAIDs (like ibuprofen); on an acid blocker, only if your prescriber agrees.",
+            ],
+            "pharmacy": [
+                # ND414 + ND431 + ND1337 zinc; [ODS-ZN] 40 mg limit, copper
+                "<b>Zinc adds up.</b> Zinc-Carnosine, GI Integrity and Licorice DGL Pro make about 38 mg a day, near "
+                "the 40 mg adult limit. No other zinc (lozenges, multis) unless your prescriber says so; long use can "
+                "lower copper.",
+                # [LAM13] [LAM17] [OC05] [FA11] [FDA11]; "a year or more": [FDA11] low magnesium mostly after more
+                # than a year of PPIs, [FDA10] fracture risk mostly after a year or more
+                "<b>Acid blockers</b> used long term can lower B12, iron, calcium and zinc; PPIs, magnesium too. "
+                "On one a year or more? {Who} can suggest a level check.",
+                # [ODS-ZN] [ODS-MG] antibiotic spacing; [LT4] thyroid spacing
+                "<b>Space the minerals.</b> Take antibiotics like cipro or doxycycline 2 hours before or 4 to 6 hours "
+                "after the zinc and magnesium here, and thyroid pills 4 hours apart.",
+            ],
+        },
     },
 }

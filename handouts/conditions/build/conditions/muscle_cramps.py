@@ -10,15 +10,21 @@ FRONT, top to bottom
   intro (cramp, spasm and guarding) -> "Contract, then let go": one picture that zooms in three steps
       YOUR CALF (lateral view of a lower leg: calf muscle, the deeper calf muscle, Achilles tendon, motor nerve,
       the red cramp knot), with a small GUARDING inset in its empty corner (the low back from behind: a back
-      muscle beside the spine tightens to guard a joint)  ->  ONE MUSCLE FIBER (the nerve ending firing on a
+      muscle beside the bone-grey spine tightens to guard a joint; both red glows are keyed "Tight knot")  ->
+      ONE MUSCLE FIBER (the nerve ending firing on a
       striped fiber, one thread of motors pulled out with the same stripe spacing, and the nerve's firing pattern:
       normal vs cramp)  ->  ONE TINY MOTOR (a sarcomere, RELAXED above and CONTRACTED below: calcium switches it
       on, ATP with magnesium's help switches it off)
   with a KEY for every symbol (the zoom ring and bracket included), a numbered 4-step strip, the common triggers,
   an honest "what the research says" panel and the get-checked red flags.
 BACK: lifestyle band, five NutriDyn columns (Muscle Eze is Start here; Mag Calm Pro and Mag-K are swaps for it,
-  CoQ10 is only for statin users, so none of those three is in the daily rhythm), daily rhythm (the empty Morning
-  slot hidden) and the edition-specific medicine checks.
+  CoQ10 is ask-first, so none of those three is in the daily rhythm), daily rhythm (the empty Morning slot hidden)
+  and the edition-specific medicine checks.  No drug name appears in any column; the statin question for CoQ10 is
+  in the medicine check ("On a statin? Ask {who} if CoQ10 fits you.").
+Polish round 2 (same day): bone-grey vertebrae and a "Back muscle / guards a joint" caption in the guarding inset,
+  the knot keyed "Tight knot", a darker "Motor nerve" label, a seated towel-stretch icon that rests on the floor,
+  every dose bar with its frequency (Mag-K as one capsule with each meal), "Bone calcium" and "Calm and relaxed"
+  headers, CoQ10 bullets without a statin tie, and the medicine check re-fitted.
 
 Every SVG id starts with "mc-" and every CSS class with "mcr-", so nothing collides with other sheets in the
 all-sheets bundle.  Back-page CSS is scoped with BACK (the back <section> right after the front that holds
@@ -109,7 +115,8 @@ SOURCES (each fact on the page carries one of these tags in a comment beside it)
              magnesium-containing antacids.
   [ODS-K]    NIH ODS, Potassium fact sheet (ACE inhibitors, ARBs and potassium-sparing diuretics raise blood
              potassium; loop and thiazide diuretics lower it; food sources).
-  [ODS-CA]   NIH ODS, Calcium fact sheet (low blood calcium raises nerve and muscle excitability).
+  [ODS-CA]   NIH ODS, Calcium fact sheet (low blood calcium raises nerve and muscle excitability; blood calcium is held
+             in a tight range by parathyroid hormone and vitamin D, with bone as the reservoir).
   [ODS-VK]   NIH ODS, Vitamin K fact sheet (vitamin K and warfarin; MK-7 is long-acting; vitamin K activates
              bone proteins such as osteocalcin that bind calcium).
   [NCCIH]    NCCIH, Coenzyme Q10 (statins lower blood CoQ10; CoQ10 may make warfarin less effective).
@@ -124,6 +131,9 @@ SOURCES (each fact on the page carries one of these tags in a comment beside it)
              signal (sodium in, potassium out) releases calcium; calcium lets myosin heads grab actin and pull;
              ATP releases the heads and powers the pump that returns calcium to storage (Mg-ATP is the working
              form); thick filaments keep their length while the sarcomere shortens.
+  [BIOCHEM]  Lehninger Principles of Biochemistry, Oxidative phosphorylation: ubiquinone (coenzyme Q) carries
+             electrons from complexes I and II to complex III of the respiratory chain in the inner mitochondrial
+             membrane; glucose and fatty acids are the fuels whose electrons it carries.
 """
 import math
 import os
@@ -174,6 +184,7 @@ def tw(text, size, weight=600, ls=0.0):
 # =============================================================== palette (every coded colour is in the KEY)
 INK, INK2 = "#23292D", "#56626A"
 NERVE, NERVE_EDGE = "#F9D648", "#9A7000"          # yellow: nerve and its signal
+NERVE_TX = "#7A5800"                              # "Motor nerve" label: 6.0:1 on the panel tint (NERVE_EDGE is 4.15:1)
 CA, CA_EDGE = "#F2891D", "#9E5206"                # orange dot: calcium, the ON switch
 MG, MG_EDGE = "#2EAD6B", "#15653D"                # green dot: magnesium, the OFF switch
 NAK, NAK_EDGE = "#3F8FD8", "#1B5A95"              # blue drop: fluid and electrolytes (sodium, potassium)
@@ -181,7 +192,7 @@ ATP, ATP_EDGE = "#14A8B3", "#0A6870"              # teal bolt: ATP, the muscle's
 ACT, ACT_A, ACT_B = "#EDB3AA", "#D6857A", "#F7CEC7"  # thin filament (actin): rose beads
 MYO, MYO_HEAD, MYO_EDGE = "#6D4FA3", "#9A80CC", "#4A3274"  # thick filament (myosin): violet shaft + heads
 ZLINE = "#2E4057"                                 # Z-line: the anchor at each end of a motor
-KNOT = "#E1332C"                                  # red glow: the cramp knot
+KNOT = "#E1332C"                                  # red glow: a tight knot (calf cramp, back guarding)
 RED_TX, GREEN_TX, ORANGE_TX, ATP_TX = "#B42B24", "#17663F", "#A3540A", "#0A6870"
 ZOOM_LINE = "#6F7C86"                             # white ring + grey lines: zooming in (keyed)
 # anatomy (not coded, so not keyed)
@@ -379,10 +390,14 @@ def panel_leg(t):
 GUARD = (3, 24, 82, 82)           # the guarding inset: x, y, w, h (panel A's empty top-left corner)
 
 
+BONE, BONE_EDGE, BONE_TAB = "#E7E2D8", "#B5AC9B", "#CFC7B8"   # vertebrae: a bone grey, unlike the cream tendon
+
+
 def guard_inset(t):
     """Muscle guarding [SPASM], for the chiropractors who hand this sheet out: the low back seen from behind.  Four
-    lumbar vertebrae (body, two short wings, the spinous tab) with the long back muscles on either side; the right one
-    is bunched and carries the same red knot glow as the calf (keyed "Cramp knot"), beside a spine joint.  Fills the
+    lumbar vertebrae (body, two short wings, the spinous tab) in bone grey, with the long back muscles on either side;
+    the right one is bunched and carries the same red glow as the calf (keyed "Tight knot", which covers both a cramp
+    and guarding), beside a spine joint.  The caption names the muscle ("Back muscle / guards a joint").  Fills the
     empty corner left of the knee, clear of the panel title, the leg and the "Calf muscle" label."""
     x, y, w, h = GUARD
     cx = x + w / 2
@@ -409,20 +424,20 @@ def guard_inset(t):
     step = (bot - top - 4) / 4
     rows = [top + 2 + step * (i + 0.5) for i in range(4)]
     for vy in rows:
-        o.append(f'<rect x="{cx - 11:.1f}" y="{vy - 1.6:.1f}" width="22" height="3.2" rx="1.6" fill="{TEN}" '
-                 f'stroke="{TEN_EDGE}" stroke-width=".8"/>')                       # the two wings
+        o.append(f'<rect x="{cx - 11:.1f}" y="{vy - 1.6:.1f}" width="22" height="3.2" rx="1.6" fill="{BONE}" '
+                 f'stroke="{BONE_EDGE}" stroke-width=".8"/>')                      # the two wings
     o.append(muscle(-1, 4.6))                         # resting side
     o.append(muscle(1, 6.4))                          # guarding side: bunched up and tight
     for i, vy in enumerate(rows):
         if i:
             o.append(f'<rect x="{cx - 5.5:.1f}" y="{vy - step / 2 - 1:.1f}" width="11" height="2" rx="1" fill="#DCE5EC"/>')
-        o.append(f'<rect x="{cx - 5.5:.1f}" y="{vy - 3.6:.1f}" width="11" height="7.2" rx="2.4" fill="{TEN}" '
-                 f'stroke="{TEN_EDGE}" stroke-width=".9"/>')                       # the bone
-        o.append(f'<ellipse cx="{cx:.1f}" cy="{vy:.1f}" rx="1.5" ry="2.3" fill="#E4D3B0"/>')   # the spinous tab
+        o.append(f'<rect x="{cx - 5.5:.1f}" y="{vy - 3.6:.1f}" width="11" height="7.2" rx="2.4" fill="{BONE}" '
+                 f'stroke="{BONE_EDGE}" stroke-width=".9"/>')                      # the bone
+        o.append(f'<ellipse cx="{cx:.1f}" cy="{vy:.1f}" rx="1.5" ry="2.3" fill="{BONE_TAB}"/>')   # the spinous tab
     # the guarding knot: next to the joint between the second and third vertebrae
     o.append(f'<ellipse cx="{cx + 12.5:.1f}" cy="{top + 2 + step * 2:.1f}" rx="8" ry="12" fill="url(#mc-knot)"/>')
-    o.append(T(cx, y + h - 16, "Tightens to", 10, 600, INK, "middle"))
-    o.append(T(cx, y + h - 5, "guard a joint", 10, 600, INK, "middle"))
+    o.append(T(cx, y + h - 16, "Back muscle", 10, 600, INK, "middle"))
+    o.append(T(cx, y + h - 5, "guards a joint", 10, 600, INK, "middle"))
     return "".join(o)
 
 
@@ -534,7 +549,7 @@ def panel_fiber(t):
     o.append(spark(nx, cy - r - 11, 7))
     for dx, dy, s in ((14, -24, .85), (28, -13, .95), (38, -22, .85)):   # sodium and potassium around the ending
         o.append(drop(nx + dx, cy - r + dy, s))
-    o.append(T(bx + 10, by + 15, "Motor nerve", 10.5, 700, NERVE_EDGE))
+    o.append(T(bx + 10, by + 15, "Motor nerve", 10.5, 700, NERVE_TX))
     o.append(T(x1 - 2, by + 15, "Muscle fiber", 10.5, 700, "#8E2E2A", "end"))
     o.append(marker(nx - 22, cy - r - 12, 1))
     # bracket: one tiny motor (sarcomere) on the thread
@@ -717,7 +732,9 @@ def key_strip(y):
     rows = [[(nerve_sw, 13, "Nerve signal"), (lambda: ca_dot(0, 0, 4.2), 5, "Calcium: switch ON"),
              (lambda: bolt(0, 0, 1.15), 5, "ATP: energy, switch OFF"), (lambda: mg_dot(0, 0, 4.2), 5, "Magnesium: helps ATP"),
              (lambda: drop(0, 0.6, 1.15), 5, "Sodium, potassium")],
-            [(knot_sw, 11, "Cramp knot"), (thin_sw, 12, "Thin filament (actin)"), (thick_sw, 12, "Thick filament (myosin)"),
+            # "Tight knot", not "Cramp knot": the same red glow marks the calf's cramp and the back muscle's guarding,
+            # which is a protective spasm rather than a cramp [SPASM]
+            [(knot_sw, 11, "Tight knot"), (thin_sw, 12, "Thin filament (actin)"), (thick_sw, 12, "Thick filament (myosin)"),
              (zoom_sw, 13, "Ring or bracket: zoom in"), (z_sw, 4, "Z-line: the anchor")]]
     fs, gap_sw = 10.5, 6
     ncol = max(len(r) for r in rows)
@@ -785,9 +802,10 @@ def art_cramp(t):
     key, kh = key_strip(KEY_Y)
     o.append(key)
     return svg(W, KEY_Y + kh + 2, "".join(o),
-               "How a muscle tightens and lets go. Left: a calf muscle and the deeper calf muscle, with a red cramp knot "
-               "and its motor nerve; a white ring and grey lines zoom in. Inset: guarding, the low back from behind, "
-               "where a back muscle beside the spine tightens to guard a joint. Middle: one muscle fiber with the nerve "
+               "How a muscle tightens and lets go. Left: a calf muscle and the deeper calf muscle, with a red tight knot "
+               "(the cramp) and its motor nerve; a white ring and grey lines zoom in. Inset: guarding, the low back from "
+               "behind, where a back muscle beside the spine tightens (the same red tight knot) to guard a joint. Middle: "
+               "one muscle fiber with the nerve "
                "ending firing on it, one thread of tiny motors, and the nerve's firing pattern, normal versus a cramp "
                "that keeps firing; a bracket and grey lines zoom in. Right: one tiny motor, a sarcomere, relaxed when "
                "ATP with magnesium's help lets go, and contracted with calcium.")
@@ -992,23 +1010,26 @@ CSS = r"""
 {BACK} .slot .when{{flex:none;width:0.84in}}
 {BACK} .slot ul{{margin:0}}
 /* the two Progressive Professional thumbnails come on an opaque white box: let the pale panel show through and
-   drop the shadow that would outline the box */
-{BACK} .pick img[src*="nd-mcr-vitamin-k2"],{BACK} .pick img[src*="nd-mcr-mag-k"]{{mix-blend-mode:multiply;filter:none}}
+   drop the shadow that would outline the box.  Matched on the alt text build.py writes ("NutriDyn <name> bottle"),
+   not the pooled file name, which changes if another sheet adds the same bottle under a shorter key. */
+{BACK} .pick img[alt="NutriDyn Vitamin K2 bottle"],{BACK} .pick img[alt="NutriDyn Mag-K bottle"]{{mix-blend-mode:multiply;filter:none}}
 """
 
 # =============================================================== back: lifestyle icons (64 grid, kit.icon style)
 # wall calf stretch: both hands on the wall, a clear torso leaning in, front knee bent, back leg straight, heel down
 ICONS.setdefault("mcr_stretch", '<path d="M58 4v54M4 58h54"/><circle cx="41" cy="9" r="5"/><path d="M40 15 34 34"/>'
                  '<path d="M39 19 57 20M38.5 22 57 27"/><path d="M34 34 44 43 43 56h6"/><path d="M34 34 13 56h8"/>')
-# stop a cramp: the seated towel stretch, side view, in the same stick-figure style as the wall stretch.  On a floor
-# line, a figure leans forward from the hip with the leg straight; the foot stands up from a round heel, the sole
-# rising to the ball and the toes tipped back toward the shin (with a toe crease); one arm holds a towel whose loop
-# wraps the ball of the foot.  Drawn from y 8 to 56, so it sits centred in its disc.
-ICONS.setdefault("mcr_foot", '<path d="M4 56H60"/><circle cx="17" cy="13" r="5"/><path d="M8.5 50 15.5 24.5"/>'
-                 '<path d="M8.5 50H40"/>'
-                 '<path d="M40 50C41.2 53.6 44 55 46.5 53.6L50.6 38.2C51.3 35.6 49.5 33.2 47 34.2L42.8 44.6"/>'
-                 '<path d="M46.2 37.6 50 38.8"/><path d="M15.2 28.5 30 35"/>'
-                 '<path d="M30 35 46.6 34.6M30 35C38 38 45.5 40.4 50.4 40.6C53.6 40.7 54.6 36.4 51.9 35.1"/>')
+# stop a cramp: the seated towel stretch, side view, in the same stick-figure style as the wall stretch.  The figure
+# SITS ON THE FLOOR: the hip and the straight leg rest on it (leg y 53, floor y 55, the strokes touch) and the round
+# heel touches it too, so it no longer hovers as if on a bench.  The foot is drawn large, because it is the point of
+# the picture: sole rising from the heel to the toes, toes tipped back toward the shin, the top of the foot back down
+# to the ankle.  The towel is ONE loop seen side-on: from the hand (where both of its ends are held, one in front of
+# the other) over the top of the foot, then round the sole at the ball of the foot.  No second strand runs to the
+# foot, so it no longer reads as a rowing machine's cables.  Drawn from y 11 to 57.
+ICONS.setdefault("mcr_foot", '<path d="M4 55H60"/><circle cx="14.6" cy="16.4" r="5"/><path d="M8 53 12.8 27.6"/>'
+                 '<path d="M12.6 31.2 27 37"/><path d="M8 53H36"/>'
+                 '<path d="M36 53C37.8 54.6 41 54.8 43.6 53.2L49 36.6C49.9 33.6 47.8 30.6 44.8 31.8L38.4 46.6"/>'
+                 '<path d="M27 37 41.6 39.6"/><path d="M48.4 39.2C53.6 39.8 53.6 46.2 46.8 45.8"/>')
 
 # =============================================================== the sheet
 SHEET = {
@@ -1049,11 +1070,21 @@ SHEET = {
         # Back-page columns are not passed through ed_text, so no {who} here: edition wording lives in rx.
         # Only Muscle Eze and Vitamin K2 are in everyone's daily rhythm (4 pills).  Mag Calm Pro and Mag-K replace
         # Muscle Eze rather than add to it, so supplemental magnesium stays at 200 mg a day, under the 350 mg upper
-        # limit [ODS-MG] (the rx panel says so: one magnesium product at a time); CoQ10 is only for statin users.
-        # Headers are body needs with no drug names (21 CFR 101.93(g)(2)(x): a product tied to a drug's side effect
-        # reads as a disease claim); who should skip what, with the drug names, lives in the rx panel.  Every need
-        # is one line, every dose note is one line, and the .need boxes share one height (CSS below), so the
-        # photos, names and dark dose bars all line up.  Claim bullets carry their own glued diamond (_sf).
+        # limit [ODS-MG] (the rx panel says so: one magnesium product at a time); CoQ10 is ask-first (rx panel:
+        # "On a statin? Ask {who} if CoQ10 fits you."), so it is not in the rhythm either.
+        # NO DRUG NAMES ANYWHERE IN THE COLUMNS (headers, bullets or dose notes).  A product shown as easing a
+        # drug's side effect reads as a disease claim: 21 CFR 101.93(g)(2)(ix), a product that "treats, prevents, or
+        # mitigates adverse events associated with a therapy for a disease, if the adverse events constitute
+        # diseases"; (x) is the catch-all ("otherwise suggests an effect on a disease").  Wording recalled, not
+        # re-read: ecfr.gov, govinfo.gov, federalregister.gov and regulations.gov are blocked from this session; a
+        # 2026-11-03 web search confirms FDA cites these criteria as (g)(2)(i)-(x) and that its 2002 Small Entity
+        # Compliance Guide on structure/function claims carries the adverse-event criterion.  Who should skip what,
+        # with the drug names, lives in the rx panel; the statin evidence stays on the front research panel.  Headers
+        # also avoid the front's cramp mechanism (step 2 "enough calcium and magnesium keep nerves calm", step 4 "an
+        # over-excited nerve"), so no header reads as "this calms the nerves that cause cramps".  Every need is one
+        # line, every dose note is one line, and the .need boxes share one height (CSS below), so the photos, names
+        # and dark dose bars all line up.  Every dose bar states how often (label directions, products.d src).  Claim
+        # bullets carry their own glued diamond (_sf).
         "cols": [
             # [LABEL] "Targeted Formula for Supporting and Relaxing Healthy Muscle Tissue"; not sold as a cramp cure
             # [COCH20]; a plain need, not "guarded" muscles, so it never reads as easing a spasm around an injury
@@ -1061,74 +1092,82 @@ SHEET = {
              "start": True,
              "bullets": [_sf("Helps muscles relax"), _sf("Supports calm and rest")],
              "dose": "3 capsules at bedtime", "dosesub": "may cause drowsiness", "sched": [("bed", 3, "capsules")]},
-            # [LABEL] "Healthy Stress and Relaxation Support"; label "Mix 1 scoop with 6 ounces of water 1-2 times
-            # daily": one scoop, as a swap for Muscle Eze, keeps the day at 200 mg magnesium
-            {"p": "mcr_mag_calm_pro", "need": "Calm busy nerves", "needsub": "magnesium, taurine,<br>B6, L-theanine",
+            # [LABEL] "Healthy Stress and Relaxation Support", hence the header "Calm and relaxed" (not "calm busy
+            # nerves", which echoed the front's cramp mechanism).  Label "Mix 1 scoop with 6 ounces of water 1-2 times
+            # daily": ONE scoop a day, as a swap for Muscle Eze, keeps the day at 200 mg magnesium (two scoops would be
+            # 400 mg, over the 350 mg upper limit [ODS-MG]); the canister gives the 6 oz.
+            {"p": "mcr_mag_calm_pro", "need": "Calm and relaxed", "needsub": "magnesium, taurine,<br>B6, L-theanine",
              "bullets": [_sf("Supports relaxation"), _sf("Supports restful sleep")],
-             "dose": "1 scoop in 6 oz water", "dosesub": "in place of Muscle Eze", "sched": []},
-            # [ODS-VK] vitamin K activates bone proteins (osteocalcin) that bind calcium; [LABEL] "one capsule daily
-            # with a meal".  The cramp trial [TAN24] stays on the front only, so the product is never tied to it.
-            {"p": "mcr_vitamin_k2", "need": "Calcium balance", "needsub": "vitamin K2 as MK-7",
+             "dose": "1 scoop a day in water", "dosesub": "in place of Muscle Eze", "sched": []},
+            # [ODS-VK] vitamin K activates bone proteins (osteocalcin) that bind calcium in bone; it does not set blood
+            # calcium (parathyroid hormone and vitamin D do [ODS-CA]), so the header is "Bone calcium", not "Calcium
+            # balance".
+            # [LABEL] "one capsule daily with a meal".  The cramp trial [TAN24] stays on the front only.
+            {"p": "mcr_vitamin_k2", "need": "Bone calcium", "needsub": "vitamin K2 as MK-7",
              "bullets": [_sf("Helps activate bone proteins that bind calcium"), "Long-acting MK-7 form"],
              "dose": "1 capsule daily", "dosesub": "with a meal", "sched": [("pm", 1, "capsule")]},
-            # [NCCIH] statins lower blood CoQ10; [LABEL] R350U "one softgel daily with a meal"
+            # CoQ10 is a helper (an electron carrier) in the energy chain inside mitochondria, not a fuel: the fuels
+            # are sugar and fat [BIOCHEM].  "Ready-to-use" echoes the shared products.py coq10 key ("the ready-to-use
+            # form of CoQ10", switch chart label read).  [LABEL] R350U "Adults take one softgel daily with a meal"
+            # (products DB R350U).  No statin wording here: see the comment above.
             {"p": "coq10", "need": "Muscle cell energy", "needsub": "CoQ10 as ubiquinol",
-             "bullets": [_sf("Fuel for energy-making in muscle cells"), "Statins lower the body&rsquo;s own CoQ10"],
-             "dose": "1 softgel with a meal", "dosesub": "statin users only", "sched": []},
+             "bullets": [_sf("Helps muscle cells make energy"), "Ready-to-use ubiquinol form"],
+             "dose": "1 softgel daily", "dosesub": "with a meal", "sched": []},
             # [ODS-MG] [ODS-K] magnesium and potassium for normal nerve and muscle signals.  No water-pill header:
             # "On a water pill?" would also invite spironolactone, triamterene and amiloride users, who must not add
-            # potassium; the rx panel names those drugs.
+            # potassium; the rx panel names those drugs.  Label (products DB P781): "Take three capsules daily with
+            # meals".  Written as one with each meal, the same three a day: "3 capsules with meals" can read as three
+            # AT EACH meal (9 a day, 600 mg magnesium), and "3 capsules daily with meals" wraps to two lines.
             {"p": "mcr_mag_k", "need": "Mineral balance", "needsub": "magnesium + potassium",
              "bullets": [_sf("Supports normal muscle and nerve signals"), _sf("Supports healthy mineral levels")],
-             "dose": "3 capsules with meals", "dosesub": "in place of Muscle Eze", "sched": []},
+             "dose": "1 capsule with each meal", "dosesub": "in place of Muscle Eze", "sched": []},
         ],
         # Both editions send every kidney and potassium decision to the PRESCRIBER: a pharmacist, DC or ND does not
         # manage kidney disease or those drugs.  No K2 dose line: the cramp trial's 180 mcg stays on the front.
+        # Only the first bullet differs by edition, so the rest are shared (RX_SHARED below).
         "rx": {
             "pharmacy": [
                 # [GARR12] [AAFP12]; [FDA-PPI] [ODS-MG] heartburn pills (PPIs).  Pharmacists review the medicine list,
                 # so this edition asks them to.
                 "<b>Bring your medicine list.</b> {Who} can check it: some water pills, heartburn pills, asthma "
                 "inhalers, statins and bone or estrogen medicines are linked to cramps. Never stop one on your own.",
-                # [ODS-MG] UL 350 mg/day from supplements: each of the three gives 200 mg, so two would be 400 mg
-                "<b>One magnesium product at a time:</b> Muscle Eze, Mag Calm Pro or Mag-K, never two.",
-                # [ODS-MG] magnesium builds up when the kidneys are impaired; [ODS-K] ACE inhibitors, ARBs and
-                # potassium-sparing diuretics raise blood potassium
-                "<b>Kidney disease?</b> Ask your prescriber before any magnesium product. <b>On an ACE inhibitor or "
-                "ARB, or spironolactone, triamterene or amiloride?</b> Skip Mag-K unless your prescriber says yes.",
-                # [ODS-VK] [NCCIH] [TAN24] warfarin
-                "<b>On warfarin (Coumadin)?</b> K2 and CoQ10 affect it. Start neither without your prescriber.",
-                # [LABEL] pregnancy, nursing, medication; passion flower and theanine with sedatives; drowsiness
-                "<b>Pregnant or nursing, or on sleep or anxiety medicine?</b> Ask {who} before any of these. "
-                "Muscle Eze can make you drowsy.",
-                # [LEVO] 4 hours; [CIPRO] 2 before or 6 after; [ODS-MG] bisphosphonates 2 hours, tetracyclines 2 before
-                # or 4-6 after; calcium binds these too.  [COCH20] GI side effects.
-                "<b>Thyroid pills:</b> 4 hours apart from magnesium or calcium. Take <b>alendronate, doxycycline or "
-                "ciprofloxacin</b> 2 hours before magnesium or calcium, or 6 hours after. Loose stools mean too much "
-                "magnesium.",
             ],
             "practitioner": [
-                # [GARR12] [AAFP12] [FDA-PPI] [ODS-MG]
-                "<b>Bring your medicine list.</b> Some water pills, heartburn pills, asthma inhalers, statins and bone "
-                "or estrogen medicines are linked to cramps. Never stop one on your own.",
-                # [ODS-MG]
-                "<b>One magnesium product at a time:</b> Muscle Eze, Mag Calm Pro or Mag-K, never two.",
-                # [ODS-MG] [ODS-K]
-                "<b>Kidney disease?</b> Ask your prescriber before any magnesium product. <b>On an ACE inhibitor or "
-                "ARB, or spironolactone, triamterene or amiloride?</b> Skip Mag-K unless your prescriber says yes.",
-                # [ODS-VK] [NCCIH] [TAN24]
-                "<b>On warfarin (Coumadin)?</b> K2 and CoQ10 affect it. Start neither without your prescriber.",
-                # [LABEL]
-                "<b>Pregnant or nursing, or on sleep or anxiety medicine?</b> Ask {who} before any of these. "
-                "Muscle Eze can make you drowsy.",
-                # [LEVO] [CIPRO] [ODS-MG] [COCH20]
-                "<b>Thyroid pills:</b> 4 hours apart from magnesium or calcium. Take <b>alendronate, doxycycline or "
-                "ciprofloxacin</b> 2 hours before magnesium or calcium, or 6 hours after. Loose stools mean too much "
-                "magnesium.",
+                # [GARR12] [AAFP12] [FDA-PPI] [ODS-MG].  Says when to bring it (the pharmacy edition says who checks it).
+                "<b>Bring your medicine list to every visit.</b> Some water pills, heartburn pills, asthma inhalers, "
+                "statins and bone or estrogen medicines are linked to cramps. Never stop one on your own.",
             ],
         },
     },
 }
+
+# The rest of the medicine check, the same in both editions.  The panel sets the height of the row it shares with the
+# daily rhythm, and the back page has about 11 pt to spare, so each bullet was fitted by measurement: the magnesium
+# line and the pregnancy line each stay on one line in both editions, which pays for the statin line.
+RX_SHARED = [
+    # [ODS-MG] UL 350 mg/day from supplements: each of the three gives 200 mg, so two would be 400 mg.  Loose stools:
+    # [ODS-MG] high supplemental magnesium often causes diarrhea; [COCH20] GI side effects in 11% to 37% of takers.
+    # (This sentence used to trail the thyroid line, where a reader scanning the bold heads would not find it.)
+    "<b>One magnesium product at a time:</b> Muscle Eze, Mag Calm Pro or Mag-K. Too much gives loose stools.",
+    # [ODS-MG] magnesium builds up when the kidneys are impaired; [ODS-K] ACE inhibitors, ARBs and potassium-sparing
+    # diuretics raise blood potassium
+    "<b>Kidney disease?</b> Ask your prescriber before any magnesium product. <b>On an ACE inhibitor or "
+    "ARB, or spironolactone, triamterene or amiloride?</b> Skip Mag-K unless your prescriber says yes.",
+    # [ODS-VK] [NCCIH] [TAN24] warfarin
+    "<b>On warfarin (Coumadin)?</b> K2 and CoQ10 affect it. Start neither without your prescriber.",
+    # [NCCIH] statins lower blood CoQ10; [KOVAC25] [KENN20] mixed evidence for statin muscle pain (front research
+    # panel).  The statin tie lives here, as a question for a professional, never in the CoQ10 column.
+    "<b>On a statin?</b> Ask {who} if CoQ10 fits you.",
+    # [LABEL] "If pregnant, nursing, or taking medication, consult your healthcare practitioner before use"; passion
+    # flower and theanine with sedatives; Muscle Eze "may cause drowsiness"
+    "<b>Pregnant, nursing, or on sleep or anxiety pills?</b> Ask {who} first. Muscle Eze can make you drowsy.",
+    # [LEVO] 4 hours; [CIPRO] 2 before or 6 after; [ODS-MG] bisphosphonates 2 hours, tetracyclines 2 before or 4-6
+    # after; calcium binds these too.  No-break spaces keep each number with "hours".
+    "<b>Thyroid pills:</b> 4&nbsp;hours apart from magnesium or calcium. Take <b>alendronate, doxycycline or "
+    "ciprofloxacin</b> 2&nbsp;hours before magnesium or calcium, or 6&nbsp;hours after.",
+]
+for _ed in ("pharmacy", "practitioner"):
+    SHEET["back"]["rx"][_ed] += RX_SHARED
 
 
 def _rhythm_css():

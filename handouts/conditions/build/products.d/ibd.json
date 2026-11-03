@@ -1,7 +1,94 @@
 {
-  "d3_5000_k2": {
+  "ibd_inflam_eze": {
+    "name": "Dynamic Inflam-Eze",
+    "size": "568 g canister &middot; 14 servings",
+    "img_src": "R266.png",
+    "key": "400&nbsp;mg turmeric root extract, 500&nbsp;mg quercetin, 200&nbsp;mg ginger, 2.5&nbsp;g L&#8209;glutamine, 15&nbsp;g protein",
+    "dose": "1 scoop twice daily",
+    "dosesub": "days 1 to 10, in 8 oz water",
+    "sched": [
+      [
+        "am",
+        1,
+        "scoop to day 10"
+      ],
+      [
+        "pm",
+        1,
+        "scoop to day 10"
+      ]
+    ],
+    "url": "https://nutridyn.com/dynamic-inflam-eze",
+    "src": "Amounts and directions: products DB R266 (scratchpad products/nutridyn_products.json; NutriDyn Catalog ND143 10/1/26 as read by the Ortho Molecular and Metagenics switch charts), per 1 scoop (40.58 g): protein 15 g, turmeric root extract 400 mg, quercetin 500 mg, L-glutamine 2.5 g, green tea leaf extract 100 mg, ginger extract 200 mg, rosemary leaf 100 mg, magnesium 260 mg, zinc 13 mg, vitamin D3 10 mcg, folate 400 mcg DFE; directions 'Shake canister before scooping. Mix 1 scoop in 8 ounces of water twice daily or as recommended by your healthcare practitioner. Consume within 10 minutes of reconstitution. If blending, blend no longer than 15 seconds.' The serving line names the turmeric matrix and leaves green tea, rosemary, magnesium, zinc, vitamin D3 and folate off for space (they matter for the totals: two scoops add 26 mg zinc and 800 IU vitamin D3). Size: R266 is 568 g, 14 servings (DB SKU note; other flavors and the larger L sizes exist). Protocol: NutriDyn 5R GI Restoration Program ND584 Rev. 1/22, REPAIR step, days 1 to 10: 'NOTE: If the patient exhibits significant GI inflammation, replace the Dynamic GI Integrity with Dynamic Inflam-Eze for improving inflammatory markers' and 'Dynamic Inflam-Eze: 1 scoop twice daily for 10 days'; Asher's Autoimmune Diseases protocol email, 2023-05-08 (lists IBD; core product, 1 scoop in 8 oz water twice daily); NutriDyn 5R GI Restoration Program Guide, 2019 edition (Inflam-Eze is the lead product). Chosen over Inflam-Eze Plus (Asher's April 2026 inflammation blast), whose white willow bark (a salicylate) and devil's claw sit badly beside the front page's NSAID flare warning. URL: web search 2026-11-03 returns nutridyn.com/dynamic-inflam-eze (page not opened: nutridyn.com is blocked from this session). PHOTO MISSING: no Inflam-Eze powder image exists in the repo, the scratchpad, the product DB or any switch chart. Masters: Dropbox /NutriDyn/Product Images/Product Images (1)/R266_Web (id:xHepYs_Ou4AAAAAAAA5I4g) or R269_Web (id:xHepYs_Ou4AAAAAAAA5I7Q), 420 px web renders, content host blocked here. Stage one as build/img-src/R266.png and this entry picks it up."
+  },
+  "ibd_gi_defend": {
+    "name": "GI Defend",
+    "size": "75&nbsp;g unflavored powder",
+    "img_src": "R191.png",
+    "key": "2.5&nbsp;g ImmunoLin (serum&#8209;derived bovine immunoglobulin), from beef serum, not milk",
+    "dose": "1 scoop twice daily",
+    "dosesub": "days 1 to 10, same shake",
+    "sched": [
+      [
+        "am",
+        1,
+        "scoop to day 10"
+      ],
+      [
+        "pm",
+        1,
+        "scoop to day 10"
+      ]
+    ],
+    "url": "https://nutridyn.com/dynamic-gi-defend-r191",
+    "src": "Amount and directions: products DB R191 (Microbiome Labs switch chart, NutriDyn Catalog ND143 10/1/26): 'ImmunoLin per serving: NutriDyn 2.5 g (1 scoop, IgG content not stated on label)'; directions 'Mix 1 scoop in 8 ounces of water or your favorite beverage as a dietary supplement or as directed by your healthcare practitioner.' Size: product DB R191 (75G); the bottle photo prints UNFLAVORED. 'From beef serum, not milk': NutriDyn Nutritional Support Knowledge Base text on serum-derived bovine immunoglobulin, quoted in Asher's email of 2022-05-04 (no lactose; 'Colostrum dairy proteins are sensitizing for many, especially the higher dosages needed to stabilize inflammatory bowel disease'; 'binds these toxins together, making them too large to pass through the gut barrier'). Dose: the label gives no frequency, so the protocol applies: ND584 REPAIR step 'Dynamic GI Defend: 1 scoop twice daily for 10 days'; Asher's GI-MAP protocol email, 2025-01-30, Calprotectin (high) and/or Zonulin (high) section: 1 scoop in 8 oz twice daily. 'Same shake': the label allows water 'or your favorite beverage', so it goes into the Inflam-Eze shake. URL: products.py SLUGS (NutriDyn 60-day protocol doc) and a web search on 2026-11-03. PHOTO: build/img-src/R191.png is a 584x640 Lanczos stopgap of a 146x160 thumbnail (SOFT); print master Dropbox /NutriDyn/Product Images/Product Images (1)/R191_Web (id:xHepYs_Ou4AAAAAAAA5IqQ)."
+  },
+  "ibd_gi_restore": {
+    "name": "GI Restore",
+    "size": "Vanilla or Chocolate powder",
+    "img_src": "R326V.png",
+    "key": "2.5&nbsp;g L&#8209;glutamine, 18.75&nbsp;mg zinc, 200&nbsp;mg NAC, 2.5&nbsp;g prebiotic fiber, plus aloe and slippery elm",
+    "dose": "1 scoop twice daily",
+    "dosesub": "from day 11, in 8 oz water",
+    "sched": [
+      [
+        "am",
+        1,
+        "serving from day 11"
+      ],
+      [
+        "pm",
+        1,
+        "serving from day 11"
+      ]
+    ],
+    "url": "https://nutridyn.com/dynamic-gi-restore",
+    "src": "Amounts and directions: products DB R326C (NutriDyn Catalog ND143 10/1/26 p.101 as read by the Metagenics and Biotics Research switch charts; the catalog prints one panel, Vanilla R326V, 35.78 g scoop): protein 12 g, L-glutamine 2.5 g, larch arabinogalactans 2.5 g, 2'-fucosyllactose 2 g, N-acetyl-L-cysteine 200 mg, zinc 18.75 mg, vitamin D3 10 mcg, folate 185.2 mcg DFE; 'NutriDyn also lists arabinogalactans, 2'-FL, quercetin, aloe, slippery elm, NAC' (aloe and slippery elm are on the label but their amounts are not in the chart reads, so the line names them without numbers; '2.5 g prebiotic fiber' is the larch arabinogalactan; protein, 2'-FL, vitamin D3 and folate are left off for space); directions 'Shake canister before scooping. Mix 1 scoop in 8 ounces of water twice daily or as recommended by your healthcare practitioner.' It carries no DGL: it fills the competitor's L-glutamine + DGL + aloe slot because ND584 takes GI Integrity out of an inflamed gut (see Dynamic Inflam-Eze) and GI Restore is the 5R's gut-lining shake. Size line: flavors only (the catalog prints 14 servings for the Vanilla panel only). Protocol: ND584 RESTORE & RETAIN step 'Dynamic GI Restore: 1 scoop twice daily, from day 11 to day 24 (2 canisters)'; Asher's email of 2020-05-06: 'GI Restore ... was designed for leaky gut and Inflammatory Bowel Diseases. Is a key part of our 5R program'; NutriDyn GI Restore training deck (CSO): 'GI Restore clinical targets: ... Colitis, Crohn's'; Asher's email of 2025-01-15 on a relapsing IBD case: 'more 5R maybe for continuous months to a year', so the sheet says 'from day 11' and leaves the end to the provider. Daily rhythm: its two scoops replace the Inflam-Eze + GI Defend shake from day 11, so they are listed as '1 serving from day 11' (one serving is one scoop) and left out of the scoop count, which then reads the true daily peak. URL: web search 2026-11-03 returns nutridyn.com/dynamic-gi-restore (not opened, nutridyn.com blocked). PHOTO MISSING: no GI Restore image exists in the repo, the scratchpad, the product DB or any switch chart; masters Dropbox /NutriDyn/Product Images/Product Images (1)/R326V_Web (id:xHepYs_Ou4AAAAAAAA5JJg) and R326C_Web (id:xHepYs_Ou4AAAAAAAA5JMw), 420 px, content host blocked here. Stage one as build/img-src/R326V.png (the Intestinal Permeability sheet's entry picks up the same file)."
+  },
+  "ibd_ultrabiotic_defense": {
+    "name": "UltraBiotic Defense",
+    "size": "30 capsules",
+    "img_src": "R158.png",
+    "key": "5.5 billion CFU S.&nbsp;boulardii, 3 billion B.&nbsp;lactis, 1 billion L.&nbsp;rhamnosus HN001",
+    "dose": "1 capsule daily",
+    "dosesub": "at bedtime",
+    "sched": [
+      [
+        "bed",
+        1,
+        "capsule"
+      ]
+    ],
+    "url": "https://nutridyn.com/ultrabiotic-defense",
+    "src": "Strains, CFU and directions: products DB R158 (Microbiome Labs switch chart, NutriDyn Catalog ND143 10/1/26): 'Per capsule: probiotics NutriDyn S. boulardii 5.5 + B. lactis UABla-12 3 + L. rhamnosus HN001 1 billion CFU'; 'Take one capsule daily or as directed by your healthcare practitioner.' Size R158 30C. The B. lactis strain is printed without its code because Asher's 2023 protocol text names HN019 while the 10/1/26 catalog read names UABla-12. Protocol: Asher's Autoimmune Diseases protocol email, 2023-05-08 (lists IBD; 'UltraBiotic Defense: 1 capsule daily'); NutriDyn 5R GI Restoration Program Guide, 2019 edition ('UltraBiotic Defense 1 cap 1x daily'). Bedtime: NutriDyn 60-day gut repair and detox protocol conversion doc (Drive, 2025): 'UltraBiotic Defense 1 cap At bedtime'. Antibiotic spacing: 2 hours, as in Asher's 2026 gut case study ('taken at least 2 hours away from any antimicrobial support'). URL: web search 2026-11-03 returns nutridyn.com/ultrabiotic-defense (not opened, nutridyn.com blocked). PHOTO: only the 86x160 chart thumbnail exists in a searched folder (scratchpad products/img/R158.png): LOW-RES. Print master Dropbox /NutriDyn/Product Images/Product Images (1)/R158_Web1 (id:xHepYs_Ou4AAAAAAAA5IfA); stage it as build/img-src/R158.png."
+  },
+  "ibd_d3_5000_k2": {
+    "name": "D3 5000 with K2",
     "size": "60 softgels",
+    "img_src": "R197.png",
+    "key": "5,000&nbsp;IU vitamin D3, 60&nbsp;mcg vitamin K2 (MK&#8209;7), 15&nbsp;mcg vitamin K1",
     "dose": "1 softgel daily",
+    "dosesub": "with your evening meal",
     "sched": [
       [
         "pm",
@@ -9,15 +96,7 @@
         "softgel"
       ]
     ],
-    "src": "Product DB R197 (Designs for Health, Ortho Molecular, NuMedica, Nutritional Frontiers, Microbiome Labs, Biotics and Apex chart label reads; NutriDyn Catalog ND143 10/1/26): SKU R197 is 60S, 60 softgels, as the bottle photo prints; per softgel vitamin D3 125 mcg (5,000 IU), vitamin K2 60 mcg as MK-7, vitamin K1 15 mcg; label directions 'Take one softgel daily'. products.py said capsules. Shared key, so this also corrects the PCOS sheet; the key line is left at its old length so no sheet's layout moves."
-  },
-  "curcumin_bcm95": {
-    "key": "800 mg BioCurc turmeric root extract per 2 softgels, an enhanced-absorption form (curcumin amount not stated on the label)",
-    "src": "Product DB R268, all nine chart label reads: NutriDyn 800 mg BioCurc extract per 2 softgels, curcuminoid percentage not stated on the label; directions two softgels daily. Same wording as products.d/lyme.json (Curcumin 400x sell sheet ND466), kept identical so the load order of the two files cannot change what prints. Size: SKU R268 is 60S (60 softgels), which also keeps this card to one size line. Replaces '800 mg curcumin', which turned an extract weight into a curcumin amount.",
-    "size": "60 softgels"
-  },
-  "ultrabiotic_xs": {
-    "size": "30 capsules",
-    "src": "Product DB R892 (Ortho Molecular and Metagenics chart label reads, NutriDyn Catalog ND143 10/1/26): SKU R892 is 30C (30 capsules); per capsule 60 billion CFU, L. acidophilus DDS-1 30 billion + B. lactis UABla-12 30 billion at time of manufacture; directions one capsule daily. Only the size line changes here."
+    "url": "https://nutridyn.com/d3-5000-with-k2",
+    "src": "Amounts and directions: products DB R197 (Designs for Health, Ortho Molecular, NuMedica, Nutritional Frontiers, Microbiome Labs, Biotics and Apex switch-chart reads of NutriDyn Catalog ND143 10/1/26): per softgel vitamin D3 125 mcg (5,000 IU), vitamin K2 60 mcg as MK-7, vitamin K1 15 mcg; 'Take one softgel daily as a dietary supplement or as directed by your healthcare practitioner. Do not exceed recommended dosage unless directed by your healthcare practitioner.' SKU R197 60S; the bottle photo prints 60 SOFTGELS. Protocol: ND584 REPAIR step 'D3 5000 with K2: 2 softgels per day for 10 days', then 'until bottle is finished'; Asher's Autoimmune Diseases protocol email, 2023-05-08, uses D3 10,000 with K2 (1 daily with food, higher if the level is extremely low) and says 'In autoimmune syndromes it is very beneficial to know where the vitamin D levels are'. Both protocols land near 10,000 IU a day, twice the label dose and above the 4,000 IU adult upper limit, so the sheet prints the label dose (1 softgel) and the Provider check has the provider test the level and set the dose. D3 5000 with K2 also has the sharp print photo (D3 10,000 with K2 has only a 420 px web render). Evening meal: NutriDyn 60-day protocol conversion doc ('D3 5000 w K2 PM'). URL: products.py SLUGS and Asher's emails. Photo: build/img-src/R197.png, 876x1508 text-safe upscale of the 420 px web render."
   }
 }

@@ -8,8 +8,11 @@ FRONT, top to bottom
      daylight enters the eye and the teal DAY SIGNAL runs along the optic nerve to the master clock
      (SCN, just above the optic chiasm), which keeps melatonin off; AT NIGHT (moon) the dark-gray
      NIGHT SIGNAL, which carries a moon badge, runs from the clock to the pineal gland, and the pineal
-     gland releases melatonin into a vein (great cerebral vein and straight sinus, along the border
-     between cerebrum and cerebellum, then down the neck).  Two colours for the two times, so the
+     gland releases melatonin into a vein (great cerebral vein and straight sinus, back along the border
+     between cerebrum and cerebellum to the confluence of sinuses at the back of the skull, where the
+     drawn vein stops: from there the blood leaves sideways, out of the midline plane).  The skull's
+     bone rim runs round the cerebrum and on, as the occipital bone, round the back and underside of
+     the cerebellum to the foramen magnum behind the brainstem.  Two colours for the two times, so the
      frame never reads as "light makes melatonin".  Beside it, a 24-hour dial: melatonin (the only
      blue on the sheet's art) rises in the evening and peaks in the small hours; cortisol (gold, the
      wake-up and stress hormone) climbs before dawn and peaks after waking; the outer ring (yellow
@@ -22,6 +25,11 @@ FRONT, top to bottom
      STOP-Bang sleep apnea check (tick boxes, "3 or more ticks? Ask about a sleep apnea test (a
      doctor orders it)").  A pharmacist can go over the check but cannot order the study, so the line
      says who orders it without sending a practitioner-edition reader "to your doctor".
+     STOP-Bang is the property of University Health Network (UHN, Toronto; stopbang.ca), and the
+     Sources line names it.  PERMISSION IS STILL OPEN: the ATS questionnaire listing says use needs the
+     developer's permission (UHN contact), so NutriDyn must ask UHN before this sheet is printed.  If
+     UHN says no, set APNEA_PANEL = "signs": an unnamed, unscored list of apnea warning signs in our
+     own words (APNEA_SIGNS) replaces the STOP-Bang list, same box, same height.
 BACK: "Reset your sleep clock" (CBT-I habits by morning / day / night, with sleep drive explained) and
 5 NutriDyn products: GoodNight (start here), Stress Essentials Calm, Mag Calm Pro, Magnesium Glycinate (the
 capsule alternative to Mag Calm Pro: one magnesium, never both), Stress Essentials Cortisol Pro (facts and
@@ -56,7 +64,17 @@ SOURCES (each number on the page carries one of these tags in a comment)
               melatonin, tryptophan and valerian not suggested as stand-alone chronic insomnia
               treatment; why the back sells support, not a cure)
   [STOPBANG]  Chung F et al. STOP-Bang questionnaire. Chest 2016;149:631. PMID 26378880 (8 yes/no
-              items; collar 17 in+ men, 16 in+ women; score 3+ = intermediate or high risk)
+              items; collar 17 in+ men, 16 in+ women; score 3+ = intermediate or high risk).  Owner:
+              University Health Network (copies in circulation read "Property of University Health
+              Network, www.stopbang.ca"; ATS sleep-questionnaire listing, site.thoracic.org/assemblies/
+              srn/sleep-related-questionnaires/stop-bang: "permission required from developer").
+              stopbang.ca itself is not reachable from the build machine.
+  [AASMOSA]   Epstein LJ et al. (AASM Adult OSA Task Force). J Clin Sleep Med 2009;5:263-76. PMID
+              19960649 (symptoms: snoring, witnessed apneas, gasping or choking, daytime sleepiness;
+              exam: neck over 17 in in men, 16 in in women; hypertension among the high-risk groups;
+              diagnosis by a sleep study) and NHLBI, Sleep Apnea (loud snoring, choking or gasping,
+              very sleepy by day; about half of people with sleep apnea have high blood pressure; seen
+              through web search).  Basis of the fallback list APNEA_SIGNS, which is not scored.
   [ZISAPEL18] Zisapel N. Br J Pharmacol 2018;175:3190. PMID 29318587 (SCN-driven, light-inhibited
               melatonin conveys "darkness"); [DLMO] Pandi-Perumal SR et al. Prog
               Neuropsychopharmacol Biol Psychiatry 2007;31:1. PMID 16884842 (dim-light melatonin
@@ -86,9 +104,11 @@ SOURCES (each number on the page carries one of these tags in a comment)
   [BOYER05]   Boyer EW, Shannon M. The serotonin syndrome. N Engl J Med 2005;352:1112. PMID 15784664
               (L-tryptophan is among the drugs linked with serotonin syndrome).
   [ODSMG]     NIH Office of Dietary Supplements, Magnesium fact sheet (upper limit 350 mg/day from
-              supplements, set because of diarrhea; separate from tetracycline and quinolone
-              antibiotics and from bisphosphonates; kidney disease raises the risk of too much).
-              ODS does not list thyroid pills; that spacing comes from [LT4LBL].
+              supplements, set because of diarrhea; kidney disease raises the risk of too much;
+              bisphosphonates: take at least 2 hours apart; tetracycline and quinolone antibiotics: at
+              least 2 hours before or 4-6 hours after a magnesium supplement).  ODS does not list
+              thyroid pills; that spacing comes from [LT4LBL].  So the page says "at least 4 hours":
+              one gap that meets all three rules.
   [LT4LBL]    Levothyroxine sodium tablets, FDA prescribing information (DailyMed; sections 2 and 7):
               give it at least 4 hours before or after agents that interfere with its absorption;
               antacids (aluminum and magnesium hydroxides), calcium carbonate and iron are listed.
@@ -97,6 +117,18 @@ SOURCES (each number on the page carries one of these tags in a comment)
               PMID 7185792 (sleep pressure, "sleep drive", builds with time awake and is spent by
               sleep, naps included); applied in CBT-I sleep restriction [AASM21] (fixed wake time,
               no long naps).
+  [EFSA23]    EFSA NDA Panel. EFSA J 2023;21(5):e08006. PMID 37207271 (vitamin B6 upper limit 12 mg a
+              day for adults, set on peripheral neuropathy; the US limit is 100 mg a day, IOM 1998).
+              GoodNight carries 40 mg B6 per 2 capsules and Mag Calm Pro 5 mg per scoop [LABELS], so the
+              back says "Its B6 (up to 40 mg) adds up" with the tingling caution, the same caution the
+              stress and neuropathy sheets carry.
+  [SHARMA18]  Sharma AK et al. J Altern Complement Med 2018;24:243-8. PMID 28829155 (ashwagandha
+              600 mg/d raised T3 and T4 and lowered TSH) -> "can raise thyroid levels".
+  [ODSASH]    NIH ODS, Ashwagandha: Is it helpful for stress, anxiety, or sleep? (consumer fact sheet,
+              seen through web search; ods.od.nih.gov is not reachable from the build machine): it may
+              affect thyroid function, so it could interact with thyroid medicines, and it might
+              interact with sedatives -> "add to sleep pills".  Same policy as the stress sheet's
+              Cortisol Pro note (stress_cortisol.py rx).
   [LABELS]    NutriDyn sell sheets and the products DB, cited per product in products.d/sleep.json.
 """
 import math
@@ -193,6 +225,16 @@ def spline(pts, closed=True):
     return "".join(d) + ("Z" if closed else "")
 
 
+def spline_tail(pts, skip):
+    """The open curve through pts, drawn from pts[skip] on: the skipped points only steer the start
+    tangent, so it carries on another curve through the same points without a kink."""
+    segs = _bezier_segments(pts, False)[skip:]
+    d = [f"M{_f(segs[0][0][0])},{_f(segs[0][0][1])}"]
+    for _, c1, c2, b in segs:
+        d.append(f"C{_f(c1[0])},{_f(c1[1])} {_f(c2[0])},{_f(c2[1])} {_f(b[0])},{_f(b[1])}")
+    return "".join(d)
+
+
 def spline_at(pts, dists, closed=False, steps=60):
     """Points on the same curve at the given arc lengths from its start (beyond the end: the end)."""
     poly = []
@@ -266,19 +308,40 @@ SCN_L = (197, 144)
 PINEAL_L = (137, 124)
 # The vein melatonin leaves by.  The pineal gland drains into the great cerebral vein and the straight
 # sinus, which runs back along the border between the cerebrum and the cerebellum (the tentorium, drawn
-# here as the cerebrum's lower edge, local y about 166-168 for x 80-120) to the back of the skull; from
-# there the blood leaves the head through the sinuses and the veins of the neck [BENARROCH08].  Drawn as
-# one simplified vein: down from the pineal onto the border within 2 dots, back along it, around the
-# back of the cerebellum and down the neck, where the head's own fade takes it out of the picture.
-VEIN_PTS = [(132, 129), (127.5, 147), (121, 163.3), (104, 166.8), (86, 167.6), (72, 168.2), (62, 175.5),
-            (59.5, 190), (66, 207.5), (82, 227), (102, 251), (117, 278), (124, 306)]
+# here as the cerebrum's lower edge, local y about 166-168 for x 80-120) to the confluence of sinuses at
+# the internal occipital protuberance, on the inside of the back of the skull [BENARROCH08].  From there
+# the blood runs sideways (transverse and sigmoid sinuses) to the jugular foramen and the internal jugular
+# vein, all out of this midline plane, so the drawn vein STOPS at the confluence, inside the skull: it
+# never leaves through the back of the skull or runs down the back of the neck.
+VEIN_PTS = [(132, 129), (127.5, 147), (121, 163.3), (104, 166.8), (86, 167.6), (72, 168.2), (64.5, 170.6)]
 VEIN_W = 4.4                     # local units (3.4 printed units at the head's 0.78 scale)
-VEIN_LABEL_AT = spline_at(VEIN_PTS, [114.0])[0]   # where "Melatonin into blood" points: behind the cerebellum
+# Melatonin dots along the vein: every 12.6 local units (about 9.8 printed units) from 9.5 units.  The
+# last of the 6 sits where the vein leaves the cerebellum's top; the vein runs on bare for about 21 units
+# to the confluence, and that bare stretch is what "Melatonin into blood" points at (arc 82, inside the
+# skull, 7 printed units clear of the last dot: a leader that ends on a dot reads as pointing at the dot).
+MEL_DOTS = [9.5 + 12.6 * i for i in range(6)]
+VEIN_LABEL_AT = spline_at(VEIN_PTS, [82.0])[0]
+# The occipital bone: it carries the skull's bone rim on from the back of the cerebrum (it starts on the
+# vault's own point (61, 122); the two points before it only steer its start, see spline_tail), over the
+# confluence of sinuses (where the bone is thickest: the internal occipital protuberance), round the back
+# and underside of the cerebellum along its outline, and on to the back edge of the foramen magnum,
+# stopping about 5 units behind the brainstem so the spinal cord has its opening.
+OCCIPITAL_PTS = [(98, 56), (72, 87), (61, 122), (61.8, 148), (63, 170), (65.9, 191), (70, 204), (82.2, 216),
+                 (97, 222.3), (112, 224.6), (126, 225.6), (137, 226.2)]
+OCCIPITAL_SKIP = 2
+# The notch between the back of the cerebrum and the top of the cerebellum is the tentorium and the
+# confluence of sinuses, against the thick internal occipital protuberance.  It is filled in the bone's
+# own cream so the two bone strokes show no inner edge lines there.  Every edge of this polygon lies under
+# the cerebrum or cerebellum (drawn later) or inside the bone's fill band, so it adds no outline of its own.
+NOTCH_PTS = [(62, 140), (70, 150), (84, 163), (96, 166), (96, 170), (80, 174), (70, 184), (66.5, 192),
+             (64.5, 192), (63.5, 170), (62.5, 150)]
 
 
 def _head_local(uid):
     """The whole head drawing in local units (about 48..306 x 18..330)."""
-    o = [f'<defs><linearGradient id="{uid}fade" gradientUnits="userSpaceOnUse" x1="0" y1="290" x2="0" y2="330">'
+    # The neck fades out from local y 284 to 308, fully clear 2 units above the card's step-strip divider
+    # (ART_B = 258 printed = local 310.3), so the divider never slices a half-faded neck.
+    o = [f'<defs><linearGradient id="{uid}fade" gradientUnits="userSpaceOnUse" x1="0" y1="284" x2="0" y2="308">'
          '<stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#000"/></linearGradient>'
          f'<mask id="{uid}mask" maskUnits="userSpaceOnUse" x="0" y="0" width="360" height="340">'
          f'<rect x="0" y="0" width="360" height="340" fill="url(#{uid}fade)"/></mask>'
@@ -293,12 +356,15 @@ def _head_local(uid):
     o.append('<path d="M262,140 Q273,134.5 284,137.5" fill="none" stroke="#9A7564" stroke-width="2.6" stroke-linecap="round"/>'
              '<path d="M289,206 Q294,201.5 299,206.5" fill="none" stroke="#C3907A" stroke-width="1.5" stroke-linecap="round"/>'
              '<path d="M282.5,238 L275,237.2" fill="none" stroke="#C3907A" stroke-width="1.4" stroke-linecap="round"/>')
-    # skull: a bone rim around the top of the brain (drawn under the brain, so only the outer half shows)
-    vault = spline(BRAIN_PTS[1:15], closed=False)
-    o.append(f'<path d="{vault}" fill="none" stroke="#D8C2AF" stroke-width="12" stroke-linecap="round"/>'
-             f'<path d="{vault}" fill="none" stroke="#F1E5D9" stroke-width="9.6" stroke-linecap="round"/>')
-    # neck: vertebral bodies in front of the spinal cord
-    for y0 in (240, 256, 272, 288, 304):
+    # skull: a bone rim around the brain (drawn under the cerebrum and cerebellum, so only the outer half
+    # shows): the vault round the cerebrum, then the occipital bone round the cerebellum (OCCIPITAL_PTS).
+    # Both edge strokes go down before both fill strokes, so where the two paths overlap there is no seam.
+    vault, occ = spline(BRAIN_PTS[1:15], closed=False), spline_tail(OCCIPITAL_PTS, OCCIPITAL_SKIP)
+    o.append("".join(f'<path d="{d}" fill="none" stroke="#D8C2AF" stroke-width="12" stroke-linecap="round"/>' for d in (vault, occ))
+             + "".join(f'<path d="{d}" fill="none" stroke="#F1E5D9" stroke-width="9.6" stroke-linecap="round"/>' for d in (vault, occ))
+             + '<path d="M' + " L".join(f"{x},{y}" for x, y in NOTCH_PTS) + 'Z" fill="#F1E5D9"/>')
+    # neck: vertebral bodies in front of the spinal cord (four: a fifth would sit wholly in the fade)
+    for y0 in (240, 256, 272, 288):
         o.append(f'<rect x="166" y="{y0}" width="21" height="13" rx="3.5" fill="#F1E5D9" stroke="#D2BBA7" stroke-width="1"/>')
     # spinal cord and brainstem, cerebellum, cerebrum
     o.append(f'<path d="{spline(STEM_PTS)}" fill="{STEM}" stroke="{BRAIN_EDGE}" stroke-width="1.2"/>')
@@ -542,7 +608,9 @@ def art_clock(t):
     # The picture is ONE frame, so the words carry the timing: light acts BY DAY (it switches melatonin
     # off and sets the clock), melatonin flows AT NIGHT [ZISAPEL18].  Sun = "by day", moon = "at night".
     o = [card(0, 0, LW, P1H, "YOUR BRAIN'S CLOCK", "light by day, melatonin by night", "slp-c1", c1),
-         card(RX, 0, W - RX, P1H, "ONE DAY, TWO SIGNALS", "your 24-hour rhythm", "slp-c2", c1)]
+         # "HORMONES", not "SIGNALS": the KEY's "Day signal" / "Night signal" are the arrows on the head,
+         # while this card shows the two hormones, cortisol and melatonin.
+         card(RX, 0, W - RX, P1H, "ONE DAY, TWO HORMONES", "your 24-hour rhythm", "slp-c2", c1)]
 
     # ---------------- left: the head
     hx, hy, s = 46.0, 16.0, 0.78
@@ -582,10 +650,10 @@ def art_clock(t):
     o.append(moon_badge((1 - bt) ** 2 * n0[0] + 2 * (1 - bt) * bt * nc[0] + bt ** 2 * n1[0],
                         (1 - bt) ** 2 * n0[1] + 2 * (1 - bt) * bt * nc[1] + bt ** 2 * n1[1]))
     # Melatonin leaving the pineal gland rides the vein (VEIN_PTS, drawn with the head): the third dot is
-    # already on the border between cerebrum and cerebellum, the rest run back along it to the back of the
-    # head, and the vein carries on alone where "into blood" points.  Dots every 12.6 local units (about
-    # 9.8 printed units).
-    for k, q in enumerate(spline_at(VEIN_PTS, [9.5 + 12.6 * i for i in range(8)])):
+    # already on the border between cerebrum and cerebellum, the rest run back along it to the confluence
+    # at the back of the skull, where the vein ends.  Dots every 12.6 local units (MEL_DOTS, about 9.8
+    # printed units).
+    for k, q in enumerate(spline_at(VEIN_PTS, MEL_DOTS)):
         x, y = m(q)
         o.append(f'<circle cx="{_f(x)}" cy="{_f(y)}" r="{2.9 if k < 2 else 2.6}" fill="{MEL}" stroke="#FFFFFF" '
                  'stroke-width=".7"/>')
@@ -610,9 +678,11 @@ def art_clock(t):
     o.append(marker(18, pin[1] - 16, 3) + T(30, pin[1] - 12, "Pineal", 11.2, 800, INK)
              + T(30, pin[1] + 2, "gland", 11.2, 800, INK))
     # "at night" (with a moon, in the night colour), then "Melatonin into blood"; the leader runs from the
-    # label to the edge of the vein where it turns down behind the cerebellum, so "into blood" points at a
-    # blood vessel.  The block stays 20+ units clear of the back-of-head outline.
-    my = pin[1] + 24.3                          # baseline of "at night"
+    # label to the edge of the bare vein past the last dot (VEIN_LABEL_AT, inside the skull), so "into
+    # blood" points at a blood vessel.  The block sits 13 units lower than the vein's level so the leader
+    # meets the (nearly level) vein at about 37 degrees instead of lying along it; it stays 12+ units clear
+    # of the back-of-head outline.
+    my = pin[1] + 37.3                          # baseline of "at night"
     o.append(_moon(20.5, my - 3.8, 5.2, NIGHT) + T(29, my, "at night", 10.4, 700, NIGHT, italic=True))
     vx, vy = m(VEIN_LABEL_AT)
     lead0 = (73.5, my + 20.8)
@@ -834,7 +904,9 @@ RISKS = [  # [NHLBI]; caffeine [DRAKE13]; evening light [GOOLEY11, CHANG15]; alc
     ("wine", "Alcohol close<br>to bedtime"),
     ("shift", "Changing sleep<br>schedules"),
     ("brain", "Stress and a<br>racing mind"),
-    ("thermo", "Pain or<br>hot flashes"),
+    # a flame (heat) for hot flashes, not a thermometer (which reads as fever or room temperature); the
+    # kit's "headache" head would sit right beside the snoring head
+    ("flame", "Hot flashes<br>or pain"),
     ("snore", "Loud snoring,<br>sleep apnea"),
     ("rx", "Decongestants,<br>some medicines"),
 ]
@@ -846,7 +918,15 @@ def risk_strip():
     return f'<div class="slp-risk">{cells}</div>'
 
 
-def know_panel():
+# STOP-Bang belongs to University Health Network (see the docstring): until NutriDyn has UHN's permission
+# the sheet must not go to print.  If UHN says no, set APNEA_PANEL = "signs" and rebuild; the fallback was
+# rendered in both editions on 2026-11-03 and fits the same box.
+APNEA_PANEL = "stopbang"
+APNEA_SIGNS = ["Loud snoring", "Sleepy or tired by day", "Gasping or breathing pauses in sleep",
+               "High blood pressure", "Large collar size"]
+
+
+def know_panel(mode=APNEA_PANEL):
     # [CDCNEED] hours of sleep by age, written with the CDC's own en-dash ranges so each row fits the
     # 1.3 in column on one line
     need = "".join(f'<div class="slp-age"><i>{a}</i><b>{b}</b></div>' for a, b in
@@ -858,27 +938,39 @@ def know_panel():
         "Trouble falling or staying asleep, or waking too early",
         "3 or more nights a week, for 3+ months",
         "Your days suffer: tired, moody or foggy"))
-    # [STOPBANG] the eight yes/no items, in questionnaire order (Chung 2016 wording, shortened).
-    # B is BMI > 35 kg/m2; most people do not know theirs, so the line says who can work it out.
-    sb = [("S", "Snore loudly"), ("T", "Tired or sleepy by day"),
-          ("O", "Seen to stop breathing or gasp"), ("P", "High blood pressure, or pills for it"),
-          ("B", "BMI over 35 (ask {who})"), ("A", "Age over 50"),
-          ("N", "Collar 17 in+ (men), 16 in+ (women)"), ("G", "Male")]
-    sbl = "".join(f'<li><span class="slp-bx"></span><em>{a}</em><span>{b}</span></li>' for a, b in sb)
+    if mode == "signs":
+        # Fallback if UHN does not give permission: generic warning signs in our own words, not scored and
+        # not in questionnaire order [AASMOSA].  Ordered so the two-column grid reads row by row.
+        apnea = (f'<div><h4>Sleep apnea warning signs</h4><ul class="slp-sb">'
+                 + "".join(f'<li><span class="slp-bx"></span><span>{x}</span></li>' for x in APNEA_SIGNS)
+                 + '</ul><p class="slp-act"><b>Any of these?</b> Ask about a sleep test (a doctor orders it).</p></div>')
+        src = "Sources: CDC; AASM (ICSD-3-TR; sleep apnea guideline 2009); American College of Physicians 2016."
+    else:
+        # [STOPBANG] the eight yes/no items, in questionnaire order (Chung 2016 wording, shortened).
+        # B is BMI > 35 kg/m2; most people do not know theirs, so the line says who can work it out.
+        sb = [("S", "Snore loudly"), ("T", "Tired or sleepy by day"),
+              ("O", "Seen to stop breathing or gasp"), ("P", "High blood pressure, or pills for it"),
+              ("B", "BMI over 35 (ask {who})"), ("A", "Age over 50"),
+              ("N", "Collar 17 in+ (men), 16 in+ (women)"), ("G", "Male")]
+        sbl = "".join(f'<li><span class="slp-bx"></span><em>{a}</em><span>{b}</span></li>' for a, b in sb)
+        # Both editions: say who orders the sleep study (a doctor; a pharmacist cannot) without sending the
+        # reader away from the provider who handed out the sheet.  [STOPBANG] 3+ = intermediate/high risk.
+        apnea = (f'<div><h4>Sleep apnea check <span>(STOP-Bang)</span></h4><ul class="slp-sb">{sbl}</ul>'
+                 '<p class="slp-act"><b>3 or more ticks?</b> Ask about a sleep apnea test (a doctor orders it).</p></div>')
+        # The owner is named in words ("property of"), never with a copyright glyph (Type 3 risk), and on the
+        # same single line, because page 1 has under 5 px of slack above the footer.
+        src = ("Sources: CDC; AASM (ICSD-3-TR); STOP-Bang (Chung 2016), property of University Health Network "
+               "(stopbang.ca); American College of Physicians 2016.")
     return ('<div class="slp-know"><div class="slp-kh"><b>Know your sleep</b><span>Tick what fits you, then go over it '
             'with {who}.</span></div><div class="slp-kg">'
             f'<div><h4>How much sleep?</h4>{need}'
             '<div class="slp-mine"><span>My usual</span><i></i><span>hours</span></div></div>'
             f'<div><h4>Is it long-term insomnia?</h4><ul class="slp-ul">{ins}</ul>'
-            # [ACP16, AASM21]
-            '<p class="slp-act"><b>All 3?</b> Ask about <b>CBT-I</b>, the short sleep-coaching program experts '
+            # [ACP16, AASM21].  The same words as the back page's subtitle; no-break hyphens (the kit prints them
+            # as plain hyphens in an unbreakable span) so "sleep-coaching" no longer splits at its hyphen.
+            '<p class="slp-act"><b>All 3?</b> Ask about <b>CBT&#8209;I</b>, the sleep&#8209;coaching program experts '
             'recommend first.</p></div>'
-            f'<div><h4>Sleep apnea check <span>(STOP-Bang)</span></h4><ul class="slp-sb">{sbl}</ul>'
-            # Both editions: say who orders the sleep study (a doctor; a pharmacist cannot) without sending the
-            # reader away from the provider who handed out the sheet.  [STOPBANG] 3+ = intermediate/high risk.
-            '<p class="slp-act"><b>3 or more ticks?</b> Ask about a sleep apnea test (a doctor orders it).</p></div>'
-            '</div><p class="slp-src">Sources: CDC; American Academy of Sleep Medicine (ICSD-3-TR); STOP-Bang, Chung 2016; '
-            'American College of Physicians 2016.</p></div>')
+            f'{apnea}</div><p class="slp-src">{src}</p></div>')
 
 
 def front(t, ed):
@@ -937,6 +1029,28 @@ CSS = r"""
 """
 
 # ============================================================== the sheet
+# Back-page check lines shared by both editions.  Each one was fitted on the rendered page: with these the
+# pharmacy and practitioner checks are both 11 lines and the back keeps its 5.5 px above the footer.
+# GoodNight: [BOYER05] tryptophan + serotonergic drugs; label drowsiness and driving caution [LABELS]; B6
+# 40 mg per 2 capsules [LABELS ND521] (plus 5 mg per Mag Calm Pro scoop) against the 12 mg EFSA and 100 mg US
+# upper limits, with the tingling caution the stress and neuropathy sheets carry [EFSA23].  "(up to 40 mg)"
+# because the dose is 1 or 2 capsules.
+_RX_GOODNIGHT = ("<b>Ask {who} before GoodNight</b> if you take antidepressants (SSRIs, SNRIs, MAOIs), migraine "
+                 "triptans or sleep pills: its tryptophan adds to serotonin, and its melatonin and valerian add "
+                 "drowsiness. Do not drive after taking it. Its B6 (up&nbsp;to&nbsp;40&nbsp;mg) adds up: tingling hands "
+                 "or feet? Tell {who}.")
+# Magnesium: one source, never both [LABELS]; the 350 mg supplement limit and kidney disease [ODSMG]; "at least
+# 4 hours" meets the levothyroxine label's 4 hours [LT4LBL], ODS's 2 hours for bisphosphonates and its 2 hours
+# before / 4-6 hours after for tetracycline and quinolone antibiotics [ODSMG].  No-break spaces keep "260 mg"
+# and "350 mg" whole.
+_RX_MAG = ("<b>Pick Mag Calm Pro (200&nbsp;mg magnesium) or Magnesium Glycinate (260&nbsp;mg), not both:</b> either "
+           "stays under the 350&nbsp;mg daily limit for supplements. Kidney disease? Ask first. Keep it at least 4 hours "
+           "from thyroid, bone or antibiotic pills.")
+# Pregnancy and medicines: the three label cautions [LABELS]; Cortisol Pro's 150 mg Sensoril ashwagandha can
+# raise thyroid hormone [SHARMA18] and may add to sedatives [ODSASH], the same note as the stress sheet.
+_RX_PREG = ("<b>Pregnant, nursing or on medicine?</b> Ask {who} first. <b>No Cortisol Pro if pregnant.</b> Its "
+            "ashwagandha can raise thyroid levels and add to sleep pills.")
+
 SHEET = {
     "slug": SLUG, "code": "ND-NR-702", "order": 17, "theme": "neuro", "series": "Brain and Nerve Series",
     "title": "Better Sleep", "sub": "When falling asleep or staying asleep is hard",
@@ -955,10 +1069,13 @@ SHEET = {
         "life_title": 'Reset Your Sleep Clock<i class="slp-bk"></i>',
         "life_sub": "Habits from CBT-I, the sleep-coaching program experts recommend first",
         "style": "circle3",
+        # Morning bullet 3 is the morning half of stimulus control [AASM21, AASMHAB]: out of bed once awake,
+        # because the bed is for sleep (the night column carries screens and the 20-minute rule).  Same two
+        # lines as the bullet it replaced, so the band does not grow.
         "life": [("sun", "Morning: set the clock",
                   ["Get up at the same time every day, even after a rough night",
                    "Get outdoor light within an hour of waking",
-                   "Use your bed only for sleep: no phone, TV or work in bed"]),
+                   "Once you wake, get up: your bed is for sleep"]),
                  # "walk" (an active day builds sleep drive), never the coffee cup page 1 uses as a sleep risk
                  ("walk", "Day: build sleep drive",
                   ["Sleep drive builds while you are awake; naps drain it",
@@ -971,8 +1088,11 @@ SHEET = {
         # Doses: every one is inside its label's directions [LABELS].  Magnesium is a choice, not a stack:
         # Mag Calm Pro (1 scoop, 200 mg) OR Magnesium Glycinate (2 capsules = one label serving, 260 mg; label:
         # 2 capsules twice daily); either one stays under the 350 mg supplement limit [ODSMG].  Magnesium
-        # Glycinate has no rhythm entry (sched []), so the plan counts one magnesium source; its column says it
-        # replaces Mag Calm Pro.  L-theanine across the plan: GoodNight 1 capsule 100 mg + Stress Essentials Calm
+        # Glycinate has no rhythm entry of its own (sched []), so the plan counts one magnesium source; its column
+        # says it replaces Mag Calm Pro, and the Mag Calm Pro cell in the rhythm names the swap ("1 scoop, or 2
+        # Magnesium Glycinate capsules at bedtime"), so a patient who picks the capsules finds them in the plan.
+        # The kit still counts that cell as the scoop, so the total reads "5 pills and 1 scoop".  L-theanine across
+        # the plan: GoodNight 1 capsule 100 mg + Stress Essentials Calm
         # 200 mg + Mag Calm Pro 100 mg + Cortisol Pro 100 mg = 500 mg a day (600 mg with 2 GoodNight); it is not
         # printed, because the number alone tells a patient nothing.  GoodNight's label says one hour before
         # bedtime, so its rhythm line says so too.  Stress Essentials Calm sits at bedtime, matching its "wind-down
@@ -989,7 +1109,8 @@ SHEET = {
              "dose": "2 capsules", "dosesub": "before bed", "sched": [("bed", 2, "capsules")]},
             {"p": "sleep_mag_calm_pro", "need": "Evening wind-down", "needsub": "magnesium drink",
              "bullets": ["Supports relaxation and a calm mood", "Magnesium, inositol and taurine in one drink"],
-             "dose": "1 scoop in 6 oz water", "dosesub": "after dinner", "sched": [("pm", 1, "scoop")]},
+             "dose": "1 scoop in 6 oz water", "dosesub": "after dinner",
+             "sched": [("pm", 1, "scoop, or 2 Magnesium Glycinate capsules at bedtime")]},
             {"p": "sleep_mag_glycinate", "need": "Magnesium, no drink", "needsub": "instead of Mag Calm Pro",
              "bullets": ["Helps maintain normal muscle and nerve function", "Supports relaxation at bedtime"],
              "dose": "2 capsules", "dosesub": "at bedtime", "sched": []},
@@ -1005,31 +1126,18 @@ SHEET = {
         # healthcare practitioner before use."  Cortisol Pro "Do not use if pregnant. If nursing or taking
         # medication, consult your healthcare practitioner before use."  Bullet 4 carries all three (and covers
         # Calm and Magnesium Glycinate too).  [BOYER05] L-tryptophan + serotonergic drugs (antidepressants,
-        # triptans).  [STOPBANG] apnea.  [ODSMG] magnesium: 350 mg supplement limit, kidney disease, spacing from
-        # bisphosphonate (bone) and tetracycline / quinolone antibiotic pills; [LT4LBL] spacing from thyroid pills.
+        # triptans).  [STOPBANG] apnea.  The four lines and their sources are in _RX_* just above SHEET; only
+        # bullet 2 differs between the editions.
         "rx": {
-            "pharmacy": [
-                "<b>Ask {who} before GoodNight</b> if you take antidepressants (SSRIs, SNRIs, MAOIs), migraine triptans "
-                "or sleep pills: its tryptophan adds to serotonin, and its melatonin and valerian add drowsiness. Do not "
-                "drive after taking it.",
-                "<b>Loud snoring, gasping or sleepy days?</b> Your pharmacist can go over the apnea check on page 1. "
-                "Apnea needs a sleep test ordered by your doctor; supplements are no substitute for apnea care.",
-                "<b>Choose Mag Calm Pro (200 mg magnesium) or Magnesium Glycinate (260 mg), not both:</b> either stays "
-                "under the 350 mg daily limit for supplements. Check first if you have kidney disease. Space it from "
-                "thyroid, bone and antibiotic pills.",
-                "<b>Pregnant, nursing or taking any medicine?</b> Ask {who} before you start any of these. "
-                "<b>Do not use Cortisol Pro if pregnant.</b>"],
-            "practitioner": [
-                "<b>Ask {who} before GoodNight</b> if you take antidepressants (SSRIs, SNRIs, MAOIs), migraine triptans "
-                "or sleep pills: its tryptophan adds to serotonin, and its melatonin and valerian add drowsiness. Do not "
-                "drive after taking it.",
-                "<b>Loud snoring, gasping or sleepy days?</b> Ask {who} about a sleep apnea test (check on page 1). "
-                "Supplements are no substitute for apnea care.",
-                "<b>Choose Mag Calm Pro (200 mg magnesium) or Magnesium Glycinate (260 mg), not both:</b> either stays "
-                "under the 350 mg daily limit for supplements. Check first if you have kidney disease. Space it from "
-                "thyroid, bone and antibiotic pills.",
-                "<b>Pregnant, nursing or taking any medicine?</b> Ask {who} before you start any of these. "
-                "<b>Do not use Cortisol Pro if pregnant.</b>"],
+            "pharmacy": [_RX_GOODNIGHT,
+                         # a pharmacist goes over the check; a doctor orders the test
+                         "<b>Snoring or gasping?</b> Go over the apnea check on page 1 with {who}. A doctor orders "
+                         "the sleep test; supplements are no substitute for apnea care.",
+                         _RX_MAG, _RX_PREG],
+            "practitioner": [_RX_GOODNIGHT,
+                             "<b>Loud snoring, gasping or sleepy days?</b> Ask {who} about a sleep apnea test (check on "
+                             "page 1). Supplements are no substitute for apnea care.",
+                             _RX_MAG, _RX_PREG],
         },
     },
 }

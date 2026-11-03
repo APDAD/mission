@@ -79,6 +79,13 @@ SOURCES (each number or fact on the page carries one of these tags in a comment)
             to measure the TSH level in a blood sample" (so: the main thyroid blood test).
   [CHAN93]  Chan E. Displacement of bilirubin from albumin by berberine. Biol Neonate 1993;63:201-8.
             PMID 8513024, doi:10.1159/000243932: berberine "best avoided in jaundiced neonates and pregnant women".
+  [BUCK04]  Buckley MS, Goff AD, Knapp WE. Fish oil interaction with warfarin. Ann Pharmacother 2004;38:50-2.
+            PMID 14742793, doi:10.1345/aph.1D007: INR rose from 2.8 to 4.3 after fish oil went from 1,000 to 2,000 mg a
+            day; "patients undergoing anticoagulation therapy with warfarin should be educated about and monitored".
+  [BEGT17]  Begtrup KM, Krag AE, Hvas AM. No impact of fish oil supplements on bleeding risk: a systematic review.
+            Dan Med J 2017;64:A5366. PMID 28552094: fish oil lowered platelet aggregation, but did not increase bleeding
+            in surgical trials (so the check says "ask first", not "avoid"). NIH ODS omega-3 fact sheet not reopened
+            (host blocked in this session).
   [YASU16]  Yasueda A et al. Antioxidant supplements as adjuvant therapy in cancer treatment: a systematic review.
             Integr Cancer Ther 2016;15:17-39. PMID 26503419, doi:10.1177/1534735415610427 (effect on
             chemotherapy and radiotherapy unclear, so: ask first).
@@ -86,7 +93,10 @@ SOURCES (each number or fact on the page carries one of these tags in a comment)
             Methyl Complete (ND420) and Omega Pure EPA-DHA 1000 (ND416) sell sheets read for this sheet (products.d
             "src"): every one says "If [you are] pregnant, nursing, or taking medication, consult your healthcare
             practitioner before use." Methyl Complete (ND420) also lists biotin 500 mcg per 2 capsules, so the
-            blood-test check names both biotin sources.
+            blood-test check names both biotin sources. Re-read 2026-11-03 (Dropbox fetch) for the one extra fact under
+            three columns: ND633 and ND1390 print a VEGETARIAN badge (Nerve Eze capsule: hypromellose); ND1390 other
+            ingredients include xylitol, natural cherry flavor and stevia leaf extract; ND416 prints "Contains: Fish
+            (Anchovy, Sardine, and Mackerel)" and a gelatin capsule shell.
   [ASA]     American Stroke Association BE FAST warning signs: sudden numbness or weakness, especially on one
             side, face drooping, speech difficulty -> call 911.
   [CFR93]   21 CFR 101.93 (structure/function statements): disclaimer adjacent to each statement or linked to it
@@ -111,6 +121,7 @@ SOURCES (each number or fact on the page carries one of these tags in a comment)
 import math
 import os
 import random
+import sys
 
 import kit
 from kit import ICONS, icon
@@ -119,32 +130,57 @@ from svgkit import T, svg
 SLUG = "neuropathy"
 
 # ============================================================== text measuring (Inter, via Pillow)
-_FACES = {}
+# The KEY columns and the "magnified" tag are placed from Inter's real advance widths. The fonts the page prints with
+# ship in the repo (handouts/conditions/fonts, static WOFF2), so those are read first and a system Inter OTF/TTF is the
+# second choice. With neither (no Pillow, or a FreeType built without WOFF2 support) tw() falls back to _MEASURED, then
+# to a generous estimate, so a missing font can never stop the build.
+_HERE = os.path.dirname(os.path.abspath(__file__))
+_REPO_FONTS = os.path.normpath(os.path.join(_HERE, "..", "..", "fonts"))
 _WEIGHTS = {400: "Regular", 500: "Medium", 600: "SemiBold", 700: "Bold", 800: "ExtraBold", 900: "Black"}
 _FONT_DIRS = ("/usr/share/fonts/opentype/inter", "/usr/share/fonts/truetype/inter",
               os.path.expanduser("~/Library/Fonts"), "/Library/Fonts")
+_FACES = {}
+# Advance width at 100 px of every string this module measures, read with Pillow from the shipped
+# inter-latin-<weight>-normal.woff2 (the system Inter-<Name>.otf gives the same numbers). Re-measure if a label changes;
+# until then a changed label falls back to the estimate and the KEY steps its label size down to fit.
+_MEASURED = {
+    ("Nerves and nerve fiber", 600): 1108.234375, ("Myelin coat", 600): 560.75, ("Nerve signal", 600): 605.90625,
+    ("Signal that fails", 600): 740.171875, ("Oxidative stress (“rust”)", 600): 1171.671875,
+    ("Extra blood sugar (glucose)", 600): 1330.59375, ("Numb or tingling area", 600): 1039.546875,
+    ("KEY", 800): 210.015625, ("INSIDE ONE NERVE FIBER", 800): 1233.796875,
+}
 
 
-def _face(name):
-    if name not in _FACES:
-        from PIL import ImageFont
-        for d in _FONT_DIRS:
-            for ext in ("otf", "ttf"):
-                f = os.path.join(d, f"Inter-{name}.{ext}")
-                if os.path.exists(f):
-                    _FACES[name] = ImageFont.truetype(f, 100)
-                    return _FACES[name]
-        raise FileNotFoundError(name)
-    return _FACES[name]
+def _face(weight):
+    """Inter at 100 px in this weight, or None when no font file can be opened."""
+    if weight not in _FACES:
+        _FACES[weight] = None
+        try:
+            from PIL import ImageFont
+        except ImportError:
+            return None
+        paths = [os.path.join(_REPO_FONTS, f"inter-latin-{weight}-normal.woff2")]
+        paths += [os.path.join(d, f"Inter-{_WEIGHTS[weight]}.{ext}") for d in _FONT_DIRS for ext in ("otf", "ttf")]
+        for f in paths:
+            if os.path.exists(f):
+                try:
+                    _FACES[weight] = ImageFont.truetype(f, 100)
+                    break
+                except OSError:          # e.g. a FreeType without WOFF2 (brotli) support: try the next file
+                    continue
+    return _FACES[weight]
 
 
 def tw(text, size, weight=600, ls=0.0):
-    """Advance width of `text` in Inter at `size` px (generous guess without Pillow or the font)."""
-    try:
-        w = _face(_WEIGHTS[weight]).getlength(text) * size / 100
-    except Exception:
-        w = len(text) * size * (0.68 if text.isupper() else 0.6)
-    return w + ls * len(text)
+    """Advance width of `text` in Inter at `size` px, plus letter-spacing `ls` after every character."""
+    f = _face(weight)
+    if f is not None:
+        w100 = f.getlength(text)
+    elif (text, weight) in _MEASURED:
+        w100 = _MEASURED[(text, weight)]
+    else:   # generous: real Inter runs 0.43-0.51 of the size per character in mixed case, 0.56-0.70 in capitals
+        w100 = len(text) * (70 if text.isupper() else 53)
+    return w100 * size / 100 + ls * len(text)
 
 
 # ============================================================== palette (every colour is named in the KEY)
@@ -604,9 +640,20 @@ def _key():
     SW = 34                                       # swatch slot: swatch centred at +15, label starts at +34
     start = 14 + tw("KEY", 10.5, 800, 1.2) + 24
     ncol = max(len(r) for r in rows)
-    need = [max(tw(r[c][1], 11, 600) for r in rows if c < len(r)) + SW for c in range(ncol)]
-    gap = (W - 12 - start - sum(need)) / (ncol - 1)   # columns sized to their longest label, equal gaps
-    assert gap >= 12, "key labels too long for four columns"
+    # Columns sized to their longest label, equal gaps (measured: 25.8 px at 11 px labels, x = 63.7, 252.3, 458.5,
+    # 632.6). If longer labels ever leave less than a 12 px gap, the label size steps down (11 px prints at 8 pt; the
+    # floor 9.75 px is 7.1 pt) and the build warns instead of stopping.
+    size = 11.0
+    while True:
+        need = [max(tw(r[c][1], size, 600) for r in rows if c < len(r)) + SW for c in range(ncol)]
+        gap = (W - 12 - start - sum(need)) / (ncol - 1)
+        if gap >= 12 or size <= 9.75:
+            break
+        size -= 0.25
+    if gap < 12:
+        print(f"WARNING: {SLUG} KEY labels too long for {ncol} columns (gap {gap:.1f} px at {size} px labels)",
+              file=sys.stderr)
+    size = int(size) if size.is_integer() else size
     xs = [start + sum(need[:c]) + gap * c for c in range(ncol)]
     o = [f'<rect x=".6" y="{y}" width="{W - 1.2}" height="{h}" rx="8" fill="#FFFFFF" stroke="#CFD6DE" stroke-width="1.2"/>',
          T(14, y + h / 2 + 3.7, "KEY", 10.5, 800, INK, ls=1.2),
@@ -616,7 +663,7 @@ def _key():
         for c, (sw, lab) in enumerate(items):
             x = xs[c]
             o.append(f'<g transform="translate({x + 15:.1f},{cy:.1f})">{sw}</g>')
-            o.append(T(round(x + SW, 1), round(cy + 3.9, 1), lab, 11, 600, INK))
+            o.append(T(round(x + SW, 1), round(cy + 3.9, 1), lab, size, 600, INK))
     return "".join(o)
 
 
@@ -813,27 +860,28 @@ CSS = r"""
 .nrp .nrp-alarm .ic{flex:none}
 .nrp .nrp-alarm p{margin:0;font-size:8pt;line-height:1.3;color:#2B3236}
 .nrp .nrp-alarm b{color:#A5281E}
-/* ---- this sheet's footers and back page. The back page has no sheet class, so it is scoped through the empty
-   .nrp-bk marker in the lifestyle subtitle. The kit now sets all shared fine print to 7 pt and draws the START HERE
-   badge (.startb) on the column's top edge; the rules below only restate or lift sizes on this sheet. ---- */
-.sheet.front:has(.nrp) .foot,.sheet.back:has(.nrp-bk) .foot,
-.sheet.front:has(.nrp) .foot .code,.sheet.back:has(.nrp-bk) .foot .code{font-size:7pt}
-.sheet.back:has(.nrp-bk) .col .need i{font-size:7pt}
-.sheet.back:has(.nrp-bk) .col .pick .sz{font-size:7pt}
+/* ---- this sheet's back page. It has no sheet class, so it is scoped through the empty .nrp-bk marker in the
+   lifestyle subtitle. The kit sets all shared fine print to 7 pt (footers, column subtitles, bottle sizes, the
+   "In each serving" head, dose notes, the disclaimer) and draws the START HERE badge (.startb); the rules below only
+   lift a few sizes above that (the label facts here, the daily rhythm and the checks further down). ---- */
 .sheet.back:has(.nrp-bk) .col .key{font-size:7.2pt}
-.sheet.back:has(.nrp-bk) .col .key b{font-size:7pt}
-.sheet.back:has(.nrp-bk) .col .dose small{font-size:7pt}
 /* FDA disclaimer (21 CFR 101.93): bold, boxed, and linked by the diamond that ends every product statement */
-.sheet.back:has(.nrp-bk) .disc{font-size:7pt;font-weight:700;color:#36424A;border:1px solid #8D99A1;border-radius:4px;
+.sheet.back:has(.nrp-bk) .disc{font-weight:700;color:#36424A;border:1px solid #8D99A1;border-radius:4px;
   padding:3px 7px 4px;max-width:5.5in}
 .nrp-dia{color:var(--c1);font-size:7pt;font-weight:700;margin-left:3px;white-space:nowrap}
+/* one more label fact under "In each serving" in the three short columns (products.d/neuropathy.json), in the space
+   the longer Gluco IR and Methyl Complete lists leave above the dose bar */
+.nrp-fact{display:block;margin-top:3px}
+.nrp-fact strong{font-weight:700;color:var(--deep)}
 /* "Nutrient Support", not the kit's "Nutrient Solutions": beside a disease title "solutions" reads as a cure */
 .sheet.back:has(.nrp-bk) .ns-title{font-size:0;gap:0;visibility:hidden}
 .sheet.back:has(.nrp-bk) .ns-title::before{content:"Nutrient Support";font-size:19pt;margin-right:10px;visibility:visible}
 .sheet.back:has(.nrp-bk) .ns-title span{visibility:visible}
-/* daily rhythm: the count never splits from its unit and is set off from the product name */
+/* daily rhythm: the count never splits from its unit and sits in brackets after the product name, so when a long
+   name wraps, the next line starts with "(" and still reads as part of the same item */
 .sheet.back:has(.nrp-bk) .slot li em{white-space:nowrap}
-.sheet.back:has(.nrp-bk) .slot li em::before{content:"\00B7\00A0"}
+.sheet.back:has(.nrp-bk) .slot li em::before{content:"("}
+.sheet.back:has(.nrp-bk) .slot li em::after{content:")"}
 /* a two-line name slot in every column, so all five columns start their bullets on the same line. Centred as a
    block (align-content), not with flex: flex would split "Omega Pure", the kit's unbreakable "EPA-DHA" span and
    "1000" into separate side-by-side boxes. */
@@ -853,13 +901,14 @@ CSS = r"""
 .sheet.back:has(.nrp-bk) .cols{margin-top:.05in}
 /* the patient's working instructions (daily rhythm, checks) at 7.6 pt for older eyes. The space comes from the
    nearly empty Bedtime slot (narrowest), the panels' side padding and the write-in box padding. The rhythm panel is
-   just wide enough for one-line morning items ("Gluco IR · 3 capsules"), the check panel for two-line checks. */
+   just wide enough for one-line morning items ("Nerve Eze (1 capsule)", "Gluco IR (3 capsules)": the brackets need
+   a hair more than the old dot, so Morning takes 2fr from Bedtime; "Evening meal" keeps its one-line header and
+   "(1 capsule)" still fits Bedtime with 4.6 px to spare), the check panel for two-line checks. */
 .sheet.back:has(.nrp-bk) .duo{grid-template-columns:3.1in 1fr;margin-top:.07in}
 .sheet.back:has(.nrp-bk) .duo .panel{padding-left:.08in;padding-right:.08in}
-.sheet.back:has(.nrp-bk) .rhythm{grid-template-columns:114fr 90fr 67fr;gap:5px}
+.sheet.back:has(.nrp-bk) .rhythm{grid-template-columns:116fr 90fr 65fr;gap:5px}
 .sheet.back:has(.nrp-bk) .slot{padding:5px 4px}
 .sheet.back:has(.nrp-bk) .slot li{font-size:7.6pt;line-height:1.15;margin:0 0 1px}
-.sheet.back:has(.nrp-bk) .slot li .nrp-if{display:block}
 .sheet.back:has(.nrp-bk) .total{font-size:7.6pt}
 .sheet.back:has(.nrp-bk) .rx li{font-size:7.6pt;line-height:1.26}
 .sheet.back:has(.nrp-bk) .notes{margin-top:.07in;padding-top:.05in;padding-bottom:.055in}
@@ -871,12 +920,14 @@ SHEET = {
     "slug": SLUG, "code": "ND-NR-701", "order": 16, "theme": "neuro", "series": "Brain and Nerve Series",
     "title": "Nerve Pain and Neuropathy", "sub": "Burning, tingling or numb feet and hands",
     # [NINDS] peripheral nerves = all nerves outside the brain and spinal cord; "more than 20 million people in the
-    # United States"; "diabetes is the leading cause of polyneuropathy". [ADA17] length-dependent: starts at the big
-    # toe on both sides and moves up; many non-diabetic causes are treatable, nerve damage may not fully reverse.
+    # United States have been estimated to have some form of peripheral neuropathy" (an estimate, so "are thought
+    # to have it", not a count); "diabetes is the leading cause of polyneuropathy". [ADA17] length-dependent: starts
+    # at the big toe on both sides and moves up; many non-diabetic causes are treatable, nerve damage may not fully
+    # reverse.
     "intro": ("<b>Peripheral neuropathy</b> means damage to the nerves outside the brain and spinal cord. The longest "
               "ones, which reach your toes, are hit first, so it often starts as burning, tingling or numb feet. More "
-              "than <b>20 million Americans</b> have it. <b>High blood sugar is the top cause</b>, and many other "
-              "causes can be found and treated."),
+              "than <b>20 million Americans</b> are thought to have it. <b>High blood sugar is the top cause</b>, and "
+              "many other causes can be found and treated."),
     "front": front,
     "css": CSS,
     "back": {
@@ -891,7 +942,7 @@ SHEET = {
             ("walk", "Move most days", "Walk, bike or swim. Practice balance."),
             # [ADA17, ADA26] foot self-care: look daily; neuropathy is the main cause of foot ulcers.
             ("nrp-foot", "Check your feet", "Daily: look for cuts, blisters, red spots."),
-            ("nrp-shoe", "Guard your feet", "No bare feet. Test bath water by elbow."),
+            ("nrp-shoe", "Guard your feet", "No bare feet. Test bath water with your elbow."),
             # [ADA17] alcohol is in the toxic-neuropathy table. Slash-free glass: the advice is "limit", not "avoid".
             ("nrp-glass", "Limit alcohol", "Alcohol is toxic to nerves. Keep it low."),
             # [ADA17] DSPN is associated with smoking; smoking slows wound healing.
@@ -918,9 +969,9 @@ SHEET = {
              "bullets": ["Supports healthy myelin, the nerve’s coat" + DIA,
                          "Methylcobalamin, a ready-to-use form of B12" + DIA],
              "dose": "1 tablet daily", "dosesub": "let it dissolve in your mouth",
-             # rhythm_block prints the unit as given: "B12 Pro · 1 tablet" with "if advised" on its own line, so
+             # rhythm_block prints the unit as given, inside the brackets: "B12 Pro (1 tablet, if advised)", so
              # "The full plan is 11 pills a day" reads as the most anyone takes, not what everyone takes.
-             "sched": [("am", 1, 'tablet <span class="nrp-if">if advised</span>')]},
+             "sched": [("am", 1, "tablet, if advised")]},
             # Methyl Complete: SS ND420 / DB R187 (nrp_methyl_complete). Same three active forms (L-methylfolate,
             # methylcobalamin, P5P) as the Metanx RCT [FONS13], at lower doses. "Supports healthy methylation" is the
             # sell sheet's own claim; the qualified homocysteine claim ("already in the normal range") took 4 lines
@@ -940,9 +991,13 @@ SHEET = {
             #   medicines.  3 [FDA19, BOWEN19] biotin and streptavidin immunoassays: troponin (heart), thyroid and
             #   others; biotin 2,000 mcg per 5 Gluco IR capsules (SS ND506) and 500 mcg per 2 Methyl Complete capsules
             #   (SS ND420).  4 [EFSA23] excess B6 -> neuropathy; UL 12 mg/day; Methyl Complete 10 mg is the only B6 on
-            #   the plan.  5 [CHAN93] berberine in pregnancy; [GUO12] CYP2C9 (warfarin) and CYP3A4 inhibition, [WU05]
-            #   cyclosporin levels up in transplant patients; [YASU16] antioxidants (ALA in Nerve Eze and Gluco IR, NAC
-            #   in Methyl Complete) during chemotherapy unclear; [LABEL] consult if pregnant, nursing or on medication.
+            #   the plan.  5 [LABEL] all five labels on this page say to consult a practitioner if pregnant, nursing or
+            #   taking medication, so the check names no single product ("any of these"). The reasons behind each risk:
+            #   [CHAN93] berberine (Gluco IR) in pregnancy; [GUO12] berberine inhibits CYP2C9 (warfarin) and CYP3A4,
+            #   [WU05] it raised cyclosporin levels in transplant patients; [BUCK04] fish oil (Omega Pure) raised the INR
+            #   on warfarin, while [BEGT17] found no added bleeding in trials, so: ask first, not avoid; [YASU16]
+            #   antioxidants (ALA in Nerve Eze and Gluco IR, NAC in Methyl Complete) during chemotherapy or radiation
+            #   are unclear, so the cancer team, who knows the regimen, is named as well as {who}.
             "practitioner": [
                 "<b>Test B12 first (MMA if borderline):</b> B12 Pro and Methyl Complete make it read high. Years on "
                 "metformin or acid blockers? Ask how often to recheck.",
@@ -952,8 +1007,8 @@ SHEET = {
                 "heart, thyroid and other tests. Tell the lab; ask what to pause.",
                 "<b>B6 adds up.</b> Methyl Complete has 10 mg; too much B6 can itself cause tingling. Show your provider "
                 "every bottle.",
-                "<b>Pregnant or nursing, in cancer care, or on blood thinners or transplant medicines?</b> Ask your "
-                "provider before Gluco IR, Nerve Eze or Methyl Complete."],
+                "<b>Pregnant or nursing, in cancer care, or on blood thinners or transplant medicines?</b> Ask {who} "
+                "(and your cancer doctor) before any of these."],
             "pharmacy": [
                 "<b>Test B12 first (MMA if borderline):</b> B12 Pro and Methyl Complete make it read high. Years on "
                 "metformin or acid blockers? Ask how often to recheck.",
@@ -963,8 +1018,8 @@ SHEET = {
                 "heart, thyroid and other tests. Tell the lab; ask what to pause.",
                 "<b>B6 adds up.</b> Methyl Complete has 10 mg; too much B6 can itself cause tingling. Show your "
                 "pharmacist every bottle.",
-                "<b>Pregnant or nursing, in cancer care, or on blood thinners or transplant medicines?</b> Ask your "
-                "pharmacist before Gluco IR, Nerve Eze or Methyl Complete."],
+                "<b>Pregnant or nursing, in cancer care, or on blood thinners or transplant medicines?</b> Ask {who} "
+                "(and your cancer doctor) before any of these."],
         },
     },
 }

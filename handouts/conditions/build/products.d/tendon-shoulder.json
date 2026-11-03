@@ -36,7 +36,7 @@
     "name": "Inflam-Eze Plus",
     "size": "90 or 180 capsules",
     "img_src": "R856.png",
-    "key": "Per 3 capsules: ginger 800&nbsp;mg, CurQfen curcumin-fenugreek 250&nbsp;mg, boswellia 250&nbsp;mg, white willow 200&nbsp;mg, hops 150&nbsp;mg, devil's claw 60&nbsp;mg",
+    "key": "Per 3 capsules: ginger 800&nbsp;mg, CurQfen curcumin-fenugreek 250&nbsp;mg, boswellia 250&nbsp;mg, white willow 200&nbsp;mg, hops 150&nbsp;mg, devil&rsquo;s claw 60&nbsp;mg",
     "dose": "3 capsules daily",
     "dosesub": "with food",
     "sched": [
@@ -69,7 +69,7 @@
       ]
     ],
     "url": "https://nutridyn.com/omega-pure-epa-dha-1000",
-    "src": "products DB R243 (scratchpad products/nutridyn_products.json, Pure Encapsulations chart label check of NutriDyn catalog ND143 10/1/26): 'EPA+DHA per softgel (1 softgel per serving each): NutriDyn 1,000 mg (EPA 730 mg + DHA 270 mg)'; directions 'Take one softgel up to three times daily with food'; size R243 120S. Same facts as the shared products.py entry omega_1000; this sheet-own entry exists so the name breaks as 'Omega Pure / EPA-DHA 1000': a no-break hyphen (U+2011), which kit.print_safe prints as a plain hyphen inside an unbreakable span (the word joiner used before is now stripped by print_safe, which let the name split after 'EPA-'), and a no-break space before 1000; alt text gets a plain hyphen. Dose follows the label: one softgel at a time, twice daily with meals (2 a day, within the label's up to 3). Photo img-src/R243.png, 848x1552 (text-safe 4x AI upscale of the 244x420 web render, img-src/SOURCES.md). URL slug from build/products.py SLUGS (omega-pure-epa-dha-1000)."
+    "src": "products DB R243 (scratchpad products/nutridyn_products.json, Pure Encapsulations chart label check of NutriDyn catalog ND143 10/1/26): 'EPA+DHA per softgel (1 softgel per serving each): NutriDyn 1,000 mg (EPA 730 mg + DHA 270 mg)'; directions 'Take one softgel up to three times daily with food'; size R243 120S. Same facts as the shared products.py entry omega_1000; this sheet-own entry exists so the name breaks as 'Omega Pure / EPA-DHA 1000': a no-break hyphen (U+2011), which kit.print_safe prints as a plain hyphen inside an unbreakable span (the word joiner used before is now stripped by print_safe, which let the name split after 'EPA-'), and a no-break space before 1000; alt text gets a plain hyphen. Dose follows the label: one softgel at a time, twice daily with meals (2 a day, within the label's up to 3). Photo img-src/R243.png, 848x1552 (text-safe 4x AI upscale of the 244x420 web render, img-src/SOURCES.md). URL slug from build/products.py SLUGS (omega-pure-epa-dha-1000). Allergen and shell, for the sheet's fish-allergy check: NutriDyn sell sheet 'Omega Pure EPA-DHA 1000 SS ND416' (Rev. 4/25), as recorded in products.d/neuropathy.json nrp_omega: Other Ingredients 'Highly concentrated omega-3 fish oil (anchovy, sardine, mackerel), capsule shell (gelatin, glycerin, purified water)...', allergen line 'Contains: Fish (Anchovy, Sardine, and Mackerel).', caution 'If you are pregnant, nursing, or taking medication, consult your healthcare practitioner before use.' The gelatin's animal source is not printed."
   },
   "ts_d3_5000_k2": {
     "name": "D3 5000 with K2",

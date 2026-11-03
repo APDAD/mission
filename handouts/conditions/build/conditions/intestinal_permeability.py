@@ -4,22 +4,35 @@ Self-contained: the front-page art, the front builder, the copy and the back-pag
 here.  Shared drawing helpers come from svgkit (T, svg, TOXIN) and kit (icon).  Every SVG id and CSS
 class carries the "ipx" prefix because all sheets share one document in the bundle PDFs.
 
-Front art, per Asher's notes (2026-11-03) and the art director's review of the first redraw:
+Front art, per Asher's notes (2026-11-03), the art director's review of the first redraw and the final
+front recheck (2026-11-03, scratchpad wf/front_rechecks_A.json):
   - five tabs (Nutrients, Food particles, Microbes, Medications, Stress).  Each tinted lane holds
     only its own tab's items, and nothing that leaks starts inside a lane: the leak streams begin
     at the gap mouths, in the clear band between the lanes and the cells;
-  - healthy half: C, D and Zn leave the Nutrients lane, ride a green arrow through the CENTRE of a
-    cell body and arrive in the blood (the same three letters all the way); the seams stay sealed
-    by three-bar tight junctions;
+  - healthy half: C, Fe and Zn (water-soluble, so they really go straight into the blood; vitamin D
+    stays in the lane) leave the Nutrients lane, ride a green arrow through the cytoplasm beside the
+    nucleus and arrive in the blood (the same three letters all the way); the seams, the healthy |
+    leaky seam included, stay sealed by the key's three-bar tight junction;
   - leaky half: six swollen, inflamed cells that differ in size, height and tilt (one is shrunken),
     with notched, ragged walls, bitten tops, broken microvilli, cracks and sparks.  The three-bar
-    junctions are snapped in half across every gap, jagged ends, some hanging.  Food particles,
-    microbes and toxins crowd each gap mouth, thin out as they pour down a translucent leak stream,
-    cross the membrane and fan out under one bold arrowhead in the blood;
+    junctions are snapped in half across every gap, jagged ends, some hanging.  Each leak is ONE
+    continuous arrow: a stream that floods the gap from its mouth, deepens as it falls, narrows into
+    a solid neck across the membrane and flows into a bold arrowhead in the blood, with small flow
+    chevrons between the items.  Food particles, microbes and toxins crowd each gap mouth, ride the
+    stream down and fan out under the head;
   - medications and stress are drawn as causes of damage (a pill resting on an injured cell, bolts
     striking cell tops), never as things that leak: oral medicines are meant to be absorbed;
   - toxins use the series symbol (svgkit.TOXIN red hexagon, white rim), as on the mold sheet;
-  - no caption floats on the art; the key names every symbol and every nutrient letter.
+  - every object registers its true outline in _SHAPES; a clearance check (2 units between any two
+    objects, 1 unit past a damaged wall) found the tangencies the NUDGE table clears;
+  - no caption floats on the art; the key names the two regions (top: inside the gut, bottom: the
+    blood), every symbol and every nutrient letter.
+
+Back page: NutriDyn's 5R GI Restoration Program (ND584).  The Gut Overgrowth sheet owns Remove; this
+back covers Replace (Digestive Complete), Repair (GI Integrity, the start pick, and GI Defend),
+Reinoculate (UltraBiotic Daily Multi-Strain) and Retain (GI Restore, days 11 to 24).  Label facts and
+sources: build/products.d/intestinal-permeability.json.  Back-page CSS is scoped with
+.sheet.back:has(.ipx-back) (a marker span in the lifestyle title).
 
 Condition facts (sources; every citation resolved on PubMed 2026-11-03):
   - One cell layer sealed by tight junctions; NSAIDs, endurance exercise and dietary emulsifiers
@@ -266,18 +279,6 @@ def vessel_y(x):
         if x0 <= x <= x1:
             return y0 + (y1 - y0) * (x - x0) / max(1e-6, x1 - x0)
     return BLT
-
-
-def _smooth(pts):
-    """Cubic segments (Catmull-Rom) through pts, as path commands after the first point."""
-    out = []
-    for i in range(len(pts) - 1):
-        p0 = pts[i - 1] if i else pts[i]
-        p1, p2 = pts[i], pts[i + 1]
-        p3 = pts[i + 2] if i + 2 < len(pts) else p2
-        out.append(f"C{p1[0] + (p2[0] - p0[0]) / 6:.1f},{p1[1] + (p2[1] - p0[1]) / 6:.1f} "
-                   f"{p2[0] - (p3[0] - p1[0]) / 6:.1f},{p2[1] - (p3[1] - p1[1]) / 6:.1f} {p2[0]:.1f},{p2[1]:.1f}")
-    return " ".join(out)
 
 
 def leak_stream(wl, wr, ybot, gid):
@@ -1020,6 +1021,23 @@ CSS = r"""
 .ipx-after{margin:0.09in 0 0;text-align:center;font-size:8.6pt;line-height:1.38;color:#2B3236;
   background:var(--soft);border-radius:6px;padding:0.06in 0.16in}
 .ipx-after b{color:var(--deep)}
+/* ---- this sheet's back page only (the page holding the .ipx-back marker in the lifestyle title) */
+/* the 5R step tag at the start of each column's sub-line: a white chip on the teal header */
+.ipx-r{display:inline-block;font:800 7pt/1.25 Inter,sans-serif;letter-spacing:.05em;text-transform:uppercase;
+  background:#fff;color:var(--deep);border-radius:3px;padding:0 4px;margin-right:2px}
+/* the one-line scope statement under the band title */
+.sheet.back:has(.ipx-back) .band h2 small{font:600 8.6pt Inter,sans-serif;letter-spacing:0;color:#FFE6D4;margin-top:3px}
+/* the daily rhythm gets the wider half: morning and evening hold four products each, bedtime one */
+.sheet.back:has(.ipx-back) .duo{grid-template-columns:1.5fr 1fr}
+.sheet.back:has(.ipx-back) .rhythm{grid-template-columns:1.25fr 1.25fr .72fr}
+/* every header keeps a little band for the START HERE badge, so it never touches the title under it */
+.sheet.back:has(.ipx-back) .col .need{padding-top:10px}
+/* slightly tighter gaps between the back page's blocks, so the footer and the FDA line keep their room */
+.sheet.back:has(.ipx-back) .band{padding-top:0.24in!important;padding-bottom:0.14in}
+.sheet.back:has(.ipx-back) .ns-title{margin-top:0.1in}
+.sheet.back:has(.ipx-back) .cols{margin-top:0.07in}
+.sheet.back:has(.ipx-back) .duo{margin-top:0.08in}
+.sheet.back:has(.ipx-back) .notes{margin-top:0.08in}
 """
 
 
@@ -1037,32 +1055,105 @@ SHEET = {
               "every few days, so the right food, habits and nutrients help it rebuild."),
     "front": front,
     "css": CSS,
-    # Back page: unchanged from the first draft (a later pass revises the products).
+    # ------------------------------------------------------------------------- back page
+    # Built on NutriDyn's 5R GI Restoration Program [ND584] (ND584 Rev. 1/22, Dropbox id:xHepYs_Ou4AAAAAAAA5smw;
+    # verbatim extract scratchpad protocols/raw/ND584_5R_2022_supplement_section.txt).  NutriDyn's fifth R is
+    # Retain ("RESTORE & RETAIN"), not "Rebalance".  The Gut Overgrowth sheet (ND-GI-104) owns step 1, Remove
+    # (the antimicrobials), so this back covers the other four, said in one line under the band title.
+    # The span marks this sheet's back page for the scoped CSS (.sheet.back:has(.ipx-back)).
     "back": {
-        "life_title": "Lifestyle Modifications", "style": "checks",
-        "life": [("Find and remove food triggers", ["Gluten", "Dairy", "Soy", "Ask about a 3-week elimination trial"]),
-                 ("Protect your gut flora", ["Use antibiotics only when truly needed", "Add one fermented food a day (kefir, yogurt, sauerkraut)"]),
-                 ("Eat whole, unprocessed foods", ["Cut added sugar and ultra-processed snacks", "Fill half the plate with vegetables and fruit", "Work up to 25 to 30 g of fiber a day"]),
-                 ("Ease the load on the lining", ["Keep alcohol low", "Ask before regular ibuprofen or naproxen", "Sleep 7 to 9 hours, manage stress"])],
+        "life_title": f'Lifestyle Modifications<span class="{U}-back"></span>',
+        "life_sub": ("From NutriDyn&rsquo;s 5R gut plan: this sheet covers Replace, Repair, Reinoculate and Retain. "
+                     "Remove is on the Gut Overgrowth sheet."),
+        "style": "checks",
+        "life": [
+            # [ND584] step 1 (days 1-10): "REMOVE all dietary triggers such as gluten, dairy, sugar, artificial
+            # sweeteners, soy, and alcohol.  All processed foods and beverages should be eliminated"
+            ("Days 1 to 10: take a break from triggers",
+             ["Gluten, dairy and soy", "Sugar, artificial sweeteners and alcohol", "Ultra-processed food and drinks"]),
+            # [ND584] step 2: "REPLACE eliminated foods with fresh fruits and vegetables, high-quality protein, and
+            # healthy fats.  Add fermented foods (sauerkraut, kimchi, kombucha)"; Step 1 list: "at least 5 servings of
+            # fruits and vegetables per day, including at least 1 dark green leafy vegetable".  Dairy-free ferments
+            # only (recheck 2026-11-03: kefir and yogurt sat beside "take out dairy").
+            ("Eat to rebuild the lining",
+             ["5 or more fruits and vegetables a day, 1 leafy green", "Good-quality protein and healthy fats",
+              "1 fermented food a day: sauerkraut, kimchi or kombucha"]),
+            # [ND584] Step 2 (days 11-24): "Begin reintroducing 1 serving daily of a single food category for 3 days.
+            # Do this for each food category (wheat/gluten, dairy, sugar).  If you have a reaction, stop consuming
+            # this food category immediately and notify your healthcare practitioner."
+            ("Days 11 to 24: bring foods back one at a time",
+             ["One group at a time: gluten, dairy, sugar", "1 serving a day for 3 days",
+              "A reaction? Stop that food and tell your care team"]),
+            # NSAIDs raise permeability (Bjarnason 1993; Camilleri 2019, module docstring).  [ND584] Clean Eating Tips:
+            # "Avoid eating under stress ... within 2 hours of bedtime.  Eat slowly"; "30 minutes of cardiovascular
+            # exercise 5 days per week"; "Block out just 10 minutes daily to focus on relaxation techniques."
+            ("Ease the load on the lining",
+             ["Ask before regular ibuprofen or naproxen", "Eat slowly and calmly; nothing 2 hours before bed",
+              "Move 30 minutes, 5 days a week; 10 calm minutes daily"]),
+        ],
+        # Products: the 5R's own picks, left to right in the order the line above names the steps.  Label facts,
+        # sources and photo notes: build/products.d/intestinal-permeability.json.  Doses follow the protocol where
+        # the label allows it (GI Integrity and GI Defend: the labels give no frequency, the 5R and the GI-MAP
+        # protocol say twice daily) and the label otherwise (Digestive Complete 2 per meal, not the 5R's 3;
+        # UltraBiotic 1 a day).  Days 1 to 10 run Replace, Repair and Reinoculate together; GI Restore takes over
+        # from the two shakes on days 11 to 24 [ND584].
         "cols": [
-            {"p": "gi_integrity", "need": "Rebuild the lining", "needsub": "L-glutamine, zinc carnosine, DGL, aloe", "start": True,
-             "bullets": ["Fuel for the cells that line your gut", "Soothing botanicals coat and calm"],
-             "dose": "1 scoop daily", "dosesub": "in 6 to 8 oz water"},
-            {"p": "ultrabiotic_dms", "need": "Rebalance gut flora", "needsub": "multi-strain probiotic + S. boulardii",
-             "bullets": ["Seven friendly strains", "S. boulardii keeps working alongside antibiotics"],
-             "dose": "1 capsule daily", "dosesub": "at bedtime"},
-            {"p": "gi_defend", "need": "Bind and calm", "needsub": "serum-derived bovine immunoglobulins",
-             "bullets": ["Immunoglobulins bind microbial toxins in the gut", "Supports barrier function and immune balance"],
+            {"p": "ip_digestive_complete", "need": "Digest food fully",
+             "needsub": f'<span class="{U}-r">Replace</span> betaine HCl, pepsin, ox bile, enzymes',
+             "bullets": ["Supports protein, fat and starch digestion",
+                         "Take with meals, never on an empty stomach"], "dose": "dose_from_db"},
+            {"p": "ip_gi_integrity", "need": "Repair the lining", "start": True,
+             "needsub": f'<span class="{U}-r">Repair</span> L-glutamine, zinc carnosine, DGL, aloe',
+             "bullets": ["Nourishes the cells that line your gut", "Soothes and coats the lining"],
              "dose": "dose_from_db"},
-            {"p": "curcumin_bcm95", "need": "Cool the fire", "needsub": "curcumin, the active compound in turmeric",
-             "bullets": ["Supports a healthy inflammatory response", "Enhanced-absorption curcumin"],
+            {"p": "ip_gi_defend", "need": "Bind and calm",
+             "needsub": f'<span class="{U}-r">Repair</span> serum-derived bovine immunoglobulins',
+             "bullets": ["Helps bind microbial toxins in the gut", "Supports gut barrier and immune balance"],
              "dose": "dose_from_db"},
-            {"p": "enzymes", "need": "Digest it fully", "needsub": "digestive enzymes",
-             "bullets": ["Breaks food down so fewer large particles reach the lining", "Take with your largest meals"],
+            {"p": "ip_ultrabiotic_dms", "need": "Add friendly bacteria",
+             "needsub": f'<span class="{U}-r">Reinoculate</span> 7 strains with S.&nbsp;boulardii',
+             "bullets": ["Supports a balanced gut microbiome", "S.&nbsp;boulardii is a yeast: antibiotics spare it"],
+             "dose": "dose_from_db"},
+            {"p": "ip_gi_restore", "need": "Keep the gains",
+             "needsub": f'<span class="{U}-r">Retain</span> gut-support shake for days 11 to 24',
+             "bullets": ["Supports the gut barrier and its mucus layer", "Feeds your friendly bacteria"],
              "dose": "dose_from_db"},
         ],
-        "rx": ["<b>NSAIDs</b> (ibuprofen, naproxen) used regularly can irritate the gut lining. Ask about alternatives.",
-               "<b>Antibiotics:</b> take the probiotic 2 hours apart from each dose and keep going 2 weeks after the course.",
-               "<b>Acid blockers</b> long term can lower magnesium and B12. Ask about a check."],
+        # Three medicine-and-nutrient notes per edition: the pharmacist checks interactions and depletions, the
+        # provider orders labs, refers and adjusts.
+        "rx": {
+            "pharmacy": [
+                # Betaine HCl raises gastric acidity; not with peptic ulcer or gastritis (Asher's GERD protocol, Gmail
+                # 16d01aaf2b11528e) and a standard caution beside NSAIDs, corticosteroids and acid suppressants.
+                "<b>Betaine HCl</b> (Digestive Complete) adds acid: not with an ulcer or gastritis, and ask {who} "
+                "before using it with an acid blocker, a daily NSAID or a steroid.",
+                # NIH ODS Zinc fact sheet: adult UL 40 mg/day; quinolones and tetracyclines: take the antibiotic at
+                # least 2 h before or 4-6 h after zinc.  Two scoops: GI Integrity 2 x 16.1 = 32.2 mg; GI Restore
+                # 2 x 18.75 = 37.5 mg (products.d).
+                "<b>Zinc</b> from two scoops (32 to 38&nbsp;mg a day, near the 40&nbsp;mg limit) binds quinolone and "
+                "tetracycline antibiotics: take them 2 hours before or 4 to 6 after.",
+                # Probiotic 2 h from antibiotics; S. boulardii is a yeast that antifungals inactivate; fungemia risk
+                # with central venous catheters or weak immunity (Enache-Angoulvant A, Hennequin C. Clin Infect Dis
+                # 2005;41:1559-68, PMID 16267727).  Pregnancy: the NutriDyn practice kit's GI Integrity handout,
+                # "Check first. Do not use if pregnant or nursing." (repo handouts/nutridyn-practice-kit.pdf).
+                "<b>Probiotic:</b> 2 hours from antibiotics; antifungals stop its S.&nbsp;boulardii; not with a central "
+                "IV line or weak immunity. <b>Pregnant or nursing?</b> Skip GI Integrity.",
+            ],
+            "practitioner": [
+                # Celiac serology (tTG-IgA) must be done on a gluten-containing diet (Rubio-Tapia A et al. ACG
+                # guideline, Am J Gastroenterol 2023;118:59-76, PMID 36602836).  Retest at 12 weeks: Asher's case
+                # study MB (Drive 1g_uogbiWY-iw_pLygYDg-mqCGecVSvzsB8tBY6ZVRKs).
+                "<b>Test first.</b> {Who} may order a celiac blood test (tTG-IgA) while gluten is still in your diet, "
+                "and a stool test now and at 12 weeks.",
+                # Same betaine HCl caution as the pharmacy edition, worded as the provider's adjustment.
+                "<b>Ulcer or gastritis, or on an acid blocker, a steroid or a daily NSAID?</b> {Who} may leave out "
+                "Digestive Complete: its betaine HCl adds acid.",
+                # Pregnancy: the NutriDyn practice kit's GI Integrity handout, "Check first. Do not use if pregnant or
+                # nursing."  [ND584] "If the patient exhibits significant GI inflammation, replace the Dynamic GI
+                # Integrity with Dynamic Inflam-Eze for improving inflammatory markers."
+                "<b>Pregnant or nursing?</b> Skip GI Integrity unless {who} says so. With marked gut inflammation, "
+                "the 5R swaps it for Inflam-Eze.",
+            ],
+        },
     },
 }

@@ -3,7 +3,7 @@
     "name": "Essential Multi",
     "size": "90 capsules &middot; 30 servings",
     "img_src": "R716.png",
-    "key": "Per 3 capsules: 100&nbsp;mcg selenium, 15&nbsp;mg zinc, 150&nbsp;mcg iodine, 1,000&nbsp;IU D3, 500&nbsp;mcg biotin; no iron",
+    "key": "Per 3 capsules: 100&nbsp;mcg selenium, 15&nbsp;mg zinc, 150&nbsp;mcg iodine, 1,000&nbsp;IU D3, 500&nbsp;mcg biotin, 120&nbsp;mcg vitamin K; no iron",
     "dose": "3 capsules with dinner",
     "dosesub": "4 hours after thyroid meds",
     "sched": [
@@ -13,7 +13,7 @@
         "capsules"
       ]
     ],
-    "src": "NutriDyn sell sheet 'Essential Multi SS ND476' Rev. 08/25, Supplement Facts panel (Dropbox /NutriDyn/Sales/Practitioner Resource/NutriDyn Marketing Materials/, id:xHepYs_Ou4AAAAAAAAz2rg, read 2026-11-03): serving 3 capsules, 30/60 servings; selenium (aspartate) 100 mcg, zinc (citrate) 15 mg, iodine (potassium iodide) 150 mcg, vitamin D3 25 mcg (1,000 IU), B12 (methylcobalamin) 200 mcg, biotin 500 mcg, no iron listed; directions 'Take three capsules once daily with food'. Same amounts as the products DB R716 chart label checks (catalog ND143 10/1/26). Sizes R716 90C (30 servings) and R716L 180C, ND144 price list 10/1/26. No verified product-page URL, so the link falls back to catalog search. Photo: img-src/R716.png (344x640) is the central 'interpolated stopgap' (Lanczos 4x from the 86x160 chart thumbnail, listed in soft.json), so it prints soft. Print source to stage instead: the crisp 254x420 NutriDyn web render at scratchpad/hires/_dl/art_switchkit/img/r716.png (90-capsule bottle, current label; checked 2026-11-03), or Dropbox '/NutriDyn/Product Images/Product Images (1)/R716_Web' (id:xHepYs_Ou4AAAAAAAA5Jjg)."
+    "src": "NutriDyn sell sheet 'Essential Multi SS ND476' Rev. 08/25, Supplement Facts panel (Dropbox /NutriDyn/Sales/Practitioner Resource/NutriDyn Marketing Materials/, id:xHepYs_Ou4AAAAAAAAz2rg, read 2026-11-03): serving 3 capsules, 30/60 servings; selenium (aspartate) 100 mcg, zinc (citrate) 15 mg, iodine (potassium iodide) 150 mcg, vitamin D3 25 mcg (1,000 IU), B12 (methylcobalamin) 200 mcg, biotin 500 mcg, no iron listed; directions 'Take three capsules once daily with food'. Same amounts as the products DB R716 chart label checks (catalog ND143 10/1/26), which also give vitamin K (as phytonadione, K1) 120 mcg per 3 capsules: on the key line and in the medicine check's blood-thinner note. Sizes R716 90C (30 servings) and R716L 180C, ND144 price list 10/1/26. No verified product-page URL, so the link falls back to catalog search. Photo: img-src/R716.png (344x640) is the central 'interpolated stopgap' (Lanczos 4x from the 86x160 chart thumbnail, listed in soft.json), so it prints soft. Print source to stage instead: the crisp 254x420 NutriDyn web render at scratchpad/hires/_dl/art_switchkit/img/r716.png (90-capsule bottle, current label; checked 2026-11-03), or Dropbox '/NutriDyn/Product Images/Product Images (1)/R716_Web' (id:xHepYs_Ou4AAAAAAAA5Jjg)."
   },
   "thy_d3_5000_k2": {
     "name": "D3 5000 with K2",
@@ -21,12 +21,12 @@
     "img_src": "R197.png",
     "key": "5,000&nbsp;IU (125&nbsp;mcg) vitamin D3, 60&nbsp;mcg vitamin K2 (MK-7), 15&nbsp;mcg vitamin K1",
     "dose": "1 softgel with dinner",
-    "dosesub": "recheck your vitamin D level",
+    "dosesub": "short term; recheck D levels",
     "sched": [
       [
         "pm",
         1,
-        "softgel"
+        "softgel, if&nbsp;D&nbsp;is&nbsp;low"
       ]
     ],
     "url": "https://nutridyn.com/d3-5000-with-k2",
@@ -52,9 +52,9 @@
     "name": "UltraBiotic Daily Multi-Strain",
     "size": "30 or 60 capsules",
     "img_src": "R829.png",
-    "key": "30 billion CFU, 7 strains: S. boulardii, L. reuteri, B. lactis, L. plantarum, L. acidophilus, L. gasseri, Bacillus coagulans",
+    "key": "30 billion CFU when made: S. boulardii, L. reuteri, B. lactis, L. plantarum, L. acidophilus, L. gasseri, Bacillus coagulans",
     "dose": "1 capsule with breakfast",
-    "dosesub": "",
+    "dosesub": "after your thyroid medicine",
     "sched": [
       [
         "am",
@@ -63,7 +63,7 @@
       ]
     ],
     "url": "https://nutridyn.com/ultrabiotic-daily-multi-strain",
-    "src": "NutriDyn sell sheet 'UltraBiotic Daily Multi-Strain SS ND460' Rev. 7/24, Supplement Facts panel (Dropbox Marketing Materials, id:xHepYs_Ou4AAAAAAAAlbgg, read 2026-11-03): serving 1 capsule, 30/60 servings, CFU at time of manufacture: Saccharomyces boulardii (Lynside) 5 billion, Lactobacillus reuteri (LRC) 5 billion, Bifidobacterium lactis UABla-12, Lactobacillus plantarum UALp-05, L. acidophilus UALa-01, L. gasseri UALg-05 and Bacillus coagulans UABc-20 at 4.167 billion each (30 billion total); directions 'Take one capsule daily'. B. lactis is Bifidobacterium; Bacillus coagulans is spelled out so the two B. genera cannot be confused. Matches products DB R829 and the shared products.py entry ultrabiotic_dms. URL slug from products.py SLUGS (NutriDyn 60-day protocol doc)."
+    "src": "NutriDyn sell sheet 'UltraBiotic Daily Multi-Strain SS ND460' Rev. 7/24, Supplement Facts panel (Dropbox Marketing Materials, id:xHepYs_Ou4AAAAAAAAlbgg, read 2026-11-03): serving 1 capsule, 30/60 servings, CFU at time of manufacture: Saccharomyces boulardii (Lynside) 5 billion, Lactobacillus reuteri (LRC) 5 billion, Bifidobacterium lactis UABla-12, Lactobacillus plantarum UALp-05, L. acidophilus UALa-01, L. gasseri UALg-05 and Bacillus coagulans UABc-20 at 4.167 billion each (30 billion total); every strain amount carries the label's dagger note 'At time of manufacture', so the printed key line carries it too, in plain words: 'when made' (the seven names give the strain count; 'at manufacture' is 5 letters longer and pushes this, the longest key block, to a 7th line holding only 'coagulans', which makes every column 8.9 pt taller and the footer overflow); directions 'Take one capsule daily'. B. lactis is Bifidobacterium; Bacillus coagulans is spelled out so the two B. genera cannot be confused. Matches products DB R829 and the shared products.py entry ultrabiotic_dms. URL slug from products.py SLUGS (NutriDyn 60-day protocol doc)."
   },
   "thy_omega_1000": {
     "name": "Omega Pure EPA-DHA 1000",
@@ -71,7 +71,7 @@
     "img_src": "R243.png",
     "key": "1,000&nbsp;mg EPA + DHA per softgel (730&nbsp;mg EPA, 270&nbsp;mg DHA)",
     "dose": "1 softgel with dinner",
-    "dosesub": "",
+    "dosesub": "same meal as the multi",
     "sched": [
       [
         "pm",
@@ -80,6 +80,6 @@
       ]
     ],
     "url": "https://nutridyn.com/omega-pure-epa-dha-1000",
-    "src": "NutriDyn sell sheet 'Omega Pure EPA-DHA 1000 SS ND416' Rev. 4/25, Supplement Facts panel (Dropbox Marketing Materials, id:xHepYs_Ou4AAAAAAAAyHow, read 2026-11-03): serving 1 softgel, 120 servings; total omega-3 1.1 g, EPA 730 mg, DHA 270 mg, additional omega-3 100 mg, triglyceride form; directions 'Take one softgel 1-3 times daily with food'. Matches products DB R243 and the shared products.py entry omega_1000. URL slug from products.py SLUGS (NutriDyn 60-day protocol doc)."
+    "src": "NutriDyn sell sheet 'Omega Pure EPA-DHA 1000 SS ND416' Rev. 4/25, Supplement Facts panel (Dropbox Marketing Materials, id:xHepYs_Ou4AAAAAAAAyHow, read 2026-11-03): serving 1 softgel, 120 servings; total omega-3 1.1 g, EPA 730 mg, DHA 270 mg, additional omega-3 100 mg, triglyceride form; directions 'Take one softgel 1-3 times daily with food' (the sheet uses one, with dinner, so dosesub 'same meal as the multi'). Matches products DB R243 and the shared products.py entry omega_1000. URL slug from products.py SLUGS (NutriDyn 60-day protocol doc)."
   }
 }

@@ -3,51 +3,51 @@
     "name": "Berberine Pro",
     "size": "90 capsules",
     "img_src": "R2125.png",
-    "key": "100 mg dihydroberberine (GlucoVantage) + 84 mg organic Ceylon cinnamon bark extract per capsule",
+    "key": "Per capsule: 100 mg dihydroberberine (GlucoVantage) + 84 mg organic Ceylon cinnamon bark extract",
     "dose": "1 capsule 3 times daily",
     "dosesub": "before meals",
     "sched": [
       [
         "am",
-        1,
-        "capsule before breakfast"
+        2,
+        "capsules: 1&nbsp;before&nbsp;breakfast, 1&nbsp;before&nbsp;lunch"
       ],
       [
         "pm",
-        2,
-        "capsules: 1 before lunch, 1 before dinner"
+        1,
+        "capsule before&nbsp;dinner"
       ]
     ],
     "url": "https://nutridyn.com/berberine-pro",
-    "src": "Label: Berberine Pro sell sheet ND1130 Rev. 11/25 (Dropbox /NutriDyn/Sales/Practitioner Resource/NutriDyn Marketing Materials/Berberine Pro SS ND1130.pdf, id:xHepYs_Ou4AAAAAAAA3OYw, read 2026-11-03). Supplement Facts, serving 1 capsule, 90 servings: Dihydroberberine (GlucoVantage) 100 mg; Organic Cinnamon Extract (bark; Cinnamomum ceylon) 84 mg. Directions: 'Take one capsule three times daily before meals or as directed by your healthcare practitioner.' Same amounts in products DB R2125 (DFH, Ortho and Thorne chart reads of catalog ND143 10/1/26); size R2125 90C on the 10/1/26 price list. Protocol: NutriDyn CSO GLC 2026 'Metabolic Fatty Liver (MAFLD, MASLD, MASH)' list (FINAL_GLC 2026 PROTOCOL RICK.pdf, id:xHepYs_Ou4AAAAAAAA7oHg). The daily rhythm has no midday slot, so the lunch dose is spelled out in the evening row (1 before breakfast; 1 before lunch and 1 before dinner = 3 a day, the label dose). URL: Asher's 'Own Every Protocol' artifact links https://nutridyn.com/berberine-pro."
+    "src": "Label: Berberine Pro sell sheet ND1130 Rev. 11/25 (Dropbox /NutriDyn/Sales/Practitioner Resource/NutriDyn Marketing Materials/Berberine Pro SS ND1130.pdf, id:xHepYs_Ou4AAAAAAAA3OYw, re-read 2026-11-03). Supplement Facts, serving 1 capsule, 90 servings: Dihydroberberine (GlucoVantage) 100 mg; Organic Cinnamon Extract (bark; Cinnamomum ceylon) 84 mg. Directions: 'Take one capsule three times daily before meals or as directed by your healthcare practitioner.' Caution: 'If you are pregnant, nursing, or taking medication, consult your healthcare practitioner before use.' (the source of the sheet's pregnancy line). Same amounts in products DB R2125 (DFH, Ortho and Thorne chart reads of catalog ND143 10/1/26); size R2125 90C on the 10/1/26 price list. Protocol: NutriDyn CSO GLC 2026 'Metabolic Fatty Liver (MAFLD, MASLD, MASH)' list (GLC 2026 protocol PDF, id:xHepYs_Ou4AAAAAAAA7oHg). The daily rhythm has no midday slot, so the breakfast and lunch doses share the Morning box (as on the insulin-resistance sheet) and the dinner dose sits in the Evening meal box: 3 a day, the label dose. URL: Asher's 'Own Every Protocol' artifact links https://nutridyn.com/berberine-pro."
   },
   "fl_lipo_flow": {
     "name": "Lipo-Flow",
     "size": "180 tablets",
     "img_src": "R863.png",
-    "key": "Per 2 tablets: 400 mg artichoke, 250 mg dandelion, 200 mg beet, 150 mg inositol, 100 mg each of tangerine peel, gentian, taurine and methionine",
-    "dose": "2 tablets, 2 or 3 times daily",
+    "key": "Per 2 tablets: 400 mg artichoke, 250 mg dandelion, 200 mg beet, 150 mg inositol, 100 mg each of tangerine peel, gentian, taurine and&nbsp;methionine",
+    "dose": "2 tablets 3 times daily",
     "dosesub": "with meals",
     "sched": [
       [
         "am",
-        2,
-        "tablets"
+        4,
+        "tablets: 2&nbsp;at&nbsp;breakfast, 2&nbsp;at&nbsp;lunch"
       ],
       [
         "pm",
         2,
-        "tablets"
+        "tablets at&nbsp;dinner"
       ]
     ],
     "url": "https://nutridyn.com/lipo-flow",
-    "src": "Label: Lipo-Flow sell sheet ND606 Rev. 4/26 (Dropbox NutriDyn Marketing Materials/Lipo-Flow SS ND606.pdf, id:xHepYs_Ou4AAAAAAAA4Cpw, read 2026-11-03; also scratchpad/labels/labels.json entry R863). Supplement Facts, serving 2 tablets, 90 servings: Artichoke Extract (aerial parts) 400 mg, Dandelion Extract (root) 250 mg, Beet Powder (root) 200 mg, Inositol 150 mg, Tangerine Extract (peel; Citrus reticulata) 100 mg, Gentian Extract (root) 100 mg, Taurine 100 mg, L-Methionine 100 mg. Directions: 'Take two tablets with a meal three times daily or as directed by your healthcare practitioner.' Size R863 180T (ND144 price list 10/1/26). Sell-sheet claim: 'Support for Healthy Fat Metabolism', 'Promote healthy bile processes'. Dose on the sheet: 2 tablets 2 or 3 times daily with meals; the rhythm shows the twice-daily plan (4 a day), inside both the label (6 a day) and the NutriDyn science-team protocol Asher sent a practitioner ('1-2 tablets 3 times daily with meals', Gmail 1921f4b76123cab0, 2024-09-24, lipotropics 'to promote healthy liver function'). Chosen for the competitor's 'bergamot + artichoke' column: artichoke plus a citrus peel extract. URL: products.py SLUGS lipo_flow."
+    "src": "Label: Lipo-Flow sell sheet ND606 Rev. 4/26 (Dropbox NutriDyn Marketing Materials/Lipo-Flow SS ND606.pdf, id:xHepYs_Ou4AAAAAAAA4Cpw; also scratchpad/labels/labels.json entry R863 and products DB R863). Supplement Facts, serving 2 tablets, 90 servings: Artichoke Extract (aerial parts) 400 mg, Dandelion Extract (root) 250 mg, Beet Powder (root) 200 mg, Inositol 150 mg, Tangerine Extract (peel; Citrus reticulata) 100 mg, Gentian Extract (root) 100 mg, Taurine 100 mg, L-Methionine 100 mg. Directions: 'Take two tablets with a meal three times daily or as directed by your healthcare practitioner.' The sheet prints that label dose (2 tablets 3 times daily with meals = 6 a day; 2 at breakfast and 2 at lunch in the Morning box, 2 at dinner in the Evening meal box). A lower option exists if fewer pills are wanted: the NutriDyn science-team lipotropic protocol in Asher's protocol email to a practitioner, 2024-09-24, reads '1-2 tablets 3 times daily with meals' (lipotropics 'to promote healthy liver function'). Size R863 180T (ND144 price list 10/1/26). Sell-sheet claims: 'Support for Healthy Fat Metabolism', 'Promote healthy bile processes'. Chosen for the competitor's 'bergamot + artichoke' column: artichoke plus a citrus peel extract. Photo: 348x640 soft 4x stopgap; print master Dropbox /NutriDyn/Product Images/Product Images (1)/R863_Web (id:xHepYs_Ou4AAAAAAAA5JoQ), not downloadable from this session. URL: products.py SLUGS lipo_flow."
   },
   "fl_milk_thistle": {
     "name": "Milk Thistle Complex",
     "size": "60 capsules",
     "img_src": "R416.png",
-    "key": "Per capsule: 375 mg milk thistle extract (80% silymarin) plus 300 mg silymarin, 50 mg NAC, 25 mg each of turmeric and artichoke",
+    "key": "Per capsule (label): milk thistle extract 375 mg (80% silymarin); silymarin 300 mg; NAC 50 mg; turmeric 25 mg; artichoke 25 mg",
     "dose": "1 capsule twice daily",
     "dosesub": "morning and evening",
     "sched": [
@@ -63,7 +63,7 @@
       ]
     ],
     "url": "https://nutridyn.com/milk-thistle-complex-r416",
-    "src": "Label: Milk Thistle Complex sell sheet ND764 Rev. 2/25 (Dropbox NutriDyn Marketing Materials/Milk Thistle Complex SS ND764.pdf, id:xHepYs_Ou4AAAAAAAAu6Lw, read 2026-11-03). Supplement Facts, serving 1 capsule, 60 servings: Milk Thistle Extract (seed; standardized to 80% silymarin) 375 mg; Silymarin (from milk thistle seed extract) 300 mg; N-Acetyl-L-Cysteine 50 mg; Turmeric Extract (root; 95% curcuminoids) 25 mg; Artichoke Extract (leaf and stem; 5% cynarin) 25 mg; Superoxide Dismutase (bovine) 5 mg; Beet Root Powder 5 mg; Boron (as glycinate) 250 mcg. The sheet's text says 'with additional bioactive silymarin added to the formula', hence 'plus 300 mg silymarin'. The page line stops at artichoke for space; SOD, beet root and boron are in the formula too. Directions: 'Take one capsule twice daily or as directed by your healthcare practitioner.' Products DB R416 (Integrative Therapeutics chart) agrees: 300 mg silymarin, 25 mg artichoke, 50 mg NAC, 25 mg turmeric; size R416 60C. Protocol: NutriDyn CSO GLC 2026 'Metabolic Fatty Liver' list (id:xHepYs_Ou4AAAAAAAA7oHg). Stands in for the competitor's aged black garlic (antioxidant liver-cell support). Photo: only the 89x160 web thumbnail exists outside the print masters. URL: Asher's 'Own Every Protocol' artifact links https://nutridyn.com/milk-thistle-complex-r416."
+    "src": "Label: Milk Thistle Complex sell sheet ND764 Rev. 2/25 (Dropbox NutriDyn Marketing Materials/Milk Thistle Complex SS ND764.pdf, id:xHepYs_Ou4AAAAAAAAu6Lw, re-read 2026-11-03). Supplement Facts, serving 1 capsule, 60 servings, each line with its own %DV asterisk: Milk Thistle Extract (seed; Silybum marianum; standardized to 80% silymarin) 375 mg; Silymarin (from milk thistle seed extract) 300 mg; N-Acetyl-L-Cysteine 50 mg; Turmeric Extract (root; standardized to 95% curcuminoids) 25 mg; Artichoke Extract (leaf and stem; standardized to 5% cynarin) 25 mg; Superoxide Dismutase (bovine) 5 mg; Beet Root Powder 5 mg; Boron (as boron glycinate) 250 mcg. OPEN QUESTION FOR NUTRIDYN, total silymarin per capsule, 300 or 600 mg? The sources disagree: 375 mg x 80% = 300 mg exactly, and products DB R416 (Integrative Therapeutics chart) reads the panel as 'NutriDyn 300 mg (1 capsule, 375 mg extract at 80%)', i.e. the 300 mg is the extract's own silymarin; but the sell sheet prose says 'Milk thistle, with additional bioactive silymarin added to the formula', which reads as 300 mg on top. Until NutriDyn confirms, the page mirrors the panel line by line and states no total; if the DB reading is confirmed, print '375 mg milk thistle extract standardized to 80% silymarin (300 mg)'. The page line stops at artichoke for space; SOD, beet root and boron are in the formula too. Directions: 'Take one capsule twice daily or as directed by your healthcare practitioner.' Sell-sheet claims used on the page: 'Promote healthy liver function'; 'promoting the liver's natural detoxification processes'; 'potent antioxidant ingredients'. Size R416 60C. Protocol: NutriDyn CSO GLC 2026 'Metabolic Fatty Liver' list (id:xHepYs_Ou4AAAAAAAA7oHg). Stands in for the competitor's aged black garlic (antioxidant liver-cell support). Photo: only the 89x160 web thumbnail is available here; the print master is Dropbox /NutriDyn/Product Images/Product Images (1)/R416_Web (id:xHepYs_Ou4AAAAAAAA5JVQ), which this session could not download (dl.dropboxusercontent.com refused by the network policy). URL: Asher's 'Own Every Protocol' artifact links https://nutridyn.com/milk-thistle-complex-r416."
   },
   "fl_mito": {
     "name": "Mito Recharge",
@@ -80,6 +80,6 @@
       ]
     ],
     "url": "https://nutridyn.com/mito-recharge-r167",
-    "src": "Label: Mito Recharge sell sheet ND812 Rev. 2/25 (Dropbox NutriDyn Marketing Materials/Mito Recharge SS ND812.pdf, id:xHepYs_Ou4AAAAAAAAvs1Q, read 2026-11-03). Supplement Facts, serving 3 capsules, 30 servings: vitamin C 150 mg, vitamin E 25 mg, vitamin K1 (phytonadione) 250 mcg, thiamin 25 mg, riboflavin 12 mg, niacin 12 mg NE, B6 (P5P) 7.5 mg, magnesium 75 mg, selenium 25 mcg, taurine 300 mg, acetyl-L-carnitine HCl 200 mg, resveratrol 100 mg, coenzyme Q10 100 mg, N-acetyl-L-cysteine 100 mg, EGCG (from green tea extract) 100 mg, quercetin 100 mg, alpha-lipoic acid 75 mg, R-alpha-lipoic acid 45 mg, sulforaphane glucosinolate 15 mg, hydroxytyrosol 10 mg, PQQ 7 mg. Directions: 'Take three capsules daily or as directed by your healthcare practitioner.' Size R167 90C. The line names EGCG and vitamin K1 because the Pharmacist/Provider check relies on them (warfarin; green tea extract taken with food per the USP green tea extract review). Taken with breakfast for that reason. Protocol: NutriDyn CSO GLC 2026 'Metabolic Fatty Liver' list (id:xHepYs_Ou4AAAAAAAA7oHg). Own key (fl_mito) so the lyme sheet's override of 'mito' never changes this page. URL: products.py SLUGS mito."
+    "src": "Label: Mito Recharge sell sheet ND812 Rev. 2/25 (Dropbox NutriDyn Marketing Materials/Mito Recharge SS ND812.pdf, id:xHepYs_Ou4AAAAAAAAvs1Q, re-read 2026-11-03). Supplement Facts, serving 3 capsules, 30 servings: vitamin C 150 mg, vitamin E 25 mg, vitamin K1 (phytonadione) 250 mcg, thiamin 25 mg, riboflavin 12 mg, niacin 12 mg NE, B6 (P5P) 7.5 mg, magnesium 75 mg, selenium 25 mcg, taurine 300 mg, acetyl-L-carnitine HCl 200 mg, resveratrol 100 mg, coenzyme Q10 100 mg, N-acetyl-L-cysteine 100 mg, EGCG (from green tea extract; leaf) 100 mg, quercetin 100 mg, alpha-lipoic acid 75 mg, R-alpha-lipoic acid 45 mg, sulforaphane glucosinolate 15 mg, hydroxytyrosol 10 mg, PQQ 7 mg. Directions: 'Take three capsules daily or as directed by your healthcare practitioner.' The label's caution is the generic one (pregnant, nursing or taking medication); it carries no green tea extract wording. The line names EGCG and vitamin K1 because the Pharmacist/Provider check relies on them: K1 works against warfarin (NIH ODS vitamin K fact sheet); green tea extract is taken with food, never fasting, and stopped if liver symptoms appear, per the USP green tea extract review (Oketch-Rabah HA, Toxicol Rep 2020;7:386-402, doi:10.1016/j.toxrep.2020.02.008: fasting bolus doses raise EGCG exposure; caution 'especially when ingested under fasting conditions or in cases where there is underlying liver vulnerability'). Taken with breakfast for that reason. OPEN QUESTION FOR ASHER OR THE CSO: this is a green-tea-extract product on a liver sheet; the USP review ties liver risk partly to underlying liver vulnerability. Size R167 90C. Protocol: NutriDyn CSO GLC 2026 'Metabolic Fatty Liver' list (id:xHepYs_Ou4AAAAAAAA7oHg). Own key (fl_mito) so the lyme sheet's override of 'mito' never changes this page. Photo: 356x640 soft 4x stopgap; print master Dropbox /NutriDyn/Product Images/Product Images (1)/R167_Web (id:xHepYs_Ou4AAAAAAAA5Iag), not downloadable from this session. URL: products.py SLUGS mito."
   }
 }

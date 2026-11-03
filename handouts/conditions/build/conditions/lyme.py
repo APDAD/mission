@@ -36,14 +36,29 @@ Back-page pass 2026-11-03 (with the final front review's leftover defects):
     products.d/lyme.json, a daily rhythm that keeps magnesium away from
     doxycycline, and edition-specific medicine-and-nutrient checks.
 
+Reviewer round 2026-11-03 (independent review of the whole sheet):
+  * PUBLIC REPO: no person's name, file name with a name, or mail id anywhere in this module
+    or products.d/lyme.json; protocols are cited by document title.
+  * FRONT: BITE caption follows CDC's current "more than 24 hours"; the rash key gives the size
+    (2 inches or more); note 2 says nymphs spread most Lyme and how the rash can look on darker
+    skin; the after-treatment note ends on follow-up with the clinician, not on products; the
+    Georgia card names STARI; the western blacklegged tick (Pacific coast) gives its card to the
+    American dog tick, one of the three ticks that bite people most in Georgia.
+  * BACK: "Recovery support, not a Lyme treatment"; "Worse at first?" is time-bound and says
+    to call before stopping; need headers "Gut support" and "Immune support"; Inflam-Eze's
+    second bullet is a NutriDyn ND516 claim; Immune PRP Pro at its label dose; Mito Recharge at
+    bedtime; both check panels add Inflam-Eze bleeding risk, the allergy-is-not-die-off line,
+    the S. boulardii caution and "doses are for adults".
+
 Every SVG is drawn at 1:1 with its printed CSS size (viewBox width = rendered
 width in CSS px), so an SVG font-size of 9.6 (the smallest used) prints at 7.2 pt.
 Sources (each number below carries a short comment): CDC Lyme disease pages
-(Signs and Symptoms of Untreated Lyme Disease; Transmission; Data and Statistics),
-CDC tick pages (Regions Where Ticks Live; How Ticks Spread Disease; STARI), CDC MMWR
-2017;66(15):408-409 (Powassan virus), Kugeler et al., Emerg Infect Dis 2021;27(2),
-UGA Extension Circular 937 ("Protect Yourself from Ticks") and UGA CAES Newswire
-("Ticks in Georgia", Nancy Hinkle) for Georgia.
+(Signs and Symptoms of Untreated Lyme Disease; How Lyme Disease Spreads; Lyme Disease
+Rashes; Chronic Symptoms and Lyme Disease; Data and Statistics), the CDC/CSTE Lyme
+surveillance case definition, CDC tick pages (Where Ticks Live; How Ticks Spread Disease;
+STARI), CDC MMWR 2017;66(15):408-409 (Powassan virus), Kugeler et al., Emerg Infect Dis
+2021;27(2), UGA Extension Circular 937 ("Protect Yourself from Ticks") and UGA CAES
+Newswire ("Ticks in Georgia", story 5470) for Georgia.
 """
 import math
 import re
@@ -86,6 +101,11 @@ def _f(v):
     return f"{v:.2f}".rstrip("0").rstrip(".")
 
 
+def _NB(s):
+    """Keep a hyphenated product name on one line (kit class .nw = white-space:nowrap)."""
+    return f'<span class="nw">{s}</span>'
+
+
 def TR(x, y, lines, size=10, weight=600, fill=INK, anchor="start", lh=1.22, bold=800, bold_fill=None):
     """Like svgkit.T, but a line may hold *bold* and _italic_ runs."""
     if isinstance(lines, str):
@@ -110,14 +130,17 @@ def TR(x, y, lines, size=10, weight=600, fill=INK, anchor="start", lh=1.22, bold
 # ============================================================ ticks, top view
 # Adult females unless noted.  Proportions and colours follow CDC and UGA
 # identification photographs: Ixodes females have a small black shield (scutum),
-# black legs and a red-orange (western: darker red-brown) body and long mouthparts;
-# the lone star female is broader and rounder, chestnut brown, with festoons
-# (the scalloped rear edge) and one silvery-white spot on her shield.
+# black legs, a red-orange body and long mouthparts; the lone star female is broader
+# and rounder, chestnut brown, with festoons (the scalloped rear edge) and one
+# silvery-white spot on her shield; the American dog tick female (Dermacentor
+# variabilis) is reddish-brown with festoons, short broad mouthparts and a large
+# pale, silvery-cream shield mottled with brown ("ornate").
 TICK_LOOK = {
     "deer": dict(rx=15.0, ry=20.0, body=("#E8834F", "#BF472A", "#6A2014"), shield=("#4E3D33", "#130D0A"),
                  legs="#1A1310", joint="#6A564A", scut=0.46, palp=14.5),
-    "western": dict(rx=13.4, ry=21.8, body=("#B4503F", "#7F2C22", "#3E110C"), shield=("#4A3A30", "#110C0A"),
-                    legs="#1A1310", joint="#6A564A", scut=0.44, palp=15.5),
+    "dog": dict(rx=16.4, ry=19.6, body=("#B27A52", "#7E4B2D", "#3F2414"), shield=("#F3ECDD", "#CDBD9C"),
+                legs="#6A4630", joint="#B8946E", scut=0.50, palp=7.2, festoons=True, ornate=True,
+                mottle="#7A5134", mouth=("#A2724C", "#5A3620")),
     "lonestar": dict(rx=18.6, ry=18.8, body=("#C3804E", "#93522F", "#4F2814"), shield=("#7C5536", "#3A2313"),
                      legs="#74472B", joint="#C29468", scut=0.55, palp=15.0, festoons=True, spot=True),
     "nymph": dict(rx=14.0, ry=16.5, body=("#D2C2AC", "#A08E78", "#605244"), shield=("#4F4237", "#1E1712"),
@@ -200,14 +223,36 @@ def tick_top(kind, x, y, s=1.0, rot=0.0, uid="lyt", quest=False, shadow=True, mi
     out.append("".join(g))
     # shield (scutum)
     s0, L = t - 0.8, s1 - (t - 0.8)
-    sw = rx * (0.72 if k.get("spot") else 0.66)
-    tail = 0.40 if k.get("spot") else 0.55        # lone star shield comes to a rounder point
+    ornate = k.get("ornate")
+    sw = rx * (0.76 if ornate else 0.72 if k.get("spot") else 0.66)
+    tail = 0.40 if k.get("spot") else 0.50 if ornate else 0.55   # lone star shield comes to a rounder point
     shield = (f"M{_f(-sw * .45)},{_f(s0)} Q0,{_f(s0 + 2.4)} {_f(sw * .45)},{_f(s0)} "
               f"C{_f(sw * .86)},{_f(s0 - .3)} {_f(sw)},{_f(s0 + L * .25)} {_f(sw)},{_f(s0 + L * .45)} "
               f"C{_f(sw)},{_f(s0 + L * .74)} {_f(sw * tail)},{_f(s1)} 0,{_f(s1)} "
               f"C{_f(-sw * tail)},{_f(s1)} {_f(-sw)},{_f(s0 + L * .74)} {_f(-sw)},{_f(s0 + L * .45)} "
               f"C{_f(-sw)},{_f(s0 + L * .25)} {_f(-sw * .86)},{_f(s0 - .3)} {_f(-sw * .45)},{_f(s0)}Z")
-    out.append(f'<path d="{shield}" fill="url(#{uid}s)" stroke="{k["shield"][1]}" stroke-width=".6"/>')
+    edge = k["mottle"] if ornate else k["shield"][1]   # a pale shield needs a dark rim to read on the body
+    out.append(f'<path d="{shield}" fill="url(#{uid}s)" stroke="{edge}" stroke-width=".7"/>')
+    if ornate:
+        # American dog tick: the pale shield is "ornate", i.e. silvery-cream with an irregular
+        # brown pattern.  Drawn as brown ground showing through at the front (behind the mouthparts),
+        # broken brown fields along both side margins, two thin cervical grooves and one long
+        # central streak toward the rear: no round spots (spots read as a face at print size).
+        # Everything is clipped to the shield so nothing spills onto the body.
+        m = k["mottle"]
+        P = lambda u, v: f"{_f(u * sw)},{_f(s0 + v * L)}"   # noqa: E731  (shield-relative point)
+        pat = [f'<path d="M{P(-.6, -.06)} H{_f(.6 * sw)} V{_f(s0 + .07 * L)} C{P(.3, .11)} {P(.13, .2)} {P(0, .31)} '
+               f'C{P(-.13, .2)} {P(-.3, .11)} {P(-.6, .07)}Z"/>',
+               f'<path d="M{P(0, .46)} C{P(.1, .58)} {P(.09, .8)} {P(0, .93)} C{P(-.09, .8)} {P(-.1, .58)} {P(0, .46)}Z"/>']
+        for sd in (-1, 1):
+            pat.append(f'<path d="M{P(sd * 1.05, .16)} C{P(sd * .8, .22)} {P(sd * .72, .34)} {P(sd * .82, .47)} '
+                       f'C{P(sd * .9, .52)} {P(sd * 1.0, .49)} {P(sd * 1.06, .42)}Z"/>'
+                       f'<path d="M{P(sd * 1.0, .6)} C{P(sd * .8, .63)} {P(sd * .64, .76)} {P(sd * .5, .98)} '
+                       f'L{P(sd * .85, .98)}Z"/>'
+                       f'<path d="M{P(sd * .2, .22)} Q{P(sd * .36, .42)} {P(sd * .3, .62)}" fill="none" stroke="{m}" '
+                       f'stroke-width="1.1" stroke-linecap="round"/>')
+        out.append(f'<defs><clipPath id="{uid}sc"><path d="{shield}"/></clipPath></defs>'
+                   f'<g clip-path="url(#{uid}sc)" fill="{m}" opacity=".85">{"".join(pat)}</g>')
     out.append(f'<ellipse cx="{_f(-sw * .34)}" cy="{_f(s0 + L * .32)}" rx="{_f(sw * .32)}" ry="{_f(L * .22)}" fill="url(#{uid}g)" opacity=".55"/>')
     if k.get("spot"):   # the "lone star": one silvery-white spot at the back of her shield
         out.append(f'<ellipse cx="0" cy="{_f(s1 - L * .23)}" rx="{_f(sw * .3)}" ry="{_f(L * .2)}" fill="#FBF8F0" '
@@ -220,7 +265,8 @@ def tick_top(kind, x, y, s=1.0, rot=0.0, uid="lyt", quest=False, shadow=True, mi
     # under-shape, so a thin DARK seam runs between them; no light strokes or
     # crossbars (at print size those read as a pill with a cross on it).
     pl, c0 = k["palp"], t - 3.4
-    sh, hl = k["shield"][1], k["shield"][0]
+    # mouthparts take the shield's dark colours, except on a pale (ornate) shield, which has its own
+    hl, sh = k.get("mouth", (k["shield"][0], k["shield"][1]))
     seam = "#0B0705"
     out.append(f'<defs><linearGradient id="{uid}m" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="{hl}"/>'
                f'<stop offset=".75" stop-color="{sh}"/></linearGradient></defs>')
@@ -429,11 +475,11 @@ def art_spread(t):
     out.append(T(sx1 - 8, sy1 - 6, "blood vessel", 9.6, 600, "#9A3D33", "end"))
     out.append(tick_feeding(210, sy0 - 0.6, "lyfeed"))
     out.append(T(215, 179.5, "BITE", 11, 800, INK, "middle", ls=1))
-    # CDC Transmission: "In most cases, the tick must be attached for 36 to 48 hours
-    # or more before the Lyme disease bacterium can be transmitted."  Faster germs:
-    # Powassan virus can pass "as quickly as 15 minutes after tick attachment"
-    # (CDC MMWR 2017;66(15):408-409, citing Ebel and Kramer 2004).
-    out.append(TR(215, 192.5, ["Lyme usually needs 36+ hours;", "some other germs pass faster.",
+    # CDC "How Lyme Disease Spreads" (current page): "In most cases, a tick must be attached
+    # for more than 24 hours before the Lyme disease bacterium can be transmitted" (older CDC
+    # pages said 36 to 48 hours).  Faster germs: Powassan virus can pass "as quickly as
+    # 15 minutes after tick attachment" (CDC MMWR 2017;66(15):408-409, citing Ebel and Kramer 2004).
+    out.append(TR(215, 192.5, ["Lyme usually needs 24+ hours;", "some other germs pass faster.",
                                "*Remove ticks right away.*"], 10, 600, SOFT_INK, "middle", lh=1.15, bold=700, bold_fill=INK))
     # 4. what one bite can pass on
     out.append(arrow("M278,134 C290,132 292,70 306,66", SLATE))
@@ -445,17 +491,19 @@ def art_spread(t):
         out.append(spirochete(sx, sy, ln, rot, wv, amp=3.0))
     out.append(T(394, 101, "Borrelia burgdorferi", 10.4, 700, INK, "middle", italic=True))
     out.append(T(394, 114, "the Lyme bacterium", 9.6, 600, SOFT_INK, "middle"))
-    # Georgia card.  "The (lone star tick) is the most common tick in Georgia" (UGA entomologist
-    # Nancy Hinkle, UGA CAES Newswire, "Ticks in Georgia", story 5470; the UGA Extension Field
-    # Report "Summertime is tick time in Georgia" says the same).  UGA Extension Circular 937,
-    # "Protect Yourself from Ticks", names the lone star, American dog and blacklegged ticks as
-    # the three species most associated with people in Georgia, so deer ticks live here too.
-    # CDC (STARI; Regions Where Ticks Live): the lone star tick is not known to spread the Lyme
-    # bacterium.  Georgia is a low-incidence Lyme state in CDC surveillance.
+    # Georgia card.  "The (lone star tick) is the most common tick in Georgia" (UGA CAES
+    # Newswire, "Ticks in Georgia", story 5470; the UGA Extension Field Report "Summertime is
+    # tick time in Georgia" says the same).  UGA Extension Circular 937, "Protect Yourself from
+    # Ticks", names the lone star, American dog and blacklegged ticks as the three species most
+    # associated with people in Georgia, so deer ticks live here too.  CDC (Where Ticks Live;
+    # About STARI): the lone star tick is not known to spread the Lyme bacterium, but its bite can
+    # cause STARI, a red, expanding rash "very similar" to the Lyme rash whose cause is unknown.
+    # Georgia is a low-incidence Lyme state in CDC surveillance.
     out.append(card(484, 6, 247, 116, "IN GEORGIA", SLATE_MID, PALE, border="#D3DADE"))
-    out.append(TR(495, 48.5, ["Lyme is reported far less here than in", "the Northeast, but deer ticks live here",
-                              "too. The tick people meet most here", "is the *lone star tick*, which is not",
-                              "known to spread Lyme."], 11, 500, "#33404A", lh=1.32, bold=700, bold_fill=INK))
+    out.append(TR(495, 44.5, ["Lyme is reported far less here than in", "the Northeast, but deer ticks live here",
+                              "too. The tick people meet most is the", "*lone star tick*. It is not known to",
+                              "spread Lyme, but its bite can cause a", "rash that looks like it (STARI)."],
+                  10.4, 500, "#33404A", lh=1.3, bold=700, bold_fill=INK))
     # other infections card.  CDC "Regions Where Ticks Live", blacklegged (deer) tick: it also
     # spreads anaplasmosis (Anaplasma phagocytophilum, a bacterium), babesiosis (Babesia microti,
     # a parasite), Borrelia miyamotoi disease (a bacterium) and Powassan virus disease (a virus).
@@ -629,19 +677,25 @@ def art_symptoms(t):
         out.append(f'<path d="M290,{_f(ly)} L{_f(px)},{_f(py)}" stroke="{LATER}" stroke-width="1.3" fill="none"/>')
         out.append(dot(px, py, LATER))
         out.append(T(294, by, lines, 10.6, 700, INK, lh=1.2))
-    # KEY (Asher: "Have a key. Purple means this...")
-    kx, ky, kw, kh = 6, 232, 178, 92
+    # KEY (Asher: "Have a key. Purple means this...").  The box starts 5 px below the figure's
+    # left hand (lowest point y = 37 + 194.6 * 0.96 = 223.8, plus its outline) and ends 4 px above
+    # the viewBox bottom.
+    kx, ky, kw, kh = 6, 230, 178, 98
     out.append(f'<rect x="{kx}" y="{ky}" width="{kw}" height="{kh}" rx="8" fill="#FFFFFF" stroke="#CFD6DA" stroke-width="1.3"/>')
-    out.append(T(kx + 11, ky + 17, "KEY", 9.6, 800, INK, ls=1.4))
+    out.append(T(kx + 11, ky + 15.5, "KEY", 9.6, 800, INK, ls=1.4))
     stub = '<path d="M{0},{1} H{2}" stroke="{3}" stroke-width="1.3"/>'
-    rows = [(stub.format(kx + 10, ky + 33, kx + 22, EARLY) + dot(kx + 22, ky + 33, EARLY), "Early sign"),
-            (stub.format(kx + 10, ky + 53, kx + 22, LATER) + dot(kx + 22, ky + 53, LATER), "Later sign")]
+    rows = [(stub.format(kx + 10, ky + 30, kx + 22, EARLY) + dot(kx + 22, ky + 30, EARLY), "Early sign"),
+            (stub.format(kx + 10, ky + 48, kx + 22, LATER) + dot(kx + 22, ky + 48, LATER), "Later sign")]
     for i, (sw, lab) in enumerate(rows):
         out.append(sw)
-        out.append(T(kx + 36, ky + 36.6 + i * 20, lab, 10.4, 600, INK))
-    out.append(rash_patch(kx + 16, ky + 76, 7, 5.6, "lyrpk", rot=0) + bullseye(kx + 33.5, ky + 76, 6.4))
-    out.append(T(kx + 46, ky + 73.4, "Rash at the bite:", 10.4, 600, INK))
-    out.append(T(kx + 46, ky + 85, "plain red or bull's-eye", 9.6, 600, SOFT_INK))
+        out.append(T(kx + 36, ky + 33.6 + i * 18, lab, 10.4, 600, INK))
+    # Size: the CDC/CSTE surveillance case definition counts a lesion as erythema migrans once it
+    # reaches 5 cm (2 inches) or more across; CDC: it "expands gradually over several days
+    # reaching up to 12 inches or more (30 cm) across".  Redness within hours of a bite is a bite
+    # reaction, not EM (same case definition).
+    out.append(rash_patch(kx + 16, ky + 77, 7, 5.6, "lyrpk", rot=0) + bullseye(kx + 33.5, ky + 77, 6.4))
+    out.append(T(kx + 46, ky + 68, "Rash at the bite:", 10.4, 600, INK))
+    out.append(T(kx + 46, ky + 80, ["plain red or bull's-eye;", "grows to 2 inches or more"], 9.6, 600, SOFT_INK, lh=1.2))
     return svg(W, H, "".join(out), "Early and later signs of Lyme disease on the body, with a key")
 
 
@@ -670,7 +724,7 @@ def art_actual_size():
 
 def art_tick_card(kind, uid):
     W, H = 76, 84
-    s = {"deer": 0.95, "western": 0.92, "lonestar": 0.92}[kind]
+    s = {"deer": 0.95, "dog": 0.92, "lonestar": 0.92}[kind]
     return svg(W, H, tick_top(kind, 38, 45, s, 0, uid), f"{kind} tick, adult female, seen from above")
 
 
@@ -698,14 +752,20 @@ CSS = r"""
 .sheet.back:has(.ly-back) .band{padding-bottom:0.11in}
 .sheet.back:has(.ly-back) .band h2{margin-bottom:0.07in}
 .sheet.back:has(.ly-back) .ns-title{margin-top:0.1in}
-/* dose bands: a little more width so "2 to 3 hours from doxycycline" stays on one line */
-.sheet.back:has(.ly-back) .col .dose{padding-left:0.025in;padding-right:0.025in}
 /* products section: say the frame out loud.  The kit's generic subtitle is not rendered
    (display:none, so it is not in the PDF either) and the sheet's own line takes its place:
-   "Recovery support", antibiotics first.  Same line in both editions. */
+   recovery support, NOT a Lyme treatment, antibiotics first.  Same line in both editions. */
 .sheet.back:has(.ly-back) .ns-title span{display:none}
-.sheet.back:has(.ly-back) .ns-title::after{content:"Recovery support. Antibiotics prescribed by your clinician come first.";
+.sheet.back:has(.ly-back) .ns-title::after{content:"Recovery support, not a Lyme treatment. Antibiotics from your clinician come first.";
   font:700 8pt Inter,sans-serif;color:var(--deep);letter-spacing:.02em}
+/* the check panel carries six safety lines, so it gets the wider share of the row (kit: 1.35fr 1fr,
+   rhythm first); measured 2026-11-03: rhythm 175 px, check 180 px, versus 163 / 254 at the kit split */
+.sheet.back:has(.ly-back) .duo{grid-template-columns:1fr 1.35fr}
+/* narrower rhythm slots: 2 px less gap and padding keeps "Evening meal" on one line */
+.sheet.back:has(.ly-back) .rhythm{gap:4px}
+.sheet.back:has(.ly-back) .slot{padding:5px 4px}
+/* two writing lines instead of three: the third went to the check panel (reviewer's allowance) */
+.sheet.back:has(.ly-back) .notes .ln:nth-of-type(3){display:none}
 """
 
 
@@ -714,26 +774,37 @@ def front(t, ed):
         # CDC: people treated with appropriate antibiotics in the early stages usually recover rapidly and completely.
         '<div class="ly-nt"><b>See a clinician promptly</b> if a rash, fever, aches or swollen joints follow a tick '
         'bite or time outdoors. Early antibiotics work best.</div>'
-        # CDC: the erythema migrans rash "occurs in approximately 70 to 80 percent of
-        # infected persons" and only "sometimes" clears into a bull's-eye.
-        '<div class="ly-nt"><b>Not everyone sees the tick.</b> Nymphs are poppy-seed small. Up to 3 in 10 '
-        'people never get a rash, and many rashes are plain red, not a bull\'s-eye. Early Lyme can pass for the flu.'
+        # CDC (How Lyme Disease Spreads): "Most humans are infected through the bites of immature
+        # ticks called nymphs.  Nymphs are tiny (less than 2 mm) and difficult to see."  CDC: the
+        # erythema migrans rash "occurs in approximately 70 to 80 percent of infected persons" and
+        # only "sometimes" clears into a bull's-eye.  Darker skin: CDC "Lyme Disease Rashes" shows the
+        # rash on dark and light skin (it can be "more difficult to see, and may not be as obviously
+        # red, on darker skin"; wording from search snippets, cdc.gov not reachable from the build
+        # session), and CDC's Emerg Infect Dis 2025;31(9) links later diagnosis in non-White patients
+        # to "difficulty seeing and recognizing erythema migrans rash on darker skin".
+        '<div class="ly-nt"><b>Not everyone sees the tick.</b> Nymphs, poppy-seed small, spread most Lyme. '
+        'Up to 3 in 10 people never get a rash. Many rashes are plain red, not a bull\'s-eye, and on darker '
+        'skin a rash can be hard to see. Early Lyme can pass for the flu.'
         f'{art_actual_size()}</div>'
-        # CDC: some people have pain, fatigue or difficulty thinking for more than
-        # 6 months after treatment (post-treatment Lyme disease syndrome).  No product
-        # claim here: the back page is structure/function only ({who} = edition token).
-        '<div class="ly-nt"><b>After treatment,</b> some people have tiredness, pain or brain fog that lingers for '
-        'months. That stretch is a good time to focus on food, sleep and steady habits. Ask {who} which '
-        'support fits you.</div>')
-    # tick ranges and diseases: CDC Regions Where Ticks Live; UGA Extension for Georgia.
-    # Western vs deer: the two Ixodes species look nearly identical, so range is the clue.
+        # CDC (Chronic Symptoms and Lyme Disease): some people have pain, fatigue or difficulty
+        # thinking for more than 6 months after treatment (post-treatment Lyme disease syndrome);
+        # they "usually get better over time", but "it can take many months to feel completely
+        # well".  No bridge to the back page: the note ends on follow-up with the clinician.
+        '<div class="ly-nt"><b>After treatment,</b> some people have tiredness, pain or brain fog that lingers. '
+        'Most get better with time, though it can take months. Focus on food, sleep and steady habits, '
+        'and tell your clinician how you feel.</div>')
+    # Tick ranges and diseases: CDC Where Ticks Live; UGA Extension Circular 937 for Georgia (lone
+    # star, American dog and blacklegged ticks are the three most associated with people there).
+    # American dog tick: CDC, widespread east of the Rocky Mountains, spreads Rocky Mountain spotted
+    # fever and tularemia, adult females most likely to bite people; RMSF "can be deadly if not
+    # treated early with the right antibiotic" (CDC About Rocky Mountain Spotted Fever).
     ticks = [("deer", "Blacklegged (deer) tick",
               "Black legs and shield, red-orange body. Eastern U.S., Georgia included. The main Lyme carrier."),
-             ("western", "Western blacklegged tick",
-              "Looks almost the same as the deer tick, so where you live is the best clue: Pacific coast states. "
-              "It also spreads Lyme."),
              ("lonestar", "Lone star tick",
-              "White dot on the female's back. Spreads ehrlichiosis and can trigger alpha-gal (red-meat) allergy.")]
+              "White dot on the female's back. Spreads ehrlichiosis and can trigger alpha-gal (red-meat) allergy."),
+             ("dog", "American dog tick",
+              "White-marked shield. Spreads Rocky Mountain spotted fever: fever after a bite needs a "
+              "clinician fast.")]
     cards = "".join(f'<div class="ly-tk">{art_tick_card(k, "lyk" + k)}<div><b>{n}</b><span>{d}</span></div></div>'
                     for k, n, d in ticks)
     return ('<div class="ly-front">'
@@ -763,18 +834,29 @@ SHEET = {
     # inflammatory balance, detox (die-off) and energy, in structure/function words only: no product
     # here treats Lyme, and "Antibiotics prescribed by your clinician come first" heads the products.
     # Five columns, the competitor's count.  Picks follow NutriDyn's own protocols first:
-    #   Immune PRP Pro and Liposomal Glutathione: Jocelyn Strand ND, NutriDyn GLC 2019 "Botanical
-    #     Medicines in Complex, Multi-Pathogen Disease" (Immune Support: Immune PRP Pro 2 capsules
-    #     2x/day; Detoxification Support "for herxing": Liposomal Glutathione up to 4x/day).  The sheet
-    #     never prints "Lyme" on that protocol: verification found it is not labelled for Lyme.
+    #   Immune PRP Pro and Liposomal Glutathione: NutriDyn GLC 2019 protocol sheet "Botanical
+    #     Medicines in Complex, Multi-Pathogen Disease" (Dropbox Seminar Notes and Protocols/GLC 2019;
+    #     Immune Support: Immune PRP Pro; Detoxification Support "for herxing": Liposomal
+    #     Glutathione up to 4x/day).  The sheet never prints "Lyme" on that protocol: verification
+    #     found it is not labelled for Lyme.  Doses on the sheet are the LABEL doses (Immune PRP Pro
+    #     4 capsules twice daily, also NutriDyn's 60-day gut-repair protocol doc); the GLC sheet's
+    #     lower 2 capsules 2x/day is a practitioner dose they can write under Special considerations.
     #   Inflam-Eze Plus: a NutriDyn educator's product key ("Botanical Anti-inflam" = Inflam-eze
     #     Plus), Gut-Neuro-Immune Restoration plan, Asher's 2025 fatigue/immune seminar (which covered
     #     tick-borne disease); also the closest NutriDyn match to the competitor's turmeric matrix.
     #   Mito Recharge: the competitor's mitochondrial category (NAC, ALC, ALA) in one NutriDyn formula.
     #   UltraBiotic Daily Multi-Strain (START HERE): gut support during the antibiotics that come first;
-    #     its S. boulardii is a yeast, which antibacterial antibiotics do not kill (sell sheet ND460
-    #     cites McFarland 2010).  It stands in for the competitor's herbal antimicrobial, which on a
-    #     Lyme sheet would read as treating the infection.
+    #     its S. boulardii is a yeast, which antibacterial antibiotics do not harm (antifungals do;
+    #     sell sheet ND460 cites McFarland 2010).  It stands in for the competitor's herbal
+    #     antimicrobial, which on a Lyme sheet would read as treating the infection.  Need header
+    #     "Gut support", not "Protect your gut", so it does not read as preventing antibiotic side
+    #     effects.  S. boulardii caution (both panels): fungemia has been reported in people with a
+    #     central venous catheter or a weakened immune system (McFarland LV, World J Gastroenterol
+    #     2010;16(18):2202-22, PMID 20458757; Kelesidis T, Ther Adv Gastroenterol 2012;5(2):111-25,
+    #     PMID 22423260).
+    #   Inflam-Eze Plus bullets are NutriDyn's own ND516 sell-sheet claims ("Promote healthy
+    #     inflammatory markers", "Support overall health and well-being"); no joint claim, because the
+    #     front lists joint aches and arthritis as Lyme signs.
     # Label facts, sizes and links: products.d/lyme.json (each entry has its "src").
     # Lifestyle sources:
     #   permethrin on clothing and gear; EPA-registered DEET, picaridin, IR3535 or oil of lemon
@@ -786,11 +868,13 @@ SHEET = {
     #   Tick"; tell the doctor when and where the bite happened: CDC "Symptoms of Tickborne Illness".
     #   "Worse at first?": the Jarisch-Herxheimer reaction comes within 24 hours of starting
     #   antibiotics in 7 to 30% of treated Lyme patients and usually passes within a day (Butler T,
-    #   Am J Trop Med Hyg 2017;96(1):46-52; StatPearls NBK557820).  Asher's own Herx explainer
-    #   (Gmail 17541a5df3e6e6e5, 2020): "feeling worse before feeling better", and "the biggest
-    #   problem ... is that people stop taking the supplement or medication".  So: keep the
-    #   antibiotic, call the clinician.  The protocols' "go slow" advice (titrate slowly) is the
-    #   kit's own rhythm line: start with the Start here pick, add one product a week.
+    #   Am J Trop Med Hyg 2017;96(1):46-52, PMID 28077740; StatPearls NBK557820), hence "day 1 or
+    #   2".  Asher's Herx explainer email, 2020: "feeling worse before feeling better", and "the
+    #   biggest problem ... is that people stop taking the supplement or medication".  So: call the
+    #   clinician before stopping.  Hives, swelling or trouble breathing are an allergic reaction,
+    #   not die-off, so both check panels say to get help right away.  The protocols' "go slow"
+    #   advice (titrate slowly) is the kit's own rhythm line: start with the Start here pick, add
+    #   one product a week.
     # Check-panel sources:
     #   Doxycycline label: "Absorption of tetracyclines is impaired by antacids containing aluminum,
     #   calcium, or magnesium ... and iron-containing preparations"; NHS doxycycline guidance keeps
@@ -801,10 +885,18 @@ SHEET = {
     #   Vitamin K "can interact with ... warfarin" (NIH ODS vitamin K fact sheet); Mito Recharge has
     #   250 mcg vitamin K1 (ND812).  Willow bark: may raise bleeding risk with warfarin or other
     #   anticoagulants, avoid with salicylate (aspirin) allergy, and children should not take it
-    #   (Reye syndrome), per MSKCC "About Herbs: Willow Bark" and MedlinePlus.  Probiotic 2 hours
-    #   from each antibiotic dose: common practice with thin evidence (no guideline found), so the
-    #   pharmacy line says the pharmacist "may suggest" it.  Doxycycline with milk or colostrum:
-    #   overall absorption not significantly affected (doxycycline labelling, via PDR).
+    #   (Reye syndrome), per MSKCC "About Herbs: Willow Bark" and MedlinePlus.  Inflam-Eze Plus also
+    #   carries 800 mg ginger, CurQfen curcumin and devil's claw, each listed by MSKCC "About Herbs"
+    #   as possibly adding to bleeding risk with anticoagulant or antiplatelet drugs, so the
+    #   bleeding line names warfarin, apixaban, aspirin and clopidogrel.  Probiotic 2 hours from each
+    #   antibiotic dose: common practice with thin evidence (no guideline found), so the pharmacy
+    #   line says the pharmacist "may suggest" it.  Doxycycline with milk or colostrum: overall
+    #   absorption not significantly affected (doxycycline labelling, via PDR).  Mito Recharge at
+    #   bedtime: twice-daily doxycycline is taken with breakfast and the evening meal and not right
+    #   before lying down (esophagus warning on its label), so bedtime keeps the 75 mg magnesium
+    #   2 to 3 hours from both doses.  "Doses are for adults": CDC surveillance shows Lyme peaking at
+    #   ages 5 to 9, every label here says to consult if pregnant or nursing, and willow bark and
+    #   devil's claw are avoided in pregnancy (MSKCC).
     "back": {
         "life_title": 'Lifestyle Recommendations<span class="ly-back"></span>',
         "life_sub": "Avoid the next bite, and pace your recovery",
@@ -814,37 +906,50 @@ SHEET = {
                  ("dryer", "Dry, then shower", "Dry clothes on high heat for 10 minutes. Shower within 2 hours."),
                  ("ly_check", "Check daily", "Scalp, ears, armpits, waist and behind the knees. Pets, too."),
                  ("ly_tweezers", "Remove it right", "Fine-tipped tweezers at the skin, pull straight up. Note the date."),
-                 ("thermo", "Worse at first?", "Can be germs dying off. Stay on your antibiotic; call your clinician.")],
+                 # "doctor", not "clinician", here: the plain word, and the only one that keeps this tile
+                 # at three lines with "day 1 or 2" unbroken (measured 2026-11-03)
+                 ("thermo", "Worse at first?",
+                  "Can be germs dying off, day&nbsp;1&nbsp;or&nbsp;2. Call your doctor before you stop.")],
         "cols": [
-            {"p": "ly_ultrabiotic_dms", "need": "Protect your gut", "needsub": "with <em>S.&nbsp;boulardii</em>", "start": True,
+            {"p": "ly_ultrabiotic_dms", "need": "Gut support", "needsub": "with <em>S.&nbsp;boulardii</em>", "start": True,
              "bullets": ["Supports a healthy gut microbiome",
-                         "<i>S.&nbsp;boulardii</i>, a yeast, is not killed by antibiotics"]},
-            {"p": "ly_immune_prp", "need": "Immune readiness", "needsub": "colostrum immunoglobulins",
+                         "<i>S.&nbsp;boulardii</i>, a yeast, is not harmed by antibacterial antibiotics"]},
+            {"p": "ly_immune_prp", "need": "Immune support", "needsub": "colostrum immunoglobulins",
              "bullets": ["Promotes healthy immune function", "Supports the gut lining"]},
             {"p": "ly_inflam_eze", "need": "Inflammatory balance", "needsub": "ginger, curcumin, boswellia",
-             "bullets": ["Promotes healthy inflammatory markers", "Supports joint comfort"]},
+             "bullets": ["Promotes healthy inflammatory markers", "Supports overall health and well-being"]},
             {"p": "ly_glutathione", "need": "Detox support", "needsub": "liposomal glutathione",
              "bullets": ["Supports healthy glutathione levels", "Provides antioxidant and detox support"]},
             {"p": "ly_mito", "need": "Cellular energy", "needsub": "mitochondrial support",
              "bullets": ["Supports your cells' energy production", "Promotes healthy antioxidant status"]},
         ],
         # Pharmacists check interactions and depletions; providers order labs, refer and adjust.
+        # Both editions carry the same safety facts; only the wording around {who} differs.
         "rx": {
             "pharmacy": [
                 "<b>Doxycycline:</b> take it 2 to 3 hours apart from calcium, magnesium (Mito Recharge has some), "
                 "iron, zinc and antacids, which block it.",
-                "<b>Probiotic timing:</b> {who} may suggest taking UltraBiotic at least 2 hours apart from each "
-                "antibiotic dose.",
-                "<b>Blood thinners:</b> doxycycline can make warfarin stronger; the vitamin K1 in Mito Recharge can "
-                "make it weaker. <span style='white-space:nowrap'>Inflam-Eze Plus</span> has aspirin-like willow bark: not for children, teens or aspirin allergy."],
+                f"<b>Blood thinners:</b> {_NB('Inflam-Eze Plus')} (ginger, curcumin, willow bark) can add to bleeding "
+                "risk with warfarin, apixaban, aspirin or clopidogrel. Doxycycline can make warfarin stronger; "
+                "Mito Recharge's vitamin K1 can make it weaker.",
+                f"<b>Aspirin-like willow bark:</b> {_NB('Inflam-Eze Plus')} is not for children, teens or "
+                "aspirin allergy.",
+                "<b>Probiotic:</b> {who} may suggest UltraBiotic at least 2 hours apart from each antibiotic dose. "
+                "Its <i>S.&nbsp;boulardii</i> is not for people with a central IV line or a weakened immune system.",
+                "<b>Hives, swelling or trouble breathing</b> after a dose is not die-off: get help right away.",
+                "<b>Doses are for adults.</b> Pregnant, nursing or under 18? Ask {who} first."],
             "practitioner": [
                 "<b>Doxycycline:</b> take it 2 to 3 hours apart from calcium, magnesium (Mito Recharge has some), "
                 "iron, zinc and antacids, which block it.",
-                "<b>Antibiotic days:</b> take UltraBiotic at least 2 hours apart from each antibiotic dose. "
-                "{Who} can say how long to continue it.",
-                "<b>On warfarin?</b> Doxycycline can make it stronger and Mito Recharge's vitamin K1 weaker, so {who} "
-                "may check your INR (a clotting test). <span style='white-space:nowrap'>Inflam-Eze Plus</span> has aspirin-like willow bark: not for children, "
-                "teens or aspirin allergy."],
+                f"<b>On a blood thinner?</b> {_NB('Inflam-Eze Plus')} (ginger, curcumin, willow bark) can add to "
+                "bleeding risk. Doxycycline can make warfarin stronger and Mito Recharge's vitamin K1 weaker, so "
+                "whoever manages your warfarin may check your INR (a clotting test).",
+                f"<b>Aspirin-like willow bark:</b> {_NB('Inflam-Eze Plus')} is not for children, teens or "
+                "aspirin allergy.",
+                "<b>Probiotic:</b> take UltraBiotic at least 2 hours apart from each antibiotic dose. "
+                "Its <i>S.&nbsp;boulardii</i> is not for people with a central IV line or a weakened immune system.",
+                "<b>Hives, swelling or trouble breathing</b> after a dose is not die-off: get help right away.",
+                "<b>Doses are for adults.</b> Pregnant, nursing or under 18? Ask {who} first."],
         },
     },
 }

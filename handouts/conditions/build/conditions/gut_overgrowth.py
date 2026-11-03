@@ -21,7 +21,8 @@ FRONT, top to bottom
   itself names the stomach, the small intestine (pink loops, leader to the duodenum where it leaves the
   stomach) and the colon (tan pouched tube), each in clear space; each circle has a one-line caption.
   Zoom-circle symbols are placed by a seeded random fill that keeps every item clear of the others (rods are
-  tested as capsules, hairs included) and clear of the organ tag on the rim ->
+  tested as capsules, hairs included), above the tallest villus tip in the small intestine, and clear of the
+  organ tag on the rim.  The balanced colon holds one small yeast cell, because a little yeast is normal ->
   KEY (every symbol, same drawing code as the art, two rows) -> three kinds of overgrowth (SIBO, yeast,
   parasites: clues, risks, which test) -> breath test "know your numbers" strip (consensus cut-offs and a
   write-in box for each gas) -> red-flag line -> the 5R ribbon with Remove marked "this sheet".
@@ -57,7 +58,8 @@ SOURCES (each fact on the page carries one of these tags in a comment next to it
             antibiotics raise gut yeast colonization.
   [CDC-CAND] CDC, Candidiasis (thrush; vaginal candidiasis): risk factors antibiotics, corticosteroids,
             diabetes, weakened immune system.  These are separate infections elsewhere that share those risk
-            factors, not signs of gut yeast; there is no single gut sign.  So the card calls them a hint.
+            factors, not signs of gut yeast; there is no single gut sign.  So the card says only that they share
+            the same risks.
   [CDC-GIA] CDC, Giardia: diarrhea, gas, greasy stools that can float, cramps; spread by untreated or
             recreational water, food, surfaces and people; diagnosed from stool samples.  CDC, Giardia and
             pets: the chance of getting Giardia from dogs or cats is small (people and pets usually carry
@@ -89,7 +91,8 @@ SOURCES (each fact on the page carries one of these tags in a comment next to it
   and immune suppression the main risks, Enache-Angoulvant A, Hennequin C. Clin Infect Dis
   2005;41:1559-68, PMID 16267727; S. boulardii is a yeast, so antibacterial antibiotics do not kill it and
   antifungals can, Kelesidis T, Pothoulakis C. Ther Adv Gastroenterol 2012;5:111-25, PMID 22423260.
-  Bleeding: ginger, clove and garlic are among the herbs that may raise bleeding risk with warfarin, Heck AM
+  Bleeding: ginger (in the Spectrum BR blend, ND505, and in Nutricidin), clove and garlic are among the herbs
+  that may raise bleeding risk with warfarin, Heck AM
   et al. Am J Health Syst Pharm 2000;57:1221-7, PMID 10902065; serratiopeptidase breaks down fibrin
   (anticoagulant, fibrinolytic), Hosseini SB et al. Arch Microbiol 2024;206:180, PMID 38502196 and Jadhav SB
   et al. Biotechnol Rep 2020;28:e00544, PMID 33134103; pau d'arco's lapachol blocks vitamin K recycling
@@ -97,7 +100,10 @@ SOURCES (each fact on the page carries one of these tags in a comment next to it
   and warfarin (MedlinePlus chlorella monograph; not re-opened this session).  Licorice (in the Spectrum BR
   blend, ND505; not DGL): glycyrrhizin raises blood pressure and lowers potassium (apparent mineralocorticoid
   excess), Deutch MR et al. Foods 2019;8:495, PMID 31615045; Kwon YJ et al. J Med Food 2020;23:12-20, PMID
-  31874059; so the pharmacy edition flags diuretics, digoxin and steroids.  Children: every label dose is an
+  31874059; so the pharmacy edition flags diuretics, digoxin and steroids and the provider edition's lead names
+  high blood pressure.  Warfarin: berberine slows CYP2C9 (Guo 2012), the enzyme that clears S-warfarin, Kaminsky
+  LS, Zhang ZY. Pharmacol Ther 1997;73:67-74, PMID 9014207, so both blood-thinner lines name Spectrum BR and the
+  pharmacy edition lists warfarin beside cyclosporine.  Children: every label dose is an
   adult dose, and berberine displaces bilirubin and is best avoided in jaundiced newborns, Chan E. Biol
   Neonate 1993;63:201-8, PMID 8513024, so both editions say "ask first" for a child.
   Plan length: ND584 runs the Remove step 10 days within a 24-day program; Chedid 2014 (below) gave herbal
@@ -278,8 +284,8 @@ def hypha(x, y, ang, n=3, s=1.0):
 
 
 def bubble(x, y, r):
-    """A gas bubble (hydrogen or methane made by microbes)."""
-    return (f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{r:.1f}" fill="{GAS}" fill-opacity=".92" stroke="{GAS_E}" stroke-width="1"/>'
+    """A gas bubble (hydrogen or methane made by microbes).  Solid fill, so nothing behind it ghosts through."""
+    return (f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{r:.1f}" fill="{GAS}" stroke="{GAS_E}" stroke-width="1"/>'
             f'<circle cx="{x - r * .36:.1f}" cy="{y - r * .36:.1f}" r="{max(r * .26, .9):.1f}" fill="#FFFFFF" opacity=".85"/>')
 
 
@@ -329,6 +335,17 @@ def _worm_spots(x, y, rot, s=1.0, L=56.0, bend=1.8):
     out = []
     for px, py in _worm_line(L, bend, 10):
         out.append((x + s * (px * math.cos(a) - py * math.sin(a)), y + s * (px * math.sin(a) + py * math.cos(a)), 3.8 * s))
+    return out
+
+
+def _yeast_spots(x, y, rot=0.0, s=1.0, bud=True):
+    """Circles that cover a budding yeast cell as drawn by yeast() (mother cell and bud, outlines included), so
+    other symbols are placed clear of it (circle-relative coords)."""
+    out = [(x, y, 7.2 * s)]
+    if bud:
+        a = math.radians(rot)
+        bx, by = 7.3 * s, -2.6 * s
+        out.append((x + bx * math.cos(a) - by * math.sin(a), y + bx * math.sin(a) + by * math.cos(a), 4.2 * s))
     return out
 
 
@@ -520,8 +537,11 @@ def _appendix():
 
 def figure():
     """The whole digestive tract in local coordinates (about 300 x 360)."""
-    # white ground inside the colon frame, so the zoom beams' soft fill shows only outside the organs
-    o = [f'<path d="{_smooth_d(COLON[:-4])}" fill="#FFFFFF"/>']
+    # white ground inside the colon frame, so the zoom beams' soft fill shows only outside the organs.  It runs on
+    # past the frame's open bottom (cecum to rectum, under the lowest small-intestine loop) to y = 322: the colon
+    # beam's lower edge crosses that gap at y = 312 to 313, so no grey sliver of it shows between the cecum, the
+    # appendix and the rectum.  The added edge lies inside the cecum and rectum or below the beam (white on white).
+    o = [f'<path d="{_smooth_d(COLON[:-4] + [(176, 322), (62, 322)])}" fill="#FFFFFF"/>']
     # esophagus (fades in at the top: the throat is above the picture)
     eso = _poly(_cr(ESO, per=12))
     o.append(f'<path d="{eso}" fill="none" stroke="url(#{U}-esoE)" stroke-width="13.4" stroke-linecap="butt"/>'
@@ -633,21 +653,22 @@ def si_zoom(cx, cy, R, over):
         o.append(villus(cx + x, cy + floor, h, rng.uniform(-4, 4)))
         x += 10.6
     o.append(f'<path d="M{cx - R},{cy + floor + 3} H{cx + R}" stroke="{VIL_E}" stroke-width=".8" opacity=".35"/>')
-    tips = floor - 31
+    tips = floor - 31                     # the top of the tallest villus: every symbol sits above this line
     if not over:
-        for (dx, dy, a) in [(-30, -30, 18), (14, -44, -28), (36, -10, 40), (-6, 2, -12)]:
+        for (dx, dy, a) in [(-30, -30, 18), (14, -44, -28), (36, -16, 40), (-6, -14, -12)]:   # all 5+ clear of the villi
             o.append(rod(cx + dx, cy + dy, a, "ok"))
         return "".join(o)
     # SIBO: the colon's own (friendly, green) bacteria crowd in and ferment food into gas [NAC17].  The big
-    # bubbles go first and join `taken` before the small ones are placed, so no two bubbles overlap.
+    # bubbles go first and join `taken` before the small ones are placed, so no two bubbles overlap.  Bubbles
+    # and rods all stay above the villus tips (rods tested as capsules), so nothing lies across the villi.
     th = _tag_half("SMALL INTESTINE")
     taken = []
     big = _place(rng, 4, 6.2, _in_circle(R, tips, th), taken, 3)
     taken += big
-    small = _place(rng, 7, 3.6, _in_circle(R, tips + 6, th), taken, 2.4)
+    small = _place(rng, 7, 3.6, _in_circle(R, tips, th), taken, 2.4)
     taken += small
     clear = [(x, y, r + 0.5) for x, y, r in taken]          # the bubbles' outline stroke
-    crowd = _place_rods(rng, 19, "ok", _in_circle(R, tips + 10, th), clear, [])
+    crowd = _place_rods(rng, 12, "ok", _in_circle(R, tips + 1, th), clear, [])   # 12: every one fits above the tips
     for x, y, a in crowd:
         o.append(rod(cx + x, cy + y, a, "ok"))
     for x, y, r in big + small:
@@ -662,7 +683,11 @@ def colon_zoom(cx, cy, R, over):
     o = [f'<rect x="{cx - R}" y="{cy - R}" width="{2 * R}" height="{2 * R}" fill="url(#{U}-lc)"/>',
          crypts(cx - R - 4, cx + R + 4, cy + floor, cy + R + 4)]     # flat lining with crypts (no villi)
     if not over:
-        good = _place_rods(rng, 46, "ok", _in_circle(R, floor, th), [], [])
+        # [CANDIDA20] a little yeast is normal: one small budding cell rests on the lining among the friendly
+        # colony, so the picture never teaches that any yeast at all is overgrowth (the Yeast card says the same)
+        yx, yy, ya, ys = 14, floor - 6, -12, 0.7
+        o.append(yeast(cx + yx, cy + yy, ya, ys))
+        good = _place_rods(rng, 44, "ok", _in_circle(R, floor, th), _yeast_spots(yx, yy, ya, ys), [])  # all 44 fit
         for x, y, a in good:
             o.append(rod(cx + x, cy + y, a, "ok"))
         return "".join(o)
@@ -817,7 +842,8 @@ def art_overgrowth():
     o.append(_organ_label(["Colon", "(large intestine)"], 507, 208.5, "start", (504, 205), (gl((284, 213))[0] + 7.5, 205)))
     return svg(W, H, "".join(o), "The digestive tract, with the stomach, the small intestine (pink loops) and the colon "
                "(tan pouched tube) labelled, and one spot in the small intestine and one spot in the colon shown "
-               "up close. Balanced: only a few bacteria in the small intestine and a thick friendly colony in the colon. "
+               "up close. Balanced: only a few bacteria in the small intestine and a thick friendly colony with one "
+               "small yeast cell in the colon. "
                "Overgrowth: the colon's own bacteria crowd the small intestine and make gas bubbles, and in the colon yeast "
                "cells and chains, a pinworm and some unfriendly bacteria take hold.")
 
@@ -870,9 +896,10 @@ KINDS = [
     (_mini(yeast(-3, 2, -10, 1.35) + yeast(9, -8, 30, 0.8, False)),
      # [CANDIDA20]: Candida is a regular member of the gut flora in most people
      "Yeast", "Candida, normally in small numbers",
-     # [CDC-CAND] thrush and vaginal candidiasis are separate infections that share the risk factors; they are
-     # not signs of gut yeast, only a hint; there is no single gut sign
-     ["No single gut sign", "Yeast infections elsewhere (mouth, vagina) can hint at it"],
+     # [CDC-CAND] thrush and vaginal candidiasis are separate infections that share these risk factors
+     # (antibiotics, steroids, diabetes, weak immunity); no source makes them a sign of gut yeast, so the card
+     # says only that they share the risks.  There is no single gut sign.
+     ["No single gut sign", "Mouth or vaginal yeast infections share the same risks"],
      # [SAMONIS93] antibiotics; [CDC-CAND] corticosteroids, diabetes, weakened immune system
      ["Antibiotics, steroid medicines", "High blood sugar", "A weakened immune system"],
      # [CANDIDA20] some Candida in stool is normal and there is no validated cut-off: the provider reads it
@@ -929,7 +956,9 @@ def numbers_html():
 # ============================================================== the 5R ribbon
 # [ND584] Remove = take out unwanted microbes and trigger foods.  The ribbon says what is removed, with no disease
 # word ("clear the overgrowth"), which next to "this sheet" would tie the back page's products to treating one.
-FIVE = [("Remove", "unwanted microbes, trigger foods", "This sheet"), ("Replace", "stomach acid, enzymes", None),
+# The sub is one line (trigger foods are the back page's "Cut the sugar"), so the Remove arrow has room to breathe.
+# The back page no longer calls Spectrum BR a 5R step, so the ribbon stays front-page education.
+FIVE = [("Remove", "unwanted microbes", "This sheet"), ("Replace", "stomach acid, enzymes", None),
         ("Reinoculate", "friendly bacteria", None), ("Repair", "heal the lining", None),
         ("Retain", "keep the balance", None)]
 
@@ -955,7 +984,7 @@ def front(t, ed):
 
 CSS = r"""
 .gov .gov-art svg{display:block;width:96.6%;height:auto;margin:0 auto}   /* a hair under full width: the room pays for the
-   two-line Remove step, the KEY gap and the gas boxes */
+   5R ribbon's height, the KEY gap and the gas boxes */
 .gov-key{position:relative;border:1.2px solid #C9D6DA;border-radius:8px;padding:7px 8px 4px;margin-top:10px}
 .gov-kt{position:absolute;top:-7px;left:12px;background:#fff;padding:0 6px;font:800 7.2pt Inter,sans-serif;
   letter-spacing:.16em;text-transform:uppercase;color:var(--deep)}
@@ -1008,7 +1037,9 @@ CSS = r"""
 .gov-5rh span{display:block;font-size:7.4pt;line-height:1.25;color:#4A555C;margin-top:1px}
 .gov-5rh em{font-style:normal;font-weight:700;color:var(--deep)}
 .gov-5rr{display:grid;grid-template-columns:repeat(5,1fr)}
-.gov-5rr>div{position:relative;background:var(--soft);color:var(--deep);padding:3px 14px 3px 18px;min-height:0.42in;
+/* min-height keeps the ribbon at the height it had with a two-line Remove sub: the one-line sub now leaves the Remove
+   arrow (title, sub and THIS SHEET tag) clear room above and below, like its neighbours */
+.gov-5rr>div{position:relative;background:var(--soft);color:var(--deep);padding:3px 14px 3px 18px;min-height:0.568in;
   display:flex;flex-direction:column;justify-content:center;
   clip-path:polygon(0 0,calc(100% - 10px) 0,100% 50%,calc(100% - 10px) 100%,0 100%,10px 50%)}
 .gov-5rr>div:first-child{clip-path:polygon(0 0,calc(100% - 10px) 0,100% 50%,calc(100% - 10px) 100%,0 100%);padding-left:9px}
@@ -1017,6 +1048,7 @@ CSS = r"""
 .gov-5rr b i{font-style:normal;display:inline-flex;align-items:center;justify-content:center;width:13px;height:13px;
   border-radius:50%;background:var(--c1);color:#fff;font:800 7pt/1 Inter,sans-serif}
 .gov-5rr span{font-size:7pt;line-height:1.12;color:#3B464C}
+.gov-5rr>div:first-child span{white-space:nowrap}   /* "unwanted microbes" fits the arrow with 5 px to spare: never wrap it */
 .gov-5rr em{font-style:normal;font:800 7pt/1.15 Inter,sans-serif;letter-spacing:.04em;color:#B3362B;margin-top:1px}
 .gov-5rr>div.gov-on{background:var(--c1);color:#fff}
 .gov-5rr>div.gov-on b i{background:#fff;color:var(--c1)}
@@ -1038,20 +1070,33 @@ CSS = r"""
 .sheet.back:has(.gov-back) .rhythm{grid-template-columns:1.2fr 1.2fr .6fr}
 .sheet.back:has(.gov-back) .life .disc2{width:0.76in;height:0.76in}
 /* the two safety panels need the room: slightly tighter gaps between the back page's blocks */
-.sheet.back:has(.gov-back) .band{padding-bottom:0.14in}
+.sheet.back:has(.gov-back) .band{padding-bottom:0.12in}
 .sheet.back:has(.gov-back) .ns-title{margin-top:0.1in}
 .sheet.back:has(.gov-back) .cols{margin-top:0.06in}
-.sheet.back:has(.gov-back) .duo{margin-top:0.08in}
-.sheet.back:has(.gov-back) .notes{margin-top:0.08in}
+.sheet.back:has(.gov-back) .duo{margin-top:0.06in}
+.sheet.back:has(.gov-back) .notes{margin-top:0.06in}
+/* the Pharmacist check's Spectrum BR line needs a fourth line (CYP2C9 and warfarin, low blood sugar, licorice and
+   its three drug classes): in the pharmacy edition only, 1 px between the check bullets and none after the last
+   pays for it, with the gaps above.  The provider edition has room and keeps the kit's 2 px. */
+.sheet.back:has(.gov-edh) .rx li{margin-bottom:1px}
+.sheet.back:has(.gov-edh) .rx li:last-child{margin-bottom:0}
 /* The kit's plan line ends "start with the Start here pick, then add one product a week", which would stretch
-   a Remove step with a set length (ND584: 10 days) to five weeks.  This sheet's line keeps the kit's count and
-   asks who to start with instead, in each edition's words (.gov-edp / .gov-edh mark the edition). */
+   a Remove step with a set length (ND584: 10 days) to five weeks.  This sheet's line keeps the kit's count, names
+   the Start here pick (Spectrum BR, the one column with start: True) and leaves the pace of the rest to each
+   edition's checker (.gov-edp / .gov-edh mark the edition).  The check panel sets the row height, so the
+   rhythm panel has room for the second line this takes. */
 .sheet.back:has(.gov-back) .total:has(> b + b){font-size:0}
 .sheet.back:has(.gov-back) .total:has(> b + b) > b:first-of-type{font-size:7pt}
 .sheet.back:has(.gov-back) .total:has(> b + b) > b + b{display:none}
 .sheet.back:has(.gov-back) .total:has(> b + b)::before{content:"The full plan is ";font-size:7pt}
-.sheet.back:has(.gov-edp) .total:has(> b + b)::after{content:". Ask your provider which to start first.";font-size:7pt}
-.sheet.back:has(.gov-edh) .total:has(> b + b)::after{content:". Ask your pharmacist which to start first.";font-size:7pt}
+.sheet.back:has(.gov-edp) .total:has(> b + b)::after{content:". Start with Spectrum BR; ask your provider when to add the rest.";font-size:7pt}
+.sheet.back:has(.gov-edh) .total:has(> b + b)::after{content:". Start with Spectrum BR; ask your pharmacist when to add the rest.";font-size:7pt}
+/* The kit's rhythm has no between-meals slot.  The second box holds the evening-meal pills and S. boulardii's
+   mid-afternoon capsule (2 hours from the herbs, apart from dinner), so on this sheet it is labelled
+   "Afternoon + dinner" (the same font-size:0 + ::after trick; gap 0 so the hidden label adds no second gap). */
+.sheet.back:has(.gov-back) .slot:nth-child(2) .when{font-size:0;gap:0}
+.sheet.back:has(.gov-back) .slot:nth-child(2) .when svg{margin-right:4px}
+.sheet.back:has(.gov-back) .slot:nth-child(2) .when::after{content:"Afternoon + dinner";font-size:7pt}
 """
 
 
@@ -1062,11 +1107,13 @@ SHEET = {
     # [SENDER16] trillions of bacteria, almost all in the colon.  [ACG20] [MMC12] defences: stomach acid, the
     # fasting "housekeeper" waves, immunity.  [NAC17] a healthy upper small bowel holds up to about 10^3 CFU/mL and
     # the ileum more [ACG20], so "few", never "free of bacteria".  [CANDIDA20] Candida is a normal resident.
-    # [CDC-GIA] parasites.  The test sentence lives in the "Three kinds" header just below.
+    # [CDC-GIA] [CDC-PIN] parasites come from exposure (untreated water, food, another person), not from weak
+    # defenses, so they get their own sentence.  The test sentence lives in the "Three kinds" header just below.
     "intro": ("Trillions of microbes live in your gut, almost all of them in the <b>colon</b> (large intestine). "
               "Stomach acid, the gut&rsquo;s sweeping waves and your immune system keep bacteria in the "
-              "<b>small intestine</b> few, and yeast and parasites in check. When those defenses slip, bacteria crowd the "
-              "small intestine (<b>SIBO</b>), <b>Candida</b> yeast multiplies, or a <b>parasite</b> moves in."),
+              "<b>small intestine</b> few and yeast in check. When those defenses slip, bacteria crowd the "
+              "small intestine (<b>SIBO</b>) or <b>Candida</b> yeast multiplies. <b>Parasites</b> are caught from "
+              "water, food or people."),
     "front": front,
     "css": CSS,
     "back": {
@@ -1080,8 +1127,8 @@ SHEET = {
             ("sugar", "Cut the sugar", "Skip added sugar, sweet drinks, alcohol and junk food during the plan."),
             # [MMC12] cleaning waves run only in the fasting state; [ND584] no food within 2 hours of bedtime
             ("clock", "Space your meals", "No grazing: the gut sweeps itself between meals. Stop eating 2 hours before bed."),
-            # [CDC-GIA] prevention: hand washing, safe water, food hygiene
-            ("drop", "Wash, cook, filter", "Wash hands and produce, cook meat through, and skip untreated lake water."),
+            # [CDC-GIA] prevention: hand washing, food hygiene, and boil or filter untreated water before drinking it
+            ("drop", "Wash, cook, filter", "Wash hands and produce, cook meat through, and boil or filter lake water."),
             # [ND584] "Avoid eating under stress. Eat slowly."
             ("plate", "Eat calm, chew well", "Slow, unhurried meals give stomach acid and enzymes a head start."),
             # [SU18] PPIs raise SIBO risk; stopping is a prescriber decision
@@ -1098,11 +1145,13 @@ SHEET = {
         # bedtime, 2 hours from every other pill, so it cannot carry the probiotic or a medicine out with the stool.
         # Claim bullets start with their verb, so the kit ends each one with the diamond tied to the FDA line.
         "cols": [
-            # ND505 Rev. 8/24, the sell sheet's own claim: "Promote a healthy gastrointestinal tract"
+            # ND505 Rev. 8/24, the sell sheet's own claim: "Promote a healthy gastrointestinal tract".  Bullet 2 is a
+            # formula fact (berberine HCl plus the label's six-herb blend), not "Step 1 of the 5R plan": next to the
+            # front's "Remove unwanted microbes: this sheet" a 5R step would read as an antimicrobial claim.
             {"p": "go_spectrum_br", "need": "Balance the flora", "needsub": "berberine, Oregon grape",
              "start": True, "dose": "dose_from_db",
              "bullets": ["Promotes a healthy gastrointestinal tract",
-                         "Step 1 of NutriDyn&rsquo;s 5R gut plan"]},
+                         "Berberine plus a six&#8209;herb blend"]},
             # ND949 Rev. 2/25: ginger plus eight oils; serratiopeptidase and calcium EDTA "support healthy biofilms"
             {"p": "go_nutricidin", "need": "Plant oils + enzyme", "needsub": "oregano, thyme, clove and more",
              "dose": "dose_from_db",
@@ -1112,11 +1161,13 @@ SHEET = {
             {"p": "go_paradex", "need": "Herbal cleanse", "needsub": "black walnut, wormwood",
              "dose": "dose_from_db",
              "bullets": ["Supports a healthy intestinal environment", "Five traditional cleanse herbs"]},
-            # ND170 Rev. 8/25: one capsule twice daily
+            # ND170 Rev. 8/25: one capsule twice daily.  S. boulardii is a yeast: antibacterial antibiotics leave it
+            # alone and antifungals (nystatin, fluconazole: a likely co-prescription on a yeast sheet) can kill it,
+            # Kelesidis 2012 PMID 22423260; printed in both editions
             {"p": "go_sboulardii", "need": "A friendly yeast", "needsub": "S. boulardii probiotic",
              "dose": "dose_from_db",
              "bullets": ["Supports a balanced gut microbiome",
-                         "A yeast, so antibiotics do not wipe it out"]},
+                         "Antifungals harm it; antibiotics do not"]},
             # the header says "Bind and carry out"; a binder taken with other pills can carry them out too, so it
             # sits 2 hours from medicines and other pills (both bullets fit two lines in this narrow column)
             {"p": "go_binder_pro", "need": "Bind and carry out", "needsub": "apple pectin, chlorella",
@@ -1130,36 +1181,45 @@ SHEET = {
             # The empty .gov-edp / .gov-edh spans mark the edition for the plan line's CSS (see CSS).
             "practitioner": [
                 # Guo 2012 (berberine slows CYP3A4/2D6/2C9; ND505 names cyclosporine); Yin 2008 (berberine lowers
-                # blood sugar, so it adds to diabetes drugs: the risk is low blood sugar); all labels: "taking
-                # medication ... consult"
-                f'<span class="{U}-edp"></span><b>On any medicine?</b> Berberine changes how the liver clears many '
-                "medicines, such as cyclosporine, and can push blood sugar too low with diabetes drugs. Bring your "
-                "list to {who}.",
+                # blood sugar, so with diabetes drugs the risk is low blood sugar); licorice root in the ND505 blend
+                # (not DGL) can raise blood pressure, Deutch 2019, Kwon 2020: the lead names high blood pressure so a
+                # reader on no medicine still stops here; all labels: "taking medication ... consult"
+                f'<span class="{U}-edp"></span><b>On any medicine or high blood pressure?</b> Berberine changes how '
+                "the liver clears many medicines, such as cyclosporine, and can push blood sugar too low with "
+                "diabetes drugs; Spectrum BR&rsquo;s licorice can raise blood pressure. Bring your list to {who}.",
+                # Spectrum BR: the ND505 blend's ginger root (Heck 2000), and berberine slows CYP2C9 (Guo 2012), the
+                # enzyme that clears S-warfarin (Kaminsky LS, Zhang ZY. Pharmacol Ther 1997;73:67-74, PMID 9014207).
                 # Heck 2000 (ginger, clove, garlic); Hosseini 2024, Jadhav 2020 (serratiopeptidase breaks down fibrin);
                 # Preusch 1989 (pau d'arco's lapachol); chlorella vitamin K vs warfarin (MedlinePlus)
-                "<b>On a blood thinner?</b> Nutricidin, Paradex and Binder Pro can affect it. Ask {who} first.",
+                "<b>On a blood thinner?</b> Spectrum BR, Nutricidin, Paradex and Binder Pro can affect it. "
+                "Ask {who} first.",
                 # ND505 (Spectrum BR) "Do not use if pregnant or nursing"; Paradex retail label: not in pregnancy or
                 # nursing; ND949, ND170, ND1141: "consult"; all doses are adult label doses; Chan 1993 (berberine
                 # and newborns)
                 "<b>Pregnant or nursing?</b> Do not take Spectrum BR or Paradex; ask {who} about the rest. "
                 "<b>For a child?</b> These are adult doses: ask first.",
-                # Enache-Angoulvant 2005 (central lines, weak immunity); Paradex: black walnut, "may contain traces
-                # of tree nuts" (retail listing)
-                "<b>Weak immunity, a central IV line or a tree-nut allergy?</b> Ask before S. boulardii or Paradex.",
+                # Enache-Angoulvant 2005 (invasive Saccharomyces infection: central venous catheters and immune
+                # suppression are the main risks, so skip it, as the pharmacy edition says); Paradex: black walnut,
+                # "may contain traces of tree nuts" (retail listing)
+                "<b>Central IV line or weak immunity?</b> Skip S. boulardii unless {who} says yes. "
+                "<b>Tree-nut allergy?</b> Ask before Paradex.",
             ],
             "pharmacy": [
-                # Guo 2012 PMID 21870106; ND505 cyclosporine caution; Yin 2008 PMID 18442638.  Licorice root is in
-                # the ND505 blend (not DGL): Deutch 2019 PMID 31615045, Kwon 2020 PMID 31874059 (blood pressure up,
-                # potassium down), hence diuretics, digoxin and steroids
-                f'<span class="{U}-edh"></span><b>Spectrum BR:</b> berberine slows drug-clearing enzymes (CYP3A4, '
-                "2D6, 2C9; cyclosporine) and adds to diabetes drugs; its licorice can raise blood pressure and lower "
-                "potassium (diuretics, digoxin, steroids).",
-                # Heck 2000 PMID 10902065 (ginger, clove, garlic); Hosseini 2024 PMID 38502196 and Jadhav 2020 PMID
-                # 33134103 (serratiopeptidase); Preusch 1989 PMID 2916837 (pau d'arco); chlorella vitamin K and
-                # warfarin (MedlinePlus)
-                "<b>Blood thinners:</b> ginger, clove oil and the enzyme serratiopeptidase (Nutricidin) and garlic and "
-                "pau d&rsquo;arco (Paradex) may add to bleeding; chlorella&rsquo;s vitamin K (Binder Pro) can weaken "
-                "warfarin.",
+                # Guo 2012 PMID 21870106 (berberine slows CYP3A4, 2D6, 2C9); ND505 cyclosporine caution; CYP2C9
+                # clears S-warfarin, Kaminsky 1997 PMID 9014207; Yin 2008 PMID 18442638 (berberine lowers blood
+                # sugar, so with diabetes drugs it can go too low).  Licorice root is in the ND505 blend (not DGL):
+                # Deutch 2019 PMID 31615045, Kwon 2020 PMID 31874059 (blood pressure up, potassium down), hence
+                # diuretics, digoxin and steroids
+                f'<span class="{U}-edh"></span><b>Spectrum BR:</b> berberine slows liver enzymes (CYP3A4, 2D6, '
+                "2C9: cyclosporine, warfarin) and can push blood sugar too low with diabetes drugs; its licorice can "
+                "raise blood pressure and lower potassium (diuretics, digoxin, steroids).",
+                # Each product named with its own herbs.  Spectrum BR: the ND505 blend's ginger root; Heck 2000 PMID
+                # 10902065 (ginger, clove, garlic; it lists licorice root too); Hosseini 2024 PMID 38502196 and Jadhav
+                # 2020 PMID 33134103 (serratiopeptidase); Preusch 1989 PMID 2916837 (pau d'arco); chlorella vitamin K
+                # and warfarin (MedlinePlus)
+                "<b>Blood thinners:</b> Spectrum BR (ginger), Nutricidin (ginger, clove oil, serratiopeptidase) and "
+                "Paradex (garlic, pau d&rsquo;arco) may add to bleeding; Binder Pro&rsquo;s chlorella (vitamin K) can "
+                "weaken warfarin.",
                 # ND505 + Paradex retail label: not in pregnancy or nursing; the other three labels: consult; adult
                 # label doses; Chan 1993 PMID 8513024 (berberine displaces bilirubin in newborns)
                 "<b>Pregnant or nursing?</b> Do not take Spectrum BR or Paradex; ask {who} about the rest. "

@@ -1,0 +1,85 @@
+{
+  "gerd_zinc_carnosine": {
+    "name": "Zinc-Carnosine",
+    "size": "60 capsules",
+    "img_src": "R154.png",
+    "key": "17 mg zinc + 58 mg L-carnosine (75 mg zinc carnosine, as PepZin GI)",
+    "dose": "1 capsule daily",
+    "dosesub": "at bedtime, between meals",
+    "sched": [
+      [
+        "bed",
+        1,
+        "capsule"
+      ]
+    ],
+    "src": "NutriDyn sell sheet 'Zinc-Carnosine SS ND414' Rev. 1/25, Supplement Facts (Dropbox /NutriDyn/Sales/Practitioner Resource/NutriDyn Marketing Materials/, id:xHepYs_Ou4AAAAAAAAw6nQ, read 2026-11-03): serving 1 capsule, 60 servings; zinc (as zinc-carnosine, PepZin GI) 17 mg, L-carnosine 58 mg; '75 mg zinc-carnosine per serving'; directions 'Take one capsule twice daily between meals'. Same amounts as products DB R154 (Metagenics chart). Sheet dose is 1 a day because GI Integrity's scoop supplies the second zinc-carnosine dose (keeps the plan's zinc near 38 mg). No current product-page URL turned up in the emails searched (they give links for GI Integrity, Spore Probio and Magnesium Glycinate only), so the link falls back to catalog search. Photo: shared R154 file, a 4x stopgap enlarged from the 88x160 chart thumbnail (soft)."
+  },
+  "gerd_dgl_pro": {
+    "name": "Licorice DGL Pro",
+    "size": "90 chewable tablets",
+    "img_src": "R2193.png",
+    "key": "Per 3 tablets: 75 mg DGL extract, 100 mg glycine, 100 mg L-glutamine, 30 mg NAC, 5 mg zinc",
+    "dose": "Chew 3 tablets",
+    "dosesub": "after your biggest meal",
+    "sched": [
+      [
+        "pm",
+        3,
+        "tablets"
+      ]
+    ],
+    "src": "NutriDyn sell sheet 'Licorice DGL Pro SS ND1337' Rev. 8/26, Supplement Facts (Dropbox /NutriDyn/Sales/Practitioner Resource/NutriDyn Marketing Materials/, id:xHepYs_Ou4AAAAAAAA2BIg, read 2026-11-03): serving 3 chewable tablets, 30 servings; zinc (as zinc glycinate) 5 mg, glycine 100 mg, L-glutamine 100 mg, deglycyrrhizinated licorice extract 75 mg, N-acetyl-cysteine 30 mg; directions 'Chew 3 tablets after each meal'. Same amounts as products DB R2193 (Integrative Therapeutics and Microbiome Labs charts); size R2193 90T on the 10/1/26 price list. Sheet uses 3 a day (Asher's GERD protocol, Gmail 16eec3cc434c5ff7, 2019-12-12: 'Chew three tablets as needed', or 1-3 before each meal) to keep the plan's zinc near 38 mg. Asher linked https://nutridyn.com/licorice-dgl-pro in 2019 (Gmail 16eec3cc434c5ff7); nutridyn.com is blocked from this session and NutriDyn's slugs changed after 2020, so the sheet keeps the catalog-search link. Photo: only the 89x160 chart thumbnail exists (products/img/R2193.png): LOW-RES, needs the print master."
+  },
+  "gerd_gi_integrity": {
+    "name": "GI Integrity",
+    "size": "About 28 servings &middot; Peach Tea, Berry or Chocolate",
+    "img_src": "R325.png",
+    "key": "3 g L-glutamine, 400 mg DGL, 300 mg aloe, 200 mg slippery elm, 16 mg zinc (as zinc carnosine)",
+    "dose": "1 scoop daily",
+    "dosesub": "in 6 to 8 oz water",
+    "sched": [
+      [
+        "am",
+        1,
+        "scoop"
+      ]
+    ],
+    "url": "https://nutridyn.com/dyn-gi-integrity",
+    "src": "NutriDyn sell sheet 'GI Integrity SS ND431' Rev. 12/24, Berry Supplement Facts (Dropbox /NutriDyn/Sales/Practitioner Resource/NutriDyn Marketing Materials/, id:xHepYs_Ou4AAAAAAAAsjHA, read 2026-11-03): about 1 scoop (8.5 g), about 28 servings; zinc (as zinc-carnosine) 16.1 mg, L-glutamine 3 g, glucosamine HCl 1 g, apple pectin 1 g, DGL powder 400 mg, aloe vera leaf gel extract 300 mg, slippery elm 200 mg, marshmallow, chamomile, okra, cat's claw, MSM, quercetin and prune 100 mg each, L-carnosine 62 mg ('Features 78 mg of zinc-carnosine'); flavors peach tea, chocolate, berry; 'Warning: Do not use if pregnant or nursing'. Okra is on the label (the line leaves it out only for space). Amounts match the products DB R327 chart reads (Pure, DFH, Ortho, Apex). URL: Asher's emails of 2024-01-18 and 2025-11-18 (Gmail 18d1d75b79d8ae28, 19a9837bbdb2aa60). Photo: img-src/R325.png, the Peach Tea label (AI upscale of NutriDyn's 420 px web render)."
+  },
+  "gerd_spore_probio": {
+    "name": "UltraBiotic Spore Probio",
+    "size": "60 capsules &middot; 30 servings",
+    "img_src": "R2196.png",
+    "key": "Per 2 capsules: 5 billion CFU from 4 spore-forming strains, 300 mg XOS prebiotic, 100 mg enzymes",
+    "dose": "2 capsules daily",
+    "dosesub": "with breakfast",
+    "sched": [
+      [
+        "am",
+        2,
+        "capsules"
+      ]
+    ],
+    "url": "https://nutridyn.com/spore-probio",
+    "src": "NutriDyn sell sheet 'UltraBiotic Spore Probio SS ND1135' Rev. 1/25, Supplement Facts (Dropbox /NutriDyn/Sales/Practitioner Resource/NutriDyn Marketing Materials/, id:xHepYs_Ou4AAAAAAAAtqcA, read 2026-11-03): serving 2 capsules, 30 servings; spore probiotic complex 5 billion CFU (Weizmannia coagulans MTCC 5856, Pediococcus acidilactici NRRL B50517, Bacillus clausii MTCC 5980, Bacillus subtilis ATCC122264), xylooligosaccharides 300 mg, digestive enzyme blend 100 mg, PreforPro phage complex 15 mg; directions 'Take two capsules daily'. Same amounts as products DB R2196 (DFH, Ortho, Thorne, Microbiome Labs charts). URL from NutriDyn's own launch email, 2024-04-04 (Gmail 18eaa6b34a886863). Photo: only the 86x160 chart thumbnail is in a searched folder: LOW-RES. A 248x420 NutriDyn web render exists at scratchpad/hires/_dl/art_switchkit/img/r2196.png for central staging."
+  },
+  "gerd_mag_glycinate": {
+    "name": "Magnesium Glycinate",
+    "size": "60, 120, 160 or 320 capsules",
+    "img_src": "R872.png",
+    "key": "260 mg magnesium per 2 capsules, as di-magnesium malate and magnesium lysinate glycinate chelate (Albion)",
+    "dose": "2 capsules daily",
+    "dosesub": "at bedtime",
+    "sched": [
+      [
+        "bed",
+        2,
+        "capsules"
+      ]
+    ],
+    "url": "https://nutridyn.com/magnesium-glycinate",
+    "src": "NutriDyn sell sheet 'Magnesium Glycinate SS ND413' Rev. 7/25, Supplement Facts (Dropbox /NutriDyn/Sales/Practitioner Resource/NutriDyn Marketing Materials/, id:xHepYs_Ou4AAAAAAAAu4cA, read 2026-11-03): serving 2 capsules, 30/60/80/160 servings; magnesium (as di-magnesium malate and magnesium lysinate glycinate chelate, Albion) 260 mg, malic acid 660 mg; directions 'Take two capsules twice daily'. Same as products DB R871/R872 (Pure, DFH, Ortho charts); sizes R871 60C, R871L 120C, R872 160C, R872L 320C. Sheet dose 2 a day (260 mg) stays under the 350 mg upper limit for supplemental magnesium (NIH ODS). URL: Asher's email 2024-01-18 (Gmail 18d1d75b79d8ae28), same slug as products.py. Photo pools with the shared magnesium-glycinate file (AI upscale)."
+  }
+}

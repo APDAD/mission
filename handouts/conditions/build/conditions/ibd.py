@@ -293,10 +293,19 @@ W_DUO = 5.6
 COLON = _cr([(-34.6, 226.0), (-34.2, 214.0), (-33.8, 201.0), (-33.6, 188.0), (-34.0, 176.0),
              (-31.4, 167.6), (-24.0, 164.4), (-13.0, 168.2), (-1.5, 173.2), (10.5, 173.0),
              (21.5, 168.0), (30.0, 161.6), (35.6, 158.0), (38.6, 162.6), (37.4, 172.0),
-             (35.6, 183.5), (35.0, 195.5), (35.4, 206.5), (33.6, 216.0), (27.4, 222.6),
-             (18.6, 223.4), (11.0, 219.4), (5.4, 218.6), (2.0, 221.6), (0.7, 226.4)])
+             (35.6, 183.5), (35.0, 195.5), (35.4, 206.5), (33.0, 215.0), (26.6, 220.2),
+             (18.4, 220.6), (11.6, 216.6), (6.6, 212.6), (2.8, 212.4), (1.0, 215.6)])
 W_COLON = 11.0
-RECTUM = _cr([(0.8, 224.6), (0.4, 230.0), (0.1, 234.4), (0.0, 237.6)])
+# The rectum is drawn AFTER the colon, starting exactly at the colon's end with the colon's own end
+# tangent and a flat (butt) top, so it covers the colon's round end cap: one continuous bowel, no
+# seam arc (front recheck 2026-11-03).  The sigmoid now meets it higher (about y 215), so the rectum
+# is 21 units long instead of a 13-unit stub; its round bottom cap ends at y 243, inside the crotch
+# line at 250.6 (check_inside()).
+_CEND = COLON[-1][3]
+_CTAN = (COLON[-1][3][0] - COLON[-1][2][0], COLON[-1][3][1] - COLON[-1][2][1])
+_CL = math.hypot(*_CTAN)
+RECTUM = [(_CEND, (_CEND[0] + _CTAN[0] / _CL * 6.0, _CEND[1] + _CTAN[1] / _CL * 6.0),
+           (0.0, 229.6), (0.0, 236.0))]
 W_RECT = 12.0
 # Cecum: the colon's widened blind pouch, drawn in the colon's own style and continuous with
 # the ascending colon: it widens from the colon's 11 units at the top to 14.3 (1.3x) at the
@@ -340,7 +349,7 @@ SI_LOOP = 23.0          # the coil is drawn as separate loops about this long, e
 UC_COLON = (0.47, 1.0)          # mid-transverse colon -> splenic flexure -> descending -> sigmoid
 CD_COLON = [(0.12, 0.25), (0.40, 0.49), (0.62, 0.69)]   # ascending; transverse; descending (splenic flexure healthy)
 CD_SI = (frac_at(SI, -36.0), 1.0)   # terminal ileum: its last 36 units, into the cecum
-TI_DOT = nearest(SI, (-13.0, 221.8))   # where both "End of the small intestine" leaders land (on the terminal ileum)
+TI_DOT = nearest(SI, (-16.0, 222.0))   # where both "End of the small intestine" leaders land (on the terminal ileum)
 
 
 # ----------------------------------------------------------------------------- drawing
@@ -376,6 +385,33 @@ def tube(segs, w, pal, kind="si"):
     return "".join(out)
 
 
+def rectum_tube(pal, cid):
+    """The rectum, drawn after the colon so it hides the colon's round end cap: a run of discs along its
+    centre line, cut flat exactly at the joint (clip `cid`, the half-plane past the colon's end, square to
+    the colon's end tangent).  It starts at the colon's own outline and body widths and flares smoothly
+    to its full width over its first 7 units, so the outline runs on without a step; the last disc is the
+    round bottom.  The highlight stripe uses the colon stripe's offset and width, so the sheen runs on
+    through the joint too."""
+    (jx, jy), (cx1, cy1) = RECTUM[0][0], RECTUM[0][1]
+    tl = math.hypot(cx1 - jx, cy1 - jy)
+    tx, ty = (cx1 - jx) / tl, (cy1 - jy) / tl
+    nx, ny = -ty, tx
+    quad = [(jx + nx * 60, jy + ny * 60), (jx + nx * 60 + tx * 80, jy + ny * 60 + ty * 80),
+            (jx - nx * 60 + tx * 80, jy - ny * 60 + ty * 80), (jx - nx * 60, jy - ny * 60)]
+    total = length(RECTUM)
+    pts = sample(RECTUM, 0.3)
+    k = len(pts) - 1
+    edge0, edge1 = (W_COLON + 1.9) / 2, (W_RECT + 2.0) / 2     # colon outline: solid 12.3, bulges 13.5 wide
+    body0, body1 = (W_COLON - 0.75) / 2, W_RECT / 2            # colon body: solid 9.4, bulges 11.1 wide
+    flare = lambda i, a, b: a + (b - a) * _smooth01(min(1.0, total * i / k / 7.0))
+    edge = "".join(f'<circle cx="{p[0]:.2f}" cy="{p[1]:.2f}" r="{flare(i, edge0, edge1):.2f}"/>' for i, (p, _) in enumerate(pts))
+    body = "".join(f'<circle cx="{p[0]:.2f}" cy="{p[1]:.2f}" r="{flare(i, body0, body1):.2f}"/>' for i, (p, _) in enumerate(pts))
+    poly = " ".join(f"{x:.2f},{y:.2f}" for x, y in quad)
+    return (f'<clipPath id="{cid}"><polygon points="{poly}"/></clipPath>'
+            f'<g clip-path="url(#{cid})"><g fill="{pal["edge"]}">{edge}</g><g fill="{pal["body"]}">{body}</g></g>'
+            f'<g transform="translate(-0.7,-0.9)">{_stroke(_d(RECTUM), pal["hi"], W_COLON * 0.26, " opacity=.85")}</g>')
+
+
 def si_coil(segs, w=W_SI):
     """The small intestine as a pile of loops.  The coil is cut into loops about SI_LOOP
     long; each loop is drawn whole (soft shadow, outline, darker underside, body, one short
@@ -406,6 +442,12 @@ def _smooth01(t):
     return t * t * (3 - 2 * t)
 
 
+def _colon_x_at(y):
+    """x of the ascending colon's centre line at height y (its first stretch, above the cecum)."""
+    pts = [p for p, _ in sample(sub(COLON, 0.0, 0.08), 0.2)]
+    return min(pts, key=lambda p: abs(p[1] - y))[0]
+
+
 def cecum(mode, pal=GI):
     """The cecum: a short, wider stretch of colon, continuous with the ascending colon above
     it.  Drawn as a run of discs whose size grows toward the round bottom, in the colon's
@@ -434,8 +476,12 @@ def cecum(mode, pal=GI):
         g.append(f'<path d="M{x - hw:.2f},{y:.2f} Q{x:.2f},{y + 1.3:.2f} {x + hw:.2f},{y:.2f}" fill="none" '
                  f'stroke="{pal["band"]}" stroke-width="0.95" stroke-linecap="round" opacity=".75"/>')
     xb, yb, wb = c[-1]
-    g.append(f'<path d="M{x0 - 3.1:.2f},{y0 + 1:.2f} C{x0 - 3.4:.2f},{y0 + 6:.2f} {xb - 4.6:.2f},{yb - 3:.2f} {xb - 3.2:.2f},{yb + 2.6:.2f}" '
-             f'fill="none" stroke="{pal["hi"]}" stroke-width="2.4" stroke-linecap="round" opacity=".8"/>')
+    # The highlight picks up exactly where the colon's own highlight stripe is cut off by the cecum's top
+    # (the colon draws its stripe along the centre line shifted (-0.7, -0.9), at width W_COLON * 0.26),
+    # then curves gently outward over the pouch: no kink at the seam (front recheck 2026-11-03).
+    hx = _colon_x_at(y0 + 0.9) - 0.7
+    g.append(f'<path d="M{hx:.2f},{y0:.2f} C{hx - 0.15:.2f},{y0 + 4.5:.2f} {xb - 4.6:.2f},{yb - 3:.2f} {xb - 3.2:.2f},{yb + 2.6:.2f}" '
+             f'fill="none" stroke="{pal["hi"]}" stroke-width="{W_COLON * 0.26:.2f}" stroke-linecap="round" opacity=".85"/>')
     return (f'<clipPath id="{cid}"><rect x="-80" y="{y0:.2f}" width="160" height="80"/></clipPath>'
             f'<g clip-path="url(#{cid})">{"".join(g)}</g>')
 
@@ -503,11 +549,11 @@ def figure(mode, x, y, s=1.0):
     # the colon, rectum and cecum sit a little in front of the coil: a soft contact shadow
     for segs, w in ((COLON, W_COLON), (RECTUM, W_RECT)):
         g.append(_stroke(_d(segs), GI["shadow"], w + 4.6, ' opacity=".09"') + _stroke(_d(segs), GI["shadow"], w + 2.8, ' opacity=".11"'))
-    g.append(tube(RECTUM, W_RECT, RED if mode == "uc" else GI, "plain"))
     g.append(tube(COLON, W_COLON, GI, "colon"))
     for segs, w in reds:
         if w == W_COLON:
             g.append(tube(segs, W_COLON, RED, "colon"))
+    g.append(rectum_tube(RED if mode == "uc" else GI, f"{k}-rclip"))     # after the colon: covers its end cap
     g.append(cecum(mode))
     g.append(stomach())
     g.append("</g></g>")
@@ -604,16 +650,21 @@ SI_DOT_R = nearest(SI, (24.4, 206.5))
 # "via" points route a leader around an organ.  The Crohn's terminal-ileum callout cannot come
 # from the outer side without crossing the whole belly, so it sits in the clear band under
 # the KEY and reaches the ileum through the gap between the cecum and the rectum (art_ibd()).
+TI_VIA = (-28.5, 242.8)   # both "End of the small intestine" leaders pass under the cecum through this point
 LABELS = [
-    {"name": ["Stomach"], "y": 143.0, "L": [(15.0, 142.0)], "R": [(34.4, 139.0)]},
+    # both Stomach dots sit inside the stomach body (the right one was on its outline, half on skin)
+    {"name": ["Stomach"], "y": 143.0, "L": [(15.0, 142.0)], "R": [(27.0, 141.0)]},
     {"name": ["Colon"], "gloss": "large intestine", "y": 178.0, "L": [(-40.4, 180.0)], "R": [(42.6, 180.0)]},
     {"name": ["Small intestine"], "y": 212.0, "L": [SI_DOT_L], "R": [SI_DOT_R]},
     {"name": ["End of the", "small intestine"], "y": 232.0, "from": 1,          # leader leaves the 2nd line
-     "L": [(-31.0, 243.8), TI_DOT], "R": None},                                  # routed under the cecum
-    {"name": ["Rectum"], "y": 266.0, "L": [(-4.6, 241.4)], "R": [(4.6, 241.4)]},
+     "L": [TI_VIA, TI_DOT], "R": None},                                         # routed under the cecum
+    {"name": ["Rectum"], "y": 268.0, "L": [(-3.0, 239.6)], "R": [(3.0, 239.6)]},   # low on the rectum: 6 units clear of the TI leader
 ]
-CD_TI = {"x": FX2 - 56.0, "y": 256.0,    # Crohn's callout: right-aligned text end and first baseline (art units)
-         "via": (-19.0, 246.0)}           # then up through the cecum-rectum gap (figure-local)
+# Crohn's terminal-ileum callout: right-aligned text end and first baseline (art units).  It shares the
+# Ulcerative colitis callout's baseline (FY + 232) and its offset from the figure (70 units left of the
+# midline, so both texts end 15 units short of the hips), and its leader takes the same route under the
+# cecum (TI_VIA), so the two callouts are an exact pair.  The KEY above it ends at art y 212.
+CD_TI = {"x": FX2 - LAB_X, "y": FY + 232.0, "via": TI_VIA}
 
 
 def leader(pts):
@@ -741,26 +792,29 @@ def key_svg(cx, y):
 
 def art_ibd(t):
     o = [defs_svg(), figure("uc", FX1, FY, FS), figure("cd", FX2, FY, FS), labels()]
-    # the centre line: VS, then the key
-    o.append(f'<circle cx="380" cy="{FY + 100}" r="33" fill="#fff" stroke="{t["c1"]}" stroke-width="3"/>')
-    o.append(T(380, FY + 111, "VS", 30, 900, t["deep"], "middle"))
-    o.append(key_svg(380, FY + 158))
+    # the centre line: VS, then the key.  Raised so the key box ends at art y 212, well above the
+    # Crohn's callout that shares the Ulcerative colitis callout's baseline (y 236).
+    o.append(f'<circle cx="380" cy="{FY + 78}" r="33" fill="#fff" stroke="{t["c1"]}" stroke-width="3"/>')
+    o.append(T(380, FY + 89, "VS", 30, 900, t["deep"], "middle"))
+    o.append(key_svg(380, FY + 130))
     return svg(AW, AH, "".join(o), "Two identical human figures with the whole digestive tract inside. In ulcerative "
-               "colitis, one unbroken stretch of the colon is red, from the rectum up. In Crohn's disease, separate red "
+               "colitis, one unbroken stretch of the colon is red, from the rectum up. In Crohn’s disease, separate red "
                "patches sit at the end of the small intestine and in the colon, with healthy bowel between them.")
 
 
 # ----------------------------------------------------------------------------- front blocks
 CAPTIONS = [("Ulcerative colitis",     # [ACGUC]
              "One unbroken stretch of inflammation that starts in the rectum and climbs the colon."),
-            ("Crohn's disease",        # [ACGCD]
+            ("Crohn’s disease",        # [ACGCD]
              "Patchy inflammation with healthy gaps, most often at the end of the small intestine.")]
 
 COMPARE = [   # (row, ulcerative colitis, Crohn's disease)
     ("Where", "Colon and rectum only",                                          # [ACGUC]
      "Anywhere from mouth to anus, most often the end of the small intestine"),  # [ACGCD]
     ("Depth", "The inner lining of the bowel", "Can go through the whole bowel wall"),   # [ACGUC] [ACGCD]
-    ("Fistulas", "Uncommon", "Can form: tunnels through the bowel wall"),                  # [CCUK] [ACGCD]
+    # a fistula is a tunnel from the bowel to the skin or another organ (front recheck: "through the bowel wall"
+    # repeated the Depth row and undersold it); "from the bowel" is left to the row, so the cell stays one line
+    ("Fistulas", "Uncommon", "Can form: tunnels to the skin or another organ"),   # [CCUK] [ACGCD]
     ("Pain", "Often the left side of the belly", "Often the lower right belly"),         # [CCF-T]
     ("Bleeding", "Common, with bowel movements", "Less common"),                         # [ACGUC] [ACGCD]
 ]
@@ -770,9 +824,9 @@ COMPARE = [   # (row, ulcerative colitis, Crohn's disease)
 # (it is not a UC trigger, so it is labelled); gut infections such as C. difficile [ACGUC];
 # trigger foods differ by person.  NSAIDs wear the pill bottle, the same icon the back
 # page's "Ask about NSAIDs" uses; antibiotics wear the capsule.
-TRIGGERS = [("headache", "Stress"), ("moon", "Poor sleep (Crohn's)"), ("sensitive", "Trigger foods"),
+TRIGGERS = [("headache", "Stress"), ("moon", "Poor sleep (Crohn’s)"), ("sensitive", "Trigger foods"),
             ("rx", "NSAID pain relievers"), ("capsule", "Antibiotics"), ("germ", "Gut infections"),
-            ("smoke", "Smoking (Crohn's)"), ("calendar", "Missed medicine")]
+            ("smoke", "Smoking (Crohn’s)"), ("calendar", "Missed medicine")]
 
 # Nutrients that often run low [WEI15] [HWA12]; vitamin D's reason [KIM20]
 NUTRIENTS = [("Fe", "Iron", "lost with bleeding"),
@@ -781,14 +835,20 @@ NUTRIENTS = [("Fe", "Iron", "lost with bleeding"),
              ("B9", "Folate", "lowered by some IBD medicines"),
              ("Zn", "Zinc", "lost with diarrhea")]
 
-# Line icons this sheet needs that kit.ICONS lacks (64x64, stroked with currentColor).
+# Line icons this sheet draws itself (64x64, stroked with currentColor; _ic() prefers these over kit.ICONS).
+# Front recheck 2026-11-03: the capsule now fills the same footprint as its neighbours (kit's is about half
+# their size), two-tone so it reads as a pill; the germ is a round-bodied cell with short pili and one wavy
+# flagellum, so its outline no longer echoes the capsule beside it (the old rod read as a wrapped sweet).
 MY_ICONS = {
-    # a rod-shaped germ with whip tails, so "Gut infections" cannot be read as a sun
-    "germ": '<rect x="15" y="23.5" width="34" height="17" rx="8.5" transform="rotate(-24 32 32)"/>'
-            '<path d="M47.6 22.4c2.4-3.6 5.6-1.8 7.6-5.2s5-2.4 6.4-5"/><path d="M50 28.8c3.6-.4 5.2 3 8.6 2.2"/>'
-            '<path d="M16.4 41.6c-2.4 3.6-5.6 1.8-7.6 5.2s-5 2.4-6.4 5"/><path d="M14 35.2c-3.6.4-5.2-3-8.6-2.2"/>'
-            '<circle cx="26.5" cy="34.5" r="2" fill="currentColor" stroke="none"/>'
-            '<circle cx="36" cy="30" r="2" fill="currentColor" stroke="none"/>',
+    "capsule": '<g transform="translate(32 32) rotate(-45)">'
+               '<path d="M0 -9H-16a9 9 0 0 0 0 18H0z" fill="currentColor" stroke="none" opacity=".35"/>'
+               '<path d="M-16 -9H16a9 9 0 0 1 0 18H-16a9 9 0 0 1 0-18z"/><path d="M0 -9V9"/></g>',
+    "germ": '<ellipse cx="27.5" cy="35" rx="15.5" ry="11" transform="rotate(-22 27.5 35)"/>'
+            '<path d="M29.4 47.5L30.3 51.9M18.4 47.3L16.3 51.3M11.7 41.4L7.6 43.1M11.9 33.6L7.5 32.6M17.7 26.3L14.7 22.9'
+            'M27.1 22.2L26.5 17.7M36.6 22.7L38.7 18.7M38.4 42.8L41.7 45.9"/>'
+            '<path d="M42.9 31.4c3.2-1.6 4.6 2.2 7.8 0.4s3-5 6.2-6.4 3.6 0.8 6.4-1.6"/>'
+            '<circle cx="23" cy="36.5" r="2.1" fill="currentColor" stroke="none"/>'
+            '<circle cx="32" cy="32.5" r="2.1" fill="currentColor" stroke="none"/>',
 }
 
 
@@ -814,7 +874,7 @@ def front(t, ed):
             f'<div class="{U}-h">What can stir up a flare</div><div class="{U}-trig">{trig}</div>'
             f'<div class="{U}-h">Nutrients that often run low in IBD</div>'
             f'<div class="{U}-nut"><div class="{U}-stat"><b>More than half</b><p>of people with IBD run low on at '
-            'least one vitamin or mineral, more often in Crohn\'s and during flares.</p></div>'
+            'least one vitamin or mineral, more often in Crohn’s and during flares.</p></div>'
             f'<div class="{U}-dep"><div class="{U}-coins">{coins}</div>'
             f'<div class="{U}-ask">Ask {{who}} whether a nutrient check makes sense for you.</div></div></div>'
             # [ACGUC] [ACGCD]: surveillance colonoscopy for long-standing colitis
@@ -827,6 +887,8 @@ CSS = r"""
 .ibx-f{display:flex;flex-direction:column}
 .ibx-art svg{display:block;width:100%;height:auto}
 .ibx-heads,.ibx-caps{display:grid;grid-template-columns:1fr 1fr;text-align:center}
+/* room between each heading's teal bar and the head crown under it (it sat on the head like a hat) */
+.ibx-heads{margin-bottom:0.05in}
 .ibx-heads b{font:900 13.5pt Merriweather,Georgia,serif;color:var(--deep);letter-spacing:-.005em}
 .ibx-heads div{display:flex;flex-direction:column;align-items:center}
 .ibx-heads div::after{content:"";width:0.42in;height:3px;border-radius:2px;background:var(--c1);margin-top:3px}
@@ -844,7 +906,8 @@ CSS = r"""
 .ibx-h{font:800 7.5pt Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--deep);
   text-align:center;margin:0.065in 0 0.032in}
 .ibx-kick{margin:0 0 0.03in}
-.ibx-trig{display:grid;grid-template-columns:repeat(8,1fr);background:linear-gradient(90deg,var(--c1),var(--c2));
+/* deep to c1: white 7.2 pt caps keep 4.6:1 or better across the band (c1 to c2 fell to 3.0:1 at the light end) */
+.ibx-trig{display:grid;grid-template-columns:repeat(8,1fr);background:linear-gradient(90deg,var(--deep),var(--c1));
   border-radius:6px;padding:0.035in 0.04in}
 .ibx-trig>div{display:flex;flex-direction:column;align-items:center;text-align:center;color:#fff;padding:0 2px}
 .ibx-trig span{font:800 7.2pt Inter,sans-serif;letter-spacing:.05em;text-transform:uppercase;line-height:1.15;margin-top:2px}
@@ -863,6 +926,25 @@ CSS = r"""
 .ibx-scope{margin:0.065in auto 0;text-align:center;font-size:8.4pt;line-height:1.3;color:#2B3236;background:var(--soft);
   border-radius:6px;padding:0.04in 0.16in;width:100%}
 .ibx-scope b{color:var(--deep)}
+/* ---- this sheet's back page only (the page holding the .ibx-back marker in the lifestyle title) */
+/* the medicine line under the band title: one quiet line, not a second heading */
+.sheet.back:has(.ibx-back) .band h2 small{font:600 8.6pt Inter,sans-serif;letter-spacing:0;color:#FFE6D4;margin-top:3px}
+/* every header keeps a little band for the START HERE badge, so it never touches the title under it, and all
+   five are one height (two of the sub-lines wrap), so the photos and names start on one line */
+.sheet.back:has(.ibx-back) .col .need{padding-top:10px;min-height:0.56in}
+/* smaller hex discs and slightly tighter gaps between the back page's blocks, so the footer and the FDA
+   line keep their room */
+.sheet.back:has(.ibx-back) .life.hex .disc2{width:0.86in;height:0.75in}
+.sheet.back:has(.ibx-back) .life .disc2 svg{width:0.44in!important;height:0.44in!important}
+.sheet.back:has(.ibx-back) .band{padding-top:0.24in!important;padding-bottom:0.14in}
+.sheet.back:has(.ibx-back) .band h2{margin-bottom:0.08in}
+.sheet.back:has(.ibx-back) .ns-title{margin-top:0.1in}
+.sheet.back:has(.ibx-back) .cols{margin-top:0.07in}
+.sheet.back:has(.ibx-back) .duo{margin-top:0.08in}
+.sheet.back:has(.ibx-back) .notes{margin-top:0.08in}
+/* the daily rhythm gets the wider half: morning and evening hold three and four products, bedtime one */
+.sheet.back:has(.ibx-back) .duo{grid-template-columns:1.5fr 1fr}
+.sheet.back:has(.ibx-back) .rhythm{grid-template-columns:1.3fr 1.3fr .72fr}
 """
 
 
@@ -884,39 +966,99 @@ _qa()
 SHEET = {
     "slug": "ibd", "code": "ND-GI-103", "order": 3, "theme": "teal", "series": "Gut Health Series",
     # same left-to-right order as the two figures
-    "title": "Inflammatory Bowel Disease", "sub": "Ulcerative colitis and Crohn's disease",
+    "title": "Inflammatory Bowel Disease", "sub": "Ulcerative colitis and Crohn’s disease",
     # "More than 2 million": [LEW23] 2.39 million diagnosed (claims data); [NCHS26] 1.6% of adults self-report,
     # so 2 million is the floor of both.  Shared symptoms; flares and quiet stretches (remission): [ACGUC] [ACGCD].
     "intro": ("Inflammatory bowel disease (IBD) is a long-term condition in which the immune system keeps part of the digestive "
               "tract inflamed. <b>More than 2 million Americans</b> live with it. The two main types, <b>ulcerative colitis</b> "
-              "and <b>Crohn's disease</b>, share belly pain, urgent diarrhea, tiredness and weight loss, with flares that come "
+              "and <b>Crohn’s disease</b>, share belly pain, urgent diarrhea, tiredness and weight loss, with flares that come "
               "and go between quieter stretches. A gastroenterologist leads the care. Food, lifestyle and nutrient support "
               "work alongside that care, never instead of it."),
     "front": front,
     "css": CSS,
-    # Back page: unchanged from the first draft (a later pass revises the products).
+    # ------------------------------------------------------------------------- back page
+    # NutriDyn's IBD program is the 5R with its IBD switch [ND584] plus the autoimmune core [AUTO23] (sources at
+    # the top of the back-page notes below).  The five columns are the five program products that fill the
+    # competitor's five nutrient slots: high-potency probiotic -> UltraBiotic Defense; complete turmeric matrix
+    # -> Dynamic Inflam-Eze; vitamin D3 -> D3 5000 with K2; L-glutamine + DGL + aloe -> GI Restore (ND584 takes
+    # GI Integrity out of an inflamed gut, so its DGL formula is not on this sheet); serum-derived bovine
+    # immunoglobulin -> GI Defend.  PRM Resolve (autoimmune core) fills no competitor slot, so it stays off.
+    # Left to right in the order they start: the days 1 to 10 shake (Inflam-Eze + GI Defend), the shake that
+    # replaces it from day 11 (GI Restore), then the two all-along pills.  Label facts, sources and photo notes:
+    # build/products.d/ibd.json.  The span marks this back page for the scoped CSS (.sheet.back:has(.ibx-back)).
     "back": {
-        "life_title": "Lifestyle Modifications", "style": "hex",
-        "life": [("sensitive", "Find food triggers", "Remove foods your care team identifies as a sensitivity or intolerance."),
-                 ("sugar", "Limit sugar", "Sugar and ultra-processed food feed the wrong microbes."),
-                 ("fish", "Eat enough", "More protein and calories during flares, to protect weight and muscle."),
-                 ("breath", "Lower stress", "Stress is one of the most common flare triggers."),
-                 ("rx", "Ask about NSAIDs", "Ibuprofen and naproxen can trigger flares. Use antibiotics only when needed."),
-                 ("walk", "Move gently", "Regular low to moderate exercise.")],
-        "cols": [
-            {"p": "ultrabiotic_xs", "need": "Rebalance the microbiome", "needsub": "high-potency probiotic",
-             "bullets": ["Supports a balanced gut microbiome", "Supports healthy bowel function"], "dose": "dose_from_db"},
-            {"p": "curcumin_bcm95", "need": "Inflammatory balance", "needsub": "curcumin", "start": True,
-             "bullets": ["Supports a healthy inflammatory response", "Enhanced-absorption curcumin"], "dose": "dose_from_db"},
-            {"p": "d3_5000_k2", "need": "Vitamin D", "needsub": "D3 with K2",
-             "bullets": ["Supports normal immune function", "Low vitamin D is common in IBD"], "dose": "dose_from_db"},
-            {"p": "gi_integrity", "need": "Repair the lining", "needsub": "L-glutamine, DGL, aloe",
-             "bullets": ["Fuel for the cells that line your gut", "Soothing botanicals"], "dose": "1 scoop daily", "dosesub": "in 6 to 8 oz water"},
-            {"p": "gi_defend", "need": "Barrier and tolerance", "needsub": "serum-derived bovine immunoglobulins",
-             "bullets": ["Binds microbial toxins in the gut", "Supports barrier function"], "dose": "dose_from_db"},
+        "life_title": f'Lifestyle Modifications<span class="{U}-back"></span>',
+        # the pairing every NutriDyn IBD page carries, said once where the back page starts
+        "life_sub": ("Keep every prescribed IBD medicine; your gastroenterologist leads. "
+                     "These steps and nutrients work alongside that care."),
+        "style": "hex",
+        "life": [
+            # [AGA24] BPA 1: a Mediterranean diet "rich in a variety of fresh fruits and vegetables, monounsaturated
+            # fats ... and lean proteins and low in ultraprocessed foods, added sugar, and salt"; [AUTO23] "an
+            # anti-inflammatory Mediterranean-type diet"; [BLAST26] wild-caught fish, olive, flax and walnut oils
+            # daily, 5 to 7 vegetable servings; [ND584] REMOVE: sugar, artificial sweeteners, processed foods.
+            ("fish", "Mediterranean", "Fish, olive oil and lots of vegetables; less sugar and processed food."),
+            # [ND584] steps 1 and 2: remove gluten, dairy and soy (with sugar and alcohol) on days 1 to 10, then
+            # bring back one category at a time, 1 serving a day for 3 days.  Kept to the 10-day pause with
+            # reintroduction: long exclusion diets are not advised in IBD [ESPEN17].
+            ("sensitive", "Spot triggers", "Skip gluten, dairy and soy for 10 days, then add back one at a time."),
+            # [AGA24] BPA 2 (cook or process produce to a soft texture if strictures make raw produce hard to
+            # tolerate) and BPA 9 (screen for malnutrition); [ND584] "Peel, lightly cook, or puree produce if you are
+            # fiber sensitive" and "3 small meals and 2 ... snacks"; [ESPEN17] protein needs rise in some patients.
+            ("plate", "Flare days", "Small meals with protein. Cook or blend produce if raw hurts."),
+            # [ND584] "Stress causes digestive issues"; "Block out just 10 minutes daily to focus on relaxation
+            # techniques."  [CCF] stress is a common flare trigger.
+            ("breath", "Lower stress", "Take 10 calm minutes a day. Stress can stir up a flare."),
+            # [ND584] 30 minutes of cardio 5 days a week and daily light stretching; "most days" keeps it gentle.
+            ("walk", "Move gently", "Walk, swim or stretch most days."),
+            # [CCF] NSAIDs (ibuprofen, naproxen) can trigger flares.  Antibiotics are on the front's flare band.
+            ("rx", "Skip NSAIDs", "Ibuprofen and naproxen can trigger flares. Ask what to take instead."),
         ],
-        "rx": ["<b>Steroids</b> (prednisone, budesonide) lower vitamin D and calcium. Ask about bone health.",
-               "<b>Sulfasalazine and methotrexate</b> lower folate. Ask whether you need a folate supplement.",
-               "<b>Never stop IBD medicine</b> during a good stretch without your gastroenterologist. Ask before any new supplement."],
+        "cols": [
+            {"p": "ibd_inflam_eze", "need": "Inflammatory balance", "needsub": "turmeric shake, days 1 to 10", "start": True,
+             "bullets": ["Supports healthy inflammatory markers", "Turmeric, quercetin and ginger in a protein shake"],
+             "dose": "dose_from_db"},
+            {"p": "ibd_gi_defend", "need": "Gut barrier support", "needsub": "antibody proteins from cow serum",
+             "bullets": ["Helps bind microbial toxins in the gut", "Supports gut barrier function"],
+             "dose": "dose_from_db"},
+            {"p": "ibd_gi_restore", "need": "Gut lining support", "needsub": "L&#8209;glutamine and aloe shake, from day 11",
+             "bullets": ["Supports the gut lining and its mucus layer", "Feeds your friendly gut bacteria"],
+             "dose": "dose_from_db"},
+            {"p": "ibd_ultrabiotic_defense", "need": "Microbiome balance", "needsub": "3 strains, with S.&nbsp;boulardii",
+             "bullets": ["Supports a balanced gut microbiome", "Take it 2 hours away from antibiotics"],
+             "dose": "dose_from_db"},
+            {"p": "ibd_d3_5000_k2", "need": "Vitamin D levels", "needsub": "D3 with K2",
+             "bullets": ["Supports healthy vitamin D levels", "Supports bone and immune health"],
+             "dose": "dose_from_db"},
+        ],
+        # Three medicine-and-nutrient notes per edition: the pharmacist checks interactions and depletions, the
+        # provider orders labs, refers and adjusts.
+        "rx": {
+            "pharmacy": [
+                # Glucocorticoids cut intestinal calcium absorption and thin bone; calcium + vitamin D for long-term
+                # users [ACR17]; steroid users had twice the odds of 25(OH)D under 10 ng/mL [SKV11].  Budesonide is
+                # gentler on bone than prednisone but long courses still count.
+                "<b>Steroids</b> (prednisone, budesonide) can thin bones: they cut calcium absorption and are "
+                "linked to low vitamin D. Ask about bone health.",
+                # [HWA12]: sulfasalazine and methotrexate are folate antagonists (folate is on the front's coins).
+                "<b>Sulfasalazine and methotrexate</b> lower folate. Ask {who} whether you need folic acid.",
+                # [ODSK] vitamin K can blunt warfarin (D3 5000 with K2: 60 mcg K2 + 15 mcg K1 a softgel);
+                # [DRUGS-C] curcumin with warfarin rated a moderate interaction (bleeding).
+                "<b>On warfarin or another blood thinner?</b> The vitamin K in D3 5000 with K2 can weaken warfarin, "
+                "and the turmeric in Inflam-Eze may add to bleeding. Ask {who} first.",
+            ],
+            "practitioner": [
+                # [AGA24] BPA 10: monitor every IBD patient for vitamin D and iron deficiency, and B12 with ileal
+                # disease or resection; [AUTO23] know the vitamin D level, dose higher only if it is very low.
+                "<b>Labs first.</b> {Who} may check vitamin D, iron, B12 and folate, then set your vitamin D dose "
+                "to your level.",
+                # [ACR17] calcium and vitamin D, and a fracture-risk check, for long-term glucocorticoid users; [SKV11].
+                "<b>On steroids?</b> They cut calcium absorption and thin bones: {who} may check your bones and your "
+                "calcium and vitamin D.",
+                # [ACGUC] [ACGCD]: severe or worsening disease is managed by the gastroenterologist.
+                "<b>Fever, heavy bleeding or a flare that won’t settle?</b> {Who} sends you back to your "
+                "gastroenterologist right away.",
+            ],
+        },
     },
 }

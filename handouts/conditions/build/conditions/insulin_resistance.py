@@ -14,19 +14,21 @@ INSULIN RESISTANCE, share one picture grammar:
      RESISTANCE: the signal dies out and the bubbles stay inside, so glucose piles up outside.
   -> inside the cell.
 The step text sits in its own strip under each panel; the art carries only numbered markers (same
-style as the strip bullets) and a few names in clear space.  One KEY names every symbol, each pair
-fenced by hairlines so no swatch can be read with its neighbour's label.  Below the art: what drives
-it / clues / where it leads, the CDC stat (only "1 in 3" is big) and a "Know your numbers" panel
-(ADA glucose and A1c ranges, a fasting-insulin write-in, NHLBI/AHA metabolic syndrome check).
+style as the strip bullets) and a few names in clear space.  One KEY names every symbol, the storage
+bubble included (seven pairs), each pair fenced by hairlines so no swatch can be read with its
+neighbour's label.  Below the art: what drives it / clues / where it leads, the CDC stat (only "1 in 3"
+is big) and a "Know your numbers" panel (ADA glucose and A1c ranges, a fasting-insulin write-in,
+NHLBI/AHA metabolic syndrome check).
 
-BACK (product pass, 2026-11-03): lifestyle band from Asher's blood-sugar handout (10-hour eating window,
-slow-sugar plate) plus ADA movement and sleep; four NutriDyn protocol products, each "In each serving" line
-copied from its NutriDyn sell sheet (sources in products.d/insulin-resistance.json): Gluco IR (Start here),
-Berberine Pro, UltraBiotic Akkermansia Plus, Omega Pure EPA-DHA 1000; a daily rhythm that keeps Berberine
-Pro's three before-meal doses; three medicine-and-nutrient notes per edition (pharmacy: interactions and
-depletions; practitioner: labs and dose changes), including the dihydroberberine overlap and biotin's lab
-interference.  The back-page CSS is scoped with .sheet.back:has(.ir-back), a marker span in the lifestyle
-title, so it cannot leak into other sheets in the all-sheets bundle.
+BACK (product pass, 2026-11-03; reviewer fixes the same day): lifestyle band from Asher's blood-sugar
+handout (10-hour eating window, slow-sugar plate) plus ADA movement and sleep; four NutriDyn protocol
+products, each "In each serving" line copied from its NutriDyn sell sheet (sources in
+products.d/insulin-resistance.json): Gluco IR (Start here), Berberine Pro, UltraBiotic Akkermansia Plus,
+Omega Pure EPA-DHA 1000; a daily rhythm that keeps Berberine Pro's three before-meal doses; four notes per
+edition (pharmacy: interactions, pregnancy, depletions, live bacteria; practitioner: labs, the prescriber
+for blood-sugar medicine, the dihydroberberine overlap with pregnancy, live bacteria).  The back-page CSS
+is scoped with .sheet.back:has(.ir-back), a marker span in the lifestyle title, so it cannot leak into
+other sheets in the all-sheets bundle.
 """
 import math
 import random
@@ -62,13 +64,23 @@ M2 = (152, CY + 75)                          # step 2: under the receptor, where
 # just right of the "Blood vessel" pill (pill ends at x 89), not among the molecules, which start at x 118.
 M3N, M3R = (G4_X + 24, CY + 44), (102, VM)
 VBOX_N, VBOX_R = (100, V0 + 5, 362, V1 - 5), (118, V0 + 5, 362, V1 - 5)   # vessel molecule boxes (8+ clear of the frame)
-BUB_R = 18.5                                 # storage bubble: outer head ring radius (heads reach 20.4)
+# Storage bubble: outer head ring radius.  With bubble()'s lipid scale 0.5 the heads reach 23.3 and the closed
+# doors 25.1.  Sized up from 18.5 (2026-11-03 review) so the doors could grow to the same protein as the
+# membrane door (see bubble()).  21 keeps every gap below at 4.7 or more; the suggested 22 would leave only about
+# 3.7 above and below the resistance bubbles, between the caption and the step strip.
+BUB_R = 21
+BUB_OUT = BUB_R + (HEAD_R + 0.3) * 0.5       # outer edge of the head ring
 # normal: a storage bubble arriving under the membrane, 0.8 below it, tucked against the open door's lower-left
-# corner (its flank about 5 units from the door where the door ends), so the open door reads as the one it
-# delivered; its upper-right door already points at that corner
-NB, NB_DOORS = (219, 217.8), (-30, 210)
-RB = [((240, 242), (-65, 165)), ((293, 240.5), (-15, 130))]   # resistance: two bubbles stuck inside
-CAP_X = 266.5                                # resistance caption, centred over the two bubbles
+# corner (its upper-right door 5.2 from the door's outer helix where the door ends), so the open door reads as
+# the one it delivered; that bubble door already points at the corner
+NB, NB_DOORS = (216, 220.7), (-30, 210)
+# resistance: two bubbles stuck inside, in the band between the caption and the step strip.  Measured gaps (viewBox
+# units, outlines incl. doors): 4.7 to the caption and to the strip rule, 6.3 to the X, 9.4 between the bubbles.
+# Doors stay within 50 degrees of level, so no door tip sticks up into the caption or down into the strip.
+RB = [((243, 240), (-35, 160)), ((299, 240), (-10, 135))]
+# Resistance caption: 5.3 below the membrane's heads.  Centred at 267, 4 left of the bubbles' midpoint, because
+# the 193-wide line must keep 8 clear of the frame on the right and the bubbles 6 clear of the X on the left.
+CAP_X, CAP_Y = 267, CY + 33.5
 
 
 def ir_defs():
@@ -186,10 +198,15 @@ def glut4(cx, cy, open_=True, s=1.0):
     return "".join(o)
 
 
-def bubble(cx, cy, doors, R=BUB_R, s=0.42, L=3.2, ds=0.21):
+def bubble(cx, cy, doors, R=BUB_R, s=0.5, L=3.2, ds=0.3):
     """GLUT4 storage bubble: a closed bilayer built from the same lipid() unit as the cell membrane
     (scaled by s, with short tails), drawn the way the membrane is: a cream wall with a row of heads
-    on each face and the tails meeting inside it.  Outer and inner heads share ONE list of angles, so
+    on each face and the tails meeting inside it.  Proportions (2026-11-03 review): the wall is 12.8
+    units thick, 0.31 of the cell membrane's 41.2, and the doors are drawn at ds = 0.3, so a door spans
+    its wall the way the big door spans the membrane (door height / wall 1.28 here, 1.33 there) and
+    reads as the same protein; at the old 0.21 the doors were 1.06 walls tall and looked like tabs.  A
+    real vesicle wall is as thick as the cell membrane; that one compromise is what "Cell drawing not to
+    scale" under the panel covers.  Outer and inner heads share ONE list of angles, so
     every pair lines up radially.  The angles are laid out segment by segment between the doors (like
     lipid_xs): the outer heads nearly touch and stop 0.5 from each door, so every door sits in an even
     notch.  The inner face keeps a head at every one of those angles, right up to each door, and the doors
@@ -366,7 +383,9 @@ def panel(x0, normal):
         # the signal brings a storage bubble, doors and all, up to the surface: the arrow sweeps from the
         # receptor's inside end and turns up into the bubble, which is arriving at the membrane by the door
         o.append(bubble(*NB, NB_DOORS))
-        o.append(f'<path d="M157.5,{CY + 35} C172,{CY + 74} {NB[0]},{CY + 86} {NB[0]},{CY + 67.5}" stroke="{GREEN}" '
+        # the arrowhead tip stops 1.2 under the bubble; the irAg marker reaches 4.1 past the path end at stroke 2.8
+        end = NB[1] + BUB_OUT + 1.2 + 4.1
+        o.append(f'<path d="M157.5,{CY + 35} C172,{CY + 74} {NB[0]},{end + 18.5:.1f} {NB[0]},{end:.1f}" stroke="{GREEN}" '
                  'stroke-width="2.8" fill="none" marker-end="url(#irAg)" stroke-linecap="round"/>')
         o.append(marker(*M1, 1, col) + marker(*M2, 2, col) + marker(*M3N, 3, col))
     else:
@@ -385,7 +404,7 @@ def panel(x0, normal):
         o.append(f'<path d="M{xx - 5.5},{xy - 5.5} l11,11 M{xx + 5.5},{xy - 5.5} l-11,11" stroke="#C0392B" stroke-width="3" stroke-linecap="round"/>')
         for c, doors in RB:
             o.append(bubble(*c, doors))
-        o.append(T(CAP_X, CY + 36, "Glucose doors stuck in storage bubbles", 10, 700, "#7A4A3C", "middle", italic=True))
+        o.append(T(CAP_X, CAP_Y, "Glucose doors stuck in storage bubbles", 10, 700, "#7A4A3C", "middle", italic=True))
         o.append(marker(*M1, 1, col) + marker(*M2, 2, col) + marker(*M3R, 3, col))
 
     # step strip: the art's symbols are named here too (green arrow, grey dashes and the X, the storage bubbles),
@@ -418,31 +437,37 @@ def _membrane_swatch():
             + "".join(lipid(x, -16, True) + lipid(x, 16, False) for x in (-9.1, 0, 9.1)) + "</g>")
 
 
-KEY_ITEMS = [  # (swatch drawn at 0,0, swatch half width incl. stroke, label, label advance at 11 px Inter 600)
-    (lambda: glucose(0, 0), 5.7, "Glucose (sugar)", 84.83),
-    (lambda: insulin(0, 0), 6.9, "Insulin", 35.05),
-    (lambda: receptor(0, 3.5, bound=False, s=0.19), 6.0, "Insulin receptor", 83.06),
-    (lambda: glut4(0, 0, True, 0.42), 10.6, "GLUT4 glucose door", 108.72),
-    (_membrane_swatch, 8.4, "Cell membrane", 80.14),
-    (lambda: red_cell(0, 0, 0, 0.82), 10.6, "Red blood cell", 74.63),
+KEY_ITEMS = [  # (swatch drawn at 0,0, swatch half width incl. stroke, label, label advance at 10 px Inter 600)
+    # advances measured with getComputedTextLength in the rendered sheet (same @font-face Inter as the art)
+    (lambda: glucose(0, 0), 5.7, "Glucose (sugar)", 76.96),
+    (lambda: insulin(0, 0), 6.9, "Insulin", 31.8),
+    (lambda: receptor(0, 3.5, bound=False, s=0.19), 6.0, "Insulin receptor", 75.37),
+    (lambda: glut4(0, 0, True, 0.42), 10.6, "GLUT4 glucose door", 98.64),
+    # the storage bubble, a scaled copy of the normal panel's bubble (doors and all): 2026-11-03 review, the one
+    # symbol a patient could not guess, unlabelled in the NORMAL panel
+    (lambda: f'<g transform="scale(.55)">{bubble(0, 0, NB_DOORS)}</g>', 13.7, "Storage bubble", 73.57),
+    (_membrane_swatch, 8.4, "Cell membrane", 72.7),
+    (lambda: red_cell(0, 0, 0, 0.82), 10.6, "Red blood cell", 67.71),
 ]
-KEY_H, KEY_TITLE_W, KEY_PAIR_GAP = 34, 26.3, 5
+KEY_H, KEY_TITLE_W, KEY_PAIR_GAP, KEY_MARGIN, KEY_SIZE = 34, 26.3, 4, 10, 10
 
 
 def key_strip(y, w=760, h=KEY_H):
-    """One row: KEY, then swatch + label pairs.  Each pair is sized from its real swatch width, 5 units
-    from swatch to label, and the leftover width is spread evenly between pairs (about 19 units, ~4x
-    the inside gap) with a hairline divider in each gap, so no swatch reads with its neighbour's label."""
+    """One row: KEY, then swatch + label pairs.  Each pair is sized from its real swatch width, 4 units
+    from swatch to label, and the leftover width is spread evenly between pairs (about 9 units) with a
+    hairline divider in the middle of each gap, so no swatch reads with its neighbour's label.  Seven
+    pairs fit one row with labels at 10 units, which prints at 7.3 pt (the viewBox is 760 units across
+    the 7.66 in column)."""
     o = [f'<rect x=".6" y="{y}" width="{w - 1.2}" height="{h}" rx="8" fill="#FFFFFF" stroke="#CFD6DA" stroke-width="1.2"/>',
-         T(14, y + h / 2 + 3.7, "KEY", 10.5, 800, INK, ls=1.4)]
+         T(KEY_MARGIN, y + h / 2 + 3.7, "KEY", 10.5, 800, INK, ls=1.4)]
     used = sum(2 * hw + KEY_PAIR_GAP + lw for _, hw, _, lw in KEY_ITEMS)
-    x = 14 + KEY_TITLE_W
-    gap = (w - 14 - x - used) / len(KEY_ITEMS)
+    x = KEY_MARGIN + KEY_TITLE_W
+    gap = (w - KEY_MARGIN - x - used) / len(KEY_ITEMS)
     for sw, hw, lab, lw in KEY_ITEMS:
         o.append(f'<path d="M{x + gap / 2:.2f},{y + 8} V{y + h - 8}" stroke="#DCE2E6" stroke-width="1"/>')
         x += gap
         o.append(f'<g transform="translate({x + hw:.2f},{y + h / 2:.2f})">{sw()}</g>')
-        o.append(T(round(x + 2 * hw + KEY_PAIR_GAP, 2), y + h / 2 + 3.9, lab, 11, 600, INK))
+        o.append(T(round(x + 2 * hw + KEY_PAIR_GAP, 2), y + h / 2 + 3.6, lab, KEY_SIZE, 600, INK))
         x += 2 * hw + KEY_PAIR_GAP + lw
     return "".join(o)
 
@@ -491,9 +516,14 @@ def chevrons():
               "Dark skin at the neck or armpits", "Skin tags in those same spots", "High triglycerides, low good HDL"]),
             # NIDDK: insulin resistance raises the risk of type 2 diabetes, heart disease and stroke, high blood
             # pressure, fatty liver disease (MASLD, named here in plain words) and is linked to PCOS; AHA/NHLBI.
+            # Memory and thinking: higher HOMA-IR and fasting insulin predicted a steeper 11-year decline in verbal
+            # fluency in 3,695 adults (Ekblad LL et al., Diabetes Care 2017;40:751-758, PMID 28381479; it did not
+            # predict word-list recall, hence "memory and thinking", not "memory"), and diabetes is one of the 14
+            # modifiable dementia risks (Livingston G et al., Lancet Commission 2024, Lancet 2024;404:572-628,
+            # PMID 39096926).  Both read on PubMed 2026-11-03.
             ("#62121A", "Where it can lead",
              ["Prediabetes, then type 2 diabetes", "Heart disease and stroke", "High blood pressure",
-              "Fatty liver disease", "PCOS and hormone shifts", "Memory decline"])]
+              "Fatty liver disease", "PCOS and hormone shifts", "Memory and thinking problems"])]
     cells = "".join(f'<div style="background:{bg}"><h4>{h}</h4><ul>{"".join(f"<li>{x}</li>" for x in xs)}</ul></div>'
                     for bg, h, xs in cols)
     return f'<div class="ir-chev">{cells}</div>'
@@ -617,6 +647,10 @@ BACK_CSS = r"""
 .sheet.back:has(.ir-back) .band h2{margin-bottom:0.07in}
 /* the morning list is the longest, bedtime holds one capsule */
 .sheet.back:has(.ir-back) .rhythm{grid-template-columns:1.4fr 1.1fr .8fr}
+/* the rx panel (four notes, 12 lines) sets the row's height: the rhythm slots grow to match it instead of
+   leaving a gap under the pill total */
+.sheet.back:has(.ir-back) .duo>.panel:first-child{display:flex;flex-direction:column}
+.sheet.back:has(.ir-back) .duo>.panel:first-child .rhythm{flex:1}
 /* lifestyle discs a little smaller so each bullet line holds about 28 characters */
 .sheet.back:has(.ir-back) .life.l3 .disc2{width:0.68in;height:0.68in}
 """
@@ -649,36 +683,54 @@ SHEET = {
             # window "later and later on weekends"; water, sparkling water, herbal tea, black coffee "are fine
             # during your fasting hours. Nothing with sugar in it."; "Talk to your provider first if: you already
             # take anything for blood sugar".  8 AM to 6 PM: the protocol research's worked example.
-            ("clock", "A 10-hour eating window",
+            # "Plain tea" (2026-11-03 review): the handout's "herbal tea" and "Nothing with sugar in it" in two
+            # words, since in Atlanta "tea" alone often means sweet tea.  The title drops its "A" so it fits one
+            # line: this card set the band's height, and the line it frees pays for the fourth rx note below.
+            ("clock", "10-hour eating window",
              ["Example: 8 AM to 6 PM", "Same hours, weekends too",
-              "Outside it: water, tea or black coffee", "On blood sugar medicine? Ask your doctor first"]),
+              "Outside it: water, plain tea or black coffee", "On blood sugar medicine? Ask your doctor first"]),
             # Same handout, page 2 (Sun 2026 meta-analysis of low-glycemic-index eating, 25 RCTs, 1,973 people):
             # "Low glycemic index simply means foods that raise blood sugar slowly" -> "slow-sugar plate" (no
             # jargon); half the plate non-starchy vegetables; "vegetables and protein first, slow carbohydrate
             # last"; slow carbs "about a fist"; "Whole fruit only. Juice delivers the sugar without the fiber".
             ("plate", "A slow-sugar plate",
-             ["Half the plate non-starchy veggies", "Veggies and protein first",
+             ["Non-starchy veggies: half the plate", "Veggies and protein first",
               "Slow carbs last, about a fist", "Whole fruit, not juice"]),
             # ADA Standards of Care in Diabetes 2025, Section 5: resistance exercise 2 to 3 sessions a week on
             # nonconsecutive days; interrupt prolonged sitting every 30 minutes.  Walking after meals: Reynolds AN
             # et al., Diabetologia 2016 (10 minutes after each meal beat one 30-minute walk for after-meal glucose).
-            # Kenneth Johnson GLC 2026 adds resistance training.  Sleep: National Sleep Foundation, 7 to 9 hours
-            # for adults (the front lists short sleep as a driver).
+            # The NutriDyn GLC 2026 insulin-resistance protocol PDF adds resistance training.  Sleep: National Sleep
+            # Foundation, 7 to 9 hours for adults (the front lists short sleep as a driver).
             ("walk", "Move often, sleep well",
-             ["Walk 10 minutes after meals", "Strength train 2 to 3 times a week",
+             ["Walk 10 minutes after meals", "Strength training 2 to 3 days a week",
               "Stand up every 30 minutes", "Sleep 7 to 9 hours a night"]),
         ],
         # Products (4, the competitor sheet's count), all from NutriDyn protocols: Asher's blood-sugar handout and
-        # "Own Every Protocol" HbA1c path (Gluco IR + Berberine Pro), Kenneth Johnson's GLC 2026 insulin
-        # resistance panel (Berberine Pro, Alpha-Lipoic Acid 200 mg, Omega Pure EPA-DHA 1000 where triglycerides
-        # are raised) and Scott Bergman's GLC 2024 metabolic-syndrome protocol (UltraBiotic Akkermansia Plus).
+        # "Own Every Protocol" HbA1c path (Gluco IR + Berberine Pro), the NutriDyn GLC 2026 insulin-resistance
+        # protocol PDF (Dropbox id:xHepYs_Ou4AAAAAAAA7hTA: Berberine Pro, Alpha-Lipoic Acid 200 mg, Omega Pure
+        # EPA-DHA 1000 where triglycerides are raised) and the NutriDyn GLC 2024 metabolic-syndrome protocol PDF
+        # (Dropbox id:xHepYs_Ou4AAAAAAAArn2A: UltraBiotic Akkermansia Plus).
         # Competitor categories: chromium AND alpha lipoic acid -> Gluco IR (600 mcg chromium picolinate, 300 mg
         # alpha lipoic acid), berberine -> Berberine Pro; vanadyl sulfate has no NutriDyn equivalent (scratchpad
-        # products/needs.md).  Alpha-Lipoic Acid R270 (200 mg, label facts in products.d as ir_ala) is held back
-        # only because its one staged photo is another brand's bottle (Progressive Professional P872, 60
-        # capsules); swap it in for ir_akk once build/img-src/ir_ala.png holds the real R270 bottle.
+        # products/needs.md).
+        # OPEN ITEM, ALPHA-LIPOIC ACID (2026-11-03 review): the protocol brief's lineup is Gluco IR, Berberine Pro,
+        # Alpha-Lipoic Acid R270 and Omega OR Akkermansia.  R270 (200 mg, label facts in products.d as ir_ala) is
+        # held back only for its photo: the one staged R270 image is another brand's bottle (Progressive
+        # Professional P872, 60 capsules) and must not be used.  The R196 Akkermansia photo is a 160 px thumbnail
+        # too, so the swap waits on a print master for either bottle.  Dropbox /NutriDyn/Product Images/Product
+        # Images (1)/ holds R270R.png (id:xHepYs_Ou4AAAAAAAA5I7g, 99,335 bytes) and R196.png
+        # (id:xHepYs_Ou4AAAAAAAA5Ipw, 86,496 bytes), but both sit in the byte range of that folder's 420 px web
+        # renders (its _Web files match the repo's 420 px bottles byte for byte), so they are probably web size,
+        # not 600 px print masters; their pixel size is unverified (content host blocked, metadata has none).
+        # When a real R270 master is staged as build/img-src/ir_ala.png: replace the ir_akk column with
+        #   {"p": "ir_ala", "need": "Antioxidant energy support", "needsub": "alpha-lipoic acid 200 mg",
+        #    "dose": "dose_from_db", "bullets": ["Supports healthy blood sugar balance", "Supports energy production"]}
+        # (ND283's own claims), keep Omega as column 4, add "Gluco IR already gives 300 mg alpha-lipoic acid, so
+        # 500 mg a day in total" to the overlap note, drop the live-bacteria note, narrow the now-empty Bedtime slot
+        # in BACK_CSS, and re-render: the Morning box grows by one line.
         # Label facts, doses and sources: products.d/insulin-resistance.json.  Card claims are the NutriDyn sell
-        # sheets' own structure/function wording (ND506, ND1130, ND1194, ND416).
+        # sheets' own structure/function wording (ND506, ND1130, ND1194, ND416), all read 2026-11-03; ND1130, ND1194
+        # and ND416 re-opened for the review.
         # Start here: Gluco IR, Asher's lead insulin-resistance formula ("IR = Insulin Resistance"), which carries
         # the chromium, alpha-lipoic acid and dihydroberberine in one bottle.
         "cols": [
@@ -698,43 +750,71 @@ SHEET = {
             {"p": "ir_akk", "need": "Friendly gut bacteria", "needsub": "Akkermansia + 4 probiotic strains",
              "dose": "dose_from_db",
              "bullets": ["Supports healthy glucose metabolism", "Supports healthy weight and a healthy gut lining"]},
-            # Johnson GLC 2026 uses it "where triglycerides are raised"; ND416: "Healthy cardiovascular function"
-            {"p": "ir_omega", "need": "Healthy blood fats", "needsub": "omega-3 fish oil (EPA + DHA)",
+            # The GLC 2026 protocol uses it "where triglycerides are raised", but ND416 (Rev. 4/25, re-opened) makes no
+            # triglyceride claim, so neither does the card: bullet 1 is ND416's "Healthy cardiovascular function";
+            # bullet 2 is ND416's EPA and DHA as "integral components of membrane phospholipids", found "especially
+            # in cell membranes" (the membrane the front page draws).  The need names the nutrient (ND416: omega-3s
+            # are "essential" because the body does not make them) instead of the old "Healthy blood fats", which
+            # implied the triglyceride claim.  "in the body" keeps "membranes" off a line of its own.
+            {"p": "ir_omega", "need": "Essential omega-3 fats", "needsub": "EPA + DHA from fish oil",
              "dose": "dose_from_db",
-             "bullets": ["Supports healthy triglyceride levels already in a normal range",
-                         "Supports healthy heart function"]},
+             "bullets": ["Supports healthy cardiovascular function",
+                         "Supports healthy cell membranes in the body"]},
         ],
-        # Three notes per edition.  Pharmacists check interactions and depletions; providers order labs and adjust.
+        # Four notes per edition (2026-11-03 review).  Pharmacists check interactions, pregnancy and depletions;
+        # providers order labs, and a change to a blood-sugar medicine goes to the doctor who prescribes it (most
+        # DCs and NDs cannot adjust insulin or a sulfonylurea).  The medicine notes are cautions, never "adds to
+        # the drug's effect": wording that a product augments a drug action reads as an implied disease claim
+        # (21 CFR 101.93(g)(2)).  Product names carry no-break spaces so "Gluco / IR" cannot split.
         # Sources: dihydroberberine 100 mg per 5 Gluco IR capsules (ND506) + 100 mg per Berberine Pro capsule x 3
         # (ND1130) = 400 mg a day.  Guo Y et al., Eur J Clin Pharmacol 2012;68:213-217, PMID 21870106,
         # doi:10.1007/s00228-011-1108-2 (berberine 300 mg three times daily for 2 weeks lowered CYP2D6, 2C9 and 3A4
-        # activity); Wu X et al., Eur J Clin Pharmacol 2005;61:567-572, PMID 16133554, doi:10.1007/s00228-005-0952-3
-        # (berberine 0.2 g three times daily raised cyclosporine levels in kidney-transplant patients).  Both
-        # read on PubMed 2026-11-03.  Added sugar lowering: NIH ODS chromium fact sheet
-        # (insulin and diabetes medicines), MedlinePlus alpha-lipoic acid, gymnema and berberine monographs (all in
-        # Gluco IR; berberine also in Berberine Pro); insulin and sulfonylureas are the drugs that carry the
-        # low-sugar risk (ADA Standards of Care 2025, Sections 6 and 9).
+        # activity: a plain-berberine result, so the sheet says "can slow" / "can change"); Wu X et al., Eur J Clin
+        # Pharmacol 2005;61:567-572, PMID 16133554, doi:10.1007/s00228-005-0952-3 (berberine 0.2 g three times daily
+        # raised cyclosporine levels in kidney-transplant patients).  Low-sugar risk on insulin and sulfonylureas:
+        # ADA Standards of Care 2025, Sections 6 and 9; NIH ODS chromium fact sheet; MedlinePlus alpha-lipoic acid,
+        # gymnema and berberine monographs (all in Gluco IR; berberine also in Berberine Pro).
+        # Pregnancy and breastfeeding: berberine displaces bilirubin from albumin about tenfold more than
+        # phenylbutazone and is "best avoided in jaundiced neonates and pregnant women" (Chan E, Biol Neonate
+        # 1993;63:201-208, PMID 8513024, doi:10.1159/000243932, read on PubMed 2026-11-03); MedlinePlus Berberine
+        # (Natural Medicines) rates it likely unsafe in pregnancy and breastfeeding (newborn kernicterus), per the
+        # 2026-11-03 review (medlineplus.gov is outside this session's network, not re-opened).  The ND506 and
+        # ND1130 labels say only "If you are pregnant, nursing ... consult".  Same caution as gut_overgrowth's
+        # "Pregnant or nursing?" line for its berberine products.
+        # Live bacteria: Akkermansia Plus is 80% pasteurized and 20% live A. muciniphila (100 million CFU live) plus
+        # live B. animalis HN019 and B420, L. rhamnosus GG and C. butyricum (ND1194, re-opened 2026-11-03).
+        # Probiotics carry more risk with a weak immune system (NCCIH, "Probiotics: What You Need To Know", per the
+        # review, not re-opened; Doron S, Snydman DR, Clin Infect Dis 2015;60 Suppl 2:S129-34, PMID 25922398,
+        # systemic infections in susceptible people; Yelin I et al., Nat Med 2019;25:1728-1732, PMID 31700189,
+        # bacteremia traced to the capsule's strain in ICU patients).  Cyclosporine users are immune-suppressed.
         # Metformin and B12: ADA Standards of Care 2025, Section 9 ("consider periodic measurement of vitamin B12").
         # Biotin: FDA Safety Communication 2017, updated 2019 (biotin can cause incorrect results in some lab
         # tests); Gluco IR has 2,000 mcg (ND506).  Recheck at about 3 months: A1c reflects about 3 months (front).
+        # Fit, measured in the rendered PDF: 12 lines per edition (was 11), no one-word last line; the free line
+        # comes from the lifestyle title above.
         "rx": {
             "practitioner": [
                 "<b>Labs now and in about 3 months:</b> fasting glucose, A1c, fasting insulin and lipids, plus B12 "
-                "if you take metformin. Gluco IR has biotin, which can throw off some tests: tell the lab.",
-                "<b>On medicine for blood sugar?</b> Gluco IR and Berberine Pro add to its effect, so {who} may "
-                "need to adjust it. Check your sugar more often at first.",
-                "<b>Two products, one ingredient.</b> Gluco IR and Berberine Pro both contain dihydroberberine, "
-                "400&nbsp;mg a day together, and it changes how some drugs (such as cyclosporine) clear. Ask "
-                "{who} if you need both.",
+                "if you take metformin. Gluco&nbsp;IR&rsquo;s biotin can throw off some tests: tell the lab.",
+                "<b>On medicine for blood sugar?</b> Before you start, tell the doctor who prescribes it: the dose "
+                "may need a change. Check your sugar more often at first.",
+                "<b>Two products, one ingredient.</b> Gluco&nbsp;IR and Berberine&nbsp;Pro both have "
+                "dihydroberberine, 400&nbsp;mg a day together. Avoid both if pregnant or breastfeeding. It can "
+                "change how drugs like cyclosporine clear: ask {who} if you need both.",
+                "<b>Weak immune system</b> or on cyclosporine? Ask {who} before Akkermansia&nbsp;Plus: it has "
+                "live bacteria.",
             ],
             "pharmacy": [
-                "<b>Two products, one ingredient.</b> Gluco IR and Berberine Pro both contain dihydroberberine, "
-                "400&nbsp;mg a day together. It slows the liver enzymes (CYP3A4, 2D6, 2C9) that clear drugs such "
-                "as cyclosporine: show {who} your full list.",
-                "<b>Insulin or a sulfonylurea</b> (such as glipizide)? Gluco IR and Berberine Pro add to the "
-                "sugar-lowering effect: watch for low blood sugar and tell your prescriber.",
-                "<b>Metformin</b> can lower B12 over time: ask about a regular check. Gluco IR has 2,000&nbsp;mcg "
-                "biotin, which can throw off some lab tests: tell the lab.",
+                "<b>Two products, one ingredient.</b> Gluco&nbsp;IR and Berberine&nbsp;Pro both contain "
+                "dihydroberberine, 400&nbsp;mg a day together. Avoid both if pregnant or breastfeeding. It can "
+                "slow the liver enzymes (CYP3A4, 2D6, 2C9) that clear drugs such as cyclosporine: bring your "
+                "full list.",
+                "<b>Insulin or a sulfonylurea</b> (such as glipizide)? Ask your prescriber before you start, and "
+                "watch for low blood sugar.",
+                "<b>Metformin</b> can lower B12 over time: ask about a regular check. Gluco&nbsp;IR has "
+                "2,000&nbsp;mcg biotin, which can throw off some lab tests: tell the lab.",
+                "<b>Weak immune system</b> or on cyclosporine? Ask {who} before Akkermansia&nbsp;Plus: it has "
+                "live bacteria.",
             ],
         },
     },
