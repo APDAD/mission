@@ -1256,8 +1256,8 @@ SHEET = {
                 # (products DB R195: 5,000 IU D3 per softgel, D3 alone) is the K-free route at the same dose.  Vitamin K
                 # in Essential Multi: 120 mcg K1 per 3 capsules (products DB R716).
                 "<b>Test first:</b> TSH, free T4, TPO antibodies, ferritin, vitamin D. Iron and D3: low levels only. "
-                "With the multi, D3 is 6,000 IU a day, over the 4,000 IU limit: recheck. On warfarin? Not D3 5000 with "
-                "K2 (its label says so); use plain D3&nbsp;5000. The multi has vitamin K.",
+                "With the multi, D3 is 6,000 IU a day, over the 4,000 IU limit: recheck. On a blood thinner? Not D3 5000 "
+                "with K2 (its label says so); use plain D3&nbsp;5000. Ask about the multi&rsquo;s vitamin K.",
                 # [LT4-PI] [ATA14] (bedtime dosing is accepted; then the iron / multi times move); the binders patients
                 # take most (iron, calcium, antacids) named, as in the pharmacy edition; [LI17];
                 # [ND-LABEL] biotin 500 mcg in Essential Multi.  "Alone ... water only ... before breakfast" is the

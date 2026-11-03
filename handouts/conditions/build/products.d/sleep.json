@@ -20,7 +20,7 @@
     "name": "Stress Essentials Calm",
     "size": "60 capsules &middot; 30 servings",
     "img_src": "R405.png",
-    "key": "Per 2 capsules: 550 mg GABA, 200 mg L&#8209;theanine",
+    "key": "Per 2 capsules: 500 mg GABA, 200 mg L&#8209;theanine",
     "dose": "2 capsules",
     "dosesub": "before bed",
     "sched": [
@@ -31,7 +31,7 @@
       ]
     ],
     "url": "https://nutridyn.com/calm-eze-r405",
-    "src": "products DB R405 (Designs for Health switch chart label check vs NeuroCalm, catalog ND143 10/1/26): GABA 550 mg, L-theanine 200 mg per 2 capsules; directions two capsules daily (no time of day; the sheet puts them before bed, matching the column's wind-down bullet); size 60C (ND144 price list 10/1/26), so 30 servings. The 2026-11-02 sleep-hour blast and the NutriDyn sell sheet ND856 (seen through web search) call the theanine Suntheanine; the DB label read does not, so the sheet does not print it. Formerly sold as Calm Eze. URL nutridyn.com/calm-eze-r405: 'curl-200 8/11' in the repo sleep-hour blast (blasts/2026-11-02-sleep-hour.html); on 2026-11-03 web search indexes the main-site page as nutridyn.com/stress-management/calm-eze-r405 and the practitioner storefronts at /calm-eze-r405. Photo: R405.png is a 356x640 Lanczos stopgap of the 89x160 chart thumbnail (img-src/soft.json): needs the print master."
+    "src": "products DB R405 (Designs for Health switch chart label check vs NeuroCalm, catalog ND143 10/1/26): GABA 550 mg, L-theanine 200 mg per 2 capsules; directions two capsules daily (no time of day; the sheet puts them before bed, matching the column's wind-down bullet); size 60C (ND144 price list 10/1/26), so 30 servings. The 2026-11-02 sleep-hour blast and the NutriDyn sell sheet ND856 (seen through web search) call the theanine Suntheanine; the DB label read does not, so the sheet does not print it. Formerly sold as Calm Eze. URL nutridyn.com/calm-eze-r405: 'curl-200 8/11' in the repo sleep-hour blast (blasts/2026-11-02-sleep-hour.html); on 2026-11-03 web search indexes the main-site page as nutridyn.com/stress-management/calm-eze-r405 and the practitioner storefronts at /calm-eze-r405. Photo: R405.png is a 356x640 Lanczos stopgap of the 89x160 chart thumbnail (img-src/soft.json): needs the print master. GABA amount (2026-11-03): NutriDyn sell sheet Stress Essentials Calm ND856 Rev. 2/25 says 500 mg per 2 capsules; older retailer pages, the Calm Eze era sheet and the switch-chart read of catalog ND143 say 550 mg. Both the sleep and stress sheets print the newer sell-sheet figure, 500 mg; confirm on a current R405 bottle before a print run."
   },
   "sleep_mag_calm_pro": {
     "name": "Mag Calm Pro",

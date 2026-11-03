@@ -111,3 +111,5 @@ Print sources for the condition sheets. "AI upscale" = text-safe 4x upscale of t
 | R325.png | 420x420 | original (replaced an AI upscale whose label text the GAN had rewritten) |
 | R2122.png | 386x420 | original (replaced an AI upscale whose label text the GAN had rewritten) |
 | R829.png | 420x420 | original (replaced an AI upscale whose label text the GAN had rewritten) |
+
+| R716.png | 254x420 | original (Switch Kit page render of the 90-capsule bottle; replaced a 4x stopgap) |

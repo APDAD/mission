@@ -115,6 +115,8 @@ REFLUX = "#D52F1E"                                                # red: reflux 
 DIA, DIA_EDGE, DIA_FIBRE = "#EDCFC2", "#C99F8F", "#D2A897"        # diaphragm muscle
 CRUS, CRUS_LO, CRUS_EDGE = "#EECBBB", "#DDB09C", "#B48979"        # diaphragm cut up close (zoom)
 PYL_EDGE = "#B9563F"                                              # pylorus ring edge
+CONE = "#ECEAE8"                                                  # zoom cone: a cool grey, clearly not tissue
+DIA_END = 225            # local x where the diaphragm's right fade ends: before the band reaches the cone
 INK, INK_SOFT, LEAD = "#22292D", "#56626A", "#59646B"
 DEEP = "#8E3110"
 
@@ -215,7 +217,8 @@ ARROW = "M170,262 C168,206 112.8,171.9 110,142 C108.5,126 102.5,112 101,100 L100
 
 def _diaphragm():
     """A band of muscle: edge, body, short diagonal fibres and a soft top highlight.
-    No centre line.  Both ends fade out (gx-dia* gradients run x 30 -> 254)."""
+    No centre line.  Both ends fade out (gx-dia* gradients run x 30 -> DIA_END): the right end is
+    gone by the stomach's shoulder, so the band never runs on into the zoom cone."""
     fib = []
     for x, y, tx, ty in _sample(DIA_SEGS, 4.2):
         nx, ny = -ty, tx
@@ -385,8 +388,8 @@ def _defs():
             '<linearGradient id="gx-pyl" x1="0" y1="0" x2="1" y2="0">'
             '<stop offset="0" stop-color="#C9644E"/><stop offset=".42" stop-color="#EE9C84"/>'
             '<stop offset=".62" stop-color="#E58A72"/><stop offset="1" stop-color="#C25C46"/></linearGradient>'
-            + fade("e", DIA_EDGE, 30, 254) + fade("f", DIA, 30, 254) + fade("k", DIA_FIBRE, 30, 254)
-            + fade("h", "#FFFFFF", 30, 254)
+            + fade("e", DIA_EDGE, 30, DIA_END) + fade("f", DIA, 30, DIA_END) + fade("k", DIA_FIBRE, 30, DIA_END)
+            + fade("h", "#FFFFFF", 30, DIA_END)
             + '<marker id="gx-arr" viewBox="0 0 10 10" refX="5.2" refY="5" markerWidth="3.1" markerHeight="3.1" '
             f'orient="auto-start-reverse" markerUnits="strokeWidth"><path d="M0,0 L10,5 L0,10 z" fill="{REFLUX}"/></marker>'
             + _halo_head()
@@ -534,7 +537,8 @@ def _wedge():
                     (ZX + R * math.cos(ang), ZY + R * math.sin(ang))))
     (p1u, p2u), (p1l, p2l) = pts
     poly = f"{p1u[0]:.1f},{p1u[1]:.1f} {p2u[0]:.1f},{p2u[1]:.1f} {p2l[0]:.1f},{p2l[1]:.1f} {p1l[0]:.1f},{p1l[1]:.1f}"
-    return f'<polygon points="{poly}" fill="#F2E8E2"/>'
+    # cool grey, not a warm beige: the warm cone read as more diaphragm (#EDCFC2) opening into a pale sheet
+    return f'<polygon points="{poly}" fill="{CONE}"/>'
 
 
 def _source_ring():
@@ -600,14 +604,23 @@ def key_row():
     ring2 = sw('<circle r="8.6" fill="none" stroke="#FFFFFF" stroke-width="3"/>'
                '<circle r="8.6" fill="none" stroke="#6E787E" stroke-width="1.2" stroke-dasharray="3.4 2.4"/>')
 
+    # The two linings in the zoom, named with the exact fills (ESO_LINING above the Z-line, LINING_TOP below):
+    # they carry the intro's point that the stomach is shielded from acid and the food tube is not.
+    def chip(fill):
+        return (f'<svg viewBox="0 0 11 11" width="11" height="11" aria-hidden="true"><rect x=".6" y=".6" width="9.8" '
+                f'height="9.8" rx="2.2" fill="{fill}" stroke="{WALL_LO}" stroke-width="1.2"/></svg>')
+
     def item(swatches, name, gloss):
         return f'<span class="gx-ki">{swatches}<span><em>{name}</em><i>{gloss}</i></span></span>'
+    linings = (f'<span class="gx-ki gx-lin"><span><em>{chip(ESO_LINING)}Food tube lining</em>'
+               f'<em>{chip(LINING_TOP)}Stomach lining</em></span></span>')
     return ('<div class="gx-key"><b>Key</b>'
-            + item(acid, "Stomach acid", "pool, jet and drops")
-            + item(ring + halves, "LES valve", "cut in half up close")
+            + item(acid, "Stomach acid", "pool and drops")
+            + item(ring + halves, "LES valve", "halved up close")
             + item(band, "Diaphragm", "hugs the valve")
             + item(arrow, "Reflux", "acid moving up")
-            + item(ring2, "Dashed circle", "shown up close") + "</div>")
+            + linings
+            + item(ring2, "Dashed circle", "zoomed in") + "</div>")
 
 
 # ------------------------------------------------------------- trigger picture row
@@ -684,7 +697,9 @@ def depletion_strip(t, ed):
             'absorb nutrients. The FDA has warned about low magnesium with long-term PPI use, and about broken bones, '
             'mostly at high doses or after a year or more.<sup>1</sup> <b>Taken one for months? Do not stop suddenly:</b> '
             f'{plan}</p></div>'
-            f'<div class="gx-dep"><div class="gx-dephead">Long-term acid blockers can lower</div><div class="gx-coins">{coins}</div>'
+            # "PPIs", not "acid blockers": the magnesium warning [FDA11] covers PPIs only, and PPIs are linked to all
+            # five coins; the paragraph beside it covers H2 blockers.
+            f'<div class="gx-dep"><div class="gx-dephead">Long-term PPI<span class="gx-lc">s</span> can lower</div><div class="gx-coins">{coins}</div>'
             '<div class="gx-ask">Ask {who} if a nutrient check makes sense.</div></div></div>')
 
 
@@ -723,8 +738,10 @@ def front(t, ed):
 CSS = r"""
 .gxf{display:flex;flex-direction:column;gap:0.065in}
 .gxf .gx-art>svg{display:block;width:100%;height:auto}
-.gxf .gx-key{display:flex;align-items:center;justify-content:center;gap:0 13px;flex-wrap:nowrap;margin:10px auto 0;
-  padding:3px 15px 3px 13px;border:1px solid #EAD9CF;border-radius:99px;background:#FFFBF8;width:max-content;max-width:100%}
+.gxf .gx-key{display:flex;align-items:center;justify-content:center;gap:0 10px;flex-wrap:nowrap;margin:10px auto 0;
+  padding:3px 14px 3px 12px;border:1px solid #EAD9CF;border-radius:99px;background:#FFFBF8;width:max-content;max-width:100%}
+.gxf .gx-key em,.gxf .gx-key i{white-space:nowrap}
+.gxf .gx-lin em{display:flex;align-items:center;gap:4px}
 .gxf .gx-key>b{font:800 7pt Inter,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--deep)}
 .gxf .gx-ki{display:inline-flex;align-items:center;gap:5px}
 .gxf .gx-ki>span{display:flex;flex-direction:column;line-height:1.14}
@@ -764,9 +781,30 @@ CSS = r"""
 .gxf .gx-coin b{width:0.4in;height:0.4in;border-radius:50%;background:var(--c1);color:#fff;display:flex;align-items:center;justify-content:center;
   font:800 10pt Inter,sans-serif;box-shadow:0 0 0 2px #fff,0 0 0 3.2px #F0B89A}
 .gxf .gx-coin span{font-size:7pt;font-weight:700;color:#2B3236;margin-top:3px;text-align:center;line-height:1.1;white-space:nowrap}
+.gxf .gx-lc{text-transform:none}
 .gxf .gx-ask{font-size:7.6pt;color:#3F4A50;text-align:center;margin-top:3px}
 .gxf .gx-fn{margin:0;font-size:7pt;color:#5E686F;line-height:1.3}
 .gxf~.foot,.gxf~.foot .code{font-size:7pt}
+/* back page, scoped by the marker span in the lifestyle title.  Room for the longer Provider check and for
+   PPI_PICK = "multi" (three products in the morning slot): a slightly shorter band, smaller margins */
+.sheet.back:has(.gxb) .band{padding-bottom:0.13in}
+.sheet.back:has(.gxb) .band h2{margin-bottom:0.08in}
+.sheet.back:has(.gxb) .life.hex .disc2{width:0.94in;height:0.82in}
+.sheet.back:has(.gxb) .duo{grid-template-columns:1fr 1.35fr;margin-top:0.08in}
+.sheet.back:has(.gxb) .ns-title{margin-top:0.1in}
+.sheet.back:has(.gxb) .cols{margin-top:0.07in}
+.sheet.back:has(.gxb) .notes{margin-top:0.08in}
+/* the narrower rhythm panel: keep each slot heading ("Evening meal") on one line */
+.sheet.back:has(.gxb) .rhythm{gap:5px}
+.sheet.back:has(.gxb) .slot{padding:5px 5px}
+.sheet.back:has(.gxb) .slot .when{white-space:nowrap}
+/* one subgrid row per part (header, photo, bullets, In each serving, dose), so every column's parts line up */
+.sheet.back:has(.gxb) .cols{row-gap:0;grid-template-rows:repeat(5,auto)}
+.sheet.back:has(.gxb) .col{display:grid;grid-row:span 5;grid-template-rows:subgrid}
+.sheet.back:has(.gxb) .col .what{display:contents}
+.sheet.back:has(.gxb) .col .what>ul{padding:0.06in 0.08in 0}
+.sheet.back:has(.gxb) .col .key{margin:4px 0.08in 0;padding-bottom:0.05in}
+.sheet.back:has(.gxb) .col .dose{display:flex;flex-direction:column;justify-content:center}
 """
 
 SHEET = {
@@ -782,75 +820,123 @@ SHEET = {
     "front": front,
     "css": CSS,
     "back": {
-        "life_title": "Lifestyle Modifications", "style": "hex",
-        # Asher's GERD protocol (Gmail 16eec3cc434c5ff7) lines up with [ACG22]; the trigger foods live on the front.
+        # the span marks this sheet's back page for the scoped CSS (.sheet.back:has(.gxb))
+        "life_title": 'Lifestyle Modifications<span class="gxb"></span>', "style": "hex",
+        # Asher's GERD protocol email (2019-12-12) lines up with [ACG22]; the trigger foods live on the front.
         "life": [("clock", "Early dinner", "Finish eating 3 hours before you lie down."),     # [ACG22] 2-3 h; [FUJ05]
-                 ("bed", "Raise the head", "Lift the head of your bed 6 to 8 inches."),        # [ACG22]; protocol "about six inches"
-                 ("portion", "Smaller meals", "Eat slowly, with plenty of plants."),           # protocol: no heavy meals; [ZAL17]
+                 # [NIDDK] blocks or a wedge, not pillows; [ACG22]; protocol "about six inches"
+                 ("bed", "Raise the head", "Blocks or a wedge, 6 to 8 inches. Not pillows."),
+                 ("plate", "Smaller meals", "Eat slowly, with plenty of plants."),             # protocol: no heavy meals; [ZAL17]
                  ("walk", "Stay upright", "No bending or hard exercise after meals."),         # protocol: bending, jarring exercise
                  ("scale", "A healthy weight", "A few pounds lighter eases the valve."),       # [ACG22] weight loss, strong
                  ("smoke", "Stop smoking", "Smoking loosens the valve.")],                     # [ACG22] tobacco; lowers LES pressure
+        # Column wording is structure/function only and names no drug: a column that pairs a product with
+        # an acid blocker's side effect reads as mitigating a drug's adverse event, a disease claim under
+        # 21 CFR 101.93(g)(2)(ix).  The PPI facts stay on the front as education.
         "cols": [
             # Asher's first line: "For many individuals, the utilization of the Zinc-Carnosine alone is
-            # sufficient" (2019-12-12).  Label: 1 capsule twice daily between meals.  One capsule here because
-            # GI Integrity's scoop carries 78 mg zinc carnosine, the other capsule's worth (ND431 vs ND414).
+            # sufficient" (2019-12-12).  Label: 1 capsule twice daily between meals.  One capsule with GI
+            # Integrity, whose scoop carries 78 mg zinc carnosine, the other capsule's worth (ND431 vs ND414).
+            # Alone (the Start-here week) it is the label dose: 1 twice a day = 34 mg zinc.
             {"p": "gerd_zinc_carnosine", "need": "Shield the lining", "needsub": "zinc carnosine", "start": True,
              "bullets": ["Supports the stomach&rsquo;s own protective lining",
-                         "Only 1 a day: GI Integrity has a second dose"],
-             "dose": "1 capsule daily", "dosesub": "at bedtime, between meals", "sched": [("bed", 1, "capsule")]},
+                         "1 a day with GI Integrity, 1 twice a day without it"],
+             "dose": "1 capsule daily", "dosesub": "at bedtime, empty stomach", "sched": [("bed", 1, "capsule")]},
             # Protocol: "Chew three tablets as needed ... or 1-3 tablets before each meal"; label: 3 after each meal.
-            # Once a day here keeps the plan's zinc near 38 mg (5 mg per 3 tablets).
+            # Once a day here keeps the plan's zinc near 38 mg (5 mg per 3 tablets).  After dinner: the rhythm box
+            # files it under the evening meal, and night-time reflux is the focus.  DGL: most, not all, of the
+            # glycyrrhizin is removed (NutriDyn's protocol copy: "does not contain substantial parts of glycyrrhizin").
             {"p": "gerd_dgl_pro", "need": "Calm after meals", "needsub": "chewable DGL licorice",
              "bullets": ["Supports the stomach&rsquo;s soothing mucus layer",
-                         "The licorice part that can raise blood pressure is removed"],
-             "dose": "Chew 3 tablets", "dosesub": "after your biggest meal", "sched": [("pm", 3, "tablets")]},
-            # Protocol: chronic reflux, GI Integrity "Features 78 mg of zinc-carnosine"; label: Do not use if
-            # pregnant or nursing (ND431).
-            {"p": "gerd_gi_integrity", "need": "Coat and soothe", "needsub": "glutamine, DGL, aloe, slippery elm, marshmallow",
+                         "Most of the licorice part that can raise blood pressure is removed"],
+             "dose": "Chew 3 tablets", "dosesub": "after dinner", "sched": [("pm", 3, "tablets")]},
+            # Protocol: chronic reflux, GI Integrity "Features 78 mg of zinc-carnosine" (the reason it is here; the
+            # protocol's own rat study found glutamine worsened reflux lesions, so the header leads with zinc
+            # carnosine, not glutamine).  Label: Do not use if pregnant or nursing (ND431).
+            {"p": "gerd_gi_integrity", "need": "Coat and soothe", "needsub": "zinc carnosine, aloe, DGL",
              "bullets": ["Sip it slowly so it coats your food tube",
                          "Skip it if pregnant or nursing"],
              "dose": "1 scoop daily", "dosesub": "in 6 to 8 oz water", "sched": [("am", 1, "scoop")]},
-            # Protocol (pantoprazole patient, 2019-09-05): "Spore Probio" while on the PPI.  PPIs shift the gut
-            # microbiome (Imhann F et al. Gut 2016;65:740-8).
+            # Protocol (pantoprazole patient, Asher's PPI-support email 2019-09-05): "Spore Probio" while on the PPI;
+            # follow-up 2019-09-06: rotate probiotics, or "stick with the Spore Probio".  XOS 300 mg: label (ND1135).
             {"p": "gerd_spore_probio", "need": "Balance the gut", "needsub": "spore probiotic",
-             "bullets": ["Acid blockers can shift your gut bacteria",
-                         "Supports a healthy, balanced gut"],
+             "bullets": ["Supports a healthy, balanced gut",
+                         "Adds XOS, a prebiotic fiber"],
              "dose": "2 capsules daily", "dosesub": "with breakfast", "sched": [("am", 2, "capsules")]},
-            # [FDA11] PPIs and low magnesium.  2 capsules = 260 mg, under the 350 mg supplement limit [ODS-MG]
-            # (label: 2 capsules twice daily).
-            {"p": "gerd_mag_glycinate", "need": "Refill magnesium", "needsub": "if you take a PPI",
-             "bullets": ["Long-term PPIs can drain magnesium",
-                         "Supports calm muscles and nerves"],
-             "dose": "2 capsules daily", "dosesub": "at bedtime", "sched": [("bed", 2, "capsules")]},
+            None,  # column 5: PPI_PICK below (Asher's call)
         ],
-        "rx": {
-            "practitioner": [
-                # [LAM13] [LAM17] [OC05] [FA11]: acid blockers and B12, iron, calcium, zinc; [FDA11] PPIs and magnesium.
-                # "Once a year": [FDA11] asks for magnesium levels before and periodically during long-term PPI use;
-                # yearly is the practical cadence, worded as "may"
-                "<b>Acid blockers</b> used long term can lower B12, iron, calcium and zinc; PPIs, magnesium too. "
-                "{Who} may check levels once a year.",
-                # ND414 17 mg + ND431 16.1 mg + ND1337 5 mg = 38 mg; [ODS-ZN] 40 mg limit, copper
-                "<b>Zinc adds up.</b> Zinc-Carnosine, GI Integrity and Licorice DGL Pro make about 38 mg a day, near "
-                "the 40 mg adult limit. No other zinc unless {who} says so; long use can lower copper.",
-                # Asher's protocol (HCl challenge; "not ... if there is gastritis or any recent history of gastric
-                # ulceration"); betaine HCl with NSAIDs or an acid blocker: not without the prescriber
-                "<b>Stomach acid check.</b> {Who} may test your stomach acid (an HCl challenge). Never take HCl on "
-                "your own, with an ulcer or with NSAIDs (like ibuprofen); on an acid blocker, only if your prescriber agrees.",
-            ],
-            "pharmacy": [
-                # ND414 + ND431 + ND1337 zinc; [ODS-ZN] 40 mg limit, copper
-                "<b>Zinc adds up.</b> Zinc-Carnosine, GI Integrity and Licorice DGL Pro make about 38 mg a day, near "
-                "the 40 mg adult limit. No other zinc (lozenges, multis) unless your prescriber says so; long use can "
-                "lower copper.",
-                # [LAM13] [LAM17] [OC05] [FA11] [FDA11]; "a year or more": [FDA11] low magnesium mostly after more
-                # than a year of PPIs, [FDA10] fracture risk mostly after a year or more
-                "<b>Acid blockers</b> used long term can lower B12, iron, calcium and zinc; PPIs, magnesium too. "
-                "On one a year or more? {Who} can suggest a level check.",
-                # [ODS-ZN] [ODS-MG] antibiotic spacing; [LT4] thyroid spacing
-                "<b>Space the minerals.</b> Take antibiotics like cipro or doxycycline 2 hours before or 4 to 6 hours "
-                "after the zinc and magnesium here, and thyroid pills 4 hours apart.",
-            ],
-        },
+        "rx": None,  # filled from PPI_PICK below
     },
 }
+
+
+# ------------------------------------------------- column 5 and the rx lines: Asher's call
+# See DECISION PENDING in the module docstring.  "magnesium" is the built default; "multi" restores the
+# PPI email's multi.  Rebuild after changing it: column 5, the zinc line, the dose note and the spacing
+# line all follow.
+PPI_PICK = "magnesium"
+
+_COL5 = {
+    # [FDA11] is why magnesium is on a GERD sheet; the column itself stays generic (see above).  2 capsules =
+    # 260 mg, under the 350 mg supplement limit [ODS-MG] (label: 2 capsules twice daily).
+    "magnesium": {"p": "gerd_mag_glycinate", "need": "Keep magnesium up", "needsub": "gentle glycinate form",
+                  "bullets": ["Supports healthy magnesium levels",
+                              "Supports calm muscles and nerves"],
+                  "dose": "2 capsules daily", "dosesub": "at bedtime", "sched": [("bed", 2, "capsules")]},
+    # Label: 3 capsules once daily with food (catalog ND143 10/1/26 via the products DB, R717).
+    "multi": {"p": "gerd_essential_multi_iron", "need": "Cover the basics", "needsub": "multivitamin with iron",
+              "bullets": ["Supports healthy iron and B12 levels",
+                          "Take it with food"],
+              "dose": "3 capsules daily", "dosesub": "with breakfast", "sched": [("am", 3, "capsules")]},
+}
+
+# Zinc per day, from the sell sheets: ND414 17 mg (1 capsule) + ND431 16.1 mg (1 scoop) + ND1337 5 mg
+# (3 tablets) = 38.1 mg; the multi adds 15 mg (ND475) = 53.1 mg.  [ODS-ZN] 40 mg adult limit counts food
+# too (about 10 mg a day), so 38 mg is "at or a little over" with food.  [MULTI] for "often 10 to 15 mg".
+_ZINC = {
+    "magnesium": ("<b>Zinc adds up.</b> The plan gives about 38 mg a day; with food, that is at or a little over "
+                  "the 40 mg adult upper limit. Count the zinc in any multi (often 10 to 15 mg) and add no other "
+                  "zinc unless {gate} says so. Use the plan only as long as {who} advises: long use can lower "
+                  "copper. Doses are for adults."),
+    "multi": ("<b>Zinc adds up.</b> The plan gives about 53 mg a day, above the 40 mg adult upper limit, so use "
+              "it only for a short course that {who} watches, and add no other zinc unless {gate} says so: long "
+              "use can lower copper. Doses are for adults."),
+}
+# Bottle vs sheet: Zinc-Carnosine 2/day vs 1, Licorice DGL Pro 9/day vs 3, Magnesium Glycinate 4/day vs 2.
+_DOSES = {
+    "magnesium": ("<b>Doses on purpose.</b> Some doses here are lower than the bottle says, to keep zinc and "
+                  "magnesium in a safe range. Follow this plan unless {who} changes it."),
+    "multi": ("<b>Doses on purpose.</b> Some doses here are lower than the bottle says, to limit zinc. Follow "
+              "this plan unless {who} changes it."),
+}
+_MINERALS = {"magnesium": "zinc and magnesium", "multi": "zinc and iron"}
+
+
+def _rx(pick):
+    z, dz, m = _ZINC[pick], _DOSES[pick], _MINERALS[pick]
+    return {
+        "practitioner": [
+            dz,
+            # [ODS-ZN] [ODS-MG] antibiotic spacing and [LT4] thyroid spacing: a pointer here, the times in the
+            # pharmacy edition
+            z.replace("{gate}", "{who}") + f" Ask {{who}} how to space antibiotics and thyroid pills from the {m}.",
+            # Asher's protocol: HCl challenge, "should not be undertaken if there is gastritis or any recent history
+            # of gastric ulceration"; betaine hydrochloride with NSAIDs or an acid blocker: not without the
+            # prescriber.  Said in words: in Inter, "HCl" prints like "HCI".
+            "<b>Stomach acid check.</b> {Who} may check your stomach acid with an acid-pill test. Never take "
+            "stomach-acid pills (betaine hydrochloride) on your own, with an ulcer or gastritis, or with NSAIDs "
+            "(like ibuprofen); on an acid blocker, only if your prescriber agrees.",
+        ],
+        "pharmacy": [
+            dz,
+            z.replace("{gate}", "your prescriber"),
+            # [ODS-ZN] [ODS-MG] antibiotic spacing; [LT4] thyroid spacing; betaine HCl is sold over the counter
+            f"<b>Space the minerals.</b> Take antibiotics like cipro or doxycycline 2 hours before or 4 to 6 hours "
+            f"after the {m} here, and thyroid pills 4 hours apart. Do not add stomach-acid pills (betaine "
+            "hydrochloride) on your own, and never with an ulcer, gastritis or NSAIDs (like ibuprofen).",
+        ],
+    }
+
+
+SHEET["back"]["cols"][4] = _COL5[PPI_PICK]
+SHEET["back"]["rx"] = _rx(PPI_PICK)

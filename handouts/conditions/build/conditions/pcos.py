@@ -44,6 +44,22 @@ Final front review fixes (2026-11-03, third round; the approved layout is unchan
   - Words: cells "answer insulin poorly"; the ovaries make the androgens; "every body size" moved
     to the facts; weight gain and diabetes added to the risk factors; the pharmacy edition sends the
     blood sugar test to "your doctor".
+Independent review fixes (2026-11-03, fourth round):
+  - Public repo: the source notes cite documents (NutriDyn GLC 2023 PCOS protocol, NutriDyn GLC 2026
+    PMOS protocol, Asher's emails and pages), never a speaker, a Gmail thread id or a private link.
+  - Front: the 2026 rename (PCOS, now also called PMOS) in the subtitle and the facts; AMH glossed; the
+    endometrial line ([GUIDE23H] 1.11); "Why it matters" runs full width under both fact boxes.
+  - Art: the zoom circle moved 8 units left, clear of the left branch, and the small circle on the
+    bloodstream holds the same three things the close-up shows; captions are upright (no faked italic).
+  - Icons: thinning hair lies flat across a pale part; skin tags rise from a curved edge of skin; the
+    pregnancy test is a slim stick with a wide window and a cap.
+  - Back: omega claims are ND416's own (no triglyceride claim); Berberine Pro's lunch dose sits in the
+    Morning box; the check panel names the fenugreek in Myo-Inositol Complex for pregnancy, sends a
+    blood-sugar medicine change to the doctor who prescribes it, warns about vitamin K and warfarin
+    and about berberine's drug enzymes in both editions, and gives B12 and short-term vitamin D an
+    action; product names get two lines in every column so the rows line up.
+  - PRINT HOLD: the Myo-Inositol Complex photo is a soft stopgap (see products.d/pcos.json), so the
+    sheet is web-only until the real bottle is staged.
 Glucose (purple hexagon) and insulin (gold dot) use the same symbols as the insulin-resistance
 sheet, so the Metabolic Health Series reads as one system.
 Every SVG id starts with "pc" and every CSS class with "pc-" (all under .pcf), so nothing
@@ -79,6 +95,17 @@ SOURCES (tags appear in comments next to each number on the page)
              thinning scalp hair, weight gain, darkened skin along neck creases and body folds
              (acanthosis nigricans), skin tags, infertility.  Not re-opened from the build machine
              on 2026-11-03 (outbound sites are blocked); long-standing content of both pages.
+  [PMOS26]   The 2026 rename, all read on PubMed 2026-11-03.  Bahri-Khomami M et al. Am J Obstet
+             Gynecol 2026;235:999-1002, PMID 42665241, doi:10.1016/j.ajog.2026.08.024 (renamed
+             polyendocrine metabolic ovarian syndrome after a consensus endorsed by 56 professional and
+             patient organizations; the ovarian look "reflects numerous arrested antral follicles, not
+             pathologic cysts"; "Diagnostic criteria remain unchanged").  Piltonen TT et al. Hum Reprod
+             2026, PMID 42905432, doi:10.1093/humrep/deag150 ("in May 2026, a multi-step global consensus
+             process culminating in a Lancet statement renamed the condition"; the guideline update that
+             consolidates it is due in 2028).  Castelo-Branco C et al. (European Society of Gynaecology
+             position paper) Gynecol Endocrinol 2026;42:2695512, PMID 42367168,
+             doi:10.1080/09513590.2026.2695512 ("prioritizing patient communication" and "prolonged dual
+             terminology use"), hence PCOS stays the headline and PMOS is added once.
 
   Back-page safety sources (all read 2026-11-03):
   [CHAN93]   Chan E. Biol Neonate 1993;63:201-8. doi:10.1159/000243932 (berberine displaces bilirubin;
@@ -90,14 +117,23 @@ SOURCES (tags appear in comments next to each number on the page)
   [PALM13]   Palmery M et al. Eur Rev Med Pharmacol Sci 2013;17:1804-13, PMID 23852908 (oral
              contraceptives deplete folic acid, B2, B6, B12, C, E, magnesium, selenium and zinc).
   [GRANT10]  Grant P. Phytother Res 2010;24:186-8. doi:10.1002/ptr.2900 (spearmint tea twice a day,
-             42 women, 30 days: free and total testosterone fell; Kenneth Johnson's NutriDyn GLC 2026
-             PMOS protocol uses it).
+             42 women, 30 days: free and total testosterone fell; the NutriDyn GLC 2026 PMOS protocol,
+             Dropbox id:xHepYs_Ou4AAAAAAAA7hTA, uses it: "Spearmint: tea or extract twice daily").
+  [OUZIR16]  Ouzir M et al. Food Chem Toxicol 2016;96:145-54, PMID 27498339, doi:10.1016/j.fct.2016.08.003
+             (review: teratogenic, anti-fertility, anti-implantation and abortifacient findings, so
+             fenugreek "is not recommended for use during pregnancy"; read on PubMed 2026-11-03).
+  [KHALKI10] Khalki L et al. J Ethnopharmacol 2010;131:321-5, PMID 20600755, doi:10.1016/j.jep.2010.06.033
+             (fenugreek seed extract through pregnancy in mice: more foetal deaths, smaller litters,
+             malformations; read on PubMed 2026-11-03).
+  [ADA-S9]   ADA Standards of Care in Diabetes, Section 9: consider periodic vitamin B12 measurement on
+             long-term metformin (with [AROD16]); the insulin-resistance sheet cites the same.
   Labels: the five NutriDyn sell sheets (ND680, ND1130, ND382, ND416, ND460), opened from Dropbox;
   details and claim wording per product in build/products.d/pcos.json.
 
 BACK (product pass, 2026-11-03): five products, the competitor's count, all from NutriDyn's own PCOS
-protocols (Monique Class GLC 2023; Kenneth Johnson GLC 2026 "PMOS"; Asher's PCOS handout and his
-Myo-Inositol Complex emails).  Competitor categories: vitamin D -> D3 5000 with K2, omega-3 -> Omega
+protocols (NutriDyn GLC 2023 PCOS protocol, Dropbox id:xHepYs_Ou4AAAAAAAAly0w; NutriDyn GLC 2026 PMOS
+protocol, Dropbox id:xHepYs_Ou4AAAAAAAA7hTA; Asher's PCOS handout and his Myo-Inositol Complex email to a
+practitioner, 2026-09-25).  Competitor categories: vitamin D -> D3 5000 with K2, omega-3 -> Omega
 Pure EPA-DHA 1000, berberine -> Berberine Pro; melatonin and turmeric have no place in these protocols,
 so Myo-Inositol Complex and UltraBiotic Daily Multi-Strain (both protocol picks) take those columns.
 Berberine Pro, not Gluco IR: it is the competitor's own category, it is on both PCOS protocols, it has
@@ -985,7 +1021,8 @@ def ring():
 
 def facts(ed):
     # Glucose tests ([GUIDE23H] 1.9.9-1.9.10: an OGTT, or fasting glucose / A1c) are ordered by a doctor;
-    # most pharmacists cannot order them, so the pharmacy edition points the reader to her doctor.
+    # most pharmacists cannot order them, so the pharmacy edition points the reader to her doctor.  The
+    # same goes for months-long gaps between periods (an exam, maybe an ultrasound).
     test_who = "your doctor" if (ed or {}).get("who") == "your pharmacist" else "{who}"
     return ('<div class="pc-facts">'
             '<div class="pc-fbox"><h4>PCOS facts</h4><p>'
@@ -998,13 +1035,17 @@ def facts(ed):
             'It happens at every body size, even at a healthy weight. '
             # [GUIDE23] adults: 2 of 3 = irregular cycles; clinical or biochemical high androgens; polycystic ovaries
             # on ultrasound OR a high AMH blood test; other causes excluded.  [PENA25] teens: irregular cycles AND
-            # high androgens (no ultrasound, no AMH), so the 2-of-3 line says "Adults".
+            # high androgens (no ultrasound, no AMH), so the 2-of-3 line says "Adults".  AMH (anti-Mullerian
+            # hormone) is made by the small follicles, so it runs high when there are many of them.
             'Adults are diagnosed with <b>2 of 3</b>: irregular periods, high androgens (a blood test or signs like extra '
-            'hair) or many follicles on ultrasound (or a high AMH blood test), once other causes are ruled out. '
-            'You can have PCOS without&nbsp;&ldquo;cysts.&rdquo;</p>'
-            # [GUIDE23] broader features: metabolic risk (type 2 diabetes), cardiovascular disease, sleep apnoea, mood.
-            '<p class="pc-why"><b>Why it matters:</b> PCOS raises the risk of type 2 diabetes, heart disease and sleep apnea '
-            f'(breathing pauses during sleep), so ask {test_who} about a blood sugar test.</p></div>'
+            'hair) or many follicles on ultrasound (or a blood test showing high AMH, a hormone made by the follicles), '
+            'once other causes are ruled out. You can have PCOS without &ldquo;cysts.&rdquo; '
+            # [PMOS26]: renamed in May 2026 (56 organizations); "numerous arrested antral follicles, not pathologic
+            # cysts"; "Diagnostic criteria remain unchanged".  The European Society of Gynaecology asks for long dual
+            # naming with patient communication first, so PCOS stays the headline and PMOS is named once, here and in
+            # the subtitle.
+            'In 2026 experts renamed it polyendocrine metabolic ovarian syndrome (<b>PMOS</b>), because the '
+            '&ldquo;cysts&rdquo; are really stalled egg follicles. Same condition, same&nbsp;tests.</p></div>'
             '<div class="pc-fbox"><h4>Risk factors</h4><ul>'
             # [GUIDE23] strong family clustering; first-degree relatives with PCOS or type 2 diabetes.
             '<li><b>Runs in families:</b> a mother or sister with PCOS or type 2 diabetes raises your risk.</li>'
@@ -1017,7 +1058,15 @@ def facts(ed):
             # studies only, hence "can make it worse".
             '<li><b>Can make it worse (you can change):</b> weight gain at the waist, a high-sugar diet, '
             'sitting most of the day, poor sleep, stress and hormone-disrupting chemicals (in some plastics and '
-            'fragrances).</li></ul></div></div>')
+            'fragrances).</li></ul></div></div>'
+            # Full width under both boxes, so the two columns stay level.
+            # [GUIDE23] broader features: metabolic risk (type 2 diabetes), cardiovascular disease, sleep apnoea, mood.
+            # [GUIDE23H] 1.11.1-1.11.3: markedly higher risk of endometrial hyperplasia and cancer (overall chance
+            # low, no routine screening); long-standing untreated amenorrhea and a persistently thickened endometrium
+            # add to the risk; 1.11.4: cycle regulation is part of prevention -> one calm line with an action.
+            '<p class="pc-why"><b>Why it matters:</b> PCOS raises the risk of type 2 diabetes, heart disease and sleep '
+            f'apnea (breathing pauses during sleep), so ask {test_who} about a blood sugar test. Long gaps between '
+            f'periods can thicken the womb lining, so tell {test_who} if your periods are often months&nbsp;apart.</p>')
 
 
 def front(t, ed):
@@ -1063,7 +1112,8 @@ CSS = r"""
 SHEET = {
     "slug": "pcos", "code": "ND-CM-204", "theme": "metab", "series": "Metabolic Health Series",
     "order": 6,
-    "title": "Polycystic Ovary Syndrome", "sub": "PCOS",
+    # [PMOS26]: PCOS stays the headline during the dual-naming years; the new name is added once.
+    "title": "Polycystic Ovary Syndrome", "sub": "PCOS, now also called PMOS",
     # [STEPTO13] insulin resistance in 75% of lean and 95% of overweight women with PCOS -> "most women".
     "intro": ("PCOS is a common hormone condition. The ovaries make extra <b>androgens</b>. These are male-type hormones "
               "like testosterone; women normally make a little. Too much can upset periods, ovulation (releasing an egg) "
@@ -1091,17 +1141,18 @@ SHEET = {
             ("moon", "Sleep 7 to 9 hours", "Snoring or always tired? Ask about sleep apnea."),
             # [GRANT10]: spearmint tea twice a day for 30 days, 42 women with PCOS: free and total testosterone
             # fell (the hair score itself did not change in that time, hence "small study" and no promise).
-            # In Kenneth Johnson's NutriDyn GLC 2026 PMOS protocol.
+            # In the NutriDyn GLC 2026 PMOS protocol ("Spearmint: tea or extract twice daily").
             ("leaf", "Spearmint tea", "Two cups a day. In a small 30-day study, testosterone came down."),
         ],
-        # Five products (the competitor sheet's count), all from NutriDyn PCOS protocols: Monique Class GLC
-        # 2023 (Myo-Inositol Complex 3 BID, Berberine Pro TID, Vit D3 5000 IU, fish oils), Kenneth Johnson GLC
-        # 2026 "PMOS" (Berberine Pro, Omega Pure EPA-DHA 1000 for the triglycerides) and Asher's own PCOS
-        # handout and blast (UltraBiotic Daily Multi-Strain, give it 12 weeks).  Label facts, doses and claim
-        # sources per product: products.d/pcos.json (the five sell sheets, opened 2026-11-03).
+        # Five products (the competitor sheet's count), all from NutriDyn PCOS protocols: the NutriDyn GLC 2023
+        # PCOS protocol (Dropbox id:xHepYs_Ou4AAAAAAAAly0w: Myo-Inositol Complex 3 BID, Berberine Pro TID, Vit D3
+        # 5000 IU, fish oils 2 BID), the NutriDyn GLC 2026 PMOS protocol (Dropbox id:xHepYs_Ou4AAAAAAAA7hTA:
+        # Myo-Inositol Complex, Berberine Pro 1 cap TID, Omega Pure EPA-DHA 1000 "for the triglycerides"), both
+        # re-opened 2026-11-03, and Asher's own PCOS handout and blast (UltraBiotic Daily Multi-Strain, give it 12
+        # weeks).  Label facts, doses and claim sources per product: products.d/pcos.json (the five sell sheets).
         # Start here: Myo-Inositol Complex, the one formula made for this condition ("Support for Healthy Ovarian
-        # Function"), the product Asher offers by name for PCOS patients, and the one Johnson calls "the
-        # best-supported supplement here"; [GUIDE23H] 4.7.1 notes inositol's limited harm.
+        # Function"), the product Asher offers by name for PCOS patients, and the one the NutriDyn GLC 2026 PMOS
+        # protocol calls "the best-supported supplement here"; [GUIDE23H] 4.7.1 notes inositol's limited harm.
         "cols": [
             # ND680: "Support healthy ovarian function", "Support healthy menstrual cycles", "Support optimal blood
             # glucose balance"
@@ -1117,51 +1168,72 @@ SHEET = {
             # "Supports bone and skin tissues", "Supports immune function"
             {"p": "pc_d3_5000_k2", "need": "Vitamin D", "needsub": "D3 5,000 IU with K2", "dose": "dose_from_db",
              "bullets": ["Supports healthy vitamin D levels", "Supports mood, bone and immune health"]},
-            # Johnson GLC 2026 uses it "for the triglycerides"; ND416: "Healthy cardiovascular function",
-            # "Healthy immune function", "Skin vitality"
-            {"p": "pc_omega", "need": "Healthy blood fats", "needsub": "omega-3 fish oil", "dose": "dose_from_db",
-             "bullets": ["Supports healthy triglyceride levels", "Supports heart, skin and immune health"]},
-            # ND460: "Support a healthy gut microbiome"; its text: "promote healthy hormone functions"
+            # The NutriDyn GLC 2026 PMOS protocol uses it "for the triglycerides", but ND416 (Rev. 4/25, re-opened
+            # 2026-11-03) makes no triglyceride claim, so neither does the card.  Its claims: "Healthy cardiovascular
+            # function", "Healthy immune function", "Skin vitality" (bullet 2 joins the last two).  The need names
+            # the nutrient (ND416: omega-3s are "essential" because the body does not make them), as on the
+            # insulin-resistance sheet; the old "Healthy blood fats" implied the triglyceride claim.
+            {"p": "pc_omega", "need": "Essential omega-3 fats", "needsub": "EPA + DHA from fish oil",
+             "dose": "dose_from_db",
+             "bullets": ["Supports healthy cardiovascular function", "Supports healthy immune function and skin"]},
+            # ND460: "Support a healthy gut microbiome"; its text: "promote healthy hormone functions".  The no-break
+            # space keeps "microbiome" off a line of its own.
             {"p": "pc_ultrabiotic", "need": "Gut and hormones", "needsub": "7-strain probiotic",
              "dose": "dose_from_db",
-             "bullets": ["Supports a healthy gut microbiome", "Promotes healthy hormone function"]},
+             "bullets": ["Supports a healthy gut&nbsp;microbiome", "Promotes healthy hormone function"]},
         ],
-        # Three notes per edition.  Pharmacists check interactions and depletions; providers order labs and adjust.
+        # Four notes per edition (2026-11-03 review).  Pharmacists check interactions, pregnancy and depletions;
+        # providers order labs, and a change to a blood-sugar medicine goes to the doctor who prescribes it (a DC or
+        # ND handing out the practitioner edition usually cannot adjust insulin or a sulfonylurea).  The medicine
+        # notes are cautions, never "adds to the drug's effect": wording that a product augments a drug action reads
+        # as an implied disease claim (21 CFR 101.93(g)(2)), as the insulin-resistance sheet's review found.
         # Pregnancy: [CHAN93] berberine displaces bilirubin from albumin, "best avoided in jaundiced neonates and
-        # pregnant women"; every one of the five labels says to consult a practitioner if pregnant or nursing;
-        # [GUIDE23H] 5.8.1-5.8.3: inositol is experimental for fertility and its safety is not known.
-        # Sugar-lowering: dihydroberberine (ND1130) and the chromium in Myo-Inositol Complex (ND680) add to diabetes
-        # medicines; low blood sugar is mainly a risk with insulin or a sulfonylurea (glipizide).  Yin J et al.
-        # Metabolism 2008;57:712-7, doi:10.1016/j.metabol.2008.01.013: berberine added to existing diabetes
-        # treatment lowered fasting and after-meal glucose and A1c further (read on PubMed 2026-11-03).
+        # pregnant women"; Myo-Inositol Complex carries 500 mg fenugreek seed extract a day (ND680) and fenugreek
+        # "is not recommended for use during pregnancy" [OUZIR16] (animal developmental toxicity [KHALKI10]), so the
+        # START HERE product is named too; every one of the five labels says to consult a practitioner if pregnant
+        # or nursing; [GUIDE23H] 5.8.1-5.8.3: inositol is experimental for fertility and its safety is not known.
         # Nursing: the berberine-bilirubin concern [CHAN93] is for newborns; the LactMed goldenseal (berberine)
         # record, PMID 30000926, could not be opened from this machine.
-        # Warfarin, not "blood thinners": vitamin K weakens warfarin (a vitamin K antagonist), not the newer
-        # anticoagulants; the ND382 label itself warns against K2 with any blood-thinning medication.
-        # [GUO12] berberine lowered CYP2D6, 2C9 and 3A4 activity.  [AROD16] metformin and B12.  [PALM13] the pill
-        # and B6, B12, folate, magnesium and zinc.  Vitamin D: the D3 5000 label (ND382) says it exceeds the adult
-        # upper intake level (4,000 IU, NIH Office of Dietary Supplements) and asks for regular 25-OH vitamin D
-        # monitoring; its K2 "is not recommended for patients on blood-thinning medications".
+        # Blood sugar: dihydroberberine (ND1130) and Myo-Inositol Complex's chromium, fenugreek and cinnamon (ND680)
+        # bear on blood sugar; low blood sugar is mainly a risk with insulin or a sulfonylurea (glipizide).  Yin J
+        # et al. Metabolism 2008;57:712-7, doi:10.1016/j.metabol.2008.01.013 (berberine with existing diabetes
+        # treatment, read on PubMed 2026-11-03) is why the prescriber hears first.
+        # Drug enzymes: [GUO12] plain berberine 300 mg three times daily for 2 weeks lowered CYP2D6, 2C9 and 3A4
+        # activity, a result for plain berberine, not for this product, hence "can slow"; in both editions, as on the
+        # fatty-liver sheet.  Vitamin K: D3 5000 has 60 mcg K2 and 15 mcg K1 (ND382); vitamin K works against
+        # warfarin (a vitamin K antagonist), and the ND382 label says K2 "is not recommended for patients on
+        # blood-thinning medications", so the note names warfarin and covers any blood thinner.
+        # B12: [AROD16] and [ADA-S9] (periodic B12 checks on metformin).  [PALM13] the pill and B6, B12, folate,
+        # magnesium and zinc.  Vitamin D: the D3 5000 label (ND382) says it exceeds the adult upper intake level
+        # (4,000 IU, NIH Office of Dietary Supplements) and that "use should be short-term and include regular
+        # monitoring of 25-(OH)" vitamin D (also on the dose bar: "short-term; check your level").
         # Labs: [GUIDE23H] 1.9.9 (OGTT, or A1c), 1.8.3 (lipids); Asher's handout: recheck testosterone and
         # triglycerides at months 1 to 3.
         # "Keep any prescribed medicine" leads the medicine note in both editions (Asher's PCOS handout: "If you
         # are on medication for PCOS, keep taking it exactly as prescribed").
         "rx": {
             "practitioner": [
-                "<b>Trying to get pregnant, pregnant or nursing?</b> Do not take Berberine Pro (not considered safe "
-                "then). Ask {who} about the rest.",
-                "<b>Keep any prescribed medicine.</b> Berberine Pro adds to metformin or insulin, so {who} may adjust "
-                "the dose. Metformin lowers B12.",
-                "<b>Labs now and at 3 months:</b> vitamin D (5,000&nbsp;IU is over the 4,000&nbsp;IU daily limit), "
-                "blood sugar (glucose tolerance or A1c), lipids, testosterone.",
+                "<b>Trying to get pregnant, pregnant or nursing?</b> Do not take Berberine Pro. Myo-Inositol "
+                "Complex has fenugreek, which is not advised in pregnancy: ask {who} before taking it or the rest.",
+                "<b>Keep any prescribed medicine.</b> On a blood-sugar medicine? Before you start Berberine Pro or "
+                "Myo-Inositol Complex, tell the doctor who prescribes it: the dose may need a change.",
+                "<b>On warfarin or another blood thinner?</b> The vitamin K (K1 and K2) in D3&nbsp;5000 can weaken "
+                "warfarin, and berberine can slow the enzymes (CYP3A4, 2D6, 2C9) that clear many drugs: ask {who} "
+                "first.",
+                "<b>Labs now and at 3 months:</b> blood sugar (glucose tolerance or A1c), lipids, testosterone, "
+                "vitamin D (5,000&nbsp;IU is above the 4,000&nbsp;IU upper limit, so use it short-term and recheck), "
+                "plus B12 if you take metformin.",
             ],
             "pharmacy": [
-                "<b>Trying to get pregnant, pregnant or nursing?</b> Do not take Berberine Pro (not considered safe "
-                "then). Ask {who} about the rest.",
-                "<b>Keep any prescribed medicine.</b> Berberine Pro adds to diabetes medicines and slows CYP3A4, 2D6 "
-                "and 2C9, which clear many drugs.",
-                "<b>The pill</b> can lower B6, B12, folate, magnesium and zinc; metformin lowers B12. <b>On "
-                "warfarin?</b> Vitamin K2 (in D3 5000) can weaken it.",
+                "<b>Trying to get pregnant, pregnant or nursing?</b> Do not take Berberine Pro. Myo-Inositol "
+                "Complex has fenugreek, which is not advised in pregnancy: ask {who} before taking it or the rest.",
+                "<b>Keep any prescribed medicine.</b> Insulin or a sulfonylurea (such as glipizide)? Ask the "
+                "prescriber first and watch for low blood sugar. Berberine can slow CYP3A4, 2D6 and 2C9, which "
+                "clear many drugs.",
+                "<b>On warfarin?</b> The vitamin K (K1 and K2) in D3&nbsp;5000 can weaken it. On any blood thinner, "
+                "ask first.",
+                "<b>The pill</b> can lower B6, B12, folate, magnesium and zinc, and <b>metformin</b> can lower B12 "
+                "over time: ask about a check.",
             ],
         },
     },
