@@ -5,16 +5,19 @@ helpers come from svgkit (T, svg) and kit (icon).  Every SVG id and CSS class st
 all sheets share one document in the bundle PDFs.
 
 This is the REMOVE step of NutriDyn's 5R gut plan.  The Intestinal Permeability sheet (ND-GI-101) covers
-Repair and Rebalance; the 5R ribbon on the front points there.
+Repair and Rebalance; the 5R ribbon on the front points there.  The ribbon uses NutriDyn's own names and
+order from ND584 (Remove, Replace, Reinoculate, Repair, Retain), not the generic "Rebalance".
 
 FRONT, top to bottom
   intro -> art: one front-view digestive tract in the centre (esophagus, stomach, the whole small
   intestine from duodenum to ileum, the colon with its haustra from cecum to rectum, appendix), with
   lens-and-beam zooms into the small intestine and the colon.  Left column BALANCED, right column
-  OVERGROWTH; small intestine on top, colon below, so the four circles compare at a glance ->
+  OVERGROWTH; small intestine on top, colon below, so the four circles compare at a glance.  Organ
+  names sit on the circle rims; each circle has a one-line caption in clear space ->
   KEY (every symbol, same drawing code as the art) -> three kinds of overgrowth (SIBO, yeast,
-  parasites: what it is, clues, what feeds it) -> how it is found (breath test with the consensus
-  numbers and write-in boxes, stool test, red flags) -> the 5R ribbon with Remove marked "this sheet".
+  parasites: clues, risks, which test) -> breath test "know your numbers" strip (consensus cut-offs and a
+  write-in box) -> red-flag line -> the 5R ribbon with Remove marked "this sheet".
+Testing is always the practitioner's: the front says "your provider" in both editions (never {who}).
 Anatomy notes: villi are drawn only in the small intestine; the colon lining is flat with crypts (the
 colon has no villi).  The stomach sits on the viewer's right (the patient's left), the cecum and
 appendix on the viewer's lower left, the splenic flexure higher than the hepatic flexure, and the

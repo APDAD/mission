@@ -4,23 +4,27 @@ FRONT: how insulin moves sugar into a cell, drawn at the cell wall.  Two panels,
 INSULIN RESISTANCE, share one picture grammar:
   blood vessel (glucose = purple hexagons, insulin = gold dots, red blood cells)
   -> fluid outside the cell
-  -> cell membrane: a phospholipid bilayer (two rows of round heads, paired tails)
-     with the insulin receptor (Y-shaped: two alpha subunits outside the cell form the
-     insulin pocket, two beta subunits cross the membrane and end in signalling domains)
-     and the GLUT4 glucose door (a channel; open at the surface when insulin works,
-     left packed inside the cell when it does not)
+  -> cell membrane: a phospholipid bilayer (two rows of round heads, paired tails), laid out
+     segment by segment so every protein sits in an even, symmetric notch, holding
+     the insulin receptor (Y-shaped: two alpha subunits outside the cell form the insulin
+     pocket, two beta subunits cross the membrane and end in signalling domains) and
+     the GLUT4 glucose door (a channel).  Spare doors wait inside the cell in STORAGE BUBBLES:
+     small closed bilayers built from the same lipid unit, doors seated in the wall.
+     NORMAL: the signal brings a bubble up to the surface and the door opens there.
+     RESISTANCE: the signal dies out and the bubbles stay inside, so glucose piles up outside.
   -> inside the cell.
-The step text sits in its own strip under each panel; the art carries only numbered markers and a
-few zone names in clear space ("Blood vessel" on a white backdrop).  One KEY names every symbol.
-Below the art: what drives it / clues / where it leads, the CDC stat (only "1 in 3" is big) and a
-"Know your numbers" panel (ADA glucose and A1c ranges, NHLBI/AHA metabolic syndrome check).
+The step text sits in its own strip under each panel; the art carries only numbered markers (same
+style as the strip bullets) and a few names in clear space.  One KEY names every symbol, each pair
+fenced by hairlines so no swatch can be read with its neighbour's label.  Below the art: what drives
+it / clues / where it leads, the CDC stat (only "1 in 3" is big) and a "Know your numbers" panel
+(ADA glucose and A1c ranges, a fasting-insulin write-in, NHLBI/AHA metabolic syndrome check).
 
 BACK: unchanged from the first draft (a later pass revises the products).
 """
 import math
 import random
 
-from kit import icon
+from kit import ICONS
 from svgkit import T, defs, svg, label_bg
 
 # ------------------------------------------------------------------ palette (every one is in the KEY)
@@ -35,14 +39,22 @@ GREEN, RED, INK = "#2F7D59", "#8A1B22", "#2B3236"
 # one panel, in viewBox units (two panels + a 16 gap = 760 wide).  Bands from the top:
 HDR = 26                   # header
 V0, V1 = 30, 72            # blood vessel (wall 5, lumen between)
-CY = 176                   # membrane centre line (bilayer spans CY-20 .. CY+20)
+CY = 176                   # membrane centre line (head rows at CY -/+ 16, so the bilayer spans CY-20.6 .. CY+20.6)
 IN1 = 268                  # bottom of "inside the cell"; the numbered step strip sits below
 PW, PH = 372, 326
-REC_X, G4_X = 130, 268     # receptor and GLUT4 positions (panel coordinates)
+REC_X, G4_X = 130, 264.5   # receptor and GLUT4 positions (G4_X puts every membrane segment at ~9 spacing)
 INS_R, GLU_R = 6.4, 5.2
 VM = (V0 + V1) / 2         # vessel mid line
-M1, M2 = (176, CY - 74), (205, CY + 80)        # step markers 1 and 2 (both panels)
-M3N, M3R = (292, CY + 44), (190, VM)           # step 3: inside the cell (normal) / on the vessel (resistance)
+HEAD_R, HEAD_DY, LIPID_STEP = 4.3, 16, 9.1   # phospholipid head radius, head-row offset from CY, target spacing
+REC_HW = 10.7              # receptor beta rods (with outline) half width where they cross the membrane
+G4_HW = 25.15              # open GLUT4 door half width: outer helix edge + half stroke
+G4_SHUT_HW, G4_HH = 20.15, 27.45   # closed door (pore shut) half width, door half height (with stroke)
+M1 = (176, CY - 74)                          # step 1: next to the insulin pocket (both panels)
+M2 = (142, CY + 72)                          # step 2: under the receptor, where the signal starts (both panels)
+M3N, M3R = (G4_X + 24, CY + 44), (190, VM)   # step 3: glucose entering (normal) / left in the blood (resistance)
+NB, NB_DOORS = (207, 216.8), (-30, 210)      # normal: a storage bubble arriving under the membrane
+RB = [((240, 244.5), (-60, 200)), ((293, 241), (-15, 150))]   # resistance: two bubbles stuck inside
+CAP_X = 266.5                                # resistance caption, centred over the two bubbles
 
 
 def ir_defs():
@@ -74,26 +86,34 @@ def red_cell(x, y, rot=0, s=1.0):
             '<ellipse rx="6.2" ry="2.8" fill="none" stroke="#97202A" stroke-width="1.5" opacity=".75"/></g>')
 
 
-def lipid(x, yh, down):
-    """One phospholipid: round head at (x, yh), two wavy tails pointing into the membrane."""
+def lipid(x, yh, down, L=11.0):
+    """One phospholipid: round head at (x, yh), two wavy tails of length L pointing into the membrane."""
     s = 1 if down else -1
     y0 = yh + s * 3.9
-    L = 11.0
-    tails = "".join(f'<path d="M{x + dx:.1f},{y0:.1f} q-1.3,{s * L / 4:.2f} 0,{s * L / 2:.2f} t0,{s * L / 2:.2f}"/>'
+    tails = "".join(f'<path d="M{x + dx:.2f},{y0:.2f} q-1.3,{s * L / 4:.2f} 0,{s * L / 2:.2f} t0,{s * L / 2:.2f}"/>'
                     for dx in (-1.75, 1.75))
     return (f'<g fill="none" stroke="{TAIL}" stroke-width="1.45" stroke-linecap="round">{tails}</g>'
-            f'<circle cx="{x:.1f}" cy="{yh}" r="4.3" fill="url(#irHd)" stroke="{HEAD_EDGE}" stroke-width=".6"/>')
+            f'<circle cx="{x:.2f}" cy="{yh}" r="{HEAD_R}" fill="url(#irHd)" stroke="{HEAD_EDGE}" stroke-width=".6"/>')
 
 
-def membrane(x0, x1, cy, skips):
-    """Phospholipid bilayer from x0 to x1, centre line cy.  skips = [(x, half_width)] where proteins sit."""
-    out = [f'<rect x="{x0}" y="{cy - 16}" width="{x1 - x0}" height="32" fill="{CORE}"/>']
-    x = x0 + 4.6
-    while x < x1:
-        if not any(abs(x - c) < hw for c, hw in skips):
-            out.append(lipid(x, cy - 16, True) + lipid(x, cy + 16, False))
-        x += 9.1
-    return "".join(out)
+def lipid_xs(lo, hi, blocks, clear=0.5):
+    """Head centres for the bilayer between x=lo and x=hi (the frame's inner edges), laid out segment
+    by segment between protein blocks [(left, right)]: even spacing inside each segment, and the end
+    heads of every segment exactly `clear` from the block or frame edge, so each protein sits in a
+    symmetric notch and both panel edges are cut the same way."""
+    edges = [lo] + [e for b in sorted(blocks) for e in b] + [hi]
+    xs = []
+    for a, b in zip(edges[0::2], edges[1::2]):
+        a, b = a + clear + HEAD_R + 0.3, b - clear - HEAD_R - 0.3     # 0.3 = half the head stroke
+        n = max(1, round((b - a) / LIPID_STEP))
+        xs += [a + i * (b - a) / n for i in range(n + 1)]
+    return xs
+
+
+def membrane(xs, cy):
+    """Phospholipid bilayer across the panel: cream core between the head rows, one lipid pair per x."""
+    return (f'<rect x="0" y="{cy - HEAD_DY}" width="{PW}" height="{2 * HEAD_DY}" fill="{CORE}"/>'
+            + "".join(lipid(x, cy - HEAD_DY, True) + lipid(x, cy + HEAD_DY, False) for x in xs))
 
 
 def receptor(cx, cy, bound=True, s=1.0):
@@ -152,29 +172,61 @@ def glut4(cx, cy, open_=True, s=1.0):
     return "".join(o)
 
 
-def vesicle(cx, cy, r, doors):
-    """Storage bubble inside the cell: its own little bilayer (two rings of heads) holding GLUT4 doors."""
-    o = [f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="#FFF9F4"/>']
-    n = int(2 * math.pi * r / 6.2)
-    for ring, rr in ((0, r), (1, r - 5.4)):
-        m = n if ring == 0 else int(n * (r - 5.4) / r)
-        for i in range(m):
-            a = 2 * math.pi * i / m
-            if any(abs((math.degrees(a) - d + 180) % 360 - 180) < 19 for d in doors):
-                continue
-            o.append(f'<circle cx="{cx + rr * math.cos(a):.1f}" cy="{cy + rr * math.sin(a):.1f}" r="2.1" '
-                     f'fill="url(#irHd)" stroke="{HEAD_EDGE}" stroke-width=".4"/>')
+def bubble(cx, cy, doors, R=17.5, s=0.42, L=3.6, ds=0.3):
+    """GLUT4 storage bubble: a closed bilayer built from the same lipid() unit as the cell membrane
+    (scaled by s, with short tails), drawn the way the membrane is: a cream wall with a row of heads
+    on each face.  Outer and inner heads share ONE list of angles, so each pair lines up radially
+    with its tails meeting in the wall, and the angles are laid out segment by segment between the
+    doors (like lipid_xs) so every door sits in an even notch.  doors = angles in degrees (SVG: 0 is
+    right, 90 is down) where closed GLUT4 doors are seated through the wall."""
+    hr = (HEAD_R + 0.3) * s                     # head radius with stroke
+    reach = (3.9 + L) * s + 0.73 * s            # head centre to tail tip (round cap included)
+    ri = R - 2 * reach - 0.4                    # inner-face head centres (0.4 between tail tips)
+    rc = (R + ri) / 2                           # wall centre line: the doors sit here
+    dhw, dhh = G4_SHUT_HW * ds, G4_HH * ds
+
+    def clear(a, d):                            # heads at angle a, both faces, 0.5 clear of the door at d?
+        for rr in (R, ri):
+            ux, uy = rr * math.cos(a) - rc * math.cos(d), rr * math.sin(a) - rc * math.sin(d)
+            v = ux * math.cos(d) + uy * math.sin(d)
+            u = -ux * math.sin(d) + uy * math.cos(d)
+            if math.hypot(max(abs(u) - dhw, 0), max(abs(v) - dhh, 0)) < hr + 0.5:
+                return False
+        return True
+
+    dr = sorted(math.radians(d) % (2 * math.pi) for d in doors)
+    half = []
+    for d in dr:                                # smallest angular offset that clears each door
+        lo, hi = 0.0, math.pi / 2
+        for _ in range(40):
+            m = (lo + hi) / 2
+            lo, hi = (lo, m) if clear(d + m, d) else (m, hi)
+        half.append(hi)
+    step = (2 * hr + 0.2) / ri                  # inner heads just touch; the outer ones share the angles
+    angles = []
+    for i, d in enumerate(dr):
+        j = (i + 1) % len(dr)
+        a0, a1 = d + half[i], dr[j] + (2 * math.pi if j == 0 else 0) - half[j]
+        n = max(1, round((a1 - a0) / step))
+        angles += [a0 + k * (a1 - a0) / n for k in range(n + 1)]
+    o = [f'<circle cx="{cx}" cy="{cy}" r="{R}" fill="{CORE}"/>',
+         f'<circle cx="{cx}" cy="{cy}" r="{ri:.2f}" fill="{OUTSIDE}"/>']
+    for a in angles:
+        for rr, rot in ((R, 90), (ri, -90)):    # outer heads: tails point in; inner heads: tails point out
+            o.append(f'<g transform="translate({cx + rr * math.cos(a):.2f},{cy + rr * math.sin(a):.2f}) '
+                     f'rotate({math.degrees(a) + rot:.1f}) scale({s})">{lipid(0, 0, True, L)}</g>')
     for d in doors:
         a = math.radians(d)
-        rm = r - 2.7
-        o.append(f'<g transform="translate({cx + rm * math.cos(a):.1f},{cy + rm * math.sin(a):.1f}) rotate({d + 90})">'
-                 f'{glut4(0, 0, False, 0.36)}</g>')
+        o.append(f'<g transform="translate({cx + rc * math.cos(a):.2f},{cy + rc * math.sin(a):.2f}) rotate({d + 90})">'
+                 f'{glut4(0, 0, False, ds)}</g>')
     return "".join(o)
 
 
-def marker(x, y, n):
-    return (f'<circle cx="{x}" cy="{y}" r="8.6" fill="#FFFFFF" stroke="{INK}" stroke-width="1.6"/>'
-            + T(x, y + 3.9, str(n), 11, 800, INK, "middle"))
+def marker(x, y, n, col):
+    """Step number in the art: drawn like the step-strip bullets (panel colour, white numeral), with a
+    white outline so it stands clear of busy art."""
+    return (f'<circle cx="{x}" cy="{y}" r="8.6" fill="{col}" stroke="#FFFFFF" stroke-width="1.5"/>'
+            + T(x, y + 3.9, str(n), 11, 800, "#FFFFFF", "middle"))
 
 
 def place(rng, radii, box, avoid, pad=1.6, tries=8000):
@@ -193,18 +245,40 @@ def place(rng, radii, box, avoid, pad=1.6, tries=8000):
     return out
 
 
+def settle(rng, n, x0, x1, floor, r=GLU_R, gap=1.0):
+    """Drop n glucose hexagons at random x in [x0, x1] onto the membrane (lowest centre y = floor) and
+    onto each other.  Each falls straight down until a face meets the floor or a hexagon already
+    there.  All hexagons share one orientation, so three axes (the flat faces) decide contact
+    exactly; gap 1.0 lets the 1-unit strokes just touch.  Gives a loose, natural pile."""
+    D = 2 * 0.866 * r + gap
+    out = []
+    for _ in range(n):
+        x = rng.uniform(x0 + r, x1 - r)
+        y = floor
+        for px, py, _ in out:
+            dx = x - px
+            lo = max(-D, (-D - 0.866 * dx) / 0.5, (-D + 0.866 * dx) / 0.5)
+            hi = min(D, (D - 0.866 * dx) / 0.5, (D + 0.866 * dx) / 0.5)
+            if lo < hi:
+                y = min(y, py + lo)
+        out.append((x, y, r))
+    return out
+
+
 # ------------------------------------------------------------------ one panel
 def panel(x0, normal):
     rng = random.Random(11 if normal else 23)
+    col = GREEN if normal else RED
     cid = "irClipN" if normal else "irClipR"
     o = [f'<g transform="translate({x0},0)">',
          f'<clipPath id="{cid}"><rect width="{PW}" height="{PH}" rx="12"/></clipPath>',
          f'<g clip-path="url(#{cid})">',
          f'<rect width="{PW}" height="{PH}" fill="#FFFFFF"/>',
-         f'<rect y="{HDR}" width="{PW}" height="{CY - 20 - HDR}" fill="{OUTSIDE}"/>',
-         f'<rect y="{CY + 20}" width="{PW}" height="{IN1 - CY - 20}" fill="{INSIDE}"/>']
+         # outside / inside colours run under the head rows, so no white seam shows at the bilayer edges
+         f'<rect y="{HDR}" width="{PW}" height="{CY - HEAD_DY - HDR}" fill="{OUTSIDE}"/>',
+         f'<rect y="{CY + HEAD_DY}" width="{PW}" height="{IN1 - CY - HEAD_DY}" fill="{INSIDE}"/>']
     # header
-    o.append(f'<rect width="{PW}" height="{HDR}" fill="{GREEN if normal else RED}"/>')
+    o.append(f'<rect width="{PW}" height="{HDR}" fill="{col}"/>')
     o.append(T(14, 18, "NORMAL" if normal else "INSULIN RESISTANCE", 13, 900, "#FFFFFF", ls=0.8))
     o.append(T(PW - 14, 17.6, "cells answer insulin" if normal else "cells barely answer", 10.5, 600, "#FFFFFF",
                "end", italic=True))
@@ -221,7 +295,7 @@ def panel(x0, normal):
         o.append(red_cell(x, y, r))
     avoid = [(x, y, 13.5, 8) for x, y, _ in cells]          # red cell size, a little extra for the tilt
     if not normal:
-        avoid.append((M3R[0], M3R[1], 8.6, 8.6))           # keep step 3's marker clear
+        avoid.append((M3R[0], M3R[1], 8.6 + 5, 8.6 + 5))   # step 3's marker stands well clear of the molecules
     n_ins, n_glu = (4, 6) if normal else (8, 13)            # resistance: more sugar AND more insulin in the blood
     for x, y, r in place(rng, [INS_R] * n_ins + [GLU_R] * n_glu, (100, V0 + 5, 370, V1 - 5), avoid):
         o.append(insulin(x, y) if r == INS_R else glucose(x, y))
@@ -236,8 +310,8 @@ def panel(x0, normal):
              f'marker-end="url(#irAy)" fill="none"/>')
 
     # membrane, then the proteins in it
-    skips = [(REC_X, 14)] + ([(G4_X, 27)] if normal else [])
-    o.append(membrane(0, PW, CY, skips))
+    blocks = [(REC_X - REC_HW, REC_X + REC_HW)] + ([(G4_X - G4_HW, G4_X + G4_HW)] if normal else [])
+    o.append(membrane(lipid_xs(1.2, PW - 1.2, blocks), CY))
     o.append(receptor(REC_X, CY, bound=True))
 
     if normal:
@@ -250,36 +324,40 @@ def panel(x0, normal):
         o.append(f'<path d="M{G4_X},{CY + 30} V{CY + 54}" stroke="{GLU_EDGE}" stroke-width="2.4" marker-end="url(#irAp)" fill="none"/>')
         for dx, dy in [(-24, 66), (28, 70), (54, 46), (82, 64), (2, 82), (56, 80)]:
             o.append(glucose(G4_X + dx, CY + dy))
-        # the signal: from the receptor's inside end to the door
-        o.append(f'<path d="M156,{CY + 44} C186,{CY + 72} 222,{CY + 70} 242,{CY + 33}" stroke="{GREEN}" stroke-width="2.8" '
-                 'fill="none" marker-end="url(#irAg)" stroke-linecap="round"/>')
-        o.append(marker(*M1, 1) + marker(*M2, 2) + marker(*M3N, 3))
+        # the signal brings a storage bubble, doors and all, up to the surface: the arrow sweeps from the
+        # receptor's inside end and turns up into the bubble, which is arriving at the membrane by the door
+        o.append(bubble(*NB, NB_DOORS))
+        o.append(f'<path d="M157.5,{CY + 35} C172,{CY + 74} {NB[0]},{CY + 86} {NB[0]},{CY + 66.5}" stroke="{GREEN}" '
+                 'stroke-width="2.8" fill="none" marker-end="url(#irAg)" stroke-linecap="round"/>')
+        o.append(marker(*M1, 1, col) + marker(*M2, 2, col) + marker(*M3N, 3, col))
     else:
-        # no door at the surface: glucose piles up outside the cell
-        pile = place(rng, [GLU_R] * 13, (166, CY - 38.5, 370, CY - 22), [], pad=1.8)
-        drift = place(rng, [GLU_R] * 6, (196, V1 + 8, 368, CY - 42), [(M1[0], M1[1], 8.6, 8.6)]
+        # no door at the surface: glucose piles up on the membrane (2 loose rows), more drifts above it
+        floor = CY - HEAD_DY - HEAD_R - 0.3 - 0.866 * GLU_R - 0.5 - 0.3
+        pile = settle(random.Random(PILE_SEED), 13, 166, 368, floor)
+        top = min(y for _, y, _ in pile) - 0.866 * GLU_R
+        drift = place(rng, [GLU_R] * 6, (196, V1 + 8, 366, top - 6), [(M1[0], M1[1], 8.6 + 4, 8.6 + 4)]
                       + [(x, y, r + 4, r + 4) for x, y, r in pile], pad=5)
         for x, y, _ in pile + drift:
             o.append(glucose(x, y))
         # weak signal: fades out before it reaches the doors
-        o.append(f'<path d="M156,{CY + 44} C178,{CY + 66} 200,{CY + 70} 218,{CY + 64}" stroke="#9AA3A9" stroke-width="2.6" '
+        o.append(f'<path d="M157.5,{CY + 35} C170,{CY + 60} 182,{CY + 70} 196,{CY + 69}" stroke="#9AA3A9" stroke-width="2.6" '
                  'fill="none" stroke-dasharray="4 4" stroke-linecap="round"/>')
-        xx, xy = 230, CY + 61
-        o.append(f'<path d="M{xx - 6},{xy - 6} l12,12 M{xx + 6},{xy - 6} l-12,12" stroke="#C0392B" stroke-width="3" stroke-linecap="round"/>')
-        o.append(vesicle(282, CY + 66, 16, [-90]) + vesicle(334, CY + 70, 15, [-90]))
-        o.append(T(294, CY + 42, "Glucose doors stuck inside", 10, 700, "#7A4A3C", "middle", italic=True))
-        o.append(glucose(64, CY + 46))                    # a trickle still gets in (other transporters)
-        o.append(marker(*M1, 1) + marker(*M2, 2) + marker(*M3R, 3))
+        xx, xy = 204, CY + 68
+        o.append(f'<path d="M{xx - 5.5},{xy - 5.5} l11,11 M{xx + 5.5},{xy - 5.5} l-11,11" stroke="#C0392B" stroke-width="3" stroke-linecap="round"/>')
+        for c, doors in RB:
+            o.append(bubble(*c, doors))
+        o.append(T(CAP_X, CY + 36, "Glucose doors stuck in storage bubbles", 10, 700, "#7A4A3C", "middle", italic=True))
+        o.append(marker(*M1, 1, col) + marker(*M2, 2, col) + marker(*M3R, 3, col))
 
     # step strip
-    steps = (["Insulin from the blood fits into its receptor.", "The signal opens the glucose door.",
+    steps = (["Insulin from the blood fits into its receptor.", "The signal brings the glucose door up and opens it.",
               "Glucose moves into the cell for fuel."] if normal else
              ["Insulin still fits its receptor, but the cell barely listens.", "The signal is weak, so the glucose doors stay inside.",
               "Glucose stays in the blood, so blood sugar rises."])
     o.append(f'<path d="M0,{IN1} H{PW}" stroke="#E4E0DA" stroke-width="1"/>')
     for i, s in enumerate(steps):
         y = IN1 + 18 + i * 17
-        o.append(f'<circle cx="18" cy="{y - 3.9}" r="7.6" fill="{GREEN if normal else RED}"/>'
+        o.append(f'<circle cx="18" cy="{y - 3.9}" r="7.6" fill="{col}"/>'
                  + T(18, y, str(i + 1), 10.5, 800, "#FFFFFF", "middle") + T(32, y, s, 11, 600, INK))
     o.append("</g>")
     o.append(f'<rect x=".6" y=".6" width="{PW - 1.2}" height="{PH - 1.2}" rx="12" fill="none" stroke="#D3D9DE" stroke-width="1.2"/>')
@@ -287,53 +365,85 @@ def panel(x0, normal):
     return "".join(o)
 
 
+PILE_SEED = 5
+
+
 # ------------------------------------------------------------------ key strip
-KEY_ITEMS = [  # (swatch, label, measured label width at 11 px Inter SemiBold)
-    (lambda: glucose(0, 0), "Glucose (sugar)", 84.8),
-    (lambda: insulin(0, 0), "Insulin", 35.0),
-    (lambda: receptor(0, 3.6, bound=False, s=0.2), "Insulin receptor", 83.1),
-    (lambda: glut4(0, 0, True, 0.42), "GLUT4 glucose door", 108.7),
-    (lambda: (f'<g transform="scale(.6)"><rect x="-14" y="-16" width="28" height="32" fill="{CORE}"/>'
-              + "".join(lipid(x, -16, True) + lipid(x, 16, False) for x in (-9.1, 0, 9.1)) + "</g>"),
-     "Cell membrane", 80.1),
-    (lambda: red_cell(0, 0, 0, 0.82), "Red blood cell", 74.6),
+def _membrane_swatch():
+    return (f'<g transform="scale(.6)"><rect x="-14" y="-16" width="28" height="32" fill="{CORE}"/>'
+            + "".join(lipid(x, -16, True) + lipid(x, 16, False) for x in (-9.1, 0, 9.1)) + "</g>")
+
+
+KEY_ITEMS = [  # (swatch drawn at 0,0, swatch half width incl. stroke, label, label advance at 11 px Inter 600)
+    (lambda: glucose(0, 0), 5.7, "Glucose (sugar)", 84.83),
+    (lambda: insulin(0, 0), 6.9, "Insulin", 35.05),
+    (lambda: receptor(0, 3.5, bound=False, s=0.19), 6.0, "Insulin receptor", 83.06),
+    (lambda: glut4(0, 0, True, 0.42), 10.6, "GLUT4 glucose door", 108.72),
+    (_membrane_swatch, 8.4, "Cell membrane", 80.14),
+    (lambda: red_cell(0, 0, 0, 0.82), 10.6, "Red blood cell", 74.63),
 ]
+KEY_H, KEY_TITLE_W, KEY_PAIR_GAP = 34, 26.3, 5
 
 
-def key_strip(y, w=760, h=32):
+def key_strip(y, w=760, h=KEY_H):
+    """One row: KEY, then swatch + label pairs.  Each pair is sized from its real swatch width, 5 units
+    from swatch to label, and the leftover width is spread evenly between pairs (about 19 units, ~4x
+    the inside gap) with a hairline divider in each gap, so no swatch reads with its neighbour's label."""
     o = [f'<rect x=".6" y="{y}" width="{w - 1.2}" height="{h}" rx="8" fill="#FFFFFF" stroke="#CFD6DA" stroke-width="1.2"/>',
-         T(14, y + h / 2 + 3.6, "KEY", 10.5, 800, INK, ls=1.4)]
-    sw_w, gap = 24, 8
-    total = sum(sw_w + gap + lw for _, _, lw in KEY_ITEMS)
-    space = (w - 52 - 14 - total) / (len(KEY_ITEMS) - 1)
-    x = 52
-    for sw, lab, lw in KEY_ITEMS:
-        o.append(f'<g transform="translate({x + sw_w / 2:.1f},{y + h / 2:.1f})">{sw()}</g>')
-        o.append(T(round(x + sw_w + gap, 1), y + h / 2 + 3.9, lab, 11, 600, INK))
-        x += sw_w + gap + lw + space
+         T(14, y + h / 2 + 3.7, "KEY", 10.5, 800, INK, ls=1.4)]
+    used = sum(2 * hw + KEY_PAIR_GAP + lw for _, hw, _, lw in KEY_ITEMS)
+    x = 14 + KEY_TITLE_W
+    gap = (w - 14 - x - used) / len(KEY_ITEMS)
+    for sw, hw, lab, lw in KEY_ITEMS:
+        o.append(f'<path d="M{x + gap / 2:.2f},{y + 8} V{y + h - 8}" stroke="#DCE2E6" stroke-width="1"/>')
+        x += gap
+        o.append(f'<g transform="translate({x + hw:.2f},{y + h / 2:.2f})">{sw()}</g>')
+        o.append(T(round(x + 2 * hw + KEY_PAIR_GAP, 2), y + h / 2 + 3.9, lab, 11, 600, INK))
+        x += 2 * hw + KEY_PAIR_GAP + lw
     return "".join(o)
 
 
 def art_insulin():
     body = [ir_defs(), panel(0, True), panel(PW + 16, False), key_strip(PH + 8)]
-    return svg(760, PH + 42, "".join(body),
-               "Two panels. Normal: insulin from the blood binds its receptor in the cell membrane, the signal opens "
-               "the GLUT4 glucose door and glucose moves into the cell. Insulin resistance: insulin binds but the signal "
-               "is weak, the glucose doors stay inside the cell and glucose stays in the blood.")
+    return svg(760, PH + 10 + KEY_H, "".join(body),
+               "Two panels. Normal: insulin from the blood binds its receptor in the cell membrane, the signal brings a "
+               "storage bubble of GLUT4 glucose doors up to the surface, the door opens and glucose moves into the cell. "
+               "Insulin resistance: insulin binds but the signal is weak, the glucose doors stay inside the cell in "
+               "storage bubbles and glucose piles up outside and stays in the blood.")
 
 
 # ------------------------------------------------------------------ front page
+IR_ICONS = {  # same 64x64 line-icon contract as kit.ICONS
+    "tape": ('<circle cx="23" cy="26" r="16"/><circle cx="23" cy="26" r="4.5"/>'
+             '<path d="M23 42h35v10H23z"/><path d="M33 42v5M41 42v7M49 42v5"/>'),          # tape measure: waist
+    "tube": ('<path d="M25 7v38a7 7 0 0 0 14 0V7"/><path d="M20 7h24"/><path d="M25 27h14"/>'
+             '<path d="M30 35v1M34 40v1"/>'),                                                   # test tube: triglycerides
+    "gauge": ('<circle cx="32" cy="35" r="22"/><path d="M32 35 44 22"/><path d="M15 35h5M44 35h5M32 18v5M20 23l3.5 3.5"/>'
+              '<circle cx="32" cy="35" r="3" fill="currentColor" stroke="none"/>'),            # pressure dial: blood pressure
+}
+
+
+def ir_icon(name, size, sw=3.4):
+    body = IR_ICONS.get(name) or ICONS[name]
+    return (f'<svg class="ic" viewBox="0 0 64 64" style="width:{size};height:{size}" fill="none" stroke="currentColor" '
+            f'stroke-width="{sw}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{body}</svg>')
+
+
 def chevrons():
-    cols = [("#7D7A86", "What drives it",
+    cols = [("#67646F", "What drives it",      # white text on #67646F is 5.8:1 (the old #7D7A86 was 4.2:1)
              # NIDDK, Insulin Resistance & Prediabetes: excess weight/belly fat, inactivity, age 45+, family
              # history, some medicines (steroids), poor sleep; diet and stress per ADA lifestyle guidance.
              ["Sugary drinks and processed food", "Sitting most of the day", "Short sleep, long-term stress",
               "Extra fat around the belly", "Family history, age 45 or older", "Some medicines, such as steroids"]),
             ("#C2392E", "Clues to watch for",
-             # NIDDK: insulin resistance and prediabetes usually have no symptoms; acanthosis nigricans and
-             # skin tags can appear; high triglycerides and low HDL travel with it.
-             ["Often no signs at all", "Weight gain at the waist", "Tired or foggy after meals",
-              "Cravings, hungry soon after eating", "Dark velvety skin patches, skin tags", "High triglycerides, low HDL"]),
+             # NIDDK, Insulin Resistance & Prediabetes: insulin resistance and prediabetes usually have no
+             # symptoms and are found with blood tests (fasting glucose, A1c); some people have darkened skin
+             # in the armpit or on the back and sides of the neck (acanthosis nigricans), and many small skin
+             # tags often appear in these same areas.  High fasting insulin: the pancreas over-produces insulin
+             # to keep glucose normal (NIDDK), and fasting insulin climbs years before glucose does (Tabak et
+             # al., Lancet 2009).  High triglycerides and low HDL travel with it (NHLBI metabolic syndrome).
+             ["Often no signs at all", "Blood sugar creeping up on labs", "High fasting insulin on a lab test",
+              "Dark skin at the neck or armpits", "Skin tags in those same spots", "High triglycerides, low HDL"]),
             ("#62121A", "Where it can lead",
              ["Prediabetes, then type 2 diabetes", "Heart disease and stroke", "High blood pressure",
               "Fatty liver (MASLD)", "PCOS and hormone shifts", "Memory decline"])]
@@ -346,9 +456,11 @@ def stat():
     # CDC (Prediabetes: Your Chance to Prevent Type 2 Diabetes; National Diabetes Statistics Report):
     # 98 million U.S. adults, more than 1 in 3, have prediabetes; more than 8 in 10 of them do not know it.
     # Insulin rising years before glucose: Tabak et al., Lancet 2009 (Whitehall II trajectories).
+    # "your doctor" in both editions: fasting insulin is a lab blood test a prescriber orders, which most
+    # pharmacists cannot do; {who} stays in Know your numbers, where a pharmacist reviewing results is right.
     return ('<div class="ir-stat"><div class="n"><small>More than</small><b>1 in 3</b></div>'
             '<p>U.S. adults have prediabetes, and <b>more than 8 in 10</b> of them do not know it (CDC). Insulin often '
-            'climbs years before blood sugar does, so ask {who} about a <b>fasting insulin</b> test along with the '
+            'climbs years before blood sugar does, so ask your doctor about a <b>fasting insulin</b> test along with the '
             'numbers below.</p></div>')
 
 
@@ -357,7 +469,7 @@ def numbers():
         t = "".join(f'<div class="ir-t {c}"><i>{a}</i><b>{b}</b></div>' for c, a, b in tiles)
         return (f'<div class="ir-sc"><h4>{title} <span>{unit}</span></h4>'
                 f'<div class="ir-tl">{t}<div class="ir-mine"><span>My result</span></div></div></div>')
-    # American Diabetes Association, Standards of Care in Diabetes 2026, Tables 2.1 and 2.2:
+    # American Diabetes Association, Standards of Care in Diabetes (Section 2, Diagnosis and Classification):
     # FPG <100 normal, 100-125 prediabetes (IFG), >=126 diabetes; A1C <5.7%, 5.7-6.4%, >=6.5%.
     # Diabetes needs a confirming repeat test unless blood sugar is unmistakably high.
     scales = (scale("Fasting blood sugar", "glucose, mg/dL, after 8 hours with no food",
@@ -368,21 +480,25 @@ def numbers():
     # 2009): any 3 of 5. Waist 40+ in men / 35+ in women; triglycerides 150+ mg/dL; HDL under 40 men /
     # under 50 women; blood pressure 130/85 or higher (either number counts); fasting glucose 100+ mg/dL.
     # Taking medicine for triglycerides, HDL, blood pressure or blood sugar counts as having that sign.
-    signs = [("waist", "Waist", "40 in or more (men)<br>35 in or more (women)"),
-             ("drop", "Triglycerides", "150 mg/dL or more"),
-             ("heart", "HDL (good) cholesterol", "under 40 (men)<br>under 50 (women)"),
-             ("heartpulse", "Blood pressure", "130/85 or higher<br>(either number)"),
+    signs = [("tape", "Waist", "40 inches or more (men)<br>35 inches or more (women)"),
+             ("tube", "Triglycerides", "150 mg/dL or more"),
+             ("heart", "HDL (good) cholesterol", "under 40 mg/dL (men)<br>under 50 mg/dL (women)"),
+             ("gauge", "Blood pressure", "130/85 or higher<br>(either number)"),
              ("bloodsugar", "Fasting blood sugar", "100 mg/dL or more")]
-    tiles = "".join(f'<div class="ir-m"><div class="ir-mtop">{icon(ic, "0.24in", sw=3.4)}<span class="ir-bx"></span></div>'
+    tiles = "".join(f'<div class="ir-m"><div class="ir-mtop">{ir_icon(ic, "0.24in")}<span class="ir-bx"></span></div>'
                     f'<b>{a}</b><span>{b}</span></div>' for ic, a, b in signs)
-    return ('<div class="ir-nums"><div class="ir-nh"><b>Know your numbers</b><span>Write your results in the boxes, '
-            'then go over them with {who}.</span></div>'
+    # Fasting insulin write-in: no cutoff is printed because none is set.  The ADA Standards of Care do not
+    # use insulin to diagnose anything and insulin assays are not standardized between labs, so the patient
+    # copies the lab's own reference range next to the result.
+    return ('<div class="ir-nums"><div class="ir-nh"><b>Know your numbers</b><span class="ir-sub">Write your results '
+            'in the boxes, then go over them with {who}.</span>'
+            '<span class="ir-fi"><b>Fasting insulin</b><i></i>&micro;IU/mL &middot; lab range<i></i></span></div>'
             f'<div class="ir-scales">{scales}</div>'
-            '<div class="ir-msh"><b>Metabolic syndrome check</b><span>Tick each sign you have. <em>Any 3 of these 5</em> '
-            'means metabolic syndrome. Taking medicine for one counts as a yes.</span></div>'
+            '<div class="ir-msh"><b>Metabolic syndrome check</b><span>Tick each sign you have. If you take medicine for '
+            'one of these, tick it. <em>Any 3 of these 5</em> means metabolic syndrome.</span></div>'
             f'<div class="ir-ms">{tiles}</div>'
             '<p class="ir-src">Sources: American Diabetes Association (a diabetes result is confirmed with a repeat test); '
-            'NHLBI and American Heart Association.</p></div>')
+            'NHLBI and American Heart Association. Cell drawing not to scale.</p></div>')
 
 
 def front(t, ed):
@@ -405,8 +521,11 @@ CSS = r"""
 .irf .ir-stat p b{font-weight:700;color:var(--deep)}
 .irf .ir-nums{margin-top:0.07in;border:1px solid #E6D5D1;border-radius:10px;padding:0.07in 0.14in 0.07in;background:#FFFFFF}
 .irf .ir-nh{display:flex;align-items:baseline;gap:10px;margin:0 0 5px}
-.irf .ir-nh b{font:900 12.5pt Merriweather,Georgia,serif;color:var(--c1)}
-.irf .ir-nh span{font-size:7.8pt;color:#56626A}
+.irf .ir-nh>b{font:900 12.5pt Merriweather,Georgia,serif;color:var(--c1);white-space:nowrap}
+.irf .ir-nh .ir-sub{font-size:7.8pt;color:#56626A}
+.irf .ir-nh .ir-fi{margin-left:auto;display:flex;align-items:baseline;gap:4px;white-space:nowrap;font-size:7.8pt;color:#2B3236}
+.irf .ir-fi b{font:800 7.8pt Inter,sans-serif;color:#2B3236}
+.irf .ir-fi i{display:inline-block;width:0.46in;height:0.12in;border-bottom:1.2px solid #8F9AA1}
 .irf .ir-scales{display:grid;grid-template-columns:1fr 1fr;gap:0.18in}
 .irf .ir-sc h4{margin:0 0 3px;font:800 8.4pt Inter,sans-serif;color:#2B3236;white-space:nowrap}
 .irf .ir-sc h4 span{font-weight:500;font-size:7.3pt;color:#5E686F}
@@ -437,11 +556,13 @@ SHEET = {
     "slug": "insulin-resistance", "code": "ND-CM-203", "theme": "metab", "series": "Metabolic Health Series",
     "order": 5,
     "title": "Understanding Insulin Resistance", "sub": None,
+    # NIDDK, Insulin Resistance & Prediabetes: the pancreas makes more insulin to keep blood glucose in a healthy
+    # range; over time it cannot keep up and glucose rises into prediabetes and type 2 diabetes.
     "intro": ("Insulin is a hormone your pancreas releases, especially after you eat. It is a messenger: it tells your "
               "cells to open their <b>glucose doors</b>, so sugar (glucose) can leave your blood and go into the cells "
-              "for fuel. With <b>insulin resistance</b>, the cells stop listening well. Sugar backs up in the blood, so "
-              "the pancreas makes more and more insulin to keep up. This can go on quietly for years before blood sugar "
-              "rises high enough to be called prediabetes or type 2 diabetes."),
+              "for fuel. With <b>insulin resistance</b>, the cells stop listening well. Sugar starts to back up, so the "
+              "pancreas pushes out more and more insulin to keep blood sugar normal. This can go on quietly for years "
+              "before blood sugar climbs high enough to be called prediabetes or type 2 diabetes."),
     "front": front,
     "css": CSS,
     # ---- back: kept exactly as the first draft (sheets.py) until the product pass

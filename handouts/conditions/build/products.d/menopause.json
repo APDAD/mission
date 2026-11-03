@@ -56,10 +56,10 @@
     "img_src": "R177.png",
     "key": "25 billion CFU from 9 strains: 7 Lactobacillus and 2 Bacillus",
     "dose": "2 capsules daily",
-    "dosesub": "same time each day",
+    "dosesub": "at bedtime",
     "sched": [
       [
-        "am",
+        "bed",
         2,
         "capsules"
       ]

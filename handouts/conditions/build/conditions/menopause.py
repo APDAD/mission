@@ -912,7 +912,7 @@ SHEET = {
             {"p": "meno_ultrabiotic_womens", "need": "Healthy flora", "needsub": "women’s probiotic, 9 strains",
              # sell sheet ND1053 claims: healthy vaginal microbiome, healthy gut microbiome
              "bullets": ["Supports a healthy vaginal microbiome", "Supports a healthy gut microbiome"],
-             "dose": "2 capsules daily", "dosesub": "same time each day", "sched": [("am", 2, "capsules")]},
+             "dose": "2 capsules daily", "dosesub": "at bedtime", "sched": [("bed", 2, "capsules")]},
             {"p": "meno_creatine", "need": "Muscle and strength", "needsub": "creatine monohydrate",
              # [CREA26]: >= 5 g a day with resistance training
              "bullets": ["Supports muscle and strength with strength training",
@@ -925,21 +925,21 @@ SHEET = {
                 "<b>Hot flashes?</b> Hormone therapy works best. Ask your provider whether it fits you.",
                 # label caution (sell sheet ND564); NIH ODS black cohosh: rare liver injury, stop with jaundice or dark urine
                 "<b>Had breast cancer or another estrogen-dependent cancer?</b> The label says not to use Menopause "
-                "Support. With black cohosh, stop if urine darkens or skin yellows.",
+                "Support. Stop it if urine darkens or skin yellows.",
                 # USPSTF osteoporosis screening; NIH ODS vitamin D: upper limit 4,000 IU a day for adults
                 "<b>Ask about</b> a bone density scan, cholesterol, A1c and vitamin D. D3 5000 is above the 4,000 IU "
                 "daily upper limit: use it with level checks.",
             ],
             "pharmacy": [
                 "<b>Had breast cancer or another estrogen-dependent cancer?</b> The label says not to use Menopause "
-                "Support. With black cohosh, stop if urine darkens or skin yellows.",
+                "Support. Stop it if urine darkens or skin yellows.",
                 # NIH ODS vitamin K (warfarin); NIH ODS / NCCIH ashwagandha interactions
-                "<b>Warfarin?</b> The vitamin K in D3 5000 with K2 can change your INR. <b>Thyroid, sedative or "
-                "diabetes medicine?</b> Ashwagandha can add to it.",
+                "<b>Warfarin?</b> Vitamin K in D3 5000 with K2 can shift your INR. <b>Thyroid or sedative "
+                "drugs?</b> Ashwagandha can add to them.",
                 # NIH ODS magnesium: separate from bisphosphonates and tetracycline or quinolone antibiotics;
                 # creatine raises serum creatinine (de Souza Almeida 2026, cited in the creatine blast)
-                "<b>Space magnesium</b> 2 hours from bisphosphonates and some antibiotics. <b>Creatine</b> can raise "
-                "the creatinine number on kidney labs.",
+                "<b>Space magnesium</b> 2 hours from bisphosphonates and some antibiotics. <b>Creatine</b> raises "
+                "creatinine on kidney labs.",
             ],
         },
     },

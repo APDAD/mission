@@ -892,8 +892,8 @@ FEEL = [  # [NICE22] activity-related pain, short morning stiffness; [HUNTER19] 
     "Hard knobs on the finger joints",
 ]
 ALERT = [  # [NICE22] QS87 atypical features: hot swollen joint, prolonged stiffness, trauma, rapid worsening, deformity
-    "A <b>hot, red, very swollen</b> joint, worse with fever: <b>go today</b>",
-    "Morning stiffness <b>over 30 minutes</b>, or many joints at once",
+    "A <b>hot, red, very swollen</b> joint, above all with a fever: <b>get care the same day</b>",
+    "Morning stiffness <b>over 30 minutes</b>, or many sore joints",
     "It began with a <b>fall or injury</b>, or is worsening fast",
     "The joint <b>locks, gives way</b> or changes shape",
 ]
@@ -1000,18 +1000,17 @@ SHEET = {
     "css": CSS,
     "back": {
         "life_title": "Lifestyle Recommendations",
-        "life_sub": "Cartilage has no blood supply. Moving is how it gets fed.",   # [FOX09]
         "style": "circle",
         "life": [
-            ("walk", "Move most days", "150 minutes a week of walking, cycling or swimming. Short bouts count."),  # [CDC-PA] [ACR19]
+            ("walk", "Move most days", "Moving feeds cartilage: walk, cycle or swim 150 minutes a week."),  # [FOX09] [CDC-PA] [ACR19]
             ("dumbbell", "Build strength", "Thigh and hip work 2 days a week takes load off the joint."),            # [CDC-PA] [OIESTAD15]
             ("scale", "Lighten the load", "Each pound lost takes about 4 pounds off your knees with every step."),   # [MESSIER05]
             ("breath", "Tai chi or yoga", "Slow, steady moves ease stiffness and build balance."),                     # [ACR19]
-            ("fish", "Eat to calm", "Fish, olive oil, beans, nuts and colorful plants. Fewer sugary drinks."),
+            ("fish", "Eat Mediterranean", "Fish, olive oil, beans, nuts and colorful plants. Fewer sugary drinks."),
             ("thermo", "Heat and support", "Warmth for stiffness, ice after a flare, a cane in the other hand."),     # [ACR19]
         ],
         "cols": [
-            {"p": "jp_inflam_eze", "need": "Calm the joint", "needsub": "ginger, curcumin, boswellia", "start": True,
+            {"p": "jp_inflam_eze", "need": "Inflammatory balance", "needsub": "ginger, curcumin, boswellia", "start": True,
              "bullets": ["Supports a healthy inflammatory response", "Supports joint comfort and movement"],
              "dose": "dose_from_db"},
             {"p": "jp_chondro_ic", "need": "Building blocks", "needsub": "glucosamine and chondroitin",
@@ -1020,7 +1019,7 @@ SHEET = {
             {"p": "jp_joint_eze", "need": "Joint comfort", "needsub": "UC-II undenatured collagen",
              "bullets": ["UC-II, studied at 40 mg a day for knee comfort", "Supports mobility and flexibility"],
              "dose": "dose_from_db"},
-            {"p": "jp_collagen_renew", "need": "Rebuild the matrix", "needsub": "collagen peptides",
+            {"p": "jp_collagen_renew", "need": "Collagen support", "needsub": "collagen peptides",
              "bullets": ["Supports cartilage, tendon and ligament structure", "Pair it with a vitamin C food, like an orange"],
              "dose": "dose_from_db"},
             # label: one softgel up to three times daily with food; 2 at one meal stays inside it
