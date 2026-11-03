@@ -72,13 +72,13 @@ SOURCES (each number on the page carries one of these tags in a comment)
               underlying liver vulnerability"; the USP monograph caution opens "Do not take on an empty stomach.
               Take with food." and ends on liver-trouble signs, "(yellowing of the skin or eyes)")
   [CSO26] NutriDyn CSO, GLC 2026 protocol PDF, Dropbox
-              /NutriDyn/Public Share Folder/GLC 2026 Notes/ (CSO folder) (id:xHepYs_Ou4AAAAAAAA7oHg),
+              /NutriDyn/Public Share Folder/GLC 2026 Notes/ (CSO folder),
               read 2026-11-03: "Metabolic Fatty Liver (MAFLD, MASLD, MASH)": PPC Silymarin (coming soon),
               Ganoderma Plus, Inflam-Eze Plus, Milk Thistle Complex, Berberine Pro, Detox, Mito Recharge,
               UltraBiotic Prebiotic.  His GLC 2026 outline (Dropbox "GLC 2026 outline marketing.docx",
-              id:xHepYs_Ou4AAAAAAAA4B1A, per scratchpad/protocols/metabolic.md) covers the gut barrier and the
+             , per scratchpad/protocols/metabolic.md) covers the gut barrier and the
               "total toxic load of xenobiotics and inflammatory endotoxins".
-  [CSO24] NutriDyn CSO, GLC 2024 protocols PDF (id:xHepYs_Ou4AAAAAAAArn1w, per
+  [CSO24] NutriDyn CSO, GLC 2024 protocols PDF, per
               scratchpad/wf/protocol-fatty-liver.json): UltraBiotic Prebiotic's polyphenols "all reduce LPS",
               listed as an Akkermansia booster.  Asher's Direct Mail blast "NutriDyn New Formula: Akkermansia
               Plus" (2024-05-09) ties Akkermansia to "colon and liver health".

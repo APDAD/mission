@@ -707,9 +707,9 @@ SHEET = {
         ],
         # Products (4, the competitor sheet's count), all from NutriDyn protocols: Asher's blood-sugar handout and
         # "Own Every Protocol" HbA1c path (Gluco IR + Berberine Pro), the NutriDyn GLC 2026 insulin-resistance
-        # protocol PDF (Dropbox id:xHepYs_Ou4AAAAAAAA7hTA: Berberine Pro, Alpha-Lipoic Acid 200 mg, Omega Pure
+        # protocol PDF: Berberine Pro, Alpha-Lipoic Acid 200 mg, Omega Pure
         # EPA-DHA 1000 where triglycerides are raised) and the NutriDyn GLC 2024 metabolic-syndrome protocol PDF
-        # (Dropbox id:xHepYs_Ou4AAAAAAAArn2A: UltraBiotic Akkermansia Plus).
+        #: UltraBiotic Akkermansia Plus).
         # Competitor categories: chromium AND alpha lipoic acid -> Gluco IR (600 mcg chromium picolinate, 300 mg
         # alpha lipoic acid), berberine -> Berberine Pro; vanadyl sulfate has no NutriDyn equivalent (scratchpad
         # products/needs.md).
@@ -718,8 +718,8 @@ SHEET = {
         # held back only for its photo: the one staged R270 image is another brand's bottle (Progressive
         # Professional P872, 60 capsules) and must not be used.  The R196 Akkermansia photo is a 160 px thumbnail
         # too, so the swap waits on a print master for either bottle.  Dropbox /NutriDyn/Product Images/Product
-        # Images (1)/ holds R270R.png (id:xHepYs_Ou4AAAAAAAA5I7g, 99,335 bytes) and R196.png
-        # (id:xHepYs_Ou4AAAAAAAA5Ipw, 86,496 bytes), but both sit in the byte range of that folder's 420 px web
+        # Images (1)/ holds R270R.png and R196.png
+        #, but both sit in the byte range of that folder's 420 px web
         # renders (its _Web files match the repo's 420 px bottles byte for byte), so they are probably web size,
         # not 600 px print masters; their pixel size is unverified (content host blocked, metadata has none).
         # When a real R270 master is staged as build/img-src/ir_ala.png: replace the ir_akk column with

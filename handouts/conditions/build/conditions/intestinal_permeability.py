@@ -86,12 +86,14 @@ STRESS = "#8150B8"
 
 LANE_X = [6 + i * 150 for i in range(5)]       # lane and tab left edges
 LANE_W = 142
-HX = [4 + i * 50 for i in range(7)]            # healthy cell walls; cell 0 sits inside the frame
+# Healthy cell walls.  Cell 0 starts under the frame's left edge (round 3: a 3-unit strip of lumen showed beside it,
+# down to the tissue), so the lining reads as running on past the picture; its nucleus keeps the 50-unit cell's place.
+HX = [-12] + [4 + i * 50 for i in range(1, 7)]
 # The green arrows cross the cytoplasm of cells 0-2 beside the nucleus (recheck 2026-11-03: an arrow down the
 # middle sliced every nucleus in half).  Arrow 5 units left of the cell centre, nucleus 11 units right of it
 # (all six healthy cells, so they stay uniform): 2.2 units of clear cytoplasm between the arrow's white halo and
 # the nucleus, 4.3 between the nucleus and the cell wall.
-NUT_X = [HX[i] + 20 for i in range(3)]
+NUT_X = [4 + i * 50 + 20 for i in range(3)]
 NUC_DX = 11
 LANE_TOK_X = [29 + i * 100 / 3 for i in range(4)]   # top row of the Nutrients lane
 # The three that travel lane -> cell -> blood leave the cell straight into the blood (standard physiology:
@@ -261,15 +263,27 @@ def arrow(x, y0, y1, col, w=5.5, head=16.0, halo="#FFFFFF"):
             f'stroke="{col}" stroke-width="1.2" stroke-linejoin="round"/>')
 
 
-# ---- the leak: ONE continuous arrow per gap (recheck 2026-11-03: the old faint band left five detached red
-# triangles hanging on the vessel wall like yield signs).  A stream fills the middle of the gap from its mouth,
-# deepens as it falls, narrows into a solid neck that crosses the basement membrane and the tissue, and flows
-# straight into a bold arrowhead in the blood.  It starts at the gap mouth, below the lanes, so nothing in the
-# Medications or Stress lanes ever looks like it leaks.
+# ---- the leak: ONE continuous stream per gap.  Art review round 3 (2026-11-03): the old stream flooded each gap
+# from wall to wall in the inflamed cells' own salmon, so every gap read as empty, cell-coloured background (1.2:1
+# against the cells at the gap floor) and the items as beads on a dotted line.  Now the stream is its own object:
+#   - a red ribbon NARROWER than the gap, so a strip of pale gap shows on each side of it (2.5 units at the mouth,
+#     more lower down, where it has narrowed as it falls and the swollen cells bulge apart again);
+#   - LEAK at .65 at the mouth, solid by mid-gap; a darker edge (EDGE, 1.2 units) down both sides and a light
+#     gloss streak down its left side, so it reads as liquid;
+#   - unbroken: the ribbon tapers into a neck across the basement membrane and the tissue, and the neck flows into
+#     a bold arrowhead in the blood (one outline, one fill, one edge);
+#   - no flow chevrons: the items ride the stream at varied offsets and angles, crossing its edges.
+# It starts at the gap mouth, below the lanes, so nothing in the Medications or Stress lanes ever looks like it leaks.
 VESSEL = [((0, BLT + 5), (150, BLT - 5), (300, BLT + 7), (450, BLT)),
           ((450, BLT), (600, BLT - 7), (650, BLT - 4), (W, BLT + 4))]   # the vessel's top edge (S reflected)
-NECK_HW = 4.6        # solid neck, 9.2 units wide
-HEAD_HW, HEAD_H = 12.5, 26.0
+RIB_M0, RIB_M1 = 3.2, 3.6    # ribbon edge to wall: at the mouth, and from 30 units down (2.2+ units of pale show)
+RIB_MAX = 26.0               # the widest ribbon: the wide mouths become a funnel no wider than this
+NECK_HW = 6.3                # the neck, 12.6 units wide
+HEAD_HW, HEAD_H = 13.5, 26.0
+DEEP = "#C9311D"             # the stream deepens to this by mid-gap (2:1 or more against the inflamed cells)
+EDGE = "#A8281A"             # the stream's darker edge
+GLOSS = "#FFC0AE"            # the light streak down its left side
+GAP_TOP, GAP_BOT = "#F3F8F9", "#F9EAE4"   # the open gap behind the stream: lumen-pale at the mouth, tissue-pale below
 
 
 def vessel_y(x):
@@ -281,57 +295,109 @@ def vessel_y(x):
     return BLT
 
 
+def _smooth(v, r):
+    return [sum(v[max(0, i - r):i + r + 1]) / len(v[max(0, i - r):i + r + 1]) for i in range(len(v))]
+
+
+def _inner(wall, y, side):
+    """The wall's innermost x within 3 units of y: the torn notches only ever widen a gap, so the ribbon ignores them."""
+    xs = [x_on(wall, y + d) for d in (-3, -1.5, 0, 1.5, 3)]
+    return max(xs) if side < 0 else min(xs)
+
+
+def ribbon(wl, wr, ybot):
+    """The stream's two edges down one gap, sampled every 2 units from the mouth to the gap floor: (ys, lefts, rights).
+    The ribbon keeps RIB_M0..RIB_M1 of pale gap on each side, narrows as it falls (it never widens again), and its
+    edges are smoothed so it reads as poured liquid, not as a copy of the ragged walls."""
+    y0 = ybot - 1.0
+    n = int(round((CB - y0) / 2)) + 1
+    ys = [y0 + i * (CB - y0) / (n - 1) for i in range(n)]
+    al = [_inner(wl, y, -1) for y in ys]
+    ar = [_inner(wr, y, 1) for y in ys]
+    marg = [RIB_M0 + (RIB_M1 - RIB_M0) * min(1.0, (y - y0) / 30) for y in ys]
+    cen, wid, run = [], [], RIB_MAX
+    for a, b, m in zip(al, ar, marg):
+        run = min(run, b - a - 2 * m)
+        cen.append((a + b) / 2)
+        wid.append(run)
+    cen, wid = _smooth(cen, 6), _smooth(wid, 3)
+    lefts = [max(c - w / 2, a + m) for c, w, a, m in zip(cen, wid, al, marg)]
+    rights = [min(c + w / 2, b - m) for c, w, b, m in zip(cen, wid, ar, marg)]
+    return ys, lefts, rights
+
+
+def _lerp_at(ys, vs, y):
+    for (ya, va), (yb, vb) in zip(zip(ys, vs), zip(ys[1:], vs[1:])):
+        if ya <= y <= yb:
+            return va + (vb - va) * (y - ya) / max(1e-6, yb - ya)
+    return vs[0] if y < ys[0] else vs[-1]
+
+
 def leak_stream(wl, wr, ybot, gid):
-    """The stream down one gap and its neck.  It floods the gap from wall to wall (its edges tuck 1.5 units under
-    the cells, which are drawn on top), fades in at the mouth so it has no lid, deepens as it falls and narrows
-    into the solid neck.  Returns (markup, x of the neck, y where the head starts)."""
-    y0, n = ybot - 2, 16
-    ys = [y0 + i * (CB - y0) / n for i in range(n + 1)]
-    left = [(x_on(wl, y) - 1.5, y) for y in ys]
-    right = [(x_on(wr, y) + 1.5, y) for y in ys[::-1]]
+    """One gap's open channel (pale, wall to wall, its edges tucked under the cells drawn later) and the stream in it:
+    ribbon, neck and arrowhead as ONE outline.  Returns (markup, ribbon edges as (ys, lefts, rights), neck x, y of the
+    head's base)."""
+    ys, lefts, rights = ribbon(wl, wr, ybot)
+    y0 = ys[0]
     gx = (x_on(wl, CB - 3) + x_on(wr, CB - 3)) / 2                 # the neck leaves from the middle of the gap floor
     hy0 = vessel_y(gx) + 0.5                                       # the head's base sits on the vessel's top edge
-    xl, xr = left[-1][0], right[0][0]
-    d = ("M" + " L".join(f"{x:.1f},{y:.1f}" for x, y in left)
-         + f" C{xl:.1f},{CB + 4} {gx - NECK_HW:.1f},{CB + 2} {gx - NECK_HW:.1f},{CB + 9}"
-         + f" L{gx - NECK_HW:.1f},{hy0 + 2.5:.1f} L{gx + NECK_HW:.1f},{hy0 + 2.5:.1f} L{gx + NECK_HW:.1f},{CB + 9}"
-         + f" C{gx + NECK_HW:.1f},{CB + 2} {xr:.1f},{CB + 4} {xr:.1f},{CB:.1f} L"
-         + " L".join(f"{x:.1f},{y:.1f}" for x, y in right) + " Z")
-    span = hy0 + 2.5 - y0
+    # the ribbon flows into the neck between 20 units above the gap floor and 8 below it (smoothstep, no pinch)
+    t0, t1 = CB - 20, CB + 8
+    lt, rt = _lerp_at(ys, lefts, t0), _lerp_at(ys, rights, t0)
+    left = [(l, y) for y, l in zip(ys, lefts) if y < t0]
+    right = [(r, y) for y, r in zip(ys, rights) if y < t0]
+    for i in range(15):
+        f = i / 14
+        s = f * f * (3 - 2 * f)
+        y = t0 + (t1 - t0) * f
+        left.append((lt + (gx - NECK_HW - lt) * s, y))
+        right.append((rt + (gx + NECK_HW - rt) * s, y))
+    left.append((gx - NECK_HW, hy0))
+    right.append((gx + NECK_HW, hy0))
+    tip = (gx, hy0 + HEAD_H)
+    head_l, head_r = (gx - HEAD_HW, hy0), (gx + HEAD_HW, hy0)
+    outline = left + [head_l, tip, head_r] + right[::-1]
+
+    def pts(p):
+        return " L".join(f"{x:.2f},{y:.2f}" for x, y in p)
+    # the open gap, wall to wall (tucked 1.5 units under the cells, which are drawn on top), then the stream
+    gy = [y0 - 1 + i * (CB + 2 - y0) / 24 for i in range(25)]
+    chan = [(x_on(wl, y) - 1.5, y) for y in gy] + [(x_on(wr, y) + 1.5, y) for y in gy[::-1]]
+    span = tip[1] - y0
 
     def off(y):
         return f"{min(1.0, max(0.0, (y - y0) / span)):.3f}"
-    # opacities raised per the recheck (about .3 / .45 / .7), then solid from the gap floor down
-    grad = (f'<defs><linearGradient id="{gid}" gradientUnits="userSpaceOnUse" x1="0" y1="{y0:.1f}" x2="0" '
-            f'y2="{hy0 + 2.5:.1f}"><stop offset="0" stop-color="{LEAK}" stop-opacity="0"/>'
-            f'<stop offset="{off(y0 + 12)}" stop-color="{LEAK}" stop-opacity=".3"/>'
-            f'<stop offset="{off(CB - 36)}" stop-color="{LEAK}" stop-opacity=".45"/>'
-            f'<stop offset="{off(CB - 3)}" stop-color="{LEAK}" stop-opacity=".7"/>'
-            f'<stop offset="{off(CB + 6)}" stop-color="{LEAK}" stop-opacity="1"/>'
-            f'<stop offset="1" stop-color="{LEAK}" stop-opacity="1"/></linearGradient></defs>')
-    _shape("stream", left + right, 0)
-    return grad + f'<path d="{d}" fill="url(#{gid})"/>', gx, hy0
-
-
-def chevron(x, y, hw):
-    """A small flow mark pointing down the stream, drawn behind the items: white on the deeper stream, with a
-    dark red edge so it also holds on the pale top of the stream."""
-    h = hw * 0.62
-    d = f"M{x - hw:.1f},{y - h:.1f} L{x:.1f},{y:.1f} L{x + hw:.1f},{y - h:.1f}"
-    return (f'<path d="{d}" fill="none" stroke="#B42A18" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" '
-            'stroke-opacity=".55"/>'
-            f'<path d="{d}" fill="none" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>')
-
-
-def leak_head(gx, y0):
-    """The bold arrowhead at the end of each stream.  Its base meets the neck with no white seam (the halo runs
-    down the two slanted sides only), so the stream and the head read as one arrow."""
-    y1, hw = y0 + HEAD_H, HEAD_HW
-    _shape("head", [(gx - hw - 1.8, y0), (gx + hw + 1.8, y0), (gx, y1 + 3.0)], 0)
-    return (f'<path d="M{gx - hw - 2.2:.1f},{y0 + 1.2:.1f} L{gx + hw + 2.2:.1f},{y0 + 1.2:.1f} L{gx:.1f},{y1 + 3.2:.1f} Z" '
-            'fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1" stroke-linejoin="round"/>'
-            f'<path d="M{gx - hw:.1f},{y0:.1f} L{gx + hw:.1f},{y0:.1f} L{gx:.1f},{y1:.1f} Z" fill="{LEAK}" '
-            f'stroke="{LEAK}" stroke-width="1.2" stroke-linejoin="round"/>')
+    mid = (y0 + CB) / 2
+    # both fade in over their first 8 units, so neither has a flat lid at the mouth
+    defs = (f'<defs><linearGradient id="{gid}c" gradientUnits="userSpaceOnUse" x1="0" y1="{y0 - 1:.1f}" x2="0" y2="{CB:.1f}">'
+            f'<stop offset="0" stop-color="{GAP_TOP}" stop-opacity="0"/>'
+            f'<stop offset="{9 / (CB - y0 + 1):.3f}" stop-color="{GAP_TOP}"/><stop offset="1" stop-color="{GAP_BOT}"/></linearGradient>'
+            f'<linearGradient id="{gid}" gradientUnits="userSpaceOnUse" x1="0" y1="{y0:.1f}" x2="0" y2="{tip[1]:.1f}">'
+            f'<stop offset="0" stop-color="{LEAK}" stop-opacity="0"/>'
+            f'<stop offset="{off(y0 + 8)}" stop-color="{LEAK}" stop-opacity=".65"/>'
+            f'<stop offset="{off(y0 + 26)}" stop-color="{LEAK}"/>'
+            f'<stop offset="{off(mid)}" stop-color="{DEEP}"/>'
+            f'<stop offset="1" stop-color="{DEEP}"/></linearGradient>'
+            f'<linearGradient id="{gid}e" gradientUnits="userSpaceOnUse" x1="0" y1="{y0:.1f}" x2="0" y2="{y0 + 12:.1f}">'
+            f'<stop offset="0" stop-color="{EDGE}" stop-opacity="0"/><stop offset="1" stop-color="{EDGE}"/></linearGradient>'
+            '</defs>')
+    # the gloss streak: down the left third of the ribbon and the neck, in two runs, stopping short of the head
+    gl = [(l + (r - l) * 0.27, y) for (l, y), (r, _) in zip(left[:-1], right[:-1]) if y0 + 6 <= y <= hy0 - 3]
+    cut = int(len(gl) * 0.55)
+    gloss = "".join(f'<path d="M{pts(run)}" fill="none" stroke="{GLOSS}" stroke-width="{w}" stroke-linecap="round" '
+                    'stroke-linejoin="round" stroke-opacity=".9"/>' for run, w in ((gl[:cut], 1.7), (gl[cut + 3:], 1.4)) if len(run) > 1)
+    hx0, hx1 = gx - HEAD_HW * 0.62, gx - HEAD_HW * 0.2                       # a short gloss on the head's left flank
+    gloss += (f'<path d="M{hx0:.2f},{hy0 + 3.2:.2f} L{hx1 + 1.2:.2f},{hy0 + HEAD_H * 0.62:.2f}" stroke="{GLOSS}" '
+              'stroke-width="1.3" stroke-linecap="round" stroke-opacity=".8"/>')
+    halo = (f'<path d="M{gx - HEAD_HW - 2.6:.2f},{hy0 + 1.2:.2f} L{gx + HEAD_HW + 2.6:.2f},{hy0 + 1.2:.2f} '
+            f'L{gx:.2f},{tip[1] + 3.4:.2f} Z" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1" stroke-linejoin="round"/>')
+    edge = "".join(f'<path d="M{pts(side + [tip])}" fill="none" stroke="url(#{gid}e)" stroke-width="1.2" '
+                   'stroke-linejoin="round" stroke-linecap="round"/>' for side in (left + [head_l], right + [head_r]))
+    _shape("stream", outline, 0)
+    _shape("head", [(gx - HEAD_HW - 2.6, hy0 + 1.2), (gx + HEAD_HW + 2.6, hy0 + 1.2), (gx, tip[1] + 3.4)], 0)
+    markup = (defs + f'<path d="M{pts(chan)} Z" fill="url(#{gid}c)"/>' + halo
+              + f'<path d="M{pts(outline)} Z" fill="url(#{gid})"/>' + gloss + edge)
+    return markup, (ys, lefts, rights), gx, hy0
 
 
 def stitches(x, y, n=3, gap=6.0, half=4.8, col=JUNCTION, sw=2.5):
@@ -421,13 +487,13 @@ def defs_svg():
         f'<linearGradient id="{U}-hcv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF" stop-opacity=".35"/>'
         '<stop offset=".25" stop-color="#FFFFFF" stop-opacity="0"/><stop offset=".85" stop-color="#C98A75" stop-opacity="0"/>'
         '<stop offset="1" stop-color="#C98A75" stop-opacity=".22"/></linearGradient>'
-        f'<linearGradient id="{U}-lc" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#D35A47"/>'
-        '<stop offset=".28" stop-color="#EC8670"/><stop offset=".6" stop-color="#F29B84"/>'
-        '<stop offset="1" stop-color="#D0553F"/></linearGradient>'
-        f'<linearGradient id="{U}-lcs" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#C24A39"/>'
-        '<stop offset=".3" stop-color="#DD735E"/><stop offset=".62" stop-color="#E5836C"/>'
-        '<stop offset="1" stop-color="#BB4634"/></linearGradient>'
-        f'<linearGradient id="{U}-lcv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B8261A" stop-opacity=".28"/>'
+        f'<linearGradient id="{U}-lc" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#D88072"/>'
+        '<stop offset=".28" stop-color="#EEAA9A"/><stop offset=".6" stop-color="#F4BEAF"/>'
+        '<stop offset="1" stop-color="#D57B6A"/></linearGradient>'
+        f'<linearGradient id="{U}-lcs" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#CB6E60"/>'
+        '<stop offset=".3" stop-color="#E09686"/><stop offset=".62" stop-color="#E8A595"/>'
+        '<stop offset="1" stop-color="#C96556"/></linearGradient>'
+        f'<linearGradient id="{U}-lcv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B8261A" stop-opacity=".22"/>'
         '<stop offset=".3" stop-color="#B8261A" stop-opacity="0"/><stop offset=".85" stop-color="#7A1D14" stop-opacity="0"/>'
         '<stop offset="1" stop-color="#7A1D14" stop-opacity=".22"/></linearGradient>'
         f'<linearGradient id="{U}-mv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F9DDD0"/>'
@@ -446,8 +512,8 @@ def defs_svg():
         f'<stop offset=".55" stop-color="{TOXIN}"/><stop offset="1" stop-color="#A4232A"/></radialGradient>'
         f'<linearGradient id="{U}-mic" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C2DE8E"/>'
         '<stop offset="1" stop-color="#86B24C"/></linearGradient>'
-        f'<linearGradient id="{U}-klk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="{LEAK}" stop-opacity=".3"/>'
-        f'<stop offset=".55" stop-color="{LEAK}" stop-opacity=".55"/><stop offset=".85" stop-color="{LEAK}"/></linearGradient>'
+        f'<linearGradient id="{U}-klk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="{LEAK}" stop-opacity=".65"/>'
+        f'<stop offset=".3" stop-color="{LEAK}"/><stop offset=".62" stop-color="{DEEP}"/></linearGradient>'
         "</defs>")
 
 
@@ -489,12 +555,13 @@ def h_villi(x0, x1, rnd):
     return f'<g fill="url(#{U}-mv)" stroke="#C98670" stroke-width=".65">{fingers}</g>'
 
 
-def h_cell(x0, x1):
+def h_cell(x0, x1, mid=None):
     """A healthy columnar cell; the nucleus sits low (basal) and a little to the right, the same in every
-    cell, so the absorbed-nutrient arrow crosses clear cytoplasm beside it."""
+    cell, so the absorbed-nutrient arrow crosses clear cytoplasm beside it.  `mid` overrides the cell's centre for
+    the nucleus (cell 0 runs on under the frame)."""
     r = 8
     d = f"M{x0},{CB} V{CT + r} Q{x0},{CT} {x0 + r},{CT} H{x1 - r} Q{x1},{CT} {x1},{CT + r} V{CB} Z"
-    cx, cy = (x0 + x1) / 2 + NUC_DX, CT + (CB - CT) * 0.74
+    cx, cy = (mid if mid is not None else (x0 + x1) / 2) + NUC_DX, CT + (CB - CT) * 0.74
     _shape("cell", [(x0, CB), (x0, CT), (x1, CT), (x1, CB)], 0.6)
     _shape("nucleus", [(cx + 8.6 * math.cos(a * math.pi / 12), cy + 14.5 * math.sin(a * math.pi / 12)) for a in range(24)], 0.45)
     return (f'<path d="{d}" fill="url(#{U}-hc)" stroke="#D2937E" stroke-width="1.2"/>'
@@ -522,7 +589,10 @@ LCELLS = [
     dict(xc=651, hw=(17, 23, 26, 25, 24), top=9, tilt=2.0, bites=(0.7,), crack=-1, spark=(-11, 31, 6.5), nuc=(3, -2, 10.5, 15),
          notches=[("L", .3, 3.4, 3.0), ("L", .55, 2.6, 2.4), ("L", .8, 3.8, 3.2), ("R", .26, 2.6, 2.4), ("R", .45, 3.2, 3.0),
                   ("R", .68, 3.8, 3.2), ("R", .9, 2.8, 2.4)]),
-    dict(xc=729, hw=(18, 23, 25, 25, 24), top=5, tilt=-1.5, bites=(0.25, 0.75), crack=1, spark=(11, 25, 7.0), nuc=(-2, 4, 11, 15.5),
+    # the last cell runs on under the frame's right edge (hwr: its right half-widths; round 3: a 6-unit strip of lumen
+    # beside it read as a sixth, empty gap)
+    dict(xc=729, hw=(18, 23, 25, 25, 24), hwr=(45, 47, 49, 49, 48), top=5, tilt=-1.5, bites=(0.25, 0.75), crack=1,
+         spark=(11, 25, 7.0), nuc=(-2, 4, 11, 15.5),
          notches=[("L", .33, 3.6, 3.2), ("L", .58, 2.6, 2.4), ("L", .78, 3.2, 2.8), ("R", .3, 3.2, 2.8), ("R", .48, 2.8, 2.6),
                   ("R", .7, 3.4, 3.0), ("R", .88, 2.6, 2.2)]),
 ]
@@ -535,7 +605,8 @@ def l_cell(c, rnd):
     h = CB - top
     ys = [top + h * f for f in (0.07, 0.25, 0.52, 0.78, 1.0)]
     left = [(xc - hw[k] + (rnd.uniform(-1.2, 1.2) if 0 < k < 4 else 0), ys[k]) for k in range(5)]
-    right = [(xc + hw[k] + (rnd.uniform(-1.2, 1.2) if 0 < k < 4 else 0), ys[k]) for k in range(5)]
+    hwr = c.get("hwr", hw)
+    right = [(xc + hwr[k] + (rnd.uniform(-1.2, 1.2) if 0 < k < 4 else 0), ys[k]) for k in range(5)]
     if c.get("lean"):                      # the first leaky cell still leans on the healthy side
         left = [(SPLIT + d, ys[k]) for k, d in enumerate((5, 1.5, 1, 1, 1))]
     xl, xr = left[0][0], right[0][0]
@@ -591,7 +662,7 @@ def l_cell(c, rnd):
     crack = f"M{ccx:.1f},{ccy:.1f} " + " ".join(f"l{a * rnd.uniform(.85, 1.2):.1f},{b * rnd.uniform(.9, 1.15):.1f}" for a, b in zig)
     sx, sy = sh(xc + c["spark"][0], top + c["spark"][1])
     fill = f"{U}-lcs" if c.get("shrunken") else f"{U}-lc"
-    body = (f'<g fill="#E58B76" stroke="#B5473A" stroke-width=".6">{"".join(vil)}</g>'
+    body = (f'<g fill="#E7A798" stroke="#B95A4C" stroke-width=".6">{"".join(vil)}</g>'
             f'<path d="{d}" fill="url(#{fill})" stroke="#AE3D31" stroke-width="1.4" stroke-linejoin="round"/>'
             f'<path d="{d}" fill="url(#{U}-lcv)"/>'
             f'<ellipse cx="{ncx:.1f}" cy="{ncy:.1f}" rx="{nrx}" ry="{nry}" transform="rotate({nrot:.0f} {ncx:.1f} {ncy:.1f})" '
@@ -606,8 +677,12 @@ def l_cell(c, rnd):
 
 
 # ----------------------------------------------------------------------------- the art
+# The two causes say what they do and wear their own colour (round 3: in the "should stay out" teal, with "like
+# ibuprofen" / "of body or mind" under them, a child could read them as two more things that leak in).  NSAIDs and
+# stress loosen the seams: Bjarnason 1993, Vanuytsel 2014, Karl 2017 (module docstring).
 TABS = [("Nutrients", "should pass"), ("Food particles", "should stay out"), ("Microbes", "should stay out"),
-        ("Medications", "like ibuprofen"), ("Stress", "of body or mind")]
+        ("Medications", "can loosen seams"), ("Stress", "can loosen seams")]
+CAUSE = "#5B4A8E"         # the two cause tabs (7.4:1 with white)
 
 # What pours through each gap, from the crowd at the mouth down to the fan in the blood:
 # 4 crowding above the mouth, 2 squeezing into it, 2 further down, 1 crossing the membrane,
@@ -655,10 +730,11 @@ NUDGE = {
     "g4m0": (-1, 0, 0, 270, 0.57),  # nose straight down, a little smaller, to squeeze between the snapped bars
     "g4m1": (2, 2.5, 0),
     "g4f2": (0, 0, 180),            # its tail ended on a food particle: turn it around
+    "g0f0": (-3, 3, 0),             # round 3: the bigger arrowhead's halo touched its tail
 }
 
 
-def _place(kind, x, y, rnd, rot=None, s=None, narrow=False, tail=True, tag=""):
+def _place(kind, x, y, rnd, rot=None, s=None, narrow=False, tail=True, tag="", v=None, r=None):
     """Draw one stream item and register it; microbes in a narrow gap swim nose-down."""
     if kind == M:
         s = s or 0.62
@@ -666,7 +742,7 @@ def _place(kind, x, y, rnd, rot=None, s=None, narrow=False, tail=True, tag=""):
     elif kind == F:
         s = s or (0.6 if narrow else 0.66)
         rot = rot if rot is not None else rnd.uniform(-40, 40)
-        v = rnd.randrange(3)
+        v = rnd.randrange(3) if v is None else v
     dx, dy, dr, *fix = NUDGE.get(tag, (0, 0, 0))
     x, y = x + dx, y + dy
     if fix and fix[0] is not None:
@@ -680,7 +756,7 @@ def _place(kind, x, y, rnd, rot=None, s=None, narrow=False, tail=True, tag=""):
         _reg_mic(f"{M}:{tag}", x, y, rot, s, tail)
         return microbe(x, y, rot, s, tail)
     if kind == X:
-        r = 5.8 if narrow else 6.2
+        r = r or (5.8 if narrow else 6.2)
         _reg(X, x, y, r + 1.8, r + 1.8)
         _reg_tox(f"{X}:{tag}", x, y, r)
         return toxin(x, y, r)
@@ -701,11 +777,53 @@ def _in_gap(kind, wl, wr, y, inset, side, rnd, tag=""):
                   tail="short", tag=tag)
 
 
+def _outline(kind, rot, s, v=0, r=6.0):
+    """An item's outline points around (0, 0) and its stroke radius, for placing it against the walls."""
+    if kind == M:
+        body = _xf(_rrect(30, 13.2, 6.6), 0, 0, rot, s)
+        return body + _xf(_MIC_PTS[4:8] + [(23.6, 0), (20, -3.6)], 0, 0, rot, s), 0.65 * s
+    if kind == F:
+        return _xf(_FOOD_PTS[v % 3], 0, 0, rot, s), 0.65 * s
+    return [(r * math.cos(math.radians(a)), r * math.sin(math.radians(a))) for a in range(-90, 270, 60)], 1.8
+
+
+def _ride(kind, side_l, side_r, rib, y, side, rnd, tag, poke=2.2):
+    """One leaked item riding the stream at height y.  On `side` (-1 left, +1 right) it straddles the ribbon's edge,
+    poking up to `poke` units past it into the pale gap, at a varied angle, but it keeps clear of the cell walls
+    (1 unit past their stroke, plus 0.5) and of the snapped junction bars (2 units, plus 0.5).  side_l / side_r are
+    (wall, [bar outlines]) for the gap's two sides."""
+    s = v = r = None
+    if kind == M:
+        s, rot = rnd.uniform(0.58, 0.63), 270 + side * rnd.uniform(10, 30)    # nose-down, leaning to its edge
+    elif kind == F:
+        s, rot, v = rnd.uniform(0.56, 0.63), rnd.uniform(-55, 55), rnd.randrange(3)
+    else:
+        rot, r = 0, rnd.uniform(5.5, 6.1)
+    pts, rad = _outline(kind, rot, s or 1.0, v or 0, r or 6.0)
+    (wl, bars_l), (wr, bars_r) = side_l, side_r
+    lo = max(x_on(wl, y + py) - px + 0.7 + rad + 1.5 for px, py in pts)
+    hi = min(x_on(wr, y + py) - px - 0.7 - rad - 1.5 for px, py in pts)
+    for bars, sg in ((bars_l, -1), (bars_r, 1)):
+        for bar in bars:
+            for bx, by in bar:
+                for px, py in pts:
+                    if abs(y + py - by) < 2.8 + rad:
+                        if sg < 0:
+                            lo = max(lo, bx - px + 0.25 + rad + 2.5)
+                        else:
+                            hi = min(hi, bx - px - 0.25 - rad - 2.5)
+    ys, lefts, rights = rib
+    ex0, ex1 = min(px for px, _ in pts), max(px for px, _ in pts)
+    tx = _lerp_at(ys, lefts, y) - poke - ex0 if side < 0 else _lerp_at(ys, rights, y) + poke - ex1
+    x = min(max(tx, lo), hi) if lo <= hi else (lo + hi) / 2
+    return _place(kind, x, y, rnd, rot=rot, s=s, narrow=True, tail="short", tag=tag, v=v, r=r)
+
+
 def art_barrier(t):
     del _REG[:]
     del _SHAPES[:]
     rnd = random.Random(23)
-    tabcol = [TAB_GREEN] + [t["c1"]] * 4
+    tabcol = [TAB_GREEN] + [t["c1"]] * 2 + [CAUSE] * 2
     o = [defs_svg(),
          f'<rect x="1" y="{FT}" width="{W - 2}" height="{FB - FT}" rx="14" fill="url(#{U}-lumen)"/>',
          f'<g clip-path="url(#{U}-clip)">']
@@ -732,8 +850,8 @@ def art_barrier(t):
         wl, wr = cells[k][2], cells[k + 1][1]           # right wall of cell k, left wall of cell k+1
         ytop, ybot = sorted((cells[k][3], cells[k + 1][3]))
         gx = (x_on(wl, ybot + 14) + x_on(wr, ybot + 14)) / 2
-        stream, gxn, hy0 = leak_stream(wl, wr, ybot, f"{U}-band{k}")
-        gaps.append((wl, wr, (ytop, ybot), gx, gxn, hy0))
+        stream, rib, gxn, hy0 = leak_stream(wl, wr, ybot, f"{U}-band{k}")
+        gaps.append((wl, wr, (ytop, ybot), gx, gxn, hy0, rib))
         o.append(stream)
 
     # ---- blood cells (behind the arrows, the delivered nutrients and the leaked items)
@@ -744,9 +862,15 @@ def art_barrier(t):
 
     # ---- healthy half: six columnar cells, seams sealed by tight junctions
     for i in range(6):
-        o.append(h_villi(HX[i], HX[i + 1], rnd))
+        o.append(h_villi(4 if i == 0 else HX[i], HX[i + 1], rnd))
+    # cell 0 runs on under the frame: 4 more microvilli to the left of its first, at the same pitch, from their own
+    # random source so every other random draw in the art (bar lengths, jitter) stays as the clearance check tuned it
+    lr = random.Random(5)
+    o.append(f'<g fill="url(#{U}-mv)" stroke="#C98670" stroke-width=".65">' + "".join(
+        f'<rect x="{12 - 4.25 * k - 1.5:.2f}" y="{BT + lr.uniform(-0.6, 0.9):.2f}" width="3" height="{CT - BT + 6}" '
+        'rx="1.5"/>' for k in range(1, 5)) + "</g>")
     for i in range(6):
-        o.append(h_cell(HX[i], HX[i + 1]))
+        o.append(h_cell(HX[i], HX[i + 1], 29 if i == 0 else None))
     for x in HX[1:6]:
         o.append(stitches(x, CT + 6))
 
@@ -765,7 +889,8 @@ def art_barrier(t):
         o.append(f'<path d="M{xm - half:.1f},{y:.1f} H{xm + half:.1f}" stroke="{JUNCTION}" stroke-width="2.5" '
                  'stroke-linecap="round"/>')
     hang = [(1, 0, 58), (0, 2, 64), (1, 1, 52), (0, 1, 66), (1, 2, 60)]   # per gap: (side, bar, angle)
-    for k, (wl, wr, mouth, gx, gxn, hy0) in enumerate(gaps):
+    bars = [([], []) for _ in gaps]                                         # per gap: the bar outlines on each side
+    for k, (wl, wr, mouth, gx, gxn, hy0, rib) in enumerate(gaps):
         for side, wall, ctop, dirn in ((0, wl, cells[k][3], 1), (1, wr, cells[k + 1][3], -1)):
             for j in range(3):
                 y = ctop + 9 + j * 6
@@ -774,6 +899,7 @@ def art_barrier(t):
                 if k in (1, 3) and side == 0 and j == 2:     # a second hanging bar on two of the gaps
                     ang = 48
                 o.append(stub(x, y, rnd.uniform(5.2, 7.4), dirn, ang, reg=True))
+                bars[k][side].append(_SHAPES[-1][1])
                 _reg("stub", x + dirn * 4, y + (3 if ang else 0), 4.5, 3 if not ang else 5)
 
     # ---- nutrients through the healthy cells, beside the nucleus (lane -> cell -> blood: the same three letters)
@@ -787,44 +913,37 @@ def art_barrier(t):
         _reg("tok", x + 15, BLT + 57, 12.5, 12.5)
         _reg_tok("tok:blood", x + 15, BLT + 57, 11)
 
-    # ---- the leak streams: a crowd at each gap mouth, thinning out as it pours into the blood
-    for k, (wl, wr, (ytop, ybot), gx, gxn, hy0) in enumerate(gaps):
+    # ---- the leak streams: a crowd at each gap mouth; then the items ride the stream down, zig-zagging across its
+    # edges at varied angles (never single file down the middle), squeeze through the neck and fan out in the blood
+    for k, (wl, wr, (ytop, ybot), gx, gxn, hy0, rib) in enumerate(gaps):
         g = random.Random(100 + k)
         kinds = STREAM[k]
         flip = -1 if k % 2 else 1
         aim = (gx, ybot + 12)
-        n0, items = len(_REG), []
+        items = []
         # 4 crowding the mouth from the clear band above it (below the lanes, never in one);
         # microbes swim head-first towards the gap
         for i, (cx, cy) in enumerate(CROWD):
             x, y = gx + flip * cx + g.uniform(-2.5, 2.5), ytop + cy + g.uniform(-2.5, 2.5)
             rot = math.degrees(math.atan2(aim[1] - y, aim[0] - x)) + 180 + g.uniform(-15, 15)
             items.append(_place(kinds[i], x, y, g, rot=rot if kinds[i] == M else None, s=0.64, tail="short", tag=f"g{k}c{i}"))
-        # 2 squeezing into the mouth, centred in the space between the snapped junction bars
-        for i, yy in enumerate([ybot + 5 + g.uniform(-1.5, 1.5), ybot + 24 + g.uniform(-2, 2)]):
-            items.append(_in_gap(kinds[4 + i], wl, wr, yy, 9.5, flip * (1 - 2 * i), g, tag=f"g{k}m{i}"))
-        # 2 further down the gap, thinning out
-        for i, yy in enumerate([CT + 70 + g.uniform(-6, 6), CT + 111 + g.uniform(-6, 6)]):
-            items.append(_in_gap(kinds[6 + i], wl, wr, yy, 3.0, g.choice((-1, 1)), g, tag=f"g{k}d{i}"))
+        # 1 squeezing into the mouth, between the snapped junction bars (two draws, as when the mouth held two items,
+        # so this one keeps the place the clearance check tuned)
+        ym = [ybot + 5 + g.uniform(-1.5, 1.5), g.uniform(-2, 2)][0]
+        items.append(_in_gap(kinds[4], wl, wr, ym, 9.5, flip, g, tag=f"g{k}m0"))
+        # 3 riding the stream down the gap, each crossing the ribbon's edge on alternate sides
+        sides = ((wl, bars[k][0]), (wr, bars[k][1]))
+        ride = [ybot + 27 + j * (CB - 56 - ybot) / 2 + g.uniform(-2, 2) for j in range(3)]   # below the bars, to CB - 29
+        for i, yy in enumerate(ride):
+            items.append(_ride(kinds[5 + i], *sides, rib, yy, -flip if i % 2 == 0 else flip, g, tag=f"g{k}r{i}"))
         # 1 squeezing through the neck, across the basement membrane
-        items.append(_place(kinds[8], gxn + g.uniform(-2, 2), CB + 7, g, narrow=True, s=0.56, tail="short", tag=f"g{k}b"))
-        # the bold arrowhead, then a small fan of leaked items just under it
-        items.append(leak_head(gxn, hy0))
+        items.append(_place(kinds[8], gxn + flip * 1.5 + g.uniform(-1, 1), CB + 7, g, narrow=True, s=0.56, tail="short",
+                            tag=f"g{k}b"))
+        # a small fan of leaked items just under the arrowhead
         fan = [(-18, BLT + 38), (17, BLT + 43), (-1, BLT + 62)][:len(kinds) - 9]
         for i, (fx, fy) in enumerate(fan):
             items.append(_place(kinds[9 + i], gxn + flip * fx + g.uniform(-2, 2), fy + g.uniform(-2, 2), g, s=0.66,
                                 tag=f"g{k}f{i}"))
-        # flow marks in the open stretches of the stream between the items (drawn first, so the items ride over them)
-        spans = sorted((y - hh, y + hh) for _, _, y, _, hh in _REG[n0:] if ybot - 4 < y < CB + 14)
-        for (_, b0), (t1, _) in zip(spans, spans[1:]):
-            if t1 - b0 >= 13 and b0 < CB - 8:
-                yc = min((b0 + t1) / 2, CB - 10)
-                hw = min(4.6, (x_on(wr, yc) - x_on(wl, yc)) / 2 - 4.0)
-                if hw >= 3:
-                    xc = (x_on(wl, yc) + x_on(wr, yc)) / 2
-                    o.append(chevron(xc, yc + hw * 0.31, hw))
-                    _shape("chev", [(xc - hw - 1.8, yc - hw * 0.31 - 1.8), (xc + hw + 1.8, yc - hw * 0.31 - 1.8),
-                                    (xc, yc + hw * 0.31 + 1.8)], 0)
         o.extend(items)
 
     # ---- causes of damage, on the cells: a pill resting on the shrunken cell, bolts striking tops
@@ -882,7 +1001,7 @@ def art_barrier(t):
     o.append("</g>")
     o.append(f'<rect x="1" y="{FT}" width="{W - 2}" height="{FB - FT}" rx="14" fill="none" stroke="#C3D5DA" stroke-width="1.4"/>')
 
-    # ---- the five tabs, on top: white type on dark fills (6.2:1 teal, 5.8:1 green)
+    # ---- the five tabs, on top: white type on dark fills (6.2:1 teal, 5.8:1 green, 7.4:1 cause purple)
     for (lab, sub), x, col in zip(TABS, LANE_X, tabcol):
         o.append(f'<rect x="{x}" y="{TY}" width="{LANE_W}" height="{TH}" rx="7" fill="{col}"/>')
         o.append(f'<path d="M{x + 59},{TY + TH - 1} h24 l-12,{PTR} z" fill="{col}"/>')
@@ -913,12 +1032,16 @@ def key_html():
     mv = (f'<g fill="url(#{U}-mv)" stroke="#C98670" stroke-width=".6">'
           + "".join(f'<rect x="{-11.6 + k * 4.6:.1f}" y="-12" width="3" height="14" rx="1.5"/>' for k in range(6)) + "</g>"
           f'<rect x="-14" y="-1" width="28" height="13" rx="4" fill="url(#{U}-hc)" stroke="#D2937E"/>')
-    # the leak as the art draws it: a stream that deepens into a solid neck and one bold head, with a flow mark
-    lk = (f'<path d="M-8.5,-14 H8.5 C8.5,-6 2.6,-4.5 2.6,-0.5 V3.4 H-2.6 V-0.5 C-2.6,-4.5 -8.5,-6 -8.5,-14 Z" '
+    # the leak as the art draws it: a red ribbon with a dark edge and a gloss streak, tapering into a neck and one
+    # bold head (white halo), all one shape
+    side = "C{a}6.5,-7 {a}2.8,-4.5 {a}2.8,-0.5 L{a}2.8,2.6 L{a}8.2,2.6 L0,13.6"
+    lk = (f'<path d="M-10.6,3.3 L10.6,3.3 L0,16.6 Z" fill="#FFFFFF" stroke="#FFFFFF" stroke-linejoin="round"/>'
+          f'<path d="M-6.5,-14 {side.format(a="-")} L8.2,2.6 L2.8,2.6 L2.8,-0.5 C2.8,-4.5 6.5,-7 6.5,-14 Z" '
           f'fill="url(#{U}-klk)"/>'
-          f'<path d="M-10.2,3.6 H10.2 L0,15.4 Z" fill="#FFFFFF"/>'
-          f'<path d="M-8.4,2.6 H8.4 L0,13.2 Z" fill="{LEAK}" stroke="{LEAK}" stroke-width="1" stroke-linejoin="round"/>'
-          + chevron(0, -6.2, 3.4))
+          f'<path d="M-4.4,-11.5 C-4.4,-7.5 -1.5,-5 -1.5,-1.6" fill="none" stroke="{GLOSS}" stroke-width="1.3" '
+          'stroke-linecap="round"/>'
+          + "".join(f'<path d="M{a}6.5,-14 {side.format(a=a)}" fill="none" stroke="{EDGE}" stroke-width="1.1" '
+                    'stroke-linejoin="round" stroke-linecap="round"/>' for a in ("-", "")))
     mx, mx1, my, my1 = microbe_extent(-34, 0.66)     # centre the key's microbe on its rotated extent
     items = [
         (food(0, 0, 0.95), "Food particle", "not fully digested"),
@@ -943,7 +1066,9 @@ def key_html():
     nut = "".join(f'<span>{swatch(ktok(s, c), 26)}{name}</span>' for s, c, name in NUTRIENT_NAMES)
     # The key names the two regions first (recheck 2026-11-03: only the bottom was labelled, so a child had to
     # guess that the top is the inside of the gut), and says every letter is absorbed, the still ones included.
-    return (f'<div class="{U}-key"><span class="{U}-kt">Key<em>Top: inside your gut &middot; Bottom: your blood</em></span>'
+    # Round 3: the middle band (the lining, and the pale tissue under it) is named too, on the same line.
+    return (f'<div class="{U}-key"><span class="{U}-kt">Key<em>Top: inside your gut &middot; Middle: the lining and the '
+            f'tissue under it &middot; Bottom: your blood</em></span>'
             f'<div class="{U}-kn"><b>Each letter is a nutrient your gut absorbs:</b>{nut}</div>'
             f'<div class="{U}-kg">{cells}</div></div>')
 
@@ -971,8 +1096,10 @@ OUTCOMES = [
     # Damaged lining cells absorb less, as in celiac disease: Rubio-Tapia A et al. ACG guideline, Am J
     # Gastroenterol 2023;118:59-76 (PMID 36602836); Wierdsma NJ et al. Nutrients 2013;5:3975-92
     # (PMID 24084055): low zinc in 67 % and low iron stores in 46 % of newly diagnosed celiac patients.  Low iron
-    # is a common cause of tiredness (NIH ODS iron fact sheet: iron deficiency anemia brings fatigue).
-    (icon("battery", "0.34in", "#fff", 3), "Poor absorption", "Low iron, zinc or vitamin D, which can leave you tired"),
+    # is a common cause of tiredness (NIH ODS iron fact sheet: iron deficiency anemia brings fatigue).  Round 3: worded
+    # as damaged CELLS absorbing less (the celiac evidence), since looser seams alone do not cause malabsorption.
+    (icon("battery", "0.34in", "#fff", 3), "Poor absorption",
+     "Damaged cells absorb less iron, zinc or vitamin D, so you may tire"),
 ]
 
 
@@ -985,8 +1112,8 @@ def front(t, ed):
     return (f'<div class="art {U}-art">{art_barrier(t)}</div>{caps}{key_html()}'
             f'<div class="{U}-oh">When the barrier leaks, you may notice</div><div class="{U}-out">{outs}</div>'
             f'<p class="{U}-after">Researchers are also studying how a leaky barrier connects to <b>autoimmune conditions</b> '
-            "such as Hashimoto's thyroiditis, rheumatoid arthritis and lupus. If you live with one, ask {who} whether gut "
-            'support belongs in your plan.</p>')
+            "such as Hashimoto's thyroiditis, rheumatoid arthritis and lupus. If you live with one, tell {who} about any "
+            'gut symptoms.</p>')
 
 
 CSS = r"""
@@ -1047,16 +1174,18 @@ SHEET = {
     "order": 1,
     "title": "Intestinal Permeability", "sub": "Your gut barrier, and why it leaks",
     # Sources for every fact in this paragraph: see the module docstring (Camilleri 2019; Vanuytsel 2014;
-    # Bjarnason 1993 and 1984; "every few days" = about 4 to 5 days, van der Flier and Clevers 2009).
+    # Bjarnason 1993 and 1984; "every few days" = about 4 to 5 days, van der Flier and Clevers 2009).  Round 3: the
+    # last sentence no longer says nutrients help the lining "rebuild": Camilleri 2019 says repair of a leaky barrier by
+    # supplements still needs confirmation, so the sheet claims only what food and habits do for a renewing lining.
     "intro": ("Your gut lining is a wall just one cell thick, sealed at the seams by <b>tight junctions</b>. A healthy lining "
               "lets nutrients through and keeps out undigested food, microbes and the toxins they make. Poor diet, infections, "
               "alcohol, some medications and stress can loosen those seams. Researchers call this "
               "<b>increased intestinal permeability</b>; you may know it as leaky gut. The good news: the lining renews itself "
-              "every few days, so the right food, habits and nutrients help it rebuild."),
+              "every few days, and food and daily habits help it stay strong."),
     "front": front,
     "css": CSS,
     # ------------------------------------------------------------------------- back page
-    # Built on NutriDyn's 5R GI Restoration Program [ND584] (ND584 Rev. 1/22, Dropbox id:xHepYs_Ou4AAAAAAAA5smw;
+    # Built on NutriDyn's 5R GI Restoration Program [ND584] (ND584 Rev. 1/22;
     # verbatim extract scratchpad protocols/raw/ND584_5R_2022_supplement_section.txt).  NutriDyn's fifth R is
     # Retain ("RESTORE & RETAIN"), not "Rebalance".  The Gut Overgrowth sheet (ND-GI-104) owns step 1, Remove
     # (the antimicrobials), so this back covers the other four, said in one line under the band title.

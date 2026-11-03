@@ -36,22 +36,39 @@ front review's small fixes are applied):
   * front fixes: the binder KEY rows are 22 px apart and the box is narrowed flush right; the
     house KEY swatch is a drop over a puddle ("Moisture, leak or puddle"), so the cutaway's
     puddles are keyed too, with measured label widths; the red return arrow ends at the
-    liver's left-lobe tip; the two free binders are drawn the size of the caught ones;
-    "Joint aches" uses an in-module JOINT icon (the kit bone is not a joint);
+    liver's left-lobe tip; the two free binders were meant to match the caught ones (they were
+    still R 12 against 13.6 until the review round below); "Joint aches" uses an in-module
+    JOINT icon (the kit bone is not a joint);
   * products follow NutriDyn's own mold protocols: KBMO Mycotoxin Protocol ND1610 (Binder Pro,
     GI Defend) and a NutriDyn educator's mold plans for Asher's 2025 Georgia seminar
     (Lipo-Flow, glutathione, Mito Recharge).  Binder Pro is the Start-here pick, the binder
     the front's diagram shows.  Five columns, the competitor's count.  Facts and sources:
     products.d/mold.json (mold-owned keys, each label re-opened this pass);
-  * binder spacing rule: Binder Pro goes mid-morning and mid-evening (the educator's grids), 2 hours
-    from food, other supplements and medicine, and every other product sits at a meal, so the check
-    panel's rule, the dose bar and the daily rhythm agree;
+  * binder spacing rule: Binder Pro goes between meals (the educator's grids: mid-morning and
+    mid-evening), 2 hours from food, other supplements and medicine, and every other product sits at
+    a meal, so the check panel's rule, the dose bar and the daily rhythm agree (the review round
+    below writes those slots as "2 hours after breakfast and supper");
   * lifestyle band: protocol advice added where it is real ("Test home & work" from the educator's
     "Preparation Plan (While Waiting on Labs and Home/Work Samples)"; "Stay regular" from
     ND1610's "elimination through the stool" and her optional magnesium citrate); "Fix fast"
     (the front's step 1, word for word) and "Sweat" (no source) are out;
   * the check panel is written per edition: pharmacists check interactions and nutrient
     losses, providers order labs, refer and adjust.
+
+Review round 2026-11-03 (independent reviewer; the front's design is unchanged):
+  * public repo: no mail-thread, Drive or Dropbox file ids in this module or in
+    products.d/mold.json; every note cites its document by title and date;
+  * Binder Pro's two doses are tied to meals ("2 hours after breakfast and supper") on the dose
+    bar and in the daily rhythm, so the Bedtime header cannot mislead; the morning dose is listed
+    last in the Morning box (scoped CSS), after the before-breakfast and breakfast items;
+  * check panel, both editions: a new line on gallstones, a blocked bile duct or a stomach ulcer
+    before Lipo-Flow (German Commission E); practitioner edition: warfarin goes to whoever manages
+    it, and tests "add clues" (no validated clinical mycotoxin test: AWMF mold guideline); the
+    panel is wider and the notes lines a little closer, so the page still ends above its footer;
+  * Liposomal Glutathione's bullets are ND971's own claims; GI Defend's says it helps bind toxins
+    (ND850's wording); "Stay regular" draws a large intestine (mo_colon), not the kit's stomach;
+    GI Defend's and glutathione's facts lead with the serving, like the other three;
+  * the two free binders really are the size of the caught ones (R 13.6).
 
 Every SVG is drawn at 1:1 with its printed CSS size (viewBox width = rendered width
 in CSS px), so an SVG font-size of 9.4 prints at 7.05 pt.
@@ -77,17 +94,37 @@ Sources (a short comment sits next to each fact below):
     adults, so "about 30 g")
   Ohkawa et al., Rinsho Shinkeigaku 1995;35:806-7 (PMID 8777808: chlorella, a vitamin K-rich
     food, blunted warfarin); Rohde et al., Curr Opin Clin Nutr Metab Care 2007;10:1-5
-    (doi:10.1097/MCO.0b013e328011c46c: vitamin K intake over 250 mcg a day lowers warfarin
+    (PMID 17143047: vitamin K intake over 250 mcg a day lowers warfarin
     sensitivity; supplements can carry enough K1 to move the INR); Sconce et al., Blood
     2007;109:2419-23 (doi:10.1182/blood-2006-09-049262: steady daily vitamin K steadies the INR)
   FDA labels for the azole antifungals (itraconazole, voriconazole, posaconazole: strong CYP3A4
     inhibitors with long interaction lists)
+  German Commission E monographs (Blumenthal M, ed., 1998: artichoke leaf and dandelion,
+    contraindicated with bile-duct obstruction, gallstones only after consulting a physician;
+    gentian root, contraindicated with gastric and duodenal ulcers)
+  AWMF mold guideline "Medical clinical diagnostics for indoor mold exposure" (Hurrass J et al.,
+    Int J Hyg Environ Health 2017;220:305-28, doi:10.1016/j.ijheh.2016.11.012; 2023 update,
+    Allergol Select 2024;8:90-198, doi:10.5414/ALX02444E: no validated mycotoxin test for
+    clinical diagnostics)
 """
 import math
 import random
 
+import kit
 from kit import icon
 from svgkit import T, svg
+
+# Back-page lifestyle band, "Stay regular": a large intestine seen from the front (pouched outer wall,
+# the sigmoid bend into the rectum) in place of the kit "gut" icon, which draws a stomach.  A 64x64 line
+# icon in the kit's grammar, stroked with currentColor at the band's 3.2 like its five neighbours, and
+# registered under this sheet's prefix the way other sheets add band icons.  Its centre-line is straight
+# runs joined by radius-7 turns, so both walls are exact offsets (outer turns radius 12, inner radius 2);
+# the outer wall bulges 2.1 between its folds (three pouches per limb, two on the shorter descending one).
+kit.ICONS.setdefault("mo_colon",
+    '<path d="M8,48A6.61,6.61 0 0 1 8,38.33 A6.61,6.61 0 0 1 8,28.67 A6.61,6.61 0 0 1 8,19A12,12 0 0 1 20,7'
+    'A4.86,4.86 0 0 1 28,7 A4.86,4.86 0 0 1 36,7 A4.86,4.86 0 0 1 44,7A12,12 0 0 1 56,19'
+    'A6.42,6.42 0 0 1 56,28.5 A6.42,6.42 0 0 1 56,38A12,12 0 0 1 44,50H39A2,2 0 0 0 37,52V58H27V52'
+    'A12,12 0 0 1 39,40H44A2,2 0 0 0 46,38V19A2,2 0 0 0 44,17H20A2,2 0 0 0 18,19V48A5,5 0 0 1 8,48Z"/>')
 
 INK = "#2B3236"
 SOFT_INK = "#4A555C"
@@ -533,9 +570,11 @@ def art_binder(t, H=288):
     cap_x = 364
     cap_y = gut_y(cap_x) + 1
     out.append(capsule_open(cap_x, cap_y, gut_angle(cap_x)))
-    # the free binders are the size of the caught ones (R 12 against 13.6): a binder does not grow
-    # when it catches a toxin
-    for (x, dy, R, rot) in [(396, 7, 12, 12), (424, -7, 12, -14)]:
+    # the free binders are the size of the caught ones (R 13.6): a binder does not grow when it
+    # catches a toxin.  They sit 4 px off the centre-line like the caught pairs; clearances measured on
+    # the rendered SVG: 2.2 px to the lining folds (the caught pairs 2.5; at 7 px a 13.6 crescent
+    # overlapped them), 7 px to the capsule, 9.9 px between the two, 6.4 px to the first caught pair
+    for (x, dy, R, rot) in [(396, 4, 13.6, 12), (424, -4, 13.6, -14)]:
         out.append(crescent(x, gut_y(x) + dy, R, rot=rot))
     # its label sits in clear space above the gut; a leader points into the lumen
     out.append(leader(385, 154.5, cap_x - 2, cap_y - 10.8) + T(388, 152, "A binder you take", 10.5, 700, BINDER_TXT))
@@ -620,16 +659,30 @@ CSS = r"""
        one) and the grid reaches 0.1in into the band's side padding, so every title sets on one line;
      - each "In each serving" block sits on its dose bar (the .what box is a column with the
        facts pushed to its foot), so the five facts blocks end on one line;
-     - every dose bar is one height with its text centred, so the bars form one row;
-     - the Morning box takes its natural width (its longest line, "Binder Pro 2 capsules,
-       mid-morning", is 159 px), so its five lines never wrap; the other two share the rest. */
+     - every dose bar is one height with its text centred, so the bars form one row.
+   Review round 2026-11-03 (measured on the rendered page, both editions):
+     - the check panel holds four lines now, so the duo gives it more width (1.25fr : 1, panel lines
+       286 px) and the notes lines sit 0.21in apart (kit 0.24in); the page then ends 9.6 px above
+       its footer in both editions, against 12.5 px before;
+     - the daily rhythm's lists are flex columns, so Binder Pro's morning dose (its sched unit
+       carries the empty <i class="mo-late"> marker) is listed LAST in the Morning box: before
+       breakfast, breakfast, then 2 hours after breakfast.  The same entry is contain:inline-size,
+       so it adds no width to the box: the Morning box takes its longest other line ("GI Defend
+       1 scoop before breakfast", 170 px with padding), never wraps those lines, and wraps only
+       Binder Pro's into two; flex gap 1px and the ul margins keep the kit's 3/1/1 px spacing;
+     - Evening meal gets a little more width than Bedtime, so "Lipo-Flow 2 tablets" stays on
+       one line (Bedtime's one entry wraps inside its box either way). */
 .sheet.back:has(.mo-back) .lifes{gap:0.1in;margin:0 -0.1in}
 .sheet.back:has(.mo-back) .col .what{display:flex;flex-direction:column}
 .sheet.back:has(.mo-back) .col .what .key{margin-top:auto}
 .sheet.back:has(.mo-back) .col .dose{min-height:0.35in;display:flex;flex-direction:column;justify-content:center}
 .sheet.back:has(.mo-back) .col .pick{padding-left:0.05in;padding-right:0.05in}
-.sheet.back:has(.mo-back) .duo{grid-template-columns:1.55fr 1fr}
-.sheet.back:has(.mo-back) .rhythm{grid-template-columns:max-content 1fr 1fr}
+.sheet.back:has(.mo-back) .duo{grid-template-columns:1.25fr 1fr}
+.sheet.back:has(.mo-back) .rhythm{grid-template-columns:max-content 1.05fr .95fr}
+.sheet.back:has(.mo-back) .slot ul{display:flex;flex-direction:column;gap:1px;margin:3px 0 1px}
+.sheet.back:has(.mo-back) .slot li{margin:0}
+.sheet.back:has(.mo-back) .slot li:has(.mo-late){order:1;contain:inline-size}
+.sheet.back:has(.mo-back) .notes .ln{height:0.21in}
 """
 
 
@@ -698,37 +751,42 @@ SHEET = {
             # Dietary Guidelines 2020-2025: 22 to 34 g fiber a day for adults; front step 3: fiber binds
             ("wheat", "More fiber", "Fiber holds on to toxins in bile. Aim for about 30&nbsp;g a day."),
             # ND1610: binders work by "elimination through the stool"; the educator's preparation plan:
-            # "OPTIONAL Cape Aloe/Mag Citrate 1-4 before sleep"
-            ("gut", "Stay regular", "Binders leave with stool. Constipated? Ask about magnesium citrate."),
+            # "OPTIONAL Cape Aloe/Mag Citrate 1-4 before sleep".  Icon: mo_colon, a large intestine (the kit
+            # "gut" icon draws a stomach)
+            ("mo_colon", "Stay regular", "Binders leave with stool. Constipated? Ask about magnesium citrate."),
         ],
         # NutriDyn's own mold protocols first: KBMO Mycotoxin Protocol ND1610 (Binder Pro, GI Defend) and
         # a NutriDyn educator's mold plans (Lipo-Flow, "Glutathione/NAC", Mito Recharge).  They also cover
         # the competitor's categories: binders (Binder Pro), bitter herbs and bile (Lipo-Flow: artichoke,
         # dandelion, gentian), mitochondrial support (Mito Recharge); NutriDyn has no phosphatidylcholine
-        # product, and the protocol's glutathione takes that place.  Timing: Binder Pro goes mid-morning and
-        # mid-evening (the educator's grids), 2 hours from food, other supplements and medicine; every other
-        # product sits at a meal, GI Defend in the morning.  Claim bullets start with their verb, so the kit
-        # ends each one with the diamond tied to the FDA line.  Facts, doses, sources: products.d/mold.json.
+        # product, and the protocol's glutathione takes that place.  Timing: Binder Pro goes between meals
+        # (the educator's grids: mid-morning and mid-evening), written "2 hours after breakfast and supper",
+        # 2 hours from food, other supplements and medicine; every other product sits at a meal, GI Defend
+        # before breakfast.  Claim bullets start with their verb, so the kit ends each one with the diamond
+        # tied to the FDA line.  Facts, doses, sources: products.d/mold.json.
         "cols": [
             # ND1610's lead product; ND1141 Rev. 12/25 "Supports healthy detoxification"; Asher's email to a
             # practice, 2026-10-29: "Binder Pro has no charcoal or clay"
             {"p": "mo_binder_pro", "need": "Bind toxins in the gut", "needsub": "pectin, Humiplex, chlorella",
              "start": True, "dose": "dose_from_db",
              "bullets": ["Helps carry toxins out with stool", "No charcoal or clay"]},
-            # ND850 Rev. 12/24: "Supports healthy gut barrier function"; "binding, neutralizing, and removing
-            # toxins from the gut".  Not called a binder here: the 2-hour rule is Binder Pro's alone
+            # ND850 Rev. 12/24: "Supports healthy gut barrier function"; GI Defend "works by binding,
+            # neutralizing, and removing toxins from the gut" (the second bullet keeps ND850's verbs).  Never
+            # called "a binder": the 2-hour rule names only Binder Pro (ImmunoLin is an immunoglobulin
+            # protein, not a broad adsorbent, and NutriDyn's 60-day protocol gives it before breakfast)
             {"p": "mo_gi_defend", "need": "Guard the gut lining", "needsub": "bovine immunoglobulins",
              "dose": "dose_from_db",
-             "bullets": ["Supports a healthy gut barrier", "Helps neutralize toxins in the gut"]},
+             "bullets": ["Supports a healthy gut barrier", "Helps bind and neutralize toxins in the gut"]},
             # ND606 Rev. 4/26: "Promote healthy bile processes", "Promote healthy liver function"
             {"p": "mo_lipo_flow", "need": "Keep bile flowing", "needsub": "artichoke, gentian bitters",
              "dose": "dose_from_db",
              "bullets": ["Promotes healthy bile flow", "Supports healthy liver function"]},
-            # ND971 Rev. 8/24: "Supports healthy glutathione levels", "Detox Support"; glutathione is the
-            # liver's packing step (conjugation) before toxins leave in bile (front caption 1)
+            # ND971 Rev. 8/24, "Additional benefits": "Supports antioxidant health", "Supports healthy
+            # glutathione levels" (the label's own claims; ND971 makes no claim about bile, so this column
+            # no longer echoes front caption 1)
             {"p": "mo_glutathione", "need": "Top up glutathione", "needsub": "the detox antioxidant",
              "dose": "dose_from_db",
-             "bullets": ["Helps the liver pack toxins into bile", "Supports healthy glutathione levels"]},
+             "bullets": ["Supports antioxidant health", "Supports healthy glutathione levels"]},
             # ND812 Rev. 2/25: "Promote healthy mitochondria", "Support healthy detoxification capacity"
             {"p": "mo_mito", "need": "Fuel your cells", "needsub": "mitochondrial support",
              "dose": "dose_from_db",
@@ -738,29 +796,48 @@ SHEET = {
             # Both editions go to patients, worded for who checks them: a pharmacist checks interactions and
             # nutrient losses, a provider orders labs, refers and adjusts.
             "pharmacy": [
-                # Binder spacing rule: the educator's grids keep the binder between meals, away from the meal-time
-                # supplements; humic-fulvic acids and chlorella are chelators (ND1141), pectin a soluble fiber
+                # Binder spacing rule.  2 hours: NutriDyn product-support guidance for its binders (email,
+                # 2026-10-29: GI Detox, the charcoal binder, "must be taken at least 2 hours away from food"),
+                # applied to Binder Pro; ND1141, ND1610 and the educator's grids give no hour figure, and the
+                # grids put the binder between meals, away from the meal-time supplements.  Humic-fulvic acids
+                # and chlorella are chelators (ND1141), pectin a soluble fiber
                 "<b>Binders can catch medicines and nutrients too.</b> Keep Binder Pro 2 hours from food, "
                 "other supplements and every medicine. {Who} can help you time it.",
                 # ND812: 250 mcg vitamin K1 per 3 capsules; Ohkawa 1995 (chlorella blunted warfarin);
                 # Rohde 2007 (over 250 mcg a day lowers warfarin sensitivity)
                 "<b>On warfarin?</b> Vitamin K can weaken it: Mito Recharge has 250&nbsp;mcg vitamin K1, and "
                 "Binder Pro&rsquo;s chlorella adds some. Ask {who} first.",
+                # Lipo-Flow's bitters (ND606: artichoke, dandelion, gentian).  German Commission E monographs
+                # (Blumenthal M, ed., 1998): artichoke leaf and dandelion are contraindicated with bile-duct
+                # obstruction and, with gallstones, used only after consulting a physician; gentian root is
+                # contraindicated with gastric and duodenal ulcers.  The Lipo-Flow label caution is generic
+                "<b>Gallstones, a blocked bile duct or a stomach ulcer?</b> Ask {who} before Lipo-Flow.",
                 # FDA labels: azole antifungals are strong CYP3A4 inhibitors with long interaction lists
                 "<b>Prescribed an antifungal?</b> Many interact with other medicines. Show {who} your full list, "
                 "supplements included.",
             ],
             "practitioner": [
+                # binder spacing rule.  2 hours: NutriDyn product-support guidance for its binders (email,
+                # 2026-10-29, on GI Detox), applied to Binder Pro; the educator's grids put the binder between
+                # meals (full note on the pharmacy edition's line)
                 "<b>Binders can catch medicines and nutrients too.</b> Keep Binder Pro 2 hours from food, "
                 "other supplements and every medicine.",
-                # the educator's "Areas to Further Assess": Mycotoxin Urine Assessment, Mold Antibody Assessment,
-                # Organic Acid Testing (NutriDyn sells the KBMO kits; ND1610 is the KBMO follow-up sheet);
-                # Asher refers CIRS-level cases to CIRS-trained clinicians (Gmail 18a44129ee7139f6)
-                "<b>Testing guides the plan.</b> {Who} may order a urine mycotoxin, mold antibody or organic "
-                "acids test, then adjust your plan or refer you to a specialist.",
-                # ND812 K1; Ohkawa 1995; Rohde 2007; Sconce 2007 (a steady daily intake steadies the INR)
+                # ND812 K1; Ohkawa 1995; Rohde 2007; Sconce 2007 (a steady daily intake steadies the INR).  This
+                # edition also goes to DCs and NDs, who rarely manage warfarin, so the patient tells whoever does
+                # (prescriber or anticoagulation clinic); the INR check is theirs to decide, and "INR" would be
+                # unglossed jargon on a patient sheet
                 "<b>On warfarin?</b> Vitamin K can weaken it: Mito Recharge has 250&nbsp;mcg vitamin K1, and "
-                "Binder Pro&rsquo;s chlorella adds some. {Who} may check your INR sooner.",
+                "Binder Pro&rsquo;s chlorella adds some. Tell whoever manages your warfarin before you start.",
+                # German Commission E: see the pharmacy edition's line
+                "<b>Gallstones, a blocked bile duct or a stomach ulcer?</b> Ask {who} before Lipo-Flow.",
+                # the educator's "Areas to Further Assess": Mycotoxin Urine Assessment, Mold Antibody Assessment,
+                # Organic Acid Testing (NutriDyn sells the KBMO kits; ND1610 is the KBMO follow-up sheet); Asher
+                # refers CIRS-level cases to CIRS-trained clinicians (Asher's email, 2023-08-30).  Clues, not a
+                # guide: urine mycotoxin tests show exposure, and no mycotoxin test is validated for clinical
+                # diagnosis (AWMF mold guideline: Hurrass J et al., Int J Hyg Environ Health 2017;220:305-28,
+                # doi:10.1016/j.ijheh.2016.11.012; 2023 update, Allergol Select 2024;8:90-198, doi:10.5414/ALX02444E)
+                "<b>Tests add clues.</b> {Who} may order a urine mycotoxin, mold antibody or organic acids test, "
+                "read it with your history, then adjust your plan or refer you to a specialist.",
             ],
         },
     },

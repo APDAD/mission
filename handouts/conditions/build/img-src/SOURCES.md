@@ -113,3 +113,14 @@ Print sources for the condition sheets. "AI upscale" = text-safe 4x upscale of t
 | R829.png | 420x420 | original (replaced an AI upscale whose label text the GAN had rewritten) |
 
 | R716.png | 254x420 | original (Switch Kit page render of the 90-capsule bottle; replaced a 4x stopgap) |
+
+| file | px | kind |
+|---|---|---|
+| R416.png | 356x640 | interpolated stopgap (Lanczos 4x from a 89x160 chart thumbnail) |
+| R2193.png | 356x640 | interpolated stopgap (Lanczos 4x from a 89x160 chart thumbnail) |
+| R2196.png | 344x640 | interpolated stopgap (Lanczos 4x from a 86x160 chart thumbnail) |
+| R182.png | 348x640 | interpolated stopgap (Lanczos 4x from a 87x160 chart thumbnail) |
+| R350.png | 368x640 | interpolated stopgap (Lanczos 4x from a 92x160 chart thumbnail) |
+| R158.png | 344x640 | interpolated stopgap (Lanczos 4x from a 86x160 chart thumbnail) |
+| R987.png | 360x640 | interpolated stopgap (Lanczos 4x from a 90x160 chart thumbnail) |
+| R196.png | 348x640 | interpolated stopgap (Lanczos 4x from a 87x160 chart thumbnail) |

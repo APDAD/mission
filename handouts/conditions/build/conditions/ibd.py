@@ -12,9 +12,10 @@ Front page, top to bottom:
 Asher's notes on the first draft (2026-11-03), all answered here:
   "Make it look like a real intestines. Make it look like a real human."  Both figures
     are one drawing (figure()) of a proportioned human (head, neck, shoulders, torso,
-    thighs fading out) with the whole tract inside: esophagus, stomach, duodenum diving
-    behind the colon, the small intestine as a pile of soft, rounded, overlapping loops
-    that starts under the transverse colon and ends in the side of the cecum, and the
+    thighs fading out) with the whole tract inside: esophagus, stomach, the duodenum's
+    C-loop (it dips behind the hepatic flexure, comes back out below the transverse colon,
+    shaded, and runs behind the coil to the jejunum's start), the small intestine as a pile
+    of soft, rounded, overlapping loops that ends in the side of the cecum, and the
     colon framing it (cecum pouch at the patient's lower right, which is the viewer's
     left, then ascending, transverse, descending and sigmoid colon and the rectum).
     check_inside() proves nothing crosses the body outline.
@@ -47,7 +48,18 @@ fistula is.  check_inside(), check_leaders() and check_text() run clean at impor
 
 Back page (2026-11-03): NutriDyn's IBD program (sources below) in the competitor's five
 nutrient slots, the medicine line under the band title, protocol-aligned lifestyle steps,
-and edition-specific checks.  Sources for the back:
+and edition-specific checks.
+
+Review round 3 (2026-11-03), answered: both editions now carry the D3 label's own blood-thinner
+instruction (skip it) and a turmeric question for both shakes, the live-yeast / weak-immunity /
+central-line line with pregnancy and nursing, the alpha-gal line for GI Defend, and the same
+red-flag line (call the gastroenterologist or go to the emergency room); the Pharmacist check
+adds the 5,800 IU vitamin D total; the plan line is written by hand for the two phases; product
+names follow their labels (Inflam-Eze, GI Defend, GI Restore); the medicine line under the band
+title is white (4.5:1 on the band); NSAIDs wear a plain two-tablet icon, not the Rx bottle; the
+front's nutrient ask is per edition (a pharmacist does not order blood tests); the duodenum
+comes back out below the colon.  The photo defects need Asher's print masters (products.d).
+Sources for the back:
   [ND584]  NutriDyn 5R GI Restoration Program guide ND584 Rev. 1/22: REPAIR (days 1-10,
            with the IBD note "If the patient exhibits significant GI inflammation, replace
            the Dynamic GI Integrity with Dynamic Inflam-Eze"), RESTORE & RETAIN (GI Restore,
@@ -72,6 +84,32 @@ and edition-specific checks.  Sources for the back:
   [ODSK]   NIH Office of Dietary Supplements, Vitamin K fact sheet (vitamin K and warfarin).
   [DRUGS-C] Drugs.com interaction checker: curcumin with warfarin, moderate (bleeding); web
            search 2026-11-03.
+  [ODSD]   NIH Office of Dietary Supplements, Vitamin D fact sheet: adult tolerable upper intake
+           level 4,000 IU (100 mcg) a day.
+  [LABELS] NutriDyn sell sheets (Supplement Facts panels), Dropbox NutriDyn Marketing Materials,
+           each opened as text 2026-11-03: D3 5000 with K2 ND382 Rev. 6/24 (5,000 IU; "Use should
+           be short-term and include regular monitoring" of vitamin D levels, the dose "exceeds the
+           adult tolerable upper intake level"; vitamin K2 "is not recommended for patients on
+           blood-thinning medications"); Inflam-Eze ND498 Rev. 7/26 (400 IU D3 and 400 mg turmeric
+           root extract per scoop; "Consume within 10 minutes of reconstitution"); GI Restore ND529
+           Rev. 10/26 (400 IU D3 and 300 mg turmeric root extract per scoop); GI Defend ND850
+           Rev. 12/24 (bovine immunoglobulin, "less than 0.05% fractionated bovine blood");
+           UltraBiotic Defense ND458 Rev. 2/25 (5.5 billion CFU S. boulardii).  Inflam-Eze, GI
+           Restore, GI Defend and UltraBiotic Defense all say "If you are pregnant, nursing, or
+           taking medication, consult your healthcare practitioner before use".  So the plan's
+           vitamin D is 5,000 + 2 x 400 = 5,800 IU a day in both phases, over [ODSD]'s 4,000 IU.
+  [ENA05]  Enache-Angoulvant A, Hennequin C. Invasive Saccharomyces infection: a comprehensive
+           review. Clin Infect Dis 2005;41:1559-68. PMID 16267727, doi:10.1086/497832 (92 cases;
+           intravascular catheters and antibiotics the commonest risk factors; S. boulardii half
+           of the fungemias), behind the live-yeast line in both checks.
+  [CDC-AG] CDC alpha-gal syndrome pages ("Products that may contain alpha-gal": products made
+           from mammals, beef among them; spread by lone star tick bites, most cases in the
+           South), as on the Joint Pain sheet; GI Defend is made from beef serum [LABELS].
+  [TW55]   Truelove SC, Witts LJ. Cortisone in ulcerative colitis. Br Med J 1955;2:1041-8.
+           PMID 13260656, doi:10.1136/bmj.2.4947.1041 (a severe attack: six or more bloody stools
+           a day with fever, a fast pulse or anemia); [ACGUC] treats acute severe colitis in
+           hospital, so the red-flag line sends the patient to the gastroenterologist or the
+           emergency room, never through the person who handed out the sheet.
   Label facts and product sources: build/products.d/ibd.json.
 
 Sources for every number and claim on the front (also tagged inline):
@@ -85,10 +123,13 @@ Sources for every number and claim on the front (also tagged inline):
            cdc.gov could not be opened from the build machine; title, number and date
            were confirmed from the CDC listing in a web search.  "More than 2 million"
            rests on [LEW23] alone and is the conservative floor of both counts.
-  [ACGUC]  Rubin DT et al. ACG Clinical Guideline: Ulcerative Colitis in Adults.
-           Am J Gastroenterol 2019;114:384-413. doi:10.14309/ajg.0000000000000152
-           (UC starts in the rectum and spreads continuously up the colon; affects
-           the inner lining; bloody diarrhea; surveillance colonoscopy).
+  [ACGUC]  Rubin DT, Ananthakrishnan AN, Siegel CA, Barnes EL, Long MD. ACG Clinical
+           Guideline Update: Ulcerative Colitis in Adults. Am J Gastroenterol
+           2025;120:1187-1224. PMID 40701556, doi:10.14309/ajg.0000000000003463 (checked in
+           PubMed 2026-11-03; it replaces the 2019 guideline, Am J Gastroenterol
+           2019;114:384-413).  UC starts in the rectum and spreads continuously up the colon;
+           affects the inner lining; bloody diarrhea; surveillance colonoscopy.  The UC facts
+           on the sheet are unchanged by the update.
   [ACGCD]  Lichtenstein GR et al. ACG Clinical Guideline: Management of Crohn's
            Disease in Adults. Am J Gastroenterol 2025;120:1225-64.
            doi:10.14309/ajg.0000000000003465 (any part of the tract from mouth to
@@ -322,11 +363,18 @@ STOM_GREATER = [(11.0, 130.4), (14.0, 126.4), (20.4, 123.6), (27.4, 125.0), (32.
                 (-10.6, 161.4)]
 STOM_LESSER = [(-10.6, 155.4), (-4.6, 156.8), (1.6, 155.4), (6.2, 149.6), (7.0, 142.2), (6.0, 134.8)]
 
-# Duodenum: the short bulb from the pylorus, then down behind the hepatic flexure and the
-# transverse colon.  It ends (cap included) under the colon, so nothing dangles below it;
-# the rest of the C-loop is hidden, as in a real front view, and the small intestine comes
-# back out from under the transverse colon just left of the midline (SI_PTS[0..5]).
-DUO = _cr([(-11.0, 152.4), (-15.8, 153.6), (-19.4, 157.4), (-20.4, 162.2), (-20.2, 166.0)])
+# Duodenum: the whole C-loop.  The bulb leaves the pylorus, the descending part dips behind the
+# hepatic flexure, comes back OUT below the transverse colon (patient's right, the viewer's left),
+# and the horizontal part sweeps toward the midline in the gap between the colon and the coil,
+# then rises behind the colon to the duodenojejunal flexure beside the jejunum's start
+# (SI_PTS[0], 5.2, 170.5), so the small intestine visibly continues the duodenum instead of
+# starting from nowhere (review round 3, 2026-11-03: the stub that ended on the colon read as
+# the stomach emptying into the colon).  Its lower part is shaded (it lies deeper, behind the
+# coil), it is drawn after the red halos (so no inflamed neighbour tints it) and before the coil,
+# whose loops lie on top of it.  The hidden end sits under the colon (check_inside() covers it).
+DUO = _cr([(-11.0, 152.4), (-15.8, 153.6), (-19.4, 157.4), (-20.4, 162.2), (-20.9, 167.6),
+           (-20.5, 173.0), (-18.7, 176.7), (-15.4, 178.7), (-11.4, 179.3), (-7.4, 179.0),
+           (-3.9, 177.7), (-0.6, 175.6), (2.4, 173.4), (4.4, 171.4)])
 W_DUO = 5.6
 
 # Colon: cecum (start) -> ascending -> hepatic flexure -> transverse -> splenic flexure ->
@@ -527,6 +575,15 @@ def cecum(mode, pal=GI):
             f'<g clip-path="url(#{cid})">{"".join(g)}</g>')
 
 
+def duodenum():
+    """The duodenum's C-loop: a plain tube in the stomach's lower colour, then a shadow overlay that
+    deepens as it dives behind the hepatic flexure and stays on over the part that comes back out
+    below the colon, so that part reads as lying deeper than the coil drawn over it."""
+    d = _d(DUO)
+    return (tube(DUO, W_DUO, {"edge": GI["edge"], "body": GI["st_bot"], "hi": GI["hi"]})
+            + _stroke(d, f"url(#{U}-duo)", W_DUO + 0.2))
+
+
 def stomach():
     pts = STOM_GREATER + STOM_LESSER
     segs = _cr(pts + [pts[0]])
@@ -580,11 +637,10 @@ def figure(mode, x, y, s=1.0):
          "</g>",
          f'<g clip-path="url(#{k}-clip)">']
     g.append(f'<g mask="url(#{U}-esofade)">{tube(ESO, W_ESO, {"edge": GI["edge"], "body": GI["st_top"], "hi": GI["hi"]})}</g>')
-    g.append(tube(DUO, W_DUO, {"edge": GI["edge"], "body": GI["st_bot"], "hi": GI["hi"]}))
-    g.append(_stroke(_d(DUO), f"url(#{U}-duo)", W_DUO + 0.2))          # darkens as it dives behind the colon
     g.append(f'<path d="{cavity_d()}" fill="{GI["cavity"]}" opacity=".55"/>')
     reds = red_parts(mode)
     g += [glow(segs, w) for segs, w in reds]
+    g.append(duodenum())          # after the red halos (never tinted by them), before the coil (which lies on it)
     g.append(si_coil(SI))
     if mode == "cd":   # an inflamed ileum is swollen, so it is drawn a little thicker
         g.append(tube(sub(SI, *CD_SI), W_SI + 1.4, RED))
@@ -610,9 +666,13 @@ def defs_svg():
             f'<stop offset="1" stop-color="{SKIN_EDGE}"/></linearGradient>'
             f'<linearGradient id="{U}-stom" x1="0" y1="0" x2=".35" y2="1">'
             f'<stop offset="0" stop-color="{GI["st_top"]}"/><stop offset="1" stop-color="{GI["st_bot"]}"/></linearGradient>'
-            f'<linearGradient id="{U}-duo" gradientUnits="userSpaceOnUse" x1="-16.6" y1="154.4" x2="-20.3" y2="160.6">'
+            # the duodenum's shade: clear at the pylorus, deepening as it dips behind the hepatic flexure
+            # (the colon's top edge is at y 158.5 there), then held for the part that comes back out below
+            # the colon and runs behind the coil (pad past y 176)
+            f'<linearGradient id="{U}-duo" gradientUnits="userSpaceOnUse" x1="0" y1="154.6" x2="0" y2="176">'
             f'<stop offset="0" stop-color="{GI["shadow"]}" stop-opacity="0"/>'
-            f'<stop offset="1" stop-color="{GI["shadow"]}" stop-opacity=".55"/></linearGradient>'
+            f'<stop offset=".26" stop-color="{GI["shadow"]}" stop-opacity=".5"/>'
+            f'<stop offset="1" stop-color="{GI["shadow"]}" stop-opacity=".44"/></linearGradient>'
             # thighs fade into the page instead of being chopped off
             f'<linearGradient id="{U}-fadeg" gradientUnits="userSpaceOnUse" x1="0" y1="247" x2="0" y2="272">'
             '<stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#000"/></linearGradient>'
@@ -864,11 +924,25 @@ COMPARE = [   # (row, ulcerative colitis, Crohn's disease)
 # What can stir up a flare: [CCF] missed doses, NSAIDs, antibiotics, smoking, stress;
 # [ANA13] poor sleep (Crohn's only, so it is labelled); [ACGCD] smoking worsens Crohn's
 # (it is not a UC trigger, so it is labelled); gut infections such as C. difficile [ACGUC];
-# trigger foods differ by person.  NSAIDs wear the pill bottle, the same icon the back
-# page's "Ask about NSAIDs" uses; antibiotics wear the capsule.
+# trigger foods differ by person.  NSAIDs wear two plain tablets (TABLETS, below), the same
+# icon as the back page's "Skip NSAIDs" hex; antibiotics wear the capsule.
 TRIGGERS = [("headache", "Stress"), ("moon", "Poor sleep (Crohn’s)"), ("sensitive", "Trigger foods"),
-            ("rx", "NSAID pain relievers"), ("capsule", "Antibiotics"), ("germ", "Gut infections"),
+            ("ibx-tablets", "NSAID pain relievers"), ("capsule", "Antibiotics"), ("germ", "Gut infections"),
             ("smoke", "Smoking (Crohn’s)"), ("calendar", "Missed medicine")]
+
+# Two round, scored tablets: an over-the-counter pain pill.  It replaces the Rx bottle, which under
+# "Skip NSAIDs" (and right under "Keep every prescribed IBD medicine") could read as "skip your
+# prescriptions" (review round 3); ibuprofen and naproxen are mostly bought over the counter.  Each
+# tablet is seen slightly from above (face ellipse, edge band, a score line that stops short of the
+# rim): drawn flat, a ring with a bar across it read as a "no entry" sign at band size.  The two stay
+# about 1 unit apart outside their strokes, inside the 64-unit box.  It is registered in kit.ICONS
+# under this sheet's own key, so the back page's hex (kit.icon) can draw it and no other sheet's icon
+# changes.
+TABLETS = ('<ellipse cx="22.5" cy="36" rx="14" ry="8.5"/><path d="M8.5 36v5.5a14 8.5 0 0 0 28 0V36"/>'
+           '<path d="M15.5 40.5 29.5 31.5"/>'
+           '<ellipse cx="44.5" cy="20.5" rx="11" ry="6.5"/><path d="M33.5 20.5v4.5a11 6.5 0 0 0 22 0v-4.5"/>'
+           '<path d="M39 24 50 17"/>')
+ICONS["ibx-tablets"] = TABLETS
 
 # Nutrients that often run low [WEI15] [HWA12]; vitamin D's reason [KIM20]
 NUTRIENTS = [("Fe", "Iron", "lost with bleeding"),
@@ -907,6 +981,11 @@ def front(t, ed):
     rows = "".join(f'<div class="{U}-row"><div>{a}</div><span>{k}</span><div>{b}</div></div>' for k, a, b in COMPARE)
     trig = "".join(f"<div>{_ic(ic, '0.23in', 3.2)}<span>{lab}</span></div>" for ic, lab in TRIGGERS)
     coins = "".join(f'<div><b>{s}</b><em>{n}</em><span>{why}</span></div>' for s, n, why in NUTRIENTS)
+    # Who orders the test: a pharmacist rarely orders blood work, so the pharmacy edition names the doctor too
+    # (review round 3); the practitioner edition keeps "your provider", who can order it.
+    pharmacy = "pharmacist" in (ed or {}).get("who", "")
+    ask = ("Ask your pharmacist or doctor whether a nutrient blood test makes sense for you." if pharmacy
+           else "Ask {who} whether a nutrient check makes sense for you.")
     return (f'<div class="{U}-f">'
             f'<div class="{U}-h {U}-kick">Where the inflammation is</div>'
             f'<div class="{U}-heads">{heads}</div>'
@@ -918,7 +997,7 @@ def front(t, ed):
             f'<div class="{U}-nut"><div class="{U}-stat"><b>More than half</b><p>of people with IBD run low on at '
             'least one vitamin or mineral, more often in Crohn’s and during flares.</p></div>'
             f'<div class="{U}-dep"><div class="{U}-coins">{coins}</div>'
-            f'<div class="{U}-ask">Ask {{who}} whether a nutrient check makes sense for you.</div></div></div>'
+            f'<div class="{U}-ask">{ask}</div></div></div>'
             # [ACGUC] [ACGCD]: surveillance colonoscopy for long-standing colitis
             f'<p class="{U}-scope">Years of colon inflammation raise colon cancer risk: keep every '
             '<b>colonoscopy</b>, even in good stretches.</p>'
@@ -969,18 +1048,33 @@ CSS = r"""
   border-radius:6px;padding:0.04in 0.16in;width:100%}
 .ibx-scope b{color:var(--deep)}
 /* ---- this sheet's back page only (the page holding the .ibx-back marker in the lifestyle title) */
-/* the medicine line under the band title: one quiet line, not a second heading */
-.sheet.back:has(.ibx-back) .band h2 small{font:600 8.6pt Inter,sans-serif;letter-spacing:0;color:#FFE6D4;margin-top:3px}
-/* every header keeps a little band for the START HERE badge, so it never touches the title under it, and all
-   five are one height (two of the sub-lines wrap), so the photos and names start on one line */
-.sheet.back:has(.ibx-back) .col .need{padding-top:10px;min-height:0.56in}
+/* the medicine line under the band title: one quiet line, not a second heading.  White: the kit's #FFE6D4 measured
+   3.78 to 3.88:1 on this band (c2t #2E7F9D to c1t #13827C) at 8.6 pt; white measures 4.53 to 4.65:1 (round 3) */
+.sheet.back:has(.ibx-back) .band h2 small{font:600 8.6pt Inter,sans-serif;letter-spacing:0;color:#FFFFFF;margin-top:3px}
+/* every header keeps a little band for the START HERE badge, so it never touches the title under it; every sub-line
+   is one line now (the longest, GI Restore's, measures 121 of 126 px), so all five headers are one height (content
+   42 px) and the photos and names start on one line; a sub-line that ever wraps breaks evenly, never leaving one
+   word alone */
+.sheet.back:has(.ibx-back) .col .need{padding-top:10px;min-height:0.45in}
+.sheet.back:has(.ibx-back) .col .need i{text-wrap:balance}
+/* the hex captions run three lines; balanced, so no word sits alone on the last line ("flares.", round 3) */
+.sheet.back:has(.ibx-back) .life p{text-wrap:balance}
 /* a little less air above the band title and the Nutrient Solutions title, so the footer keeps its margin
-   (the same two tweaks as the Intestinal Permeability sheet) */
-.sheet.back:has(.ibx-back) .band{padding-top:0.24in!important}
-.sheet.back:has(.ibx-back) .ns-title{margin-top:0.1in}
-/* the daily rhythm gets the wider half: morning and evening hold three and four products, bedtime one */
-.sheet.back:has(.ibx-back) .duo{grid-template-columns:1.5fr 1fr}
-.sheet.back:has(.ibx-back) .rhythm{grid-template-columns:1.3fr 1.3fr .8fr}
+   (the same two tweaks as the Intestinal Permeability sheet, a touch tighter for round 3's longer checks) */
+.sheet.back:has(.ibx-back) .band{padding-top:0.21in!important}
+.sheet.back:has(.ibx-back) .ns-title{margin-top:0.08in}
+/* the medicine check (five or six safety notes per edition) takes the wider share of the row; every dose in the
+   daily rhythm drops to its own grey line under its product, so the four entries of a slot read evenly (the short
+   ones used to share the name's line while the long ones wrapped); morning and evening hold three and four
+   products, bedtime one */
+.sheet.back:has(.ibx-back) .duo{grid-template-columns:1fr 1.2fr}
+.sheet.back:has(.ibx-back) .rhythm{grid-template-columns:1fr 1.1fr .9fr}
+.sheet.back:has(.ibx-back) .slot li em{display:block}
+.sheet.back:has(.ibx-back) .slot li{line-height:1.2}
+/* two writing lines in the notes box (the kit's third is hidden) and slightly tighter lines, as on the Thyroid
+   sheet, so the longer checks keep the footer on the page in both editions */
+.sheet.back:has(.ibx-back) .notes .ln{height:0.22in}
+.sheet.back:has(.ibx-back) .notes .ln:nth-of-type(3){display:none}
 """
 
 
@@ -996,6 +1090,29 @@ def _qa():
 
 
 _qa()
+
+
+# ----------------------------------------------------------------------------- the safety notes
+# Printed word for word in both check panels (review round 3), {who} filled per edition.
+# [LABELS] ND382: vitamin K2 "is not recommended for patients on blood-thinning medications", so the note gives the
+# label's own instruction (skip it), in the Thyroid sheet's words; [ODSK] vitamin K can blunt warfarin; [DRUGS-C]
+# curcumin with warfarin, moderate (bleeding); both shakes carry turmeric root extract (Inflam-Eze 400 mg, GI Restore
+# 300 mg a scoop, [LABELS]).
+BLOOD_THINNER = ("<b>On warfarin or another blood thinner?</b> Skip D3 5000 with K2 (its label says&nbsp;so), and ask "
+                 "{who} before the shakes: both have turmeric.")
+# [ENA05]: S. boulardii fungemia, mostly with intravascular catheters; azathioprine, methotrexate, biologics, JAK pills
+# and steroids all suppress immunity ([ACGUC] [ACGCD]).  Pregnancy and nursing: the labels' own caution [LABELS]
+# (consult before use), so it covers every product, not only the probiotic.
+LIVE_YEAST = ("<b>Weak immunity or a central IV line?</b> Many IBD medicines calm the immune system: ask {who} before "
+              "UltraBiotic Defense, whose S.&nbsp;boulardii is a live yeast. <b>Pregnant or nursing?</b> Ask before "
+              "you start.")
+# [CDC-AG]: products made from mammals can trigger alpha-gal syndrome; GI Defend is made from beef serum [LABELS].
+ALPHA_GAL = "<b>Beef or red-meat (alpha-gal) allergy?</b> Skip GI Defend."
+# [TW55] [ACGUC]: fever with heavy bleeding marks a severe attack, which is treated in hospital, so the patient goes
+# straight to the gastroenterologist or the emergency room (an urgent-care clinic would send them on), never back
+# through whoever handed out the sheet.
+RED_FLAG = ("<b>Fever, heavy bleeding or a flare that won’t settle?</b> Call your gastroenterologist right away, "
+            "or go to the emergency room.")
 
 
 # ----------------------------------------------------------------------------- the sheet
@@ -1016,9 +1133,11 @@ SHEET = {
     # NutriDyn's IBD program is the 5R with its IBD switch [ND584] plus the autoimmune core [AUTO23] (sources in
     # the module docstring).  The five columns are the five program products that fill the
     # competitor's five nutrient slots: high-potency probiotic -> UltraBiotic Defense; complete turmeric matrix
-    # -> Dynamic Inflam-Eze; vitamin D3 -> D3 5000 with K2; L-glutamine + DGL + aloe -> GI Restore (ND584 takes
+    # -> Inflam-Eze; vitamin D3 -> D3 5000 with K2; L-glutamine + DGL + aloe -> GI Restore (ND584 takes
     # GI Integrity out of an inflamed gut, so its DGL formula is not on this sheet); serum-derived bovine
     # immunoglobulin -> GI Defend.  PRM Resolve (autoimmune core) fills no competitor slot, so it stays off.
+    # Names follow the labels and sell sheets (ND498, ND850, ND529: "Inflam-Eze", "GI Defend", "GI Restore"); the
+    # "Dynamic" prefix lives only in ND584 and the web addresses (round 3: one style everywhere).
     # Left to right in the order they start: the days 1 to 10 shake (Inflam-Eze + GI Defend), the shake that
     # replaces it from day 11 (GI Restore), then the two all-along pills.  Label facts, sources and photo notes:
     # build/products.d/ibd.json.  The span marks this back page for the scoped CSS (.sheet.back:has(.ibx-back)).
@@ -1043,21 +1162,25 @@ SHEET = {
             # fiber sensitive" and "3 small meals and 2 ... snacks"; [ESPEN17] protein needs rise in some patients.
             ("plate", "Flare days", "Small meals with protein. Cook or blend produce if raw hurts."),
             # [ND584] "Stress causes digestive issues"; "Block out just 10 minutes daily to focus on relaxation
-            # techniques."  [CCF] stress is a common flare trigger.
-            ("breath", "Lower stress", "Take 10 calm minutes a day. Stress can stir up a flare."),
+            # techniques."  [CCF] stress is a common flare trigger.  Worded so no word sits alone on a line.
+            ("breath", "Lower stress", "Take 10 calm minutes daily. Stress can stir up flares."),
             # [ND584] 30 minutes of cardio 5 days a week and daily light stretching; "most days" keeps it gentle.
             ("walk", "Move gently", "Walk, swim or stretch most days."),
-            # [CCF] NSAIDs (ibuprofen, naproxen) can trigger flares.  Antibiotics are on the front's flare band.
-            ("rx", "Skip NSAIDs", "Ibuprofen and naproxen can trigger flares. Ask what to take instead."),
+            # [CCF] NSAIDs (ibuprofen, naproxen) can trigger flares.  Antibiotics are on the front's flare band.  Two plain
+            # tablets (TABLETS), not the Rx bottle, so "Skip" never reads as "skip your prescriptions".
+            ("ibx-tablets", "Skip NSAIDs", "Ibuprofen and naproxen can trigger flares. Ask what to take instead."),
         ],
         "cols": [
             {"p": "ibd_inflam_eze", "need": "Inflammatory balance", "needsub": "turmeric shake, days 1 to 10", "start": True,
-             "bullets": ["Supports a healthy inflammatory response", "Turmeric, quercetin and ginger in a protein shake"],
+             # the second bullet carries the label's "Consume within 10 minutes of reconstitution" [LABELS] (ND498) in two
+             # lines (198 of 230 px); turmeric, quercetin and ginger are named in the serving line right under it
+             "bullets": ["Supports a healthy inflammatory response", "Drink the shake within 10 minutes of mixing"],
              "dose": "dose_from_db"},
-            {"p": "ibd_gi_defend", "need": "Gut barrier support", "needsub": "antibody proteins from cow serum",
+            {"p": "ibd_gi_defend", "need": "Gut barrier support", "needsub": "antibodies from cow serum",
              "bullets": ["Helps bind microbial toxins in the gut", "Supports gut barrier function"],
              "dose": "dose_from_db"},
-            {"p": "ibd_gi_restore", "need": "Gut lining support", "needsub": "L&#8209;glutamine and aloe shake, from day 11",
+            # one line (121 of 126 px), so every header is one height; "from day 11" is in the dose bar right below
+            {"p": "ibd_gi_restore", "need": "Gut lining support", "needsub": "L&#8209;glutamine and aloe shake",
              "bullets": ["Supports the gut lining and its mucus layer", "Feeds your friendly gut bacteria"],
              "dose": "dose_from_db"},
             {"p": "ibd_ultrabiotic_defense", "need": "Microbiome balance", "needsub": "3 strains, with S.&nbsp;boulardii",
@@ -1067,33 +1190,40 @@ SHEET = {
              "bullets": ["Supports healthy vitamin D levels", "Supports bone and immune health"],
              "dose": "dose_from_db"},
         ],
-        # Three medicine-and-nutrient notes per edition: the pharmacist checks interactions and depletions, the
-        # provider orders labs, refers and adjusts.
+        # The plan runs in two phases, so the plan line is written by hand: the kit's default ("then add one product a
+        # week") would start GI Defend about day 8 and GI Restore about day 15, and its scoop total is only true for days
+        # 1 to 10 (review round 3).  Totals (products.d/ibd.json): UltraBiotic Defense 1 capsule + D3 5000 with K2 1
+        # softgel = 2 pills; days 1 to 10, Inflam-Eze 2 scoops + GI Defend 2 scoops = 4 scoops; from day 11, GI Restore's
+        # 2 scoops take their place.
+        "rhythm_note": ("Days 1 to 10: <b>2 pills and 4 scoops a day</b>. From day 11, GI Restore is the only shake: "
+                        "<b>2 pills and 2 scoops</b>. Overwhelmed? Start with the <b>Start here</b> shake; ask {who} "
+                        "when to add the rest."),
+        # Medicine-and-nutrient notes per edition: the pharmacist checks interactions and depletions, the provider
+        # orders labs, refers and adjusts.  The four safety notes after them are word for word the same in both
+        # editions (module constants above SHEET).
         "rx": {
             "pharmacy": [
                 # Glucocorticoids cut intestinal calcium absorption and thin bone; calcium + vitamin D for long-term
-                # users [ACR17]; steroid users had twice the odds of 25(OH)D under 10 ng/mL [SKV11].  Budesonide is
-                # gentler on bone than prednisone but long courses still count.
-                "<b>Steroids</b> (prednisone, budesonide) can thin bones: they cut calcium absorption and are "
-                "linked to low vitamin D. Ask about bone health.",
-                # [HWA12]: sulfasalazine and methotrexate are folate antagonists (folate is on the front's coins).
-                "<b>Sulfasalazine and methotrexate</b> lower folate. Ask {who} whether you need folic acid.",
-                # [ODSK] vitamin K can blunt warfarin (D3 5000 with K2: 60 mcg K2 + 15 mcg K1 a softgel);
-                # [DRUGS-C] curcumin with warfarin rated a moderate interaction (bleeding).
-                "<b>On warfarin or another blood thinner?</b> The vitamin K in D3 5000 with K2 can weaken warfarin, "
-                "and the turmeric in Dynamic Inflam-Eze may add to bleeding. Ask {who} first.",
+                # users [ACR17]; steroid users had twice the odds of 25(OH)D under 10 ng/mL [SKV11].  [HWA12]:
+                # sulfasalazine and methotrexate are folate antagonists (folate is on the front's coins).  The two
+                # depletion notes share one bullet to make room for the safety notes (round 3).
+                "<b>Steroids</b> (prednisone, budesonide) can thin bones and are linked to low vitamin&nbsp;D. "
+                "<b>Sulfasalazine and methotrexate</b> lower folate: ask about folic acid.",
+                # [LABELS] 5,000 IU (D3 5000 with K2) + 2 x 400 IU (Inflam-Eze on days 1 to 10, then GI Restore) =
+                # 5,800 IU a day in both phases; [ODSD] adult upper limit 4,000 IU; ND382: "Use should be short-term
+                # and include regular monitoring" of vitamin D levels.
+                "<b>Vitamin&nbsp;D:</b> with the shakes this plan gives 5,800 IU a day, above the 4,000 IU limit; the "
+                "label asks for short-term use and level checks.",
+                BLOOD_THINNER, LIVE_YEAST, ALPHA_GAL, RED_FLAG,
             ],
             "practitioner": [
                 # [AGA24] BPA 10: monitor every IBD patient for vitamin D and iron deficiency, and B12 with ileal
-                # disease or resection; [AUTO23] know the vitamin D level, dose higher only if it is very low.
-                "<b>Labs first.</b> {Who} may check vitamin D, iron, B12 and folate, then set your vitamin D dose "
-                "to your level.",
-                # [ACR17] calcium and vitamin D, and a fracture-risk check, for long-term glucocorticoid users; [SKV11].
-                "<b>On steroids?</b> They cut calcium absorption and thin bones: {who} may check your bones and your "
-                "calcium and vitamin D.",
-                # [ACGUC] [ACGCD]: severe or worsening disease is managed by the gastroenterologist.
-                "<b>Fever, heavy bleeding or a flare that won’t settle?</b> {Who} sends you back to your "
-                "gastroenterologist right away.",
+                # disease or resection; [HWA12] folate; [ACR17] [SKV11] bones, calcium and vitamin D on steroids;
+                # [AUTO23] know the vitamin D level; [LABELS] [ODSD] 5,800 IU a day, over the 4,000 IU limit.  The
+                # labs and steroid notes share one bullet to make room for the safety notes (round 3).
+                "<b>Labs first.</b> {Who} may check vitamin&nbsp;D, iron, B12 and folate, and your bones if you take "
+                "steroids. With the shakes this plan gives 5,800 IU of vitamin&nbsp;D a day: {who} sets the dose to your level.",
+                BLOOD_THINNER, LIVE_YEAST, ALPHA_GAL, RED_FLAG,
             ],
         },
     },

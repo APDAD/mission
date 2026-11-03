@@ -118,7 +118,7 @@ SOURCES (tags appear in comments next to each number on the page)
              contraceptives deplete folic acid, B2, B6, B12, C, E, magnesium, selenium and zinc).
   [GRANT10]  Grant P. Phytother Res 2010;24:186-8. doi:10.1002/ptr.2900 (spearmint tea twice a day,
              42 women, 30 days: free and total testosterone fell; the NutriDyn GLC 2026 PMOS protocol,
-             Dropbox id:xHepYs_Ou4AAAAAAAA7hTA, uses it: "Spearmint: tea or extract twice daily").
+            , uses it: "Spearmint: tea or extract twice daily").
   [OUZIR16]  Ouzir M et al. Food Chem Toxicol 2016;96:145-54, PMID 27498339, doi:10.1016/j.fct.2016.08.003
              (review: teratogenic, anti-fertility, anti-implantation and abortifacient findings, so
              fenugreek "is not recommended for use during pregnancy"; read on PubMed 2026-11-03).
@@ -131,8 +131,8 @@ SOURCES (tags appear in comments next to each number on the page)
   details and claim wording per product in build/products.d/pcos.json.
 
 BACK (product pass, 2026-11-03): five products, the competitor's count, all from NutriDyn's own PCOS
-protocols (NutriDyn GLC 2023 PCOS protocol, Dropbox id:xHepYs_Ou4AAAAAAAAly0w; NutriDyn GLC 2026 PMOS
-protocol, Dropbox id:xHepYs_Ou4AAAAAAAA7hTA; Asher's PCOS handout and his Myo-Inositol Complex email to a
+protocols (NutriDyn GLC 2023 PCOS protocol; NutriDyn GLC 2026 PMOS
+protocol; Asher's PCOS handout and his Myo-Inositol Complex email to a
 practitioner, 2026-09-25).  Competitor categories: vitamin D -> D3 5000 with K2, omega-3 -> Omega
 Pure EPA-DHA 1000, berberine -> Berberine Pro; melatonin and turmeric have no place in these protocols,
 so Myo-Inositol Complex and UltraBiotic Daily Multi-Strain (both protocol picks) take those columns.
@@ -144,8 +144,16 @@ import math
 import os
 import random
 
-from kit import icon
+from kit import DIAMOND, icon
 from svgkit import T, svg, label_bg
+
+
+def claim(text):
+    """A back-page claim bullet ending in the drawn FDA-disclaimer diamond (kit.DIAMOND), bound to its last
+    word so the diamond never sits on a line of its own: Chromium will break between the kit's &nbsp; and an
+    inline SVG.  Every bullet in a column must use this, since the kit then adds no marks of its own there."""
+    head, _, last = text.rpartition(" ")
+    return f'{head} <span class="nw">{last}&nbsp;<span class="mark">{DIAMOND}</span></span>'
 
 # ================================================================== text measuring (Inter)
 _FACES = {}
@@ -426,7 +434,7 @@ def insulin(x, y, r=4.8):
 
 
 def red_cell(x, y, rot=0, s=1.0):
-    return (f'<g transform="translate({x:.1f},{y:.1f}) rotate({rot}) scale({s})"><ellipse rx="12.5" ry="7" fill="url(#pcRc)" '
+    return (f'<g transform="translate({x:.1f},{y:.1f}) rotate({rot:.1f}) scale({s})"><ellipse rx="12.5" ry="7" fill="url(#pcRc)" '
             'stroke="#8E1D25" stroke-width=".8"/><ellipse rx="6.2" ry="2.8" fill="none" stroke="#97202A" stroke-width="1.5" opacity=".75"/></g>')
 
 
@@ -649,7 +657,8 @@ UX, UY, US = 552, 82, 0.94           # uterus group (14 left of centre-right, so
 TY, TW, WALL = 28, 34, 5              # bloodstream centre line, width, wall thickness
 TX0, TX1 = 14, 752                    # the bloodstream's two cut ends
 BW, RF = 20.0, 6.0                    # branch width; radius of the fillets where a branch leaves the trunk
-BX, BY, BR = 318, 144, 54             # zoom circle
+BX, BY, BR = 310, 144, 54             # zoom circle (clear of the left branch; the pancreas tail and label stay clear)
+R_IND = 21                            # the small circle on the bloodstream that the zoom circle magnifies
 
 
 def fillet(xc, yb, half, r, side):
@@ -767,7 +776,17 @@ def art_pcos(t):
     lab_x0 = 34
 
     tg = tangents(tc)
-    placed = []
+    # The small circle on the bloodstream holds exactly what the zoom circle shows, in the same kinds: a red
+    # cell in the middle, a sugar and an insulin on each side (placed, not random, so it can never come out
+    # empty or sugar-only).  The random symbols keep out of it.
+    yi = yc(BX)
+    ind = [(BX - 12.5, yi - 3.4, 3.2, "g"), (BX - 12.5, yi + 5.0, 3.2, "i"), (BX, yi + 0.4, 7.6, "r"),
+           (BX + 12.5, yi - 3.4, 3.2, "i"), (BX + 12.5, yi + 5.0, 3.2, "g")]
+    for px, py, r, kind in ind:
+        reach = 4.6 if kind == "r" else r
+        assert math.dist((px, py), (BX, yi)) + (7.6 if kind == "r" else r) < R_IND - 1, "indicator symbol leaves its circle"
+        assert abs(py - yi) + reach < (TW - 2 * WALL) / 2 - 1.0, "indicator symbol leaves the bloodstream"
+    placed = [(px, py, r, kind) for px, py, r, kind in ind]
     kinds = ["g"] * 16 + ["i"] * 12 + ["r"] * 9
     rng.shuffle(kinds)
     idx = list(range(12, len(tc) - 12))
@@ -783,14 +802,17 @@ def art_pcos(t):
                 continue
             if any(abs(px - xv) < BW / 2 + RF + 3 for xv in (xR, xL)):   # keep the branch openings clear
                 continue
+            if abs(px - BX) < R_IND + r + 1.5:                         # keep the indicator circle to its five
+                continue
             if any(math.dist((px, py), (qx, qy)) < r + qr + 2.4 for qx, qy, qr, _ in placed):
                 continue
             placed.append((px, py, r, kind))
             break
-    assert len(placed) == len(kinds), f"bloodstream: placed {len(placed)} of {len(kinds)} symbols"
-    for px, py, r, kind in placed:
+    assert len(placed) == len(kinds) + len(ind), f"bloodstream: placed {len(placed) - len(ind)} of {len(kinds)} symbols"
+    for k, (px, py, r, kind) in enumerate(placed):
+        rot = -6 if k < len(ind) else rng.uniform(-12, 12)
         o.append(glucose(px, py, 3.0) if kind == "g" else insulin(px, py, 2.9) if kind == "i" else
-                 red_cell(px, py, rng.uniform(-12, 12), 0.6))
+                 red_cell(px, py, rot, 0.6))
     # insulin riding both branches all the way to the ovaries (the same three spots on each)
     for xv, c in ((xR, rc), (xL, lc)):
         run = [p for p in c if p[1] > yc(xv) + TW / 2 + RF + 3]
@@ -802,7 +824,7 @@ def art_pcos(t):
              + T(lab_x0 + lab_w / 2, TY + 3.8, "Bloodstream", 10.5, 800, "#8E1F28", "middle"))
 
     # ---------------------------------------------------------- zoom circle: the crowded blood
-    r_ind = 21
+    r_ind = R_IND
     d = BY - TY
     ny_ = (r_ind - BR) / d
     nx_ = math.sqrt(1 - ny_ * ny_)
@@ -837,19 +859,21 @@ def art_pcos(t):
     z.append("</g>")
     o.append("".join(z))
     o.append(f'<circle cx="{BX}" cy="{BY}" r="{BR}" fill="none" stroke="#4F5A61" stroke-width="2"/>')
-    o.append(T(BX, BY + BR + 15, "close-up of the blood (not to scale)", 10, 600, "#56626A", "middle", italic=True))
+    # Captions are upright: the shipped fonts have no italic face, and a faked slant is not print quality.
+    # They read as captions by their lighter weight and muted colour next to the bold part names.
+    o.append(T(BX, BY + BR + 15, "close-up of the blood (not to scale)", 10, 500, "#5E6A72", "middle"))
 
     # ---------------------------------------------------------- uterus, tubes, ovaries, androgens
     o.append(reproductive(UX, UY, US))
     for side in (-1, 1):
         for lx, ly, r in [(126, 60, 5.4), (136, 72, 5.0), (146, 84, 4.6)]:
             o.append(androgen(UX + side * lx * US, UY + ly * US, r))
-        o.append(T(UX + side * 146 * US, UY + 104 * US, "extra androgens", 10, 700, AND_EDGE, "middle", italic=True))
+        o.append(T(UX + side * 146 * US, UY + 104 * US, "extra androgens", 10, 600, AND_EDGE, "middle"))
 
     # ---------------------------------------------------------- labels and step markers
     o.append(T(214, 162, "Pancreas", 11.5, 800, "#7A4318", "middle"))
     # under the C-loop of the duodenum, well away from the zoom caption (no leader needed)
-    o.append(T(PX + 80 * PS, H_ART - 8, "small intestine", 10, 600, "#8A5A50", "middle", italic=True))
+    o.append(T(PX + 80 * PS, H_ART - 8, "small intestine", 10, 500, "#8A5A50", "middle"))
     for side in (-1, 1):
         o.append(T(UX + side * 92 * US, UY + 80 * US, "Ovary", 11, 800, "#8A2F3A", "middle"))
     o.append(T(UX, UY + 134 * US + 15, "Uterus", 11, 800, "#8A2F3A", "middle"))
@@ -936,17 +960,26 @@ FACE_HAIR = ('<path d="M42 57v-9c5-3 8-8 8-15 0-11-8-19-18-19-8.5 0-14.5 5.5-16 
              '<path d="M24.5 15.5c5-3 13-3.5 19 1.5"/><circle cx="48" cy="15.5" r="5.5"/>'
              '<path d="M15.4 37.8l-3.6 2.4M15.6 40.2l-3.4 2.6M16.4 42.8l-3.6 3.4M18.2 45l-2.4 4.6M21 46.6l-1 5.2M23.4 47l.2 4"'
              ' stroke-width="2.3"/>')
-# Thinning scalp hair (Ludwig pattern), seen from the front: long hair still frames the face, but the
-# part has widened into a bare band across the top of the head, crossed by only four thin strands.
-SCALP_THIN = ('<path d="M29.6 22.4c-2.4-3.6-5-6.6-8.6-8.4-4.8 3.6-7.2 9.4-7.2 16.2 0 8.4 1 15.6-2.2 22.6 3.4 1.6 7 1.4 10.4-.4'
-              '-1.8-5-2.6-10.6-2.4-16.6.2-6.8 3.4-11.4 10-13.4z" fill="currentColor" stroke="none" opacity=".6"/>'
-              '<path d="M34.4 22.4c2.4-3.6 5-6.6 8.6-8.4 4.8 3.6 7.2 9.4 7.2 16.2 0 8.4-1 15.6 2.2 22.6-3.4 1.6-7 1.4-10.4-.4'
-              ' 1.8-5 2.6-10.6 2.4-16.6-.2-6.8-3.4-11.4-10-13.4z" fill="currentColor" stroke="none" opacity=".6"/>'
-              '<path d="M32 8.6c-9.4 0-15.4 8-15.4 18.6 0 11.6 6.6 20.6 15.4 20.6s15.4-9 15.4-20.6C47.4 16.6 41.4 8.6 32 8.6z"/>'
-              '<path d="M27.6 46.6v4.2c-6.6 1.2-12.4 3.8-15.2 8.6M36.4 46.6v4.2c6.6 1.2 12.4 3.8 15.2 8.6"/>'
-              '<path d="M24.6 13.4c1.6 2.4 2.8 5 3.4 7.8M39.4 13.4c-1.6 2.4-2.8 5-3.4 7.8M29.4 10c.6 2.6 1 5.2 1 8'
-              'M34.6 10c-.6 2.6-1 5.2-1 8" stroke-width="1.6"/>'
-              '<path d="M26.2 30h2.6M35.2 30h2.6M29.6 39c1.6 1 3.2 1 4.8 0" stroke-width="2.2"/>')
+# Thinning scalp hair, front view: long hair frames the face; the hair is parted in the middle and the part
+# has widened into a pale wedge of scalp (lighter than the hair) that is widest at the crown.  Three fine
+# strands lie flat across the bare wedge, following the curve of the head.
+SCALP_THIN = (
+    # bare scalp: the widened part, a pale wedge from the front hairline to the crown
+    '<path d="M32 19.4 23.6 11.2C26 9.5 28.8 8.6 32 8.6s6 .9 8.4 2.6z" fill="currentColor" stroke="none" opacity=".15"/>'
+    # hair, combed away from the part on each side, down past the shoulders
+    '<path d="M32 19.4 23.6 11.2c-4.6 3.2-7.4 9-7.8 16.4-.4 8.8.6 16.4-3.6 24.8 3.6 1.4 7.4 1.2 10.6-.8'
+    '-2.4-5.6-3.4-11.4-3.2-17.4.2-6 2.8-10.8 8.2-13.6 2.8-1.4 5.4-2 8.2-2.2z" fill="currentColor" stroke="none" opacity=".66"/>'
+    '<path d="M32 19.4 40.4 11.2c4.6 3.2 7.4 9 7.8 16.4.4 8.8-.6 16.4 3.6 24.8-3.6 1.4-7.4 1.2-10.6-.8'
+    ' 2.4-5.6 3.4-11.4 3.2-17.4-.2-6-2.8-10.8-8.2-13.6-2.8-1.4-5.4-2-8.2-2.2z" fill="currentColor" stroke="none" opacity=".66"/>'
+    # head and face outline, neck and shoulders
+    '<path d="M32 8.6c-9.4 0-15.4 8-15.4 18.6 0 11.6 6.6 20.6 15.4 20.6s15.4-9 15.4-20.6C47.4 16.6 41.4 8.6 32 8.6z"/>'
+    '<path d="M27.6 46.6v4.2c-6.6 1.2-12.4 3.8-15.2 8.6M36.4 46.6v4.2c6.6 1.2 12.4 3.8 15.2 8.6"/>'
+    # a few fine strands lying flat across the bare part, curved with the head
+    # (uneven: one crosses the whole part, one starts from the right and stops short, one short from the left)
+    '<path d="M25.2 13.4c2.6-1.6 5.6-2 8.6-1.3 1.8.4 3.4 1.1 4.8 2M40.2 12.9c-3.2-.3-6.4.6-9.3 2.5M28.4 17.2c1.5-.9 3-1.2 4.4-1"'
+    ' stroke-width="1.15"/>'
+    # eyes and mouth
+    '<path d="M26.2 30h2.6M35.2 30h2.6M29.6 39c1.6 1 3.2 1 4.8 0" stroke-width="2.2"/>')
 # Dark skin patches (acanthosis nigricans): the same profile language as FACE_HAIR (bun, hairline), no
 # facial hair, an ear, and an irregular dark velvety patch on the side and back of the neck below the
 # ear, with two skin creases and a speckled edge.  It stops short of the throat, so it cannot read as
@@ -977,24 +1010,38 @@ WAIST = ('<path d="M22.6 6.6c-1.2 7-4.4 11.4-7.4 16.4-3 5-4.2 9.6-3.2 15 1 5.6 4
          '<path d="M18 31.6v3M24.6 32.8v3M32 33.2v3M39.4 32.8v3M46 31.6v3" stroke-width="2"/>'
          '<path d="M52.8 33.4h4.4v8.6h-4.4" stroke-width="2.6"/>'
          '<circle cx="32" cy="45.4" r="1.4" fill="currentColor" stroke="none"/>')
-# Trouble getting pregnant: a pregnancy test whose window shows only one line (not pregnant yet).
-PREG_TEST = ('<g transform="rotate(-38 32 32)">'
-             '<path d="M25 13a7 7 0 0 1 14 0v24H25z"/>'
-             '<path d="M26.4 37h11.2l-1.2 20a4.2 4.2 0 0 1-8.8 0z" fill="currentColor" stroke="none" opacity=".45"/>'
-             '<path d="M25 37h14l-1.4 20.4a5.6 5.6 0 0 1-11.2 0z"/>'
-             '<rect x="27.8" y="15.4" width="8.4" height="15" rx="2.6" stroke-width="2.4"/>'
-             '<path d="M28.8 20.2h6.4" stroke-width="3"/></g>')
-# Skin tags: a close-up of a patch of skin (shaded, with pores) with three small soft growths on short
-# stalks rising from its surface.
-SKIN_TAG = ('<g transform="translate(0 -7)">'
-            '<path d="M7 41.4c8.4-3.6 41.6-3.6 50 0V51a7 7 0 0 1-7 7H14a7 7 0 0 1-7-7z" fill="currentColor" stroke="none" opacity=".2"/>'
-            '<path d="M7 41.4c8.4-3.6 41.6-3.6 50 0"/>'
-            '<g fill="currentColor" fill-opacity=".55" stroke-width="2.4">'
-            '<path d="M18.4 39.6c0-3.2-3-4.6-3-8.6a4.6 4.6 0 0 1 9.2 0c0 4-3 5.4-3 8.6z"/>'
-            '<path d="M30.4 38.8c0-4-3.6-5.8-3.6-10.6a5.2 5.2 0 0 1 10.4 0c0 4.8-3.6 6.6-3.6 10.6z"/>'
-            '<path d="M43.2 39.4c0-2.6-2.4-3.8-2.4-7.2a3.8 3.8 0 0 1 7.6 0c0 3.4-2.4 4.6-2.4 7.2z"/></g>'
-            '<g fill="currentColor" stroke="none" opacity=".5"><circle cx="15" cy="48" r="1"/><circle cx="25.6" cy="51.6" r="1"/>'
-            '<circle cx="36" cy="47.4" r="1"/><circle cx="47.6" cy="50.4" r="1"/></g></g>')
+# Trouble getting pregnant: a home pregnancy test, tilted: a wide handle with a wide result window that shows
+# only one line (the control line: not pregnant yet), and a narrower capped tip with the absorbent end.
+PREG_TEST = (
+    '<g transform="rotate(-38 32 32)">'
+    '<rect x="24.6" y="3" width="14.8" height="41.4" rx="7.4"/>'
+    '<path d="M27.6 44.4V56a4.4 4.4 0 0 0 8.8 0V44.4"/>'
+    '<path d="M28.8 47.4h6.4V56a3.2 3.2 0 0 1-6.4 0z" fill="currentColor" stroke="none" opacity=".45"/>'
+    '<rect x="27" y="13.6" width="10" height="17.2" rx="3.6" stroke-width="2.3"/>'
+    '<path d="M29 19.4h6" stroke-width="2.8"/>'
+    '</g>')
+# Skin tags: a close-up of a gently curved edge of skin, shaded below its surface and fading out (no tray,
+# no bottom edge), with a few pores; three small soft growths on narrow stalks rise from the surface.
+SKIN_TAG = (
+    '<defs><radialGradient id="pcSkinFade" cx="32" cy="36" r="25" gradientUnits="userSpaceOnUse" '
+    'gradientTransform="matrix(1.34 0 0 1 -10.88 0)">'
+    '<stop offset="0" stop-color="currentColor" stop-opacity=".38"/><stop offset=".55" stop-color="currentColor" stop-opacity=".2"/>'
+    '<stop offset="1" stop-color="currentColor" stop-opacity="0"/></radialGradient></defs>'
+    '<g transform="translate(0 3)">'
+    '<path d="M3 42.6C12.6 37.4 22.2 35 32 35s19.4 2.4 29 7.6V61H3z" fill="url(#pcSkinFade)" stroke="none"/>'
+    '<path d="M3 42.6C12.6 37.4 22.2 35 32 35s19.4 2.4 29 7.6"/>'
+    # each tag: a narrow stalk from the surface widening into a soft rounded bulb, square to the curve, drawn
+    # 1.22 times larger about its base (stroke 1.9 x 1.22 = the ring's usual 2.3)
+    '<g fill="currentColor" fill-opacity=".55" stroke-width="1.9">'
+    '<path transform="translate(17.85 38.7) scale(1.22) translate(-17.85 -38.7)" '
+    'd="M16.4 38.9c-.5-1.6-1.6-2.7-2.9-4.1-2.2-2.4-1.5-6.2 1.6-7.1 3.2-1 5.8 1.3 5.8 4.2 0 2.2-1.1 3.9-1.5 5.6l-.1 1z"/>'
+    '<path transform="translate(32.25 35.1) scale(1.22) translate(-32.25 -35.1)" '
+    'd="M30.5 35.1c-.1-2-1.3-3.4-2.6-5.2-2-2.9-.6-7.2 3.4-7.6 4-.4 6.2 2.7 5.3 6.1-.6 2.3-2 3.8-2.5 5.6l-.1 1.1z"/>'
+    '<path transform="translate(47 38) scale(1.22) translate(-47 -38)" '
+    'd="M45.7 37.4c.2-1.4 0-2.6-.6-4-1-2.3.6-4.8 3.1-4.8 2.7 0 4 2.7 2.9 4.9-.7 1.5-1.9 2.6-2.6 4.2l-.2.9z"/></g>'
+    '<g fill="currentColor" stroke="none" opacity=".5"><circle cx="11" cy="49" r="1"/><circle cx="22.4" cy="46" r="1"/>'
+    '<circle cx="38.6" cy="45.6" r="1"/><circle cx="51.6" cy="48.6" r="1"/><circle cx="30" cy="52" r="1"/>'
+    '<circle cx="18" cy="55" r=".9"/><circle cx="44" cy="54.6" r=".9"/></g></g>')
 
 
 def ring():
@@ -1038,19 +1085,20 @@ def facts(ed):
             # high androgens (no ultrasound, no AMH), so the 2-of-3 line says "Adults".  AMH (anti-Mullerian
             # hormone) is made by the small follicles, so it runs high when there are many of them.
             'Adults are diagnosed with <b>2 of 3</b>: irregular periods, high androgens (a blood test or signs like extra '
-            'hair) or many follicles on ultrasound (or a blood test showing high AMH, a hormone made by the follicles), '
-            'once other causes are ruled out. You can have PCOS without &ldquo;cysts.&rdquo; '
+            'hair) or many follicles on ultrasound (or a blood test showing high AMH, a follicle hormone), once other '
+            'causes are ruled out. You can have PCOS without &ldquo;cysts.&rdquo; '
             # [PMOS26]: renamed in May 2026 (56 organizations); "numerous arrested antral follicles, not pathologic
             # cysts"; "Diagnostic criteria remain unchanged".  The European Society of Gynaecology asks for long dual
             # naming with patient communication first, so PCOS stays the headline and PMOS is named once, here and in
             # the subtitle.
-            'In 2026 experts renamed it polyendocrine metabolic ovarian syndrome (<b>PMOS</b>), because the '
+            'In&nbsp;2026 experts renamed it polyendocrine metabolic ovarian syndrome (<b>PMOS</b>), because the '
             '&ldquo;cysts&rdquo; are really stalled egg follicles. Same condition, same&nbsp;tests.</p></div>'
             '<div class="pc-fbox"><h4>Risk factors</h4><ul>'
             # [GUIDE23] strong family clustering; first-degree relatives with PCOS or type 2 diabetes.
             '<li><b>Runs in families:</b> a mother or sister with PCOS or type 2 diabetes raises your risk.</li>'
-            # [GUIDE23H] 1.9.8: women with type 1 and type 2 diabetes have an increased risk of PCOS.
-            '<li><b>Diabetes:</b> women with type 1 or type 2 diabetes are more likely to have PCOS.</li>'
+            # [GUIDE23H] 1.9.8: women with type 1 and type 2 diabetes have an increased risk of PCOS.  One line, so
+            # this box and the facts box end level (7 lines each).
+            '<li><b>Diabetes:</b> type 1 or 2 raises the risk.</li>'
             # [GUIDE23] weight gain worsens insulin resistance and androgen excess (hence the guideline's focus on
             # preventing weight gain, 3.1.2); lifestyle (diet, activity, sleep, stress) worsens or eases PCOS
             # features but is not shown to cause it.  Hormone-disrupting chemicals (BPA in some plastics,
@@ -1065,8 +1113,8 @@ def facts(ed):
             # low, no routine screening); long-standing untreated amenorrhea and a persistently thickened endometrium
             # add to the risk; 1.11.4: cycle regulation is part of prevention -> one calm line with an action.
             '<p class="pc-why"><b>Why it matters:</b> PCOS raises the risk of type 2 diabetes, heart disease and sleep '
-            f'apnea (breathing pauses during sleep), so ask {test_who} about a blood sugar test. Long gaps between '
-            f'periods can thicken the womb lining, so tell {test_who} if your periods are often months&nbsp;apart.</p>')
+            f'apnea (breathing pauses in sleep), so ask {test_who} about a blood sugar test. Long gaps between periods '
+            f'can thicken the womb lining, so tell {test_who} if yours are often months&nbsp;apart.</p>')
 
 
 def front(t, ed):
@@ -1088,13 +1136,13 @@ CSS = r"""
 .pcf .pc-key span{display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
 .pcf .pc-key svg{flex:none;display:block}
 .pcf .pc-key b{color:#1F2A2E;font-weight:800}
-.pcf .pc-head{font:900 12pt Merriweather,Georgia,serif;color:var(--c1);text-align:center;margin:0.1in 0 0.05in;letter-spacing:.02em}
+.pcf .pc-head{font:900 12pt Merriweather,Georgia,serif;color:var(--c1);text-align:center;margin:0.08in 0 0.05in;letter-spacing:.02em}
 .pcf .pc-ring{display:grid;grid-template-columns:repeat(5,1fr);gap:0.06in 0.06in}
 .pcf .pc-rg{display:flex;flex-direction:column;align-items:center;text-align:center}
-.pcf .pc-c{width:0.55in;height:0.55in;border-radius:50%;background:#F1E7E2;display:flex;align-items:center;justify-content:center;
+.pcf .pc-c{width:0.53in;height:0.53in;border-radius:50%;background:#F1E7E2;display:flex;align-items:center;justify-content:center;
   color:#8A5A52;box-shadow:0 0 0 2px #fff,0 0 0 3px #E8D8D1}
 .pcf .pc-rg span{font-size:7.8pt;line-height:1.2;margin-top:3px;color:#3A4247}
-.pcf .pc-facts{display:grid;grid-template-columns:1.5fr 1fr;gap:0.14in;margin-top:0.08in}
+.pcf .pc-facts{display:grid;grid-template-columns:1.62fr 1fr;gap:0.14in;margin-top:0.08in}
 .pcf .pc-fbox h4{margin:0 0 4px;background:var(--c1);color:#fff;font:800 8.2pt Inter,sans-serif;letter-spacing:.08em;
   text-transform:uppercase;padding:3px 10px;border-radius:3px}
 .pcf .pc-fbox p,.pcf .pc-fbox li{font-size:8.2pt;line-height:1.33;margin:0;color:#2B3236}
@@ -1111,9 +1159,28 @@ CSS = r"""
 .sheet.back:has(.pc-back) .duo{grid-template-columns:1fr 1fr}
 .sheet.back:has(.pc-back) .rhythm{grid-template-columns:1fr 1fr}
 .sheet.back:has(.pc-back) .rhythm .slot:nth-child(3){display:none}
-/* Two name lines in every column (two names wrap), set on the bottom line, so the bullets, serving lines
-   and dose bars start at the same height across the row. */
-.sheet.back:has(.pc-back) .col .pick .nm{min-height:2.3em;display:flex;align-items:flex-end;justify-content:center}
+/* Two name lines in every column (two names wrap), so the bullets, serving lines and dose bars start at the
+   same height across the row: the photo link is as tall as the photo, its 0.04 in gap and two 8.6 pt name
+   lines, and the name sits at its bottom, next to the size line.  (The name itself stays a block: making it
+   a flex box would split names that carry no-break spans.) */
+.sheet.back:has(.pc-back) .col a.plink{min-height:calc(1.02in + 19.78pt)}
+.sheet.back:has(.pc-back) .col .pick .nm{margin-top:auto}
+/* Myo-Inositol Complex's serving line (five ingredients) is the longest and sets the row's height, so the
+   START HERE column is a little wider (the kit's inline style is repeat(5,1fr)).  1.04 is the widest it
+   can go before "Blood sugar and insulin" wraps in the narrower columns (measured). */
+.sheet.back:has(.pc-back) .cols{grid-template-columns:1.04fr 1fr 1fr 1fr 1fr!important}
+/* The four-note check panel sets the duo's height; the room comes from a little less red above and below
+   the lifestyle cards (shared 0.3 in / 0.18 in, as on the insulin-resistance sheet), a smaller gap over
+   "Nutrient Solutions", and slightly tighter leading in the check panel. */
+.sheet.back:has(.pc-back) .band{padding-top:0.22in!important;padding-bottom:0.13in}
+.sheet.back:has(.pc-back) .band h2{margin-bottom:0.07in}
+.sheet.back:has(.pc-back) .life .disc2{width:0.8in;height:0.8in}
+.sheet.back:has(.pc-back) .ns-title{margin-top:0.11in}
+.sheet.back:has(.pc-back) .cols{margin-top:0.07in}
+.sheet.back:has(.pc-back) .duo{margin-top:0.08in}
+.sheet.back:has(.pc-back) .rx li{line-height:1.24;margin-bottom:1px}
+.sheet.back:has(.pc-back) .notes{margin-top:0.08in;padding-bottom:0.07in}
+.sheet.back:has(.pc-back) .recby{margin-top:0.07in}
 """
 
 SHEET = {
@@ -1152,8 +1219,8 @@ SHEET = {
             ("leaf", "Spearmint tea", "Two cups a day. In a small 30-day study, testosterone came down."),
         ],
         # Five products (the competitor sheet's count), all from NutriDyn PCOS protocols: the NutriDyn GLC 2023
-        # PCOS protocol (Dropbox id:xHepYs_Ou4AAAAAAAAly0w: Myo-Inositol Complex 3 BID, Berberine Pro TID, Vit D3
-        # 5000 IU, fish oils 2 BID), the NutriDyn GLC 2026 PMOS protocol (Dropbox id:xHepYs_Ou4AAAAAAAA7hTA:
+        # PCOS protocol: Myo-Inositol Complex 3 BID, Berberine Pro TID, Vit D3
+        # 5000 IU, fish oils 2 BID), the NutriDyn GLC 2026 PMOS protocol:
         # Myo-Inositol Complex, Berberine Pro 1 cap TID, Omega Pure EPA-DHA 1000 "for the triglycerides"), both
         # re-opened 2026-11-03, and Asher's own PCOS handout and blast (UltraBiotic Daily Multi-Strain, give it 12
         # weeks).  Label facts, doses and claim sources per product: products.d/pcos.json (the five sell sheets).
@@ -1165,29 +1232,31 @@ SHEET = {
             # glucose balance"
             {"p": "pc_inositol", "need": "Ovaries and cycles", "needsub": "myo- + D-chiro-inositol",
              "start": True, "dose": "dose_from_db",
-             "bullets": ["Supports healthy ovaries and cycles", "Supports optimal blood glucose balance"]},
+             "bullets": [claim("Supports healthy ovaries and cycles"), claim("Supports optimal blood glucose balance")]},
             # ND1130: "Promotes healthy glucose metabolism", "Supports heart health & optimal lipid balance";
             # GlucoVantage is dihydroberberine, a form of berberine (the serving line names it exactly)
             {"p": "pc_berberine", "need": "Blood sugar and insulin", "needsub": "berberine + cinnamon",
              "dose": "dose_from_db",
-             "bullets": ["Promotes healthy glucose metabolism", "Supports heart health and lipid balance"]},
+             "bullets": [claim("Promotes healthy glucose metabolism"), claim("Supports heart health and lipid balance")]},
             # ND382: "help ensure users obtain adequate amounts"; "Supports healthy mood and stress levels",
             # "Supports bone and skin tissues", "Supports immune function"
             {"p": "pc_d3_5000_k2", "need": "Vitamin D", "needsub": "D3 5,000 IU with K2", "dose": "dose_from_db",
-             "bullets": ["Supports healthy vitamin D levels", "Supports mood, bone and immune health"]},
+             "bullets": [claim("Supports healthy vitamin D levels"), claim("Supports mood, bone and immune health")]},
             # The NutriDyn GLC 2026 PMOS protocol uses it "for the triglycerides", but ND416 (Rev. 4/25, re-opened
             # 2026-11-03) makes no triglyceride claim, so neither does the card.  Its claims: "Healthy cardiovascular
-            # function", "Healthy immune function", "Skin vitality" (bullet 2 joins the last two).  The need names
-            # the nutrient (ND416: omega-3s are "essential" because the body does not make them), as on the
+            # function", "Healthy immune function", "Skin vitality".  Bullet 1 says "heart" for cardiovascular and
+            # bullet 2 joins the last two: "cardiovascular function" and "immune function and skin" each ran to a
+            # third line in these five narrow columns, leaving a word and the diamond alone.  The need names the
+            # nutrient (ND416: omega-3s are "essential" because the body does not make them), as on the
             # insulin-resistance sheet; the old "Healthy blood fats" implied the triglyceride claim.
             {"p": "pc_omega", "need": "Essential omega-3 fats", "needsub": "EPA + DHA from fish oil",
              "dose": "dose_from_db",
-             "bullets": ["Supports healthy cardiovascular function", "Supports healthy immune function and skin"]},
+             "bullets": [claim("Supports healthy heart&nbsp;function"), claim("Supports healthy immunity and skin")]},
             # ND460: "Support a healthy gut microbiome"; its text: "promote healthy hormone functions".  The no-break
             # space keeps "microbiome" off a line of its own.
             {"p": "pc_ultrabiotic", "need": "Gut and hormones", "needsub": "7-strain probiotic",
              "dose": "dose_from_db",
-             "bullets": ["Supports a healthy gut&nbsp;microbiome", "Promotes healthy hormone function"]},
+             "bullets": [claim("Supports a healthy gut&nbsp;microbiome"), claim("Promotes healthy hormone function")]},
         ],
         # Four notes per edition (2026-11-03 review).  Pharmacists check interactions, pregnancy and depletions;
         # providers order labs, and a change to a blood-sugar medicine goes to the doctor who prescribes it (a DC or
@@ -1220,10 +1289,10 @@ SHEET = {
         # are on medication for PCOS, keep taking it exactly as prescribed").
         "rx": {
             "practitioner": [
-                "<b>Trying to get pregnant, pregnant or nursing?</b> Do not take Berberine Pro. Myo-Inositol "
+                "<b>Trying to get pregnant, pregnant or nursing?</b> Do not take Berberine&nbsp;Pro. Myo&#8209;Inositol&nbsp;"
                 "Complex has fenugreek, which is not advised in pregnancy: ask {who} before taking it or the rest.",
-                "<b>Keep any prescribed medicine.</b> On a blood-sugar medicine? Before you start Berberine Pro or "
-                "Myo-Inositol Complex, tell the doctor who prescribes it: the dose may need a change.",
+                "<b>Keep any prescribed medicine.</b> On a blood-sugar medicine? Before you start Berberine&nbsp;Pro or "
+                "Myo&#8209;Inositol&nbsp;Complex, tell the doctor who prescribes it: the dose may need a change.",
                 "<b>On warfarin or another blood thinner?</b> The vitamin K (K1 and K2) in D3&nbsp;5000 can weaken "
                 "warfarin, and berberine can slow the enzymes (CYP3A4, 2D6, 2C9) that clear many drugs: ask {who} "
                 "first.",
@@ -1232,12 +1301,12 @@ SHEET = {
                 "plus B12 if you take metformin.",
             ],
             "pharmacy": [
-                "<b>Trying to get pregnant, pregnant or nursing?</b> Do not take Berberine Pro. Myo-Inositol "
+                "<b>Trying to get pregnant, pregnant or nursing?</b> Do not take Berberine&nbsp;Pro. Myo&#8209;Inositol&nbsp;"
                 "Complex has fenugreek, which is not advised in pregnancy: ask {who} before taking it or the rest.",
                 "<b>Keep any prescribed medicine.</b> Insulin or a sulfonylurea (such as glipizide)? Ask the "
                 "prescriber first and watch for low blood sugar. Berberine can slow CYP3A4, 2D6 and 2C9, which "
                 "clear many drugs.",
-                "<b>On warfarin?</b> The vitamin K (K1 and K2) in D3&nbsp;5000 can weaken it. On any blood thinner, "
+                "<b>On warfarin?</b> The vitamin K (K1 and K2) in D3&nbsp;5000 can weaken it. On&nbsp;any blood thinner, "
                 "ask first.",
                 "<b>The pill</b> can lower B6, B12, folate, magnesium and zinc, and <b>metformin</b> can lower B12 "
                 "over time: ask about a check.",
