@@ -47,7 +47,7 @@ DIA, DIA_EDGE, DIA_FIBRE = "#E8D5CA", "#C7AA9B", "#F7EEE8"        # diaphragm
 INK, INK_SOFT, LEAD = "#22292D", "#56626A", "#59646B"
 DEEP = "#8E3110"
 
-W, H = 735, 338          # diagram viewBox: 1 unit = 1 px at the 7.66 in content width
+W, H = 735, 330          # diagram viewBox: 1 unit = 1 px at the 7.66 in content width
 OX, OY = 215, 8          # anatomy origin inside the diagram
 ZX, ZY, ZR = 614, 152, 108   # zoom circle (ZR in zoom units)
 ZS = 1.06                    # zoom scale: on the page the circle radius is ZR * ZS
@@ -389,11 +389,11 @@ NUTRIENTS = [("Mg", "Magnesium"),    # [FDA] 2011: low magnesium with long-term 
 
 def depletion_strip(t, ed):
     coins = "".join(f'<div class="gx-coin"><b>{s}</b><span>{n}</span></div>' for s, n in NUTRIENTS)
-    return ('<div class="gx-strip"><div class="gx-meds"><div class="gx-h">Long-term acid blockers can lower</div>'
+    return ('<div class="gx-strip"><div class="gx-meds"><div class="gx-h">About acid-blocking medicines</div>'
             '<p>PPIs (like omeprazole) and H2 blockers (like famotidine) help many people heal. But acid also helps you absorb '
             'nutrients, and the FDA has warned about low magnesium and broken bones with long-term, high-dose PPI use.'
             '<sup>1</sup> Never stop one on your own: ask {who} for a plan.</p></div>'
-            f'<div class="gx-dep"><div class="gx-coins">{coins}</div>'
+            f'<div class="gx-dep"><div class="gx-dephead">Long-term acid blockers can lower</div><div class="gx-coins">{coins}</div>'
             '<div class="gx-ask">Ask {who} if a nutrient check makes sense.</div></div></div>')
 
 
@@ -461,12 +461,13 @@ CSS = r"""
 .gxf .gx-meds p{margin:0;font-size:8.2pt;line-height:1.34;color:#2B3236}
 .gxf .gx-meds sup{color:var(--c1);font-weight:700;font-size:7.2pt;line-height:0}
 .gxf .gx-dep{background:#fff;border-radius:8px;padding:0.05in 0.08in 0.05in}
+.gxf .gx-dephead{font:800 7.4pt Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--deep);text-align:center;margin:0 0 5px}
 .gxf .gx-coins{display:grid;grid-template-columns:repeat(5,1fr);gap:0.04in}
 .gxf .gx-coin{display:flex;flex-direction:column;align-items:center}
-.gxf .gx-coin b{width:0.42in;height:0.42in;border-radius:50%;background:var(--c1);color:#fff;display:flex;align-items:center;justify-content:center;
+.gxf .gx-coin b{width:0.4in;height:0.4in;border-radius:50%;background:var(--c1);color:#fff;display:flex;align-items:center;justify-content:center;
   font:800 10pt Inter,sans-serif;box-shadow:0 0 0 2px #fff,0 0 0 3.2px #F0B89A}
 .gxf .gx-coin span{font-size:7pt;font-weight:700;color:#2B3236;margin-top:3px;text-align:center;line-height:1.1;white-space:nowrap}
-.gxf .gx-ask{font-size:7.6pt;color:#3F4A50;text-align:center;margin-top:3px}
+.gxf .gx-ask{font-size:7.6pt;color:#3F4A50;text-align:center;margin-top:2px}
 .gxf .gx-fn{margin:0;font-size:7pt;color:#5E686F;line-height:1.3}
 """
 

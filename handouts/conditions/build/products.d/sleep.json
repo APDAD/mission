@@ -1,0 +1,42 @@
+{
+  "sleep_goodnight": {
+    "name": "GoodNight",
+    "size": "60 capsules &middot; 30 servings",
+    "img_src": "R153.png",
+    "key": "Per 2 capsules: 5 mg melatonin, 500 mg L-tryptophan, 300 mg lemon balm, 200 mg L-theanine, 120 mg hops, 100 mg valerian, 40 mg vitamin B6",
+    "dose": "1 to 2 capsules",
+    "dosesub": "1 hour before bed",
+    "sched": [["bed", 1, "capsule"]],
+    "src": "GoodNight sell sheet ND521 Rev. 8/24 (Dropbox NutriDyn Marketing Materials, read into scratchpad labels/labels.json): per 2 capsules vitamin B6 (as P5P) 40 mg, L-tryptophan 500 mg, lemon balm 4:1 extract 300 mg, L-theanine 200 mg, hops 4:1 extract 120 mg, valerian extract (0.8% valerenic acids) 100 mg, melatonin 5 mg; 30 servings; directions 1 or 2 capsules one hour before bedtime; label caution: pregnant, nursing, SSRIs or MAOIs, may cause drowsiness. Same amounts in products DB R153 (5 switch charts, catalog ND143 10/1/26). Size: ND144 price list 10/1/26 (R153 60C)."
+  },
+  "sleep_stress_calm": {
+    "name": "Stress Essentials Calm",
+    "size": "60 capsules",
+    "img_src": "R405.png",
+    "key": "550 mg GABA and 200 mg L-theanine per 2 capsules",
+    "dose": "2 capsules",
+    "dosesub": "in the evening",
+    "sched": [["pm", 2, "capsules"]],
+    "src": "products DB R405 (Designs for Health switch chart label check vs NeuroCalm, catalog ND143 10/1/26): GABA 550 mg, L-theanine 200 mg per 2 capsules; directions two capsules daily; size 60C (ND144 price list 10/1/26). The 2026-11-02 sleep-hour blast calls the theanine Suntheanine; the DB label read does not, so the sheet does not print it."
+  },
+  "sleep_theanine_pro": {
+    "name": "L-Theanine Pro",
+    "size": "60 capsules",
+    "img_src": "R2123.png",
+    "key": "200 mg L-theanine per capsule",
+    "dose": "1 capsule, 1 to 2 times daily",
+    "dosesub": "start in the morning",
+    "sched": [["am", 1, "capsule"]],
+    "src": "products DB R2123 (Thorne switch chart, direct match vs Thorne Theanine, catalog ND143 10/1/26): L-theanine 200 mg per capsule; directions one capsule twice daily; size 60C (ND144 price list 10/1/26)."
+  },
+  "sleep_mag_calm_pro": {
+    "name": "Mag Calm Pro",
+    "size": "About 60 servings &middot; Raspberry Lemon",
+    "img_src": "R2122.png",
+    "key": "Per scoop: 200 mg magnesium, 2 g myo-inositol, 500 mg taurine, 100 mg L-theanine (Suntheanine), 5 mg vitamin B6",
+    "dose": "1 scoop in 6 oz water",
+    "dosesub": "after dinner",
+    "sched": [["pm", 1, "scoop"]],
+    "src": "Mag Calm Pro sell sheet ND1075 Rev. 11/24 (labels.json): per scoop (4.13 g) vitamin B6 (as P5P) 5 mg, magnesium (as dimagnesium malate) 200 mg, myo-inositol 2 g, taurine 500 mg, L-theanine (Suntheanine) 100 mg; about 60 servings, 247.8 g; directions 1 scoop in 6 oz water 1-2 times daily. Same amounts in products DB R2122 (Metagenics chart, catalog ND143 10/1/26)."
+  }
+}

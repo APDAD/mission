@@ -1,0 +1,69 @@
+{
+  "ts_collagen_renew": {
+    "name": "Collagen Renew",
+    "size": "525 g &middot; about 30 scoops",
+    "img_src": "R190.png",
+    "key": "17.5 g collagen peptides: TENDOFORTE, FORTIGEL and FORTIBONE 5 g each, VERISOL 2.5 g",
+    "dose": "1 scoop daily",
+    "dosesub": "in 8 oz water or any drink",
+    "sched": [
+      [
+        "am",
+        1,
+        "scoop"
+      ]
+    ],
+    "url": "https://nutridyn.com/dynamic-multi-collagen-renew",
+    "src": "Supplement Facts from NutriDyn sell sheet 'Collagen Renew SS ND569' (Rev. 9/24, Dropbox Practitioner Resource/Marketing Materials) as recorded in scratchpad labels/labels.json R190: about 1 scoop (17.5 g), about 30 servings, collagen peptides 17.5 g = FORTIGEL 5 g + FORTIBONE 5 g + TENDOFORTE 5 g + VERISOL 2.5 g, protein 15 g; directions 'Mix 1 scoop in 8 ounces of water, your favorite beverage, or a recipe'. Corroborated by products DB R190 (catalog ND143 10/1/26 via five switch charts) and the repo blast blasts/2026-10-19-collagen-tendon.html (panel read live; no vitamin C in the formula). Size R190 525G from price list ND144 10/1/26. Product URL from the same blast (curl-verified 2026-08-11). Bottle photo R190 (unflavored, 18.52 oz / 525 g, 30 servings)."
+  },
+  "ts_vitamin_c_1000": {
+    "name": "Vitamin C 1000",
+    "size": "100 capsules",
+    "img_src": "R101.png",
+    "key": "1,000 mg vitamin C (as ascorbic acid) per capsule",
+    "dose": "1 capsule, 1 to 2 times daily",
+    "dosesub": "",
+    "sched": [
+      [
+        "am",
+        1,
+        "capsule"
+      ]
+    ],
+    "src": "products DB R101 (scratchpad products/nutridyn_products.json, Nutri-West switch chart label check of NutriDyn catalog ND143 10/1/26): 'Vitamin C (as ascorbic acid) per serving: NutriDyn 1,000 mg (1 capsule)'; directions 'Take one capsule one to two times daily'. Size R101 100C from the 10/1/26 price list as listed in the DB. Product page slug not verified, so the link falls back to the nutridyn.com catalog search. Only photo found is the 160 px chart thumbnail (products/img/R101.png); a Dropbox original exists at /NutriDyn/Product Images/Product Images (1)/R101.png (60 KB) but was not staged."
+  },
+  "ts_inflam_eze_plus": {
+    "name": "Inflam-Eze Plus",
+    "size": "90 or 180 capsules",
+    "img_src": "R856.png",
+    "key": "Per 3 capsules: ginger 800 mg, CurQfen curcumin 250 mg, boswellia 250 mg, white willow 200 mg, hops 150 mg, devil's claw 60 mg",
+    "dose": "3 capsules daily",
+    "dosesub": "with food",
+    "sched": [
+      [
+        "pm",
+        3,
+        "capsules"
+      ]
+    ],
+    "url": "https://nutridyn.com/inflam-eze-plus",
+    "src": "Supplement Facts from NutriDyn sell sheet 'Inflam-Eze Plus SS ND516' (Rev. 5/25) as recorded in scratchpad labels/labels.json R856 / R856L: serving 3 capsules; ginger root powder 800 mg; CurQfen curcumin + fenugreek galactomannan extract 250 mg (35% curcuminoids); Boswellia serrata gum extract 250 mg (65% boswellic acid); white willow bark extract 200 mg (25% salicin); hops extract 150 mg (2% xanthohumol); devil's claw root extract 60 mg (1.2% harpagosides); directions 'Take 3 capsules once daily with food'. Matches products DB R856 (catalog ND143 10/1/26). Sizes R856 90C and R856L 180C from price list ND144 10/1/26. URL slug from build/products.py SLUGS ('inflam-eze-plus', NutriDyn 60-day protocol doc)."
+  },
+  "ts_d3_5000_k2": {
+    "name": "D3 5000 with K2",
+    "size": "60 softgels",
+    "img_src": "R197.png",
+    "key": "5,000 IU (125 mcg) vitamin D3, 60 mcg vitamin K2 <span style=\"white-space:nowrap\">(MK-7)</span>, 15 mcg vitamin K1",
+    "dose": "1 softgel daily",
+    "dosesub": "with a meal",
+    "sched": [
+      [
+        "am",
+        1,
+        "softgel"
+      ]
+    ],
+    "url": "https://nutridyn.com/d3-5000-with-k2",
+    "src": "products DB R197 (Designs for Health chart label checks of catalog ND143 10/1/26): per serving vitamin D3 125 mcg (5,000 IU), vitamin K1 15 mcg, vitamin K2 60 mcg as MK-7; directions 'Take one softgel daily'; size 60S. The bottle photo (img-src/R197.png) reads '60 SOFTGELS' and 'Featuring MenaQ7 Vitamin K2'. The shared products.py entry d3_5000_k2 says capsules, so this sheet uses its own entry and leaves the shared one alone. URL slug from build/products.py SLUGS (d3-5000-with-k2)."
+  }
+}

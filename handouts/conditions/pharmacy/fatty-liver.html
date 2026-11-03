@@ -266,14 +266,15 @@ a.plink:hover .nm{text-decoration:underline}
 .gxf .gx-strip{display:grid;grid-template-columns:1.3fr 1fr;gap:0.14in;align-items:center;background:var(--soft);border-radius:10px;
   padding:0.07in 0.12in 0.07in 0.14in}
 .gxf .gx-meds p{margin:0;font-size:8.2pt;line-height:1.34;color:#2B3236}
-.gxf .gx-meds sup{color:var(--c1);font-weight:700}
+.gxf .gx-meds sup{color:var(--c1);font-weight:700;font-size:7.2pt;line-height:0}
 .gxf .gx-dep{background:#fff;border-radius:8px;padding:0.05in 0.08in 0.05in}
+.gxf .gx-dephead{font:800 7.4pt Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--deep);text-align:center;margin:0 0 5px}
 .gxf .gx-coins{display:grid;grid-template-columns:repeat(5,1fr);gap:0.04in}
 .gxf .gx-coin{display:flex;flex-direction:column;align-items:center}
-.gxf .gx-coin b{width:0.42in;height:0.42in;border-radius:50%;background:var(--c1);color:#fff;display:flex;align-items:center;justify-content:center;
+.gxf .gx-coin b{width:0.4in;height:0.4in;border-radius:50%;background:var(--c1);color:#fff;display:flex;align-items:center;justify-content:center;
   font:800 10pt Inter,sans-serif;box-shadow:0 0 0 2px #fff,0 0 0 3.2px #F0B89A}
 .gxf .gx-coin span{font-size:7pt;font-weight:700;color:#2B3236;margin-top:3px;text-align:center;line-height:1.1;white-space:nowrap}
-.gxf .gx-ask{font-size:7.6pt;color:#3F4A50;text-align:center;margin-top:3px}
+.gxf .gx-ask{font-size:7.6pt;color:#3F4A50;text-align:center;margin-top:2px}
 .gxf .gx-fn{margin:0;font-size:7pt;color:#5E686F;line-height:1.3}
 
 .flv-h{display:flex;align-items:center;gap:0.1in;font:900 11pt/1.2 Merriweather,Georgia,serif;color:var(--c1);
@@ -398,6 +399,34 @@ a.plink:hover .nm{text-decoration:underline}
 .ly-front .ly-tk svg{flex:none;width:0.7917in;height:auto}
 .ly-front .ly-tk b{display:block;font-size:8.8pt;color:#4A2C80;line-height:1.2}
 .ly-front .ly-tk span{display:block;font-size:7.8pt;color:#3A4247;line-height:1.28;margin-top:1px}
+
+.mo-front{display:flex;flex-direction:column}
+.mo-front .mo-h{font:900 12pt Merriweather,Georgia,serif;color:var(--c1);letter-spacing:.02em;margin:0 0 0.04in}
+.mo-front .mo-art svg{display:block;width:100%;height:auto}
+.mo-front .mo-signs{display:grid;grid-template-columns:1fr 1fr;gap:0.12in;margin:0 0 0.1in}
+.mo-front .mo-grp{background:var(--tint);border:1px solid #E4DCEF;border-radius:8px;padding:4px 6px 6px}
+.mo-front .mo-grp h4{margin:0 0 3px;text-align:center;font:800 7.4pt Inter,sans-serif;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--c1)}
+.mo-front .mo-ics{display:grid;grid-template-columns:repeat(4,1fr)}
+.mo-front .mo-ics div{display:flex;flex-direction:column;align-items:center;text-align:center;color:var(--c1)}
+.mo-front .mo-ics span{font-size:8pt;color:#3A4247;line-height:1.15;margin-top:2px}
+.mo-front .mo-two{display:grid;grid-template-columns:1fr 400px;gap:15px;align-items:start;margin-bottom:0.08in}
+.mo-front .mo-steps{display:flex;flex-direction:column;gap:6px}
+.mo-front .mo-step{display:flex;gap:8px;align-items:flex-start}
+.mo-front .mo-step .n{flex:none;width:0.26in;height:0.26in;border-radius:50%;background:var(--c1);color:#fff;
+  font:800 9pt Inter,sans-serif;display:flex;align-items:center;justify-content:center}
+.mo-front .mo-step b{font:800 9.4pt Inter,sans-serif;color:var(--deep);display:block}
+.mo-front .mo-step span{display:block;font-size:8.3pt;color:#3A4247;line-height:1.3}
+.mo-front .mo-stat{display:flex;gap:10px;align-items:center;background:var(--soft);border-radius:8px;padding:6px 10px;margin-top:8px}
+.mo-front .mo-stat b{font:900 19pt Merriweather,Georgia,serif;color:var(--c1);line-height:1;white-space:nowrap}
+.mo-front .mo-stat span{font-size:8.3pt;line-height:1.3;color:#2B3236}
+
+.ihl .ihl-art svg{display:block;width:100%;height:auto}
+.ihl-h{display:flex;align-items:center;gap:0.1in;font:900 11pt/1.2 Merriweather,Georgia,serif;color:var(--c1);
+  letter-spacing:.04em;text-transform:uppercase;margin:0.02in 0 0.06in}
+.ihl-h::after{content:"";flex:1;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--soft),rgba(227,238,246,0))}
+
+.nrp .nrp-art svg{display:block;width:100%;height:auto}
 </style>
 </head><body>
 <div class="toolbar"><b>Fatty Liver Disease · Pharmacy edition</b><div class="btns"><a class="ghost" href="../index.html">All sheets</a><a href="fatty-liver.pdf">Download PDF</a><button onclick="window.print()">Print</button></div></div><div class="stack"><section class="sheet front" style="--c1:#8A1B22;--c2:#C2392E;--soft:#F6E4E1;--deep:#62121A;--tint:#FBF3F2"><div class="rule-top"></div><div class="inner"><div class="headrow"><svg style="height:0.27in;width:auto;color:#14664D;display:block" viewBox="0 0 174 31" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -5,37 +5,62 @@ here (no legacy sheets.py / art.py imports).  Front, top to bottom:
   intro -> nitric-oxide pathway (4 numbered steps) beside a tight-vs-relaxed artery
   with its KEY -> risk-factor icons -> "reading your numbers" + "measure it right"
   beside the AHA/ACC category table.
-Back: unchanged from the first draft (a later pass revises the products).
+Back: unchanged from the first draft (the back-page pass revises the products, the
+Provider/Pharmacist check and the lifestyle band).
 
 Every number stated on the front carries a source comment next to it.
 Edition wording: "{who}" / "{Who}" become "your provider" or "your pharmacist" (build.ed_text).
 """
+import re
+
 from svgkit import T, svg
 from kit import ICONS, icon
 
 SLUG = "high-blood-pressure"
 
 # ------------------------------------------------------------------ vessel colours (all named in the KEY)
-OUTER = "#F2D2C9"      # outer layer of the artery wall
-OUTER_LN = "#E3B4A8"
+OUTER = "#EDD3AE"      # outer layer of the artery wall (connective tissue): warm tan, CIE76 dE 16.6 from LUMEN
+OUTER_LN = "#D2B286"   # its outline
 TIGHT = "#9A2924"      # tight (contracted) muscle wall
 TIGHT_LN = "#741A16"   # muscle-fibre lines, tight wall
 RELAX = "#D27A6C"      # relaxed muscle wall
 RELAX_LN = "#B85A4D"   # muscle-fibre lines, relaxed wall
 LUMEN = "#F9E1DA"      # blood inside the vessel (shown in the "Blood flow" swatch)
+LUMEN_LN = "#E3B4A8"   # outline of the pale "Blood flow" swatch, so it shows on the white KEY
 PUSH = "#3A1411"       # arrows: blood pushing on the vessel wall (pressure)
 INK = "#2B3236"
 
 # ------------------------------------------------------------------ this sheet's icons (64 x 64 grid, stroke style)
+# Mouth with the tongue out; three solid dots on the tongue are the friendly bacteria.  The dots carry no
+# outline (stroke none), sit 2.6+ units clear of each other and of the tongue's inner edge, so they stay
+# three separate dots at print size instead of fusing with the outline.
 IC_TONGUE = ('<path d="M7 25c5-6 11-9 16-8 3 .6 6 2.4 9 2.4s6-1.8 9-2.4c5-1 11 2 16 8"/>'      # upper lip
              '<path d="M7 25c14 4 36 4 50 0"/>'                                                 # mouth line
-             '<path d="M21 28v8c0 8 5 14 11 14s11-6 11-14v-8" fill="#F6C9C1"/><path d="M32 30v7"/>'   # tongue
-             '<rect x="23.5" y="38.5" width="8" height="4" rx="2" fill="currentColor" stroke="none" transform="rotate(-25 27.5 40.5)"/>'
-             '<rect x="33.5" y="41" width="8" height="4" rx="2" fill="currentColor" stroke="none" transform="rotate(20 37.5 43)"/>')
+             '<path d="M21 28v8c0 8 5 14 11 14s11-6 11-14v-8" fill="#F6C9C1"/>'                 # tongue
+             '<g fill="currentColor" stroke="none"><circle cx="28.3" cy="37.2" r="2"/>'
+             '<circle cx="35.7" cy="37.2" r="2"/><circle cx="32" cy="43" r="2"/></g>')
 IC_VESSEL = ('<path d="M5 25c14 0 22-8 54-11"/><path d="M5 39c14 0 22 8 54 11"/>'
              '<path d="M13 32h30"/><path d="M37 25.5l7 6.5-7 6.5"/>')
 IC_SOFA = ('<path d="M14 31v-7a6 6 0 0 1 6-6h24a6 6 0 0 1 6 6v7"/>'
            '<path d="M8 36a5 5 0 0 1 10 0v4h28v-4a5 5 0 0 1 10 0v11H8z"/><path d="M12 47v6M52 47v6"/>')
+
+
+def _noslash(name):
+    """A kit icon without its coral 'avoid' slash: on a list of RISKS the slash would read as 'no salt'."""
+    return re.sub(r'<path class="x"[^>]*/>', "", ICONS[name])
+
+
+def _kidneys():
+    """The kit's two kidney beans, each 10% smaller about its own centre and moved 2.8 units outward,
+    so a clear 3.6-unit gap shows between them (touching beans read as a walnut).  The group stroke is
+    scaled up to match, so the line weight stays 2.8 like every other risk icon."""
+    left, right = re.findall(r'<path d="[^"]+"/>', ICONS["kidney"])
+    return (f'<g transform="translate(-2.8 0) translate(21.4 32) scale(.9) translate(-21.4 -32)" stroke-width="3.111">{left}</g>'
+            f'<g transform="translate(2.8 0) translate(42.6 32) scale(.9) translate(-42.6 -32)" stroke-width="3.111">{right}</g>')
+
+
+# Female sign alone (the kit's 'hormone' glyph pairs it with the male sign, which reads as "sex").
+IC_FEMALE = '<circle cx="32" cy="22" r="12"/><path d="M32 34v22M23.5 46h17"/>'
 
 
 def _ic(body, size, color="currentColor", sw=2.8):
@@ -46,12 +71,13 @@ def _ic(body, size, color="currentColor", sw=2.8):
 
 
 def _no_molecule(c1, c2):
-    """Ball-and-stick nitric oxide (N=O) in the 64 grid; letters drawn without the icon stroke."""
+    """Ball-and-stick nitric oxide (N=O) in the 64 grid.  The atoms are plain discs (no outline) with a
+    6-unit gap between them, so the double bond (the two short bars) shows; letters 19.5 units = 7.3 pt."""
     return (f'<path d="M29 27.5h6M29 36.5h6" stroke="{c1}"/>'
-            f'<circle cx="17" cy="32" r="13" fill="{c1}" stroke="{c1}"/>'
-            f'<circle cx="47" cy="32" r="13" fill="{c2}" stroke="{c2}"/>'
-            '<g stroke="none">' + T(17, 38.6, "N", 18.5, 800, "#fff", "middle")
-            + T(47, 38.6, "O", 18.5, 800, "#fff", "middle") + "</g>")
+            f'<circle cx="16" cy="32" r="13" fill="{c1}" stroke="none"/>'
+            f'<circle cx="48" cy="32" r="13" fill="{c2}" stroke="none"/>'
+            '<g stroke="none">' + T(16, 39.1, "N", 19.5, 800, "#fff", "middle")
+            + T(48, 39.1, "O", 19.5, 800, "#fff", "middle") + "</g>")
 
 
 # ------------------------------------------------------------------ small drawing helpers
@@ -128,10 +154,11 @@ def art_bp(t):
     # ---- left: the nitric-oxide pathway, four numbered steps.
     # Dietary nitrate -> oral bacteria (mostly on the tongue) reduce it to nitrite -> nitrite is reduced to NO
     # in the stomach, blood and tissues -> NO relaxes vascular smooth muscle (Lundberg, Weitzberg & Gladwin,
-    # Nat Rev Drug Discov 2008; NIH Office of Dietary Supplements on dietary nitrate).
+    # Nat Rev Drug Discov 2008;7:156-67; NIH Office of Dietary Supplements on dietary nitrate).  The vessel
+    # lining also makes NO from L-arginine (eNOS); dietary nitrate is a second route, hence "a building block".
     steps = [
-        ("beet", "Eat greens and beets", ["They are rich in nitrate,", "the raw material for NO."]),
-        ("tongue", "Mouth bacteria help", ["Friendly bacteria on your", "tongue turn it into nitrite."]),
+        ("beet", "Eat greens and beets", ["They are rich in nitrate,", "a building block for NO."]),
+        ("tongue", "Mouth bacteria help", ["Friendly tongue bacteria", "turn nitrate into nitrite."]),
         ("no", "Your body makes NO", ["Nitrite becomes nitric oxide", "in your blood and tissues."]),
         ("vessel", "NO relaxes vessel walls", ["Vessels widen and blood", "flows with less pressure."]),
     ]
@@ -145,8 +172,10 @@ def art_bp(t):
         out.append(f'<circle cx="{cx}" cy="{cy}" r="22" fill="#fff" stroke="{c1}" stroke-width="2"/>')
         out.append(f'<g transform="translate({cx - 16.5},{cy - 16.5}) scale(.515625)" fill="none" stroke="{c1}" '
                    f'stroke-width="4.8" stroke-linecap="round" stroke-linejoin="round">{bodies[ic]}</g>')
-        bx, by = cx - 17, y + 10        # step number, badged on the icon ring
-        out.append(f'<circle cx="{bx}" cy="{by}" r="9" fill="{c1}" stroke="#fff" stroke-width="2"/>'
+        # step number, badged on the icon ring; its white halo (r 8 + 1) stops 2.5 units below the card top,
+        # clear of the card border (y +/- 0.75), and 3.9 units clear of the step-3 N disc
+        bx, by = cx - 17, y + 11.5
+        out.append(f'<circle cx="{bx}" cy="{by}" r="8" fill="{c1}" stroke="#fff" stroke-width="2"/>'
                    + T(bx, by + 3.8, str(i + 1), 10.5, 800, "#fff", "middle"))
         tx = CX + 66
         out.append(T(tx, y + 17.5, title, 12.5, 800, deep))
@@ -194,9 +223,9 @@ def art_bp(t):
                        (rx0 + 70, 28, -14), (rx0 + 158, 33, 6), (rx0 + 222, 26, -6)]:
         out.append(_cell(x, vy + dy, 0.9, r))
 
-    # flow arrows, labelled
-    out.append(_tag(lc - 62, vy, 124, 21, "High pressure"))
-    out.append(_tag(rc - 70, vy, 140, 21, "Normal pressure"))
+    # flow arrows, labelled as flow (the KEY's "Blood flow"); only the dark arrows stand for pressure
+    out.append(_tag(lc - 75, vy, 150, 21, "Flow: high pressure", 11))
+    out.append(_tag(rc - 80.5, vy, 161, 21, "Flow: normal pressure", 11))
 
     # ---- KEY: names every symbol and colour in the vessel
     KY, KH = 244, 48
@@ -213,9 +242,9 @@ def art_bp(t):
                         for j in range(n))
         return f'<rect x="-12" y="-6.5" width="24" height="13" rx="2" fill="{fill}"/>{lines}'
 
-    flow_sw = (f'<rect x="-13" y="-7.5" width="26" height="15" rx="3" fill="{LUMEN}" stroke="{OUTER_LN}" stroke-width="1"/>'
+    flow_sw = (f'<rect x="-13" y="-7.5" width="26" height="15" rx="3" fill="{LUMEN}" stroke="{LUMEN_LN}" stroke-width="1"/>'
                '<path d="M-8,-3 H3 L8,0 L3,3 H-8 Z" fill="#fff" stroke="#C9B3AD" stroke-width=".8"/>')
-    c_1, c_2, c_3 = X0 + 62, X0 + 196, X0 + 346
+    c_1, c_2, c_3 = X0 + 66, X0 + 214, X0 + 380     # even gaps: label -> next swatch, and right padding
     out.append(item(c_1, r1, _cell(0, 0, 0.72), "Red blood cell"))
     out.append(item(c_1, r2, band(TIGHT, TIGHT_LN, 4), "Tight muscle wall"))
     # big + small arrow: arrow size shows how hard the blood pushes (high vs normal pressure)
@@ -228,11 +257,22 @@ def art_bp(t):
 
 
 # ------------------------------------------------------------------ front page
-RISKS = [  # AHA "Know Your Risk Factors for High Blood Pressure"; CDC "High Blood Pressure Risk Factors"
+# Risk factors: AHA "Know Your Risk Factors for High Blood Pressure" (family history, age, chronic kidney
+# disease; inactivity, high-sodium diet, overweight, too much alcohol, sleep apnea, diabetes, smoking, stress)
+# and CDC "High Blood Pressure Risk Factors".  "Pregnancy or birth control pills": high blood pressure in
+# pregnancy (gestational hypertension, preeclampsia) and estrogen birth control pills, which can raise blood
+# pressure: 2017 ACC/AHA guideline (Hypertension 2018;71:e13-e115, Table 13, oral contraceptives) and the
+# 2025 AHA/ACC guideline (Hypertension 2025;82:e212-e316, hypertension in pregnancy).
+RISKS = [
     ("scale", "Extra weight"), ("salt", "High-sodium,<br>processed food"), ("sofa", "Sitting most<br>of the day"),
-    ("glass", "Too much<br>alcohol"), ("smoke", "Smoking"), ("breath", "Chronic stress"),
+    ("glass", "Too much<br>alcohol"), ("smoke", "Smoking"), ("headache", "Chronic stress"),
     ("moon", "Poor sleep or<br>sleep apnea"), ("bloodsugar", "Diabetes"), ("kidney", "Kidney<br>disease"),
-    ("hormone", "Hormone<br>changes"), ("dna", "Family<br>history"), ("age", "Increasing age")]
+    ("female", "Pregnancy or<br>birth control pills"), ("dna", "Family<br>history"), ("age", "Increasing age")]
+# Icons drawn here rather than straight from the kit: no "avoid" slash on the salt, glass and cigarette
+# (this row lists risks, not rules), separated kidney beans, the female sign alone.  The slashed kit
+# versions stay on the back's lifestyle band.
+RISK_ICONS = {"sofa": IC_SOFA, "salt": _noslash("salt"), "glass": _noslash("glass"), "smoke": _noslash("smoke"),
+              "kidney": _kidneys(), "female": IC_FEMALE}
 
 # Blood pressure categories, mm Hg: 2025 AHA/ACC high blood pressure guideline (same cutoffs as the 2017 guideline).
 BP_ROWS = [("#3E8E5B", "Normal", "under 120", "and", "under 80"),
@@ -243,11 +283,12 @@ BP_ROWS = [("#3E8E5B", "Normal", "under 120", "and", "under 80"),
 
 
 def front(t, ed):
-    risk = "".join(f'<div class="hbp-rf">{_ic(IC_SOFA, "0.36in") if ic == "sofa" else icon(ic, "0.36in", sw=2.8)}'
+    risk = "".join(f'<div class="hbp-rf">{_ic(RISK_ICONS[ic], "0.36in") if ic in RISK_ICONS else icon(ic, "0.36in", sw=2.8)}'
                    f'<span>{lab}</span></div>' for ic, lab in RISKS)
     rows = "".join(f'<tr><td><i style="background:{c}"></i>{cat}</td><td class="n">{a}</td><td class="c">{j}</td>'
                    f'<td class="n">{b}</td></tr>' for c, cat, a, j, b in BP_ROWS)
-    table = ('<table class="hbp-bp"><tr><th>Category</th><th>Top number</th><th></th>'
+    table = ('<div class="hbp-sh">What the numbers mean</div>'
+             '<table class="hbp-bp"><tr><th>Category</th><th>Top number</th><th></th>'
              f'<th>Bottom number</th></tr>{rows}</table>'
              # AHA: over 180/120, wait a few minutes and test again; still high, contact your doctor right away;
              # with chest or back pain, shortness of breath, numbness, weakness, vision change or trouble
@@ -271,8 +312,9 @@ def front(t, ed):
             '<li>Sit back supported, feet flat, legs uncrossed, arm at heart level.</li>'
             '<li>Cuff on bare skin. Take 2 readings, 1 minute apart. Write them down.</li>'
             '<li>Ask {who} to check your cuff size.</li></ul>'
-            # write-in row, styled like the Patient name / Date fields in the page header
-            '<div class="hbp-log"><b>Your reading</b><i></i><em>/</em><i></i><b class="g">Goal</b><i></i><em>/</em><i></i></div>')
+            # write-in row, styled like the Patient name / Date fields in the page header; each box is
+            # 0.42 in wide, room for a handwritten 3-digit number such as 142
+            '<div class="hbp-log"><b>Reading</b><i></i><em>/</em><i></i><b class="g">Goal</b><i></i><em>/</em><i></i></div>')
     return ('<div class="hbp">'
             f'<div class="art hbp-art">{art_bp(t)}</div>'
             f'<div class="hbp-h">RISK FACTORS</div><div class="hbp-risk">{risk}</div>'
@@ -300,24 +342,24 @@ CSS = r"""
   border-bottom:2px solid var(--c1);transform:rotate(-45deg)}
 .hbp .hbp-log{display:flex;align-items:center;gap:4px;margin-top:0.07in;font-size:8pt;color:#2B3236}
 .hbp .hbp-log b{font-weight:700;white-space:nowrap}
-.hbp .hbp-log b.g{margin-left:10px}
-.hbp .hbp-log i{display:block;width:0.34in;height:0.24in;border-radius:5px;background:#E9ECEE;border:1px solid #D6DBDF}
+.hbp .hbp-log b.g{margin-left:6px}
+.hbp .hbp-log i{display:block;width:0.42in;height:0.24in;border-radius:5px;background:#E9ECEE;border:1px solid #D6DBDF}
 .hbp .hbp-log em{font-style:normal;color:#69737A;font-weight:600}
 .hbp .hbp-bp{width:100%;border-collapse:collapse;font-size:8.4pt}
 .hbp .hbp-bp th{background:var(--c1);color:#fff;padding:4px 8px;font-size:7.8pt;line-height:1.15;text-align:center}
 .hbp .hbp-bp th:first-child{text-align:left}
-.hbp .hbp-bp td{padding:2.5px 8px;border-bottom:1px solid #EEE3E1}
+.hbp .hbp-bp td{padding:2px 8px;border-bottom:1px solid #EEE3E1}
 .hbp .hbp-bp tr:nth-child(even) td{background:var(--tint)}
 .hbp .hbp-bp td.n{text-align:center;font-variant-numeric:tabular-nums;font-weight:700}
 .hbp .hbp-bp td.c{text-align:center;color:#69737A;font-size:7.4pt}
 .hbp .hbp-bp td i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:-1px}
-.hbp .hbp-alarm{border:1.5px solid #C0392B;background:#FDF1EF;border-radius:7px;padding:3px 9px;margin-top:5px;
+.hbp .hbp-alarm{border:1.5px solid #C0392B;background:#FDF1EF;border-radius:7px;padding:2px 9px;margin-top:4px;
   font-size:8pt;line-height:1.3;color:#2B3236}
 .hbp .hbp-alarm b{color:#A5281E}
-.hbp .hbp-note{border-left:4px solid var(--c2);background:var(--tint);border-radius:0 6px 6px 0;padding:3px 9px;margin-top:5px;
+.hbp .hbp-note{border-left:4px solid var(--c2);background:var(--tint);border-radius:0 6px 6px 0;padding:2px 9px;margin-top:4px;
   font-size:8pt;line-height:1.3;color:#2B3236}
 .hbp .hbp-note b{color:var(--deep)}
-.hbp .hbp-fn{font-size:7pt;color:#5E686F;line-height:1.3;margin:4px 0 0}
+.hbp .hbp-fn{font-size:7pt;color:#5E686F;line-height:1.3;margin:3px 0 0}
 """
 
 # ------------------------------------------------------------------ the sheet

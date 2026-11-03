@@ -1,0 +1,39 @@
+{
+  "nrp_nerve_eze": {
+    "name": "Nerve Eze",
+    "size": "60 capsules",
+    "img_src": "R184.png",
+    "key": "300 mg PEA (palmitoylethanolamide, as Levagen+) and 150 mg alpha lipoic acid per capsule",
+    "dose": "1 capsule twice daily",
+    "dosesub": "",
+    "sched": [
+      [
+        "am",
+        1,
+        "capsule"
+      ],
+      [
+        "bed",
+        1,
+        "capsule"
+      ]
+    ],
+    "src": "NutriDyn sell sheet Nerve Eze SS ND633, Rev. 8/24 (Dropbox /NutriDyn/Sales/Practitioner Resource/NutriDyn Marketing Materials/, id:xHepYs_Ou4AAAAAAAAtRRg), read into scratchpad labels/labels.json: 1 capsule = PEA (Levagen+) 300 mg + alpha lipoic acid 150 mg; directions 'Take one capsule twice daily'. Size: ND144 price list 10/1/26 line 'Nerve Eze R184 60C'."
+  },
+  "nrp_b12_pro": {
+    "name": "B12 Pro",
+    "size": "60 quick-dissolve tablets",
+    "img_src": "R2181.png",
+    "key": "5,000 mcg vitamin B12 as methylcobalamin per quick-dissolve tablet",
+    "dose": "1 tablet daily",
+    "dosesub": "",
+    "sched": [
+      [
+        "am",
+        1,
+        "tablet"
+      ]
+    ],
+    "src": "Product DB scratchpad products/nutridyn_products.json R2181 (NutriDyn catalog ND143 10/1/26 as read by the NuMedica, Nutri-West, Biotics Research and Apex switch charts): 'Vitamin B12 as methylcobalamin per serving: NutriDyn 5,000 mcg (1 quick-dissolve tablet)'; directions 'Take one quick-dissolve tablet by mouth per day'; SKU R2181 60T."
+  }
+}

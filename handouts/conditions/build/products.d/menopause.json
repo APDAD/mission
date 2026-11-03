@@ -1,0 +1,86 @@
+{
+  "meno_menopause_support": {
+    "name": "Menopause Support",
+    "size": "90 tablets",
+    "img_src": "R264L.png",
+    "key": "500 mg EstroG‑100 herbal blend, 250 mg ashwagandha root, 80 mg black cohosh root",
+    "dose": "1 tablet daily",
+    "dosesub": "with food, same time each day",
+    "sched": [
+      [
+        "am",
+        1,
+        "tablet"
+      ]
+    ],
+    "url": "https://nutridyn.com/menopause-support",
+    "src": "Menopause Support sell sheet ND564 Rev. 8/24 (Dropbox NutriDyn Marketing Materials id:xHepYs_Ou4AAAAAAAAtb9A, read into scratchpad labels/labels.json): per 1 tablet Estro G-100 blend (Angelica gigas nakai root extract, Cynanchum wilfordii root extract, Phlomis umbrosa root extract) 500 mg, ashwagandha root powder 250 mg, black cohosh root powder 80 mg; 90 servings; directions one tablet daily with food at the same time of day; caution: not for pregnancy or nursing, not recommended with known or suspected estrogen-dependent cancer. Same amounts in products DB R264L (Pendulum chart, catalog ND143 10/1/26). Size R264L 90T from price list ND144 10/1/26. URL from Asher's Dr. Miller visit brief artifact (Revival shelf)."
+  },
+  "meno_mag_calm_pro": {
+    "name": "Mag Calm Pro",
+    "size": "60 scoops &middot; Raspberry Lemon",
+    "img_src": "R2122.png",
+    "key": "200 mg magnesium (as malate), 2 g myo‑inositol, 500 mg taurine, 100 mg L‑theanine, 5 mg vitamin B6",
+    "dose": "1 scoop at bedtime",
+    "dosesub": "in 6 oz water; up to 2 a day",
+    "sched": [
+      [
+        "bed",
+        1,
+        "scoop"
+      ]
+    ],
+    "url": "https://nutridyn.com/mag-calm-pro",
+    "src": "Mag Calm Pro sell sheet ND1075 Rev. 11/24 (labels.json): per scoop (4.13 g) vitamin B6 (as pyridoxal-5-phosphate) 5 mg, magnesium (as dimagnesium malate) 200 mg, myo-inositol 2 g, taurine 500 mg, L-theanine (Suntheanine) 100 mg; about 60 servings, 247.8 g; directions 1 scoop with 6 oz water 1-2 times daily. Same amounts in products DB R2122 (Metagenics chart). URL from Asher's Dr. Miller visit brief artifact."
+  },
+  "meno_d3_5000_k2": {
+    "name": "D3 5000 with K2",
+    "size": "60 softgels",
+    "img_src": "R197.png",
+    "key": "5,000 IU (125 mcg) vitamin D3, 60 mcg vitamin K2 (MK‑7), 15 mcg vitamin K1",
+    "dose": "1 softgel daily",
+    "dosesub": "with your evening meal",
+    "sched": [
+      [
+        "pm",
+        1,
+        "softgel"
+      ]
+    ],
+    "url": "https://nutridyn.com/d3-5000-with-k2",
+    "src": "products DB R197 (Designs for Health and Ortho Molecular charts, catalog ND143 10/1/26): per softgel vitamin D3 125 mcg (5,000 IU), vitamin K2 60 mcg as MK-7, vitamin K1 15 mcg; directions take one softgel daily; size 60S (60 softgels, also printed on the bottle photo). The shared products.py entry d3_5000_k2 says capsules; the label says softgels, so this sheet uses its own entry."
+  },
+  "meno_ultrabiotic_womens": {
+    "name": "UltraBiotic Women’s",
+    "size": "60 capsules &middot; 30 servings",
+    "img_src": "R177.png",
+    "key": "25 billion CFU from 9 strains: 7 Lactobacillus and 2 Bacillus",
+    "dose": "2 capsules daily",
+    "dosesub": "same time each day",
+    "sched": [
+      [
+        "am",
+        2,
+        "capsules"
+      ]
+    ],
+    "src": "UltraBiotic Women's sell sheet ND1053 Rev. 1/25, opened 2026-11-03 (Dropbox NutriDyn Marketing Materials id:xHepYs_Ou4AAAAAAAAwfzA): serving 2 capsules, 30 servings; strains L. acidophilus La-14, L. rhamnosus HN001, L. rhamnosus Rosell-11 + L. helveticus Rosell-52 (Lacidofil), Bacillus subtilis HU58, L. reuteri 1E1, Bacillus coagulans SC208, L. gasseri LG36, L. salivarius LS33; amounts 9 + 6 + 4 + 2 + 2 + 1 + 0.5 + 0.5 = 25 billion CFU at time of manufacture (text extraction split names and amounts; the total matches the products DB R177 Metagenics-chart read: 9 strains, 25 billion CFU per 2 capsules). Claims on the sheet: supports a healthy vaginal microbiome, supports a healthy gut microbiome. Directions take two capsules daily. No verified product-page URL, so the link falls back to catalog search."
+  },
+  "meno_creatine": {
+    "name": "Creatine Powder",
+    "size": "505 g &middot; about 100 scoops",
+    "img_src": "R258.png",
+    "key": "5 g creatine monohydrate per scoop",
+    "dose": "1 scoop daily",
+    "dosesub": "in 8 to 16 oz of any drink",
+    "sched": [
+      [
+        "am",
+        1,
+        "scoop"
+      ]
+    ],
+    "url": "https://nutridyn.com/creatine-powder-r258",
+    "src": "products DB R258 (Thorne chart, catalog ND143 10/1/26): creatine monohydrate 5 g per scoop, 100 servings, 505 g; directions mix 1 scoop in 8-16 ounces of water or your favorite beverage. Unflavored per the tub photo. URL from the repo creatine blast (blasts/2026-11-16-creatine-plus-training.html)."
+  }
+}
