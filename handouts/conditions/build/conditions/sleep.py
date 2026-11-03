@@ -272,6 +272,7 @@ PINEAL_L = (137, 124)
 VEIN_PTS = [(132, 129), (127.5, 147), (121, 163.3), (104, 166.8), (86, 167.6), (72, 168.2), (62, 175.5),
             (59.5, 190), (66, 207.5), (82, 227), (102, 251), (117, 278), (124, 306)]
 VEIN_W = 4.4                     # local units (3.4 printed units at the head's 0.78 scale)
+VEIN_LABEL_AT = spline_at(VEIN_PTS, [114.0])[0]   # where "Melatonin into blood" points: behind the cerebellum
 
 
 def _head_local(uid):
@@ -438,9 +439,15 @@ def _sun(x, y, r=6.5, rays=True):
     return "".join(o)
 
 
-def _moon(x, y, r=7.0, fill="#3C4A86"):
+def _moon(x, y, r=7.0, fill=NIGHT):
     return (f'<path d="M{_f(x + r * .35)},{_f(y - r)} A{r},{r} 0 1 0 {_f(x + r * .95)},{_f(y + r * .5)} '
             f'A{r * .78:.1f},{r * .78:.1f} 0 1 1 {_f(x + r * .35)},{_f(y - r)} Z" fill="{fill}"/>')
+
+
+def moon_badge(x, y, r=5.6):
+    """A white disc with a night-coloured ring and crescent: rides on the night signal (art and KEY)."""
+    return (f'<circle cx="{_f(x)}" cy="{_f(y)}" r="{r}" fill="#FFFFFF" stroke="{NIGHT}" stroke-width=".9"/>'
+            + _moon(x - r * .08, y, r * .6, NIGHT))
 
 
 def dial(cx, cy, R):
@@ -487,8 +494,8 @@ def dial(cx, cy, R):
              'stroke-width=".7" stroke-linejoin="round"/>')
     o.append(f'<path d="{_band(cx, cy, rc, 15, cortisol_level, 0, 24, wmin=1.4)}" fill="{COR}" stroke="{COR_EDGE}" '
              'stroke-width=".6" stroke-linejoin="round"/>')
-    # centre: sun above (day half), moon below (night half)
-    o.append(_sun(cx, cy - 12, 5.2) + _moon(cx - 1, cy + 13, 6.4))
+    # centre: sun above (day half), moon below (night half, in the night colour)
+    o.append(_sun(cx, cy - 12, 5.2) + _moon(cx - 1, cy + 13, 6.4, NIGHT))
     # hour labels
     lab = lambda x, y, t, a="middle": T(_f(x), _f(y), t, 10.2, 800, "#4D585F", a, ls=0.6)
     o.append(lab(cx, cy - R - 7, "NOON") + lab(cx, cy + R + 16, "MIDNIGHT")
@@ -559,16 +566,23 @@ def art_clock(t):
         o.append(f'<path d="M{_f(p[0])},{_f(p[1])} L{_f(q[0])},{_f(q[1])}" stroke="#FFFFFF" stroke-width="1" opacity=".7"/>')
     o.append(_sun(*sun, r=10.5))
     o.append(T(sun[0], 60, "by day", 10.4, 700, INK2, "middle", italic=True))
-    # nerve signals: eye -> along the optic nerve -> SCN, then SCN -> pineal (under the thalamus)
+    # Two signals, two colours, two times.  BY DAY the teal day signal runs from the eye along the optic
+    # nerve to the SCN; AT NIGHT the dark-gray night signal, with a moon badge near its start, runs from
+    # the SCN to the pineal gland under the thalamus [BENARROCH08].
     back_eye = m((EYE_C[0] - 11, EYE_C[1] + 1))
     o.append(signal_arrow(back_eye, ((back_eye[0] + chi[0]) / 2, chi[1] + 3.5), (scn[0] + 4.2, scn[1] + 2.4), sw=1.8, head=5.6))
-    o.append(signal_arrow((scn[0] - 4, scn[1] + 3), (scn[0] - 22, scn[1] + 22), (pin[0] + 4.6, pin[1] + 4.6), sw=1.8, head=5.6))
-    # melatonin leaving the pineal gland: its veins drain backward along the straight sinus (between the
-    # back of the cerebrum and the cerebellum) into the bloodstream
-    trail = [(-10, 2), (-17, 7), (-24, 12), (-31, 17), (-38, 22), (-46, 26), (-54, 29)]
-    for k, (dx, dy) in enumerate(trail):
-        r = 2.9 if k < 2 else 2.6
-        o.append(f'<circle cx="{_f(pin[0] + dx)}" cy="{_f(pin[1] + dy)}" r="{r}" fill="{MEL}" stroke="#FFFFFF" stroke-width=".7"/>')
+    n0, nc, n1 = (scn[0] - 4, scn[1] + 3), (scn[0] - 22, scn[1] + 22), (pin[0] + 4.6, pin[1] + 4.6)
+    o.append(signal_arrow(n0, nc, n1, color=NIGHT, sw=1.8, head=5.6))
+    bt = 0.24
+    o.append(moon_badge((1 - bt) ** 2 * n0[0] + 2 * (1 - bt) * bt * nc[0] + bt ** 2 * n1[0],
+                        (1 - bt) ** 2 * n0[1] + 2 * (1 - bt) * bt * nc[1] + bt ** 2 * n1[1]))
+    # Melatonin leaving the pineal gland rides the vein (VEIN_PTS, drawn with the head): it drops onto the
+    # border between cerebrum and cerebellum within two dots, then runs back along it toward the back of
+    # the head.  Dots every 12.6 local units (about 9.8 printed units).
+    for k, q in enumerate(spline_at(VEIN_PTS, [3.5 + 12.6 * i for i in range(9)])):
+        x, y = m(q)
+        o.append(f'<circle cx="{_f(x)}" cy="{_f(y)}" r="{2.9 if k < 2 else 2.6}" fill="{MEL}" stroke="#FFFFFF" '
+                 'stroke-width=".7"/>')
     # labels in clear space, with leader lines.  "Daylight" sits 9.7 units inside the card edge and its
     # marker about 5 units under the beam.
     o.append(marker(330, 127, 1) + T(342, 131.2, "Daylight", 11.2, 800, INK))
@@ -589,12 +603,17 @@ def art_clock(t):
              f'<circle cx="{_f(pin[0] - 5.5)}" cy="{_f(pin[1] - 4.6)}" r="1.6" fill="#7A858C"/>')
     o.append(marker(18, pin[1] - 16, 3) + T(30, pin[1] - 12, "Pineal", 11.2, 800, INK)
              + T(30, pin[1] + 2, "gland", 11.2, 800, INK))
-    # "at night" (with a moon), then "Melatonin into blood"; the leader runs from the label to the end of
-    # the melatonin trail.  The block stays 20+ units clear of the back-of-head outline.
+    # "at night" (with a moon, in the night colour), then "Melatonin into blood"; the leader runs from the
+    # label to the edge of the vein where it turns down behind the cerebellum, so "into blood" points at a
+    # blood vessel.  The block stays 20+ units clear of the back-of-head outline.
     my = pin[1] + 24.3                          # baseline of "at night"
-    o.append(_moon(20.5, my - 3.8, 5.2, MEL) + T(29, my, "at night", 10.4, 700, MEL, italic=True))
-    end = (pin[0] - 54, pin[1] + 29)
-    o.append(f'<path d="M72,{_f(my + 10.2)} L{_f(end[0] - 4)},{_f(end[1] + 1)}" stroke="#5E6C93" stroke-width="1.1"/>')
+    o.append(_moon(20.5, my - 3.8, 5.2, NIGHT) + T(29, my, "at night", 10.4, 700, NIGHT, italic=True))
+    vx, vy = m(VEIN_LABEL_AT)
+    lead0 = (73.5, my + 20.8)
+    ux_, uy_ = vx - lead0[0], vy - lead0[1]
+    ul = math.hypot(ux_, uy_)
+    vend = (vx - ux_ / ul * (VEIN_W * s / 2 + 0.6), vy - uy_ / ul * (VEIN_W * s / 2 + 0.6))
+    o.append(f'<path d="M{_f(lead0[0])},{_f(lead0[1])} L{_f(vend[0])},{_f(vend[1])}" stroke="#5E6C93" stroke-width="1.1"/>')
     o.append(T(14, my + 14.6, "Melatonin", 11, 800, MEL) + T(14, my + 27.8, "into blood", 10.4, 600, MEL, italic=True))
 
     # ---------------- right: the dial

@@ -919,6 +919,11 @@ CSS = r"""
 .flv-foot{display:flex;justify-content:space-between;align-items:baseline;gap:0.2in;margin-top:0.06in;font-size:7.4pt;color:#3F4A50}
 .flv-foot b{color:var(--deep)}
 .flv-foot small{font-size:7.2pt;color:#6A747B;white-space:nowrap}
+/* back page, scoped by the marker span in the lifestyle title */
+.sheet.back:has(.flv-back) .life .disc2{width:0.74in;height:0.74in}
+.sheet.back:has(.flv-back) .life .disc2 svg{width:0.44in!important;height:0.44in!important}
+.sheet.back:has(.flv-back) .band h2{margin-bottom:0.07in}
+.sheet.back:has(.flv-back) .rhythm{grid-template-columns:1fr 1fr .5fr}
 """
 
 # ============================================================== back page
@@ -929,11 +934,11 @@ LIFE = [
     # ultra-processed food (rich in sugars and saturated fat) and avoiding sugar-sweetened beverages"; [AASLD23]:
     # "dietary sugars (eg, fructose, sucrose, and glucose), drive the formation and accumulation of intrahepatic fat"
     ("plate", "Eat Mediterranean",
-     "Vegetables, beans, olive oil, nuts and fish. Skip sugary drinks and packaged sweets: sugar is easily turned into liver fat."),
+     "Vegetables, beans, olive oil, nuts and fish. Skip sugary drinks and sweets: sugar easily turns into liver fat."),
     # [EASL24]: weight loss "should aim at a sustained reduction of >=5% to reduce liver fat, 7-10% to improve
     # liver inflammation and >=10% to improve fibrosis"
     ("scale", "Lose 7 to 10 percent",
-     "Losing 5 percent of your weight cuts liver fat. 7 to 10 percent calms inflammation; 10 percent or more can ease scarring."),
+     "5 percent of your weight cuts liver fat; 7 to 10 percent calms inflammation; 10 or more eases scarring."),
     # [EASL24]/[AASLD23]: ">150 min/week of moderate ... physical activity"; 2 strength days [HHS18];
     # 10-minute walks after meals lowered after-meal glucose more than one 30-minute walk [REYNOLDS16]
     ("walk", "Move every day",
@@ -944,7 +949,7 @@ LIFE = [
     # [EASL24]: people with steatotic liver disease "should be discouraged from consuming alcohol"; "All alcohol
     # consumption should be stopped completely and permanently in individuals with advanced fibrosis or cirrhosis"
     ("glass", "Go easy on alcohol",
-     "It did not cause this, but alcohol adds to the liver's load. Less is better, and none at all if there is scarring."),
+     "It did not cause this, but alcohol adds to the liver's load. Less is better; none at all if there is scarring."),
 ]
 
 COLS = [
@@ -977,21 +982,20 @@ COLS = [
 #    dark urine or yellow skin [USP20]
 RX = {
     "pharmacy": [
-        "<b>Diabetes medicines:</b> Berberine Pro adds to the sugar-lowering effect of metformin, insulin and "
-        "sulfonylureas, and it slows the liver enzymes that clear some drugs (CYP2D6, 2C9, 3A4). Show {who} your full list.",
-        "<b>Warfarin:</b> Mito Recharge has 250 mcg vitamin K1, which works against warfarin. Take it every day, "
-        "not on and off, and tell {who} before you start or stop it.",
-        "<b>Statins</b> are safe with fatty liver but can lower CoQ10; Mito Recharge already has 100 mg. It also has "
-        "green tea extract: take it with food, and stop if you notice dark urine or yellow skin.",
+        "<b>Diabetes medicines:</b> Berberine Pro adds to their sugar-lowering effect, and it can slow the liver "
+        "enzymes that clear some drugs (CYP2D6, 2C9, 3A4).",
+        "<b>Warfarin:</b> Mito Recharge has 250 mcg vitamin K1, which works against it. Take it the same way every "
+        "day, and tell {who} before you start.",
+        "<b>Statins</b> are safe with fatty liver but can lower CoQ10; Mito Recharge has 100 mg. It has green tea "
+        "extract, so take it with food; stop if urine turns dark or skin yellow.",
     ],
     "practitioner": [
-        "<b>Diabetes medicines:</b> Berberine Pro adds to the sugar-lowering effect of metformin, insulin and "
-        "sulfonylureas, so {who} may check your blood sugar more often and adjust doses.",
-        "<b>Warfarin:</b> Mito Recharge has 250 mcg vitamin K1, which works against warfarin. {Who} may recheck "
-        "your INR after you start it; then keep the dose the same every day.",
-        "<b>Statins</b> are safe with fatty liver, so keep taking yours; they can lower CoQ10, and Mito Recharge "
-        "already has 100 mg. It also has green tea extract: take it with food, and call {who} about dark urine or "
-        "yellow skin.",
+        "<b>Diabetes medicines:</b> Berberine Pro adds to their sugar-lowering effect, so {who} may check your "
+        "blood sugar more often and adjust doses.",
+        "<b>Warfarin:</b> Mito Recharge has 250 mcg vitamin K1, which works against it. Keep the dose steady; "
+        "{who} may recheck your INR after you start.",
+        "<b>Statins</b> are safe with fatty liver but can lower CoQ10; Mito Recharge has 100 mg. It has green tea "
+        "extract, so take it with food; call {who} about dark urine or yellow skin.",
     ],
 }
 
@@ -1011,7 +1015,8 @@ SHEET = {
     "front": front,
     "css": CSS,
     "back": {
-        "life_title": "Lifestyle Recommendations", "style": "circle",
+        # the span marks this sheet's back page for the scoped CSS (.sheet.back:has(.flv-back))
+        "life_title": 'Lifestyle Recommendations<span class="flv-back"></span>', "style": "circle",
         "life": LIFE,
         "cols": COLS,
         "rx": RX,

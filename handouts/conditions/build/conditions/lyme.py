@@ -814,9 +814,9 @@ SHEET = {
                  ("ly_tweezers", "Remove it right", "Fine-tipped tweezers at the skin, pull straight up. Note the date."),
                  ("thermo", "Worse at first?", "Can be germs dying off. Keep your antibiotic; call your clinician.")],
         "cols": [
-            {"p": "ly_ultrabiotic_dms", "need": "Protect your gut", "needsub": "with <em>S. boulardii</em>", "start": True,
+            {"p": "ly_ultrabiotic_dms", "need": "Protect your gut", "needsub": "with <em>S.&nbsp;boulardii</em>", "start": True,
              "bullets": ["Supports a healthy gut microbiome",
-                         "<i>S. boulardii</i>, a yeast, is not killed by antibiotics"]},
+                         "<i>S.&nbsp;boulardii</i>, a yeast, is not killed by antibiotics"]},
             {"p": "ly_immune_prp", "need": "Immune readiness", "needsub": "colostrum immunoglobulins",
              "bullets": ["Promotes healthy immune function", "Supports the gut lining"]},
             {"p": "ly_inflam_eze", "need": "Inflammatory balance", "needsub": "ginger, curcumin, boswellia",

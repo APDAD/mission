@@ -110,10 +110,19 @@ SOURCES (each fact on the page carries one of these tags in a comment beside it)
 import math
 import os
 
-from kit import ICONS
+from kit import DIAMOND, ICONS
 from svgkit import T, svg
 
 SLUG = "muscle-cramps"
+
+
+def _sf(text):
+    """A claim bullet (structure/function) ending in the FDA diamond, drawn with kit.DIAMOND (never a font glyph).
+    The diamond is glued to the bullet's last word inside an unbreakable span: an inline SVG is a line-break
+    opportunity even after a no-break space, so without the glue it can wrap onto a line of its own.  Because
+    these bullets carry their own mark, build.py adds none to this sheet's columns."""
+    head, _, last = text.rpartition(" ")
+    return f'{head} <span class="nw">{last}&nbsp;<span class="mark">{DIAMOND}</span></span>'
 
 # =============================================================== text measuring
 _FACES = {}
@@ -932,7 +941,8 @@ SHEET = {
     "back": {
         "life_title": "Lifestyle Recommendations", "style": "circle",
         "life": [
-            ("mcr_stretch", "Stretch before bed",            # [HALL12]
+            # the title stays on one line, so this cell is no taller than its neighbours
+            ("mcr_stretch", "Bedtime stretch",               # [HALL12]
              "Gently stretch your calves and the backs of your thighs every night before sleep."),
             # "salts" could read as table salt, so the electrolytes are named; the title stays on one line
             ("drop", "Drink enough",                          # [LAU19]; [MAYO] dehydration
@@ -943,74 +953,90 @@ SHEET = {
              "Add exercise a little at a time. Tired muscles cramp more easily."),
             ("mcr_foot", "Stop a cramp",                      # [MAYO] self-care
              "Straighten the leg, pull your toes toward you, rub the knot, add warmth."),
-            ("rx", "Check medicines",                         # [GARR12]
-             "Water pills, inhalers and statins can play a part. Never stop one without your prescriber."),
+            # [GARR12] water pills, inhalers, statins; [FDA-PPI] [ODS-MG] long-term heartburn pills (PPIs) lower blood
+            # magnesium.  Four lines like its neighbours; "never stop one on your own" is in the medicine check below.
+            ("rx", "Check medicines",
+             "Water pills, heartburn pills, inhalers and statins can play a part. Ask before stopping."),
         ],
         # Back-page columns are not passed through ed_text, so no {who} here: edition wording lives in rx.
         # Only Muscle Eze and Vitamin K2 are in everyone's daily rhythm (4 pills).  Mag Calm Pro and Mag-K replace
         # Muscle Eze rather than add to it, so supplemental magnesium stays at 200 mg a day, under the 350 mg upper
-        # limit [ODS-MG]; CoQ10 is only for statin users.
+        # limit [ODS-MG] (the rx panel says so: one magnesium product at a time); CoQ10 is only for statin users.
+        # Headers are body needs with no drug names (21 CFR 101.93(g)(2)(x): a product tied to a drug's side effect
+        # reads as a disease claim); who should skip what, with the drug names, lives in the rx panel.  Every need
+        # is one line, every dose note is one line, and the .need boxes share one height (CSS below), so the
+        # photos, names and dark dose bars all line up.  Claim bullets carry their own glued diamond (_sf).
         "cols": [
-            # [LABEL] "Targeted Formula for Supporting and Relaxing Healthy Muscle Tissue"; [SPASM] guarding;
-            # not sold as a cramp cure [COCH20]
-            {"p": "mcr_muscle_eze", "need": "Relax guarded muscles", "needsub": "magnesium + calcium,<br>theanine, passion flower",
+            # [LABEL] "Targeted Formula for Supporting and Relaxing Healthy Muscle Tissue"; not sold as a cramp cure
+            # [COCH20]; a plain need, not "guarded" muscles, so it never reads as easing a spasm around an injury
+            {"p": "mcr_muscle_eze", "need": "Relaxed muscles", "needsub": "magnesium + calcium,<br>theanine, passion flower",
              "start": True,
-             "bullets": ["Helps muscles relax", "Supports calm and rest"],
+             "bullets": [_sf("Helps muscles relax"), _sf("Supports calm and rest")],
              "dose": "3 capsules at bedtime", "dosesub": "may cause drowsiness", "sched": [("bed", 3, "capsules")]},
+            # [LABEL] "Healthy Stress and Relaxation Support"; label "Mix 1 scoop with 6 ounces of water 1-2 times
+            # daily": one scoop, as a swap for Muscle Eze, keeps the day at 200 mg magnesium
             {"p": "mcr_mag_calm_pro", "need": "Calm busy nerves", "needsub": "magnesium, taurine,<br>B6, L-theanine",
-             "bullets": ["Supports relaxed nerves", "Supports restful sleep"],
-             "dose": "1 scoop in 6 oz water", "dosesub": "or in place of Muscle Eze on restless nights", "sched": []},
-            # [ODS-VK] vitamin K activates bone proteins (osteocalcin) that bind calcium; [TAN24] 180 mcg in the trial
-            {"p": "mcr_vitamin_k2", "need": "Bone and calcium balance", "needsub": "vitamin K2 as MK-7",
-             "bullets": ["Helps activate bone proteins that bind calcium", "Long-acting MK-7 form"],
-             "dose": "1 capsule daily", "dosesub": "with dinner. Trial: 180&nbsp;mcg; 1&nbsp;capsule = 100&nbsp;mcg",
-             "sched": [("pm", 1, "capsule")]},
-            {"p": "coq10", "need": "On a statin?", "needsub": "CoQ10 for muscle energy",
-             "bullets": ["Fuel for energy-making in muscle cells", "Statins lower the body&rsquo;s own CoQ10"],   # [NCCIH]
-             "dose": "1 softgel daily", "dosesub": "with a meal, only if you take a statin", "sched": []},
-            # [ODS-MG] [ODS-K] thiazide and loop water pills raise magnesium and potassium loss; potassium-sparing ones
-            # (spironolactone, triamterene, amiloride) keep both, so the header names the two that drain them
-            {"p": "mcr_mag_k", "need": "On HCTZ or furosemide?", "needsub": "magnesium + potassium",
-             "bullets": ["Supports normal muscle and nerve signals", "These water pills can drain both minerals"],
+             "bullets": [_sf("Supports relaxation"), _sf("Supports restful sleep")],
+             "dose": "1 scoop in 6 oz water", "dosesub": "in place of Muscle Eze", "sched": []},
+            # [ODS-VK] vitamin K activates bone proteins (osteocalcin) that bind calcium; [LABEL] "one capsule daily
+            # with a meal".  The cramp trial [TAN24] stays on the front only, so the product is never tied to it.
+            {"p": "mcr_vitamin_k2", "need": "Calcium balance", "needsub": "vitamin K2 as MK-7",
+             "bullets": [_sf("Helps activate bone proteins that bind calcium"), "Long-acting MK-7 form"],
+             "dose": "1 capsule daily", "dosesub": "with a meal", "sched": [("pm", 1, "capsule")]},
+            # [NCCIH] statins lower blood CoQ10; [LABEL] R350U "one softgel daily with a meal"
+            {"p": "coq10", "need": "Muscle cell energy", "needsub": "CoQ10 as ubiquinol",
+             "bullets": [_sf("Fuel for energy-making in muscle cells"), "Statins lower the body&rsquo;s own CoQ10"],
+             "dose": "1 softgel with a meal", "dosesub": "statin users only", "sched": []},
+            # [ODS-MG] [ODS-K] magnesium and potassium for normal nerve and muscle signals.  No water-pill header:
+            # "On a water pill?" would also invite spironolactone, triamterene and amiloride users, who must not add
+            # potassium; the rx panel names those drugs.
+            {"p": "mcr_mag_k", "need": "Mineral balance", "needsub": "magnesium + potassium",
+             "bullets": [_sf("Supports normal muscle and nerve signals"), _sf("Supports healthy mineral levels")],
              "dose": "3 capsules with meals", "dosesub": "in place of Muscle Eze", "sched": []},
         ],
+        # Both editions send every kidney and potassium decision to the PRESCRIBER: a pharmacist, DC or ND does not
+        # manage kidney disease or those drugs.  No K2 dose line: the cramp trial's 180 mcg stays on the front.
         "rx": {
             "pharmacy": [
-                # [GARR12] [AAFP12]; pharmacists review the medicine list, so this edition asks them to
-                "<b>Bring your medicine list.</b> {Who} can check it: some water pills, asthma inhalers, statins and "
-                "bone or estrogen medicines are linked to cramps. Never stop one on your own.",
-                # [TAN24] [ODS-VK] [NCCIH]
+                # [GARR12] [AAFP12]; [FDA-PPI] [ODS-MG] heartburn pills (PPIs).  Pharmacists review the medicine list,
+                # so this edition asks them to.
+                "<b>Bring your medicine list.</b> {Who} can check it: some water pills, heartburn pills, asthma "
+                "inhalers, statins and bone or estrogen medicines are linked to cramps. Never stop one on your own.",
+                # [ODS-MG] UL 350 mg/day from supplements: each of the three gives 200 mg, so two would be 400 mg
+                "<b>One magnesium product at a time:</b> Muscle Eze, Mag Calm Pro or Mag-K, never two.",
+                # [ODS-MG] magnesium builds up when the kidneys are impaired; [ODS-K] ACE inhibitors, ARBs and
+                # potassium-sparing diuretics raise blood potassium
+                "<b>Kidney disease?</b> Ask your prescriber before any magnesium product. <b>On an ACE inhibitor or "
+                "ARB, or spironolactone, triamterene or amiloride?</b> Skip Mag-K unless your prescriber says yes.",
+                # [ODS-VK] [NCCIH] [TAN24] warfarin
                 "<b>On warfarin (Coumadin)?</b> K2 and CoQ10 affect it. Start neither without your prescriber.",
                 # [LABEL] pregnancy, nursing, medication; passion flower and theanine with sedatives; drowsiness
                 "<b>Pregnant or nursing, or on sleep or anxiety medicine?</b> Ask {who} before any of these. "
                 "Muscle Eze can make you drowsy.",
-                # [ODS-K] [ODS-MG] kidney disease, ACE inhibitors, ARBs and potassium-sparing diuretics raise potassium
-                "<b>Kidney disease, an ACE inhibitor or ARB, or spironolactone, triamterene or amiloride?</b> Skip Mag-K "
-                "unless {who} says yes.",
-                # [LEVO] 4 hours; [CIPRO] 2 before or 6 after; [ODS-MG] bisphosphonates 2 hours, tetracyclines 2 before or
-                # 4-6 after; calcium binds these too.  [COCH20] GI side effects.
-                "<b>Thyroid pills:</b> 4 hours apart from magnesium or calcium. <b>Alendronate, doxycycline or "
-                "ciprofloxacin:</b> 2 hours before them or 6 hours after. Loose stools mean too much magnesium.",
-                # [TAN24] 180 mcg; [LABEL] one capsule daily or as directed
-                "<b>K2 dose:</b> 1 capsule is 100 mcg (the trial used 180). Take more only if {who} says so.",
+                # [LEVO] 4 hours; [CIPRO] 2 before or 6 after; [ODS-MG] bisphosphonates 2 hours, tetracyclines 2 before
+                # or 4-6 after; calcium binds these too.  [COCH20] GI side effects.
+                "<b>Thyroid pills:</b> 4 hours apart from magnesium or calcium. Take <b>alendronate, doxycycline or "
+                "ciprofloxacin</b> 2 hours before magnesium or calcium, or 6 hours after. Loose stools mean too much "
+                "magnesium.",
             ],
             "practitioner": [
-                # [GARR12] [AAFP12]
-                "<b>Bring your medicine list.</b> Some water pills, asthma inhalers, statins and bone or estrogen "
-                "medicines are linked to cramps. Never stop one on your own.",
-                # [TAN24] [ODS-VK] [NCCIH]
+                # [GARR12] [AAFP12] [FDA-PPI] [ODS-MG]
+                "<b>Bring your medicine list.</b> Some water pills, heartburn pills, asthma inhalers, statins and bone "
+                "or estrogen medicines are linked to cramps. Never stop one on your own.",
+                # [ODS-MG]
+                "<b>One magnesium product at a time:</b> Muscle Eze, Mag Calm Pro or Mag-K, never two.",
+                # [ODS-MG] [ODS-K]
+                "<b>Kidney disease?</b> Ask your prescriber before any magnesium product. <b>On an ACE inhibitor or "
+                "ARB, or spironolactone, triamterene or amiloride?</b> Skip Mag-K unless your prescriber says yes.",
+                # [ODS-VK] [NCCIH] [TAN24]
                 "<b>On warfarin (Coumadin)?</b> K2 and CoQ10 affect it. Start neither without your prescriber.",
                 # [LABEL]
                 "<b>Pregnant or nursing, or on sleep or anxiety medicine?</b> Ask {who} before any of these. "
                 "Muscle Eze can make you drowsy.",
-                # [ODS-K] [ODS-MG]; a DC or ND is not the prescriber, so the drug decision goes to the prescriber
-                "<b>Kidney disease, an ACE inhibitor or ARB, or spironolactone, triamterene or amiloride?</b> Skip Mag-K "
-                "unless your prescriber says yes.",
                 # [LEVO] [CIPRO] [ODS-MG] [COCH20]
-                "<b>Thyroid pills:</b> 4 hours apart from magnesium or calcium. <b>Alendronate, doxycycline or "
-                "ciprofloxacin:</b> 2 hours before them or 6 hours after. Loose stools mean too much magnesium.",
-                # [TAN24] [LABEL]
-                "<b>K2 dose:</b> 1 capsule is 100 mcg (the trial used 180). Take more only if {who} says so.",
+                "<b>Thyroid pills:</b> 4 hours apart from magnesium or calcium. Take <b>alendronate, doxycycline or "
+                "ciprofloxacin</b> 2 hours before magnesium or calcium, or 6 hours after. Loose stools mean too much "
+                "magnesium.",
             ],
         },
     },

@@ -954,9 +954,9 @@ def best_box():
             '<li><b>Hormone therapy works best.</b> For most healthy women under 60, the benefits outweigh the '
             'risks. It needs a prescription, so ask your doctor.</li>'
             '<li><b>Also proven:</b> CBT (a brief talk therapy), clinical hypnosis and some prescriptions.</li>'
-            '<li><b>Supplements</b> are not proven for hot flashes. EstroG&#8209;100, in Menopause Support, '
-            'helped in small trials; the newest was run by a supplement company and added GABA.&nbsp;'
-            f'{mark} If you try it, score yourself again at 6 weeks.</li></ol>'
+            '<li><b>Supplements</b> are not proven for hot flashes. In small trials, EstroG&#8209;100 (in Menopause '
+            'Support) helped; the newest was run by a supplement company and added GABA.&nbsp;'
+            f'{mark} If you try it, score again at 6 weeks.</li></ol>'
             '<small>Source: The Menopause Society, 2022 and 2023.<br>'
             f'{mark} Not evaluated by the FDA; not intended to diagnose, treat, cure, or prevent any '
             'disease.</small></div>')

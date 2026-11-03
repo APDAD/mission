@@ -1037,7 +1037,7 @@ SHEET = {
             # [CADE16].  [PATAK04] vitamin C in the adrenal gland; pantothenic acid builds coenzyme A for steroid
             # synthesis; [AKTURK18] why glandulars are not a first step.
             {"p": "sc_adrenal_renew", "need": "Coming off a glandular?", "needsub": "switch, then step down",
-             "bullets": ["Not a first step", sf("Supports a healthy stress response")],
+             "bullets": ["Not a first step", sf("B vitamins and vitamin C for a healthy stress response")],
              "dose": "dose_from_db"},
         ],
         # One list for both editions; {who} is the only difference.

@@ -1,0 +1,57 @@
+{
+  "hbp_bp_support": {
+    "name": "Cardio Essentials BP Support",
+    "size": "90 capsules &middot; 30 servings",
+    "img_src": "R182.png",
+    "key": "Per 3 capsules: 750&nbsp;mg olive leaf extract, 750&nbsp;mg fermented black garlic extract, 300&nbsp;mg concentrated celery seed (3nB), 200&nbsp;mg grape seed extract",
+    "dose": "3 capsules daily",
+    "dosesub": "with your evening meal",
+    "sched": [["pm", 3, "capsules"]],
+    "url": "https://nutridyn.com/cardio-essentials-bp-support-r182",
+    "src": "Label: Cardio Essentials BP Support sell sheet ND681 Rev. 10/24 (Dropbox /NutriDyn/Sales/Practitioner Resource/NutriDyn Marketing Materials/Cardio Essentials BP Support SS ND681.pdf, id:xHepYs_Ou4AAAAAAAAw_9w), opened with the Dropbox reader on 2026-11-03. Supplement Facts: serving size 3 capsules, 30 servings per container; olive leaf extract (Olea europaea, 16% oleuropein, Benolea EFLA 943) 750 mg; fermented black garlic bulb extract (Allium sativum, >1% S-allyl cysteine) 750 mg; concentrated celery seed fraction (Apium graveolens, 42.5% phthalides, 3nB) 300 mg; grape seed extract (Vitis vinifera, 90% polyphenols, MegaNatural-BP) 200 mg. Directions 'Take three capsules daily or as directed by your healthcare practitioner.' Caution 'If you are pregnant, nursing, or taking medication, consult your healthcare practitioner before use.' The sheet's compliance line is 'Support for healthy blood pressure already in the normal range', and it says Benolea and MegaNatural-BP work by promoting nitric oxide production. Size R182 90C: products DB (ND144 price list 10/1/26). Protocol: Asher's High Blood Pressure Protocol email to Dr. Hoisington (Gmail 17822c0dfc689947, 2021-03-11) names it as the formula; his Drive sheet 'Dr. Joe/Allison' (2023-02-13): 'BP Support if looking purely for blood pressure support'. The label sets no time of day; the evening meal is this sheet's plan, to spread the pills. URL: the product key cardio-essentials-bp-support-r182 was seen through web search on NutriDyn storefronts that share the catalog (dhs., acnc. and ccmlkenorth.nutridyn.com); nutridyn.com itself is blocked from this session, so the main-site page was not opened. Photo: only the 87x160 chart thumbnail is reachable (scratchpad products/img/R182.png), LOW-RES; Dropbox /NutriDyn/Product Images/Product Images (1)/R182_Web (the 420 px web render) exists but cannot be downloaded here."
+  },
+  "hbp_nitric_boost": {
+    "name": "Nitric Boost",
+    "size": "90 capsules &middot; 30 servings",
+    "img_src": "R257.png",
+    "key": "Per 3 capsules: 375&nbsp;mg beet root extract, potassium nitrate (150&nbsp;mg potassium), 120&nbsp;mg magnesium, plus pomegranate, tart cherry, pine bark and grape seed",
+    "dose": "3 capsules daily",
+    "dosesub": "with breakfast",
+    "sched": [["am", 3, "capsules"]],
+    "url": "https://nutridyn.com/nitric-boost-r257",
+    "src": "Label: Nitric Boost sell sheet ND1255 Rev. 6/25 (Dropbox /NutriDyn/Sales/Practitioner Resource/NutriDyn Marketing Materials/Nitric Boost SS ND1255.pdf, id:xHepYs_Ou4AAAAAAAAx4ag), opened with the Dropbox reader on 2026-11-03 and identical to scratchpad labels/labels.json R257. Supplement Facts: serving size 3 capsules, 30 servings; vitamin C (as magnesium and zinc ascorbate) 300 mg; vitamin D3 15 mcg; thiamin 100 mg; vitamin B12 50 mcg; magnesium (as magnesium ascorbate) 120 mg; zinc 7 mg; potassium (as potassium nitrate) 150 mg; beet root extract 375 mg; pomegranate extract (Pomanox, 30% punicalagins) 200 mg; Montmorency tart cherry extract 200 mg; French maritime pine bark extract (Pycnogenol) 50 mg; grape seed extract (95% proanthocyanidins) 50 mg. Directions 'Take three capsules daily or as directed by your healthcare practitioner.' Caution: pregnant, nursing or taking medication, consult. The sheet: 'By increasing nitric oxide production, the formula promotes vasodilation, supports healthy blood flow'; 'Beet Root Extract is rich in nitrates that convert to nitric oxide'. Size R257 90C: ND144 price list 10/1/26 (labels.json corroboration). Protocol: Chad Oler GLC 2025 HBP slide 12 ('Nitric Oxide Strips suboptimal and/or hypertension, add Cardio Flow 1 scoop QD, Nitric Boost 3 caps/day', Dropbox id:xHepYs_Ou4AAAAAAAA0ajA); Dr. Sefcik's flow relayed by Asher (Gmail 1a0bb53d10a9ec81, 2026-09-23): Nitric Boost for patients who will not take a powder. Chosen over Cardio Flow Powder (R157) because the front teaches the dietary-nitrate route and this formula delivers nitrate directly, and because no Cardio Flow Powder photo is reachable at any size (the column would print the grey placeholder); swap to R157 once its print photo is staged. Morning with food per Oler ('with food') and the daytime rhythm. Its 120 mg magnesium is why the Magnesium Glycinate column drops to 1 capsule (total 250 mg a day, under the NIH 350 mg supplement upper limit). URL: product key nitric-boost-r257 seen through web search on a NutriDyn storefront (alvaroalaor705323.nutridyn.com, same catalog); nutridyn.com is blocked here, so not opened. Photo R257.png is a 328x640 Lanczos stopgap of the 82x160 chart thumbnail (img-src/soft.json): SOFT, needs the print master."
+  },
+  "hbp_mag_glycinate": {
+    "name": "Magnesium Glycinate",
+    "size": "60, 120, 160 or 320 capsules",
+    "img_src": "R872.png",
+    "key": "Per 2 capsules: 260&nbsp;mg magnesium as gentle Albion chelates (malate and lysinate glycinate)",
+    "dose": "1 capsule at bedtime",
+    "dosesub": "2 if you skip Nitric Boost",
+    "sched": [["bed", 1, "capsule"]],
+    "url": "https://nutridyn.com/magnesium-glycinate",
+    "src": "Sheet-local copy of the shared mag_glycinate entry so this sheet can set its own dose without changing other sheets. Products DB R871 (13 switch-chart label reads of catalog ND143 10/1/26): 260 mg magnesium per 2 capsules as di-magnesium malate and magnesium lysinate glycinate chelate, plus 660 mg malic acid; directions 'Take two capsules twice daily'; sizes R871 60C, R871L 120C, R872 160C, R872L 320C (ND144 price list 10/1/26). 'Albion' from the live panel read in Asher's magnesium blast (repo blasts/2026-10-12-magnesium-bp.html, which also records nutridyn.com/magnesium-glycinate as 'curl-200 8/11'). Dose: 1 capsule (130 mg) at bedtime because Nitric Boost already gives 120 mg, so the full plan supplies 250 mg of supplemental magnesium a day; 2 capsules (260 mg) without Nitric Boost. Both stay under the NIH ODS Tolerable Upper Intake Level of 350 mg a day from supplements for adults (Magnesium fact sheet for health professionals). The blast's 2025 Hypertension meta-analysis (38 RCTs) found no dose-response and the benefit in treated hypertensives (-7.7 mm Hg systolic) and magnesium-deficient patients, hence the test-first bullet. Protocol: Chad Oler GLC 2019 (1 capsule two to three times daily with food). Photo R872.png 848x1552 (text-safe 4x upscale of the 244x420 web render, scratchpad hires/manifest.json)."
+  },
+  "hbp_omega_1000": {
+    "name": "Omega Pure EPA‑DHA 1000",
+    "size": "120 softgels",
+    "img_src": "R243.png",
+    "key": "Per softgel: 1,000&nbsp;mg EPA + DHA (730&nbsp;mg EPA, 270&nbsp;mg DHA)",
+    "dose": "2 softgels daily",
+    "dosesub": "with your evening meal",
+    "sched": [["pm", 2, "softgels"]],
+    "url": "https://nutridyn.com/omega-pure-epa-dha-1000",
+    "src": "Products DB R243 (Pure, Designs for Health, Ortho Molecular and other switch-chart label reads of catalog ND143 10/1/26): EPA 730 mg + DHA 270 mg = 1,000 mg EPA + DHA per softgel; directions 'Take one softgel up to three times daily with food'; size R243 120S (ND144 10/1/26). Protocol: Chad Oler's HBP stack (GLC 2025 slide 12 and GLC 2019) uses Omega Pure EPA-DHA 720 (R841), 2 softgels three times daily; this sheet uses the same Omega Pure line at 1,000 mg per softgel because it gives the omega-3s in fewer softgels and is the only Omega Pure bottle with a print-ready photo (R841 has only the 86x160 chart thumbnail here). 2 softgels a day (2,000 mg EPA + DHA) sits inside the label's up-to-3 and in the 2 to 3 g/day range a 2022 dose-response meta-analysis linked to the largest blood pressure effect (Zhang X et al., J Am Heart Assoc 2022;11:e025071). URL slug from products.py SLUGS (NutriDyn 60-day protocol doc). Name uses a non-breaking hyphen and space so 'EPA-DHA 1000' never splits. Photo R243.png 848x1552 (text-safe 4x upscale of the 244x420 web render, scratchpad hires/manifest.json)."
+  },
+  "hbp_coq10": {
+    "name": "CoQ10 100 mg",
+    "size": "60 softgels",
+    "img_src": "R350.png",
+    "key": "Per softgel: 100&nbsp;mg CoQ10 (CoQsol), 67&nbsp;mg vitamin&nbsp;E, 698&nbsp;mcg vitamin&nbsp;A as beta-carotene",
+    "dose": "1 softgel daily",
+    "dosesub": "with breakfast",
+    "sched": [["am", 1, "softgel"]],
+    "url": "https://nutridyn.com/coq10-100-mg",
+    "src": "Label: CoQ10 100 mg sell sheet ND270 Rev. 7/24 (Dropbox /NutriDyn/Sales/Practitioner Resource/NutriDyn Marketing Materials/CoQ10 100mg SS ND270.pdf, id:xHepYs_Ou4AAAAAAAAevOQ), opened with the Dropbox reader on 2026-11-03. Supplement Facts: serving size 1 softgel, 60 servings; vitamin A (as beta-carotene, Betatene) 698 mcg RAE; vitamin E (as mixed tocopherols and d-alpha-tocopherol) 67 mg; coenzyme Q10 (CoQsol) 100 mg. Directions 'Take one softgel daily as a dietary supplement or directed by your healthcare practitioner.' The sheet lists 'Supports blood flow and nitric oxide production' and 'Supports energy production'. The products DB (R350, chart reads of catalog ND143 10/1/26) prints 'Take one softgel twice daily', and Chad Oler's HBP slide (GLC 2025 slide 12, GLC 2019) uses 1 softgel twice daily; this sheet prints the once-daily direction from the label it could open, and a provider can raise it. Protocol: Oler's HBP stack names 'CoQ10 (100 mg)', which is this product (CoQ10 Ubiquinol R350U is a different item). Size R350 60S (ND144 10/1/26 via the DB). URL: product key coq10-100-mg seen through web search on a NutriDyn storefront (afc.nutridyn.com, SKU R350, same catalog); nutridyn.com is blocked here, so not opened. Photo: only the 92x160 chart thumbnail (scratchpad products/img/R350.png) is reachable, LOW-RES; Dropbox Product Images (1)/R350_Web and R350.png exist but cannot be downloaded here."
+  }
+}

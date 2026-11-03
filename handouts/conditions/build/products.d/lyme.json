@@ -11,7 +11,7 @@
     "name": "UltraBiotic Daily Multi-Strain",
     "size": "30 or 60 capsules",
     "img_src": "R829.png",
-    "key": "30 billion CFU per capsule, seven strains: <i>S. boulardii</i>, <i>L. reuteri</i>, <i>B. lactis</i>, <i>L. plantarum</i>, <i>L. acidophilus</i>, <i>L. gasseri</i>, <i>B. coagulans</i>",
+    "key": "30 billion CFU, seven strains: <i>S.&nbsp;boulardii</i>, <i>L.&nbsp;reuteri</i>, <i>B.&nbsp;lactis</i>, <i>L.&nbsp;plantarum</i>, <i>L.&nbsp;acidophilus</i>, <i>L.&nbsp;gasseri</i>, <i>B.&nbsp;coagulans</i>",
     "dose": "1 capsule at bedtime",
     "dosesub": "2 hours from antibiotics",
     "sched": [
@@ -28,7 +28,7 @@
     "name": "Immune PRP Pro",
     "size": "120 capsules &middot; contains milk",
     "img_src": "R2178.png",
-    "key": "Per 4 capsules: 1,720 mg bovine colostrum, standardized to 30% IgG, with PRP, IgA, IgM and lactoferrin",
+    "key": "Per 4 capsules: 1,720 mg bovine colostrum, standardized to 30% IgG antibodies, with PRP, IgA, IgM and lactoferrin",
     "dose": "2 capsules twice daily",
     "dosesub": "morning and evening",
     "sched": [

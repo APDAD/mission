@@ -177,7 +177,11 @@ KEY_Y, KEY_H = 346, 68         # three-row KEY; its white box covers the faded s
 TOP = 4                        # top margin above the heading pills (the art is drawn TOP units down)
 INS_R = 63
 INS_L, INS_W = (100, 92), (660, 92)   # magnified circles (healthy, worn)
-LENS_U = (-40, 30)             # where the dashed rings sit on the femoral cartilage (local u, healthy / worn)
+# where the dashed rings sit on the femoral cartilage (local u, healthy / worn): each in the clear window between
+# its joint-space bracket (u -64 / +64) and the cartilage end or the meniscus tip, so a dashed connector can rise
+# from it to its circle (the worn one between markers 1 and 2)
+LENS_U = (-47, 80)
+LENS_R = 10
 SPACE_U = 64                   # the joint-space brackets, at the middle of each condyle
 
 
@@ -335,11 +339,15 @@ N_FEM, N_TIB = len(FEM), len(TIB)
 FEM_ART_R = (N_FEM - 2 - FEM_ART[1], N_FEM - 2 - FEM_ART[0])   # the same segments, mirrored
 TIB_ART_R = (N_TIB - 2 - TIB_ART[1], N_TIB - 2 - TIB_ART[0])
 
-# joint lining (synovium): femur attachment -> tibia attachment.  The worn side bulges with extra fluid.
-SYN_L = [(CX - 103, 159), (CX - 114, 164), (CX - 123, 175), (CX - 128, 191), (CX - 128.5, 208), (CX - 126, 224),
-         (CX - 122, 237), (CX - 116.3, 247.5)]
-SYN_R = [(CX + 103, 159), (CX + 119, 162), (CX + 133, 173), (CX + 142, 190), (CX + 144.5, 209), (CX + 143, 228),
-         (CX + 137, 245), (CX + 124, 256), (CX + 112, 258.5)]
+# joint lining (synovium): femur attachment -> tibia attachment.  The worn side bulges with extra fluid.  Each
+# lining comes in to meet the outer rim of its meniscus at mid-height (the rim is held by the joint capsule), with
+# the fluid pocket above it; on the worn side the pushed-out meniscus presses into the swollen lining.
+SYN_L = [(CX - 103, 159), (CX - 114, 164), (CX - 123, 175), (CX - 128, 191), (CX - 128.4, 205), (CX - 123.6, 219),
+         (CX - 124, 229), (CX - 121.5, 239), (CX - 116.3, 247.5)]
+SYN_R = [(CX + 103, 159), (CX + 119, 162), (CX + 133, 173), (CX + 142, 190), (CX + 144.5, 209), (CX + 142.5, 224),
+         (CX + 138, 234), (CX + 132.5, 246), (CX + 122, 255.5), (CX + 112, 258.5)]
+MEN_W = (CX + 133, CX + 95)    # worn meniscus, outer and inner edge: pushed out past the plateau rim to the lining
+VILLI_SKIP = (222, 241)        # no lining folds where the worn meniscus and the spur under it press on the lining
 
 
 def _seg_pts(samples, rng):
@@ -522,7 +530,7 @@ def _bracket(x, y0, y1, w=3.4):
             f'<path d="{heads}" fill="{INK}"/>')
 
 
-def _syn_band(pts, worn, rnd):
+def _syn_band(pts, worn, rnd, skip=None):
     d = path_d(pts, closed=False)
     if not worn:
         return (f'<path d="{d}" fill="none" stroke="{LINING_EDGE}" stroke-width="6" stroke-linecap="round"/>'
@@ -530,7 +538,8 @@ def _syn_band(pts, worn, rnd):
                 f'<path d="{d}" fill="none" stroke="{LINING_HI}" stroke-width="1.1" stroke-linecap="round" opacity=".9"/>')
     o = [f'<path d="{d}" fill="none" stroke="{INFL_EDGE}" stroke-width="10" stroke-linecap="round"/>',
          f'<path d="{d}" fill="none" stroke="{INFL}" stroke-width="7.8" stroke-linecap="round"/>']
-    # finger-like folds (villi) of a swollen lining, reaching into the fluid
+    # finger-like folds (villi) of a swollen lining, reaching into the fluid (none in the `skip` y range, where
+    # the pushed-out meniscus presses on the lining)
     curve = [(x, y) for x, y, _ in sample(pts, closed=False, per=10)]
     for i in range(6, len(curve) - 7, 4):
         (xa, ya), (xb, yb) = curve[i - 1], curve[i + 1]
@@ -541,6 +550,8 @@ def _syn_band(pts, worn, rnd):
             nx, ny = -nx, -ny
         r = 2.9 if i % 8 else 3.6
         fx, fy = curve[i][0] + nx * (3.9 + r * 0.7), curve[i][1] + ny * (3.9 + r * 0.7)
+        if skip and skip[0] <= fy <= skip[1]:
+            continue
         o.append(f'<circle cx="{_f(fx)}" cy="{_f(fy)}" r="{r}" fill="{INFL}" stroke="{INFL_EDGE}" stroke-width=".9"/>')
     o.append(f'<path d="{d}" fill="none" stroke="{INFL_HI}" stroke-width="1.3" stroke-linecap="round" opacity=".85"/>')
     return "".join(o)
@@ -629,13 +640,14 @@ def knee(rnd):
     o += [lip_f, lip_t]
 
     # ---- menisci: a healthy wedge at the rim; the worn one thinner, torn and pushed out past the plateau edge,
-    # where it rests on the tibial spur
+    # where it rests on the tibial spur and presses into the lining
     o.append(_meniscus(surf_fl, surf_tl, CX - 118.5, CX - 80, 15, False))
-    o.append(_meniscus(surf_fr, surf_tr, CX + 127, CX + 93, 6.6, True, rim_y=tip_t[1] - 1.6))
+    o.append(_meniscus(surf_fr, surf_tr, MEN_W[0], MEN_W[1], 6.6, True, rim_y=tip_t[1] - 1.6))
 
-    # ---- lining: thin and calm on the healthy side; thick, red and folded where it is inflamed
+    # ---- lining: thin and calm on the healthy side; thick, red and folded where it is inflamed.  Drawn after the
+    # menisci, so each lining's inner edge overlaps its meniscus rim and the two read as joined.
     o.append(_syn_band(SYN_L, False, rnd))
-    o.append(_syn_band(SYN_R, True, rnd))
+    o.append(_syn_band(SYN_R, True, rnd, skip=VILLI_SKIP))
     # loose bits of worn cartilage floating in the extra fluid
     for x, y, a in FLAKES:
         o.append(_flake(CX + x, y, a))
@@ -823,6 +835,23 @@ def _lens(x, y, col, r=11):
     """A dashed ring on the knee marking the spot each magnified circle shows."""
     return (f'<circle cx="{_f(x)}" cy="{_f(y)}" r="{r + 1.5}" fill="none" stroke="#FFFFFF" stroke-width="3.4"/>'
             f'<circle cx="{_f(x)}" cy="{_f(y)}" r="{r}" fill="none" stroke="{col}" stroke-width="1.9" stroke-dasharray="3.4 2.4"/>')
+
+
+def _connector(ring, ring_r, circle, lift, c2, col):
+    """A faint dashed callout line, white halo under it, from the top of a dashed ring up and over to its
+    magnified circle: it leaves the ring straight up for `lift` units, then bends through c2 and meets the
+    circle head-on at its outer white rim."""
+    (x0, y0), (cx, cy) = ring, circle
+    p0 = (x0, y0 - ring_r - 2.2)
+    c1 = (x0, p0[1] - lift)
+    ux, uy = c2[0] - cx, c2[1] - cy
+    m = math.hypot(ux, uy)
+    p3 = (cx + ux / m * (INS_R + 3.6), cy + uy / m * (INS_R + 3.6))
+    d = (f"M{_f(p0[0])},{_f(p0[1])} C{_f(c1[0])},{_f(c1[1])} {_f(c2[0])},{_f(c2[1])} "
+         f"{_f(p3[0])},{_f(p3[1])}")
+    return (f'<path d="{d}" fill="none" stroke="#FFFFFF" stroke-width="3.8" stroke-linecap="round" opacity=".92"/>'
+            f'<path d="{d}" fill="none" stroke="{col}" stroke-width="1.35" stroke-dasharray="3.4 2.6" '
+            'stroke-linecap="round" opacity=".9"/>')
 
 
 # ============================================================== labels
