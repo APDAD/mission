@@ -2,8 +2,13 @@
 label-checked amounts only (sources noted per entry).  `sched` drives the
 "Your daily rhythm" panel: (slot, count, unit) with slot in am / pm / bed.
 """
+import glob
+import json
 import os
+import re
 import shutil
+
+HERE = os.path.dirname(os.path.abspath(__file__))
 
 ASSETS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "blasts", "assets")
 EXTRACTED = os.environ.get("ND_PRODUCT_IMG", "")
@@ -94,33 +99,94 @@ P.update({
 })
 P["ultrabiotic_dms"].update(img_src=_x("R829"), key="30 billion CFU, seven strains: S. boulardii, L. reuteri, B. lactis, L. plantarum, L. acidophilus, L. gasseri, B. coagulans")
 
+# ---------------------------------------------------------------- product links
+# Product photos and names link to the product page.  nutridyn.com slugs come
+# from the NutriDyn 60-day protocol doc (Drive, 2025); others fall back to a
+# catalog search.  LINK_BASE can later point at an OpenFunctional storefront.
+LINK_BASE = os.environ.get("ND_LINK_BASE", "https://nutridyn.com/")
+SLUGS = {
+    "gi_defend": "dynamic-gi-defend-r191", "ultrabiotic_dms": "ultrabiotic-daily-multi-strain",
+    "curcumin_bcm95": "curcumin-400x-r268", "d3_5000_k2": "d3-5000-with-k2", "omega_1000": "omega-pure-epa-dha-1000",
+    "mag_glycinate": "magnesium-glycinate", "lipo_flow": "lipo-flow", "methyl_b": "methyl-complete-r187",
+    "mito": "mito-recharge-r167", "immunity_pro": "immunity-pro", "inflam_eze": "inflam-eze-plus",
+}
+
+
+def url_for(k, p):
+    if p.get("url"):
+        return p["url"]
+    if k in SLUGS:
+        return LINK_BASE + SLUGS[k]
+    from urllib.parse import quote_plus
+    return LINK_BASE + "catalogsearch/result/?q=" + quote_plus(re.sub(r"<[^>]+>|&[a-z]+;", " ", p["name"]).strip())
+
+
+# ---------------------------------------------------------------- per-sheet additions
+# Sheet agents add products in products.d/<slug>.json ({"key": {...same fields...}})
+# so nobody edits this shared file in parallel.
+for _f in sorted(glob.glob(os.path.join(HERE, "products.d", "*.json"))):
+    try:
+        _d = json.load(open(_f))
+    except Exception as _e:  # a half-written file from a parallel editor must not break other builds
+        print(f"WARNING: skipped {os.path.basename(_f)}: {_e}")
+        continue
+    for _k, _v in _d.items():
+        if _k in P:
+            P[_k].update(_v)
+        else:
+            P[_k] = _v
+
 PLACEHOLDER = dict(name="[product]", size="", img_src=None, key="[label facts]", dose="[dose]", dosesub="", sched=[], placeholder=True)
 
 
 def get(k):
-    return P.get(k, dict(PLACEHOLDER, name=f"[{k}]"))
+    p = P.get(k, dict(PLACEHOLDER, name=f"[{k}]"))
+    p.setdefault("href", url_for(k, p))
+    return p
 
 
 def check_complete(keys):
     return sorted({k for k in keys if k not in P or P[k].get("placeholder")})
 
 
-def stage_images(dst):
-    """Copy each product image into the shelf's img/ folder and set p['img']."""
+HIRES = os.path.join(HERE, "img-src")  # committed print-quality sources: <key>.png or <CODE>.png
+MIN_PRINT_PX = 600
+
+
+def stage_images(dst, report=None):
+    """Copy the best image per product into img/ and set p['img'] (relative to
+    the edition folder) and p['img_px'] (pixel height)."""
+    from PIL import Image
     for k, p in P.items():
-        src = None
-        if p.get("img_src"):
-            for base in (ASSETS, EXTRACTED):
-                cand = os.path.join(base, p["img_src"]) if base else None
-                if cand and os.path.exists(cand):
-                    src = cand
-                    break
+        cands = []
+        code = (p.get("img_src") or "").replace(".png", "")
+        for base, names in ((HIRES, [f"{k}.png", f"{code}.png", p.get("img_src") or ""]),
+                            (ASSETS, [p.get("img_src") or ""]), (EXTRACTED, [p.get("img_src") or ""])):
+            for n in names:
+                if base and n:
+                    c = os.path.join(base, n)
+                    if os.path.exists(c):
+                        cands.append(c)
+        best, best_h = None, 0
+        for c in cands:
+            try:
+                h = Image.open(c).size[1]
+            except Exception:
+                continue
+            if h > best_h:
+                best, best_h = c, h
         name = f"nd-{k.replace('_', '-')}.png"
-        if src:
-            shutil.copyfile(src, os.path.join(dst, name))
-            p["img"] = f"img/{name}"
-        elif os.path.exists(os.path.join(dst, name)):
-            p["img"] = f"img/{name}"
+        if best:
+            out = os.path.join(dst, name)
+            if not (os.path.exists(out) and os.path.getsize(out) == os.path.getsize(best)):
+                tmpf = out + f".{os.getpid()}.tmp"
+                shutil.copyfile(best, tmpf)
+                os.replace(tmpf, out)
+            p["img"] = f"../img/{name}"
+            p["img_px"] = best_h
         else:
-            p["img"] = "img/nd-missing.png"
-    PLACEHOLDER["img"] = "img/nd-missing.png"
+            p["img"] = "../img/nd-missing.png"
+            p["img_px"] = 0
+        if report is not None:
+            report[k] = (best_h, best)
+    PLACEHOLDER["img"] = "../img/nd-missing.png"

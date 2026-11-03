@@ -1,40 +1,38 @@
-// Render the condition sheets to Letter PDFs + preview images with the
-// pre-installed Playwright Chromium.  Usage: node render.js <OUT> [<TMP>]
+// Render condition sheets to Letter PDFs + previews + thumbnails with the
+// pre-installed Playwright Chromium.  Usage: node render.js <job.json>
+// job = {items:[{html,pdf,preview,thumb}], bundles:[{html,pdf}]}
 const { chromium } = require('playwright');
 const fs = require('fs');
 const path = require('path');
 const { execFileSync } = require('child_process');
 
 (async () => {
-  const OUT = process.argv[2];
-  const TMP = process.argv[3] || path.join(__dirname);
-  const slugs = fs.readdirSync(OUT).filter(f => f.endsWith('.html') && f !== 'index.html').map(f => f.replace('.html', ''));
+  const job = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
   const browser = await chromium.launch();
   const ctx = await browser.newContext({ viewport: { width: 900, height: 1200 }, deviceScaleFactor: 1 });
   const page = await ctx.newPage();
-  fs.mkdirSync(path.join(TMP, 'preview'), { recursive: true });
-  for (const slug of slugs) {
-    await page.goto('file://' + path.join(OUT, slug + '.html'), { waitUntil: 'networkidle' });
+  for (const it of job.items) {
+    await page.goto('file://' + it.html, { waitUntil: 'networkidle' });
     await page.evaluate(() => document.fonts.ready);
-    await page.waitForTimeout(300);
+    await page.waitForTimeout(250);
+    fs.mkdirSync(path.dirname(it.preview), { recursive: true });
     const sheets = await page.$$('.sheet');
     for (let i = 0; i < sheets.length; i++) {
-      const png = path.join(TMP, 'preview', `${slug}-${i + 1}.png`);
+      const png = `${it.preview}-${i + 1}.png`;
       await sheets[i].screenshot({ path: png });
-      execFileSync('convert', [png, '-resize', '360x', '-quality', '82', path.join(OUT, 'img', `thumb-${slug}-${i + 1}.jpg`)]);
+      if (it.thumb) execFileSync('convert', [png, '-resize', '360x', '-quality', '82', `${it.thumb}-${i + 1}.jpg`]);
     }
     await page.emulateMedia({ media: 'print' });
-    await page.pdf({ path: path.join(OUT, slug + '.pdf'), preferCSSPageSize: true, printBackground: true });
+    await page.pdf({ path: it.pdf, preferCSSPageSize: true, printBackground: true });
     await page.emulateMedia({ media: 'screen' });
-    console.log('rendered', slug, sheets.length, 'pages');
+    console.log('rendered', path.basename(it.pdf), sheets.length, 'pages');
   }
-  const all = path.join(TMP, '_all.html');
-  if (fs.existsSync(all)) {
-    await page.goto('file://' + all, { waitUntil: 'networkidle' });
+  for (const b of job.bundles || []) {
+    await page.goto('file://' + b.html, { waitUntil: 'networkidle' });
     await page.evaluate(() => document.fonts.ready);
     await page.emulateMedia({ media: 'print' });
-    await page.pdf({ path: path.join(OUT, 'all-condition-sheets.pdf'), preferCSSPageSize: true, printBackground: true });
-    console.log('rendered all-condition-sheets.pdf');
+    await page.pdf({ path: b.pdf, preferCSSPageSize: true, printBackground: true });
+    console.log('rendered bundle', b.pdf);
   }
   await browser.close();
 })();

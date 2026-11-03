@@ -17,6 +17,11 @@ THEMES = {
     "gerd":   {"c1": "#CF4A1C", "c2": "#EE9A2E", "soft": "#FCEADB", "deep": "#8E3110", "tint": "#FEF6EF"},
     "metab":  {"c1": "#8A1B22", "c2": "#C2392E", "soft": "#F6E4E1", "deep": "#62121A", "tint": "#FBF3F2"},
     "immune": {"c1": "#4A2B80", "c2": "#7A52B3", "soft": "#EDE6F6", "deep": "#34205C", "tint": "#F7F3FB"},
+    # families for the next wave (pain and movement, brain and nerves, hormones)
+    "msk":     {"c1": "#1F5E8C", "c2": "#2E8FC8", "soft": "#E3EEF6", "deep": "#123F60", "tint": "#F2F7FB"},
+    "neuro":   {"c1": "#3D4E6B", "c2": "#5F7CA8", "soft": "#E6EAF2", "deep": "#26324A", "tint": "#F4F6FA"},
+    "hormone": {"c1": "#9B3F68", "c2": "#C96A8E", "soft": "#F6E6EE", "deep": "#6E2747", "tint": "#FBF3F7"},
+    "energy":  {"c1": "#B06A12", "c2": "#E0A030", "soft": "#FAEFD9", "deep": "#7A480A", "tint": "#FDF8EE"},
 }
 
 # NutriDyn wordmark (vector, from the brand file in peptide-seminar/).  The
@@ -100,6 +105,20 @@ ICONS = {
     "bloodsugar": '<path d="M32 7C24 21 15 30 15 41a17 17 0 0 0 34 0C49 30 40 21 32 7z"/><path d="M24 38h4l3-6 4 12 3-6h4"/>',
     "stethoscope": '<path d="M16 8v14a10 10 0 0 0 20 0V8"/><path d="M26 32v8a12 12 0 0 0 24 0v-6"/><circle cx="50" cy="30" r="5"/>',
 }
+
+
+def html_key(items, title="KEY"):
+    """HTML legend row for a diagram.  items = [(css_background, label, shape)] with
+    shape in dot | square | hex | ring | line.  Every diagram with symbols needs one
+    (or an in-SVG svgkit.key_box)."""
+    cells = []
+    for bg, lab, *shape in items:
+        sh = (shape or ["dot"])[0]
+        st = {"dot": "border-radius:50%", "square": "border-radius:2px",
+              "hex": "clip-path:polygon(25% 5%,75% 5%,100% 50%,75% 95%,25% 95%,0 50%);border-radius:0",
+              "ring": "border-radius:50%;box-shadow:inset 0 0 0 2px #E2463E", "line": "height:4px;width:16px;border-radius:2px"}[sh]
+        cells.append(f'<span><i style="background:{bg};{st}"></i>{lab}</span>')
+    return f'<div class="keyrow"><b>{title}</b>{"".join(cells)}</div>'
 
 
 def icon(name, size="0.42in", color="currentColor", sw=3.2):
