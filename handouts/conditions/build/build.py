@@ -14,6 +14,7 @@ Never hand-edit generated HTML: edit build/conditions/<slug>.py and rebuild.
 """
 import json
 import os
+import re
 import subprocess
 import sys
 
@@ -85,6 +86,10 @@ def life_block(b):
     return f'<div class="lifes c{len(items)}{extra}">{cells}</div>'
 
 
+SF_VERB = re.compile(r"(supports?|helps?|promotes?|maintains?|aids?|encourages?|nourishes?|contributes?|provides?|"
+                     r"fuels?|feeds?|protects?|balances?|calms?|soothes?|builds?|strengthens?)\b", re.I)
+
+
 def col_block(c):
     p = products.get(c["p"])
     dose, dosesub = c.get("dose"), c.get("dosesub")
@@ -92,9 +97,13 @@ def col_block(c):
         dose, dosesub = p["dose"], p.get("dosesub", "")
     bullets = list(c["bullets"])
     # Tie the column's structure/function statements to the FDA disclaimer in the footer with the
-    # same drawn diamond, unless the sheet already marks them itself.
+    # same drawn diamond, unless the sheet already marks them itself. The mark goes on each bullet
+    # that makes a claim (starts with an S/F verb); if none does, on the first bullet.
     if bullets and not any(m in "".join(bullets) for m in ('class="mark"', "class='mark'", "-dia", kit.DIAMOND)):
-        bullets[-1] = f'{bullets[-1]}&nbsp;<span class="mark">{kit.DIAMOND}</span>'
+        mark = f'&nbsp;<span class="mark">{kit.DIAMOND}</span>'
+        claim = [i for i, b in enumerate(bullets) if SF_VERB.match(re.sub(r"<[^>]+>", "", b).strip())]
+        for i in claim or [0]:
+            bullets[i] = bullets[i] + mark
     lis = "".join(f"<li>{x}</li>" for x in bullets)
     # The badge straddles the column's top edge (half above it), so it never covers the title or the photo.
     start = '<span class="startb">Start here</span>' if c.get("start") else ""
