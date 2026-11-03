@@ -125,7 +125,7 @@ W, H = 760, 416
 CX = 380                       # the split line runs down the middle of the knee
 FEM_TOP, TIB_BOT = 44, 344     # bone ends fade out above and below (local units)
 K, YJ = 1.12, 214              # the knee is drawn in local units and scaled by K about the joint line
-DROP = 8                       # the worn inner condyle sits lower: a narrowed joint space
+DROP = 10                      # the worn inner condyle sits lower: a narrowed joint space
 KEY_Y, KEY_H = 362, 50
 INS_R = 63
 INS_L, INS_W = (100, 92), (660, 92)   # magnified circles (healthy, worn)
@@ -1016,6 +1016,7 @@ SHEET = {
             {"p": "jp_chondro_ic", "need": "Building blocks", "needsub": "glucosamine and chondroitin",
              "bullets": ["Raw materials for cartilage and joint fluid", "Supports joint structure and flexibility"],
              "dose": "dose_from_db"},
+            # [LUGO16] UC-II 40 mg a day (this label: 20 mg per capsule, 1 capsule twice daily)
             {"p": "jp_joint_eze", "need": "Joint comfort", "needsub": "UC-II undenatured collagen",
              "bullets": ["UC-II, studied at 40 mg a day for knee comfort", "Supports mobility and flexibility"],
              "dose": "dose_from_db"},

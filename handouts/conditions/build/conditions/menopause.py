@@ -218,16 +218,20 @@ HEAD_R = [(0, 0), (16.2, 2.6), (25.6, 11), (28.6, 25), (28.2, 39), (26.2, 51.2),
           (6.3, 78.6), (0, 80.2)]
 HAIR_BACK_R = [(0, -5.8), (19.8, -3.1), (31.8, 7.4), (36.8, 23), (37.8, 40), (36.9, 56), (34.4, 68.5), (30.8, 77.2),
                (25, 81.2, 0.55), (19.2, 76.4), (17.2, 67), (0, 61)]
-# side-swept fringe: parting at x = -8, hair sweeps to the viewer's right
-HAIR_FRONT = [(-31.4, 25), (-31.8, 10.5), (-22.5, -1.6), (-6.5, -5.4), (10.5, -4.8), (24.6, 1.2), (33, 12.2), (33.4, 27),
-              (27.4, 31.5), (22.6, 21), (12.6, 14.2), (1, 12.4), (-8, 14.2, 0.45), (-14.4, 16.6), (-22.4, 23.6),
-              (-27, 33.2)]
+# side-swept fringe: parting at x = -8, hair sweeps to the viewer's right.  The cap's outer edge sits
+# inside the side hair, so only the hairline (its inner edge) is outlined.
+HAIR_FRONT = [(-34, 37), (-35.4, 21), (-29.4, 6.4), (-18.4, -2.6), (-4, -5.3), (12, -4.5), (25, 1.4), (33.2, 11),
+              (35.8, 24), (34.6, 37, 0.4), (28.2, 33.6, 0.5), (23.6, 22.2), (13.2, 14.8), (1, 12.8), (-8, 14.6, 0.45),
+              (-15.2, 17.2), (-23.2, 24.8), (-28.4, 35.4, 0.5)]
+HAIRLINE = [(28.2, 33.6), (23.6, 22.2), (13.2, 14.8), (1, 12.8), (-8, 14.6, 0.45), (-15.2, 17.2), (-23.2, 24.8),
+            (-28.4, 35.4)]
 
 BODY_D = _spline(_mirror(BODY_R))
 ARM_RD, ARM_LD = _spline(ARM_R), _spline(_flip(ARM_R))
 HEAD_D = _spline(_mirror(HEAD_R))
 HAIR_BACK_D = _spline(_mirror(HAIR_BACK_R))
 HAIR_FRONT_D = _spline(HAIR_FRONT)
+HAIRLINE_D = _spline(HAIRLINE, closed=False)
 
 # where each gold dot sits (local units)
 DOT = {"hair": (31.5, 50), "breast": (-31, 169), "heart": (8, 158), "gut": (-9, 250), "ovary": (28.6, 275),
@@ -246,6 +250,8 @@ def _pelvis():
                 (4.4 * s, 309.6, 0.5), (9 * s, 312.4), (20 * s, 314), (31.5 * s, 312.4), (38.6 * s, 306),
                 (42.6 * s, 296.5)]
         o.append(f'<path d="{_spline(wing)}" fill="{BONE}" stroke="{BONE_LN}" stroke-width=".9"/>')
+        o.append(f'<path d="M{19 * s},{263} C{27 * s},{254.6} {41 * s},{251.4} {52 * s},{256} C{50 * s},{266} '
+                 f'{45 * s},{274} {39 * s},{279}" fill="none" stroke="{BONE_LN}" stroke-width=".8" opacity=".55"/>')
         o.append(f'<path d="{_spline(ring)}" fill="{BONE}" stroke="{BONE_LN}" stroke-width=".9"/>')
         o.append(f'<ellipse cx="{21.5 * s}" cy="305.4" rx="8.6" ry="5.6" fill="{SKIN}" stroke="{BONE_LN}" '
                  f'stroke-width=".8" transform="rotate({-12 * s} {21.5 * s} 305.4)"/>')            # obturator hole
@@ -268,24 +274,21 @@ def _pelvis():
 
 
 def _thigh_muscles():
-    """Quadriceps on each thigh: vastus lateralis, rectus femoris, vastus medialis, fibre lines."""
+    """Quadriceps on each thigh, one mass with the seams between vastus lateralis, rectus femoris
+    and vastus medialis, plus fine fibre lines.  Translucent, so the femur shows through."""
     o = []
     for s in (1, -1):
-        parts = [
-            [(64.6 * s, 300), (65.6 * s, 322), (63.4 * s, 346), (60 * s, 370, 0.3), (50 * s, 370, 0.3),
-             (53.6 * s, 346), (57 * s, 322), (58.2 * s, 302)],
-            [(46 * s, 296.5), (49.6 * s, 316), (47.6 * s, 344), (40.4 * s, 370, 0.3), (28.6 * s, 370, 0.3),
-             (33.2 * s, 344), (36.6 * s, 316), (38.4 * s, 298)],
-            [(26.4 * s, 309), (28.8 * s, 330), (25.2 * s, 352), (18.8 * s, 370, 0.3), (11 * s, 370, 0.3),
-             (13.2 * s, 350), (15.4 * s, 330), (16.4 * s, 314)],
-        ]
-        for p in parts:
-            o.append(f'<path d="{_spline(p)}" fill="{MUSCLE}" fill-opacity=".5" stroke="{MUSCLE_LN}" '
-                     f'stroke-width=".8" stroke-opacity=".7"/>')
-        for x0, x1 in ((61 * s, 55 * s), (43 * s, 34.5 * s), (22 * s, 15 * s)):
-            for k in (-2.4, 0, 2.4):
-                o.append(f'<path d="M{x0 + k:.1f},{306} C{x0 + k + 1.2 * s:.1f},{328} {x1 + k + 1.6 * s:.1f},{346} '
-                         f'{x1 + k - 1 * s:.1f},{368}" stroke="{MUSCLE_LN}" stroke-width=".55" fill="none" opacity=".55"/>')
+        mass = [(60.6 * s, 298), (63.8 * s, 320), (61.8 * s, 346), (58.6 * s, 370, 0.3), (13.6 * s, 370, 0.3),
+                (12.8 * s, 350), (14.8 * s, 330), (20.4 * s, 312), (30 * s, 300.6), (44 * s, 294.6)]
+        o.append(f'<path d="{_spline(mass)}" fill="{MUSCLE}" fill-opacity=".42" stroke="{MUSCLE_LN}" '
+                 'stroke-width=".8" stroke-opacity=".6"/>')
+        for d in (f"M{52 * s},{299} C{51 * s},{320} {49.6 * s},{345} {46 * s},{370}",
+                  f"M{31 * s},{302} C{31.6 * s},{322} {30.6 * s},{346} {27.4 * s},{370}"):
+            o.append(f'<path d="{d}" fill="none" stroke="{MUSCLE_LN}" stroke-width=".9" stroke-opacity=".7"/>')
+        for x0, x1 in ((57 * s, 53 * s), (55 * s, 50.4 * s), (45 * s, 40 * s), (40 * s, 35 * s), (36 * s, 31.6 * s),
+                       (25 * s, 21 * s), (20 * s, 17.2 * s)):
+            o.append(f'<path d="M{x0:.1f},{306} C{x0 + 0.8 * s:.1f},{328} {x1 + 1.2 * s:.1f},{348} {x1 - 0.6 * s:.1f},{369}" '
+                     f'stroke="{MUSCLE_LN}" stroke-width=".5" fill="none" opacity=".45"/>')
     return "".join(o)
 
 
@@ -393,7 +396,8 @@ def figure():
              f'{_pelvic_organs()}{_thigh_muscles()}</g>')
     head = (f'<path d="{HAIR_BACK_D}" fill="url(#mnp-hair)" stroke="{HAIR_LN}" stroke-width="1.1"/>'
             f'<path d="{HEAD_D}" fill="url(#mnp-face)" stroke="{SKIN_LN}" stroke-width="1.3"/>'
-            f'<path d="{HAIR_FRONT_D}" fill="url(#mnp-hair)" stroke="{HAIR_LN}" stroke-width="1.1"/>'
+            f'<path d="{HAIR_FRONT_D}" fill="url(#mnp-hair)"/>'
+            f'<path d="{HAIRLINE_D}" fill="none" stroke="{HAIR_LN}" stroke-width="1.1" stroke-linecap="round"/>'
             '<path d="M-5,-1.5 C5,-3.4 17,-0.6 26,7.6" stroke="#9C7462" stroke-width="2" fill="none" '
             'stroke-linecap="round" opacity=".55"/>'
             '<path d="M-20,3 C-25,8 -28,15 -29,22" stroke="#9C7462" stroke-width="1.6" fill="none" '
@@ -402,8 +406,9 @@ def figure():
 
 
 def figure_defs():
-    return ('<linearGradient id="mnp-skin" x1="-1" y1="0" x2="1" y2="0" gradientUnits="objectBoundingBox">'
-            f'<stop offset="0" stop-color="{SKIN_EDGE}"/><stop offset=".5" stop-color="#FCEEE7"/>'
+    return ('<linearGradient id="mnp-skin" x1="-104" y1="0" x2="104" y2="0" gradientUnits="userSpaceOnUse">'
+            f'<stop offset="0" stop-color="{SKIN_EDGE}"/><stop offset=".3" stop-color="#F9E8E0"/>'
+            '<stop offset=".5" stop-color="#FCEFE9"/><stop offset=".7" stop-color="#F9E8E0"/>'
             f'<stop offset="1" stop-color="{SKIN_EDGE}"/></linearGradient>'
             '<radialGradient id="mnp-face" cx=".45" cy=".42" r=".7"><stop offset="0" stop-color="#FCEEE7"/>'
             f'<stop offset="1" stop-color="{SKIN_EDGE}"/></radialGradient>'
@@ -814,7 +819,7 @@ def best_box():
     # [ESTRO] small EstroG-100 trials; the 2025 one was run by the tested product's maker (OLLY / Unilever).
     return ('<div class="mnp-best"><h4>Hot flashes: what works best</h4><ol>'
             '<li><b>Hormone therapy works best.</b> For most healthy women under 60, the benefits outweigh the '
-            'risks. Ask {who}.</li>'
+            'risks. It needs a prescription, so ask your doctor.</li>'
             '<li><b>Also proven:</b> CBT, clinical hypnosis and some prescriptions.</li>'
             '<li><b>Supplements</b> are not recommended for hot flashes. EstroG&#8209;100, in Menopause Support, '
             'helped in small trials; the newest was paid for by a supplement company.</li></ol>'
@@ -872,7 +877,7 @@ SHEET = {
     "intro": ("Menopause is the day you reach <b>12 months in a row with no period</b>, on average around age 51. "
               "The years before it, <b>perimenopause</b>, often last 4 to 8 years while estrogen and progesterone swing, "
               "then fall. These hormones act on nearly every tissue, so changes show up from head to toe. "
-              "<b>Hormone therapy is the most effective treatment for hot flashes</b>: ask {who} if it fits you."),
+              "<b>Hormone therapy is the most effective treatment for hot flashes</b>: ask your doctor if it fits you."),
     "front": front,
     "css": CSS,
     "back": {
@@ -938,7 +943,7 @@ SHEET = {
                 "drugs?</b> Ashwagandha can add to them.",
                 # NIH ODS magnesium: separate from bisphosphonates and tetracycline or quinolone antibiotics;
                 # creatine raises serum creatinine (de Souza Almeida 2026, cited in the creatine blast)
-                "<b>Space magnesium</b> 2 hours from bisphosphonates and some antibiotics. <b>Creatine</b> raises "
+                "<b>Space magnesium</b> 2 hours from bisphosphonates and some antibiotics. <b>Creatine</b> can raise "
                 "creatinine on kidney labs.",
             ],
         },
