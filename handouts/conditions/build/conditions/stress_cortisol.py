@@ -59,6 +59,13 @@ SOURCES (tags sit in comments next to each number or claim on the page)
              Endocrinol Metab 2008;93:1526-40. PMID 18334580 (most telling signs: easy bruising, facial
              plethora, proximal muscle weakness, reddish-purple striae over 1 cm wide; also central weight
              gain, a fatty hump, new high blood pressure or diabetes; most cases come from steroid medicines)
+  [FLES21]   Fleseriu M et al. Pituitary Society consensus, Cushing's disease: a guideline update. Lancet Diabetes
+             Endocrinol 2021;9:847-75. PMID 34687601. doi:10.1016/S2213-8587(21)00235-7 (current companion to
+             [ES08CS]; same clinical signs)
+  [BEUS24]   Beuschlein F et al. ESE/Endocrine Society joint guideline, glucocorticoid-induced adrenal insufficiency.
+             J Clin Endocrinol Metab 2024;109:1657-83. PMID 38724043. doi:10.1210/clinem/dgae250 (at least 1% of
+             people take long-term steroids; stopping or tapering needs care because the HPA axis is suppressed)
+             -> "On a steroid such as prednisone? Never stop it suddenly."
   [988]      988 Suicide & Crisis Lifeline (call or text 988), SAMHSA, live since July 2022.
   [ANAT]     Gray's Anatomy (42nd ed.): kidneys at T12-L3, the right a little lower than the left; right
              adrenal pyramidal on the upper pole, left adrenal crescentic along the medial border above the
@@ -82,10 +89,17 @@ SOURCES (tags sit in comments next to each number or claim on the page)
   [SHARMA18] Sharma AK et al. J Altern Complement Med 2018;24:243-8. PMID 28829155 (ashwagandha 600 mg/d
              raised T3 and T4 and lowered TSH) -> "can raise thyroid hormone levels"
   [BJORN20]  Bjornsson HK et al. Liver Int 2020;40:825-9. PMID 31991029 (rare ashwagandha liver injury)
-  [PENN17]   Penninkilampi R et al. J Hum Hypertens 2017;31:699-707. PMID 28660884 (regular licorice raises
-             blood pressure and lowers potassium)
-  [LOV05]    Lovallo WR et al. Psychosom Med 2005;67:734-9. PMID 16204431 (caffeine raises cortisol; in daily
-             users an afternoon dose still raised it from 1 to 7 pm)
+  [JAMS17]   Jamshidi N, Cohen MM. Evid Based Complement Alternat Med 2017;2017:9217567. PMID 28400848 (holy basil
+             / tulsi in 24 human studies: lowered blood sugar in metabolic studies) and [SINGH01] Singh S et al.
+             J Ethnopharmacol 2001;78:139-43. PMID 11694358 (holy basil oil lengthened clotting time in animals)
+             -> holy basil (Adrenal Renew) beside ginseng in the warfarin / diabetes line
+  [EFSA23]   EFSA NDA Panel. EFSA J 2023;21(5):e08006. PMID 37207271. doi:10.2903/j.efsa.2023.8006 (vitamin B6
+             upper limit 12 mg a day for adults, set on peripheral neuropathy; the US limit is 100 mg a day, IOM 1998)
+             -> "B6 adds up to 65 mg a day here" with the tingling caution
+  [DRAKE13]  Drake C et al. J Clin Sleep Med 2013;9:1195-200. PMID 24235903. doi:10.5664/jcsm.3170 (400 mg of
+             caffeine at bedtime, 3 h or even 6 h before bed disrupted sleep and cut total sleep time) -> "Coffee by
+             noon: a late cup can cost you sleep."  [LOV05] Lovallo WR et al. Psychosom Med 2005;67:734-9 (caffeine
+             raises cortisol, but daily users are partly tolerant) is no longer quoted on the page.
   [LEP01]    Leproult R et al. J Clin Endocrinol Metab 2001;86:151-7. PMID 11231993 (bright light in the
              early morning raised cortisol by more than 50%; afternoon light did not)
   [BALB23]   Balban MY et al. Cell Rep Med 2023;4:100895. PMID 36630953 (5 min a day of exhale-focused
@@ -212,13 +226,6 @@ def tangents(c1, r1, c2, r2):
         nx, ny = c * ux - sgn * h * uy, c * uy + sgn * h * ux
         out.append(((x1 + r1 * nx, y1 + r1 * ny), (x2 + r2 * nx, y2 + r2 * ny)))
     return out
-
-
-def halo(text_markup, width=3.2):
-    """Give SVG text a white outline (drawn under the glyphs), so a faint line behind it never touches the
-    letters."""
-    return text_markup.replace("<text ", f'<text stroke="#FFFFFF" stroke-width="{width}" stroke-linejoin="round" '
-                                         'paint-order="stroke" ', 1)
 
 
 def pill(cx, cy, text, size, fg, bg="#FFFFFF", edge=None, weight=800, padx=6.0, h=None):
@@ -460,7 +467,8 @@ def adrenal_close():
     # cut face: a thin core of medulla inside a thick band of cortex
     med = [(-5, -27, 0.55), (3, -16), (10, -5, 0.6), (-5, -3.5), (-19, -3, 0.6), (-13, -15)]
     o.append(f'<path d="{spline(med)}" fill="{MEDULLA}" stroke="{MEDULLA_LN}" stroke-width="1.1"/>')
-    return "".join(o), (16, -15), (7, -6)
+    # leader anchors on the LEFT half (the labels sit to the inset's left): mid-cortex band, mid-medulla
+    return "".join(o), (-20, -15), (-5, -11)
 
 
 def cort(x, y, r=4.6):
@@ -575,18 +583,17 @@ def art_axis(t):
            '</defs>']
     G = lambda x, y: (FX + x * k, FY + y * k)          # head units -> viewBox
 
-    # ---- zoom cones (under everything), then the figure
+    # ---- zoom cones: fill AND edge lines go down first, so the body covers them where they pass behind it
     lens_c, lens_r = G(0, LENS_Y + 0.012), 9.5
     adr_c, adr_r = G(-0.205, 2.23), 11.5
     for (c, r), (ic, ir) in (((lens_c, lens_r), (BI_C, BI_R)), ((adr_c, adr_r), (AI_C, AI_R))):
         (a1, b1), (a2, b2) = tangents(c, r, ic, ir)
         out.append(f'<path d="M{a1[0]:.1f},{a1[1]:.1f} L{b1[0]:.1f},{b1[1]:.1f} L{b2[0]:.1f},{b2[1]:.1f} '
                    f'L{a2[0]:.1f},{a2[1]:.1f} Z" fill="{c1}" fill-opacity=".035"/>')
-    out.append(f'<g transform="translate({FX},{FY})">{fig}</g>')
-    for (c, r), (ic, ir) in (((lens_c, lens_r), (BI_C, BI_R)), ((adr_c, adr_r), (AI_C, AI_R))):
-        for a, b in tangents(c, r, ic, ir):
+        for a, b in ((a1, b1), (a2, b2)):
             out.append(f'<path d="M{a[0]:.1f},{a[1]:.1f} L{b[0]:.1f},{b[1]:.1f}" stroke="{c1}" stroke-width="1" '
                        'stroke-opacity=".45"/>')
+    out.append(f'<g transform="translate({FX},{FY})">{fig}</g>')
 
     # ---- ACTH: the blue signal runs from the pituitary down to both adrenals
     top, fork = G(0, LENS_Y + 0.075), G(0, 1.90)
@@ -613,35 +620,47 @@ def art_axis(t):
     for x, y in ((1.235, 1.78), (1.282, 1.33), (1.205, 0.88)):
         out.append(cort(*G(x, y), 4.2))
     out.append(marker(*G(1.29, 1.08), 4, c1))
-    # spine, labelled where the body is quiet
-    sx_, sy_ = G(0, 3.02)
+
+    # ---- kidneys and spine, labelled in the quiet lower torso.  The two kidney leaders run up to each
+    # kidney's lower pole (the KIDNEY outline's bottom point, turned by its tilt).
+    kx, ky = G(0, 2.985)
+    kid_pill, kid_w = pill(kx, ky, "Kidneys", 9.8, KID_B, "#FFFFFF", KID_A, 700, 5)
+    for spec in (KID_L, KID_R):
+        cx_k, cy_k, tilt = spec
+        a = math.radians(tilt)
+        pole = G(cx_k - 0.247 * math.sin(a), cy_k + 0.247 * math.cos(a))
+        side = -1 if cx_k < 0 else 1
+        out.append(leader([(kx + side * (kid_w / 2 - 9), ky - 6.5), (pole[0] - side * 1.5, pole[1] + 1.2)], KID_LN, 1.1))
+    out.append(kid_pill)
+    sx_, sy_ = G(0, 3.30)
     out.append(pill(sx_, sy_, "Spine", 9.8, "#7D6A4C", "#FFFFFF", BONE_LN, 700, 5)[0])
 
-    # ---- lens on the head, and the brain inset
+    # ---- lens on the head, and the brain inset.  Every label sits inside the circle (checked in
+    # _check_inset below); the CRH arrow runs from the hypothalamus down to the pituitary.
     out.append(f'<circle cx="{lens_c[0]:.1f}" cy="{lens_c[1]:.1f}" r="{lens_r}" fill="#FFFFFF" fill-opacity=".25" '
                f'stroke="{c1}" stroke-width="1.6"/>')
     bx, by = BI_C
     out.append(f'<circle cx="{bx}" cy="{by}" r="{BI_R + 2.2}" fill="#FFFFFF"/>'
                f'<circle cx="{bx}" cy="{by}" r="{BI_R}" fill="url(#scx-lens)"/>')
     bmark, hpos, ppos = brain_side()
-    bs, bdx, bdy = 0.92, bx + 5, by - 11
+    bs, bdx, bdy = 0.92, bx + 8, by - 14
     out.append(f'<g clip-path="url(#scx-bi)"><g transform="translate({bdx},{bdy}) scale({bs})">{bmark}</g></g>')
     out.append(f'<circle cx="{bx}" cy="{by}" r="{BI_R}" fill="none" stroke="{c1}" stroke-width="2"/>')
     hx, hy = bdx + hpos[0] * bs, bdy + hpos[1] * bs
     px, py = bdx + ppos[0] * bs, bdy + ppos[1] * bs
-    # CRH: down the pituitary stalk; ACTH: out of the pituitary toward the blood
     out.append(signal_path((hx - 7, hy + 1.5), (hx - 25, hy + 1), (px - 23, py + 2), (px - 6.6, py + 1), 2.3, 6.2, False))
-    out.append(signal_path((px + 2, py + 5.5), (px + 4, py + 14), (px + 7, py + 20), (px + 10, py + 30), 2.4, 6.5, False))
-    out.append(pill(hx - 42, hy + 10, "CRH", 10, SIGNAL, "#FFFFFF", SIGNAL)[0])
-    out.append(pill(px + 34, py + 27, "ACTH", 10, SIGNAL, "#FFFFFF", SIGNAL)[0])
-    out.append(leader([(hx - 4, hy - 4), (hx - 20, hy - 26)], HYPO_LN, 1.2)
-               + pill(hx - 30, hy - 33, "Hypothalamus", 10.2, "#A34612", "#FFFFFF", HYPO)[0])
-    out.append(leader([(px - 3, py + 4), (px - 17, py + 28)], PIT_LN, 1.2)
-               + pill(px - 26, py + 35, "Pituitary gland", 10.2, PIT_LN, "#FFFFFF", PIT)[0])
+    pills = [(hx - 47, hy + 9, "CRH", 10, SIGNAL, SIGNAL), (hx - 16, hy - 37, "Hypothalamus", 10.2, "#A34612", HYPO),
+             (px - 1, py + 42, "Pituitary gland", 10.2, PIT_LN, PIT)]
+    out.append(leader([(hx - 3, hy - 4.5), (hx - 11, hy - 29)], HYPO_LN, 1.2))
+    out.append(leader([(px - 0.5, py + 4.6), (px - 1, py + 34.5)], PIT_LN, 1.2))
+    for cx_p, cy_p, text, size, fg, edge in pills:
+        out.append(pill(cx_p, cy_p, text, size, fg, "#FFFFFF", edge)[0])
+    _check_inset(BI_C, BI_R, [(cx_p, cy_p, tw(text, size, 800) + 12, size * 1.5) for cx_p, cy_p, text, size, _, _ in pills])
     out.append(marker(hx + 9, hy - 13, 1, c1) + marker(px + 14, py + 2, 2, c1))
     out.append(T(bx, by + BI_R + 14, "Your brain, seen from the side", 10.2, 700, deep, "middle", italic=True))
 
-    # ---- adrenal inset: cut open to show its two layers
+    # ---- adrenal inset: cut open to show its two layers.  Its labels sit in the clear space to its left,
+    # away from the zoom cone, which leaves the circle on its right.
     ax, ay = AI_C
     out.append(f'<circle cx="{adr_c[0]:.1f}" cy="{adr_c[1]:.1f}" r="{adr_r}" fill="#FFFFFF" fill-opacity=".2" '
                f'stroke="{c1}" stroke-width="1.6"/>')
@@ -656,25 +675,35 @@ def art_axis(t):
     out.append(T(ax + 2, ay + 33, "Kidney", 10.2, 800, "#FFFFFF", "middle"))
     cx_, cy_ = adx + cpt[0] * asx, ady + cpt[1] * asx
     mx_, my_ = adx + mpt[0] * asx, ady + mpt[1] * asx
-    lx = ax + AI_R + 12
-    out.append(halo(T(lx, ay - 38, ["One adrenal", "gland, cut open"], 10.2, 700, deep, lh=1.18, italic=True)))
-    out.append(leader([(cx_, cy_), (lx - 3, ay - 6)], CORTEX_LN, 1.1))
-    out.append(halo(T(lx, ay - 9.5, ["Outer layer:", "makes cortisol"], 10.2, 700, "#7A4E08", lh=1.18)))
-    out.append(leader([(mx_, my_), (ax + 24, ay + 22), (lx - 3, ay + 22)], MEDULLA_LN, 1.1))
-    out.append(halo(T(lx, ay + 18.5, ["Core: makes", "adrenaline"], 10.2, 700, MEDULLA_LN, lh=1.18)))
-    out.append(marker(ax - AI_R * 0.72, ay - AI_R * 0.72, 3, c1))
+    lx = ax - AI_R - 11                                  # right edge of the label column (text-anchor end)
+    out.append(T(lx, ay - 38, ["One adrenal", "gland, cut open"], 10.2, 700, deep, "end", lh=1.18, italic=True))
+    out.append(leader([(lx + 3, ay - 11.5), (cx_, cy_)], CORTEX_LN, 1.1))
+    out.append(T(lx, ay - 8, ["Outer layer:", "makes cortisol"], 10.2, 700, "#7A4E08", "end", lh=1.18))
+    out.append(leader([(lx + 3, ay + 18.5), (mx_ - 13, ay + 18.5), (mx_, my_)], MEDULLA_LN, 1.1))
+    out.append(T(lx, ay + 22, ["Core: makes", "adrenaline"], 10.2, 700, MEDULLA_LN, "end", lh=1.18))
+    out.append(marker(ax - AI_R * 0.71, ay - AI_R * 0.71, 3, c1))
 
     # ---- the four steps and the KEY
     notes, _ = notes_col(t, 12)
     out.append(notes)
-    kmark, _ = key_col(NX, A_H - 69, NW)
+    kh = 21 + 15.5 * 4
+    kmark, _ = key_col(NX, A_H - kh - 2, NW)
     out.append(kmark)
     return svg(A_W, A_H, "".join(out),
-               "Your stress system. A person's body with the brain, spine, kidneys and adrenal glands. A close-up of the "
-               "brain from the side shows the hypothalamus sending CRH to the pituitary gland, which sends ACTH through "
-               "the blood to the adrenal glands. A close-up of one adrenal gland shows its outer layer, which makes "
-               "cortisol, and its core, which makes adrenaline. A dashed loop shows cortisol travelling back to the "
-               "brain as a brake.")
+               "Your stress system. A person's body with the brain, spine, kidneys and the yellow adrenal glands on top "
+               "of the kidneys. A close-up of the brain from the side shows the hypothalamus sending CRH to the "
+               "pituitary gland, which sends ACTH through the blood to the adrenal glands. A close-up of one adrenal "
+               "gland shows its outer layer, which makes cortisol, and its core, which makes adrenaline. A dashed loop "
+               "shows cortisol travelling back to the brain as a brake.")
+
+
+def _check_inset(c, r, boxes, margin=2.0):
+    """Fail the build if a rounded label (cx, cy, w, h) pokes out of its inset circle."""
+    for cx, cy, w, h in boxes:
+        cap = h / 2
+        for ex in (cx - (w / 2 - cap), cx + (w / 2 - cap)):
+            d = math.hypot(ex - c[0], cy - c[1]) + cap
+            assert d <= r - margin, f"label at ({cx:.0f},{cy:.0f}) leaves its inset by {d - r + margin:.1f}"
 
 
 # ============================================================== picture 2: the cortisol clock
@@ -696,11 +725,13 @@ def _vy(v):
 HEALTHY_PTS = [(6.0, 0.47), (6.5, 0.60), (6.85, 0.86), (7.15, 1.0), (7.6, 0.95), (8.5, 0.84), (9.5, 0.73),
                (11, 0.61), (12.5, 0.53), (14, 0.46), (15.5, 0.39), (17, 0.33), (18.5, 0.27), (20, 0.21),
                (21.5, 0.15), (23, 0.09), (24, 0.065)]
-# Long-term stress [MILLER07][ADAM17]: a high, flat profile: a smaller morning rise, then a slow fall, so
-# evening levels stay higher than they should.
-STRESSED_PTS = [(6.0, 0.40), (6.5, 0.46), (6.9, 0.58), (7.2, 0.64), (7.8, 0.63), (9, 0.61), (10.5, 0.59),
-                (12, 0.565), (13.5, 0.545), (15, 0.525), (16.5, 0.505), (18, 0.485), (19.5, 0.46), (21, 0.44),
-                (22.5, 0.415), (24, 0.39)]
+# Long-term stress [MILLER07][ADAM17]: a flatter day: a smaller morning rise, then a slower fall, so evening levels
+# stay above the healthy curve.  The evening tail still falls toward night (0.29 at 9 PM, 0.20 at midnight):
+# those studies show flatter slopes, not a lost night-time low, which is the Cushing's pattern the front sends
+# to a doctor [ES08CS].
+STRESSED_PTS = [(6.0, 0.38), (6.5, 0.44), (6.9, 0.55), (7.2, 0.60), (7.8, 0.60), (9, 0.585), (10.5, 0.56),
+                (12, 0.53), (13.5, 0.495), (15, 0.46), (16.5, 0.42), (18, 0.38), (19.5, 0.335), (21, 0.29),
+                (22.5, 0.245), (24, 0.20)]
 
 
 def _curve(pts):
@@ -717,7 +748,8 @@ def art_clock(t):
              f'<rect x="{PX1 - 6}" y="{PY0 - 6}" width="6" height="{PY1 - PY0 + 6}" fill="#EEF0F8"/>')
     for v in (0.25, 0.5, 0.75):
         o.append(f'<path d="M{PX0},{_vy(v):.1f} H{PX1}" stroke="#EFE5D6" stroke-width="1"/>')
-    ticks = [(6, "6 AM"), (9, "9 AM"), (12, "NOON"), (15, "3 PM"), (18, "6 PM"), (21, "9 PM"), (24, "MIDNIGHT")]
+    # "12 AM", not "MIDNIGHT": the longer word ran into "9 PM"
+    ticks = [(6, "6 AM"), (9, "9 AM"), (12, "NOON"), (15, "3 PM"), (18, "6 PM"), (21, "9 PM"), (24, "12 AM")]
     for h, lab in ticks:
         x = _hx(h)
         anchor = "start" if h == 6 else ("end" if h == 24 else "middle")
@@ -745,13 +777,14 @@ def art_clock(t):
              'stroke-linecap="round"/>')
     o.append(f'<path d="{h_d}" fill="none" stroke="#FFFFFF" stroke-width="6.4" stroke-linecap="round"/>'
              f'<path d="{h_d}" fill="none" stroke="{HEALTHY}" stroke-width="3.2" stroke-linecap="round"/>')
-    # labels sit in clear space beside each curve
+    # labels sit in clear space beside each curve: no grid line, curve or band edge runs under any of them
+    # (plain text, no stroked halo: stroked text prints as a Type 3 font)
     px_, py_ = _hx(7.15), _vy(1.0)
     o.append(f'<circle cx="{px_:.1f}" cy="{py_:.1f}" r="3.4" fill="{HEALTHY}" stroke="#fff" stroke-width="1.4"/>')
-    o.append(halo(T(round(px_ + 9, 1), round(py_ + 4, 1), "Healthy peak, 30 to 45 min after waking", 10.2, 700, HEALTHY)))
+    o.append(T(round(px_ + 9, 1), round(py_ + 4, 1), "Healthy peak, 30 to 45 min after waking", 10.2, 700, HEALTHY))
     o.append(f'<circle cx="{_hx(24):.1f}" cy="{_vy(0.065):.1f}" r="3.4" fill="{HEALTHY}" stroke="#fff" stroke-width="1.4"/>')
-    o.append(halo(T(round(_hx(7.7), 1), round(_vy(0.44), 1), "Tired in the morning", 10.2, 700, STRESSED)))
-    o.append(halo(T(round(_hx(23.6), 1), round(_vy(0.415) - 9, 1), "Wired at night", 10.2, 700, STRESSED, "end")))
+    o.append(T(round(_hx(7.7), 1), round(_vy(0.5) + 12, 1), "Tired in the morning", 10.2, 700, STRESSED))
+    o.append(T(round(_hx(23.6), 1), round(_vy(0.5) + 11, 1), "Wired at night", 10.2, 700, STRESSED, "end"))
 
     # ---- KEY cards on the right (each names its line)
     kx, kw = 492, 268
@@ -806,7 +839,8 @@ def _ic(name, size="0.3in", sw=3.3):
 SIGNS = [("moon", "Trouble<br>sleeping"), ("sc-tired", "Tired, even<br>after sleep"),
          ("headache", "Headaches,<br>tight muscles"), ("brain", "Foggy, hard<br>to focus"),
          ("sc-mood", "Anxious, cranky<br>or low"), ("gut", "Upset<br>stomach"),
-         ("microbe", "Sick more<br>often"), ("waist", "Weight gain<br>at the belly")]
+         ("microbe", "Sick more<br>often"), ("waist", "Slow belly<br>weight gain")]
+# "Slow" on purpose: FAST weight gain in the face and belly is a red flag on the same page (too much cortisol).
 
 
 def signs_block():
@@ -827,7 +861,8 @@ def low_block():
     # pressure), salt craving, darker skin (primary disease), nausea, vomiting, belly pain.
     # [ES08CS] too much cortisol: central weight gain and a round face, wide reddish-purple stretch marks,
     # easy bruising, weak thigh and upper-arm muscles, new high blood pressure or blood sugar.
-    # Steroid medicines: never stop suddenly [ES16AI].  [988] crisis line.
+    # Steroid medicines: never stop suddenly [ES16AI][BEUS24].  [988] crisis line.  Signs of too much cortisol
+    # are checked against [FLES21] as well as [ES08CS].
     low = ["Weight loss with deep tiredness", "Dizzy or faint when you stand", "Craving salt, darkening skin",
            "Nausea, vomiting or belly pain"]
     high = ["Fast weight gain in the face and belly", "Wide purple stretch marks",
@@ -850,7 +885,8 @@ def front(t, ed):
             f'<div class="art scx-art">{art_clock(t)}</div>'
             f'{signs_block()}{low_block()}'
             '<p class="scx-src">Sources: Endocrine Society guidelines (adrenal insufficiency 2016, Cushing&rsquo;s '
-            'syndrome 2008); Cadegiani 2016 review; Smith 2006; Miller 2007.</p>'
+            'syndrome 2008, steroid-induced adrenal insufficiency 2024); Pituitary Society 2021; Cadegiani 2016 review; '
+            'Smith 2006; Miller 2007.</p>'
             '</div>')
 
 

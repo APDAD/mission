@@ -245,12 +245,12 @@ def tick_feeding(hx, hy, uid="lyf"):
     # EIGHT legs, all from under the belly: four near (dark) and four far (paler, drawn first so the
     # near legs pass in front of them).  Along the skin the tips alternate near/far, so all eight can
     # be counted: front pairs I-II reach forward, back pairs III-IV reach back.
-    far = [(P(6, 6), (hx - 3, hy - 8), (hx - 9, sk - .8)),               # far I
-           (P(10, 6.5), (hx - 8, hy - 6.5), (hx - 20, sk - .8)),         # far II
+    far = [(P(6, 6), (hx - 3, hy - 8), (hx - 12.5, sk - .8)),            # far I
+           (P(10, 6.5), (hx - 8.5, hy - 7), (hx - 22.5, sk - .8)),       # far II
            (P(14, 6.5), (hx + 22, hy - 12), (hx + 28, sk - .8)),         # far III
            (P(20, 6.5), (hx + 32, hy - 10), (hx + 40, sk - .8))]         # far IV
-    near = [(P(8, 7.5), (hx - 6, hy - 4), (hx - 15, sk)),                # I
-            (P(12, 8), (hx - 10.5, hy - 9.5), (hx - 26, sk)),            # II
+    near = [(P(8, 7.5), (hx - 6.5, hy - 4), (hx - 17.5, sk)),            # I
+            (P(12, 8), (hx - 11, hy - 9.5), (hx - 28, sk)),              # II
             (P(17, 8), (hx + 27, hy - 6), (hx + 33, sk)),                # III
             (P(22, 7.5), (hx + 37, hy - 14), (hx + 47, sk))]             # IV
     for r, kn, tp in far:
@@ -277,16 +277,16 @@ def tick_feeding(hx, hy, uid="lyf"):
                '<path d="M15.5,-1.4 C21,-3 28,-3 33.5,-.8" stroke="#6A2014" stroke-width=".7" fill="none" opacity=".45"/>'
                # the shield (scutum): a solid dark cap over the front third of the back, its rear edge
                # bowed toward the middle of the body like the plate seen from above, not a thin band
-               f'<path d="M-3,5 L2,3.8 Q13,-1 15.6,-11.5 L-3,-12Z" fill="url(#{uid}s)"/>'
-               '<path d="M4.6,-4.2 Q7.6,-8.2 12.2,-8.9" stroke="#6E5A4C" stroke-width=".9" fill="none" '
-               'stroke-linecap="round" opacity=".55"/>'
+               f'<path d="M-3,6 L2.2,4.6 C9,4.6 15.6,1.6 16.4,-4 C16.8,-7 16.6,-9.6 16.9,-12 L-3,-12Z" fill="url(#{uid}s)"/>'
+               '<path d="M5.2,-4.6 Q8.6,-8.4 13.6,-8.9" stroke="#7A6656" stroke-width=".9" fill="none" '
+               'stroke-linecap="round" opacity=".5"/>'
                '</g>'
                f'<path d="{body}" fill="none" stroke="{k["body"][2]}" stroke-width=".8"/>'
                f'<ellipse cx="25" cy="-5" rx="6.5" ry="2.2" fill="url(#{uid}g)" opacity=".4"/>'
                '</g>')
     # palps resting on the skin, just ahead of the bite
-    out.append(f'<path d="M{_f(hx - 1)},{_f(sk - 1.6)} C{_f(hx - 5)},{_f(sk - 3)} {_f(hx - 10)},{_f(sk - 1.6)} '
-               f'{_f(hx - 10.5)},{_f(sk - .2)} H{_f(hx - 1)}Z" fill="#1A1210"/>')
+    out.append(f'<path d="M{_f(hx - 1)},{_f(sk - 1.6)} C{_f(hx - 4.5)},{_f(sk - 3)} {_f(hx - 8.6)},{_f(sk - 1.6)} '
+               f'{_f(hx - 9)},{_f(sk - .2)} H{_f(hx - 1)}Z" fill="#1A1210"/>')
     return "".join(out)
 
 
@@ -309,18 +309,39 @@ def leaf(x, y, length, ang, uid="lyl"):
             f'<path d="{" ".join(veins)}" stroke="#2E6B25" stroke-width=".8" fill="none" opacity=".65"/></g>')
 
 
-def spirochete(x, y, length, rot=0.0, waves=7, amp=3.2, col="#2F63B0"):
-    """Borrelia: a long, thin corkscrew bacterium, tapered at both ends."""
-    n = waves * 8
-    pts = []
-    for i in range(n + 1):
-        u = i / n
-        taper = math.sin(math.pi * u) ** .5
-        pts.append((length * u, amp * taper * math.sin(2 * math.pi * waves * u)))
-    d = "M" + " L".join(f"{_f(px)},{_f(py)}" for px, py in pts)
-    hi = "M" + " L".join(f"{_f(px)},{_f(py - .7)}" for px, py in pts)
-    return (f'<g transform="translate({_f(x)},{_f(y)}) rotate({_f(rot)})" fill="none" stroke-linecap="round" stroke-linejoin="round">'
-            f'<path d="{d}" stroke="{col}" stroke-width="2.6"/><path d="{hi}" stroke="#9DBDEB" stroke-width=".9" opacity=".8"/></g>')
+def spirochete(x, y, length, rot=0.0, waves=7, amp=3.2, back="#1B3A73", front="#3B76C6", shine="#B9D2F3"):
+    """Borrelia: a long, thin corkscrew (helical) bacterium, tapered at both ends.  Drawn as a
+    helix whose axis leans a little toward the viewer: each turn's BACK half (dark, thinner) is
+    drawn first and its FRONT half (lighter, with a shine line) over it, so the coil reads in depth
+    instead of as a flat wave."""
+    lean = .35                                  # sin of the axis tilt: front half-turns lean forward
+
+    def pt(u):
+        taper = math.sin(math.pi * u) ** .6     # 0 at both tips
+        ph = 2 * math.pi * waves * u
+        r = amp * taper
+        return length * u + lean * r * math.sin(ph), -r * math.cos(ph), taper
+
+    halves = []
+    for k in range(2 * waves):                  # one path per half-turn
+        u0, u1 = k / (2 * waves), (k + 1) / (2 * waves)
+        ps = [pt(u0 + (u1 - u0) * j / 12) for j in range(13)]
+        tm = pt((u0 + u1) / 2)[2]
+        halves.append((k % 2 == 0, ps, tm))     # sin(phase) > 0 on even half-turns = front
+    out = [f'<g transform="translate({_f(x)},{_f(y)}) rotate({_f(rot)})" fill="none" stroke-linecap="round" stroke-linejoin="round">']
+    for is_front, ps, tm in halves:             # back halves first
+        if not is_front:
+            d = "M" + " L".join(f"{_f(a)},{_f(b)}" for a, b, _ in ps)
+            out.append(f'<path d="{d}" stroke="{back}" stroke-width="{_f(.45 + 1.2 * tm)}"/>')
+    for is_front, ps, tm in halves:
+        if is_front:
+            d = "M" + " L".join(f"{_f(a)},{_f(b)}" for a, b, _ in ps)
+            out.append(f'<path d="{d}" stroke="{front}" stroke-width="{_f(.6 + 1.6 * tm)}"/>')
+            if tm > .45:
+                hi = "M" + " L".join(f"{_f(a - .25)},{_f(b - .5 * tm)}" for a, b, _ in ps[3:10])
+                out.append(f'<path d="{hi}" stroke="{shine}" stroke-width=".6" opacity=".9"/>')
+    out.append("</g>")
+    return "".join(out)
 
 
 def card(x, y, w, h, title, head_fill, body_fill="#FFFFFF", border=None, title_fill="#FFFFFF"):
@@ -340,10 +361,17 @@ def arrow(d, col, w=3.2):
 def art_spread(t):
     W, H = 735, 222
     out = [defs()]
-    # 1. waits on a leaf (questing: back legs hold on, front legs reach out)
+    # 1. waits on a leaf, with tall grass behind it.  CDC "How Ticks Spread Disease": ticks
+    # wait "questing", holding leaves and grass with the third and fourth pairs of legs and
+    # "the first pair of legs outstretched, waiting to climb onto the host".
+    for d, c in (("M5.5,92 C7,68 10,42 16,15 C13.6,42 11.4,68 10,92Z", "#5E9E43"),
+                 ("M10.5,92 C17,71 28,49 41,29 C31,50 21.5,72 15,92Z", "#4E8B37"),
+                 ("M2.5,92 C2.6,78 3.4,64 5.6,50 C5.9,65 6.2,79 6.4,92Z", "#73B254")):
+        out.append(f'<path d="{d}" fill="{c}"/>')
     out.append(leaf(20, 74, 114, -21, "lyleaf"))
     out.append(tick_top("deer", 109, 33, 0.44, 69, "lyq", quest=True, shadow=False))
-    out.append(T(146, 30, ["Waits on grass", "and leaves"], 10, 600, SOFT_INK))
+    out.append(T(146, 31, "WAITS", 11, 800, INK, ls=1))
+    out.append(T(146, 44.5, ["on grass and leaves,", "front legs reaching out"], 10, 600, SOFT_INK, lh=1.15))
     # 2. climbs on
     out.append(arrow("M30,86 C16,106 18,126 40,140", SLATE))
     out.append(tick_top("deer", 86, 138, 0.92, 0, "lyb"))
@@ -358,7 +386,7 @@ def art_spread(t):
                f'<path d="M{sx0},{sy0 + 6} a6,6 0 0 1 6,-6 H{sx1 - 6} a6,6 0 0 1 6,6 V{sy0 + 9} H{sx0}Z" fill="#F7D6C0"/>'
                f'<path d="M{sx0 + 6},{sy0} H{sx1 - 6}" stroke="#D29B7B" stroke-width="1.2"/>'
                # a small blood vessel in the dermis, labelled where the line ends
-               f'<path d="M{sx0 + 4},{sy1 - 7} C{sx0 + 16},{sy1 - 10.5} {sx0 + 30},{sy1 - 5} {sx0 + 46},{sy1 - 8}" '
+               f'<path d="M{sx0 + 4},{sy1 - 7} C{sx0 + 14},{sy1 - 10.5} {sx0 + 26},{sy1 - 5} {sx0 + 38},{sy1 - 8}" '
                f'stroke="#C0564B" stroke-width="2.2" fill="none" stroke-linecap="round" opacity=".8"/>')
     out.append(T(sx1 - 8, sy0 + 18, "SKIN", 9.6, 800, "#8A4A30", "end", ls=1))
     out.append(T(sx1 - 8, sy1 - 6, "blood vessel", 9.6, 600, "#9A3D33", "end"))
@@ -376,24 +404,28 @@ def art_spread(t):
     # Lyme disease card
     out.append(card(314, 6, 160, 116, "LYME DISEASE", SLATE))
     out.append('<rect x="324" y="36" width="140" height="48" rx="6" fill="#E9EFF7"/>')
-    for sx, sy, ln, rot, wv in ((332, 47, 88, -2, 8), (366, 60, 90, 2, 8), (338, 74, 74, -1.5, 7)):
-        out.append(spirochete(sx, sy, ln, rot, wv, amp=2.9))
+    for sx, sy, ln, rot, wv in ((332, 47, 88, -2, 7), (366, 60, 90, 2, 7), (338, 74, 74, -1.5, 6)):
+        out.append(spirochete(sx, sy, ln, rot, wv, amp=3.0))
     out.append(T(394, 101, "Borrelia burgdorferi", 10.4, 700, INK, "middle", italic=True))
     out.append(T(394, 114, "the Lyme bacterium", 9.6, 600, SOFT_INK, "middle"))
-    # Georgia card.  UGA Extension: the lone star tick is the most common tick biting
-    # people in Georgia; blacklegged ticks occur here but are less common.  CDC STARI page:
-    # no evidence lone star ticks transmit the Lyme bacterium.  Georgia is a low-incidence
-    # Lyme state (CDC surveillance).
+    # Georgia card.  "The (lone star tick) is the most common tick in Georgia" (UGA entomologist
+    # Nancy Hinkle, UGA CAES Newswire, "Ticks in Georgia", story 5470; the UGA Extension Field
+    # Report "Summertime is tick time in Georgia" says the same).  UGA Extension Circular 937,
+    # "Protect Yourself from Ticks", names the lone star, American dog and blacklegged ticks as
+    # the three species most associated with people in Georgia, so deer ticks live here too.
+    # CDC (STARI; Regions Where Ticks Live): the lone star tick is not known to spread the Lyme
+    # bacterium.  Georgia is a low-incidence Lyme state in CDC surveillance.
     out.append(card(484, 6, 247, 116, "IN GEORGIA", SLATE_MID, PALE, border="#D3DADE"))
     out.append(TR(495, 48.5, ["Lyme is reported far less here than in", "the Northeast, but deer ticks live here",
-                              "too. The tick that bites people most", "here is the *lone star tick*, which is",
-                              "not known to spread Lyme."], 11, 500, "#33404A", lh=1.32, bold=700, bold_fill=INK))
-    # other infections card.  CDC (Diseases Transmitted by Ticks; Blacklegged tick): the
-    # same ticks also spread anaplasmosis (Anaplasma phagocytophilum, a bacterium),
-    # babesiosis (Babesia microti, a parasite), Borrelia miyamotoi disease (a bacterium)
-    # and Powassan virus disease (a virus).
+                              "too. The tick people meet most here", "is the *lone star tick*, which is not",
+                              "known to spread Lyme."], 11, 500, "#33404A", lh=1.32, bold=700, bold_fill=INK))
+    # other infections card.  CDC "Regions Where Ticks Live", blacklegged (deer) tick: it also
+    # spreads anaplasmosis (Anaplasma phagocytophilum, a bacterium), babesiosis (Babesia microti,
+    # a parasite), Borrelia miyamotoi disease (a bacterium) and Powassan virus disease (a virus).
+    # The western blacklegged tick spreads only anaplasmosis and B. miyamotoi besides Lyme, so
+    # the title names deer ticks rather than "the same ticks" (which would take in the western one).
     ox, oy, ow, oh = 314, 134, 417, 83
-    out.append(card(ox, oy, ow, oh, "OTHER INFECTIONS THE SAME TICKS CAN CARRY", SLATE))
+    out.append(card(ox, oy, ow, oh, "OTHER INFECTIONS DEER TICKS CAN CARRY", SLATE))
     out.append(f'<path d="M{_f(ox + ow / 2)},{oy + 29} V{oy + oh - 8} M{ox + 14},{_f(oy + 22 + (oh - 22) / 2)} H{ox + ow - 14}" '
                'stroke="#E1E6E9" stroke-width="1"/>')
     items = [("Anaplasmosis", "bacterium"), ("Babesiosis", "parasite"),

@@ -4,3 +4,6 @@ practitioner/
 pharmacy/
 img/thumb-*
 build/_tmp/
+
+# Python bytecode from the builder
+__pycache__/

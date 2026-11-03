@@ -121,10 +121,13 @@ import math
 import os
 import random
 
-from kit import ICONS
+from kit import ICONS, DIAMOND
 from svgkit import T, svg
 
 SLUG = "thyroid"
+# The drawn diamond that ties a structure/function bullet to the FDA disclaimer.  This sheet places it
+# itself (build.py then adds none): on every claim, never on a plain fact, and never alone on a line.
+SF = f'&nbsp;<span class="mark">{DIAMOND}</span>'
 
 # ============================================================== text measuring (Inter via Pillow)
 _FACES = {}
@@ -938,8 +941,9 @@ def front(t, ed):
 
 CSS = r"""
 .thy .thy-art svg{display:block;width:100%;height:auto}
-.thy .thy-art2{margin-top:0.06in}
-.thy .thy-signs{margin-top:0.06in}
+.sheet.front:has(.thy) .intro{margin-bottom:0.065in}
+.thy .thy-art2{margin-top:0.045in}
+.thy .thy-signs{margin-top:0.045in}
 .thy .thy-sh{display:flex;align-items:baseline;gap:0.12in;margin:0 0 0.035in}
 .thy .thy-sh b{flex:none;font:900 10.4pt Merriweather,Georgia,serif;color:var(--c1)}
 .thy .thy-sh span{font-size:7.8pt;color:#4A555C}
@@ -951,8 +955,8 @@ CSS = r"""
 .thy .thy-risk{margin:0.045in 0 0;font-size:7.6pt;line-height:1.3;color:#2F373C;background:var(--tint);border-radius:6px;
   padding:0.03in 0.1in;border-left:3px solid var(--c2)}
 .thy .thy-risk b{color:var(--deep)}
-.thy .thy-nums{margin-top:0.06in;border:1px solid #E7D3DC;border-radius:10px;padding:0.05in 0.11in 0.04in;background:#fff}
-.thy .thy-nh{display:flex;align-items:baseline;gap:10px;margin:0 0 3px}
+.thy .thy-nums{margin-top:0.045in;border:1px solid #E7D3DC;border-radius:10px;padding:0.04in 0.11in 0.035in;background:#fff}
+.thy .thy-nh{display:flex;align-items:baseline;gap:10px;margin:0 0 2px}
 .thy .thy-nh b{font:900 11pt Merriweather,Georgia,serif;color:var(--c1)}
 .thy .thy-nh span{font-size:7.8pt;color:#56626A}
 .thy .thy-ngrid{display:grid;grid-template-columns:1.9fr 1fr;gap:5px 0.12in;align-items:stretch}
@@ -1036,38 +1040,41 @@ SHEET = {
              "start": True,
              # [HUW24] [ZHANG25] selenium; [HU17] 50-100 mcg selenium a day where intake is low; [KNEZ20] zinc for
              # T4 to T3; 150 mcg iodine = the adult RDA, not a high dose ([ATA15] warns about high doses)
-             "bullets": ["Selenium and zinc support thyroid function",
-                         "Iodine at a normal daily amount (150 mcg), not a high dose"],
+             "bullets": ["Selenium and zinc support thyroid health" + SF,
+                         "Normal-dose iodine (150 mcg), not a high dose"],
              "dose": "3 capsules with dinner", "dosesub": "4 hours after thyroid meds", "sched": [("pm", 3, "capsules")]},
             {"p": "thy_d3_5000_k2", "need": "Vitamin D", "needsub": "only if your level is low",
              # [HU17] check vitamin D and correct a deficiency; [WANG18]; [KNEZ20] vitamin D and immune regulation
-             "bullets": ["Supports healthy immune function", "K2 helps put calcium to work in bone"],
+             "bullets": ["Supports healthy immune function" + SF, "K2 helps put calcium to work in bone" + SF],
              "dose": "1 softgel with dinner", "dosesub": "recheck your vitamin D level",
              "sched": [("pm", 1, "softgel, if vitamin D is low")]},
             {"p": "thy_iron_support", "need": "Iron", "needsub": "only if ferritin is low",
              # [HU17] TPO is a heme (iron) enzyme; Hashimoto's patients are often iron deficient; check and correct
-             "bullets": ["Supports healthy iron levels and energy", "TPO, the thyroid&#8217;s hormone-making enzyme, needs iron"],
+             "bullets": ["Supports healthy iron levels and energy" + SF,
+                         "TPO, the thyroid&#8217;s hormone-making enzyme, needs iron"],
              "dose": "1 capsule at bedtime", "dosesub": "4 hours from thyroid meds",
              "sched": [("bed", 1, "capsule, if ferritin is low")]},
             {"p": "thy_ultrabiotic_dms", "need": "Gut balance", "needsub": "the gut-thyroid link",
              # [KNEZ20] the thyroid-gut axis (gut microbes take part in thyroid hormone and mineral handling);
              # constipation is one of the front's signs [NIDDK]; label directions one capsule daily [ND-LABEL]
-             "bullets": ["Supports a healthy gut microbiome", "Supports regular, comfortable digestion"],
+             "bullets": ["Supports a healthy gut microbiome" + SF, "Supports regular, comfortable digestion" + SF],
              "dose": "1 capsule with breakfast", "dosesub": "", "sched": [("am", 1, "capsule")]},
             {"p": "thy_omega_1000", "need": "Omega-3s", "needsub": "for heart health",
              # front: a slow thyroid can raise cholesterol [KOTW20]; EPA/DHA and triglycerides, structure/function
              # wording only (no thyroid-population claim on the back)
-             "bullets": ["Supports a healthy inflammatory response", "Supports heart health and healthy triglycerides"],
+             "bullets": ["Supports a healthy inflammatory response" + SF,
+                         "Supports heart health and healthy triglycerides" + SF],
              "dose": "1 softgel with dinner", "dosesub": "", "sched": [("pm", 1, "softgel")]},
         ],
         "rx": {
             "pharmacy": [
                 # [LT4-PI] empty stomach, half to one hour before breakfast, 4 hours from binders; [ATA14] bedtime dosing
                 # is also accepted, and then the iron / multi times shift
-                "<b>Thyroid medicine alone:</b> water only, empty stomach, 30 to 60 minutes before breakfast. Iron, "
-                "calcium, magnesium, antacids and multis 4 hours later. Bedtime dose? Ask {who} to re-time them.",
-                # [LI17] biotin interference; FDA biotin safety communication; [ND-LABEL] Essential Multi 500 mcg biotin
-                "<b>Biotin skews thyroid labs.</b> It is in multivitamins (Essential Multi too) and hair, skin and nail "
+                "<b>Thyroid medicine alone:</b> water, empty stomach, 30 to 60 minutes before breakfast. Iron, calcium, "
+                "magnesium, antacids and multis 4 hours later. Bedtime dose? Ask {who} to re-time them.",
+                # [LI17] biotin interference; FDA biotin safety communication; [ND-LABEL] Essential Multi 500 mcg biotin.
+                # ("multis" = multivitamins, the word this sheet uses throughout.)
+                "<b>Biotin skews thyroid labs.</b> It is in multis (Essential Multi too) and hair, skin and nail "
                 "formulas. Stop it 2 to 3 days before a blood test.",
                 # [HU17] check and correct low levels; [ODS] vitamin D UL 4,000 IU; [ND-LABEL] the D3 5000 label says it
                 # exceeds the UL and levels need monitoring.  5,000 + 1,000 (Essential Multi) = 6,000 IU.  (The label's

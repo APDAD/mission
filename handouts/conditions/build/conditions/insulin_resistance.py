@@ -57,8 +57,8 @@ M3N, M3R = (G4_X + 24, CY + 44), (102, VM)
 VBOX_N, VBOX_R = (100, V0 + 5, 362, V1 - 5), (118, V0 + 5, 362, V1 - 5)   # vessel molecule boxes (8+ clear of the frame)
 BUB_R = 18.5                                 # storage bubble: outer head ring radius (heads reach 20.4)
 # normal: a storage bubble arriving under the membrane, 0.8 below it, tucked against the open door's lower-left
-# corner (its right flank 5.8 from the door at the door's bottom edge), so the open door reads as the one it
-# delivered; a short dotted green arrow carries it up into the membrane
+# corner (its flank about 5 units from the door where the door ends), so the open door reads as the one it
+# delivered; its upper-right door already points at that corner
 NB, NB_DOORS = (219, 217.8), (-30, 210)
 RB = [((240, 242), (-65, 165)), ((293, 240.5), (-15, 130))]   # resistance: two bubbles stuck inside
 CAP_X = 266.5                                # resistance caption, centred over the two bubbles
@@ -324,7 +324,7 @@ def panel(x0, normal):
     if not normal:
         avoid.append((M3R[0], M3R[1], 8.6 + 5, 8.6 + 5))   # step 3's marker stands well clear of the molecules
     n_ins, n_glu = (4, 6) if normal else (8, 13)            # resistance: more sugar AND more insulin in the blood
-    for x, y, r in placed_all(place(rng, [INS_R] * n_ins + [GLU_R] * n_glu, (100, V0 + 5, 370, V1 - 5), avoid),
+    for x, y, r in placed_all(place(rng, [INS_R] * n_ins + [GLU_R] * n_glu, VBOX_N if normal else VBOX_R, avoid),
                               n_ins + n_glu, "vessel molecules"):
         o.append(insulin(x, y) if r == INS_R else glucose(x, y))
     o.append(label_bg(8, VM - 9, 81, 18, "#FFFFFF", 0.92, 5) + T(48.5, VM + 3.8, "Blood vessel", 10.5, 800, "#8E1F28", "middle"))
@@ -343,14 +343,18 @@ def panel(x0, normal):
     o.append(receptor(REC_X, CY, bound=True))
 
     if normal:
-        # glucose travels to the open door, through it, and into the cell
-        o.append(f'<path d="M{G4_X},{V1 + 1} V{CY - 31}" stroke="{GLU_EDGE}" stroke-width="1.8" stroke-dasharray="3 3" '
-                 'marker-end="url(#irAp)" fill="none"/>')
+        # glucose travels to the open door, through it, and into the cell.  The dashed path breaks 2 units
+        # short of each travelling hexagon, so the molecules ride the path instead of being skewered by it.
+        stops = [V1 + 1, V1 + 22, V1 + 50, CY - 31]
+        for k, (a, b) in enumerate(zip(stops, stops[1:])):
+            a, b = (a if k == 0 else a + GLU_R + 2), (b if k == len(stops) - 2 else b - GLU_R - 2)
+            o.append(f'<path d="M{G4_X},{a} V{b}" stroke="{GLU_EDGE}" stroke-width="1.8" stroke-dasharray="3 3" fill="none"'
+                     + (' marker-end="url(#irAp)"/>' if k == len(stops) - 2 else '/>'))
         o.append(glucose(G4_X, V1 + 22) + glucose(G4_X, V1 + 50))
         o.append(glut4(G4_X, CY, True))
         o.append(glucose(G4_X, CY - 2))
         o.append(f'<path d="M{G4_X},{CY + 30} V{CY + 54}" stroke="{GLU_EDGE}" stroke-width="2.4" marker-end="url(#irAp)" fill="none"/>')
-        for dx, dy in [(-24, 66), (28, 70), (54, 46), (82, 64), (2, 82), (56, 80)]:
+        for dx, dy in [(-14, 70), (28, 70), (54, 46), (82, 64), (2, 82), (56, 80)]:   # first one clear of the green arrowhead
             o.append(glucose(G4_X + dx, CY + dy))
         # the signal brings a storage bubble, doors and all, up to the surface: the arrow sweeps from the
         # receptor's inside end and turns up into the bubble, which is arriving at the membrane by the door
@@ -377,11 +381,16 @@ def panel(x0, normal):
         o.append(T(CAP_X, CY + 36, "Glucose doors stuck in storage bubbles", 10, 700, "#7A4A3C", "middle", italic=True))
         o.append(marker(*M1, 1, col) + marker(*M2, 2, col) + marker(*M3R, 3, col))
 
-    # step strip
-    steps = (["Insulin from the blood fits into its receptor.", "The signal brings the glucose door up and opens it.",
+    # step strip: the art's symbols are named here too (green arrow, grey dashes and the X, the storage bubbles),
+    # and resistance step 3 says why that vessel holds twice the insulin (NIDDK: the pancreas makes more insulin
+    # to keep blood glucose in a healthy range).  Every line measured at 11 Inter SemiBold: 324 to 328 units
+    # against the 330 between x 32 and the frame margin.
+    steps = (["Insulin from the blood fits into its receptor.",
+              "The signal (green arrow) raises a bubble of doors. One opens.",
               "Glucose moves into the cell for fuel."] if normal else
-             ["Insulin still fits its receptor, but the cell barely listens.", "The signal is weak, so the glucose doors stay inside.",
-              "Glucose stays in the blood, so blood sugar rises."])
+             ["Insulin still fits its receptor, but the cell barely listens.",
+              "The signal (grey dashes) dies at the X. Doors stay in bubbles.",
+              "Glucose stays in the blood. The pancreas makes more insulin."])
     o.append(f'<path d="M0,{IN1} H{PW}" stroke="#E4E0DA" stroke-width="1"/>')
     for i, s in enumerate(steps):
         y = IN1 + 18 + i * 17
@@ -463,6 +472,7 @@ def chevrons():
              # history, some medicines (steroids), poor sleep; diet and stress per ADA lifestyle guidance.
              ["Sugary drinks and processed food", "Sitting most of the day", "Short sleep, long-term stress",
               "Extra fat around the belly", "Family history, age 45 or older", "Some medicines, such as steroids"]),
+            # "good HDL" glosses HDL in one line (168 px of the 197 px column at 8.1 pt)
             ("#C2392E", "Clues to watch for",
              # NIDDK, Insulin Resistance & Prediabetes: insulin resistance and prediabetes usually have no
              # symptoms and are found with blood tests (fasting glucose, A1c); some people have darkened skin
@@ -471,24 +481,29 @@ def chevrons():
              # to keep glucose normal (NIDDK), and fasting insulin climbs years before glucose does (Tabak et
              # al., Lancet 2009).  High triglycerides and low HDL travel with it (NHLBI metabolic syndrome).
              ["Often no signs at all", "Blood sugar creeping up on labs", "High fasting insulin on a lab test",
-              "Dark skin at the neck or armpits", "Skin tags in those same spots", "High triglycerides, low HDL"]),
+              "Dark skin at the neck or armpits", "Skin tags in those same spots", "High triglycerides, low good HDL"]),
+            # NIDDK: insulin resistance raises the risk of type 2 diabetes, heart disease and stroke, high blood
+            # pressure, fatty liver disease (MASLD, named here in plain words) and is linked to PCOS; AHA/NHLBI.
             ("#62121A", "Where it can lead",
              ["Prediabetes, then type 2 diabetes", "Heart disease and stroke", "High blood pressure",
-              "Fatty liver (MASLD)", "PCOS and hormone shifts", "Memory decline"])]
+              "Fatty liver disease", "PCOS and hormone shifts", "Memory decline"])]
     cells = "".join(f'<div style="background:{bg}"><h4>{h}</h4><ul>{"".join(f"<li>{x}</li>" for x in xs)}</ul></div>'
                     for bg, h, xs in cols)
     return f'<div class="ir-chev">{cells}</div>'
 
 
-def stat():
+def stat(ed):
     # CDC (Prediabetes: Your Chance to Prevent Type 2 Diabetes; National Diabetes Statistics Report):
     # 98 million U.S. adults, more than 1 in 3, have prediabetes; more than 8 in 10 of them do not know it.
     # Insulin rising years before glucose: Tabak et al., Lancet 2009 (Whitehall II trajectories).
-    # "your doctor" in both editions: fasting insulin is a lab blood test a prescriber orders, which most
-    # pharmacists cannot do; {who} stays in Know your numbers, where a pharmacist reviewing results is right.
+    # Who orders the test: in the practitioner edition the provider handing over the sheet orders it, so the
+    # sentence names the same person as Know your numbers ({who} = your provider).  In the pharmacy edition
+    # it stays "your doctor": fasting insulin is a blood test a prescriber orders, which most pharmacists
+    # cannot do, while the pharmacist is the one Know your numbers sends the results to.
+    asker = ed["who"] if ed.get("rx_title") == "Provider check" else "your doctor"
     return ('<div class="ir-stat"><div class="n"><small>More than</small><b>1 in 3</b></div>'
             '<p>U.S. adults have prediabetes, and <b>more than 8 in 10</b> of them do not know it (CDC). Insulin often '
-            'climbs years before blood sugar does, so ask your doctor about a <b>fasting insulin</b> test along with the '
+            f'climbs years before blood sugar does, so ask {asker} about a <b>fasting insulin</b> test along with the '
             'numbers below.</p></div>')
 
 
@@ -500,7 +515,7 @@ def numbers():
     # American Diabetes Association, Standards of Care in Diabetes (Section 2, Diagnosis and Classification):
     # FPG <100 normal, 100-125 prediabetes (IFG), >=126 diabetes; A1C <5.7%, 5.7-6.4%, >=6.5%.
     # Diabetes needs a confirming repeat test unless blood sugar is unmistakably high.
-    scales = (scale("Fasting blood sugar", "glucose, mg/dL, after 8 hours with no food",
+    scales = (scale("Fasting blood sugar", "mg/dL, after 8 hours with no food",
                     [("ok", "Normal", "under 100"), ("pre", "Prediabetes", "100 to 125"), ("dm", "Diabetes", "126 or more")])
               + scale("A1c", "average blood sugar over about 3 months",
                       [("ok", "Normal", "under 5.7%"), ("pre", "Prediabetes", "5.7 to 6.4%"), ("dm", "Diabetes", "6.5% or more")]))
@@ -517,10 +532,12 @@ def numbers():
                     f'<b>{a}</b><span>{b}</span></div>' for ic, a, b in signs)
     # Fasting insulin write-in: no cutoff is printed because none is set.  The ADA Standards of Care do not
     # use insulin to diagnose anything and insulin assays are not standardized between labs, so the patient
-    # copies the lab's own reference range next to the result.
-    return ('<div class="ir-nums"><div class="ir-nh"><b>Know your numbers</b><span class="ir-sub">Fill in your results; '
-            'review them with {who}.</span>'
-            '<span class="ir-fi"><b>Fasting insulin</b><i></i>&micro;IU/mL &middot; lab range<i></i></span></div>'
+    # copies the lab's own reference range next to the result.  Both write-ins are dashed boxes like every
+    # other write-in on the page; "Fill in" is said by the boxes themselves ("My result"), so the sub-line
+    # keeps only who to review them with, which leaves each box about 0.75 in wide.
+    return ('<div class="ir-nums"><div class="ir-nh"><b>Know your numbers</b><span class="ir-sub">Review your results '
+            'with {who}.</span>'
+            '<span class="ir-fi"><b>Fasting insulin</b><i></i>&micro;IU/mL<em>Lab range</em><i></i></span></div>'
             f'<div class="ir-scales">{scales}</div>'
             '<div class="ir-msh"><b>Metabolic syndrome check</b><span>Tick each sign you have. If you take medicine for '
             'one, tick it. <em>Any 3 of these 5</em> means metabolic syndrome.</span></div>'
@@ -530,7 +547,7 @@ def numbers():
 
 
 def front(t, ed):
-    return (f'<div class="irf"><div class="ir-art">{art_insulin()}</div>{chevrons()}{stat()}{numbers()}</div>')
+    return (f'<div class="irf"><div class="ir-art">{art_insulin()}</div>{chevrons()}{stat(ed)}{numbers()}</div>')
 
 
 CSS = r"""
@@ -553,8 +570,10 @@ CSS = r"""
 .irf .ir-nh .ir-sub{flex:none;font-size:7.8pt;color:#56626A;white-space:nowrap}
 .irf .ir-nh .ir-fi{flex:1 1 auto;min-width:0;display:flex;justify-content:flex-end;align-items:baseline;gap:3px;
   white-space:nowrap;font-size:7.8pt;color:#2B3236}
-.irf .ir-fi b{flex:none;font:800 7.8pt Inter,sans-serif;color:#2B3236}
-.irf .ir-fi i{flex:0 1 0.5in;min-width:0.34in;height:0.12in;border-bottom:1.2px solid #8F9AA1}
+.irf .ir-fi b,.irf .ir-fi em{flex:none;font:800 7.8pt Inter,sans-serif;font-style:normal;color:#2B3236}
+.irf .ir-fi em{margin-left:7px}
+.irf .ir-fi i{flex:0 1 0.78in;min-width:0.62in;height:0.16in;align-self:center;border:1.3px dashed #9AA5AC;
+  border-radius:4px;background:#fff}
 .irf .ir-scales{display:grid;grid-template-columns:1fr 1fr;gap:0.18in}
 .irf .ir-sc h4{margin:0 0 3px;font:800 8.4pt Inter,sans-serif;color:#2B3236;white-space:nowrap}
 .irf .ir-sc h4 span{font-weight:500;font-size:7.3pt;color:#5E686F}
