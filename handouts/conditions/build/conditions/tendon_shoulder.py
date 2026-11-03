@@ -1234,8 +1234,10 @@ SHEET = {
             # fish oil (anchovy, sardine, mackerel)", "Contains: Fish" (NutriDyn sell sheet ND416, as recorded in
             # products.d/neuropathy.json and in this sheet's ts_omega_1000 "src").
             # (two questions, one per line in both editions: the break falls between the sentences)
-            "<b>Allergic to aspirin?</b> Skip Inflam‑Eze&nbsp;Plus: its white willow is aspirin&rsquo;s cousin. "
-            "<b>Red&nbsp;meat (alpha-gal) or fish?</b> Skip Collagen&nbsp;Renew (beef) or Omega&nbsp;Pure (fish oil).",
+            # Omega Pure's softgel shell is gelatin of unstated animal source (ND416), a possible alpha-gal source per
+            # CDC, so it is named for both allergies, matching the gelatin line on the joint pain sheet.
+            "<b>Allergic to aspirin, red&nbsp;meat (alpha-gal) or fish?</b> Skip Inflam‑Eze&nbsp;Plus (willow, "
+            "aspirin&rsquo;s cousin), Collagen&nbsp;Renew (beef) or Omega&nbsp;Pure (fish oil, gelatin shell).",
             # 4 Diabetes: ginger and turmeric might lower blood sugar, and with diabetes medicines it might drop too low
             # (MedlinePlus Ginger and Turmeric, as cited in conditions/injury_healing.py); Inflam-Eze Plus carries both
             # (labels.json R856: ginger 800 mg, CurQfen curcumin-fenugreek 250 mg).  Liver: rare liver injury with

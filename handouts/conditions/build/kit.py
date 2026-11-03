@@ -171,7 +171,7 @@ h1,h2,h3{margin:0}
 .foot{margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end;gap:12px;padding-top:6px;
   font-size:7pt;color:#6A747B}
 .foot .code{font:600 7pt Inter,sans-serif;letter-spacing:.06em;color:#5B666D;text-align:right;white-space:nowrap}
-.disc{font-size:7pt;color:#5E686F;line-height:1.28;max-width:5.4in}
+.disc{font-size:7pt;font-weight:700;color:#36424A;line-height:1.28;max-width:5.4in;border:0.6pt solid #7D878D;border-radius:2px;padding:2px 5px}
 .disc sup,.mark{color:var(--c1);font-weight:700}
 .nw{white-space:nowrap}
 

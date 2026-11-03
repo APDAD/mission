@@ -446,17 +446,27 @@ CSS = r"""
 .hbp .hbp-note b{color:var(--deep)}
 .hbp .hbp-fn{font-size:7pt;color:#5E686F;line-height:1.3;margin:3px 0 0}
 /* back page, scoped: only this sheet's back carries the .hbp-back marker.
-   The two formula columns carry the longest label facts, so they get the extra width; the duo gives the
-   check panel a little more room so each note stays at 3 lines; one header height for all five columns
-   lines the photos up.  In the daily rhythm each count sits on its own line under the product name, so a
-   name that ends in a number never runs into it ("EPA-DHA 1000" then "2 softgels"); the evening slot is
-   widest so "Cardio Essentials BP Support" stays on one line. */
-.sheet.back:has(.hbp-back) .cols{grid-template-columns:1.18fr 1.18fr .88fr .88fr .88fr!important}
+   The two formula columns carry the longest label facts, so they get the extra width (Nitric Boost most:
+   its serving line names all twelve label ingredients); one header height for all five columns lines the
+   photos up, and every product name gets a two-line box so all five bullet lists start on one line.
+   In the daily rhythm each count is a small grey pill after the product name, so a name that ends in a
+   number never runs into it ("EPA-DHA 1000" then "1 softgel") and a count never splits from its unit; the
+   slot widths fit the longest names (measured, Inter 7 pt: "Omega Pure EPA-DHA 1000" 123 px, "Cardio
+   Essentials BP Support" 128 px) so each slot stays at five lines or fewer. */
+.sheet.back:has(.hbp-back) .cols{grid-template-columns:1.15fr 1.27fr .86fr .86fr .86fr!important}
 .sheet.back:has(.hbp-back) .col .need{min-height:0.56in}
-.sheet.back:has(.hbp-back) .duo{grid-template-columns:1.1fr 1fr}
-.sheet.back:has(.hbp-back) .rhythm{grid-template-columns:1fr 1.5fr .85fr}
+.sheet.back:has(.hbp-back) .col .pick .nm{min-height:2.3em}
+.sheet.back:has(.hbp-back) .duo{grid-template-columns:1.1fr 1fr;margin-top:0.08in}
+/* the four-note check panel is 1.71 in tall, 0.15 in more than three notes; it is paid back from block
+   spacing only (band top padding 0.30 to 0.25 in, the gaps above Nutrient Solutions, the duo and the
+   notes box), never from type size or line spacing */
+.sheet.back:has(.hbp-back) .band{padding-top:0.25in!important}
+.sheet.back:has(.hbp-back) .ns-title{margin-top:0.1in}
+.sheet.back:has(.hbp-back) .notes{margin-top:0.08in}
+.sheet.back:has(.hbp-back) .rhythm{grid-template-columns:1fr 1.094fr .586fr}
 .sheet.back:has(.hbp-back) .slot li{margin:1px 0 3px}
-.sheet.back:has(.hbp-back) .slot li em{display:block}
+.sheet.back:has(.hbp-back) .slot li em{display:inline-block;white-space:nowrap;background:#EEF1F3;color:#4A555B;
+  border-radius:3px;padding:0 3px;line-height:1.3}
 """
 
 # ------------------------------------------------------------------ the sheet
@@ -492,8 +502,9 @@ SHEET = {
             # AHA "How much sodium should I eat per day?": no more than 2,300 mg a day, an ideal limit of 1,500 mg
             # for most adults, especially with high blood pressure; more than 70% comes from packaged, prepared and
             # restaurant food.  2025 AHA/ACC guideline (Hypertension 2025;82:e212-e316): under 1,500 mg optimal.
-            ("salt", "Cut the sodium", "Under 2,300 mg a day; 1,500 is even better. Most comes from packaged "
-                                       "and restaurant food."),
+            # (measured at 7.5 pt: four lines, "Under 2,300 mg a day;" 109 px of the 114 px column)
+            ("salt", "Cut the sodium", "Under 2,300 mg a day; 1,500 is better. Most comes from packaged and "
+                                       "restaurant food."),
             # AHA "Managing Weight to Control High Blood Pressure": losing even 5 to 10 pounds can help lower blood
             # pressure.  2017 ACC/AHA guideline Table 15: about 1 mm Hg lower for every 1 kg lost.
             # ("Trim extra weight" measured two lines at 9.6 pt; this title fits one.)
@@ -545,40 +556,49 @@ SHEET = {
             # tracked the starting state, so test first
             {"p": "hbp_mag_glycinate", "need": "Relax vessel walls", "needsub": "magnesium", "dose": "dose_from_db",
              "bullets": ["Supports relaxed vessel walls", "Helps most if you run low"]},
-            {"p": "hbp_omega_1000", "need": "Flexible vessels", "needsub": "omega-3s EPA and DHA", "dose": "dose_from_db",
+            # the no-break hyphen keeps "omega-3s" whole, so the header wraps "EPA and DHA / omega-3s"
+            {"p": "hbp_omega_1000", "need": "Flexible vessels", "needsub": "EPA and DHA omega&#8209;3s", "dose": "dose_from_db",
              "bullets": ["Supports heart and vessel health", "Supports healthy triglyceride levels"]},
             # Statins lower CoQ10 (NIH NCCIH, Coenzyme Q10); ND270: "Supports blood flow and nitric oxide
             # production", "Supports energy production"
             {"p": "hbp_coq10", "need": "Power the heart", "needsub": "coenzyme Q10", "dose": "dose_from_db",
              "bullets": ["Statins can lower your CoQ10", "Fuel for heart cells"]},
         ],
-        # Three medicine-and-nutrient notes per edition, worded for who checks them: pharmacists check
-        # interactions and depletions; providers (MDs, DCs, NDs) order labs and adjust doses.
+        # Four medicine-and-nutrient notes per edition, worded for who checks them: pharmacists check
+        # interactions and depletions; providers (MDs, DCs, NDs) order labs and adjust doses.  Both editions
+        # carry every caution: depletions, potassium, blood pressure medicines (with the never-stop rule),
+        # blood thinners and pregnancy.  None says a formula lowers blood pressure; they say "show this sheet,
+        # doses may need a check".
         # Sources: NIH ODS Magnesium fact sheet (loop and thiazide diuretics raise urinary magnesium loss;
         # spironolactone lowers it; impaired kidneys raise the risk of too much magnesium); NIH ODS Potassium
         # fact sheet (ACE inhibitors, ARBs and potassium-sparing diuretics can raise potassium); 2025 AHA/ACC
         # guideline (potassium-enriched salt substitutes except with CKD or potassium-raising drugs); NIH NCCIH
         # Coenzyme Q10 (statins lower CoQ10; the beta-blocker link rests on old in-vitro data, so it is left
-        # out); NIH NCCIH Garlic and NIH ODS Omega-3 and Vitamin E fact sheets (may add to bleeding with blood
-        # thinners); nitrate and nitric-oxide formulas can add to the blood-pressure drop from nitroglycerin and
-        # PDE5 inhibitors (sildenafil, tadalafil).  Nitric Boost: 150 mg potassium per 3 capsules (ND1255).
-        "rx": {
-            "pharmacy": [
-                "<b>Water pills</b> (HCTZ, chlorthalidone, furosemide) can drain magnesium and potassium, and "
-                "<b>statins</b> lower CoQ10. Ask your doctor to check your levels.",
-                "<b>Kidney disease, ACE inhibitor, ARB or spironolactone?</b> Potassium can build up: skip salt "
-                "substitutes, and ask {who} before magnesium or Nitric Boost (150 mg potassium).",
-                "<b>Blood thinners?</b> Garlic, fish oil and vitamin E may add to bleeding. <b>Nitroglycerin or ED "
-                "pills?</b> Nitric Boost may add to their pressure drop. Bring this sheet to your next doctor visit.",
-            ],
-            "practitioner": [
-                "<b>Water pills</b> (HCTZ, chlorthalidone, furosemide) can drain magnesium and potassium, and "
-                "<b>statins</b> lower CoQ10. Ask {who} to check your levels and kidney function.",
-                "<b>Kidney disease, ACE inhibitor, ARB or spironolactone?</b> Potassium can build up: skip salt "
-                "substitutes, and ask {who} before magnesium or Nitric Boost (150 mg potassium).",
-                "<b>Keep a home log.</b> These formulas may strengthen blood pressure pills, nitroglycerin, ED pills "
-                "and blood thinners, so {who} may adjust your doses. Never stop a medicine on your own.",
-            ],
-        },
+        # out); nitrate and nitric-oxide formulas can add to the blood-pressure drop from blood pressure
+        # medicines, nitroglycerin and PDE5 inhibitors (sildenafil, tadalafil), as can magnesium, fish oil and
+        # the BP Support botanicals.  Blood thinners: NIH NCCIH Garlic and NIH ODS Omega-3 and Vitamin E fact
+        # sheets (may add to bleeding); CoQ10 and warfarin point both ways, so the note asks for an INR check
+        # rather than naming a direction: reduced warfarin effect (Spigset O, Lancet 1994;344:1372-3, PMID
+        # 7968059, doi 10.1016/s0140-6736(94)90736-6), more self-reported bleeding on warfarin, OR 3.69
+        # (Shalansky S et al., Pharmacotherapy 2007;27:1237-47, PMID 17723077, doi 10.1592/phco.27.9.1237),
+        # and no INR change at 100 mg a day in a small crossover RCT (Engelsen J et al., Thromb Haemost
+        # 2002;87:1075-6, PMID 12083489).  Pregnancy and nursing: the ND681, ND1255 and ND270 labels all say
+        # "If you are pregnant, nursing, or taking medication, consult your healthcare practitioner", and
+        # celery seed is traditionally avoided in pregnancy.  Nitric Boost: 150 mg potassium per 3 capsules
+        # (ND1255).
+        # One list for both editions (the {who} token names the pharmacist or the provider), so the pharmacy
+        # edition carries every caution the provider edition does.  Measured in the rendered panel at 7.2 pt:
+        # 2 + 3 + 2 + 3 = 10 lines; "BP pills" is the only head short enough to keep note 3 on two lines in
+        # the pharmacy edition ("High BP" is already on the front).
+        "rx": [
+            "<b>Water pills</b> (HCTZ, furosemide) can drain magnesium and potassium; <b>statins</b> lower CoQ10. "
+            "Ask about a blood test.",
+            "<b>Kidney disease, ACE inhibitor, ARB or spironolactone?</b> Potassium can build up: skip salt "
+            "substitutes, and ask {who} before magnesium or Nitric Boost (150 mg potassium).",
+            "<b>BP pills, nitroglycerin or ED pills?</b> Show {who} this sheet first: doses may need a check. "
+            "Never stop a medicine on your own.",
+            "<b>Warfarin or another blood thinner?</b> Garlic, fish oil, vitamin E and CoQ10 can change how it "
+            "works: get your INR checked when you start or stop them. <b>Pregnant or nursing?</b> Ask {who} first.",
+        ],
     },
 }

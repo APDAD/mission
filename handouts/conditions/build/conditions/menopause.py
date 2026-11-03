@@ -1014,21 +1014,16 @@ def best_box():
     # "in both formulas on the back": Menopause Support (ND564) and PeriMenopause Support (ND565) each carry
     # 500 mg EstroG-100 blend per tablet (labels.json), so the evidence line fits whichever box is ticked.
     # The 6-week retest is the [MAP] retest, so the patient can see for herself whether it helps.
-    # The EstroG-100 sentence is a product statement, so it carries the drawn diamond and page 1 carries
-    # the short DSHEA disclaimer it points to (the full one is on page 2).
-    mark = f'<span class="mark">{DIAMOND}</span>'
+    # Page 1 makes no product claim (2026-11-03 review: a product claim needs the exact FDA notice in a bold,
+    # boxed footer, which belongs on page 2). The EstroG-100 evidence stays in the source notes above and the
+    # product itself is on the back, where the full notice sits.
     return ('<div class="mnp-best"><h4>Hot flashes: what works best</h4><ol>'
             '<li><b>Hormone therapy works best.</b> For most healthy women under 60, the benefits outweigh the '
             'risks. It needs a prescription, so ask your doctor.</li>'
             '<li><b>Also proven:</b> CBT (a brief talk therapy), clinical hypnosis and some prescriptions.</li>'
-            # "the newest, from a supplement maker, added GABA" (not "came from ... and added"): the longer form
-            # pushed "6 weeks." onto a fifth line and the bottom row into the footer (measured, round 2)
-            '<li><b>Supplements</b> are not proven for hot flashes. In small trials, EstroG&#8209;100 (in both '
-            'formulas on the back) helped; the newest, from a supplement maker, added GABA.&nbsp;'
-            f'{mark} If you try it, score again at 6 weeks.</li></ol>'
-            '<small>Source: The Menopause Society, 2022 and 2023.<br>'
-            f'{mark} Not evaluated by the FDA; not intended to diagnose, treat, cure, or prevent any '
-            'disease.</small></div>')
+            '<li><b>Supplements</b> are not proven for hot flashes. If you try one, score your symptoms again at '
+            '6 weeks to see whether it helps.</li></ol>'
+            '<small>Source: The Menopause Society, 2022 and 2023.</small></div>')
 
 
 def front(t, ed):

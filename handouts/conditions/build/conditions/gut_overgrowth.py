@@ -1080,17 +1080,8 @@ CSS = r"""
    pays for it, with the gaps above.  The provider edition has room and keeps the kit's 2 px. */
 .sheet.back:has(.gov-edh) .rx li{margin-bottom:1px}
 .sheet.back:has(.gov-edh) .rx li:last-child{margin-bottom:0}
-/* The kit's plan line ends "start with the Start here pick, then add one product a week", which would stretch
-   a Remove step with a set length (ND584: 10 days) to five weeks.  This sheet's line keeps the kit's count, names
-   the Start here pick (Spectrum BR, the one column with start: True) and leaves the pace of the rest to each
-   edition's checker (.gov-edp / .gov-edh mark the edition).  The check panel sets the row height, so the
-   rhythm panel has room for the second line this takes. */
-.sheet.back:has(.gov-back) .total:has(> b + b){font-size:0}
-.sheet.back:has(.gov-back) .total:has(> b + b) > b:first-of-type{font-size:7pt}
-.sheet.back:has(.gov-back) .total:has(> b + b) > b + b{display:none}
-.sheet.back:has(.gov-back) .total:has(> b + b)::before{content:"The full plan is ";font-size:7pt}
-.sheet.back:has(.gov-edp) .total:has(> b + b)::after{content:". Start with Spectrum BR; ask your provider when to add the rest.";font-size:7pt}
-.sheet.back:has(.gov-edh) .total:has(> b + b)::after{content:". Start with Spectrum BR; ask your pharmacist when to add the rest.";font-size:7pt}
+/* The plan line is set through SHEET["back"]["rhythm_note"] (the kit's "add one product a week" would stretch a
+   Remove step with a set length, ND584: 10 days, to five weeks). */
 /* The kit's rhythm has no between-meals slot.  The second box holds the evening-meal pills and S. boulardii's
    mid-afternoon capsule (2 hours from the herbs, apart from dinner), so on this sheet it is labelled
    "Afternoon + dinner" (the same font-size:0 + ::after trick; gap 0 so the hidden label adds no second gap). */
@@ -1175,6 +1166,7 @@ SHEET = {
              "bullets": ["Helps bind unwanted compounds",
                          "Take 2 hours from medicines and pills"]},
         ],
+        "rhythm_note": "The full plan is <b>{plan} a day</b>. Start with Spectrum&nbsp;BR; ask {who} when to add the rest.",
         "rx": {
             # Both editions go to patients, worded for who checks them.  No disease words next to the products
             # (the "test first" line moved off this page: the front says testing shows which overgrowth it is).
@@ -1202,7 +1194,7 @@ SHEET = {
                 # suppression are the main risks, so skip it, as the pharmacy edition says); Paradex: black walnut,
                 # "may contain traces of tree nuts" (retail listing)
                 "<b>Central IV line or weak immunity?</b> Skip S. boulardii unless {who} says yes. "
-                "<b>Tree-nut allergy?</b> Ask before Paradex.",
+                "<b>Tree-nut allergy or a seizure disorder?</b> Ask before Paradex.",
             ],
             "pharmacy": [
                 # Guo 2012 PMID 21870106 (berberine slows CYP3A4, 2D6, 2C9); ND505 cyclosporine caution; CYP2C9
@@ -1227,7 +1219,7 @@ SHEET = {
                 # Enache-Angoulvant 2005 PMID 16267727 (catheters, immune suppression); Kelesidis 2012 (antifungals
                 # act on yeast, so they may inactivate S. boulardii); Paradex tree-nut trace warning (retail listing)
                 "<b>S. boulardii</b> is a live yeast: skip it with a central IV line or weak immunity; antifungals "
-                "stop it. <b>Tree-nut allergy?</b> Ask before Paradex.",
+                "stop it. <b>Tree-nut allergy or a seizure disorder?</b> Ask before Paradex.",
             ],
         },
     },

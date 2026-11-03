@@ -35,9 +35,11 @@ EDITIONS = {
                  "who": "your pharmacist", "Who": "Your pharmacist", "for": "compounding and retail pharmacies"},
 }
 
+# 21 CFR 101.93: the exact notice (plural form allowed), in bold type, set off in a hairline box, linked to
+# every structure/function statement by the same symbol. The "works alongside your care" line moved out:
+# extra words inside the box are not part of the notice, and each check panel already says it.
 DISCLAIMER = (f"<span class='mark'>{kit.DIAMOND}</span> These statements have not been evaluated by the Food and Drug "
-              "Administration. These products are not intended to diagnose, treat, cure, or prevent any disease. "
-              "Nutrient support works alongside, never instead of, the care and medicines your practitioner prescribes.")
+              "Administration. These products are not intended to diagnose, treat, cure, or prevent any disease.")
 
 BACK_CSS = r"""
 .col{position:relative}
@@ -118,7 +120,10 @@ def col_block(c):
 SLOTS = [("am", "Morning", "sun"), ("pm", "Evening meal", "plate"), ("bed", "Bedtime", "moon")]
 
 
-def rhythm_block(cols):
+def rhythm_block(cols, note=None, ed=None):
+    """The three-slot daily schedule plus one plan line. A sheet whose products are alternatives (swap, never
+    stack) can replace the default plan line with back["rhythm_note"]; "{plan}" becomes the pill/scoop total
+    and the {who}/{Who} tokens are filled per edition."""
     by = {"am": [], "pm": [], "bed": []}
     pills = scoops = droppers = 0
     for c in cols:
@@ -143,8 +148,12 @@ def rhythm_block(cols):
     if droppers:
         parts.append(f"{droppers} dropper{'s' if droppers != 1 else ''}")
     joined = ", ".join(parts[:-1]) + (" and " if len(parts) > 1 else "") + parts[-1] if parts else "nothing"
-    total = (f'<div class="total">The full plan is <b>{joined} a day</b>. Overwhelmed? Start with the '
-             f'<b>Start here</b> pick, then add one product a week.</div>')
+    if note:
+        text = note.replace("{plan}", joined)
+        total = f'<div class="total">{ed_text(text, ed) if ed else text}</div>'
+    else:
+        total = (f'<div class="total">The full plan is <b>{joined} a day</b>. Overwhelmed? Start with the '
+                 f'<b>Start here</b> pick, then add one product a week.</div>')
     return f'<div class="rhythm">{cells}</div>{total}'
 
 
@@ -175,7 +184,7 @@ def back_page(s, ed, edkey):
             f'<div class="band" style="padding-top:0.3in"><h2>{b["life_title"]}{sub}</h2>{life_block(b)}</div>'
             '<div class="ns-title">Nutrient Solutions<span>What your body needs, and the NutriDyn formula that delivers it</span></div>'
             f'<div class="cols" style="grid-template-columns:repeat({len(b["cols"])},1fr)">{cols}</div>'
-            f'<div class="duo"><div class="panel"><h3>Your daily rhythm</h3>{rhythm_block(b["cols"])}</div>'
+            f'<div class="duo"><div class="panel"><h3>Your daily rhythm</h3>{rhythm_block(b["cols"], b.get("rhythm_note"), ed)}</div>'
             f'<div class="panel rx"><h3>{ed["rx_title"]}</h3><ul>{rx}</ul></div></div>'
             f'<div class="notes"><b>Special considerations for you:</b>{lines}</div>'
             '<div class="recby"><span>Recommended by</span><span class="ln2" data-for></span><span>Phone</span>'

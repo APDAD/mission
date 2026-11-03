@@ -1125,6 +1125,10 @@ SHEET = {
         # Both editions send every kidney and potassium decision to the PRESCRIBER: a pharmacist, DC or ND does not
         # manage kidney disease or those drugs.  No K2 dose line: the cramp trial's 180 mcg stays on the front.
         # Only the first bullet differs by edition, so the rest are shared (RX_SHARED below).
+        # The kit line ("add one product a week") would stack magnesium products that this sheet offers as
+        # alternatives (Mag Calm Pro and Mag-K replace Muscle Eze), so the sheet sets its own plan line.
+        "rhythm_note": ("The full plan is <b>{plan} a day</b>. Start with Muscle&nbsp;Eze; add Vitamin&nbsp;K2 "
+                        "after a week. Swap magnesium products, never stack them."),
         "rx": {
             "pharmacy": [
                 # [GARR12] [AAFP12]; [FDA-PPI] [ODS-MG] heartburn pills (PPIs).  Pharmacists review the medicine list,
