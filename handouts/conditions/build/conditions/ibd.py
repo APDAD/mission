@@ -303,10 +303,12 @@ W_RECT = 12.0
 # bottom.  The terminal ileum runs into its inner (medial) wall.
 CEC_TOP, CEC_BOT, CEC_W = (-34.6, 218.0), (-35.1, 230.2), 14.3
 
-# Small intestine: ONE continuous, non-crossing tube, about 300 units long.  The centre line
-# was GROWN, not ruled: tools/si_grow.py (constrained differential growth in the agent
-# scratchpad: a chain that lengthens a point at a time, folds kept one tube-width apart,
-# pushed off the colon, rectum and cecum, bends kept round) and then lightly smoothed.  It
+# Small intestine: ONE continuous, non-crossing tube, about 290 units long.  The centre line
+# was GROWN, not ruled, and is baked here as plain points: constrained differential growth
+# (a chain that lengthens a point at a time, folds kept one tube-width (6.7) apart, pushed
+# off the colon, rectum and cecum), then Taubin-smoothed, with the jejunum's first hook and
+# the bend into the terminal ileum rounded by hand.  Edit points freely, then re-run
+# check_inside() and check_leaders(); keep neighbouring runs at least ~6.3 apart.  It
 # starts under the transverse colon just left of the midline (the duodenojejunal flexure),
 # coils as jejunum through the upper left of the belly (the viewer's upper right), crosses to
 # the lower right as ileum, and its last run, the terminal ileum, enters the cecum's side.
@@ -404,18 +406,19 @@ def _smooth01(t):
     return t * t * (3 - 2 * t)
 
 
-def cecum(pal=GI):
+def cecum(mode, pal=GI):
     """The cecum: a short, wider stretch of colon, continuous with the ascending colon above
     it.  Drawn as a run of discs whose size grows toward the round bottom, in the colon's
     layers (outline with haustral bulges, body, haustral folds, highlight), and cut flat at
-    the top where it meets the ascending colon, so the two join without a seam."""
+    the top where it meets the ascending colon, so the two join without a seam.  `mode`
+    only keeps the clip id unique per figure."""
     (x0, y0), (x1, y1) = CEC_TOP, CEC_BOT
     n = 36
     c = [(x0 + (x1 - x0) * i / n, y0 + (y1 - y0) * i / n, W_COLON + (CEC_W - W_COLON) * _smooth01(i / n))
          for i in range(n + 1)]
     at = lambda s: c[min(n, max(0, round(s / (y1 - y0) * n)))]       # disc nearest s units below the top
     knobs = [at(s) for s in (2.0, 8.0) if s <= y1 - y0] + [c[-1]]
-    o = [f'<clipPath id="{U}-ceclip-%s"><rect x="-80" y="{y0:.2f}" width="160" height="80"/></clipPath>']
+    cid = f"{U}-ceclip-{mode}"
     g = []
     for x, y, w in c:
         g.append(f'<circle cx="{x:.2f}" cy="{y:.2f}" r="{w / 2 + 0.65:.2f}" fill="{pal["edge"]}"/>')
@@ -433,7 +436,8 @@ def cecum(pal=GI):
     xb, yb, wb = c[-1]
     g.append(f'<path d="M{x0 - 3.1:.2f},{y0 + 1:.2f} C{x0 - 3.4:.2f},{y0 + 6:.2f} {xb - 4.6:.2f},{yb - 3:.2f} {xb - 3.2:.2f},{yb + 2.6:.2f}" '
              f'fill="none" stroke="{pal["hi"]}" stroke-width="2.4" stroke-linecap="round" opacity=".8"/>')
-    return o, g
+    return (f'<clipPath id="{cid}"><rect x="-80" y="{y0:.2f}" width="160" height="80"/></clipPath>'
+            f'<g clip-path="url(#{cid})">{"".join(g)}</g>')
 
 
 def stomach():
@@ -504,9 +508,7 @@ def figure(mode, x, y, s=1.0):
     for segs, w in reds:
         if w == W_COLON:
             g.append(tube(segs, W_COLON, RED, "colon"))
-    clip, cec = cecum()
-    g.append(clip[0] % mode)
-    g.append(f'<g clip-path="url(#{U}-ceclip-{mode})">{"".join(cec)}</g>')
+    g.append(cecum(mode))
     g.append(stomach())
     g.append("</g></g>")
     return "".join(g)
@@ -862,6 +864,20 @@ CSS = r"""
   border-radius:6px;padding:0.04in 0.16in;width:100%}
 .ibx-scope b{color:var(--deep)}
 """
+
+
+def _qa():
+    """Runs at import, so every build says out loud when an edit breaks the art: an organ
+    over the body outline, a leader over red, crossing leaders, or a label off the edge.
+    It warns instead of raising, because a failed import would silently drop the sheet
+    from a full build."""
+    import sys
+    probs = check_inside()[:4] + check_leaders()[:4] + [p for p in check_text() if not str(p).startswith("(")][:4]
+    if probs:
+        print(f"WARNING: ibd.py art QA failed: {probs}", file=sys.stderr)
+
+
+_qa()
 
 
 # ----------------------------------------------------------------------------- the sheet
