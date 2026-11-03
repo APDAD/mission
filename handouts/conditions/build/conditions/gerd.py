@@ -43,13 +43,14 @@ ESO_LINING = "#FBE4DB"                                            # esophagus li
 ACID_TOP, ACID_MID, ACID_BOT, ACID_EDGE = "#E1EA7C", "#BCCD3A", "#A2B52C", "#7C8F1E"
 LES, LES_DARK, LES_HI = "#1E9A8E", "#0F6B63", "#7AD6CA"          # teal: the LES valve
 REFLUX = "#D52F1E"                                                # red: reflux direction
-DIA, DIA_EDGE, DIA_FIBRE = "#EBDCD3", "#CDB3A6", "#F7EFEA"        # diaphragm
+DIA, DIA_EDGE, DIA_FIBRE = "#E8D5CA", "#C7AA9B", "#F7EEE8"        # diaphragm
 INK, INK_SOFT, LEAD = "#22292D", "#56626A", "#59646B"
 DEEP = "#8E3110"
 
-W, H = 735, 328          # diagram viewBox: 1 unit = 1 px at the 7.66 in content width
+W, H = 735, 338          # diagram viewBox: 1 unit = 1 px at the 7.66 in content width
 OX, OY = 215, 8          # anatomy origin inside the diagram
-ZX, ZY, ZR = 614, 150, 108   # zoom circle
+ZX, ZY, ZR = 614, 152, 108   # zoom circle (ZR in zoom units)
+ZS = 1.06                    # zoom scale: on the page the circle radius is ZR * ZS
 SX, SY, SR = 100, 102, 25    # zoom source ring (local coords, centred on the LES)
 
 
@@ -85,8 +86,8 @@ def _defs():
             f'<stop offset="0" stop-color="#2DB3A5"/><stop offset=".7" stop-color="{LES}"/>'
             f'<stop offset="1" stop-color="{LES_DARK}"/></radialGradient>'
             + ''.join(f'<linearGradient id="gx-dia{k}" gradientUnits="userSpaceOnUse" x1="28" y1="0" x2="292" y2="0">'
-                      f'<stop offset="0" stop-color="{c}" stop-opacity="0"/><stop offset=".2" stop-color="{c}"/>'
-                      f'<stop offset=".82" stop-color="{c}"/><stop offset="1" stop-color="{c}" stop-opacity="0"/></linearGradient>'
+                      f'<stop offset="0" stop-color="{c}" stop-opacity="0"/><stop offset=".13" stop-color="{c}"/>'
+                      f'<stop offset=".86" stop-color="{c}"/><stop offset="1" stop-color="{c}" stop-opacity="0"/></linearGradient>'
                       for k, c in (("e", DIA_EDGE), ("f", DIA)))
             + '<marker id="gx-arr" viewBox="0 0 10 10" refX="5.2" refY="5" markerWidth="3.1" markerHeight="3.1" '
             f'orient="auto-start-reverse" markerUnits="strokeWidth"><path d="M0,0 L10,5 L0,10 z" fill="{REFLUX}"/></marker>'
@@ -148,8 +149,6 @@ def _acid_pool():
     out = [f'<path d="{ACID} L260,330 L20,330 Z" fill="url(#gx-acid)"/>',
            f'<path d="{ACID}" stroke="#F3F7C2" stroke-width="2.2" fill="none" opacity=".9"/>']
     out += [f'<circle cx="{x}" cy="{y}" r="{r}" fill="#EEF3A6" opacity=".8"/>' for x, y, r in bubbles]
-    # a splash thrown up toward the cardia
-    out.append('<path d="M125,251 C121,240 125,231 132,228 C137,234 136,243 141,249 Z" fill="url(#gx-acid)"/>')
     out += [f'<circle cx="{x}" cy="{y}" r="{r}" fill="{ACID_MID}" stroke="{ACID_EDGE}" stroke-width=".9"/>' for x, y, r in drops]
     return "".join(out)
 
@@ -181,7 +180,7 @@ def _anatomy():
     return "".join([
         f'<g transform="translate({OX},{OY})">', _diaphragm(), _duodenum(),
         # pylorus: the muscle ring where the stomach empties into the duodenum
-        f'<rect x="20" y="226" width="11" height="32" rx="5" fill="{WALL_LO}"/>',
+        f'<ellipse cx="25.5" cy="242" rx="5.5" ry="16" fill="{WALL_LO}"/>',
         _les_hoop("back"),
         f'<path d="{SILH}" fill="url(#gx-wall)" stroke="{WALL_LO}" stroke-width="1.6" stroke-linejoin="round"/>',
         f'<rect x="{ESO_L}" y="-20" width="{ESO_R - ESO_L}" height="124" fill="url(#gx-cyl)"/>',
@@ -212,10 +211,12 @@ Z_LUMEN = ("M-24,-140 L-24,-72 C-24,-60 -13,-50 -13,-36 C-13,-22 -24,-12 -24,-2 
            "C66,11 54,16 42,16 C32,16 24,8 24,-2 C24,-12 13,-22 13,-36 C13,-50 24,-60 24,-72 L24,-140 Z")
 Z_LES_L = "M-35,-74 C-52,-64 -53,-12 -37,-2 C-21,-9 -17,-60 -35,-74 Z"
 Z_LES_R = "M35,-74 C52,-64 53,-12 37,-2 C21,-9 17,-60 35,-74 Z"
-Z_POOL = "M-140,60 C-104,52 -76,66 -44,58 C-18,51 -2,62 22,55 C48,47 70,60 96,52 C116,46 130,52 140,50"
-Z_JET = ("M-26,58 C-15,38 -10,12 -8,-14 C-7,-34 -10,-50 -12,-62 "
-         "C-15,-71 -9,-79 -4,-71 C-3,-81 6,-84 7,-72 C10,-79 18,-74 14,-63 "
-         "C11,-50 8,-34 8,-14 C9,12 14,38 27,58 Z")
+# The refluxed acid is one liquid body clipped to the lumen: the pool mounds up into
+# the funnel, fills the open valve wall to wall and climbs the tube to a wavy crest.
+Z_ACID = ("M-140,88 C-110,86 -84,80 -62,64 C-42,48 -30,20 -30,-12 L-30,-60 "
+          "C-22,-70 -14,-58 -5,-68 C3,-77 12,-60 20,-68 C25,-73 29,-68 30,-64 "
+          "L30,-12 C30,12 42,32 62,46 C84,60 110,68 140,68 L140,140 L-140,140 Z")
+Z_CREST = ("M-30,-60 C-22,-70 -14,-58 -5,-68 C3,-77 12,-60 20,-68 C25,-73 29,-68 30,-64")
 
 
 def _zoom_les(d, side, k):
@@ -229,10 +230,10 @@ def _zoom_les(d, side, k):
 
 def _zoom():
     r = ZR - 4
-    drops = [(-20, -82, 4.2), (17, -88, 3.5), (-3, -97, 3.0), (25, -71, 2.4), (-26, -64, 2.1), (6, -108, 2.2)]
+    drops = [(-16, -84, 3.6), (12, -90, 3.0), (-4, -96, 2.4), (21, -80, 2.4), (-23, -76, 2.0), (4, -82, 2.2)]
     return "".join([
-        f'<circle cx="{ZX + 1.5}" cy="{ZY + 2.5}" r="{ZR + 3}" fill="#5A2A1A" opacity=".08"/>',
-        f'<g transform="translate({ZX},{ZY})">',
+        f'<circle cx="{ZX + 1.5}" cy="{ZY + 2.5}" r="{ZR * ZS + 3}" fill="#5A2A1A" opacity=".08"/>',
+        f'<g transform="translate({ZX},{ZY}) scale({ZS})">',
         f'<clipPath id="gx-zc"><circle r="{r}"/></clipPath>',
         f'<clipPath id="gx-zl"><path d="{Z_LUMEN}"/></clipPath>',
         '<g clip-path="url(#gx-zc)">',
@@ -243,24 +244,22 @@ def _zoom():
         # pale esophagus lining above a soft wavy Z-line; deep-rose stomach lining below
         f'<path d="M-40,-140 L40,-140 L40,6 C30,2 22,10 12,6 C2,2 -6,10 -16,6 C-24,3 -32,8 -40,5 Z" fill="{ESO_LINING}"/>',
         '<path d="M-12,-140 V-86 M0,-140 V-92 M12,-140 V-86" stroke="#F2D3C8" stroke-width="1.5" stroke-linecap="round"/>',
-        # back half of the LES ring, seen across the far wall of the open tube
-        f'<path d="M-16,-34 Q0,-50 16,-34" stroke="{LES_DARK}" stroke-width="15" fill="none" opacity=".35"/>',
-        f'<path d="M-16,-34 Q0,-50 16,-34" stroke="{LES}" stroke-width="10" fill="none" opacity=".45"/>',
-        f'<path d="M-62,40 C-48,32 -40,24 -33,14 M-104,62 C-84,54 -66,46 -54,32 M70,24 C84,12 100,4 124,0 '
-        f'M62,38 C82,26 106,20 136,18" stroke="{RUGA_HI}" stroke-width="3" fill="none" stroke-linecap="round" opacity=".9"/>',
-        # acid pool, and the splash forced up through the open valve
-        f'<path d="{Z_POOL} L140,140 L-140,140 Z" fill="url(#gx-acid)"/>',
-        f'<path d="{Z_POOL}" stroke="#F3F7C2" stroke-width="2.4" fill="none"/>',
-        f'<path d="{Z_JET}" fill="url(#gx-jet)" stroke="{ACID_EDGE}" stroke-width="1" stroke-linejoin="round"/>',
-        '<path d="M-3,46 C-4,20 -3,-14 -4,-52" stroke="#F6F9CF" stroke-width="2" fill="none" stroke-linecap="round" opacity=".85"/>',
+        f'<path d="M-66,50 C-52,42 -44,32 -38,20 M-108,70 C-88,64 -72,56 -60,44 M70,22 C84,10 100,2 124,-2 '
+        f'M66,36 C86,24 108,18 138,16 M92,48 C106,40 120,36 140,34" stroke="{RUGA_HI}" stroke-width="3" fill="none" '
+        'stroke-linecap="round" opacity=".9"/>',
+        # acid: the pool mounds up into the funnel and surges through the open valve
+        f'<path d="{Z_ACID}" fill="url(#gx-acid)"/>',
+        f'<path d="{Z_CREST}" stroke="#F6F9CF" stroke-width="2.6" fill="none" stroke-linecap="round"/>',
+        "".join(f'<circle cx="{x}" cy="{y}" r="{rr}" fill="#EEF3A6" opacity=".85"/>' for x, y, rr in
+                ((-10, 18, 2.6), (12, -2, 2.0), (-14, -30, 1.8), (14, -44, 2.4), (-30, 78, 2.4), (40, 76, 2.0), (86, 86, 2.6), (-70, 96, 2.2))),
         "".join(f'<circle cx="{x}" cy="{y}" r="{rr}" fill="{ACID_MID}" stroke="{ACID_EDGE}" stroke-width="1"/>' for x, y, rr in drops),
         "</g>",
         # cut face of the walls, then the two cut faces of the LES ring inside the thickened wall
         f'<path d="{Z_LUMEN}" fill="none" stroke="{CUT}" stroke-width="3"/>',
         _zoom_les(Z_LES_L, -1, 0), _zoom_les(Z_LES_R, 1, 1),
-        f'<path d="M2,36 C1,10 -1,-14 0,-44 L1,-86" stroke="#FFFFFF" stroke-width="7.4" fill="none" stroke-linecap="round" '
+        f'<path d="M1,44 C1,14 -1,-14 0,-40 L0,-78" stroke="#FFFFFF" stroke-width="7.4" fill="none" stroke-linecap="round" '
         'opacity=".75"/>',
-        _arrow("M2,36 C1,10 -1,-14 0,-44 L1,-86", 4.4, halo=False),
+        _arrow("M1,44 C1,14 -1,-14 0,-40 L0,-78", 4.4, halo=False),
         "</g>",
         f'<circle r="{r}" fill="none" stroke="#FFFFFF" stroke-width="7"/>',
         f'<circle r="{ZR}" fill="none" stroke="#D8C7BE" stroke-width="1.3"/>',
@@ -274,12 +273,13 @@ def _wedge():
     dx, dy = ZX - x1, ZY - y1
     d = math.hypot(dx, dy)
     base = math.atan2(dy, dx)
-    a = math.acos((r1 - ZR) / d)
+    R = ZR * ZS
+    a = math.acos((r1 - R) / d)
     pts = []
     for s in (-1, 1):
         ang = base + s * a
         pts.append(((x1 + r1 * math.cos(ang), y1 + r1 * math.sin(ang)),
-                    (ZX + ZR * math.cos(ang), ZY + ZR * math.sin(ang))))
+                    (ZX + R * math.cos(ang), ZY + R * math.sin(ang))))
     (p1u, p2u), (p1l, p2l) = pts
     poly = f"{p1u[0]:.1f},{p1u[1]:.1f} {p2u[0]:.1f},{p2u[1]:.1f} {p2l[0]:.1f},{p2l[1]:.1f} {p1l[0]:.1f},{p1l[1]:.1f}"
     return f'<polygon points="{poly}" fill="#F2E8E2"/>'
@@ -307,9 +307,9 @@ def art_reflux():
             # fade the esophagus into the page at the top rather than chopping it off
             f'<rect x="{OX + ESO_L - 6}" y="0" width="{ESO_R - ESO_L + 12}" height="30" fill="url(#gx-topfade)"/>',
             _zoom(),
-            T(ZX, 22, "UP CLOSE AT THE VALVE", 10.5, 800, DEEP, "middle", ls=1.6),
-            T(ZX, 288, "The relaxed valve stays open,", 13.5, 800, INK, "middle"),
-            T(ZX, 305, "so acid splashes back up.", 13.5, 800, INK, "middle"),
+            T(ZX, 21, "UP CLOSE AT THE VALVE", 10.5, 800, DEEP, "middle", ls=1.6),
+            T(ZX, 297, "The relaxed valve stays open,", 13.5, 800, INK, "middle"),
+            T(ZX, 314, "so acid splashes back up.", 13.5, 800, INK, "middle"),
             _label(168, 48, "Esophagus", "your food tube", OX + ESO_L - 1, OY + 36),
             _label(168, 92, "Diaphragm", "breathing muscle", OX + 70, OY + 89),
             _label(168, 142, "LES valve", "a ring of muscle", OX + SX - 21, OY + SY + 4),
@@ -325,14 +325,15 @@ def key_row():
     acid = sw('<path d="M-11,-2 C-7,-7 -3,1 1,-3 C5,-7 8,-3 11,-4 L11,8 L-11,8 Z" '
               f'fill="{ACID_MID}" stroke="{ACID_EDGE}" stroke-width=".9"/>'
               '<path d="M-11,-2 C-7,-7 -3,1 1,-3 C5,-7 8,-3 11,-4" stroke="#F3F7C2" stroke-width="1.6" fill="none"/>')
-    les = sw(f'<rect x="-6" y="-11" width="12" height="22" fill="{WALL_MID}"/>'
+    les = sw(f'<path d="M-10,1 A10,3.4 0 0 1 10,1" stroke="{LES_DARK}" stroke-width="4.6" fill="none"/>'
+             f'<rect x="-6" y="-11" width="12" height="22" fill="{WALL_MID}"/>'
              f'<path d="M-10,1 A10,3.4 0 0 0 10,1" stroke="{LES_DARK}" stroke-width="5.4" fill="none" stroke-linecap="round"/>'
              f'<path d="M-10,1 A10,3.4 0 0 0 10,1" stroke="{LES}" stroke-width="3.4" fill="none" stroke-linecap="round"/>')
     arrow = sw(f'<path d="M0,10 V-3" stroke="{REFLUX}" stroke-width="3.6" stroke-linecap="round"/>'
                f'<path d="M-6,-1 L0,-10 L6,-1 Z" fill="{REFLUX}"/>')
     return ('<div class="gx-key"><b>Key</b>'
             f'<span>{acid}<em>Stomach acid</em></span>'
-            f'<span>{les}<em>LES valve</em><i>the ring of muscle that shuts the stomach</i></span>'
+            f'<span>{les}<em>LES valve</em><i>the ring of muscle that shuts after you swallow</i></span>'
             f'<span>{arrow}<em>Reflux</em><i>acid moving up</i></span></div>')
 
 
@@ -342,7 +343,7 @@ def key_row():
 TRIGGERS = [
     ("Fried or fatty food",
      '<path d="M17 30h30l-4 25a3 3 0 0 1-3 2.6H24a3 3 0 0 1-3-2.6z"/><path d="M23 30l-2-17M29.5 30V10M36 30l1-18M42.5 30l3-15"/>'
-     '<path d="M24 41c5 3 11 3 16 0"/>'),
+     '<path d="M20 40h24"/>'),
     ("Spicy food",
      '<path d="M44 20c5 2 7 8 5 15-3 11-15 19-31 20-3 0-4-3-1-4 11-4 17-12 19-21 1-6 4-10 8-10z"/>'
      '<path d="M45 20c0-5 3-9 8-10"/><path d="M40 21c2-2 5-2 7 0"/>'),
@@ -375,7 +376,7 @@ def _ic(body, size, color, sw=3):
 
 
 def trigger_row(t):
-    cells = "".join(f'<div class="gx-tr"><span class="gx-badge">{_ic(b, "0.31in", t["deep"], 3.1)}</span><span>{lab}</span></div>'
+    cells = "".join(f'<div class="gx-tr"><span class="gx-badge">{_ic(b, "0.33in", t["deep"], 3.1)}</span><span>{lab}</span></div>'
                     for lab, b in TRIGGERS)
     return (f'<div class="gx-trig"><div class="gx-h">Common triggers <i>They differ from person to person. '
             f'Notice which ones bother you.</i></div><div class="gx-trow">{cells}</div></div>')
@@ -390,16 +391,13 @@ NUTRIENTS = [("Mg", "Magnesium"),    # [FDA] 2011: low magnesium with long-term 
 
 
 def depletion_strip(t, ed):
-    pharmacy = ed.get("who") == "your pharmacist"
-    stop = ("Never stop one on your own: ask your pharmacist and prescriber for a plan."
-            if pharmacy else "Never stop one on your own: ask your provider for a plan.")
     coins = "".join(f'<div class="gx-coin"><b>{s}</b><span>{n}</span></div>' for s, n in NUTRIENTS)
     return ('<div class="gx-strip"><div class="gx-meds"><div class="gx-h">Long-term acid blockers can lower</div>'
-            '<p>PPIs (like omeprazole) and H2 blockers (like famotidine) help many people heal. But stomach acid also helps you '
-            'absorb nutrients, and the FDA has warned about low magnesium and broken bones with long-term, high-dose PPI use.'
-            f'<sup>1</sup> {stop}</p></div>'
+            '<p>PPIs (like omeprazole) and H2 blockers (like famotidine) help many people heal. But acid also helps you absorb '
+            'nutrients, and the FDA has warned about low magnesium and broken bones with long-term, high-dose PPI use.'
+            '<sup>1</sup> Never stop one on your own: ask {who} for a plan.</p></div>'
             f'<div class="gx-dep"><div class="gx-coins">{coins}</div>'
-            '<div class="gx-ask">Ask {who} whether a nutrient check makes sense.</div></div></div>')
+            '<div class="gx-ask">Ask {who} if a nutrient check makes sense.</div></div></div>')
 
 
 # ---------------------------------------------------------------- front page
@@ -412,7 +410,9 @@ FEEL = ["Burning behind the breastbone",          # [ACG22] heartburn, the most 
 ALARM = ["Food sticks, or it hurts to swallow",   # [ACG22] dysphagia is an alarm symptom
          "You throw up blood or coffee-ground bits",  # [ACG22] GI bleeding
          "Your stools are black or tarry",
-         "You lose weight without trying"]        # [ACG22] weight loss
+         "You lose weight without trying",        # [ACG22] weight loss
+         # [ACG22]: chest pain needs heart disease ruled out before anyone calls it reflux
+         "<b>Chest pain: call 911.</b> It can be the heart."]
 
 
 def front(t, ed):
@@ -422,17 +422,15 @@ def front(t, ed):
             '<div class="gx-row">'
             f'<div class="gx-feel"><div class="gx-h">How it can feel</div><ul>{feel}</ul>'
             '<p class="gx-why"><b>Why treat it?</b> Left alone, acid can inflame, narrow or scar the esophagus.</p></div>'
-            f'<div class="gx-alarm"><div class="gx-h">Get care right away if</div><ul>{alarm}</ul>'
-            # [ACG22]: chest pain needs heart disease ruled out before anyone calls it reflux
-            '<p><b>Chest pain or pressure? Call 911.</b> Heart trouble can feel like heartburn.</p></div>'
+            f'<div class="gx-alarm"><div class="gx-h">Get care right away if</div><ul>{alarm}</ul></div>'
             '</div>'
             f'{trigger_row(t)}{depletion_strip(t, ed)}'
-            '<p class="gx-fn">1. U.S. Food and Drug Administration. Drug Safety Communications on proton pump inhibitors: '
-            'possible increased risk of fractures (2010) and low magnesium levels with long-term use (2011).</p></div>')
+            '<p class="gx-fn">1. U.S. FDA Drug Safety Communications on proton pump inhibitors (PPIs): possible fracture risk '
+            '(2010); low magnesium with long-term use (2011).</p></div>')
 
 
 CSS = r"""
-.gxf{display:flex;flex-direction:column;gap:0.07in}
+.gxf{display:flex;flex-direction:column;gap:0.085in}
 .gxf .gx-art>svg{display:block;width:100%;height:auto}
 .gxf .gx-key{display:flex;align-items:center;justify-content:center;gap:4px 18px;flex-wrap:wrap;margin:2px auto 0;
   padding:3px 14px;border:1px solid #EAD9CF;border-radius:99px;background:#FFFBF8;width:max-content;max-width:100%}
@@ -458,21 +456,21 @@ CSS = r"""
 .gxf .gx-alarm p b{color:#A5281E}
 .gxf .gx-trow{display:grid;grid-template-columns:repeat(10,1fr);gap:0 0.04in}
 .gxf .gx-tr{display:flex;flex-direction:column;align-items:center;text-align:center}
-.gxf .gx-badge{width:0.47in;height:0.47in;border-radius:50%;background:var(--soft);display:flex;align-items:center;justify-content:center;
+.gxf .gx-badge{width:0.5in;height:0.5in;border-radius:50%;background:var(--soft);display:flex;align-items:center;justify-content:center;
   box-shadow:inset 0 0 0 1.5px #F3D3BC}
 .gxf .gx-tr>span:last-child{font-size:7.5pt;line-height:1.18;color:#2B3236;margin-top:3px;font-weight:600}
-.gxf .gx-strip{display:grid;grid-template-columns:1.18fr 1fr;gap:0.14in;align-items:center;background:var(--soft);border-radius:10px;
+.gxf .gx-strip{display:grid;grid-template-columns:1.3fr 1fr;gap:0.14in;align-items:center;background:var(--soft);border-radius:10px;
   padding:0.07in 0.12in 0.07in 0.14in}
 .gxf .gx-meds p{margin:0;font-size:8.2pt;line-height:1.34;color:#2B3236}
 .gxf .gx-meds sup{color:var(--c1);font-weight:700}
 .gxf .gx-dep{background:#fff;border-radius:8px;padding:0.05in 0.08in 0.05in}
 .gxf .gx-coins{display:grid;grid-template-columns:repeat(5,1fr);gap:0.04in}
 .gxf .gx-coin{display:flex;flex-direction:column;align-items:center}
-.gxf .gx-coin b{width:0.4in;height:0.4in;border-radius:50%;background:var(--c1);color:#fff;display:flex;align-items:center;justify-content:center;
+.gxf .gx-coin b{width:0.42in;height:0.42in;border-radius:50%;background:var(--c1);color:#fff;display:flex;align-items:center;justify-content:center;
   font:800 10pt Inter,sans-serif;box-shadow:0 0 0 2px #fff,0 0 0 3.2px #F0B89A}
-.gxf .gx-coin span{font-size:7.2pt;font-weight:700;color:#2B3236;margin-top:3px;text-align:center;line-height:1.1}
+.gxf .gx-coin span{font-size:7pt;font-weight:700;color:#2B3236;margin-top:3px;text-align:center;line-height:1.1;white-space:nowrap}
 .gxf .gx-ask{font-size:7.6pt;color:#3F4A50;text-align:center;margin-top:3px}
-.gxf .gx-fn{margin:0;font-size:6.6pt;color:#5E686F;line-height:1.3}
+.gxf .gx-fn{margin:0;font-size:7pt;color:#5E686F;line-height:1.3}
 """
 
 SHEET = {

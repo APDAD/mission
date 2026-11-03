@@ -187,6 +187,10 @@ def stage_images(dst, report=None):
         else:
             p["img"] = "../img/nd-missing.png"
             p["img_px"] = 0
+        soft_f = os.path.join(HIRES, "soft.json")
+        soft = set(json.load(open(soft_f))) if os.path.exists(soft_f) else set()
+        if best and os.path.basename(best).replace(".png", "") in soft:
+            p["img_soft"] = True
         if report is not None:
             report[k] = (best_h, best)
     PLACEHOLDER["img"] = "../img/nd-missing.png"

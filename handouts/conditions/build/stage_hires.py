@@ -38,6 +38,8 @@ def main(manifest):
         by_name[norm(p["name"])] = k
     os.makedirs(DST, exist_ok=True)
     log = []
+    soft_path = os.path.join(DST, "soft.json")
+    soft = set(json.load(open(soft_path))) if os.path.exists(soft_path) else set()
     for it in items:
         src = it.get("path")
         if not src or not os.path.exists(src):
@@ -56,7 +58,12 @@ def main(manifest):
             have = Image.open(out).size[1] if os.path.exists(out) else 0
             if h > have:
                 shutil.copyfile(src, out)
+                if "lanczos" in (it.get("source") or "").lower() or "stopgap" in (it.get("source") or "").lower():
+                    soft.add(n.replace(".png", ""))
+                else:
+                    soft.discard(n.replace(".png", ""))
                 log.append(f"| {n} | {w}x{h} | {'upscaled' if it.get('upscaled') else 'original'} | {it.get('source', '')} |")
+    json.dump(sorted(soft), open(soft_path, "w"), indent=0)
     with open(os.path.join(DST, "SOURCES.md"), "a") as f:
         if log:
             f.write("\n| file | px | kind | source |\n|---|---|---|---|\n" + "\n".join(log) + "\n")

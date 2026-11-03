@@ -286,6 +286,9 @@ def main():
     low = [(k, report.get(k, (0, None))[0]) for k in used if report.get(k, (0, None))[0] < products.MIN_PRINT_PX]
     if low:
         print("LOW-RES PRODUCT PHOTOS (<%dpx tall):" % products.MIN_PRINT_PX, ", ".join(f"{k} {h}px" for k, h in low))
+    soft = [k for k in used if products.P.get(k, {}).get("img_soft")]
+    if soft:
+        print("SOFT PRODUCT PHOTOS (enlarged from 160px thumbnails; need the print master):", ", ".join(soft))
     job = {"items": [], "bundles": []}
     for edkey in EDITIONS:
         d = os.path.join(OUT, edkey)
