@@ -31,6 +31,28 @@ Fix round 2026-11-03 (art director's review):
     SHEET["back"] stays frozen for the back-page pass, so scoped back-only CSS (see
     BACK-PAGE FIT in CSS) fits it without changing a word.
 
+Back-page pass 2026-11-03 (the front's design is approved and unchanged; only the final
+front review's small fixes are applied):
+  * front fixes: the binder KEY rows are 22 px apart and the box is narrowed flush right; the
+    house KEY swatch is a drop over a puddle ("Moisture, leak or puddle"), so the cutaway's
+    puddles are keyed too, with measured label widths; the red return arrow ends at the
+    liver's left-lobe tip; the two free binders are drawn the size of the caught ones;
+    "Joint aches" uses an in-module JOINT icon (the kit bone is not a joint);
+  * products follow NutriDyn's own mold protocols: KBMO Mycotoxin Protocol ND1610 (Binder Pro,
+    GI Defend) and a NutriDyn educator's mold plans for Asher's 2025 Georgia seminar
+    (Lipo-Flow, glutathione, Mito Recharge).  Binder Pro is the Start-here pick, the binder
+    the front's diagram shows.  Five columns, the competitor's count.  Facts and sources:
+    products.d/mold.json (mold-owned keys, each label re-opened this pass);
+  * binder spacing rule: Binder Pro goes 2 hours after breakfast and 2 hours after supper
+    (the educator's grids: mid-morning and mid-evening), so every other product sits at a meal and
+    the check panel's rule and the daily rhythm agree;
+  * lifestyle band: protocol advice added where it is real ("Test home & work" from the educator's
+    "Preparation Plan (While Waiting on Labs and Home/Work Samples)"; "Stay regular" from
+    ND1610's "elimination through the stool" and her optional magnesium citrate); "Fix fast"
+    (the front's step 1, word for word) and "Sweat" (no source) are out;
+  * the check panel is written per edition: pharmacists check interactions and nutrient
+    losses, providers order labs, refer and adjust.
+
 Every SVG is drawn at 1:1 with its printed CSS size (viewBox width = rendered width
 in CSS px), so an SVG font-size of 9.4 prints at 7.05 pt.
 
@@ -46,6 +68,20 @@ Sources (a short comment sits next to each fact below):
     more than about 10 square feet: use EPA's remediation guide / a professional)
   Kerkadi et al., J Toxicol Environ Health A 1998;53:231-50 (a bile-acid binder raised
     fecal excretion of the mycotoxin ochratoxin A and cut its enterohepatic recirculation)
+  Back page:
+  WHO, Mycotoxins fact sheet (aflatoxins in maize, groundnuts, tree nuts, spices; ochratoxin A
+    in cereals, coffee, dried vine fruit, wine and grape juice, spices; patulin in apples)
+  EPA, A Brief Guide to Mold, Moisture, and Your Home (indoor humidity ideally 30 to 50 percent);
+    EPA, Guide to Air Cleaners in the Home (HEPA filters capture mold spores)
+  Dietary Guidelines for Americans 2020-2025 (fiber 14 g per 1,000 kcal: 22 to 34 g a day for
+    adults, so "about 30 g")
+  Ohkawa et al., Rinsho Shinkeigaku 1995;35:806-7 (PMID 8777808: chlorella, a vitamin K-rich
+    food, blunted warfarin); Rohde et al., Curr Opin Clin Nutr Metab Care 2007;10:1-5
+    (doi:10.1097/MCO.0b013e328011c46c: vitamin K intake over 250 mcg a day lowers warfarin
+    sensitivity; supplements can carry enough K1 to move the INR); Sconce et al., Blood
+    2007;109:2419-23 (doi:10.1182/blood-2006-09-049262: steady daily vitamin K steadies the INR)
+  FDA labels for the azole antifungals (itraconazole, voriconazole, posaconazole: strong CYP3A4
+    inhibitors with long interaction lists)
 """
 import math
 import random
@@ -122,6 +158,12 @@ def drop(x, y, s=1.0):
             f'<path d="M0,-7.8 C2.5,-4.6 5.2,-1.6 5.2,2 A5.2,5.2 0 0 1 -5.2,2 C-5.2,-1.6 -2.5,-4.6 0,-7.8Z" fill="{WATER}"/>'
             '<path d="M-2.5,2.4 A2.6,2.6 0 0 0 -0.6,4.9" stroke="#FFFFFF" stroke-width="1.1" fill="none" '
             'stroke-linecap="round" opacity=".85"/></g>')
+
+
+def puddle_drop():
+    """Key swatch for water as the cutaway draws it: a keyed drop over a small puddle (every
+    puddle in the house sits under a drop), centred on (0, 0) and 15 px wide."""
+    return '<ellipse cx="0" cy="6.3" rx="7.5" ry="1.9" fill="#86B1D8"/>' + drop(0, -2.4, 0.8)
 
 
 def badge(x, y, n, fill):
@@ -339,9 +381,10 @@ def art_house(t):
     out.append(lab(314, 96, ["Showers", "and tubs"], "start") + leader(311, 100, 287, 96))
     out.append(lab(314, 207, "Under sinks", "start") + leader(311, 203.5, 261.8, 211.5))
     out.append("</g>")
-    # key
-    out.append(key_row(200, 256, [(colony(0, 0, 8, 7), "Mold growth"), (drop(0, 0, 1.0), "Moisture or leak")],
-                       widths=[62, 86]))
+    # key: the water swatch is a drop over a puddle, so the cutaway's puddles are keyed too.
+    # widths = the labels' measured text widths (CSS px, Inter 600 at 10 px)
+    out.append(key_row(200, 256, [(colony(0, 0, 8, 7), "Mold growth"), (puddle_drop(), "Moisture, leak or puddle")],
+                       widths=[61, 117]))
     return svg(W, H, "".join(out), "Where mold hides in a home: attic, windows, walls, bathroom, kitchen sink and crawl space")
 
 
@@ -480,7 +523,8 @@ def art_binder(t, H=288):
     esc_y = gut_y(esc_x) - LUMEN / 2 - 3
     out.append(hexagon(esc_x, esc_y, 8.6))
     # recirculation loop back to the liver
-    p0, p1, p2, p3 = (esc_x + 2, esc_y - 12.5), (esc_x + 6, 120), (300, 66), (226, 63)
+    # it ends where its arrowhead tip just meets the liver's left-lobe tip (edge near x = 212 at y = 63)
+    p0, p1, p2, p3 = (esc_x + 2, esc_y - 12.5), (esc_x + 6, 120), (300, 66), (214, 63)
     out.append(f'<path d="M{_f(p0[0])},{_f(p0[1])} C{_f(p1[0])},{_f(p1[1])} {_f(p2[0])},{_f(p2[1])} {_f(p3[0])},{_f(p3[1])}" '
                'stroke="#C0392B" stroke-width="3" fill="none" stroke-dasharray="6 4.5" marker-end="url(#moArR)"/>')
     mx, my = _bez(p0, p1, p2, p3, 0.55)
@@ -489,7 +533,9 @@ def art_binder(t, H=288):
     cap_x = 364
     cap_y = gut_y(cap_x) + 1
     out.append(capsule_open(cap_x, cap_y, gut_angle(cap_x)))
-    for (x, dy, R, rot) in [(397, 7, 8, 12), (417, -7, 8.5, -14)]:
+    # the free binders are the size of the caught ones (R 12 against 13.6): a binder does not grow
+    # when it catches a toxin
+    for (x, dy, R, rot) in [(396, 7, 12, 12), (424, -7, 12, -14)]:
         out.append(crescent(x, gut_y(x) + dy, R, rot=rot))
     # its label sits in clear space above the gut; a leader points into the lumen
     out.append(leader(385, 154.5, cap_x - 2, cap_y - 10.8) + T(388, 152, "A binder you take", 10.5, 700, BINDER_TXT))
@@ -508,14 +554,16 @@ def art_binder(t, H=288):
     cy4 = H - 13
     out.append(badge(408, cy4, 4, c1) + T(422, cy4 + 3.8, "Binders hold on, so the toxins leave with stool.", 10.5, 700, BINDER_TXT))
     # key
-    kb, _ = key_box(556, 10, [(hexagon(0, 0, 7), "Mycotoxin"), (crescent(-2.6, 0, 9.5), "Binder"),
+    # rows 22 px apart, so the two crescent swatches keep a 4 px gap; the box ends flush with the
+    # column's right edge (731) and carries the same side padding left and right of its labels
+    kb, _ = key_box(568, 10, [(hexagon(0, 0, 7), "Mycotoxin"), (crescent(-2.6, 0, 9.5), "Binder"),
                               (caught(-3.4, 0, r=5.2, R=8.2), "Toxin caught by a binder"),
                               # drawn like the duct: dark rim under the light core, square ends
                               ('<path d="M-8,0 H7" stroke="#4E8A33" stroke-width="9"/>'
                                '<path d="M-8,0 H7" stroke="#86C25E" stroke-width="5"/>', "Bile"),
                               ('<path d="M-9,0 H5" stroke="#C0392B" stroke-width="2.6" stroke-dasharray="4 3"/>'
                                '<path d="M3,-4.5 L9.5,0 L3,4.5 Z" fill="#C0392B"/>', "Soaks back in")],
-                    175)
+                    163, row_h=22)
     out.append(kb)
     return svg(_f(W), H, "".join(out), "How a binder helps carry mycotoxins out of the body")
 
@@ -530,6 +578,12 @@ LUNGS = ('<path d="M32 7v17M32 24l-6 6M32 24l6 6"/>'
          '<path d="M38 22c8-1 15 9 16 22 1 7-2 11-7 11-6 0-9-4-9-11V22z"/>')
 INHALER = ('<path d="M31 25V10a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v15"/>'
            '<path d="M27 25h20v25a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4v-6a4 4 0 0 1 4-4h13z"/><path d="M27 40v14"/><path d="M4 41h.5M2.5 47h.5M4 53h.5"/>')
+# Joint (a knee, front view): the upper bone ends in two rounded knobs, the lower bone in a flat
+# top, a clear gap between them, and three short ache rays on each side of the gap.  (The kit
+# "bone" is a whole bone, not a joint, and was the one symptom icon that did not show its symptom.)
+JOINT = ('<path d="M26 4v14c0 2-6 3-6 8 0 3 2 5 5 5 3 0 5-2 7-2s4 2 7 2c3 0 5-2 5-5 0-5-6-6-6-8V4"/>'
+         '<path d="M21 40c0-1.2 1-2 2-2h18c1 0 2 .8 2 2 0 3-5 4-5 7v13M26 60V47c0-3-5-4-5-7"/>'
+         '<path d="M13 29.5l-6-3M12 34.5H5M13 39.5l-6 3M51 29.5l6-3M52 34.5h7M51 39.5l6 3"/>')
 
 
 def own_icon(body, size, sw):
@@ -560,31 +614,21 @@ CSS = r"""
 .mo-front .mo-steps{margin-bottom:8px}
 .mo-front .mo-stat b{font:900 19pt Merriweather,Georgia,serif;color:var(--c1);line-height:1;white-space:nowrap}
 .mo-front .mo-stat span{font-size:8.3pt;line-height:1.3;color:#2B3236}
-/* BACK-PAGE FIT (fix round 2026-11-03).  SHEET["back"] is draft 1 and stays frozen until the
-   back-page product pass.  As built it needed 1061 px in a 1021 px frame: the FDA disclaimer was
-   cut by the bottom bar and the page/edition line did not print.  These rules reach only THIS
-   sheet's back (the .sheet.back right after the .mo-front page, so the all-sheets bundle is
-   safe) and change no words:
-     - lifestyle cells 0.04in apart instead of 0.1in, so "Limit moldy foods" sets on one line
-       (116 px in a 119 px cell) and the tallest cell loses a title line and a body line;
-     - daily-rhythm columns size to their contents, a count never splits from its unit
-       ("Mito Recharge 3 / capsules"), and the rhythm panel takes a little width from the
-       check panel (which was 42 percent blank), so the Morning list stops wrapping;
-     - every dose bar is the same height with its text centred, so the bars form one row
-       (the glutathione line sets on one line at 7.3 pt with tighter side padding);
-     - product size lines get 0.05in side padding so "Practitioner exclusive · powder" stops
-       orphaning "powder";
-     - the GI Defend tub, when it is the Start-here pick, sits 0.12in lower so the ribbon no
-       longer covers its lid (the column has the slack; a narrow bottle needs no rule).
-   Re-check all of these, and drop any that the rebuilt back no longer needs, when it lands. */
-.sheet.front:has(.mo-front)+.sheet.back .lifes{gap:0.04in}
-.sheet.front:has(.mo-front)+.sheet.back .duo{grid-template-columns:1.55fr 1fr}
-.sheet.front:has(.mo-front)+.sheet.back .rhythm{grid-template-columns:auto auto auto}
-.sheet.front:has(.mo-front)+.sheet.back .slot li em{white-space:nowrap}
-.sheet.front:has(.mo-front)+.sheet.back .col .dose{min-height:0.35in;display:flex;flex-direction:column;
-  justify-content:center;font-size:7.3pt;padding-left:0.03in;padding-right:0.03in}
-.sheet.front:has(.mo-front)+.sheet.back .col .pick{padding-left:0.05in;padding-right:0.05in}
-.sheet.front:has(.mo-front)+.sheet.back .col:has(.startt) .pick img[src$="/nd-gi-defend.png"]{margin-top:0.12in}
+/* BACK PAGE (back-page pass 2026-11-03).  Reached through the marker span in the lifestyle title,
+   so the rules touch only this sheet's back, in its own file and in the all-sheets bundle.
+     - lifestyle cells 0.04in apart, so every title sets on one line;
+     - every column's header is one height, so the photos and product names share a line, and
+       each "In each serving" block sits on its dose bar (the .what box is a column with the
+       facts pushed to its foot);
+     - every dose bar is one height with its text centred, so the bars form one row;
+     - daily-rhythm columns size to their contents. */
+.sheet.back:has(.mo-back) .lifes{gap:0.04in}
+.sheet.back:has(.mo-back) .col .need{min-height:0.54in}
+.sheet.back:has(.mo-back) .col .what{display:flex;flex-direction:column}
+.sheet.back:has(.mo-back) .col .what .key{margin-top:auto}
+.sheet.back:has(.mo-back) .col .dose{min-height:0.35in;display:flex;flex-direction:column;justify-content:center}
+.sheet.back:has(.mo-back) .col .pick{padding-left:0.05in;padding-right:0.05in}
+.sheet.back:has(.mo-back) .rhythm{grid-template-columns:auto auto auto}
 """
 
 
@@ -593,7 +637,7 @@ def front(t, ed):
     k = lambda name: icon(name, "0.36in", sw=2.9)
     grp_a = [(k("nose"), "Stuffy nose"), (s(LUNGS), "Cough, wheeze"), (s(EYE), "Itchy, red eyes"),
              (s(INHALER), "Asthma flares")]
-    grp_b = [(k("battery"), "Fatigue"), (k("brain"), "Brain fog"), (k("headache"), "Headaches"), (k("bone"), "Joint aches")]
+    grp_b = [(k("battery"), "Fatigue"), (k("brain"), "Brain fog"), (k("headache"), "Headaches"), (s(JOINT), "Joint aches")]
     cells = lambda items: "".join(f"<div>{ic}<span>{lab}</span></div>" for ic, lab in items)
     # CDC Mold: Basic Facts + IOM 2004 for group A; group B is what patients commonly report
     signs = ('<div class="mo-signs">'
@@ -636,29 +680,86 @@ SHEET = {
               "with removing the exposure."),
     "front": front,
     "css": CSS,
-    # back: exactly as draft 1 (sheets.py); a later pass revises the products.
     "back": {
-        "life_title": "Lifestyle Recommendations", "style": "circle",
-        "life": [("sensitive", "Limit moldy foods", "Peanuts, corn, long-stored grains, dried fruit, wine and aged cheese carry more mycotoxins."),
-                 ("wheat", "More fiber", "Fiber binds toxins carried in bile. Aim for 30 g a day."),
-                 ("house", "Dry the air", "Keep indoor humidity between 30 and 50 percent with a dehumidifier."),
-                 ("filter", "Filter it", "HEPA air purifiers and HEPA vacuums trap mold spores."),
-                 ("sauna", "Sweat", "Sauna or a good workout helps you sweat. Drink water."),
-                 ("clipboard", "Fix fast", "Dry or repair any leak within 24 to 48 hours.")],
-        "cols": [
-            {"p": "gi_defend", "need": "Bind toxins in the gut", "needsub": "serum-derived bovine immunoglobulins", "start": True,
-             "bullets": ["Immunoglobulins bind microbial toxins in the gut", "Supports barrier function"], "dose": "dose_from_db"},
-            {"p": "lipo_flow", "need": "Keep bile flowing", "needsub": "liver and bile support",
-             "bullets": ["Supports healthy bile flow", "Supports the liver's clearance pathways"], "dose": "dose_from_db"},
-            {"p": "glutathione", "need": "Master antioxidant", "needsub": "liposomal glutathione",
-             "bullets": ["Supports the liver's detox pathways", "Liposomal form for absorption"], "dose": "dose_from_db"},
-            {"p": "mito", "need": "Cellular energy and glutathione", "needsub": "NAC, carnitine, ALA",
-             "bullets": ["Supports mitochondria and detoxification", "Antioxidant support"], "dose": "dose_from_db"},
-            {"p": "nac600", "need": "Build glutathione", "needsub": "N-acetyl-L-cysteine",
-             "bullets": ["The building block your body uses to make glutathione", "Supports respiratory health"], "dose": "dose_from_db"},
+        # the empty span marks this sheet's back page for the scoped CSS (.sheet.back:has(.mo-back))
+        "life_title": 'Lifestyle Recommendations<span class="mo-back"></span>', "style": "circle",
+        "life": [
+            # NutriDyn educator: "Mold Care ~ Preparation Plan (While Waiting on Labs and Home/Work
+            # Samples)": support starts while the home and the workplace are checked
+            ("house", "Test home &amp; work", "Start your plan while your home and workplace are checked for damp and mold."),
+            # EPA, A Brief Guide to Mold, Moisture, and Your Home: indoor humidity ideally 30 to 50 percent
+            ("meter", "Dry the air", "Keep indoor humidity at 30 to 50 percent. A dehumidifier helps."),
+            # EPA, Guide to Air Cleaners in the Home: HEPA filters capture mold spores; HEPA vacuums in cleanup
+            ("filter", "Filter it", "HEPA air purifiers and HEPA vacuums trap mold spores."),
+            # WHO, Mycotoxins fact sheet: maize, groundnuts, stored cereals, dried vine fruit, spices, wine
+            ("jar", "Limit risky foods", "Peanuts, corn, long-stored grains, dried fruit, spices and wine can carry mycotoxins."),
+            # Dietary Guidelines 2020-2025: 22 to 34 g fiber a day for adults; front step 3: fiber binds
+            ("wheat", "More fiber", "Fiber holds on to toxins in bile. Aim for about 30 g a day."),
+            # ND1610: binders work by "elimination through the stool"; the educator's preparation plan:
+            # "OPTIONAL Cape Aloe/Mag Citrate 1-4 before sleep"
+            ("gut", "Stay regular", "Binders leave with stool. Drink water. Constipated? Ask about magnesium citrate."),
         ],
-        "rx": ["<b>Binders block absorption.</b> Take them 2 hours apart from food, supplements and every medicine.",
-               "<b>Antifungal drugs,</b> if prescribed, interact with many medicines. Have your pharmacist review your list.",
-               "<b>Stay regular.</b> Binders need a daily bowel movement to work. Constipated? Call your practitioner."],
+        # NutriDyn's own mold protocols first: KBMO Mycotoxin Protocol ND1610 (Binder Pro, GI Defend) and
+        # a NutriDyn educator's mold plans (Lipo-Flow, "Glutathione/NAC", Mito Recharge).  They also cover the
+        # competitor's five categories: binders (Binder Pro), bitter herbs and bile (Lipo-Flow: artichoke,
+        # dandelion, gentian), mitochondrial support (Mito Recharge); NutriDyn has no phosphatidylcholine
+        # product, and the protocol's glutathione takes that place.  Timing: Binder Pro goes 2 hours after
+        # breakfast and 2 hours after supper (educator grid: mid-morning, mid-evening), so every other product sits
+        # at a meal, 2 hours from the binder.  Claim bullets start with their verb, so the kit ends each one
+        # with the diamond tied to the FDA line.  Facts, doses and sources: products.d/mold.json.
+        "cols": [
+            # ND1610's lead product; ND1141 Rev. 12/25 "Supports healthy detoxification"; Asher's email to a
+            # practice, 2026-10-29: "Binder Pro has no charcoal or clay"
+            {"p": "mo_binder_pro", "need": "Bind toxins in the gut", "needsub": "apple pectin, Humiplex, chlorella",
+             "start": True, "dose": "dose_from_db",
+             "bullets": ["Helps hold on to toxins in the gut so they leave with stool", "No charcoal or clay"]},
+            # ND850 Rev. 12/24: "Supports healthy gut barrier function"; "binding, neutralizing, and removing
+            # toxins from the gut"; Asher 2023-12-21: "stays in the gut"
+            {"p": "mo_gi_defend", "need": "Guard the gut lining", "needsub": "serum-derived bovine immunoglobulins",
+             "dose": "dose_from_db",
+             "bullets": ["Supports a healthy gut barrier", "Helps neutralize gut toxins, and stays in the gut"]},
+            # ND606 Rev. 4/26: "Promote healthy bile processes", "Promote healthy liver function"
+            {"p": "mo_lipo_flow", "need": "Keep bile flowing", "needsub": "artichoke, dandelion, gentian",
+             "dose": "dose_from_db",
+             "bullets": ["Promotes healthy bile flow, the liver&rsquo;s way out", "Supports healthy liver function"]},
+            # ND971 Rev. 8/24: "Supports healthy glutathione levels", "Detox Support"; glutathione is the
+            # liver's packing step (conjugation) before toxins leave in bile (front caption 1)
+            {"p": "mo_glutathione", "need": "Top up glutathione", "needsub": "antioxidant and detox support",
+             "dose": "dose_from_db",
+             "bullets": ["Helps the liver pack toxins into bile", "Supports healthy glutathione levels"]},
+            # ND812 Rev. 2/25: "Promote healthy mitochondria", "Support healthy detoxification capacity"
+            {"p": "mo_mito", "need": "Fuel your cells", "needsub": "mitochondrial support",
+             "dose": "dose_from_db",
+             "bullets": ["Promotes healthy mitochondria and energy", "Supports healthy detox capacity"]},
+        ],
+        "rx": {
+            # Both editions go to patients, worded for who checks them: a pharmacist checks interactions and
+            # nutrient losses, a provider orders labs, refers and adjusts.
+            "pharmacy": [
+                # Binder spacing rule: the educator's grids keep the binder between meals, away from the meal-time
+                # supplements; humic-fulvic acids and chlorella are chelators (ND1141), pectin a soluble fiber
+                "<b>Binders can catch medicines and nutrients too.</b> Take Binder Pro 2 hours apart from food, "
+                "other supplements and every medicine. {Who} can help you time it.",
+                # ND812: 250 mcg vitamin K1 per 3 capsules; Ohkawa 1995 (chlorella blunted warfarin);
+                # Rohde 2007 (over 250 mcg a day lowers warfarin sensitivity)
+                "<b>On warfarin?</b> Vitamin K can weaken it. Mito Recharge has 250&nbsp;mcg vitamin K1, and the "
+                "chlorella in Binder Pro carries some too. Ask {who} before you start.",
+                # FDA labels: azole antifungals are strong CYP3A4 inhibitors with long interaction lists
+                "<b>Prescribed an antifungal?</b> Many interact with other medicines. Show {who} your full list, "
+                "supplements included.",
+            ],
+            "practitioner": [
+                "<b>Binders can catch medicines and nutrients too.</b> Take Binder Pro 2 hours apart from food, "
+                "other supplements and every medicine.",
+                # the educator's "Areas to Further Assess": Mycotoxin Urine Assessment, Mold Antibody Assessment,
+                # Organic Acid Testing (NutriDyn sells the KBMO kits; ND1610 is the KBMO follow-up sheet);
+                # Asher refers CIRS-level cases to CIRS-trained clinicians (Gmail 18a44129ee7139f6)
+                "<b>Testing guides the plan.</b> {Who} may order a urine mycotoxin, mold antibody or organic "
+                "acids test, then adjust your plan or refer you to a specialist.",
+                # ND812 K1; Ohkawa 1995; Rohde 2007; Sconce 2007 (a steady daily intake steadies the INR)
+                "<b>On warfarin?</b> Vitamin K can weaken it. Mito Recharge has 250&nbsp;mcg vitamin K1, and the "
+                "chlorella in Binder Pro carries some too. {Who} may check your INR (a clotting test) sooner.",
+            ],
+        },
     },
 }

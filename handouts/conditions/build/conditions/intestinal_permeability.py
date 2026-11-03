@@ -281,43 +281,45 @@ def _smooth(pts):
 
 
 def leak_stream(wl, wr, ybot, gid):
-    """The stream down one gap and its neck.  Returns (markup, x of the neck, y where the head starts)."""
-    y0, n = ybot - 3, 22
+    """The stream down one gap and its neck.  It floods the gap from wall to wall (its edges tuck 1.5 units under
+    the cells, which are drawn on top), fades in at the mouth so it has no lid, deepens as it falls and narrows
+    into the solid neck.  Returns (markup, x of the neck, y where the head starts)."""
+    y0, n = ybot - 2, 16
     ys = [y0 + i * (CB - y0) / n for i in range(n + 1)]
-    xl, xr = [x_on(wl, y) for y in ys], [x_on(wr, y) for y in ys]
-    # narrowest width within two samples either side, so the stream clears every notch; smoothed centre line
-    wmin = [min(xr[j] - xl[j] for j in range(max(0, i - 2), min(n, i + 2) + 1)) for i in range(n + 1)]
-    mid = [(a + b) / 2 for a, b in zip(xl, xr)]
-    cen = [sum(mid[max(0, i - 2):i + 3]) / len(mid[max(0, i - 2):i + 3]) for i in range(n + 1)]
-    hw = [max(5.0, min(0.37 * w, 0.5 * w - 3.4)) for w in wmin]
-    hw = [sum(hw[max(0, i - 1):i + 2]) / len(hw[max(0, i - 1):i + 2]) for i in range(n + 1)]
-    gx = cen[-1]
-    hy0 = vessel_y(gx) + 0.5                      # the head's base sits on the vessel's top edge
-    left = [(c - h, y) for c, h, y in zip(cen, hw, ys)]
-    right = [(c + h, y) for c, h, y in zip(cen, hw, ys)][::-1]
-    cap = hw[0] * 0.7
-    d = (f"M{left[0][0]:.1f},{left[0][1]:.1f} {_smooth(left)} "
-         f"C{left[-1][0]:.1f},{CB + 4} {gx - NECK_HW:.1f},{CB + 3} {gx - NECK_HW:.1f},{CB + 9} "
-         f"L{gx - NECK_HW:.1f},{hy0 + 2.5:.1f} L{gx + NECK_HW:.1f},{hy0 + 2.5:.1f} L{gx + NECK_HW:.1f},{CB + 9} "
-         f"C{gx + NECK_HW:.1f},{CB + 3} {right[0][0]:.1f},{CB + 4} {right[0][0]:.1f},{right[0][1]:.1f} {_smooth(right)} "
-         f"C{right[-1][0]:.1f},{y0 - cap:.1f} {left[0][0]:.1f},{y0 - cap:.1f} {left[0][0]:.1f},{left[0][1]:.1f} Z")
-    span = hy0 + 2.5 - (y0 - cap)
+    left = [(x_on(wl, y) - 1.5, y) for y in ys]
+    right = [(x_on(wr, y) + 1.5, y) for y in ys[::-1]]
+    gx = (x_on(wl, CB - 3) + x_on(wr, CB - 3)) / 2                 # the neck leaves from the middle of the gap floor
+    hy0 = vessel_y(gx) + 0.5                                       # the head's base sits on the vessel's top edge
+    xl, xr = left[-1][0], right[0][0]
+    d = ("M" + " L".join(f"{x:.1f},{y:.1f}" for x, y in left)
+         + f" C{xl:.1f},{CB + 4} {gx - NECK_HW:.1f},{CB + 2} {gx - NECK_HW:.1f},{CB + 9}"
+         + f" L{gx - NECK_HW:.1f},{hy0 + 2.5:.1f} L{gx + NECK_HW:.1f},{hy0 + 2.5:.1f} L{gx + NECK_HW:.1f},{CB + 9}"
+         + f" C{gx + NECK_HW:.1f},{CB + 2} {xr:.1f},{CB + 4} {xr:.1f},{CB:.1f} L"
+         + " L".join(f"{x:.1f},{y:.1f}" for x, y in right) + " Z")
+    span = hy0 + 2.5 - y0
 
     def off(y):
-        return f"{min(1.0, max(0.0, (y - (y0 - cap)) / span)):.3f}"
-    grad = (f'<defs><linearGradient id="{gid}" gradientUnits="userSpaceOnUse" x1="0" y1="{y0 - cap:.1f}" x2="0" '
+        return f"{min(1.0, max(0.0, (y - y0) / span)):.3f}"
+    # opacities raised per the recheck (about .3 / .45 / .7), then solid from the gap floor down
+    grad = (f'<defs><linearGradient id="{gid}" gradientUnits="userSpaceOnUse" x1="0" y1="{y0:.1f}" x2="0" '
             f'y2="{hy0 + 2.5:.1f}"><stop offset="0" stop-color="{LEAK}" stop-opacity="0"/>'
-            f'<stop offset="{off(y0 + 8)}" stop-color="{LEAK}" stop-opacity=".3"/>'
-            f'<stop offset="{off(CB - 40)}" stop-color="{LEAK}" stop-opacity=".45"/>'
-            f'<stop offset="{off(CB)}" stop-color="{LEAK}" stop-opacity=".7"/>'
-            f'<stop offset="{off(CB + 7)}" stop-color="{LEAK}" stop-opacity="1"/>'
+            f'<stop offset="{off(y0 + 12)}" stop-color="{LEAK}" stop-opacity=".3"/>'
+            f'<stop offset="{off(CB - 36)}" stop-color="{LEAK}" stop-opacity=".45"/>'
+            f'<stop offset="{off(CB - 3)}" stop-color="{LEAK}" stop-opacity=".7"/>'
+            f'<stop offset="{off(CB + 6)}" stop-color="{LEAK}" stop-opacity="1"/>'
             f'<stop offset="1" stop-color="{LEAK}" stop-opacity="1"/></linearGradient></defs>')
-    # a soft highlight down one side of the stream: it reads as liquid, not as a tint on the gap
-    hl = [(c - h * 0.45, y) for c, h, y in zip(cen[2:-2], hw[2:-2], ys[2:-2])]
-    shine = (f'<path d="M{hl[0][0]:.1f},{hl[0][1]:.1f} {_smooth(hl)}" fill="none" stroke="#FFFFFF" '
-             f'stroke-width="1.6" stroke-linecap="round" stroke-opacity=".55"/>')
     _shape("stream", left + right, 0)
-    return grad + f'<path d="{d}" fill="url(#{gid})"/>' + shine, gx, hy0
+    return grad + f'<path d="{d}" fill="url(#{gid})"/>', gx, hy0
+
+
+def chevron(x, y, hw):
+    """A small flow mark pointing down the stream, drawn behind the items: white on the deeper stream, with a
+    dark red edge so it also holds on the pale top of the stream."""
+    h = hw * 0.62
+    d = f"M{x - hw:.1f},{y - h:.1f} L{x:.1f},{y:.1f} L{x + hw:.1f},{y - h:.1f}"
+    return (f'<path d="{d}" fill="none" stroke="#B42A18" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" '
+            'stroke-opacity=".55"/>'
+            f'<path d="{d}" fill="none" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>')
 
 
 def leak_head(gx, y0):
@@ -765,26 +767,39 @@ def art_barrier(t):
         kinds = STREAM[k]
         flip = -1 if k % 2 else 1
         aim = (gx, ybot + 12)
+        n0, items = len(_REG), []
         # 4 crowding the mouth from the clear band above it (below the lanes, never in one);
         # microbes swim head-first towards the gap
         for i, (cx, cy) in enumerate(CROWD):
             x, y = gx + flip * cx + g.uniform(-2.5, 2.5), ytop + cy + g.uniform(-2.5, 2.5)
             rot = math.degrees(math.atan2(aim[1] - y, aim[0] - x)) + 180 + g.uniform(-15, 15)
-            o.append(_place(kinds[i], x, y, g, rot=rot if kinds[i] == M else None, s=0.64, tail="short", tag=f"g{k}c{i}"))
+            items.append(_place(kinds[i], x, y, g, rot=rot if kinds[i] == M else None, s=0.64, tail="short", tag=f"g{k}c{i}"))
         # 2 squeezing into the mouth, centred in the space between the snapped junction bars
         for i, yy in enumerate([ybot + 5 + g.uniform(-1.5, 1.5), ybot + 24 + g.uniform(-2, 2)]):
-            o.append(_in_gap(kinds[4 + i], wl, wr, yy, 9.5, flip * (1 - 2 * i), g, tag=f"g{k}m{i}"))
+            items.append(_in_gap(kinds[4 + i], wl, wr, yy, 9.5, flip * (1 - 2 * i), g, tag=f"g{k}m{i}"))
         # 2 further down the gap, thinning out
         for i, yy in enumerate([CT + 70 + g.uniform(-6, 6), CT + 111 + g.uniform(-6, 6)]):
-            o.append(_in_gap(kinds[6 + i], wl, wr, yy, 3.0, g.choice((-1, 1)), g, tag=f"g{k}d{i}"))
+            items.append(_in_gap(kinds[6 + i], wl, wr, yy, 3.0, g.choice((-1, 1)), g, tag=f"g{k}d{i}"))
         # 1 squeezing through the neck, across the basement membrane
-        o.append(_place(kinds[8], gxn + g.uniform(-2, 2), CB + 7, g, narrow=True, s=0.56, tail="short", tag=f"g{k}b"))
+        items.append(_place(kinds[8], gxn + g.uniform(-2, 2), CB + 7, g, narrow=True, s=0.56, tail="short", tag=f"g{k}b"))
         # the bold arrowhead, then a small fan of leaked items just under it
-        o.append(leak_head(gxn, hy0))
+        items.append(leak_head(gxn, hy0))
         fan = [(-18, BLT + 38), (17, BLT + 43), (-1, BLT + 62)][:len(kinds) - 9]
         for i, (fx, fy) in enumerate(fan):
-            o.append(_place(kinds[9 + i], gxn + flip * fx + g.uniform(-2, 2), fy + g.uniform(-2, 2), g, s=0.66,
-                            tag=f"g{k}f{i}"))
+            items.append(_place(kinds[9 + i], gxn + flip * fx + g.uniform(-2, 2), fy + g.uniform(-2, 2), g, s=0.66,
+                                tag=f"g{k}f{i}"))
+        # flow marks in the open stretches of the stream between the items (drawn first, so the items ride over them)
+        spans = sorted((y - hh, y + hh) for _, _, y, _, hh in _REG[n0:] if ybot - 4 < y < CB + 14)
+        for (_, b0), (t1, _) in zip(spans, spans[1:]):
+            if t1 - b0 >= 13 and b0 < CB - 8:
+                yc = min((b0 + t1) / 2, CB - 10)
+                hw = min(4.6, (x_on(wr, yc) - x_on(wl, yc)) / 2 - 4.0)
+                if hw >= 3:
+                    xc = (x_on(wl, yc) + x_on(wr, yc)) / 2
+                    o.append(chevron(xc, yc + hw * 0.31, hw))
+                    _shape("chev", [(xc - hw - 1.8, yc - hw * 0.31 - 1.8), (xc + hw + 1.8, yc - hw * 0.31 - 1.8),
+                                    (xc, yc + hw * 0.31 + 1.8)], 0)
+        o.extend(items)
 
     # ---- causes of damage, on the cells: a pill resting on the shrunken cell, bolts striking tops
     px_, py_ = LCELLS[2]["xc"] + 1, cells[2][3] - 7.5

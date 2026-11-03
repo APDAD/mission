@@ -753,7 +753,8 @@ def body_map(t):
     return svg(BM_W, BM_H, "".join(out),
                "A woman's body with notes on the changes menopause can bring: brain and thermostat, skin and hair, "
                "breasts, heart, gut and weight, ovaries and uterus, bladder and vagina, bones and muscles. "
-               "The liver, stomach, colon and pelvis are named. A magnified circle shows the hypothalamus in the brain.")
+               "The liver, stomach and colon are named; the bladder is drawn in urine yellow. A magnified circle shows "
+               "the hypothalamus in the brain.")
 
 
 # ============================================================== picture 2: hot flashes + hormone timeline
@@ -1054,7 +1055,7 @@ CSS = r"""
 
 # START column, second bullet: the two formulas, by stage [MAP] ("When was your last period?  Within the
 # last year: PeriMenopause Support; longer ago: Menopause Support"); {who} ticks one.  Product names link
-# to the product page, like the photo above them (PeriMenopause Support URL from the same Dr. Miller visit
+# to the product page, like the photo above them (PeriMenopause Support URL from the same earlier NutriDyn visit
 # brief that gives this sheet its Menopause Support URL; nutridyn.com cannot be opened from this session).
 PICK = ('<span class="mnp-pk"><i></i><a href="https://nutridyn.com/menopause-support"><b>Menopause Support</b></a>: '
         'no period for a year or more</span>'

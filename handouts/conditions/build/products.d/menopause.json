@@ -64,7 +64,7 @@
         "capsules"
       ]
     ],
-    "src": "UltraBiotic Women's sell sheet ND1053 Rev. 1/25, opened 2026-11-03 (Dropbox NutriDyn Marketing Materials id:xHepYs_Ou4AAAAAAAAwfzA): serving 2 capsules, 30 servings; strains L. acidophilus La-14, L. rhamnosus HN001, L. rhamnosus Rosell-11 + L. helveticus Rosell-52 (Lacidofil), Bacillus subtilis HU58, L. reuteri 1E1, Bacillus coagulans SC208, L. gasseri LG36, L. salivarius LS33; amounts 9 + 6 + 4 + 2 + 2 + 1 + 0.5 + 0.5 = 25 billion CFU at time of manufacture (text extraction split names and amounts; the total matches the products DB R177 Metagenics-chart read: 9 strains, 25 billion CFU per 2 capsules). Claims on the sheet: supports a healthy vaginal microbiome, supports a healthy gut microbiome. Directions take two capsules daily. No verified product-page URL, so the link falls back to catalog search. Dose bar: '2 capsules daily' is the label direction; 'same time each day' is a soft cue and the bedtime slot in Your daily rhythm is plan timing, not label text. 'at time of manufacture' is the label's own qualifier for the 25 billion CFU. Photo: R177 is the 115x160 catalog thumbnail (below print quality). The print master 'UltraBiotic Womens PC ND1010.pdf' could not be downloaded from this session; the only original found (688x952, Gmail 'Fwd: Bag Stuffer' 2023-08-15, ND1106 Life University bag insert) shows the pre-rebrand label, so it was not used."
+    "src": "UltraBiotic Women's sell sheet ND1053 Rev. 1/25, opened 2026-11-03 (Dropbox NutriDyn Marketing Materials id:xHepYs_Ou4AAAAAAAAwfzA): serving 2 capsules, 30 servings; strains L. acidophilus La-14, L. rhamnosus HN001, L. rhamnosus Rosell-11 + L. helveticus Rosell-52 (Lacidofil), Bacillus subtilis HU58, L. reuteri 1E1, Bacillus coagulans SC208, L. gasseri LG36, L. salivarius LS33; amounts 9 + 6 + 4 + 2 + 2 + 1 + 0.5 + 0.5 = 25 billion CFU at time of manufacture (text extraction split names and amounts; the total matches the products DB R177 Metagenics-chart read: 9 strains, 25 billion CFU per 2 capsules). Claims on the sheet: supports a healthy vaginal microbiome, supports a healthy gut microbiome. Directions take two capsules daily. No verified product-page URL, so the link falls back to catalog search. Dose bar: '2 capsules daily' is the label direction; 'same time each day' is a soft cue and the bedtime slot in Your daily rhythm is plan timing, not label text. 'at time of manufacture' is the label's own qualifier for the 25 billion CFU. Photo: img-src R177.png is a smooth 4x stopgap (460x640) enlarged from the 115x160 catalog thumbnail, listed in img-src/soft.json (below print quality). The print master 'UltraBiotic Womens PC ND1010.pdf' could not be downloaded from this session; the only original found (688x952, Gmail 'Fwd: Bag Stuffer' 2023-08-15, ND1106 Life University bag insert) shows the pre-rebrand label, so it was not used."
   },
   "meno_creatine": {
     "name": "Creatine Powder",
@@ -75,12 +75,12 @@
     "dosesub": "in 8 to 16 oz of any drink",
     "sched": [
       [
-        "am",
+        "pm",
         1,
         "scoop"
       ]
     ],
     "url": "https://nutridyn.com/creatine-powder-r258",
-    "src": "products DB R258 (Thorne chart, catalog ND143 10/1/26): creatine monohydrate 5 g per scoop, 100 servings, 505 g; directions mix 1 scoop in 8-16 ounces of water or your favorite beverage. Unflavored per the tub photo. URL from the repo creatine blast (blasts/2026-11-16-creatine-plus-training.html). Dose bar is the label direction; the morning slot in Your daily rhythm is plan timing. Photo: R258 is a 768x780 Lanczos enlargement of a 157x160 thumbnail (below print quality; print master Creatine Powder PC ND1311 / BS ND1312 in Dropbox could not be downloaded from this session)."
+    "src": "products DB R258 (Thorne chart, catalog ND143 10/1/26): creatine monohydrate 5 g per scoop, 100 servings, 505 g; directions mix 1 scoop in 8-16 ounces of water or your favorite beverage. Unflavored per the tub photo. URL from the repo creatine blast (blasts/2026-11-16-creatine-plus-training.html). Dose bar is the label direction; the evening-meal slot in Your daily rhythm is plan timing (the label allows any drink, any time; evening balances the three slots). Photo: the shared photo pool picks the sharpest real file for this bottle, the 265x241 original in blasts/assets/creatine-powder.png (img-src R258.png is a soft 768x780 enlargement of a 157x160 thumbnail). Both are below print quality; the print master Creatine Powder PC ND1311 / BS ND1312 in Dropbox could not be downloaded from this session."
   }
 }

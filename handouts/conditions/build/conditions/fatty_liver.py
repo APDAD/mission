@@ -28,8 +28,8 @@ Front recheck pass (2026-11-03, front_rechecks_BC.json), no redesign beyond the 
   - The severity row, the band and the key share one 8-unit margin on both sides.
 Back (products pass, same day): four columns, the competitor's count, matching its four nutrient
 categories (berberine; bergamot + artichoke; aged black garlic; alpha lipoic acid) with NutriDyn's own
-protocol products.  Berberine Pro, Milk Thistle Complex and Mito Recharge are on Rick Mayfield's GLC 2026
-"Metabolic Fatty Liver (MAFLD, MASLD, MASH)" list [MAYFIELD26]; Lipo-Flow is the NutriDyn science-team
+protocol products.  Berberine Pro, Milk Thistle Complex and Mito Recharge are on the NutriDyn CSO's GLC 2026
+"Metabolic Fatty Liver (MAFLD, MASLD, MASH)" list [CSO26]; Lipo-Flow is the NutriDyn science-team
 lipotropic (400 mg artichoke + tangerine peel: the citrus-and-artichoke match) Asher sends "to promote healthy
 liver function".  Milk Thistle Complex stands in for aged black garlic (both are antioxidant liver-cell
 support; NutriDyn has no liver protocol with garlic).  Label facts: products.d/fatty-liver.json (fl_* keys, so
@@ -68,14 +68,14 @@ SOURCES (each number on the page carries one of these tags in a comment)
               Toxicol Rep 2020;7:386-402. doi:10.1016/j.toxrep.2020.02.008 (fasting bolus doses raise EGCG
               exposure; case reports at 140 to about 1000 mg/day EGCG; USP label: take with food, stop
               and call if dark urine or yellow skin or eyes)
-  [MAYFIELD26] Rick Mayfield DC (NutriDyn CSO), FINAL_GLC 2026 PROTOCOL RICK.pdf, Dropbox
-              /NutriDyn/Public Share Folder/GLC 2026 Notes/3 - Rick Mayfield/ (id:xHepYs_Ou4AAAAAAAA7oHg),
+  [CSO26] NutriDyn CSO, GLC 2026 protocol PDF, Dropbox
+              /NutriDyn/Public Share Folder/GLC 2026 Notes/ (CSO folder) (id:xHepYs_Ou4AAAAAAAA7oHg),
               read 2026-11-03: "Metabolic Fatty Liver (MAFLD, MASLD, MASH)": PPC Silymarin (coming soon),
               Ganoderma Plus, Inflam-Eze Plus, Milk Thistle Complex, Berberine Pro, Detox, Mito Recharge,
               UltraBiotic Prebiotic.  His GLC 2026 outline (Dropbox "GLC 2026 outline marketing.docx",
               id:xHepYs_Ou4AAAAAAAA4B1A, per scratchpad/protocols/metabolic.md) covers the gut barrier and the
               "total toxic load of xenobiotics and inflammatory endotoxins".
-  [MAYFIELD24] Mayfield, GLC2024 Rick Mayfield Protocols.pdf (id:xHepYs_Ou4AAAAAAAArn1w, per
+  [CSO24] NutriDyn CSO, GLC 2024 protocols PDF (id:xHepYs_Ou4AAAAAAAArn1w, per
               scratchpad/wf/protocol-fatty-liver.json): UltraBiotic Prebiotic's polyphenols "all reduce LPS",
               listed as an Akkermansia booster.  Asher's Direct Mail blast "NutriDyn New Formula: Akkermansia
               Plus" (Gmail 18f5f05aa7b72a44, 2024-05-09) ties Akkermansia to "colon and liver health".
@@ -933,7 +933,7 @@ CSS = r"""
 """
 
 # ============================================================== back page
-# Lifestyle: guideline steps [EASL24][AASLD23], plus the protocol's gut-liver angle [MAYFIELD26] (gut barrier,
+# Lifestyle: guideline steps [EASL24][AASLD23], plus the protocol's gut-liver angle [CSO26] (gut barrier,
 # endotoxins; UltraBiotic Prebiotic on the fatty-liver list, Akkermansia in Asher's 2024 launch blast).
 LIFE = [
     # [EASL24]: "improving diet quality (similar to the Mediterranean dietary pattern), limiting the consumption of
@@ -949,7 +949,7 @@ LIFE = [
     # 10-minute walks after meals lowered after-meal glucose more than one 30-minute walk [REYNOLDS16]
     ("walk", "Move every day",
      "150 minutes a week of brisk walking plus 2 strength days. A 10-minute walk after meals blunts the sugar spike."),
-    # gut barrier and endotoxins [MAYFIELD26]; plant polyphenols and fiber as Akkermansia boosters [MAYFIELD24];
+    # gut barrier and endotoxins [CSO26]; plant polyphenols and fiber as Akkermansia boosters [CSO24];
     # [AASLD23]: gut-microbiome products "may also contribute"
     ("gut", "Feed your gut",
      "Fiber and colorful plants feed helpful gut bacteria, like Akkermansia, that help keep the gut lining strong."),
@@ -960,7 +960,7 @@ LIFE = [
 ]
 
 COLS = [
-    # [MAYFIELD26]; label [LABELS] ND1130 via products.d (fl_berberine).  The first driver on the front is insulin
+    # [CSO26]; label [LABELS] ND1130 via products.d (fl_berberine).  The first driver on the front is insulin
     # resistance, and berberine is the competitor's first nutrient, so this is the one to start with.
     {"p": "fl_berberine", "need": "Steady sugar and fat", "needsub": "berberine (as dihydroberberine)", "start": True,
      "bullets": ["Supports healthy glucose metabolism", "Supports lipid levels already in a normal range"],
@@ -968,12 +968,12 @@ COLS = [
     # NutriDyn science-team lipotropic; 400 mg artichoke + tangerine peel = the competitor's bergamot + artichoke
     {"p": "fl_lipo_flow", "need": "Help the liver process fat", "needsub": "artichoke, citrus peel, inositol",
      "bullets": ["Supports healthy fat metabolism in the liver", "Supports healthy bile flow"], "dose": "dose_from_db"},
-    # [MAYFIELD26]; antioxidant liver-cell support, the stand-in for the competitor's aged black garlic.
+    # [CSO26]; antioxidant liver-cell support, the stand-in for the competitor's aged black garlic.
     # Claims stay structure/function: [AASLD23] calls silymarin's effect in NASH "inconclusive".
     {"p": "fl_milk_thistle", "need": "Protect liver cells", "needsub": "milk thistle (silymarin), NAC",
      "bullets": ["Antioxidant support for healthy liver function", "Supports the liver's natural detox processes"],
      "dose": "dose_from_db"},
-    # [MAYFIELD26]; alpha lipoic acid (75 mg + 45 mg R-lipoic) = the competitor's ALA
+    # [CSO26]; alpha lipoic acid (75 mg + 45 mg R-lipoic) = the competitor's ALA
     {"p": "fl_mito", "need": "Help cells make energy", "needsub": "alpha lipoic acid, CoQ10, NAC",
      "bullets": ["Supports energy production in cells", "Promotes healthy antioxidant status"], "dose": "dose_from_db"},
 ]

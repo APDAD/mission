@@ -767,7 +767,7 @@ SHEET = {
     #     Medicines in Complex, Multi-Pathogen Disease" (Immune Support: Immune PRP Pro 2 capsules
     #     2x/day; Detoxification Support "for herxing": Liposomal Glutathione up to 4x/day).  The sheet
     #     never prints "Lyme" on that protocol: verification found it is not labelled for Lyme.
-    #   Inflam-Eze Plus: Dr. Kristi Hughes ND's NutriDyn key ("Botanical Anti-inflam" = Inflam-eze
+    #   Inflam-Eze Plus: a NutriDyn educator's product key ("Botanical Anti-inflam" = Inflam-eze
     #     Plus), Gut-Neuro-Immune Restoration plan, Asher's 2025 fatigue/immune seminar (which covered
     #     tick-borne disease); also the closest NutriDyn match to the competitor's turmeric matrix.
     #   Mito Recharge: the competitor's mitochondrial category (NAC, ALC, ALA) in one NutriDyn formula.
