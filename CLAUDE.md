@@ -379,7 +379,7 @@ Never hand-edit the generated HTML or PDFs. Binding rules (his words, 2026-11-03
 - Product photos and names are hyperlinked (products.url_for). Product count per sheet matches the
   competitor's sheet; products come from NutriDyn's own protocols first (5R ND584, KBMO ND1610,
   GLC protocols, Asher's emailed protocols), every "In each serving" line backed by a real label.
-- Two editions: pharmacy ("Pharmacist check") for Morgan-type accounts, practitioner ("Provider
+- Two editions: pharmacy ("Pharmacist check") for compounding and retail pharmacy accounts, practitioner ("Provider
   check") for MDs, DCs, NDs. Write rx notes with {who}/{Who} tokens or a per-edition dict.
 - Back-page claims are structure/function only; the FDA disclaimer is automatic. Public repo: no
   account names, prices or patient data in any sheet, and none in the "src" notes or code comments
