@@ -88,3 +88,26 @@ Print sources for the condition sheets. "AI upscale" = text-safe 4x upscale of t
 | R716.png | 344x640 | interpolated stopgap (Lanczos 4x from a 86x160 chart thumbnail) |
 | R847.png | 348x640 | interpolated stopgap (Lanczos 4x from a 87x160 chart thumbnail) |
 | R101.png | 356x640 | interpolated stopgap (Lanczos 4x from a 89x160 chart thumbnail) |
+
+2026-11-03: every AI (Real-ESRGAN) upscale was withdrawn. The GAN rewrote label text ('Practitionor Exclusive', 'Reloxing Healthy Muscle Tissuo'). The 420 px originals print at about 430 ppi at the sheets' 0.98 in photo height, above the 300 ppi print standard.
+
+| file | px | kind |
+|---|---|---|
+| P814.png | 201x402 | original (replaced an AI upscale whose label text the GAN had rewritten) |
+| R872.png | 244x420 | original (replaced an AI upscale whose label text the GAN had rewritten) |
+| R2125.png | 258x420 | original (replaced an AI upscale whose label text the GAN had rewritten) |
+| R960.png | 244x420 | original (replaced an AI upscale whose label text the GAN had rewritten) |
+| R243.png | 244x420 | original (replaced an AI upscale whose label text the GAN had rewritten) |
+| R197.png | 270x420 | original (replaced an AI upscale whose label text the GAN had rewritten) |
+| R2186.png | 258x420 | original (replaced an AI upscale whose label text the GAN had rewritten) |
+| R856.png | 254x420 | original (replaced an AI upscale whose label text the GAN had rewritten) |
+| R884.png | 254x420 | original (replaced an AI upscale whose label text the GAN had rewritten) |
+| R190.png | 287x420 | original (replaced an AI upscale whose label text the GAN had rewritten) |
+| R2182.png | 258x420 | original (replaced an AI upscale whose label text the GAN had rewritten) |
+| R264L.png | 254x420 | original (replaced an AI upscale whose label text the GAN had rewritten) |
+| R848.png | 254x420 | original (replaced an AI upscale whose label text the GAN had rewritten) |
+| R301.png | 264x420 | original (replaced an AI upscale whose label text the GAN had rewritten) |
+| R372L.png | 298x420 | original (replaced an AI upscale whose label text the GAN had rewritten) |
+| R325.png | 420x420 | original (replaced an AI upscale whose label text the GAN had rewritten) |
+| R2122.png | 386x420 | original (replaced an AI upscale whose label text the GAN had rewritten) |
+| R829.png | 420x420 | original (replaced an AI upscale whose label text the GAN had rewritten) |

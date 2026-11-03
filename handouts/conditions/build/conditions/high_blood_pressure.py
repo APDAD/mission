@@ -476,21 +476,24 @@ SHEET = {
         # the span marks this sheet's back page for the scoped CSS (.sheet.back:has(.hbp-back))
         "life_title": 'Lifestyle Recommendations<span class="hbp-back"></span>',
         "style": "circle",
-        # Six tiles, titles 17 characters or fewer so every title sits on one line at 9.6 pt and all six
-        # bodies start on the same line.  The lifestyle band is not run through the edition tokens, so it
-        # names "your doctor", which is right in both editions.
+        # Six tiles, titles short enough that every title sits on one line at 9.6 pt, all six bodies start on
+        # the same line, and the gutter between neighbouring titles is 0.2 in or more (Merriweather 700 measured
+        # in the browser; the tightest pair, "Lighten the load" / "Move, then hold", is 0.204 in).  The lifestyle
+        # band is not run through the edition tokens, so it names "your doctor", which is right in both editions.
         "life": [
-            # Oler GLC 2025 HBP slide 12: nitrate-rich foods daily (beets, lettuce, spinach); avoid antiseptic
-            # mouthwash (it blunts the nitrate-to-NO pathway).  Kapil V et al., Free Radic Biol Med 2013;55:93-100 (PMID 23183324):
-            # 7 days of antiseptic (chlorhexidine) mouthwash cut oral nitrite and raised systolic pressure 2 to 3.5
-            # mm Hg.  The front's steps 1 and 2 (Lundberg, Weitzberg & Gladwin 2008).
-            ("beet", "Boost your NO", "Eat greens and beets daily. Skip antiseptic mouthwash: it kills helpful "
-                                       "mouth bacteria."),
+            # NutriDyn GLC 2025 endothelial-dysfunction protocol, slide 12 (HBP Supplement Recommendations):
+            # nitrate-rich foods daily (beets, lettuce, spinach); avoid antiseptic mouthwash (it blunts the
+            # nitrate-to-NO pathway).  Kapil V et al., Free Radic Biol Med 2013;55:93-100 (PMID 23183324): 7 days of
+            # antiseptic (chlorhexidine) mouthwash cut oral nitrite and raised systolic pressure 2 to 3.5 mm Hg.
+            # The exception matters: dentists prescribe chlorhexidine rinse after gum and periodontal treatment,
+            # and a patient should not drop it on this sheet's word.  The front's steps 1 and 2 give the why.
+            ("beet", "Boost your NO", "Eat greens and beets daily. Skip antiseptic mouthwash unless your dentist "
+                                       "prescribed it."),
             # AHA "How much sodium should I eat per day?": no more than 2,300 mg a day, an ideal limit of 1,500 mg
             # for most adults, especially with high blood pressure; more than 70% comes from packaged, prepared and
             # restaurant food.  2025 AHA/ACC guideline (Hypertension 2025;82:e212-e316): under 1,500 mg optimal.
-            ("salt", "Cut the sodium", "Stay under 2,300 mg a day; under 1,500 is even better. Most hides in "
-                                       "packaged food."),
+            ("salt", "Cut the sodium", "Under 2,300 mg a day; 1,500 is even better. Most comes from packaged "
+                                       "and restaurant food."),
             # AHA "Managing Weight to Control High Blood Pressure": losing even 5 to 10 pounds can help lower blood
             # pressure.  2017 ACC/AHA guideline Table 15: about 1 mm Hg lower for every 1 kg lost.
             # ("Trim extra weight" measured two lines at 9.6 pt; this title fits one.)
@@ -498,28 +501,32 @@ SHEET = {
             # AHA physical activity advice: 150 minutes a week of moderate activity (30 minutes, 5 days).
             # 2017 ACC/AHA Table 15: isometric resistance (hand grip, 4 x 2 minutes) 3 sessions a week.
             # Edwards JJ et al., Br J Sports Med 2023;57:1317-26 (PMID 37491419): isometric work (wall squats, hand grips) gave the
-            # largest resting blood pressure drop of any exercise type.  Oler GLC 2025: 20 to 30 minutes, 5 times a
-            # week, plus resistance training; Johnson GLC 2026: 30 minutes 5 times a week plus resistance 2-3 times.
+            # largest resting blood pressure drop of any exercise type.  NutriDyn GLC 2025 endothelial-dysfunction
+            # protocol: 20 to 30 minutes, 5 times a week, plus resistance training; NutriDyn GLC 2026 cardiovascular
+            # protocol: 30 minutes 5 times a week plus resistance 2 to 3 times.
             ("dumbbell", "Move, then hold", "Walk briskly 30 minutes, 5 days a week. Add wall sits or hand grips "
                                             "3 times a week."),
             # AHA Life's Essential 8: 7 to 9 hours of sleep a night for adults; AHA: obstructive sleep apnea
             # raises blood pressure, and loud snoring is a common sign.
-            ("moon", "Sleep and breathe", "Sleep 7 to 9 hours. Loud snoring? Ask your doctor about a&nbsp;sleep&nbsp;test."),
+            ("moon", "Sleep well", "Sleep 7 to 9 hours. Loud snoring? Ask your doctor about a&nbsp;sleep&nbsp;test."),
             # AHA: each cigarette raises blood pressure for a while and smoking damages the vessel lining.
-            # 2025 AHA/ACC guideline: drink less alcohol, and none is best; Oler GLC 2019: under 1 drink a day.
-            ("smoke", "Quit and cut back", "Quit smoking: it tightens your vessels. Cut back on alcohol; "
-                                           "none&nbsp;is&nbsp;best."),
+            # 2025 AHA/ACC guideline: drink less alcohol, and none is best; NutriDyn GLC 2019 HBP protocol
+            # (Taming the Silent Killer): under 1 drink a day.
+            ("smoke", "Quit, cut back", "Quit smoking: it tightens your vessels. Cut back on alcohol; "
+                                        "none&nbsp;is&nbsp;best."),
         ],
-        # Products: Asher's High Blood Pressure Protocol (Gmail 17822c0dfc689947, 2021-03-11: Cardio Essentials
-        # BP Support is "the formula"), Chad Oler's HBP slide (GLC 2025 slide 12, GLC 2019: Cardio Flow or Nitric
-        # Boost for nitric oxide, CoQ10 100 mg, Omega Pure, magnesium glycinate) and the Johnson GLC 2026 list.
-        # Five columns, the competitor's count; their categories map as: BP botanicals (hibiscus, lemon verbena,
-        # green coffee) -> BP Support; L-citrulline for nitric oxide -> Nitric Boost; magnesium -> Magnesium
-        # Glycinate; omega-3 -> Omega Pure; fucoidan (no NutriDyn equivalent) -> CoQ10, from the protocols.
-        # Label facts, sizes, URLs and photo status for every product: products.d/high-blood-pressure.json.
-        # Daily rhythm: morning Nitric Boost 3 + CoQ10 1; evening meal BP Support 3 + Omega 2; bedtime
-        # Magnesium 1 = 10 pills.  Supplemental magnesium: Nitric Boost 120 mg + 1 Magnesium Glycinate 130 mg =
-        # 250 mg a day, under the NIH ODS upper limit of 350 mg a day from supplements.
+        # Products: Asher's Hypertension protocol email, 2021-03-11 (Cardio Essentials BP Support is "the
+        # formula"); the NutriDyn GLC 2025 endothelial-dysfunction protocol, slide 12 (HBP Supplement
+        # Recommendations) and the NutriDyn GLC 2019 HBP protocol (Taming the Silent Killer): Cardio Flow or Nitric
+        # Boost for nitric oxide, CoQ10 100 mg, Omega Pure, magnesium glycinate; the NutriDyn GLC 2026
+        # cardiovascular protocol list.  Five columns, the competitor's count; their categories map as: BP
+        # botanicals (hibiscus, lemon verbena, green coffee) -> BP Support; L-citrulline for nitric oxide ->
+        # Nitric Boost; magnesium -> Magnesium Glycinate; omega-3 -> Omega Pure; fucoidan (no NutriDyn
+        # equivalent) -> CoQ10, from the protocols.  Label facts, sizes, URLs and photo status for every
+        # product: products.d/high-blood-pressure.json.
+        # Daily rhythm: morning Nitric Boost 3 + Omega 1 + CoQ10 1; evening meal BP Support 3 + Omega 1 +
+        # CoQ10 1; bedtime Magnesium 1 = 11 pills.  Supplemental magnesium: Nitric Boost 120 mg + 1 Magnesium
+        # Glycinate 130 mg = 250 mg a day, under the NIH ODS upper limit of 350 mg a day from supplements.
         "cols": [
             # Start here: Asher's named HBP formula and his rule "BP Support if looking purely for blood pressure
             # support"; ND681 compliance line and its nitric oxide mechanism (Benolea, MegaNatural-BP)
@@ -527,11 +534,13 @@ SHEET = {
              "start": True, "dose": "dose_from_db",
              "bullets": ["Supports healthy blood pressure already in the normal range",
                          "Helps vessels make NO"]},
-            # ND1255: beet root nitrates convert to nitric oxide; "supports healthy nitric oxide production and
-            # optimal blood flow"
+            # ND1255 Rev. 6/25, its own structure/function wording: "supports healthy nitric oxide production and
+            # optimal blood flow", "supports healthy blood flow".  Both bullets are claims in the label's words;
+            # neither points back to the front's pressure steps, so nothing reads as "this capsule lowers high
+            # blood pressure".
             {"p": "hbp_nitric_boost", "need": "Boost nitric oxide", "needsub": "beet root and potassium nitrate",
              "dose": "dose_from_db",
-             "bullets": ["The nitrate of step 1 on the front, in a capsule", "Supports NO and blood flow"]},
+             "bullets": ["Supports NO production", "Supports healthy blood flow"]},
             # Asher's magnesium blast (2026-10-12, Hypertension 2025 meta-analysis of 38 RCTs): the benefit
             # tracked the starting state, so test first
             {"p": "hbp_mag_glycinate", "need": "Relax vessel walls", "needsub": "magnesium", "dose": "dose_from_db",

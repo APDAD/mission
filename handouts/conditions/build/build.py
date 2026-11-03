@@ -351,7 +351,7 @@ def main():
         print("PLACEHOLDER PRODUCTS STILL IN USE:", missing)
     low = [(k, report.get(k, (0, None))[0]) for k in used if report.get(k, (0, None))[0] < products.MIN_PRINT_PX]
     if low:
-        print("LOW-RES PRODUCT PHOTOS (<%dpx tall):" % products.MIN_PRINT_PX, ", ".join(f"{k} {h}px" for k, h in low))
+        print("LOW-RES PRODUCT PHOTOS (<%dpx tall, under 300 ppi at the 0.98 in print size):" % products.MIN_PRINT_PX, ", ".join(f"{k} {h}px" for k, h in low))
     soft = [k for k in used if products.P.get(k, {}).get("img_soft")]
     if soft:
         print("SOFT PRODUCT PHOTOS (enlarged from 160px thumbnails; need the print master):", ", ".join(soft))

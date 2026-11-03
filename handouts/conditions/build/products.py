@@ -150,7 +150,9 @@ def check_complete(keys):
 
 
 HIRES = os.path.join(HERE, "img-src")  # committed print-quality sources: <key>.png or <CODE>.png
-MIN_PRINT_PX = 600
+# Photos print 0.98 in tall, so 300 ppi (the print standard) needs about 294 px of REAL detail. The 420 px
+# originals print at about 430 ppi. Never use GAN/AI upscales for labels: they rewrote label text (2026-11-03).
+MIN_PRINT_PX = 300
 
 
 def stage_images(dst, report=None):
