@@ -7,21 +7,32 @@ Front page, top to bottom:
   -> KEY row -> how it can feel + get-care box -> common-trigger picture
   row -> acid-blocker nutrient strip -> FDA footnote.
 
-Back page (2026-11-03 back pass): Asher's own GERD protocol (Gmail 16eec3cc434c5ff7,
+Back page (2026-11-03 back pass): Asher's own GERD protocol (Asher's GERD protocol email,
 2019-12-12: Zinc-Carnosine first, Licorice DGL Pro for meals, GI Integrity when it is
-chronic; Gmail 16d01aaf2b11528e, 2019-09-05: a spore probiotic while on a PPI) plus
-Magnesium Glycinate for the FDA's PPI magnesium warning.  Five columns, the same count
-as the competitor's sheet.  Every "In each serving" line is copied from NutriDyn's own
-sell-sheet Supplement Facts panel (build/products.d/gerd.json names each one).
+chronic; Asher's PPI-support email, 2019-09-05: "Essential Multi and Spore Probio" while
+on a PPI) plus Magnesium Glycinate for the FDA's PPI magnesium warning.  Five columns, the
+same count as the competitor's sheet.  Every "In each serving" line is copied from
+NutriDyn's own sell-sheet Supplement Facts panel (build/products.d/gerd.json names each one).
 
-Why there is no multi with iron on the back, although the PPI protocol names one: four
-of the five protocol products carry zinc.  Per the sell sheets: Zinc-Carnosine 17 mg a
-capsule (ND414), GI Integrity 16.1 mg a scoop (ND431), Licorice DGL Pro 5 mg per 3
-tablets (ND1337), Essential Multi with Iron 15 mg per 3 capsules (ND475).  Capsule +
-scoop + multi is already 48 mg, over the 40 mg adult upper limit [ODS-ZN], before any
-DGL.  So the plan pairs one Zinc-Carnosine capsule with one GI Integrity scoop (together
-they equal the label's twice-daily zinc carnosine), adds 3 DGL tablets a day (about 38 mg
-zinc in all) and covers the acid-blocker gap with zinc-free magnesium.
+DECISION PENDING, ASHER'S CALL (raised 2026-11-03; NOT yet approved, so record his answer and
+its date here before print).  PPI_PICK below switches column 5, the zinc line, the dose note
+and the spacing line together:
+  "magnesium" (built, the default): the PPI email's multi is swapped for Magnesium Glycinate.
+      Why: four of the five protocol products carry zinc.  Per the sell sheets: Zinc-Carnosine
+      17 mg a capsule (ND414), GI Integrity 16.1 mg a scoop (ND431), Licorice DGL Pro 5 mg per
+      3 tablets (ND1337), Essential Multi (with or without iron) 15 mg per 3 capsules (ND475,
+      ND476).  Capsule + scoop + DGL = about 38 mg; the multi makes it about 53 mg, over the
+      40 mg adult upper limit [ODS-ZN], which counts food too.  Iron pills are also on the
+      protocol's own list of reflux-provoking medicines.
+  "multi" (built, verified to render): Essential Multi with Iron (R717) back in column 5, and
+      the zinc line says plainly that the plan is about 53 mg, for a short, watched course.
+      The email itself says "Essential Multi" (R716 has no iron); the protocol research read
+      it as the iron version.  Ask which one if he picks the multi.
+  Either way, four doses sit below the bottle or the protocol on purpose (the rx note "Doses on
+  purpose" says so): Zinc-Carnosine 1 a day with GI Integrity (bottle 1 twice daily, protocol
+  2 twice daily), Licorice DGL Pro 3 a day (bottle 3 after each meal), Magnesium Glycinate
+  2 a day = 260 mg, under the 350 mg supplement limit [ODS-MG] (bottle 2 twice daily), and
+  GI Integrity 1 scoop (protocol 1 twice daily).  These cuts are part of the same decision.
 
 Front review fixes (2026-11-03, front_rechecks_A): zoom left wall now runs down like the
 lesser curvature; refluxed acid is a jet that narrows through the valve with lining
@@ -64,8 +75,17 @@ Sources for every number and claim on the front (also tagged inline):
            anti-reflux barrier), drawn as the crus beside the valve.
 Back-page sources:
   [ODS-ZN] NIH Office of Dietary Supplements, Zinc fact sheet: adult upper limit
-           40 mg a day; excess zinc can lower copper; quinolone and tetracycline
-           antibiotics: take them 2 h before or 4-6 h after zinc.
+           40 mg a day from food and supplements together (IOM DRI 2001; 34 mg at 14-18,
+           23 mg at 9-13), so "Doses are for adults"; excess zinc can lower copper;
+           quinolone and tetracycline antibiotics: take them 2 h before or 4-6 h after zinc.
+           U.S. adults get roughly 10 mg a day from food (NHANES, What We Eat in America),
+           hence "with food, at or a little over" for the plan's 38 mg.  (ods.od.nih.gov is
+           blocked from this session: these rest on the IOM table, not a live read.)
+  [MULTI]  Zinc in multis: the products DB chart reads of competitor multis (Thorne, Pure,
+           DFH, Ortho, Integrative Therapeutics, Klaire, Biotics) give 7.5 to 25 mg per
+           daily serving, most 10 to 15 mg; NutriDyn's own Essential Multi 15 mg.
+  [NIDDK]  NIDDK, Treatment for GER and GERD: raise the head of the bed 6 to 8 inches with
+           blocks or a wedge; extra pillows do not help.
   [ODS-MG] NIH ODS, Magnesium fact sheet: upper limit for supplemental magnesium
            350 mg a day; same antibiotic spacing; PPIs over about a year can
            cause low magnesium.

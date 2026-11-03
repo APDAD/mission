@@ -448,7 +448,8 @@ CSS = r"""
 /* back page, scoped: only this sheet's back carries the .hbp-back marker.
    The two formula columns carry the longest label facts, so they get the extra width (Nitric Boost most:
    its serving line names all twelve label ingredients); one header height for all five columns lines the
-   photos up, and every product name gets a two-line box so all five bullet lists start on one line.
+   photos up, and every product name gets a two-line box, so the sizes share one line and all five bullet
+   lists start on one line (a flex box would split the no-break "EPA-DHA" span onto a line of its own).
    In the daily rhythm each count is a small grey pill after the product name, so a name that ends in a
    number never runs into it ("EPA-DHA 1000" then "1 softgel") and a count never splits from its unit; the
    slot widths fit the longest names (measured, Inter 7 pt: "Omega Pure EPA-DHA 1000" 123 px, "Cardio
