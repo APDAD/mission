@@ -1098,15 +1098,22 @@ CSS = r"""
 .pcf .pc-fbox h4{margin:0 0 4px;background:var(--c1);color:#fff;font:800 8.2pt Inter,sans-serif;letter-spacing:.08em;
   text-transform:uppercase;padding:3px 10px;border-radius:3px}
 .pcf .pc-fbox p,.pcf .pc-fbox li{font-size:8.2pt;line-height:1.33;margin:0;color:#2B3236}
-.pcf .pc-fbox p.pc-why{margin-top:4px}
 .pcf .pc-fbox ul{margin:0;padding-left:13px}
 .pcf .pc-fbox li{margin-bottom:1px}
 .pcf .pc-fbox b{color:var(--deep)}
-/* Back page, this sheet only: nothing is taken at bedtime, so the Bedtime slot of "Your daily rhythm"
-   gets a narrow column, and the rhythm panel takes a little more of the row from the check panel, so
-   each product and its count fit on one line where they can. */
-.sheet.back:has(.pc-back) .duo{grid-template-columns:1.86fr 1fr}
-.sheet.back:has(.pc-back) .rhythm{grid-template-columns:1.4fr 1.4fr .46fr}
+/* "Why it matters" spans both fact boxes, on a pale band with the theme rule on its left */
+.pcf p.pc-why{font-size:8.2pt;line-height:1.33;margin:6px 0 0;color:#2B3236;background:var(--tint);
+  border-left:3px solid var(--c1);border-radius:0 4px 4px 0;padding:3px 9px 4px}
+.pcf p.pc-why b{color:var(--deep)}
+/* Back page, this sheet only.  Nothing is taken at bedtime, so the empty Bedtime box of "Your daily rhythm"
+   is hidden (the kit draws Morning, Evening meal, Bedtime in that order) and the two meal boxes share the
+   panel; the check panel holds four notes, so it takes half the row. */
+.sheet.back:has(.pc-back) .duo{grid-template-columns:1fr 1fr}
+.sheet.back:has(.pc-back) .rhythm{grid-template-columns:1fr 1fr}
+.sheet.back:has(.pc-back) .rhythm .slot:nth-child(3){display:none}
+/* Two name lines in every column (two names wrap), set on the bottom line, so the bullets, serving lines
+   and dose bars start at the same height across the row. */
+.sheet.back:has(.pc-back) .col .pick .nm{min-height:2.3em;display:flex;align-items:flex-end;justify-content:center}
 """
 
 SHEET = {
