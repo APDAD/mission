@@ -525,12 +525,13 @@ def _tissue_scarred(cx, cy, r):
                         nucs.append((nx, ny, 2.4))
                         continue
                 out.append(f'<circle cx="{px:.1f}" cy="{py:.1f}" r="3.2" fill="{NUC}"/>')
-                nucs.append((px, py, 3.2))
+                if inside:                            # a centre outside the nodule is clipped away
+                    nucs.append((px, py, 3.2))
         out.append("</g>")
         out.append(f'<path d="{d}" fill="none" stroke="{SCAR_EDGE}" stroke-width="1.6" stroke-linejoin="round"/>')
-    # immune cells on the scar's edge: the middle of each septum inside the view, moved onto one
-    # nodule's rim, kept clear of fat, nuclei, each other and the circle's edge
-    placed, side = [], 0
+    # immune cells in the scar: points along each septum's centre line inside the view (its middle,
+    # then its thirds), kept clear of fat, visible nuclei, each other and the circle's edge
+    placed = []
     for i in range(n):
         for j in range(i + 1, n):
             si, sj = SCAR_SEEDS[i], SCAR_SEEDS[j]
@@ -544,14 +545,14 @@ def _tissue_scarred(cx, cy, r):
             if not seg:
                 continue
             (ax, ay), (bx, by) = seg
-            k = widths[(i, j)] / 2 * (1 if side % 2 else -1)
-            x, y = cx + (ax + bx) / 2 + ux * k, cy + (ay + by) / 2 + uy * k
-            side += 1
-            if (all(math.hypot(x - a, y - b) >= rd + IMM_R + 1 for a, b, rd in drops)
-                    and all(math.hypot(x - a, y - b) >= rn + IMM_R + 0.9 for a, b, rn in nucs)
-                    and all(math.hypot(x - a, y - b) >= 2 * IMM_GAP for a, b in placed)):
-                placed.append((x, y))
-                out.append(sw_immune(IMM_R, x, y))
+            for f in (0.5, 0.33, 0.67):
+                x, y = cx + ax + (bx - ax) * f, cy + ay + (by - ay) * f
+                if (all(math.hypot(x - a, y - b) >= rd + IMM_R + 1 for a, b, rd in drops)
+                        and all(math.hypot(x - a, y - b) >= rn + IMM_R + 0.9 for a, b, rn in nucs)
+                        and all(math.hypot(x - a, y - b) >= 2 * IMM_GAP for a, b in placed)):
+                    placed.append((x, y))
+                    out.append(sw_immune(IMM_R, x, y))
+                    break
             if len(placed) == 5:
                 break
         if len(placed) == 5:
@@ -839,7 +840,7 @@ CHECKS = [
     ("vial", "Liver enzymes (ALT, AST)",
      "A routine blood test. High levels can mean the liver is irritated, but normal levels do not rule out "
      "fatty liver.",
-     [(SEV[0], "Healthy ALT, women: about 25 U/L or less"), (SEV[0], "Healthy ALT, men: about 33 U/L or less")]),
+     [(SEV[0], "Healthy ALT, women: about 25 or less"), (SEV[0], "Healthy ALT, men: about 33 or less")]),
     ("gauge", "FIB-4 score",
      "Worked out from your age and routine labs (ALT, AST, platelets) to estimate the risk of advanced scarring.",
      [(SEV[0], "Under 1.3: low risk"), (SEV[1], "1.3 or higher: a FibroScan is next")]),

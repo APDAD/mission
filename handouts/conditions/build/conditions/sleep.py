@@ -5,20 +5,23 @@ Self-contained sheet module (no legacy / sheets.py / art.py drawing code), new o
 FRONT, top to bottom
   1. "Your brain's clock": a side view of the head, cut down the middle so the deep midline parts
      show (cerebrum with the corpus callosum and thalamus, brainstem, cerebellum).  BY DAY (sun)
-     daylight enters the eye and a nerve signal runs along the optic nerve to the master clock
-     (SCN, just above the optic chiasm), which keeps melatonin off; AT NIGHT (moon) the clock
-     signals the pineal gland and the pineal gland releases melatonin into the blood.  The single
-     frame is labelled "by day" / "at night" so it never reads as "light makes melatonin".  Beside
-     it, a 24-hour dial: melatonin (navy) rises in the evening and peaks in the small hours;
-     cortisol (gold) climbs before dawn and peaks after waking; the outer ring (yellow day, navy
-     night) is named in the card.
+     daylight enters the eye and the teal DAY SIGNAL runs along the optic nerve to the master clock
+     (SCN, just above the optic chiasm), which keeps melatonin off; AT NIGHT (moon) the dark-gray
+     NIGHT SIGNAL, which carries a moon badge, runs from the clock to the pineal gland, and the pineal
+     gland releases melatonin into a vein (great cerebral vein and straight sinus, along the border
+     between cerebrum and cerebellum, then down the neck).  Two colours for the two times, so the
+     frame never reads as "light makes melatonin".  Beside it, a 24-hour dial: melatonin (the only
+     blue on the sheet's art) rises in the evening and peaks in the small hours; cortisol (gold, the
+     wake-up and stress hormone) climbs before dawn and peaks after waking; the outer ring (yellow
+     day, dark-gray night) is named in the card.
   2. "One night of sleep": a sleep-stage strip (awake, REM, light, deep) for a typical adult
-     night of about 5 cycles, with three plain-language notes.  One KEY names every symbol in
-     both pictures.
+     night of about 5 cycles, with three plain-language notes.  One two-row KEY names every symbol
+     in both pictures (row 1 the clock, row 2 the sleep stages).
   3. "What can throw your clock off": 8 risk-factor icons.
-  4. "Know your sleep": hours needed by age, the 3-part insomnia check, and the STOP-Bang sleep
-     apnea check (tick boxes, "3 or more: ask your doctor about a sleep test").  The test is routed
-     to the doctor in both editions: a pharmacist can go over the check but cannot order the study.
+  4. "Know your sleep": hours needed by age, the 3-part long-term (chronic) insomnia check, and the
+     STOP-Bang sleep apnea check (tick boxes, "3 or more ticks? Ask about a sleep apnea test (a
+     doctor orders it)").  A pharmacist can go over the check but cannot order the study, so the line
+     says who orders it without sending a practitioner-edition reader "to your doctor".
 BACK: "Reset your sleep clock" (CBT-I habits by morning / day / night, with sleep drive explained) and
 5 NutriDyn products: GoodNight (start here), Stress Essentials Calm, Mag Calm Pro, Magnesium Glycinate,
 Stress Essentials Cortisol Pro (facts and sources in products.d/sleep.json).
@@ -83,8 +86,12 @@ SOURCES (each number on the page carries one of these tags in a comment)
               (L-tryptophan is among the drugs linked with serotonin syndrome).
   [ODSMG]     NIH Office of Dietary Supplements, Magnesium fact sheet (upper limit 350 mg/day from
               supplements, set because of diarrhea; separate from tetracycline and quinolone
-              antibiotics, bisphosphonates and thyroid pills; kidney disease raises the risk of too
-              much).
+              antibiotics and from bisphosphonates; kidney disease raises the risk of too much).
+              ODS does not list thyroid pills; that spacing comes from [LT4LBL].
+  [LT4LBL]    Levothyroxine sodium tablets, FDA prescribing information (DailyMed; sections 2 and 7):
+              give it at least 4 hours before or after agents that interfere with its absorption;
+              antacids (aluminum and magnesium hydroxides), calcium carbonate and iron are listed.
+              MedlinePlus Levothyroxine drug information (a682461) says the same for patients.
   [BORBELY82] Borbely AA. A two process model of sleep regulation. Hum Neurobiol 1982;1:195,
               PMID 7185792 (sleep pressure, "sleep drive", builds with time awake and is spent by
               sleep, naps included); applied in CBT-I sleep restriction [AASM21] (fixed wake time,
@@ -130,12 +137,15 @@ def tw(text, size, weight=600, ls=0.0):
 
 # ============================================================== palette (every symbol is in the KEY)
 INK, INK2 = "#2B3236", "#56616A"
-MEL, MEL_EDGE = "#2C4BA8", "#172F70"            # melatonin: navy dots and the navy band on the dial
+MEL, MEL_EDGE = "#2C4BA8", "#172F70"            # melatonin: blue dots and the blue band on the dial (the only blue)
 COR, COR_EDGE, COR_TX = "#EAA828", "#B07A0C", "#7E5200"   # cortisol: gold band; darker gold for text
 SUN, SUN_EDGE = "#FFD23F", "#E0A70F"            # daylight: yellow ray and sun
-SIG = "#0F8A8F"                                 # nerve signal: teal dashed arrows (and the SCN dot)
+SIG = "#0F8A8F"                                 # day signal: teal dashed arrow, eye to clock (and the SCN dot)
 AWAKE, REM, LITE, DEEP = "#E47C5C", "#7D55B9", "#7FB0E4", "#2E8A5D"   # sleep stages
-NIGHT, DAY = "#2B3766", "#FCEBB1"               # the dial's night and day ring
+# Night is dark gray, not navy, so that melatonin is the only blue on the dial: the night half of the
+# ring, the dial's moon, the night signal (clock to pineal, with a moon badge) and the "at night" words.
+NIGHT, DAY = "#3A3F4A", "#FCEBB1"               # the dial's night and day ring
+VEIN, VEIN_EDGE = "#C9D2E8", "#8E9CC2"          # the vein melatonin rides in (named by "into blood")
 # anatomy (named directly on the picture, not colour codes)
 SKIN, SKIN_EDGE = "#F6E2D4", "#D7B49F"
 BRAIN, BRAIN_EDGE, SULCUS = "#E9E4F2", "#A69EBF", "#C4BCD9"
@@ -153,9 +163,8 @@ def _f(v):
 
 
 # ============================================================== curves
-def spline(pts, closed=True):
-    """Catmull-Rom curve through pts [(x, y) or (x, y, tension)] as cubic Bezier path data.
-    Low tension makes a sharper corner (used for the nose, lips and chin)."""
+def _bezier_segments(pts, closed):
+    """The cubic Bezier segments [(p0, c1, c2, p1)] of the Catmull-Rom curve through pts."""
     n = len(pts)
 
     def p(i):
@@ -166,13 +175,43 @@ def spline(pts, closed=True):
         a, b, c = p(i - 1), p(i), p(i + 1)
         k = b[2] if len(b) > 2 else 1.0
         tan.append((k * (c[0] - a[0]) / 2, k * (c[1] - a[1]) / 2))
-    d = [f"M{_f(pts[0][0])},{_f(pts[0][1])}"]
+    segs = []
     for i in range(n if closed else n - 1):
         j = (i + 1) % n
         (xa, ya), (xb, yb) = pts[i][:2], pts[j][:2]
-        d.append(f"C{_f(xa + tan[i][0] / 3)},{_f(ya + tan[i][1] / 3)} {_f(xb - tan[j][0] / 3)},{_f(yb - tan[j][1] / 3)} "
-                 f"{_f(xb)},{_f(yb)}")
+        segs.append(((xa, ya), (xa + tan[i][0] / 3, ya + tan[i][1] / 3), (xb - tan[j][0] / 3, yb - tan[j][1] / 3), (xb, yb)))
+    return segs
+
+
+def spline(pts, closed=True):
+    """Catmull-Rom curve through pts [(x, y) or (x, y, tension)] as cubic Bezier path data.
+    Low tension makes a sharper corner (used for the nose, lips and chin)."""
+    d = [f"M{_f(pts[0][0])},{_f(pts[0][1])}"]
+    for _, c1, c2, b in _bezier_segments(pts, closed):
+        d.append(f"C{_f(c1[0])},{_f(c1[1])} {_f(c2[0])},{_f(c2[1])} {_f(b[0])},{_f(b[1])}")
     return "".join(d) + ("Z" if closed else "")
+
+
+def spline_at(pts, dists, closed=False, steps=60):
+    """Points on the same curve at the given arc lengths from its start (beyond the end: the end)."""
+    poly = []
+    for a, c1, c2, b in _bezier_segments(pts, closed):
+        for k in range(0 if not poly else 1, steps + 1):
+            u = k / steps
+            poly.append(tuple((1 - u) ** 3 * a[i] + 3 * (1 - u) ** 2 * u * c1[i] + 3 * (1 - u) * u * u * c2[i] + u ** 3 * b[i]
+                              for i in (0, 1)))
+    out, run, i = [], 0.0, 0
+    for d in sorted(dists):
+        while i < len(poly) - 1 and run + math.dist(poly[i], poly[i + 1]) < d:
+            run += math.dist(poly[i], poly[i + 1])
+            i += 1
+        if i >= len(poly) - 1:
+            out.append(poly[-1])
+            continue
+        seg = math.dist(poly[i], poly[i + 1]) or 1
+        t = (d - run) / seg
+        out.append((poly[i][0] + (poly[i + 1][0] - poly[i][0]) * t, poly[i][1] + (poly[i + 1][1] - poly[i][1]) * t))
+    return out
 
 
 def _arrowhead(x, y, ux, uy, size, color):
@@ -224,6 +263,15 @@ EYE_C, EYE_R = (252, 158), 13.0
 CHIASM = (201, 151)
 SCN_L = (197, 144)
 PINEAL_L = (137, 124)
+# The vein melatonin leaves by.  The pineal gland drains into the great cerebral vein and the straight
+# sinus, which runs back along the border between the cerebrum and the cerebellum (the tentorium, drawn
+# here as the cerebrum's lower edge, local y about 166-168 for x 80-120) to the back of the skull; from
+# there the blood leaves the head through the sinuses and the veins of the neck [BENARROCH08].  Drawn as
+# one simplified vein: down from the pineal onto the border within 2 dots, back along it, around the
+# back of the cerebellum and down the neck, where the head's own fade takes it out of the picture.
+VEIN_PTS = [(132, 129), (127.5, 147), (121, 163.3), (104, 166.8), (86, 167.6), (72, 168.2), (62, 175.5),
+            (59.5, 190), (66, 207.5), (82, 227), (102, 251), (117, 278), (124, 306)]
+VEIN_W = 4.4                     # local units (3.4 printed units at the head's 0.78 scale)
 
 
 def _head_local(uid):
@@ -288,6 +336,10 @@ def _head_local(uid):
              f'stroke="#C99A82" stroke-width="2.2" stroke-linecap="round"/>'
              f'<path d="M{ex + 5},{ey + 12.2} C{ex + 12},{ey + 12} {ex + 17},{ey + 9} {ex + 18.5},{ey + 4.5}" fill="none" '
              f'stroke="#C99A82" stroke-width="1.8" stroke-linecap="round"/>')
+    # the vein (a two-tone tube, so it reads as a vessel and not as another nerve signal)
+    vein = spline(VEIN_PTS, closed=False)
+    o.append(f'<path d="{vein}" fill="none" stroke="{VEIN_EDGE}" stroke-width="{VEIN_W}" stroke-linecap="round"/>'
+             f'<path d="{vein}" fill="none" stroke="{VEIN}" stroke-width="{VEIN_W - 1.8}" stroke-linecap="round"/>')
     # pineal gland: a small pine-cone shape behind the thalamus, under the back of the corpus callosum
     px, py = PINEAL_L
     o.append(f'<g transform="translate({px},{py}) rotate(18)">'

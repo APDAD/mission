@@ -19,9 +19,9 @@ FRONT, top to bottom
   each with "what is happening" and "your part", then a KEY naming every symbol (and the note that
   the times are typical) -> "What can slow healing" icon row -> "Get care right away".
 BACK
-  lifestyle band (circle style) -> 5 NutriDyn products (Start here: Inflam-Eze Plus) ->
-  rhythm -> Provider / Pharmacist check (the same lines in both editions; only {who} differs).
-  Product facts live in products.d/injury-healing.json.
+  lifestyle band (circle style) -> 5 NutriDyn products (Start here: Inflam-Eze Plus; then PRM Resolve,
+  Collagen Renew, Muscle Eze, Whey Protein) -> rhythm -> Provider / Pharmacist check (the same lines in both
+  editions; only {who} differs).  Product facts live in products.d/injury-healing.json.
 
 SOURCES (each number on the page carries one of these tags in a comment)
   [LEONG20]   Leong NL et al. Tendon and ligament healing and current approaches to tendon and
@@ -72,6 +72,7 @@ import math
 import os
 import random
 
+import kit
 from kit import icon
 from svgkit import T, svg
 
@@ -840,9 +841,23 @@ def art_phases():
 IC_COUCH = ('<path d="M13 30v-6a6 6 0 0 1 6-6h26a6 6 0 0 1 6 6v6"/>'
             '<path d="M7 35a5 5 0 0 1 10 0v4h30v-4a5 5 0 0 1 10 0v12H7z"/><path d="M11 47v6M53 47v6"/>'
             '<path d="M27 11h6l-6 6h6M37 5h5l-5 5h5"/>')                       # couch with "zz": too much rest
-IC_RUSH = ('<path d="M7 57h50"/><rect x="11" y="45" width="9" height="12" rx="1.5"/>'
-           '<rect x="25" y="38" width="9" height="19" rx="1.5"/><rect x="39" y="24" width="9" height="33" rx="1.5"/>'
-           '<path d="M9 33 45 7"/><path d="M33 7h12v12"/>')         # bars jumping up with a steep arrow: too much, too soon
+# Too much, too soon: a heavy dumbbell rushing in (speed lines), not a rising "progress" chart.
+IC_RUSH = ('<path d="M3 23h11M1 32h13M3 41h11"/>'
+           '<rect x="20" y="22.5" width="6" height="19" rx="2"/><rect x="26" y="15" width="8" height="34" rx="2.5"/>'
+           '<path d="M34 32h12"/>'
+           '<rect x="46" y="15" width="8" height="34" rx="2.5"/><rect x="54" y="22.5" width="6" height="19" rx="2"/>')
+# The row names problems, so these show the thing itself (no "don't" slash): a lit cigarette with its
+# smoke, and a glass of wine.
+IC_CIG = ('<rect x="4" y="39" width="43" height="9" rx="2"/><path d="M14 39v9"/>'
+          '<path d="M47 39h4.5a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H47" fill="currentColor" fill-opacity=".35"/>'
+          '<path d="M50 33c-3.5-3.5 3.5-6 0-10s3.5-6.5 0-10"/><path d="M58 31c-3-3 3-5.5 0-9s3-5.5 0-8.5"/>')
+IC_WINE = ('<path d="M20 7h24c0 15-5 24-12 24S20 22 20 7z"/>'
+           '<path d="M21.6 16.5c0 7 4 13 10.4 13s10.4-6 10.4-13z" fill="currentColor" fill-opacity=".3" stroke="none"/>'
+           '<path d="M21.2 16.5h21.6M32 31v21M22 55c3-2.6 17-2.6 20 0"/>')
+# Back-page lifestyle band: an orange slice for vitamin C (kit.ICONS has no citrus).  Registered under a
+# sheet prefix, the way other sheets add band icons.
+kit.ICONS.setdefault("ih-citrus", '<circle cx="32" cy="32" r="22"/><circle cx="32" cy="32" r="16.5"/>'
+                                  '<path d="M32 15.5v33M17.7 23.75l28.6 16.5M17.7 40.25l28.6-16.5"/>')
 IC_STRESS = ('<circle cx="32" cy="35" r="21"/><path d="M20 27l8 3.5M44 27l-8 3.5"/>'
              '<circle cx="25" cy="36" r="1.9" fill="currentColor" stroke="none"/>'
              '<circle cx="39" cy="36" r="1.9" fill="currentColor" stroke="none"/>'
@@ -856,16 +871,16 @@ def _ic(body, size="0.33in", sw=2.8):
 
 
 SLOWERS = [  # what can slow healing
-    ("smoke", "Smoking or<br>nicotine"),          # [GUO10] smoking; nicotine narrows vessels
+    ("cig", "Smoking or<br>nicotine"),            # [GUO10] smoking; nicotine narrows vessels
     ("moon", "Short or<br>poor sleep"),           # [SMITH18] "relatively modest sleep disruption delays wound healing"
     ("egg", "Too little<br>protein"),             # [GUO10] nutrition; Tipton 2015 (PMID 26553492): avoid protein shortfall
     ("bloodsugar", "High blood<br>sugar"),        # [GUO10] diabetes
-    ("glass", "Alcohol"),                         # [GUO10] alcohol exposure impairs healing
+    ("wine", "Alcohol"),                          # [GUO10] alcohol exposure impairs healing
     ("stress", "Ongoing<br>stress"),              # [GUO10] stress
     ("couch", "Too much<br>rest"),                # [KHAN09] load drives repair; [PEACE20] LOVE: load, exercise
     ("rush", "Too much,<br>too soon"),            # [PEACE20] load without making pain worse
 ]
-OWN_ICONS = {"couch": IC_COUCH, "rush": IC_RUSH, "stress": IC_STRESS}
+OWN_ICONS = {"cig": IC_CIG, "wine": IC_WINE, "couch": IC_COUCH, "rush": IC_RUSH, "stress": IC_STRESS}
 
 
 def slow_row():
@@ -880,8 +895,12 @@ def care_box():
     # 911 now: [CDC-VTE] chest pain or trouble breathing; [AHA-STR] stroke signs (neck trauma can, rarely,
     # injure a neck artery); [CDC-TBI] danger signs after a head injury (its "slurred speech" is carried by the
     # stroke line's "trouble speaking"); [AAOS] new weakness or numbness with loss of bladder or bowel control.
+    # Stroke line: F.A.S.T. plus sudden trouble seeing and dizziness [AHA-STR]; a sudden, severe headache or
+    # neck pain is the earliest warning of a torn neck artery (Biller 2014: headache and neck pain are the most
+    # common presenting symptoms of cervical artery dissection) and is on the ASA list ("sudden severe headache").
     now = ["<b>Chest pain</b> or sudden trouble breathing",
-           "<b>Signs of stroke:</b> face drooping, arm weakness, trouble speaking, sudden vision loss or severe dizziness",
+           "<b>Signs of stroke:</b> face drooping, arm weakness, trouble speaking or seeing, severe dizziness, "
+           "or a sudden, severe headache or neck pain",
            "<b>After a crash or blow to the head:</b> a headache that keeps getting worse, repeated vomiting, "
            "confusion or unusual sleepiness",
            "<b>New weakness or numbness</b> with loss of bladder or bowel control"]
@@ -931,19 +950,12 @@ CSS = r"""
 .ihl-cc li{font-size:7.9pt;line-height:1.3;color:#2B3236;margin:0 0 1px}
 .ihl-cc li b{color:#1F2A2E}
 .ihl-nw{white-space:nowrap}
-/* front footer: 7 pt floor */
-.sheet.front:has(.ihl) .foot,.sheet.front:has(.ihl) .foot .code{font-size:7pt}
-/* back page: scoped with :has() to the marker span in this sheet's lifestyle title.  7 pt floor for every
-   label on the page; equal-height need headers; the "In each serving" rows start on one line. */
+/* back page: scoped with :has() to the marker span in this sheet's lifestyle title (the 7 pt fine print and
+   the Start here badge come from the shared kit).  Equal-height need headers; the "In each serving" rows
+   start on one line. */
 .sheet.back:has(.ihl-back) .col .need{height:0.53in;min-height:0.53in}
-.sheet.back:has(.ihl-back) .col .need i{font-size:7pt}
-.sheet.back:has(.ihl-back) .col .pick .sz{font-size:7pt}
 .sheet.back:has(.ihl-back) .col .what ul{min-height:4.2em}
-.sheet.back:has(.ihl-back) .col .key,.sheet.back:has(.ihl-back) .col .key b{font-size:7pt}
-.sheet.back:has(.ihl-back) .col .dose small{font-size:7pt}
-.sheet.back:has(.ihl-back) .startt{font-size:7pt}
 .sheet.back:has(.ihl-back) .slot li em{white-space:nowrap}
-.sheet.back:has(.ihl-back) .foot,.sheet.back:has(.ihl-back) .foot .code,.sheet.back:has(.ihl-back) .disc{font-size:7pt}
 /* back layout: the same blocks as every sheet, re-placed with a grid so the six-line check panel can run
    full width in two columns; the daily rhythm and the notes box share the row under it. */
 .sheet.back:has(.ihl-back) .inner{display:grid;grid-template-columns:1.6fr 1fr;column-gap:0.1in;
@@ -953,7 +965,7 @@ CSS = r"""
 .sheet.back:has(.ihl-back) .ns-title{grid-row:2}
 .sheet.back:has(.ihl-back) .cols{grid-row:3}
 .sheet.back:has(.ihl-back) .duo{display:contents}
-.sheet.back:has(.ihl-back) .duo>.panel,.sheet.back:has(.ihl-back) .notes{margin-top:0.08in}
+.sheet.back:has(.ihl-back) .duo>.panel,.sheet.back:has(.ihl-back) .notes{margin-top:0.05in}
 .sheet.back:has(.ihl-back) .ns-title{margin-top:0.1in}
 .sheet.back:has(.ihl-back) .duo>.panel.rx{grid-row:4;grid-column:1/-1}
 .sheet.back:has(.ihl-back) .duo>.panel:not(.rx){grid-row:5;grid-column:1}
@@ -962,6 +974,9 @@ CSS = r"""
 .sheet.back:has(.ihl-back) .foot{grid-row:8}
 .sheet.back:has(.ihl-back) .panel.rx ul{columns:2;column-gap:0.26in}
 .sheet.back:has(.ihl-back) .panel.rx li{break-inside:avoid}
+/* the notes box is as tall as the rhythm panel beside it: share that height among the three write-in lines */
+.sheet.back:has(.ihl-back) .notes{display:flex;flex-direction:column}
+.sheet.back:has(.ihl-back) .notes .ln{flex:1 1 0;height:auto;min-height:0.24in}
 """
 
 SHEET = {
@@ -984,8 +999,9 @@ SHEET = {
         "life": [
             # Tipton 2015 (PMID 26553492): avoid protein and energy shortfalls; higher protein while immobilised.
             ("egg", "Protein every meal", "Fish, eggs, chicken or beans, a palm-size portion."),
-            # NIH ODS vitamin C fact sheet: vitamin C is required to make collagen.
-            ("apple", "Color for vitamin C", "Citrus, kiwi and peppers help you make collagen."),
+            # NIH ODS vitamin C fact sheet: vitamin C is required to make collagen; citrus fruits, red and
+            # green peppers, kiwifruit and strawberries are among the best food sources.  Icon: an orange slice.
+            ("ih-citrus", "Vitamin C every day", "Oranges, kiwi, strawberries and peppers help you make collagen."),
             # [SMITH18] short sleep delayed wound healing; AASM/SRS: adults need 7 or more hours.
             ("moon", "Sleep 7 to 9 hours", "Short sleep slows repair. Keep a steady bedtime."),
             # [KHAN09] mechanotherapy; [LEONG20] fibres align "in the direction of stress".
@@ -1001,8 +1017,8 @@ SHEET = {
              "dose": "dose_from_db"},
             {"p": "ih_prm_resolve", "need": "Resolution support", "needsub": "PRMs from fish oil, the body's finish-up signals",
              # PRMs = pro-resolving mediators (label: 18-HEPE, 17-HDHA, 14-HDHA), made from omega-3s to wind
-             # inflammation down; glossed in plain words in the needsub.
-             "bullets": ["Supports the natural resolution of inflammation", "EPA and DHA omega-3s"],
+             # inflammation down; glossed in plain words in the needsub.  Framed as a normal body process.
+             "bullets": ["Supports the body's natural resolution response", "EPA and DHA omega-3s"],
              "dose": "dose_from_db"},
             {"p": "ih_collagen_renew", "need": "Collagen support", "needsub": "collagen peptides for tendon, ligament, bone",
              # No vitamin C in the formula (blast 2026-10-19-collagen-tendon); NIH ODS: vitamin C is needed to make
@@ -1013,37 +1029,48 @@ SHEET = {
              'passion flower',
              # NutriDyn's own language (blast 2026-09-22-muscle-guarding): "Helps relax muscle tissue, supports calmness".
              "bullets": ["Helps relax muscle tissue", "Supports calmness at bedtime"], "dose": "dose_from_db"},
-            {"p": "ih_nerve_eze", "need": "Healthy nerve function", "needsub": "PEA (Levagen+) + alpha lipoic acid",
-             # Sell sheet ND633: "Bioavailable PEA and ALA for Healthy Nerve Function".  PEA is a naturally
-             # occurring fatty acid amide (Vina 2025, PMID 39798151; Lang-Illievich 2023, PMID 36986081).
-             "bullets": ["Supports healthy nerve function", "PEA: a fat compound your body makes"],
+            # Protein backs the front page's "Too little protein" and the band's "Protein every meal": Tipton 2015
+            # (PMID 26553492) advises avoiding protein shortfall during injury recovery, and higher protein
+            # while a limb is immobilised.  The claim is the bottle's own ("Supports Lean Body Mass"); "repair"
+            # is avoided so the column never reads as healing the injury.  This column replaced Nerve Eze
+            # (polish round 1): its photo is a soft thumbnail enlargement, its facts single-source, its page
+            # unverified, and "nerve function" sat opposite the front's numbness red flag.
+            {"p": "ih_whey_protein", "need": "Protein support", "needsub": "grass-fed whey isolate, a complete protein",
+             "bullets": ["Supports lean muscle while you move less", "An easy way to get protein at a meal"],
              "dose": "dose_from_db"},
         ],
         # One list for both editions; only {who} changes ("your provider" / "your pharmacist").
         # Bleeding: willow bark contains salicin (MedlinePlus Willow bark; NCCIH); ginger and turmeric/curcumin may
         # slow clotting (MedlinePlus); devil's claw has warfarin interaction reports (MedlinePlus); omega-3s and
         # warfarin (NIH ODS).  Aspirin allergy: avoid willow bark (MedlinePlus).  Surgery: the American Society of
-        # Anesthesiologists asks patients to stop herbal supplements 2 weeks before surgery.  Drowsiness: Muscle
-        # Eze label "may cause drowsiness"; hops can cause sleepiness with sedatives (MedlinePlus Hops).  Alpha
-        # lipoic acid can lower blood sugar (MedlinePlus).  Calcium and magnesium bind tetracycline and quinolone
-        # antibiotics and reduce levothyroxine absorption (NIH ODS magnesium and calcium fact sheets).  Labels: "If
-        # pregnant, nursing..." (all five); Muscle Eze "Adults take..."; willow bark (a salicylate source) is not
-        # advised for children (Reye's syndrome, MedlinePlus); PRM Resolve "Contains: Fish (anchovy, sardine,
-        # squid, and mackerel)".
+        # Anesthesiologists asks patients to stop herbal supplements 2 weeks before surgery; after surgery the
+        # same bleeding cautions apply to a fresh wound and to clot-prevention medicines, so the line asks the
+        # surgeon when to start.  Drowsiness: Muscle Eze label "may cause drowsiness"; hops can cause sleepiness
+        # with sedatives (MedlinePlus Hops).  Diabetes: ginger and turmeric might lower blood sugar, and with
+        # diabetes medicines it might drop too low (MedlinePlus Ginger and Turmeric, interactions with
+        # antidiabetes drugs).  Calcium and magnesium bind tetracycline and quinolone antibiotics and reduce
+        # levothyroxine absorption (NIH ODS magnesium and calcium fact sheets).  Kidney disease: magnesium builds
+        # up when the kidneys are weak (NIH ODS magnesium), willow bark may harm weak kidneys (MedlinePlus), and
+        # protein intake is often limited in kidney disease (NIDDK).  Stomach ulcers: devil's claw and willow bark
+        # (MedlinePlus).  Gallstones: turmeric and devil's claw (MedlinePlus).  Labels: "If pregnant, nursing..."
+        # (all); Muscle Eze "Adults take..."; willow bark (a salicylate source) is not advised for children
+        # (Reye's syndrome, MedlinePlus); PRM Resolve "Contains: Fish (anchovy, sardine, squid, and mackerel)"
+        # (squid is a mollusk, so shellfish); Whey Protein is a milk protein (products DB: "dairy-based").
         "rx": [
             "<b>Blood thinner (warfarin, apixaban, clopidogrel), aspirin, or NSAIDs like ibuprofen or naproxen?</b> "
             "White willow (contains salicin), ginger, curcumin, devil's claw and fish oil may add to bleeding risk. "
-            "Check with {who} and the doctor who prescribes it.",
+            "Ask {who} and your prescriber.",
             '<b>Allergic to aspirin?</b> Skip <span class="ihl-nw">Inflam-Eze Plus</span>: white willow contains salicin, '
             'a natural relative of aspirin.',
-            "<b>Surgery coming up?</b> Tell your surgeon about every supplement. Many ask you to stop herbs and fish oil "
-            "2 weeks before.",
-            '<b>Muscle relaxers, opioids, sleep aids:</b> <span class="ihl-nw">Muscle Eze</span> and the hops in '
-            '<span class="ihl-nw">Inflam-Eze Plus</span> may add drowsiness. <b>Diabetes medicine:</b> alpha lipoic acid '
-            'can lower blood sugar.',
+            "<b>Surgery coming up, or just had one?</b> Tell your surgeon about every supplement and ask when to start. "
+            "Many ask you to stop herbs and fish oil 2 weeks before surgery.",
+            '<b>Muscle relaxers, opioids or sleep aids?</b> <span class="ihl-nw">Muscle Eze</span> and the hops in '
+            '<span class="ihl-nw">Inflam-Eze Plus</span> may add drowsiness. <b>Diabetes medicine?</b> The ginger and '
+            'curcumin in <span class="ihl-nw">Inflam-Eze Plus</span> may lower blood sugar; ask {who} about checking it.',
             '<b>Antibiotics or thyroid medicine?</b> The calcium and magnesium in <span class="ihl-nw">Muscle Eze</span> '
             'can block some of them. Ask {who} how to space them.',
-            "<b>Pregnant, nursing, under 18, or allergic to fish or shellfish?</b> Ask {who} first.",
+            "<b>Pregnant, nursing, under 18, allergic to fish, shellfish or milk, or have kidney disease, stomach "
+            "ulcers or gallstones?</b> Ask {who} first.",
         ],
     },
 }

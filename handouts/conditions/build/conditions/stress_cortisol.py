@@ -7,12 +7,19 @@ FRONT, top to bottom:
   left one a crescent, as in life).  A magnified side view of the brain shows the hypothalamus and the
   pituitary; a magnified adrenal shows its outer layer (cortex, makes cortisol) and core (medulla,
   makes adrenaline).  Blue arrows = the brain's stress signals (CRH, ACTH); gold dots = cortisol; a grey
-  dashed loop = the brake (cortisol's feedback to the brain).  Four numbered steps and a KEY.
+  dashed loop = the brake (cortisol's feedback to the brain).  Four numbered steps and a KEY (which also names the
+  yellow adrenal glands); the kidneys and spine carry their own labels.  Both zoom cones are drawn under the
+  figure, every brain-inset label sits inside its circle (_check_inset fails the build otherwise), and the
+  adrenal inset's labels sit to its left, clear of its cone.  No SVG text is stroked (stroked text prints as a
+  Type 3 font): labels sit in clear space instead of on white halos.
   -> "Your cortisol clock": a healthy daily curve (green) beside a flattened stressed curve (red dashed),
   with its own KEY cards -> "Signs your stress system is working overtime" (tick tiles)
   -> "Is it 'adrenal fatigue'?" beside "See {who} soon" (too-low and too-high cortisol signs, steroid
   medicines, 988).
-BACK: hex lifestyle band, five NutriDyn picks, daily rhythm, an edition check.
+BACK: hex lifestyle band (deepened for 4.5:1 contrast), five NutriDyn picks with full label lines, daily rhythm,
+one medicine check for both editions ({who} is the only difference), and a bold, boxed FDA disclaimer tied by a
+diamond to every structure/function statement [CFR93].  Back-page CSS is scoped by the empty <i class="scx-bk">
+in the band title.
 Every SVG id starts with "scx-" and every CSS class with "scx-", so nothing collides with other sheets
 in the all-sheets bundle.  Edition wording: "{who}" / "{Who}" (build.ed_text).
 
@@ -856,7 +863,7 @@ def signs_block():
 
 def low_block():
     # [CADE16]: 58 studies, no substantiation that "adrenal fatigue" exists; not recognised by any
-    # endocrinology society.  Habits that move the rhythm: [LEP01] light, [LEP97] sleep, [LOV05] caffeine.
+    # endocrinology society.  Habits that move the rhythm: [LEP01] light, [LEP97] sleep, [DRAKE13] caffeine and sleep.
     myth = ('<div class="scx-myth"><h4>Is it &ldquo;adrenal fatigue&rdquo;?</h4>'
             '<p>You may hear stress-tiredness called that, but it is <b>not a medical diagnosis</b>. A review of 58 '
             'studies found no proof that stress wears out the adrenal glands. What can change is the stress signal and '

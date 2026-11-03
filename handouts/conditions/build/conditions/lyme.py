@@ -634,11 +634,11 @@ def art_symptoms(t):
     out.append(f'<rect x="{kx}" y="{ky}" width="{kw}" height="{kh}" rx="8" fill="#FFFFFF" stroke="#CFD6DA" stroke-width="1.3"/>')
     out.append(T(kx + 11, ky + 17, "KEY", 9.6, 800, INK, ls=1.4))
     stub = '<path d="M{0},{1} H{2}" stroke="{3}" stroke-width="1.3"/>'
-    rows = [(stub.format(kx + 10, ky + 35, kx + 22, EARLY) + dot(kx + 22, ky + 35, EARLY), "Early sign"),
-            (stub.format(kx + 10, ky + 55, kx + 22, LATER) + dot(kx + 22, ky + 55, LATER), "Later sign")]
+    rows = [(stub.format(kx + 10, ky + 33, kx + 22, EARLY) + dot(kx + 22, ky + 33, EARLY), "Early sign"),
+            (stub.format(kx + 10, ky + 53, kx + 22, LATER) + dot(kx + 22, ky + 53, LATER), "Later sign")]
     for i, (sw, lab) in enumerate(rows):
         out.append(sw)
-        out.append(T(kx + 36, ky + 38.6 + i * 20, lab, 10.4, 600, INK))
+        out.append(T(kx + 36, ky + 36.6 + i * 20, lab, 10.4, 600, INK))
     out.append(rash_patch(kx + 16, ky + 76, 7, 5.6, "lyrpk", rot=0) + bullseye(kx + 33.5, ky + 76, 6.4))
     out.append(T(kx + 46, ky + 73.4, "Rash at the bite:", 10.4, 600, INK))
     out.append(T(kx + 46, ky + 85, "plain red or bull's-eye", 9.6, 600, SOFT_INK))
@@ -834,14 +834,14 @@ SHEET = {
                 "<b>Probiotic timing:</b> {who} may suggest taking UltraBiotic at least 2 hours apart from each "
                 "antibiotic dose.",
                 "<b>Blood thinners:</b> doxycycline can make warfarin stronger; the vitamin K1 in Mito Recharge can "
-                "make it weaker. Inflam-Eze Plus has aspirin-like willow bark: not for children, teens or aspirin allergy."],
+                "make it weaker. <span style='white-space:nowrap'>Inflam-Eze Plus</span> has aspirin-like willow bark: not for children, teens or aspirin allergy."],
             "practitioner": [
                 "<b>Doxycycline:</b> take it 2 to 3 hours apart from calcium, magnesium (Mito Recharge has some), "
                 "iron, zinc and antacids, which block it.",
                 "<b>Antibiotic days:</b> take UltraBiotic at least 2 hours apart from each antibiotic dose. "
                 "{Who} can say how long to continue it.",
                 "<b>On warfarin?</b> Doxycycline can make it stronger and Mito Recharge's vitamin K1 weaker, so {who} "
-                "may check your INR (a clotting test). Inflam-Eze Plus has aspirin-like willow bark: not for children, "
+                "may check your INR (a clotting test). <span style='white-space:nowrap'>Inflam-Eze Plus</span> has aspirin-like willow bark: not for children, "
                 "teens or aspirin allergy."],
         },
     },

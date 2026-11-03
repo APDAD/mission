@@ -918,10 +918,12 @@ def picture2(t):
 # Two keep the Map's exact words (its first and eleventh questions); the Map's "UTIs" is said in plain
 # words.  The rest are the Map's questions in plainer words (Map: "Sleep or insomnia", "Mood, anxiety,
 # low mood", "Sex drive", "Weight changes", "Breast tenderness", "Hair thinning or facial hair").
-# A label with "|" wraps there onto a second line.
-TRACK = ["Hot flashes or|night sweats", "Poor sleep", "Mood or anxiety", "Vaginal dryness", "Bladder|infections",
-         "Low sex drive", "Weight change", "Sore breasts", "Headaches", "Brain fog", "Joint or|muscle pain",
-         "Hair changes"]
+# A label with "|" breaks there onto a second line.  Rows 1, 2 and 4 hold a two-line Map label anyway,
+# so their other long labels break too (free in height), which keeps the grid narrow enough for the
+# "what works best" box beside it.  Row 3 stays on one line.
+TRACK = ["Hot flashes or|night sweats", "Poor sleep", "Mood or|anxiety", "Vaginal|dryness", "Bladder|infections",
+         "Low sex|drive", "Weight change", "Sore breasts", "Headaches", "Brain fog", "Joint or|muscle pain",
+         "Hair|changes"]
 
 
 def tracker():
@@ -929,7 +931,7 @@ def tracker():
                     '<em><i>0</i><i>1</i><i>2</i><i>3</i></em></div>' for lab in TRACK)
     return ('<div class="mnp-track"><div class="mnp-th"><div class="mnp-th1"><b>Track your symptoms</b>'
             # [MAP] "Same twelve questions at six weeks": two colors keep the two scores apart on one grid
-            '<span class="mnp-pen">Circle in pen today. At 6 weeks, circle again in a new color.</span></div>'
+            '<span class="mnp-pen">Circle in pen today; at 6 weeks, use a new color.</span></div>'
             # [MAP] scale: 0 none, 1 mild, 2 disrupts some days, 3 disrupts most days
             '<span>Circle <strong>0</strong> none, <strong>1</strong> mild, <strong>2</strong> bothers you some days, '
             '<strong>3</strong> bothers you most days.</span></div>'
@@ -971,7 +973,7 @@ def front(t, ed):
 CSS = r"""
 .mnp .mnp-art svg{display:block;width:100%;height:auto}
 .mnp .mnp-art2{margin-top:0.04in}
-.mnp .mnp-low{display:grid;grid-template-columns:1.72fr 1fr;gap:0.1in;margin-top:0.06in;align-items:stretch}
+.mnp .mnp-low{display:grid;grid-template-columns:1.5fr 1fr;gap:0.1in;margin-top:0.06in;align-items:stretch}
 .mnp .mnp-track{border:1px solid #E7D3DC;border-radius:9px;background:var(--tint);padding:0.05in 0.1in 0.05in;
   display:flex;flex-direction:column}
 .mnp .mnp-th{display:flex;flex-direction:column;margin-bottom:2px}

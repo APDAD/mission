@@ -12,19 +12,23 @@ FRONT, top to bottom
   fluid and loose flakes, a squeezed joint space, a torn meniscus pushed out past the rim).
   Matching I-beam brackets measure the joint space bone end to bone end on both sides.  The four
   numbered OA steps each have a leader to the tissue they name.  Each half has a magnified circle
-  of its cartilage, and one three-row KEY names every colour and symbol on the knee and in both
-  circles -> how it can feel / get checked promptly -> what raises your risk -> good to know
-  (1 lb -> 4 lb, where OA strikes, 150 min, a pain scale).
+  of its cartilage, tied to a dashed ring on the knee by a dashed connector, and one three-row KEY
+  names every colour and symbol on the knee and in both circles.  Each meniscus rim meets the joint
+  lining (the capsule holds it), with fluid pockets above it; on the worn side the pushed-out
+  meniscus presses into the swollen lining -> how it can feel / get checked promptly -> what raises
+  your risk -> good to know (1 lb -> 4 lb, where OA strikes as a front-view figure, 150 min, a pain
+  scale).
   Anatomy: a right knee seen from the front, so the outer (lateral) side with the fibula is on the
   viewer's left and the inner (medial) side is on the right, where knee OA most often starts.
   Proportions: condyle width : femoral shaft about 2.7 : 1; cartilage about 3% of joint width
   (2 to 3 mm on an 80 mm knee), drawn a little thicker so the change reads; meniscus a wedge about
   twice cartilage height at its rim (Sophia Fox 2009, doi:10.1177/1941738109350438, PMID 23015907).
-BACK: lifestyle band, 5 NutriDyn products (label facts in products.d/joint-pain.json), daily rhythm
-  (morning and evening; no bedtime products, so that empty slot is hidden), one check list that
-  reads right in both editions through {who}.  The back page is reached in CSS through the empty
-  .jpn-bk marker in the lifestyle title (the kit sets several back-page texts below 7 pt; BACK_CSS
-  lifts them to 7 pt on this sheet only).
+BACK: lifestyle band, 5 NutriDyn products (label facts in products.d/joint-pain.json): four make the
+  daily plan and the fifth, Curcumin 400X, is the willow-free choice instead of Inflam-Eze Plus, so it
+  stays out of the daily rhythm (morning and evening; no bedtime products, so that empty slot is
+  hidden).  One check list reads right in both editions through {who}.  The back page is reached in
+  CSS through the empty .jpn-bk marker in the lifestyle title; BACK_CSS only tightens spacing there
+  so the longer check list fits (all fine print, the START HERE badge and the diamond come from the kit).
 
 SOURCES (tags used in the comments next to each number or claim)
   [GBD21]     GBD 2021 Osteoarthritis Collaborators. Lancet Rheumatol 2023;5:e508-22. PMID 37675071,
@@ -87,6 +91,23 @@ SOURCES (tags used in the comments next to each number or claim)
   [COMM-E]      German Commission E, devil's claw: not with stomach or duodenal ulcers; with gallstones
                 only after medical advice (the EU monograph EMA/HMPC/627057/2015 adds a warfarin bleeding
                 caution).  Not re-confirmed this session; the panel line is an "ask first", not a rule.
+  [TGA23]       TGA safety alert "Medicines containing turmeric or curcumin - risk of liver injury" (2023,
+                https://www.tga.gov.au/safety/safety-alerts/medicines-containing-turmeric-or-curcumin-risk-liver-injury,
+                read through web-search summaries 2026-11-03): rare liver injury; the risk may be higher with
+                enhanced-absorption products and higher doses; people with liver problems should avoid them;
+                watch for yellow skin or eyes, dark urine, unusual tiredness.  The sheet stacks two
+                enhanced-absorption forms (CurQfen, BioCurc), hence the liver line and its stop sign.
+  [MN-UL]       Institute of Medicine DRI report, 2001: adult upper limit for manganese 11 mg a day; MedlinePlus
+                (manganese): people with chronic liver disease have trouble getting rid of manganese, so it can
+                build up.  Chondro-Relief Intensive Care contains manganese ascorbate (Clinical Guide ND181, 2022);
+                its only printed amount, 15 mg per 4 capsules, is from 2014 (products.d src), so the sheet prints
+                no number and puts the product in the liver line.
+  [ASA-HERB]    American Society of Anesthesiologists, as cited with Ang-Lee MK et al. JAMA 2001;286:208-16,
+                PMID 11448284: tell the surgical team about herbal products and stop them about two weeks
+                before surgery; ginger, turmeric, willow and devil's claw carry bleeding cautions.
+  [CDC-AGS]     CDC "Products that may contain alpha-gal": gelatin and other products made from mammals (beef,
+                pork) can trigger alpha-gal syndrome, the red-meat allergy spread by lone star tick bites.
+                Collagen Renew's only other ingredient is "Bovine Collagen Peptides" (labels.json R190).
 """
 import math
 import os

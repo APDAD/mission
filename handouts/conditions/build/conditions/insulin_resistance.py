@@ -706,9 +706,11 @@ SHEET = {
         ],
         # Three notes per edition.  Pharmacists check interactions and depletions; providers order labs and adjust.
         # Sources: dihydroberberine 100 mg per 5 Gluco IR capsules (ND506) + 100 mg per Berberine Pro capsule x 3
-        # (ND1130) = 400 mg a day.  Guo Y et al., Eur J Clin Pharmacol 2012;68:213-217 (berberine 300 mg three times
-        # daily lowered CYP2D6, 2C9 and 3A4 activity); Wu X et al., Eur J Clin Pharmacol 2005 (berberine raised
-        # cyclosporine levels in kidney-transplant patients).  Added sugar lowering: NIH ODS chromium fact sheet
+        # (ND1130) = 400 mg a day.  Guo Y et al., Eur J Clin Pharmacol 2012;68:213-217, PMID 21870106,
+        # doi:10.1007/s00228-011-1108-2 (berberine 300 mg three times daily for 2 weeks lowered CYP2D6, 2C9 and 3A4
+        # activity); Wu X et al., Eur J Clin Pharmacol 2005;61:567-572, PMID 16133554, doi:10.1007/s00228-005-0952-3
+        # (berberine 0.2 g three times daily raised cyclosporine levels in kidney-transplant patients).  Both
+        # read on PubMed 2026-11-03.  Added sugar lowering: NIH ODS chromium fact sheet
         # (insulin and diabetes medicines), MedlinePlus alpha-lipoic acid, gymnema and berberine monographs (all in
         # Gluco IR; berberine also in Berberine Pro); insulin and sulfonylureas are the drugs that carry the
         # low-sugar risk (ADA Standards of Care 2025, Sections 6 and 9).
