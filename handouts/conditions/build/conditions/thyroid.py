@@ -258,6 +258,21 @@ def antibody(x, y, ang=0, s=1.0):
             'stroke-linecap="round"/></g>')
 
 
+def loop_arrow(cx, cy, r, color, sw=1.3):
+    """A clockwise loop arrow (270 degree arc + arrowhead), drawn as paths."""
+    a0, a1 = math.radians(-40), math.radians(230)
+    p0 = (cx + r * math.cos(a0), cy + r * math.sin(a0))
+    p1 = (cx + r * math.cos(a1), cy + r * math.sin(a1))
+    tx, ty = -math.sin(a1), math.cos(a1)            # direction of travel at the end of the arc
+    nx, ny = math.cos(a1), math.sin(a1)             # outward normal
+    tip = (p1[0] + 2.1 * tx, p1[1] + 2.1 * ty)
+    b1 = (p1[0] - 0.5 * tx + 1.7 * nx, p1[1] - 0.5 * ty + 1.7 * ny)
+    b2 = (p1[0] - 0.5 * tx - 1.7 * nx, p1[1] - 0.5 * ty - 1.7 * ny)
+    return (f'<path d="M{p0[0]:.2f},{p0[1]:.2f} A{r},{r} 0 1 1 {p1[0]:.2f},{p1[1]:.2f}" fill="none" stroke="{color}" '
+            f'stroke-width="{sw}" stroke-linecap="round"/>'
+            f'<path d="M{tip[0]:.2f},{tip[1]:.2f} L{b1[0]:.2f},{b1[1]:.2f} L{b2[0]:.2f},{b2[1]:.2f} Z" fill="{color}"/>')
+
+
 def lymphocyte(x, y, r=3.5):
     return (f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{r}" fill="{IMMUNE}" stroke="{IMMUNE_N}" stroke-width=".8"/>'
             f'<circle cx="{x - r * .25:.1f}" cy="{y - r * .25:.1f}" r="{r * .5:.2f}" fill="#A890E0" opacity=".7"/>')
@@ -507,13 +522,13 @@ def _wrap(text, width, size, weight=500):
 W = 760
 P1_HDR = 24
 FX, FY, FS = 170, -14.6, 0.84       # neck figure: local (0, 0) -> (FX, FY), scale FS (local y 46 = top of the art)
-P1_ART = 218                        # bottom of the art band; the step strip and the KEY sit below it
+P1_ART = 217                        # bottom of the art band; the step strip and the KEY sit below it
 BR_C, BR_R = (398, 84), 50          # brain inset
 ORG = (404, 148, 566, 208)          # liver / kidneys / muscles node (x0, y0, x1, y1)
 CELL_C, CELL_R = (690, 176), 24     # every cell
-P1_STEPS = 222
-P1_KEY = 279                        # 5 units of air under badge 3 of the step strip
-P1_H = P1_KEY + 35                  # KEY strip (27 tall) + 8 units of margin above the panel border
+P1_STEPS = 221
+P1_KEY = 278                        # 5 units of air under badge 3 of the step strip (it used to touch)
+P1_H = P1_KEY + 33                  # KEY strip (27 tall) + 5 units of air above the panel border (was 2)
 
 
 def _fig(x, y):
@@ -681,10 +696,12 @@ def picture1(t):
         fit(s, 10.6, 500, 352 if col == 0 else 338, "step strip")
         if i < 5:
             o.append(badge(x, y - 3.8, i + 1, c1, 7.4, 9.8))
-        else:
+        else:   # the feedback step: a dashed ring with a drawn loop arrow (no font glyph, so no Type 3 font)
             o.append(f'<circle cx="{x}" cy="{y - 3.8}" r="7.4" fill="#fff" stroke="{FEED}" stroke-width="1.5" '
-                     'stroke-dasharray="2.6 1.8"/>' + T(x, y - 0.3, "&#8635;", 10, 800, FEED, "middle"))
+                     'stroke-dasharray="2.6 1.8"/>' + loop_arrow(x, y - 3.8, 3.6, FEED))
         o.append(T(x + 13, y, s, 10.6, 500, INK))
+    if P1_STEPS + 15 + 2 * 15.8 - 3.8 + 9.0 > P1_KEY - 4 or P1_KEY + 27 > P1_H - 5:
+        raise ValueError("thyroid sheet: step strip, KEY strip and panel border too tight")
     o.append(key1(P1_KEY, c1))
     return svg(W, P1_H, "".join(o),
                "How your thyroid works: a front view of the neck with the butterfly-shaped thyroid gland on the "
@@ -721,7 +738,7 @@ def key1(y, c1):
 
 # ============================================================== picture 2: Hashimoto's, magnified
 P2_HDR = 24
-P2_H = 174
+P2_H = 171
 CR = 52
 CIRC = [((68, 94), "HEALTHY", "#2F7D59"), ((206, 94), "HASHIMOTO&#8217;S", "#A5281E")]
 FOLLICLES = [(-30, -30, 20), (12, -36, 17), (42, -8, 17), (-40, 10, 16), (-6, 4, 19), (28, 30, 18), (-20, 40, 15),
@@ -809,7 +826,7 @@ def picture2(t):
     # TPO (thyroid peroxidase) is the gland's hormone-making enzyme.  [SURKS04] on a routine panel a high
     # TSH with normal free T4 (mild disease) comes first; TPO antibodies often appear years earlier, but
     # only show if someone tests for them, so step 4 says "routine blood test".
-    sx, sy, sw = 282, P2_HDR + 22, 286
+    sx, sy, sw = 282, P2_HDR + 19, 286
     steps = ["Immune cells mistake the thyroid for a threat.",
              "They move in, and antibodies tag TPO, the gland&#8217;s hormone-making enzyme.",
              "Over months or years, the gland makes less hormone.",
@@ -901,15 +918,15 @@ def numbers_block():
                     + (f'<span class="thy-low">{c}</span>' if c else "") + '</div><i></i></div>' for a, b, c in boxes)
     # [LI17] biotin makes thyroid immunoassays read falsely high or low; stop window per FDA / ATA advice.
     # [ND-LABEL] Essential Multi (the Start-here pick on the back) has 500 mcg biotin per 3 capsules.
-    biotin = ('<div class="thy-bio"><b>Before any thyroid blood test</b><span>Stop <strong>biotin</strong> 2 to 3 days '
-              'ahead, Essential Multi too. Many multis and hair, skin and nail formulas have it. It can make results '
-              'look falsely high or low.</span></div>')
+    biotin = ('<div class="thy-bio"><b>Before any thyroid blood test</b><span>Stop <strong>biotin</strong> (in Essential '
+              'Multi, many multis and hair, skin and nail formulas) 2 to 3 days ahead. It can make results look falsely '
+              'high or low.</span></div>')
     # Edition-neutral on purpose: results go back to whoever ordered the test, not to the pharmacist.
     return ('<div class="thy-nums"><div class="thy-nh"><b>Know your numbers</b><span>Write your results in the boxes, '
             'then go over them with the provider who ordered them.</span></div>'
             f'<div class="thy-ngrid">{tsh}{biotin}<div class="thy-bxs">{cells}</div></div>'
-            '<p class="thy-src">Sources: NIDDK; American Thyroid Association; Surks, JAMA 2004; Wyne, J Endocr Soc 2022; '
-            'Hu and Rayman, Thyroid 2017; Li, JAMA 2017; IOM 2011; BSG 2021; Kotwal, JCEM 2020.</p></div>')
+            '<p class="thy-src">Sources: NIDDK; American Thyroid Assn.; Surks 2004; Wyne 2022; Kotwal 2020; Hu and Rayman '
+            '2017; Li 2017; IOM 2011; British Soc. of Gastroenterology 2021.</p></div>')
 
 
 def front(t, ed):
@@ -966,6 +983,10 @@ CSS = r"""
    every back-page text run, footer and disclaimer at 7 pt or more, so no size overrides are needed.) */
 .sheet.back:has(.thy-back) .col .need{height:0.5in;min-height:0.5in}
 .sheet.back:has(.thy-back) .life b{font-size:9.2pt}
+/* a wider medicine-check panel (its notes are this sheet's longest text) and slightly tighter writing
+   lines keep the back on one page with the footer visible */
+.sheet.back:has(.thy-back) .duo{grid-template-columns:1.12fr 1fr}
+.sheet.back:has(.thy-back) .notes .ln{height:0.22in}
 /* the kit has no rule for class="x": draw this sheet's "avoid" slash in NutriDyn coral */
 .sheet.back:has(.thy-back) .life svg .x{stroke:#F15F3F}
 """
@@ -998,7 +1019,9 @@ SHEET = {
             # [PEAR13] the U.S. is generally iodine-sufficient; [TENG06] [HU17] [ATA15] high or excess iodine can
             # harm.  150 mcg is the adult RDA [ODS], the amount in Essential Multi [ND-LABEL], so the tile and the
             # Start-here pick agree.
-            ("thy_drops", "No high-dose iodine", "Skip kelp and iodine drops. Iodized salt or a basic multi (150 mcg) is plenty."),
+            # (Title: "No high-dose iodine" wraps to two lines in a 1.2 in tile even at 8.8 pt, so it reads
+            # "Go easy on iodine"; the text names what to skip and what is enough.)
+            ("thy_drops", "Go easy on iodine", "No kelp or iodine drops. Iodized salt or a multi (150 mcg) is plenty."),
             # Physical Activity Guidelines for Americans, 2nd ed. (HHS 2018)
             ("walk", "Move every day", "Walk most days. Add strength work 2 to 3 days a week."),
             # [NSF15] National Sleep Foundation 2015: 7 to 9 hours for adults (7 to 8 at 65+)
@@ -1013,9 +1036,9 @@ SHEET = {
              "start": True,
              # [HUW24] [ZHANG25] selenium; [HU17] 50-100 mcg selenium a day where intake is low; [KNEZ20] zinc for
              # T4 to T3; 150 mcg iodine = the adult RDA, not a high dose ([ATA15] warns about high doses)
-             "bullets": ["Selenium and zinc support healthy thyroid function",
+             "bullets": ["Selenium and zinc support thyroid function",
                          "Iodine at a normal daily amount (150 mcg), not a high dose"],
-             "dose": "3 capsules with dinner", "dosesub": "4 hours after thyroid medicine", "sched": [("pm", 3, "capsules")]},
+             "dose": "3 capsules with dinner", "dosesub": "4 hours after thyroid meds", "sched": [("pm", 3, "capsules")]},
             {"p": "thy_d3_5000_k2", "need": "Vitamin D", "needsub": "only if your level is low",
              # [HU17] check vitamin D and correct a deficiency; [WANG18]; [KNEZ20] vitamin D and immune regulation
              "bullets": ["Supports healthy immune function", "K2 helps put calcium to work in bone"],
@@ -1024,7 +1047,7 @@ SHEET = {
             {"p": "thy_iron_support", "need": "Iron", "needsub": "only if ferritin is low",
              # [HU17] TPO is a heme (iron) enzyme; Hashimoto's patients are often iron deficient; check and correct
              "bullets": ["Supports healthy iron levels and energy", "TPO, the thyroid&#8217;s hormone-making enzyme, needs iron"],
-             "dose": "1 capsule at bedtime", "dosesub": "4 hours from thyroid medicine",
+             "dose": "1 capsule at bedtime", "dosesub": "4 hours from thyroid meds",
              "sched": [("bed", 1, "capsule, if ferritin is low")]},
             {"p": "thy_ultrabiotic_dms", "need": "Gut balance", "needsub": "the gut-thyroid link",
              # [KNEZ20] the thyroid-gut axis (gut microbes take part in thyroid hormone and mineral handling);
@@ -1041,33 +1064,34 @@ SHEET = {
             "pharmacy": [
                 # [LT4-PI] empty stomach, half to one hour before breakfast, 4 hours from binders; [ATA14] bedtime dosing
                 # is also accepted, and then the iron / multi times shift
-                "<b>Thyroid medicine first, alone:</b> water only, empty stomach, 30 to 60 minutes before breakfast. "
-                "Iron, calcium, magnesium, antacids and multis 4 hours later. Take it at bedtime? Ask {who} to re-time "
-                "the iron and multi.",
+                "<b>Thyroid medicine alone:</b> water only, empty stomach, 30 to 60 minutes before breakfast. Iron, "
+                "calcium, magnesium, antacids and multis 4 hours later. Bedtime dose? Ask {who} to re-time them.",
                 # [LI17] biotin interference; FDA biotin safety communication; [ND-LABEL] Essential Multi 500 mcg biotin
-                "<b>Biotin skews thyroid labs.</b> It is in many hair, skin and nail formulas and multivitamins, "
-                "Essential Multi too. Stop it 2 to 3 days before a blood test.",
-                # [HU17] check and correct low levels; [ODS] vitamin D UL 4,000 IU; [ND-LABEL] D3 5000 label: exceeds the
-                # UL, monitor levels; K2 not recommended with blood thinners.  5,000 + 1,000 (Essential Multi) = 6,000 IU
-                "<b>D3 5000 and Iron Support are for low lab levels.</b> D3 5000 plus the multi is 6,000 IU a day, above "
-                "the 4,000 IU upper limit, so recheck your level. On a blood thinner? Skip the K2 formula.",
-                # [KANG13] thyroid supplements with T4/T3; [TENG06] [ATA15] iodine; never self-adjust
-                "<b>Never change your thyroid dose on your own.</b> Skip kelp and iodine drops with Hashimoto&#8217;s. "
-                "Glandular thyroid products can hold real hormone: use them only if your prescriber says so.",
+                "<b>Biotin skews thyroid labs.</b> It is in multivitamins (Essential Multi too) and hair, skin and nail "
+                "formulas. Stop it 2 to 3 days before a blood test.",
+                # [HU17] check and correct low levels; [ODS] vitamin D UL 4,000 IU; [ND-LABEL] the D3 5000 label says it
+                # exceeds the UL and levels need monitoring.  5,000 + 1,000 (Essential Multi) = 6,000 IU.  (The label's
+                # K2 / blood-thinner warning is in the practitioner list; here it would cost a line the page lacks.)
+                "<b>D3 5000 and Iron Support need a low lab first.</b> With the multi, D3 is 6,000 IU a day, over the "
+                "4,000 IU upper limit: recheck it.",
+                # [KANG13] thyroid supplements with T4/T3; never self-adjust.  (Kelp / iodine drops: the hex tile.)
+                "<b>Never change your thyroid dose on your own.</b> Glandular thyroid products can hold real hormone: "
+                "use them only if your prescriber says so.",
             ],
             "practitioner": [
-                # [HU17] check iron and vitamin D; [ODS] vitamin D UL 4,000 IU; [ND-LABEL] D3 label warnings; the
-                # multi adds 1,000 IU, so the plan totals 6,000 IU
+                # [HU17] check iron and vitamin D; [ODS] vitamin D UL 4,000 IU; [ND-LABEL] D3 label: exceeds the UL,
+                # monitor levels, K2 not recommended with blood thinners.  The multi adds 1,000 IU: 6,000 IU in all.
                 "<b>Test first:</b> TSH, free T4, TPO antibodies, ferritin, vitamin D. Iron Support and D3 5000 are for "
-                "low levels. With Essential Multi&#8217;s 1,000 IU that is 6,000 IU a day, above the 4,000 IU upper limit, "
-                "so recheck. K2 is not for people on blood thinners.",
-                # [LT4-PI] [ATA14] (bedtime dosing accepted); [LI17]; [ND-LABEL] biotin 500 mcg in Essential Multi
+                "low levels. D3 5000 plus the multi is 6,000 IU a day, over the 4,000 IU upper limit: recheck. K2 is not "
+                "for blood thinners.",
+                # [LT4-PI] [ATA14] (bedtime dosing is accepted; then the iron / multi times move); [LI17];
+                # [ND-LABEL] biotin 500 mcg in Essential Multi
                 "<b>Thyroid medicine alone:</b> water, empty stomach, 30 to 60 minutes before breakfast; minerals and "
-                "multis 4 hours later. Taken at bedtime? Ask {who} to re-time the iron and multi. Stop biotin, Essential "
-                "Multi too, 2 to 3 days before labs.",
+                "multis 4 hours later. Bedtime dose? Ask {who} to re-time them. Stop biotin, Essential Multi too, 2 to 3 "
+                "days before labs.",
                 # [KANG13] [TENG06] [ATA15]
-                "<b>Never change thyroid medicine without {who}.</b> Skip kelp and iodine drops with Hashimoto&#8217;s. "
-                "Glandular thyroid products can hold active hormone: use them only under {who}&#8217;s care.",
+                "<b>Never change thyroid medicine without {who}.</b> Skip kelp and iodine drops. Glandular thyroid "
+                "products can hold active hormone: use them only under {who}&#8217;s care.",
             ],
         },
     },

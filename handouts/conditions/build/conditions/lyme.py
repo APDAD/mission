@@ -242,13 +242,17 @@ def tick_feeding(hx, hy, uid="lyf"):
                 f'<path d="M{_f(kn[0])},{_f(kn[1])} Q{_f(mx)},{_f(my)} {_f(tip[0])},{_f(tip[1])}" stroke="{col}" '
                 f'stroke-width="{w0 * .72:.2f}" stroke-linecap="round" fill="none"/>')
 
-    # all legs go under the body, so each one appears from the belly; arches are nested, none cross
-    far = [(P(10, 8), (hx - 8, hy - 6.5), (hx - 20, sk - 1.2)),
-           (P(20, 9), (hx + 32, hy - 10), (hx + 40, sk - 1.2))]
-    near = [(P(8, 9), (hx - 6, hy - 4), (hx - 15, sk)),              # I
-            (P(12, 10), (hx - 10.5, hy - 9.5), (hx - 26, sk)),       # II
-            (P(17, 10.5), (hx + 27, hy - 6), (hx + 33, sk)),         # III
-            (P(22, 10.5), (hx + 37, hy - 14), (hx + 47, sk))]        # IV
+    # EIGHT legs, all from under the belly: four near (dark) and four far (paler, drawn first so the
+    # near legs pass in front of them).  Along the skin the tips alternate near/far, so all eight can
+    # be counted: front pairs I-II reach forward, back pairs III-IV reach back.
+    far = [(P(6, 6), (hx - 3, hy - 8), (hx - 9, sk - .8)),               # far I
+           (P(10, 6.5), (hx - 8, hy - 6.5), (hx - 20, sk - .8)),         # far II
+           (P(14, 6.5), (hx + 22, hy - 12), (hx + 28, sk - .8)),         # far III
+           (P(20, 6.5), (hx + 32, hy - 10), (hx + 40, sk - .8))]         # far IV
+    near = [(P(8, 7.5), (hx - 6, hy - 4), (hx - 15, sk)),                # I
+            (P(12, 8), (hx - 10.5, hy - 9.5), (hx - 26, sk)),            # II
+            (P(17, 8), (hx + 27, hy - 6), (hx + 33, sk)),                # III
+            (P(22, 7.5), (hx + 37, hy - 14), (hx + 47, sk))]             # IV
     for r, kn, tp in far:
         out.append(leg(r, kn, tp, "#6B5A4E", 1.6))
     for r, kn, tp in near:
@@ -256,18 +260,29 @@ def tick_feeding(hx, hy, uid="lyf"):
         out.append(f'<circle cx="{_f(kn[0])}" cy="{_f(kn[1])}" r=".7" fill="#6A564A"/>')
     tip = P(-19, 2.4)
     out.append(f'<ellipse cx="{_f(tip[0])}" cy="{_f(tip[1] - 1)}" rx="8" ry="5.5" fill="url(#{uid}p)"/>')
+    # half-fed idiosoma: a flattened oval (back = local -y, belly = +y, toward the skin)
+    body = ("M2.5,0 C2.5,-6.6 9,-10 19,-10 C29,-10 35.5,-6.2 35.5,0 C35.5,5.8 29,9 19,9 "
+            "C9,9 2.5,6 2.5,0Z")
+    out.append(f'<defs><clipPath id="{uid}c"><path d="{body}"/></clipPath>'
+               f'<linearGradient id="{uid}s" x1="0" y1="0" x2=".35" y2="1"><stop offset="0" stop-color="#4E3D33"/>'
+               f'<stop offset=".55" stop-color="#1E1511"/><stop offset="1" stop-color="#120C0A"/></linearGradient></defs>')
     out.append(f'<g transform="translate({_f(hx)},{_f(hy)}) rotate({_f(th)})">'
                # barbed hypostome into the skin, then the base of the mouthparts
                '<path d="M-3,-.4 L-19,2.4 L-3,2.6Z" fill="#2A1D17"/>'
                '<path d="M-8,0.4 l-1.2,1.6 M-12,1.1 l-1.2,1.5 M-16,1.8 l-1.1,1.2" stroke="#2A1D17" stroke-width=".6"/>'
                '<rect x="-4.8" y="-3" width="8.4" height="6" rx="1.7" fill="#1A1210"/>'
-               # idiosoma, half fed
-               f'<path d="M2.5,0 C2.5,-8.5 10,-12.5 20,-12.5 C30.5,-12.5 36.5,-7.5 36.5,0 C36.5,7.5 30.5,11.5 20,11.5 '
-               f'C10,11.5 2.5,7.5 2.5,0Z" fill="url(#{uid}b)" stroke="{k["body"][2]}" stroke-width=".8"/>'
-               '<path d="M9,-1 C14,-3.2 26,-3.2 33,-1" stroke="#6A2014" stroke-width=".7" fill="none" opacity=".5"/>'
-               # the black shield on the front of the back
-               '<path d="M2.6,-1.8 C3.4,-8.8 9,-12.3 16,-12.4 L16.4,-9.6 C10.6,-9.3 6.3,-6.4 5.4,-.9Z" fill="#140E0B"/>'
-               f'<ellipse cx="24" cy="-6.5" rx="7" ry="2.8" fill="url(#{uid}g)" opacity=".85"/>'
+               f'<path d="{body}" fill="url(#{uid}b)"/>'
+               f'<g clip-path="url(#{uid}c)">'
+               # marginal groove behind the shield, kept faint
+               '<path d="M15.5,-1.4 C21,-3 28,-3 33.5,-.8" stroke="#6A2014" stroke-width=".7" fill="none" opacity=".45"/>'
+               # the shield (scutum): a solid dark cap over the front third of the back, its rear edge
+               # bowed toward the middle of the body like the plate seen from above, not a thin band
+               f'<path d="M-3,5 L2,3.8 Q13,-1 15.6,-11.5 L-3,-12Z" fill="url(#{uid}s)"/>'
+               '<path d="M4.6,-4.2 Q7.6,-8.2 12.2,-8.9" stroke="#6E5A4C" stroke-width=".9" fill="none" '
+               'stroke-linecap="round" opacity=".55"/>'
+               '</g>'
+               f'<path d="{body}" fill="none" stroke="{k["body"][2]}" stroke-width=".8"/>'
+               f'<ellipse cx="25" cy="-5" rx="6.5" ry="2.2" fill="url(#{uid}g)" opacity=".4"/>'
                '</g>')
     # palps resting on the skin, just ahead of the bite
     out.append(f'<path d="M{_f(hx - 1)},{_f(sk - 1.6)} C{_f(hx - 5)},{_f(sk - 3)} {_f(hx - 10)},{_f(sk - 1.6)} '

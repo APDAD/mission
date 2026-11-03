@@ -3,9 +3,9 @@
     "name": "Essential Multi",
     "size": "90 capsules &middot; 30 servings",
     "img_src": "R716.png",
-    "key": "Per 3 capsules: 100 mcg selenium, 15 mg zinc, 150 mcg iodine, 1,000 IU vitamin D3, 200 mcg B12; no iron",
+    "key": "Per 3 capsules: 100 mcg selenium, 15 mg zinc, 150 mcg iodine, 1,000 IU D3, 500 mcg biotin; no iron",
     "dose": "3 capsules with dinner",
-    "dosesub": "4 hours after thyroid medicine",
+    "dosesub": "4 hours after thyroid meds",
     "sched": [
       [
         "pm",
@@ -38,7 +38,7 @@
     "img_src": "R847.png",
     "key": "29 mg iron (bisglycinate), 80 mg vitamin C, 350 mcg B12, 1,020 mcg DFE folate, 5 mg B6, 1 mg copper",
     "dose": "1 capsule at bedtime",
-    "dosesub": "4 hours from thyroid medicine",
+    "dosesub": "4 hours from thyroid meds",
     "sched": [
       [
         "bed",
@@ -52,7 +52,7 @@
     "name": "UltraBiotic Daily Multi-Strain",
     "size": "30 or 60 capsules",
     "img_src": "R829.png",
-    "key": "30 billion CFU from 7 strains: S. boulardii, L. reuteri, B. lactis, L. plantarum, L. acidophilus, L. gasseri, Bacillus coagulans",
+    "key": "30 billion CFU, 7 strains: S. boulardii, L. reuteri, B. lactis, L. plantarum, L. acidophilus, L. gasseri, Bacillus coagulans",
     "dose": "1 capsule with breakfast",
     "dosesub": "",
     "sched": [

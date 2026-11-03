@@ -505,18 +505,18 @@ def leader(pts, color, w=1.1):
 # ============================================================== picture 1: the stress system
 A_W, A_H = 760, 292
 FX, FY, FK = 352, 5, 76.0        # figure centre line, crown, head height (viewBox units)
-BI_C, BI_R = (110, 81), 72       # brain inset
-AI_C, AI_R = (94, 238), 44       # adrenal inset
+BI_C, BI_R = (104, 86), 80       # brain inset: big enough that every label sits inside its frame
+AI_C, AI_R = (214, 244), 44      # adrenal inset, beside the figure; its labels sit to its LEFT, clear of its cone
 NX, NW = 486, 274                # notes column: left edge and width
 
 # The four steps of the stress response [SMITH06][SAP00].  "Pea-sized" pituitary: NIH MedlinePlus.
+# Each step is two lines, so the KEY below has room for its fourth row (the yellow adrenal glands).
 STEPS = [
     ("THE ALARM", "When stress hits, your hypothalamus, deep in the brain, sends out a signal called CRH."),
     ("THE RELAY", "Your pea-sized pituitary gland answers with ACTH, which travels through the blood."),
-    ("THE RESPONSE", "Your adrenal glands, on top of your kidneys, release cortisol, which raises blood sugar "
-                     "for quick fuel."),
-    ("THE BRAKE", "Cortisol tells the brain to ease off, so the alarm switches off. When stress never lets up, "
-                  "it stays on alert."),
+    ("THE RESPONSE", "Your adrenal glands, on your kidneys, release cortisol. It raises blood sugar for quick "
+                     "fuel."),
+    ("THE BRAKE", "Cortisol tells the brain to ease off. When stress never lets up, the alarm stays on."),
 ]
 
 
@@ -533,8 +533,15 @@ def notes_col(t, y0):
     return "".join(o), y
 
 
+def _adrenal_swatch(cx, cy):
+    """A small yellow adrenal (the same rounded pyramid and gradient as the figure) for the KEY."""
+    pts = [(cx, cy - 6.5, 0.55), (cx + 4.5, cy - 1), (cx + 7.5, cy + 5.2, 0.6), (cx, cy + 5.6), (cx - 7.5, cy + 5.2, 0.6),
+           (cx - 4.5, cy - 1)]
+    return f'<path d="{spline(pts)}" fill="url(#scx-adr)" stroke="{CORTEX_LN}" stroke-width="1"/>'
+
+
 def key_col(x, y, w):
-    """KEY for picture 1: every symbol drawn on it."""
+    """KEY for picture 1: every symbol drawn on it, and the one colour-coded organ that has no label of its own."""
     rows = [
         (lambda cx, cy: signal_path((cx - 13, cy), (cx - 6, cy), (cx + 2, cy), (cx + 13, cy), 2.6, 7.5, False),
          "Blue arrow: a stress signal (CRH, ACTH)"),
@@ -542,6 +549,7 @@ def key_col(x, y, w):
         (lambda cx, cy: (f'<path d="M{cx - 13},{cy} H{cx + 5}" stroke="{BRAKE}" stroke-width="2.4" stroke-dasharray="6 4" '
                          'stroke-linecap="round"/>' + arrow_head(cx + 13, cy, 0, 8, BRAKE)),
          "Grey dashed arrow: the brake"),
+        (_adrenal_swatch, "Yellow: adrenal glands, on the kidneys"),
     ]
     h = 21 + 15.5 * len(rows)
     o = [f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="8" fill="#FFFFFF" stroke="#D9CFBF" stroke-width="1.3"/>',

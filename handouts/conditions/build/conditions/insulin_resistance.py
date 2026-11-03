@@ -51,9 +51,15 @@ G4_HW = 25.15              # open GLUT4 door half width: outer helix edge + half
 G4_SHUT_HW, G4_HH = 20.15, 27.45   # closed door (pore shut) half width, door half height (with stroke)
 M1 = (176, CY - 74)                          # step 1: next to the insulin pocket (both panels)
 M2 = (152, CY + 75)                          # step 2: under the receptor, where the signal starts (both panels)
-M3N, M3R = (G4_X + 24, CY + 44), (190, VM)   # step 3: glucose entering (normal) / left in the blood (resistance)
+# step 3: glucose entering (normal) / left in the blood (resistance).  The resistance marker sits in clear space
+# just right of the "Blood vessel" pill (pill ends at x 89), not among the molecules, which start at x 118.
+M3N, M3R = (G4_X + 24, CY + 44), (102, VM)
+VBOX_N, VBOX_R = (100, V0 + 5, 362, V1 - 5), (118, V0 + 5, 362, V1 - 5)   # vessel molecule boxes (8+ clear of the frame)
 BUB_R = 18.5                                 # storage bubble: outer head ring radius (heads reach 20.4)
-NB, NB_DOORS = (207, 217.8), (-30, 210)      # normal: a storage bubble arriving under the membrane, 0.8 below it
+# normal: a storage bubble arriving under the membrane, 0.8 below it, tucked against the open door's lower-left
+# corner (its right flank 5.8 from the door at the door's bottom edge), so the open door reads as the one it
+# delivered; a short dotted green arrow carries it up into the membrane
+NB, NB_DOORS = (219, 217.8), (-30, 210)
 RB = [((240, 242), (-65, 165)), ((293, 240.5), (-15, 130))]   # resistance: two bubbles stuck inside
 CAP_X = 266.5                                # resistance caption, centred over the two bubbles
 
@@ -179,7 +185,9 @@ def bubble(cx, cy, doors, R=BUB_R, s=0.42, L=3.2, ds=0.21):
     on each face and the tails meeting inside it.  Outer and inner heads share ONE list of angles, so
     every pair lines up radially.  The angles are laid out segment by segment between the doors (like
     lipid_xs): the outer heads nearly touch and stop 0.5 from each door, so every door sits in an even
-    notch; where a door's inner end needs the room, that pair keeps only its outer lipid.
+    notch.  The inner face keeps a head at every one of those angles, right up to each door, and the doors
+    are drawn last, on top, the way proteins sit in a bilayer (the nearest inner heads tuck half under a
+    door's edge), so both leaflets run unbroken and the ring reads as one even bilayer all the way round.
     doors = angles in degrees (SVG: 0 is right, 90 is down) of the closed GLUT4 doors seated through
     the wall."""
     hr = (HEAD_R + 0.3) * s                     # head radius with stroke
@@ -214,8 +222,6 @@ def bubble(cx, cy, doors, R=BUB_R, s=0.42, L=3.2, ds=0.21):
     inner, outer = [], []
     for a in angles:
         for rr, rot, lst in ((R, 90, outer), (ri, -90, inner)):   # outer tails point in, inner tails point out
-            if rr == ri and not all(clear(a, d, ri) for d in dr):
-                continue
             lst.append(f'<g transform="translate({cx + rr * math.cos(a):.2f},{cy + rr * math.sin(a):.2f}) '
                        f'rotate({math.degrees(a) + rot:.1f}) scale({s})">{lipid(0, 0, True, L)}</g>')
     o += inner + outer

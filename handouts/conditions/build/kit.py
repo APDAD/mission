@@ -3,6 +3,7 @@ page frames and product cards.  Generated pages only; edit content.py / art.py
 and re-run build.py.  Nothing in here may carry account data: this repo is public.
 """
 import html
+import re
 
 E = html.escape
 
@@ -171,6 +172,7 @@ h1,h2,h3{margin:0}
 .foot .code{font:600 7pt Inter,sans-serif;letter-spacing:.06em;color:#5B666D;text-align:right;white-space:nowrap}
 .disc{font-size:7pt;color:#5E686F;line-height:1.28;max-width:5.4in}
 .disc sup,.mark{color:var(--c1);font-weight:700}
+.nw{white-space:nowrap}
 
 /* back page */
 .band{margin:0 -0.42in;padding:0.16in 0.42in 0.18in;background:linear-gradient(120deg,var(--c1),var(--c2));color:#fff;
@@ -261,16 +263,29 @@ def font_faces(base):
 
 
 # Characters the shipped Latin fonts have no glyph for, even though they sit inside the Latin
-# subset's unicode-range: Chromium falls back and the PDF gets a Type 3 font. Swap them for
-# glyphs the fonts do carry (a plain hyphen) or drop them (zero-width joiners).
-PRINT_SAFE = {"\u2011": "-", "&#8209;": "-", "&#x2011;": "-", "\u2060": "", "&#8288;": "", "&NoBreak;": "",
-              "\u200b": "", "&#8203;": ""}
+# subset's unicode-range: Chromium falls back and the PDF gets a Type 3 font. A no-break hyphen
+# becomes a plain hyphen; in HTML text the hyphenated word is wrapped in .nw (white-space:nowrap)
+# so it still never splits across lines ("EstroG-100", "MK-7"). Zero-width joiners are dropped.
+_NBH = re.compile(r"[A-Za-z0-9]+(?:\u2011[A-Za-z0-9]+)+")
+_SVG_BLOCK = re.compile(r"(<svg\b.*?</svg>)", re.S)
+_TAG = re.compile(r"(<[^>]*>)")
 
 
 def print_safe(doc):
-    for a, b in PRINT_SAFE.items():
-        doc = doc.replace(a, b)
-    return doc
+    for a in ("&#8209;", "&#x2011;"):
+        doc = doc.replace(a, "\u2011")
+    for a in ("\u2060", "&#8288;", "&NoBreak;", "\u200b", "&#8203;"):
+        doc = doc.replace(a, "")
+    parts = _SVG_BLOCK.split(doc)
+    for i, part in enumerate(parts):
+        if i % 2:                                   # inside an <svg>: SVG text never wraps
+            parts[i] = part.replace("\u2011", "-")
+        else:
+            toks = _TAG.split(part)                  # wrap only text between tags, never inside an attribute
+            for j in range(0, len(toks), 2):
+                toks[j] = _NBH.sub(lambda m: '<span class="nw">' + m.group(0).replace("\u2011", "-") + "</span>", toks[j])
+            parts[i] = "".join(toks).replace("\u2011", "-")
+    return "".join(parts)
 
 
 def page_shell(title, body, theme="gut", extra_css="", font_base="../fonts/"):
