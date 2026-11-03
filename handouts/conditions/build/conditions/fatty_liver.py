@@ -987,7 +987,7 @@ RX = {
         "<b>Warfarin:</b> Mito Recharge has 250 mcg vitamin K1, which works against it. Take it the same way every "
         "day, and tell {who} before you start.",
         "<b>Statins</b> are safe with fatty liver but can lower CoQ10; Mito Recharge has 100 mg. It has green tea "
-        "extract, so take it with food; stop if urine turns dark or skin yellow.",
+        "extract, so take it with food. Dark urine or yellow skin? Stop it and call your doctor.",
     ],
     "practitioner": [
         "<b>Diabetes medicines:</b> Berberine Pro adds to their sugar-lowering effect, so {who} may check your "
@@ -995,7 +995,7 @@ RX = {
         "<b>Warfarin:</b> Mito Recharge has 250 mcg vitamin K1, which works against it. Keep the dose steady; "
         "{who} may recheck your INR after you start.",
         "<b>Statins</b> are safe with fatty liver but can lower CoQ10; Mito Recharge has 100 mg. It has green tea "
-        "extract, so take it with food; call {who} about dark urine or yellow skin.",
+        "extract, so take it with food. Dark urine or yellow skin? Stop it and call {who}.",
     ],
 }
 

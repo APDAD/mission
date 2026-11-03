@@ -1001,7 +1001,7 @@ SHEET = {
             ("egg", "Protein every meal", "Fish, eggs, chicken or beans, a palm-size portion."),
             # NIH ODS vitamin C fact sheet: vitamin C is required to make collagen; citrus fruits, red and
             # green peppers, kiwifruit and strawberries are among the best food sources.  Icon: an orange slice.
-            ("ih-citrus", "Vitamin C every day", "Oranges, kiwi, strawberries and peppers help you make collagen."),
+            ("ih-citrus", "Vitamin C every day", "Oranges, kiwi and peppers help you make collagen."),
             # [SMITH18] short sleep delayed wound healing; AASM/SRS: adults need 7 or more hours.
             ("moon", "Sleep 7 to 9 hours", "Short sleep slows repair. Keep a steady bedtime."),
             # [KHAN09] mechanotherapy; [LEONG20] fibres align "in the direction of stress".

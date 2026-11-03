@@ -721,9 +721,9 @@ def checks(ed):
            '<div class="dm"><i>Diabetes</i><b>6.5% or more</b></div></div>')
     mine = '<div class="nrp-mine"><span>{}</span><i></i></div>'
     tiles = [
-        ("meter", "Blood sugar", "A1c: your 3-month average",
-         a1c + '<p>A normal A1c? A 2-hour glucose test (a sweet drink, then a blood test) can still catch early '
-         'sugar trouble.</p>', "My A1c"),
+        ("meter", "Blood sugar", "A1c: 3-month average",
+         a1c + '<p>Normal A1c? A 2-hour glucose test (sweet drink, then blood test) can catch early trouble.</p>',
+         "My A1c"),
         # [AAN09, BCSH14] serum B12 "with metabolites (methylmalonic acid ...)"; [BCSH14] test before supplements
         # raise it; [AROD16] testing in long-term metformin users "should be considered"; [ADA26] Section 9 interval
         # not verified this session, so no interval is printed: "ask how often to recheck it".
@@ -834,8 +834,10 @@ CSS = r"""
 /* daily rhythm: the count never splits from its unit and is set off from the product name */
 .sheet.back:has(.nrp-bk) .slot li em{white-space:nowrap}
 .sheet.back:has(.nrp-bk) .slot li em::before{content:"\00B7\00A0"}
-/* a two-line name slot in every column, so all five columns start their bullets on the same line */
-.sheet.back:has(.nrp-bk) .col .pick .nm{min-height:2.1em;line-height:1.05;display:flex;align-items:center;justify-content:center}
+/* a two-line name slot in every column, so all five columns start their bullets on the same line. Centred as a
+   block (align-content), not with flex: flex would split "Omega Pure", the kit's unbreakable "EPA-DHA" span and
+   "1000" into separate side-by-side boxes. */
+.sheet.back:has(.nrp-bk) .col .pick .nm{min-height:2.1em;line-height:1.05;display:block;align-content:center}
 /* ...and a five-line bullet block in every column (the tallest has five), so all five "In each serving" heads
    share one line too */
 .sheet.back:has(.nrp-bk) .col .what ul{min-height:calc(5 * 1.28em + 2px)}

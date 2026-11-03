@@ -1060,13 +1060,17 @@ def art_knee():
     o.append(T(CX - 154, 322, "Calf bone", 10.5, 700, INK, "end"))
     o.append(T(CX - 154, 335, "(fibula)", 10, 500, INK2, "end", italic=True))
 
-    # magnified circles, and the dashed rings on the knee that mark the spot each one shows
+    # magnified circles, and the dashed rings on the knee that mark the spot each one shows, each tied to its
+    # circle by a dashed connector that rises from the ring and bends over to the circle through clear space (the
+    # worn one passes between markers 1 and 2 and above the swollen lining)
     lx, ly = tf(CX + LENS_U[0], _y_at(g["fem_l"], CX + LENS_U[0], max) + 3.4)
     rx, ry = tf(CX + LENS_U[1], _y_at(g["fem_r"], CX + LENS_U[1], max) + 1.6)
     o.append(inset(INS_L, False))
     o.append(inset(INS_W, True))
-    o.append(_lens(lx, ly, GREEN_DK))
-    o.append(_lens(rx, ry, RED_DK))
+    o.append(_connector((lx, ly), LENS_R, INS_L, 52, (lx - 34, 116), GREEN_DK))
+    o.append(_connector((rx, ry), LENS_R, INS_W, 56, (rx + 36, 116), RED_DK))
+    o.append(_lens(lx, ly, GREEN_DK, LENS_R))
+    o.append(_lens(rx, ry, RED_DK, LENS_R))
 
     # joint space, bone end to bone end, at the same spot on both sides: full height when healthy, squeezed
     # where the worn cartilage has gone

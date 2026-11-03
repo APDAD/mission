@@ -90,7 +90,7 @@
   },
   "ih_whey_protein": {
     "name": "Whey Protein",
-    "size": "896 g chocolate or 909 g vanilla",
+    "size": "Chocolate or vanilla",
     "img_src": "R372L.png",
     "key": "Per scoop (32&nbsp;g): 25&nbsp;g protein from whey protein isolate, with 2.65&nbsp;g leucine",
     "dose": "1 scoop daily",
@@ -103,6 +103,6 @@
       ]
     ],
     "url": "https://nutridyn.com/dynamic-whey-protein",
-    "src": "Products DB R372L (Nutri-West Complete Whey-G and Biotics Research Whey Protein Isolate switch charts, catalog ND143 10/1/26): 'NutriDyn 25 g (1 scoop, 32 g, whey protein isolate)'; 'label directions per day: NutriDyn 1 serving'; directions 'Mix 1 scoop in 8-10 ounces of water as a dietary supplement or as directed by your healthcare practitioner'; SKUs R372L 896G (Chocolate) and R373L 909G (Vanilla), 10/1/26 price list; DB note 'Whey Protein is dairy-based' (drives the milk line in the check panel). Leucine 2.65 g per scoop and 'grass-fed, rBGH-free' from the repo blasts blasts/2026-10-26-glp1-protein-chooser.html ('Every leucine number read off the nutridyn.com label 2026-10-21') and blasts/2026-09-22-peptide-nutrient-gap.html ('2.65 g of leucine in one scoop'); the bottle photo reads 'Bioactive Whey Protein Isolate with BCAAs', 'Supports Lean Body Mass' and 'Complete Protein Source'. URL https://nutridyn.com/dynamic-whey-protein from both blasts. The evening-meal slot is the sheet's plan (it spreads protein away from the morning Collagen Renew scoop; peptide-nutrient-gap blast: 'Spread the protein out'), not label text. PHOTO: img-src/R372L.png 1084x1580, a text-safe upscale of the web render, not listed in img-src/soft.json (crisp)."
+    "src": "Products DB R372L (Nutri-West Complete Whey-G and Biotics Research Whey Protein Isolate switch charts, catalog ND143 10/1/26): 'NutriDyn 25 g (1 scoop, 32 g, whey protein isolate)'; 'label directions per day: NutriDyn 1 serving'; directions 'Mix 1 scoop in 8-10 ounces of water as a dietary supplement or as directed by your healthcare practitioner'; SKUs R372L 896G (Chocolate) and R373L 909G (Vanilla), 10/1/26 price list (the size line names the two flavors; the weights do not fit one line); DB note 'Whey Protein is dairy-based' (drives the milk line in the check panel). Leucine 2.65 g per scoop and 'grass-fed, rBGH-free' from the repo blasts blasts/2026-10-26-glp1-protein-chooser.html ('Every leucine number read off the nutridyn.com label 2026-10-21') and blasts/2026-09-22-peptide-nutrient-gap.html ('2.65 g of leucine in one scoop'); the bottle photo reads 'Bioactive Whey Protein Isolate with BCAAs', 'Supports Lean Body Mass' and 'Complete Protein Source'. URL https://nutridyn.com/dynamic-whey-protein from both blasts. The evening-meal slot is the sheet's plan (it spreads protein away from the morning Collagen Renew scoop; peptide-nutrient-gap blast: 'Spread the protein out'), not label text. PHOTO: img-src/R372L.png 1084x1580, a text-safe upscale of the web render, not listed in img-src/soft.json (crisp)."
   }
 }

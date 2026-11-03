@@ -890,18 +890,15 @@ CSS = r"""
 .mcr .mcr-flag li b{color:#A5281E}
 .mcr .mcr-flag li em{font-style:normal;font-weight:700;color:#2B3236}
 .mcr .mcr-q{margin:2px 0 0;font-size:7.2pt;color:#5E686F;line-height:1.3}
-/* this sheet's footers: shared CSS prints them at 6.6 pt, under the 7 pt minimum */
-.sheet.front:has(.mcr) .foot,.sheet.front:has(.mcr) .foot .code{font-size:7pt}
 """ + f"""
-/* this sheet's back page only: lift the shared 6.2 to 6.8 pt text to the 7 pt minimum */
-{BACK} .startt,{BACK} .col .need i,{BACK} .col .key,{BACK} .col .key b,{BACK} .col .dose small,{BACK} .disc,
-{BACK} .foot,{BACK} .foot .code{{font-size:7pt}}
-{BACK} .col .pick .sz{{font-size:7pt;line-height:1.2}}
+/* product columns: every need box is as tall as the tallest (a one-line need over a two-line list), so the photos,
+   names and dark dose bars line up across the row; size lines and dose notes sit a little tighter */
+{BACK} .col .need{{min-height:0.53in}}
+{BACK} .col .pick .sz{{line-height:1.2}}
 {BACK} .col .dose small{{line-height:1.25}}
-{BACK} .startt{{top:0.53in}}
 /* only Muscle Eze and Vitamin K2 are in the daily plan, while the medicine check is long: a narrow rhythm panel with
-   the three times of day stacked, beside a wide check panel, so neither panel is left half empty */
-{BACK} .duo{{grid-template-columns:2.45in 1fr}}
+   the times of day stacked (an empty slot is hidden, see _rhythm_css), beside a wide check panel */
+{BACK} .duo{{grid-template-columns:2.1in 1fr}}
 {BACK} .rhythm{{grid-template-columns:1fr;gap:4px}}
 {BACK} .slot{{display:flex;align-items:center;gap:6px;padding:4px 6px}}
 {BACK} .ns-title{{margin-top:0.1in}}
@@ -937,7 +934,7 @@ SHEET = {
               "the sore spot and is slow to let go. Cramps are very common: <b>up to 6 in 10 adults</b> have had a night "
               "leg cramp, and nearly <b>half of people over 60</b> get them. Most are harmless, and simple habits help."),
     "front": front,
-    "css": CSS,
+    "css": CSS,    # + _rhythm_css() below
     "back": {
         "life_title": "Lifestyle Recommendations", "style": "circle",
         "life": [
@@ -1041,3 +1038,23 @@ SHEET = {
         },
     },
 }
+
+
+def _rhythm_css():
+    """Hide the daily-rhythm slots this plan leaves empty (a column's own sched, else its product's sched), the way
+    joint_pain.py does, instead of printing an empty "nothing to take" box."""
+    import json
+    here = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    try:
+        prods = json.load(open(os.path.join(here, "products.d", f"{SLUG}.json")))
+    except Exception:
+        prods = {}
+    used = set()
+    for c in SHEET["back"]["cols"]:
+        sched = c["sched"] if "sched" in c else prods.get(c["p"], {}).get("sched", [])
+        used.update(s[0] for s in sched)
+    return "".join(f"{BACK} .rhythm .slot:nth-child({i}){{display:none}}"
+                   for i, slot in enumerate(("am", "pm", "bed"), 1) if slot not in used)
+
+
+SHEET["css"] += _rhythm_css()

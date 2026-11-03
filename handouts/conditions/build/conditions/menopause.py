@@ -696,7 +696,7 @@ def body_map(t):
     hx, hy = INSET_C[0] + 1 - 8.4 * .92, INSET_C[1] - 4 + 7.6 * .92
     lab = "Hypothalamus"
     lw = tw(lab, 10.2, 800) + 12
-    lx, ly = KEY_BOX[0] + KEY_BOX[2] + 7, INSET_C[1] + INSET_R + 10
+    lx, ly = KEY_BOX[0] + KEY_BOX[2] + 4, INSET_C[1] + INSET_R + 12
     sx, sy = hx - 5.4, hy + 3.2
     ex = lx + lw * 0.45
     out.append(f'<path d="M{sx:.1f},{sy:.1f} L{ex:.1f},{ly:.1f}" stroke="#fff" stroke-width="3.2" stroke-linecap="round"/>'

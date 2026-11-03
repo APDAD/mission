@@ -530,6 +530,9 @@ LW, RX = 398, 410            # left card width, right card x
 P1H = 314                    # card height (the 3-line step strip needs about 4.6 units clear top and bottom)
 ART_B = 258                  # bottom of the drawing area; the step strip sits below
 STEP_Y0, STEP_DY, STEP_R = 15.5, 15.8, 7.0   # strip baselines ART_B + 15.5 + i * 15.8; dot radius
+# Cortisol leader: from beside its gloss (x-height middle of "the wake-up and") to the gold band at 9:30 am.
+# Checked numerically: it clears the melatonin band (with its stroke) by 6.9 units and every hour tick by 3.4.
+CORTISOL_LEADER_FROM, CORTISOL_LEADER_H = (RX + 104, 71.0), 9.5
 
 
 def art_clock(t):
@@ -622,12 +625,17 @@ def art_clock(t):
     o.append(d)
     o.append(T(W - 12, 40, "Wider band", 10.2, 600, INK2, "end", italic=True)
              + T(W - 12, 52.5, "= more hormone", 10.2, 600, INK2, "end", italic=True))
-    # callouts: cortisol (upper left), melatonin (lower left)
-    cpk = _polar(cx, cy, rc + 8, 8.5)
-    o.append(f'<path d="M{RX + 104},68 L{_f(cpk[0])},{_f(cpk[1])}" stroke="#8C7A52" stroke-width="1.1"/>'
+    # callouts: cortisol (upper left), melatonin (lower left).  Cortisol gets its plain-words gloss here.
+    # Its leader starts beside the gloss and aims at 9:30 am, where the gold band is still about 90% wide
+    # [DEBONO09 peak about 8:30], so it passes clear of the thin end of the melatonin band (8:36 am).
+    hc = CORTISOL_LEADER_H
+    cpk = _polar(cx, cy, rc + 15 * cortisol_level(hc) / 2 + 0.8, hc)
+    c0 = CORTISOL_LEADER_FROM
+    o.append(f'<path d="M{_f(c0[0])},{_f(c0[1])} L{_f(cpk[0])},{_f(cpk[1])}" stroke="#8C7A52" stroke-width="1.1"/>'
              f'<circle cx="{_f(cpk[0])}" cy="{_f(cpk[1])}" r="1.7" fill="#8C7A52"/>')
     o.append(marker(RX + 20, 52, 4) + T(RX + 32, 56.2, "Cortisol", 11.4, 800, COR_TX)
-             + T(RX + 12, 72, ["peaks soon", "after waking"], 10.4, 600, INK2, lh=1.22))
+             + T(RX + 12, 72, ["the wake-up and", "stress hormone,", "peaks soon", "after waking"], 10.4, 600, INK2,
+                 lh=1.22))
     mpk = _polar(cx, cy, rm + 9, 3.0)
     o.append(f'<path d="M{RX + 98},{cy + 70} L{_f(mpk[0])},{_f(mpk[1])}" stroke="#5E6C93" stroke-width="1.1"/>'
              f'<circle cx="{_f(mpk[0])}" cy="{_f(mpk[1])}" r="1.7" fill="#5E6C93"/>')
@@ -635,7 +643,7 @@ def art_clock(t):
              + T(RX + 12, cy + 77, ["peaks about", "2 to 4 am"], 10.4, 600, INK2, lh=1.22))
     # the outer ring is a colour code too, so it is named here (lower right, clear of the ring and MIDNIGHT)
     o.append(T(W - 12, 204, "Outer ring:", 10.2, 700, INK2, "end")
-             + T(W - 12, 217.4, ["yellow = day,", "navy = night"], 10.2, 600, INK2, "end", italic=True, lh=1.2))
+             + T(W - 12, 217.4, ["yellow = day,", "dark gray = night"], 10.2, 600, INK2, "end", italic=True, lh=1.2))
     # time runs clockwise, like a clock: a small arrow outside the ring, 2:40 to 4:10 pm
     ra = R + 7.5
     a0, a1 = _polar(cx, cy, ra, 14 + 40 / 60), _polar(cx, cy, ra, 16 + 10 / 60)
@@ -650,7 +658,7 @@ def art_clock(t):
              f'<path d="M1,{ART_B} H{LW - 1} M{RX + 1},{ART_B} H{W - 1}" stroke="#E3E7EA" stroke-width="1"/>')
     left = ["Morning light sets your master clock and turns melatonin off.",
             "When it gets dark, the clock signals the pineal gland.",
-            "The pineal gland releases melatonin, the body's night signal."]
+            "The pineal gland releases melatonin, the body's night hormone."]
     for i, txt in enumerate(left):
         y = ART_B + STEP_Y0 + i * STEP_DY
         o.append(step_dot(16, y, i + 1, c1) + T(30, y, txt, 10.6, 600, INK))
@@ -661,10 +669,11 @@ def art_clock(t):
         y = ART_B + STEP_Y0 + i * STEP_DY
         o.append(step_dot(RX + 16, y, n, c) + T(RX + 30, y, txt, 10.6, 600, INK))
     return svg(W, P1H, "".join(o),
-               "Side view of the head. By day, light enters the eye and a nerve signal sets the master clock (SCN) above "
-               "the optic chiasm, which keeps melatonin switched off. At night the clock signals the pineal gland, which "
-               "releases melatonin into the blood. Beside it, a 24-hour dial: melatonin rises in the evening and peaks "
-               "at night, cortisol rises before dawn and peaks after waking; the outer ring is yellow by day and navy "
+               "Side view of the head. By day, light enters the eye and a teal day signal sets the master clock (SCN) "
+               "above the optic chiasm, which keeps melatonin switched off. At night a dark-gray night signal runs from "
+               "the clock to the pineal gland, which releases melatonin into a vein that carries it into the blood. "
+               "Beside it, a 24-hour dial: melatonin rises in the evening and peaks at night; cortisol, the wake-up and "
+               "stress hormone, rises before dawn and peaks after waking; the outer ring is yellow by day and dark gray "
                "by night.")
 
 
@@ -747,6 +756,12 @@ def _sw_beam():
 def _sw_signal():
     return (f'<path d="M-11,0 H4" stroke="{SIG}" stroke-width="2" stroke-dasharray="4 3" stroke-linecap="round"/>'
             + _arrowhead(11, 0, 1, 0, 6, SIG))
+
+
+def _sw_night():
+    """The night signal as drawn on the head: dark-gray dashes, arrowhead, moon badge near the start."""
+    return (f'<path d="M-9,0 H4" stroke="{NIGHT}" stroke-width="2" stroke-dasharray="4 3" stroke-linecap="round"/>'
+            + _arrowhead(11, 0, 1, 0, 6, NIGHT) + moon_badge(-8.2, 0, 4.9))
 
 
 def _sw_mel():

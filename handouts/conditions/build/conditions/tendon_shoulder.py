@@ -993,7 +993,8 @@ def front(t, ed):
             f'{sites_block()}{risk_block()}{pain_block()}{flags_block()}</div>')
 
 
-_BK = '.sheet.back:has(img[src*="/nd-ts-"])'     # this sheet's back page: the one showing its nd-ts-*.png photos
+_BK = '.sheet.back:has(.tsp-bk)'     # this sheet's back page: the marker span in its lifestyle title (photo file
+                                      # names are pooled across sheets now, so they cannot identify the page)
 CSS = r"""
 .tsp .tsp-art svg{display:block;width:100%;height:auto}
 .tsp .tsp-h{display:flex;align-items:center;gap:0.1in;margin:0.1in 0 0.05in;font:900 10.5pt/1.2 Merriweather,Georgia,serif;
@@ -1040,15 +1041,22 @@ CSS = r"""
 .tsp .tsp-flag .ic{flex:none;color:#B23A30}
 .tsp .tsp-flag p{margin:0;font-size:7.9pt;line-height:1.33;color:#2B3236}
 .tsp .tsp-flag b{color:#A5281E}
-/* 7 pt floor for the shared page text that kit.py / build.py print at 6.2 to 6.8 pt, on this sheet's two pages only
-   (front: the page holding .tsp; back: the page showing this sheet's photos).  Delete once the pipeline is raised. */
-.sheet.front:has(.tsp) .foot,.sheet.front:has(.tsp) .foot .code,
-BK .col .need i,BK .col .pick .sz,BK .col .key,BK .col .key b,BK .col .dose small,BK .startt,BK .disc,BK .foot,
-BK .foot .code{font-size:7pt}
 /* the rhythm keeps a count with its unit ("1 softgel"): an inline-block moves to the next line whole */
 BK .slot li em{display:inline-block}
-/* START HERE sits above the wide canister's lid, not on it (same box height, so the row does not grow) */
-.sheet.back .col:has(img[src$="/nd-ts-collagen-renew.png"]) .pick img{height:0.83in;margin-top:0.15in}
+/* The five columns share four rows (a subgrid: header, photo and name, bullets and serving, dose), so the bullets,
+   the IN EACH SERVING heads and the dose bars line up across the row although "Omega Pure / EPA-DHA 1000" needs two
+   lines and the Collagen Renew dose needs three.  A one-line name sits on the row's bottom line, just above its
+   size; the dose text is centred in its bar. */
+BK .cols{grid-template-rows:repeat(4,auto);row-gap:0}
+BK .col{display:grid;grid-row:1/span 4;grid-template-rows:subgrid;row-gap:0}
+BK .col .pick a.plink{flex:1}
+BK .col .pick .nm{margin-top:auto;padding-top:0.04in}
+BK .col .dose{display:flex;flex-direction:column;justify-content:center}
+/* No bedtime products: two rhythm slots instead of an empty "nothing to take" box, and the freed width goes to the
+   check panel, which carries the most text on the page. */
+BK .rhythm{grid-template-columns:1fr 1fr}
+BK .rhythm .slot:nth-child(3){display:none}
+BK .duo{grid-template-columns:1fr 1.22fr}
 """.replace("BK", _BK)
 
 # ============================================================== back-page icons (registered by name for build.life_block)
@@ -1073,7 +1081,9 @@ SHEET = {
     "front": front,
     "css": CSS,
     "back": {
-        "life_title": "Lifestyle Recommendations", "life_sub": "Habits that help tendons rebuild", "style": "circle",
+        # the empty span marks this sheet's back page for the scoped CSS (_BK)
+        "life_title": 'Lifestyle Recommendations<span class="tsp-bk"></span>', "life_sub": "Habits that help tendons rebuild",
+        "style": "circle",
         "life": [
             # Loading raises collagen building; inactivity lowers it; overuse needs adjusted loading, not rest [KJAER04]
             ("dumbbell", "Load, don't rest", "Exercise most days. Full rest weakens tendons."),
@@ -1082,7 +1092,7 @@ SHEET = {
             # Work with the arm above shoulder height raises cuff risk [LEONG19]
             ("ts_lower", "Lower your reach", "Keep heavy lifting below shoulder height."),
             # Vitamin C is needed to make collagen [ODS-C]
-            ("plate", "Feed the rebuild", "Eat protein and vitamin C foods like citrus."),
+            ("plate", "Feed the rebuild", "Eat protein and vitamin&nbsp;C foods like citrus."),
             # Adults need 7 to 9 hours [NSF15]; the day's biggest growth hormone (repair hormone) pulse comes in deep
             # sleep [VC96]
             ("moon", "Sleep 7 to 9 hours", "Your repair hormone peaks in deep sleep."),
@@ -1094,9 +1104,10 @@ SHEET = {
              "bullets": ["Supports tendons, ligaments and joints",
                          "Includes TENDOFORTE, made for tendons"],               # formulation fact (labels.json R190)
              "dose": "1 scoop in 8 oz water",                                      # label: 1 scoop in 8 ounces of water
-             "dosesub": "about 1 hour before exercise",                            # [SHAW17]
-             # the rhythm says "before exercise" too, so a later workout does not clash with the Morning slot
-             "sched": [("am", 1, "scoop before exercise")]},
+             # the timing is the sheet's, not the label's [SHAW17]: about 1 hour before exercise; on a rest day the
+             # time does not matter.  The rhythm says the same, so a later workout never clashes with the Morning slot.
+             "dosesub": "about 1 hour before exercise,<br>any time on rest days",
+             "sched": [("am", 1, "scoop, or 1 hour before exercise")]},
             {"p": "ts_vitamin_c_1000", "need": "Build collagen", "needsub": "vitamin C",
              "bullets": ["Your body needs it to build collagen",                            # [ODS-C]
                          "Collagen Renew has none, so pair them"],                         # labels.json R190: no vitamin C
@@ -1106,25 +1117,40 @@ SHEET = {
              "dose": "3 capsules daily", "dosesub": "with food", "sched": [("pm", 3, "capsules")]},
             {"p": "ts_omega_1000", "need": "Inflammatory balance", "needsub": "omega-3s EPA and DHA",
              "bullets": ["Supports a balanced inflammatory response", "Supports muscle, joint and heart health"],
-             "dose": "2 softgels daily", "dosesub": "with your evening meal",     # label: up to 3 a day with food
-             "sched": [("pm", 2, "softgels")]},
+             # label: "Take one softgel up to three times daily with food", so one at a time, with two meals
+             "dose": "1 softgel twice daily", "dosesub": "with meals",
+             "sched": [("am", 1, "softgel"), ("pm", 1, "softgel")]},
             {"p": "ts_d3_5000_k2", "need": "Muscle and bone", "needsub": "vitamin D3 with K2",
-             "bullets": ["Supports muscle and bone health",
+             # Why vitamin D on a tendon sheet: a tendon joins muscle to bone, and both need vitamin D (NIH ODS
+             # Vitamin D fact sheet: bones need it to absorb calcium; muscles need it to move).  Structure/function only.
+             "bullets": ["Supports the muscles and bones that tendons join",
                          "High dose: check your vitamin D level first"],   # 5,000 IU is above the 4,000 IU adult UL (NIH ODS)
              "dose": "1 softgel daily", "dosesub": "with breakfast", "sched": [("am", 1, "softgel")]},
         ],
-        # Edition-aware via {who}: "your provider" (practitioner) / "your pharmacist" (pharmacy).
+        # Edition-aware via {who}: "your provider" (practitioner) / "your pharmacist" (pharmacy).  The same cautions, in
+        # substance, as the sibling Pain and Movement sheets that carry these products (injury-healing: surgery and
+        # "the doctor who prescribes it"; joint-pain: stomach ulcer or gallstones), so a pharmacy holding both sees
+        # one story for Inflam-Eze Plus and fish oil.
         "rx": [
-            # Omega-3s and these herbs may add to anticoagulant effects; vitamin K counters warfarin (NIH ODS fact sheets)
-            "<b>Blood thinner or aspirin?</b> Fish oil and Inflam-Eze Plus herbs can add to bleeding, and the vitamin K in "
-            "D3 5000 with K2 affects warfarin. Ask {who}.",
+            # Bleeding: omega-3s and warfarin (NIH ODS Omega-3 fact sheet); willow bark contains salicin and may increase
+            # the effect of coumarin anticoagulants [EMA-SALIX: EMA/HMPC/80630/2016]; ginger and turmeric/curcumin may
+            # slow clotting (MedlinePlus).  Vitamin K counters warfarin (NIH ODS Vitamin K fact sheet).  Surgery: the
+            # American Society of Anesthesiologists asks patients to stop herbal supplements 2 weeks before surgery.
+            "<b>Blood thinner, aspirin, or surgery coming up?</b> Fish oil and the Inflam-Eze Plus herbs can add to "
+            "bleeding; many surgeons stop them 2 weeks before. The vitamin K in D3 5000 with K2 affects warfarin. "
+            "Ask {who} and the doctor who prescribes it.",
             # [FDA16][YU19]: stop the antibiotic and call at the first tendon pain
             "<b>Fluoroquinolone antibiotics</b> (ciprofloxacin, levofloxacin) can injure tendons, more so after 60 or with "
             "steroids. Stop and call your prescriber at the first tendon pain.",
-            # White willow bark carries salicin, a salicylate (labels.json R856: 200 mg, 25% salicin); label caution:
-            # "If you are pregnant, nursing, or taking medication, consult your healthcare practitioner before use"
-            "<b>Aspirin allergy, pregnant or nursing?</b> Skip Inflam-Eze Plus: its white willow is aspirin's cousin "
-            "(a salicylate). Ask {who} before pairing it with ibuprofen or naproxen.",
+            # White willow bark carries salicin, a salicylate (labels.json R856: 200 mg, 25% salicin): not with a
+            # salicylate allergy, and not with aspirin or other NSAIDs without advice [EMA-SALIX].
+            "<b>Aspirin allergy?</b> Skip Inflam-Eze Plus: its white willow is aspirin's cousin (a salicylate). Ask {who} "
+            "before pairing it with ibuprofen or naproxen.",
+            # Devil's claw: not with stomach or duodenal ulcers, gallstones only after advice (German Commission E);
+            # turmeric: not with gallstones or blocked bile ducts (EMA/HMPC/329755/2017).  Label caution (labels.json
+            # R856, R190): "If you are pregnant, nursing, or taking medication, consult your healthcare practitioner
+            # before use"; the line covers all five products.
+            "<b>Stomach ulcer, gallstones, pregnant or nursing?</b> Ask {who} before starting any of these.",
         ],
     },
 }
