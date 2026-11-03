@@ -1037,6 +1037,7 @@ CSS = r"""
 .sheet.back:has(.mnp-back) .col .what li:has(.mnp-pk)::before{display:none}
 .sheet.back:has(.mnp-back) .mnp-pk{display:block;position:relative;padding-left:12px;margin:2px 0 0;font-size:7pt}
 .sheet.back:has(.mnp-back) .col .key .mnp-kk{font-style:normal;font-weight:700;color:var(--deep)}
+.sheet.back:has(.mnp-back) .mnp-pk a{color:inherit;text-decoration:none}
 .sheet.back:has(.mnp-back) .mnp-pk i{position:absolute;left:0;top:2.4px;width:7.2px;height:7.2px;box-sizing:border-box;
   border:1.3px solid var(--deep);border-radius:1.5px;background:#fff}
 .sheet.back:has(.mnp-back) .rhythm .mnp-or{color:#283035}
@@ -1052,9 +1053,13 @@ CSS = r"""
 """
 
 # START column, second bullet: the two formulas, by stage [MAP] ("When was your last period?  Within the
-# last year: PeriMenopause Support; longer ago: Menopause Support"); {who} ticks one
-PICK = ('<span class="mnp-pk"><i></i><b>Menopause Support</b>: no period for a year or more</span>'
-        '<span class="mnp-pk"><i></i><b>PeriMenopause Support</b>, 30 tablets: period in the past year</span>')
+# last year: PeriMenopause Support; longer ago: Menopause Support"); {who} ticks one.  Product names link
+# to the product page, like the photo above them (PeriMenopause Support URL from the same Dr. Miller visit
+# brief that gives this sheet its Menopause Support URL; nutridyn.com cannot be opened from this session).
+PICK = ('<span class="mnp-pk"><i></i><a href="https://nutridyn.com/menopause-support"><b>Menopause Support</b></a>: '
+        'no period for a year or more</span>'
+        '<span class="mnp-pk"><i></i><a href="https://nutridyn.com/womens-health/perimenopause-support">'
+        '<b>PeriMenopause Support</b></a>, 30 tablets: period in the past year</span>')
 
 # ============================================================== the sheet
 SHEET = {
