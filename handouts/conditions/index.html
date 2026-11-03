@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Condition Sheets · NutriDyn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@700;900&display=swap" rel="stylesheet">
+<style>:root{--c1:#0E6A7A;--c2:#2C8DB4;--soft:#E3F1F4;--deep:#0A4B57;--tint:#F2F8F9}
+@page { size: 8.5in 11in; margin: 0; }
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:#E8E5DE;color:#1F2A2E;font-family:Inter,"Helvetica Neue",Arial,sans-serif;
+  -webkit-print-color-adjust:exact;print-color-adjust:exact;font-size:9pt;line-height:1.32}
+.toolbar{position:sticky;top:0;z-index:5;display:flex;gap:10px;flex-wrap:wrap;align-items:center;
+  justify-content:space-between;padding:10px 16px;background:rgba(247,245,240,.96);border-bottom:1px solid #D9D4C8;
+  font-size:14px}
+.toolbar b{font-family:Merriweather,Georgia,serif;font-size:15px;color:#14664D}
+.toolbar .btns{display:flex;gap:8px;flex-wrap:wrap}
+.toolbar a,.toolbar button{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:99px;
+  background:#14664D;color:#fff;text-decoration:none;font:600 14px Inter,sans-serif;border:0;cursor:pointer}
+.toolbar a.ghost{background:transparent;color:#14664D;border:1.5px solid #14664D}
+.stack{padding:18px 0 40px}
+.sheet{width:8.5in;height:11in;margin:0 auto 22px;background:#fff;position:relative;overflow:hidden;
+  box-shadow:0 6px 24px rgba(30,30,20,.14);break-after:page;page-break-after:always}
+.sheet:last-child{break-after:auto;page-break-after:auto}
+@media print{body{background:#fff}.toolbar{display:none}.stack{padding:0}.sheet{margin:0;box-shadow:none;zoom:1!important}}
+.inner{position:absolute;inset:0.38in 0.42in 0.36in 0.42in;display:flex;flex-direction:column}
+.rule-top{position:absolute;left:0;right:0;top:0;height:0.13in;background:linear-gradient(90deg,var(--c1),var(--c2))}
+.rule-top::after{content:"";position:absolute;left:0.42in;right:0.42in;top:0.2in;height:2px;background:var(--c2);opacity:.55}
+.rule-bot{position:absolute;left:0;right:0;bottom:0;height:0.13in;background:linear-gradient(90deg,var(--c2),var(--c1))}
+h1,h2,h3{margin:0}
+.serif{font-family:Merriweather,Georgia,serif}
+.headrow{display:flex;justify-content:space-between;align-items:center;margin-top:0.06in}
+.series{font:700 7pt Inter,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--deep)}
+.fields{display:grid;grid-template-columns:auto 1fr auto 1.25in;gap:6px 10px;align-items:center;margin:0.16in 0 0.1in;
+  font:700 8.5pt Inter,sans-serif;color:#2B3236}
+.fields span.box{height:0.27in;border-radius:6px;background:#E9ECEE;border:1px solid #D6DBDF}
+.title{font-family:Merriweather,Georgia,serif;font-weight:900;color:var(--c1);font-size:30pt;line-height:1.05;
+  letter-spacing:-.01em;margin:0.02in 0 0.05in}
+.title small{font-size:15pt;font-weight:700;color:var(--deep)}
+.intro{font-size:9.4pt;line-height:1.42;color:#2B3236;margin:0 0 0.08in}
+.intro b{color:var(--deep)}
+.art{display:block;width:100%}
+.art svg{display:block;width:100%;height:auto}
+.foot{margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end;gap:12px;padding-top:6px;
+  font-size:6.6pt;color:#6A747B}
+.foot .code{font:600 6.6pt Inter,sans-serif;letter-spacing:.06em;color:#5B666D;text-align:right;white-space:nowrap}
+.disc{font-size:6.3pt;color:#5E686F;line-height:1.3;max-width:5.2in}
+.disc sup,.mark{color:var(--c1);font-weight:700}
+
+/* back page */
+.band{margin:0 -0.42in;padding:0.16in 0.42in 0.18in;background:linear-gradient(120deg,var(--c1),var(--c2));color:#fff;
+  position:relative}
+.band h2{font-family:Merriweather,Georgia,serif;font-weight:700;font-size:21pt;text-align:center;margin:0 0 0.1in;color:#fff}
+.band h2 small{display:block;font-size:10pt;font-weight:700;color:#FFE6D4;margin-top:2px}
+.lifes{display:grid;gap:0.1in;align-items:start}
+.life{display:flex;flex-direction:column;align-items:center;text-align:center}
+.life .disc2{width:0.86in;height:0.86in;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 0 rgba(0,0,0,.08) inset,0 0 0 3px rgba(255,255,255,.35);color:var(--c1)}
+.life.hex .disc2{border-radius:0;clip-path:polygon(25% 3%,75% 3%,100% 50%,75% 97%,25% 97%,0 50%);width:0.98in;height:0.86in}
+.life b{display:block;font-family:Merriweather,Georgia,serif;font-size:9.6pt;margin:0.06in 0 0.03in;color:#fff}
+.life p{margin:0;font-size:7.5pt;line-height:1.3;color:#F5F7F8}
+.checks{display:grid;grid-template-columns:1fr 1fr;gap:0.06in 0.3in;background:#fff;border-radius:10px;padding:0.14in 0.2in;color:#1F2A2E}
+.chk{display:flex;gap:8px;align-items:flex-start}
+.chk .bx{flex:none;width:0.15in;height:0.15in;border:1.6px solid var(--deep);border-radius:2px;margin-top:2px}
+.chk b{font-size:9pt;color:var(--deep)}
+.chk ul{margin:2px 0 0;padding:0;list-style:none}
+.chk li{font-size:8pt;margin:1px 0;padding-left:15px;position:relative}
+.chk li::before{content:"";position:absolute;left:0;top:4px;width:8px;height:8px;border:1.4px solid var(--c2);border-radius:50%}
+.ns-title{font-family:Merriweather,Georgia,serif;font-weight:900;color:var(--c1);font-size:19pt;margin:0.14in 0 0.02in;
+  display:flex;align-items:baseline;gap:10px}
+.ns-title span{font:600 8pt Inter,sans-serif;color:#56626A;letter-spacing:.02em}
+.cols{display:grid;gap:0.08in;margin-top:0.06in}
+.col{display:flex;flex-direction:column;background:#fff;border-radius:6px;overflow:hidden;
+  box-shadow:0 1px 0 #E3E7EA,0 2px 6px rgba(20,30,40,.10);border:1px solid #E1E5E8}
+.col .need{background:linear-gradient(160deg,var(--c1),var(--c2));color:#fff;padding:0.07in 0.07in 0.06in;text-align:center;
+  min-height:0.5in;display:flex;flex-direction:column;justify-content:center}
+.col .need b{font-size:8.2pt;line-height:1.2;display:block}
+.col .need i{font-style:normal;font-size:6.8pt;opacity:.92;display:block;margin-top:2px;line-height:1.2}
+.col .pick{display:flex;flex-direction:column;align-items:center;padding:0.06in 0.07in 0.04in;background:var(--tint)}
+.col .pick img{height:0.98in;width:auto;max-width:100%;object-fit:contain;display:block;filter:drop-shadow(0 2px 2px rgba(0,0,0,.12))}
+.col .pick .nm{font:800 8.6pt Inter,sans-serif;color:#1A2226;margin-top:0.04in;text-align:center;line-height:1.15}
+.col .pick .sz{font-size:6.6pt;color:#5E696F;text-align:center}
+.col .what{padding:0.06in 0.08in 0.05in;flex:1;font-size:7.3pt;line-height:1.28;color:#283035}
+.col .what ul{margin:0;padding:0;list-style:none}
+.col .what li{position:relative;padding-left:9px;margin:0 0 2px}
+.col .what li::before{content:"";position:absolute;left:0;top:4px;width:4px;height:4px;border-radius:50%;background:var(--c2)}
+.col .key{border-top:1px dashed #D3DADF;margin-top:4px;padding-top:3px;font-size:6.7pt;color:#3F4A50}
+.col .key b{color:var(--deep);font-size:6.5pt;letter-spacing:.06em;text-transform:uppercase}
+.col .dose{background:var(--deep);color:#fff;text-align:center;font:700 7.6pt Inter,sans-serif;padding:0.06in 0.05in;line-height:1.2}
+.col .dose small{display:block;font-weight:500;font-size:6.4pt;opacity:.9}
+.duo{display:grid;grid-template-columns:1.35fr 1fr;gap:0.1in;margin-top:0.1in}
+.panel{border:1px solid #DCE2E6;border-radius:8px;padding:0.08in 0.12in;background:#FBFCFC}
+.panel h3{font:800 7.4pt Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--c1);margin:0 0 4px}
+.rhythm{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.slot{background:#fff;border:1px solid #E2E6E9;border-radius:6px;padding:5px 6px}
+.slot .when{font:800 7pt Inter,sans-serif;color:var(--deep);display:flex;align-items:center;gap:4px}
+.slot .when svg{width:13px;height:13px}
+.slot ul{margin:3px 0 0;padding:0;list-style:none}
+.slot li{font-size:7pt;line-height:1.25;margin:1px 0}
+.slot li em{font-style:normal;color:#5E696F}
+.total{font-size:7pt;color:#3F4A50;margin-top:4px}
+.total b{color:var(--deep)}
+.rx ul{margin:0;padding:0 0 0 12px}
+.rx li{font-size:7.2pt;line-height:1.28;margin:0 0 2px}
+.rx li b{color:var(--deep)}
+.notes{margin-top:0.1in;border:1px solid #CCD3D8;border-radius:8px;padding:0.07in 0.14in 0.09in;background:#F6F7F8}
+.notes b{font-size:8.6pt;color:#4B565C;font-weight:600}
+.notes .ln{height:0.24in;border-bottom:1px solid #9FA9AF}
+.recby{display:flex;gap:8px;align-items:flex-end;font-size:7pt;color:#4B565C;margin-top:0.08in}
+.recby .ln2{flex:1;border-bottom:1px solid #9FA9AF;height:0.18in;font:700 9pt Inter,sans-serif;color:#1F2A2E;padding-left:4px}
+.small{font-size:7.2pt;color:#5B666D}
+.tag{display:inline-block;font:800 6.6pt Inter,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#fff;
+  background:var(--c1);border-radius:3px;padding:2px 6px}
+
+body{background:#F1EFE8}
+.wrap{max-width:1180px;margin:0 auto;padding:22px 16px 60px}
+.hero{background:#14664D;color:#fff;border-radius:14px;padding:22px 22px 20px;display:grid;gap:10px}
+.hero .k{font:800 12px Inter;letter-spacing:.18em;text-transform:uppercase;color:#BFE3D4}
+.hero h1{font:900 clamp(26px,5vw,40px)/1.1 Merriweather,Georgia,serif;margin:0}
+.hero p{margin:0;font-size:15px;line-height:1.5;color:#E5F2EC;max-width:70ch}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:16px 0}
+.stt{background:#FBFAF6;border-radius:10px;padding:12px 14px}
+.stt b{display:block;font:900 30px Merriweather,Georgia,serif;color:#14664D;line-height:1}
+.stt span{font:700 11px Inter;letter-spacing:.12em;text-transform:uppercase;color:#6B6B66}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;background:#FBFAF6;border-radius:10px;padding:12px 14px;margin-bottom:16px}
+.bar label{font:700 13px Inter;color:#2C2C2A}
+.bar input{flex:1 1 220px;min-width:0;min-height:44px;border:1px solid #CFC9BC;border-radius:8px;padding:0 12px;font:15px Inter}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 16px;border-radius:99px;background:#14664D;
+  color:#fff;text-decoration:none;font:700 14px Inter;white-space:nowrap}
+.btn.g{background:transparent;color:#14664D;border:1.5px solid #14664D}
+.btn.c{background:#F15F3F}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.card{background:#FBFAF6;border-radius:12px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 1px 0 #E2DED4;
+  transition:transform .15s ease,box-shadow .15s ease}
+.card:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,.08)}
+.card .th{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:#E2DED4}
+.card .th img{width:100%;height:auto;display:block}
+.card .bd{padding:12px 14px 14px;display:flex;flex-direction:column;gap:8px;flex:1}
+.card h2{font:900 18px/1.2 Merriweather,Georgia,serif;margin:0;color:#2C2C2A}
+.card .fam{font:800 11px Inter;letter-spacing:.14em;text-transform:uppercase}
+.card .pp{font-size:13px;color:#5B5B55;line-height:1.4;margin:0}
+.card .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}
+.how{background:#FBFAF6;border-radius:12px;padding:16px 18px;margin-top:18px;display:grid;gap:8px}
+.how h3{font:900 18px Merriweather,Georgia,serif;margin:0;color:#14664D}
+.how ol{margin:0;padding-left:20px;font-size:14px;line-height:1.55}
+.src{font-size:12px;color:#6B6B66;margin-top:18px;line-height:1.5}
+</style>
+</head><body>
+<div class="wrap">
+<div class="hero"><span class="k">NutriDyn &middot; Patient education &middot; November 2026</span>
+<h1>Condition sheets</h1>
+<p>Nine two-sided handouts. The front explains the condition. The back has the lifestyle steps, the NutriDyn products that
+deliver each nutrient (with photos, what's in them and how to take them), a daily schedule and pharmacist notes on medicine
+and nutrient interactions. Print double-sided, flip on the long edge.</p></div>
+<div class="stats"><div class="stt"><b>9</b><span>conditions</span></div><div class="stt"><b>18</b><span>printed pages</span></div>
+<div class="stt"><b>20</b><span>NutriDyn products shown</span></div>
+<div class="stt"><b>1</b><span>start-here pick per sheet</span></div></div>
+<div class="bar"><label for="pr">Practice name to print on every sheet</label>
+<input id="pr" placeholder="e.g. your pharmacy or clinic name" autocomplete="organization">
+<a class="btn c" href="all-condition-sheets.pdf">All 9 sheets, one PDF</a>
+<a class="btn g" href="warehouse-bottle-counter-card.html">Warehouse-bottle counter card</a></div>
+<div class="grid"><article class="card"><a class="th" href="intestinal-permeability.html"><img src="img/thumb-intestinal-permeability-1.jpg" alt="Front of the Intestinal Permeability sheet" loading="lazy"><img src="img/thumb-intestinal-permeability-2.jpg" alt="Back of the Intestinal Permeability sheet" loading="lazy"></a><div class="bd"><span class="fam" style="color:#0E6A7A">Gut &middot; ND-GI-101</span><h2>Intestinal Permeability</h2><p class="pp">5 NutriDyn picks: GI Integrity, UltraBiotic Daily Multi-Strain, GI Defend, Curcumin 400X, Digestive Vegetarian.</p><div class="row"><a class="btn" data-k href="intestinal-permeability.html">Open and print</a><a class="btn g" href="intestinal-permeability.pdf">PDF</a></div></div></article><article class="card"><a class="th" href="fatty-liver.html"><img src="img/thumb-fatty-liver-1.jpg" alt="Front of the Fatty Liver Disease sheet" loading="lazy"><img src="img/thumb-fatty-liver-2.jpg" alt="Back of the Fatty Liver Disease sheet" loading="lazy"></a><div class="bd"><span class="fam" style="color:#8A1B22">Metabolic &middot; ND-CM-201</span><h2>Fatty Liver Disease</h2><p class="pp">4 NutriDyn picks: Berberine Pro, Lipo-Flow, Omega Pure EPA-DHA 1000, Mito Recharge.</p><div class="row"><a class="btn" data-k href="fatty-liver.html">Open and print</a><a class="btn g" href="fatty-liver.pdf">PDF</a></div></div></article><article class="card"><a class="th" href="gerd.html"><img src="img/thumb-gerd-1.jpg" alt="Front of the Acid Reflux and GERD sheet" loading="lazy"><img src="img/thumb-gerd-2.jpg" alt="Back of the Acid Reflux and GERD sheet" loading="lazy"></a><div class="bd"><span class="fam" style="color:#CF4A1C">Gut &middot; ND-GI-102</span><h2>Acid Reflux and GERD</h2><p class="pp">5 NutriDyn picks: GI Integrity, Zinc-Carnosine, UltraBiotic Daily Multi-Strain, Magnesium Glycinate, Methyl Complete.</p><div class="row"><a class="btn" data-k href="gerd.html">Open and print</a><a class="btn g" href="gerd.pdf">PDF</a></div></div></article><article class="card"><a class="th" href="high-blood-pressure.html"><img src="img/thumb-high-blood-pressure-1.jpg" alt="Front of the High Blood Pressure sheet" loading="lazy"><img src="img/thumb-high-blood-pressure-2.jpg" alt="Back of the High Blood Pressure sheet" loading="lazy"></a><div class="bd"><span class="fam" style="color:#8A1B22">Metabolic &middot; ND-CM-202</span><h2>High Blood Pressure</h2><p class="pp">3 NutriDyn picks: Magnesium Glycinate, Omega Pure EPA-DHA 1000, CoQ10 Ubiquinol.</p><div class="row"><a class="btn" data-k href="high-blood-pressure.html">Open and print</a><a class="btn g" href="high-blood-pressure.pdf">PDF</a></div></div></article><article class="card"><a class="th" href="ibd.html"><img src="img/thumb-ibd-1.jpg" alt="Front of the Inflammatory Bowel Disease sheet" loading="lazy"><img src="img/thumb-ibd-2.jpg" alt="Back of the Inflammatory Bowel Disease sheet" loading="lazy"></a><div class="bd"><span class="fam" style="color:#13827C">Gut &middot; ND-GI-103</span><h2>Inflammatory Bowel Disease</h2><p class="pp">5 NutriDyn picks: UltraBiotic Daily Extra Strength, Curcumin 400X, D3 5000 with K2, GI Integrity, GI Defend.</p><div class="row"><a class="btn" data-k href="ibd.html">Open and print</a><a class="btn g" href="ibd.pdf">PDF</a></div></div></article><article class="card"><a class="th" href="insulin-resistance.html"><img src="img/thumb-insulin-resistance-1.jpg" alt="Front of the Understanding Insulin Resistance sheet" loading="lazy"><img src="img/thumb-insulin-resistance-2.jpg" alt="Back of the Understanding Insulin Resistance sheet" loading="lazy"></a><div class="bd"><span class="fam" style="color:#8A1B22">Metabolic &middot; ND-CM-203</span><h2>Understanding Insulin Resistance</h2><p class="pp">4 NutriDyn picks: Gluco IR, Berberine Pro, Magnesium Glycinate, Omega Pure EPA-DHA 1000.</p><div class="row"><a class="btn" data-k href="insulin-resistance.html">Open and print</a><a class="btn g" href="insulin-resistance.pdf">PDF</a></div></div></article><article class="card"><a class="th" href="lyme.html"><img src="img/thumb-lyme-1.jpg" alt="Front of the Lyme Disease sheet" loading="lazy"><img src="img/thumb-lyme-2.jpg" alt="Back of the Lyme Disease sheet" loading="lazy"></a><div class="bd"><span class="fam" style="color:#4A2B80">Immune &middot; ND-IM-301</span><h2>Lyme Disease</h2><p class="pp">5 NutriDyn picks: UltraBiotic Daily Multi-Strain, Immunity Pro, Curcumin 400X, GI Defend, Mito Recharge.</p><div class="row"><a class="btn" data-k href="lyme.html">Open and print</a><a class="btn g" href="lyme.pdf">PDF</a></div></div></article><article class="card"><a class="th" href="pcos.html"><img src="img/thumb-pcos-1.jpg" alt="Front of the Polycystic Ovary Syndrome sheet" loading="lazy"><img src="img/thumb-pcos-2.jpg" alt="Back of the Polycystic Ovary Syndrome sheet" loading="lazy"></a><div class="bd"><span class="fam" style="color:#8A1B22">Metabolic &middot; ND-CM-204</span><h2>Polycystic Ovary Syndrome</h2><p class="pp">5 NutriDyn picks: Gluco IR, Myo-Inositol Complex, D3 5000 with K2, Omega Pure EPA-DHA 1000, UltraBiotic Daily Multi-Strain.</p><div class="row"><a class="btn" data-k href="pcos.html">Open and print</a><a class="btn g" href="pcos.pdf">PDF</a></div></div></article><article class="card"><a class="th" href="mold.html"><img src="img/thumb-mold-1.jpg" alt="Front of the Mold Illness sheet" loading="lazy"><img src="img/thumb-mold-2.jpg" alt="Back of the Mold Illness sheet" loading="lazy"></a><div class="bd"><span class="fam" style="color:#4A2B80">Immune &middot; ND-IM-302</span><h2>Mold Illness</h2><p class="pp">5 NutriDyn picks: GI Defend, Lipo-Flow, Liposomal Glutathione, Mito Recharge, NAC-600.</p><div class="row"><a class="btn" data-k href="mold.html">Open and print</a><a class="btn g" href="mold.pdf">PDF</a></div></div></article></div>
+<div class="how"><h3>How to use them</h3><ol>
+<li>Pick the sheet, write the patient's name and date at the top.</li>
+<li>On the back, tick the lifestyle steps that apply and circle the products you recommend.</li>
+<li>Write the dose and anything specific in <i>Special considerations</i>. The "Start here" pick is the one to begin with.</li>
+<li>Typing a practice name above fills the "Recommended by" line when you print from the page (the PDFs leave it blank to hand-write).</li>
+</ol></div>
+<p class="src">Built from NutriDyn label facts and practitioner protocols. Condition facts from the CDC, WHO, FDA, AASLD,
+ACG and AHA/ACC. Every product statement is structure/function and carries the FDA disclaimer. Generated by
+handouts/conditions/build/build.py; do not hand-edit.</p>
+</div>
+<script>(function(){var i=document.getElementById('pr');var k='mc_sheet_practice';
+function upd(){var v=i.value.trim();document.querySelectorAll('a[data-k]').forEach(function(a){var b=a.getAttribute('href').split('?')[0];
+a.setAttribute('href',v?b+'?for='+encodeURIComponent(v):b);});try{localStorage.setItem(k,v)}catch(e){}}
+try{i.value=localStorage.getItem(k)||''}catch(e){}i.addEventListener('input',upd);upd();})();</script>
+<script>
+// Fit each printable sheet to small screens without horizontal scroll; print is always 1:1.
+(function(){function fit(){var w=Math.min(1,(window.innerWidth-16)/816);
+document.querySelectorAll('.sheet').forEach(function(s){s.style.zoom=w<1?w:'';});}
+window.addEventListener('resize',fit);fit();
+var p=new URLSearchParams(location.search).get('for');
+if(p){document.querySelectorAll('[data-for]').forEach(function(e){e.textContent=p.slice(0,80);});}})();
+</script>
+</body></html>

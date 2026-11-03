@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Warehouse Bottle Counter Card</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@700;900&display=swap" rel="stylesheet">
+<style>:root{--c1:#0E6A7A;--c2:#2C8DB4;--soft:#E3F1F4;--deep:#0A4B57;--tint:#F2F8F9}
+@page { size: 8.5in 11in; margin: 0; }
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:#E8E5DE;color:#1F2A2E;font-family:Inter,"Helvetica Neue",Arial,sans-serif;
+  -webkit-print-color-adjust:exact;print-color-adjust:exact;font-size:9pt;line-height:1.32}
+.toolbar{position:sticky;top:0;z-index:5;display:flex;gap:10px;flex-wrap:wrap;align-items:center;
+  justify-content:space-between;padding:10px 16px;background:rgba(247,245,240,.96);border-bottom:1px solid #D9D4C8;
+  font-size:14px}
+.toolbar b{font-family:Merriweather,Georgia,serif;font-size:15px;color:#14664D}
+.toolbar .btns{display:flex;gap:8px;flex-wrap:wrap}
+.toolbar a,.toolbar button{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:99px;
+  background:#14664D;color:#fff;text-decoration:none;font:600 14px Inter,sans-serif;border:0;cursor:pointer}
+.toolbar a.ghost{background:transparent;color:#14664D;border:1.5px solid #14664D}
+.stack{padding:18px 0 40px}
+.sheet{width:8.5in;height:11in;margin:0 auto 22px;background:#fff;position:relative;overflow:hidden;
+  box-shadow:0 6px 24px rgba(30,30,20,.14);break-after:page;page-break-after:always}
+.sheet:last-child{break-after:auto;page-break-after:auto}
+@media print{body{background:#fff}.toolbar{display:none}.stack{padding:0}.sheet{margin:0;box-shadow:none;zoom:1!important}}
+.inner{position:absolute;inset:0.38in 0.42in 0.36in 0.42in;display:flex;flex-direction:column}
+.rule-top{position:absolute;left:0;right:0;top:0;height:0.13in;background:linear-gradient(90deg,var(--c1),var(--c2))}
+.rule-top::after{content:"";position:absolute;left:0.42in;right:0.42in;top:0.2in;height:2px;background:var(--c2);opacity:.55}
+.rule-bot{position:absolute;left:0;right:0;bottom:0;height:0.13in;background:linear-gradient(90deg,var(--c2),var(--c1))}
+h1,h2,h3{margin:0}
+.serif{font-family:Merriweather,Georgia,serif}
+.headrow{display:flex;justify-content:space-between;align-items:center;margin-top:0.06in}
+.series{font:700 7pt Inter,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--deep)}
+.fields{display:grid;grid-template-columns:auto 1fr auto 1.25in;gap:6px 10px;align-items:center;margin:0.16in 0 0.1in;
+  font:700 8.5pt Inter,sans-serif;color:#2B3236}
+.fields span.box{height:0.27in;border-radius:6px;background:#E9ECEE;border:1px solid #D6DBDF}
+.title{font-family:Merriweather,Georgia,serif;font-weight:900;color:var(--c1);font-size:30pt;line-height:1.05;
+  letter-spacing:-.01em;margin:0.02in 0 0.05in}
+.title small{font-size:15pt;font-weight:700;color:var(--deep)}
+.intro{font-size:9.4pt;line-height:1.42;color:#2B3236;margin:0 0 0.08in}
+.intro b{color:var(--deep)}
+.art{display:block;width:100%}
+.art svg{display:block;width:100%;height:auto}
+.foot{margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end;gap:12px;padding-top:6px;
+  font-size:6.6pt;color:#6A747B}
+.foot .code{font:600 6.6pt Inter,sans-serif;letter-spacing:.06em;color:#5B666D;text-align:right;white-space:nowrap}
+.disc{font-size:6.3pt;color:#5E686F;line-height:1.3;max-width:5.2in}
+.disc sup,.mark{color:var(--c1);font-weight:700}
+
+/* back page */
+.band{margin:0 -0.42in;padding:0.16in 0.42in 0.18in;background:linear-gradient(120deg,var(--c1),var(--c2));color:#fff;
+  position:relative}
+.band h2{font-family:Merriweather,Georgia,serif;font-weight:700;font-size:21pt;text-align:center;margin:0 0 0.1in;color:#fff}
+.band h2 small{display:block;font-size:10pt;font-weight:700;color:#FFE6D4;margin-top:2px}
+.lifes{display:grid;gap:0.1in;align-items:start}
+.life{display:flex;flex-direction:column;align-items:center;text-align:center}
+.life .disc2{width:0.86in;height:0.86in;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 0 rgba(0,0,0,.08) inset,0 0 0 3px rgba(255,255,255,.35);color:var(--c1)}
+.life.hex .disc2{border-radius:0;clip-path:polygon(25% 3%,75% 3%,100% 50%,75% 97%,25% 97%,0 50%);width:0.98in;height:0.86in}
+.life b{display:block;font-family:Merriweather,Georgia,serif;font-size:9.6pt;margin:0.06in 0 0.03in;color:#fff}
+.life p{margin:0;font-size:7.5pt;line-height:1.3;color:#F5F7F8}
+.checks{display:grid;grid-template-columns:1fr 1fr;gap:0.06in 0.3in;background:#fff;border-radius:10px;padding:0.14in 0.2in;color:#1F2A2E}
+.chk{display:flex;gap:8px;align-items:flex-start}
+.chk .bx{flex:none;width:0.15in;height:0.15in;border:1.6px solid var(--deep);border-radius:2px;margin-top:2px}
+.chk b{font-size:9pt;color:var(--deep)}
+.chk ul{margin:2px 0 0;padding:0;list-style:none}
+.chk li{font-size:8pt;margin:1px 0;padding-left:15px;position:relative}
+.chk li::before{content:"";position:absolute;left:0;top:4px;width:8px;height:8px;border:1.4px solid var(--c2);border-radius:50%}
+.ns-title{font-family:Merriweather,Georgia,serif;font-weight:900;color:var(--c1);font-size:19pt;margin:0.14in 0 0.02in;
+  display:flex;align-items:baseline;gap:10px}
+.ns-title span{font:600 8pt Inter,sans-serif;color:#56626A;letter-spacing:.02em}
+.cols{display:grid;gap:0.08in;margin-top:0.06in}
+.col{display:flex;flex-direction:column;background:#fff;border-radius:6px;overflow:hidden;
+  box-shadow:0 1px 0 #E3E7EA,0 2px 6px rgba(20,30,40,.10);border:1px solid #E1E5E8}
+.col .need{background:linear-gradient(160deg,var(--c1),var(--c2));color:#fff;padding:0.07in 0.07in 0.06in;text-align:center;
+  min-height:0.5in;display:flex;flex-direction:column;justify-content:center}
+.col .need b{font-size:8.2pt;line-height:1.2;display:block}
+.col .need i{font-style:normal;font-size:6.8pt;opacity:.92;display:block;margin-top:2px;line-height:1.2}
+.col .pick{display:flex;flex-direction:column;align-items:center;padding:0.06in 0.07in 0.04in;background:var(--tint)}
+.col .pick img{height:0.98in;width:auto;max-width:100%;object-fit:contain;display:block;filter:drop-shadow(0 2px 2px rgba(0,0,0,.12))}
+.col .pick .nm{font:800 8.6pt Inter,sans-serif;color:#1A2226;margin-top:0.04in;text-align:center;line-height:1.15}
+.col .pick .sz{font-size:6.6pt;color:#5E696F;text-align:center}
+.col .what{padding:0.06in 0.08in 0.05in;flex:1;font-size:7.3pt;line-height:1.28;color:#283035}
+.col .what ul{margin:0;padding:0;list-style:none}
+.col .what li{position:relative;padding-left:9px;margin:0 0 2px}
+.col .what li::before{content:"";position:absolute;left:0;top:4px;width:4px;height:4px;border-radius:50%;background:var(--c2)}
+.col .key{border-top:1px dashed #D3DADF;margin-top:4px;padding-top:3px;font-size:6.7pt;color:#3F4A50}
+.col .key b{color:var(--deep);font-size:6.5pt;letter-spacing:.06em;text-transform:uppercase}
+.col .dose{background:var(--deep);color:#fff;text-align:center;font:700 7.6pt Inter,sans-serif;padding:0.06in 0.05in;line-height:1.2}
+.col .dose small{display:block;font-weight:500;font-size:6.4pt;opacity:.9}
+.duo{display:grid;grid-template-columns:1.35fr 1fr;gap:0.1in;margin-top:0.1in}
+.panel{border:1px solid #DCE2E6;border-radius:8px;padding:0.08in 0.12in;background:#FBFCFC}
+.panel h3{font:800 7.4pt Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--c1);margin:0 0 4px}
+.rhythm{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.slot{background:#fff;border:1px solid #E2E6E9;border-radius:6px;padding:5px 6px}
+.slot .when{font:800 7pt Inter,sans-serif;color:var(--deep);display:flex;align-items:center;gap:4px}
+.slot .when svg{width:13px;height:13px}
+.slot ul{margin:3px 0 0;padding:0;list-style:none}
+.slot li{font-size:7pt;line-height:1.25;margin:1px 0}
+.slot li em{font-style:normal;color:#5E696F}
+.total{font-size:7pt;color:#3F4A50;margin-top:4px}
+.total b{color:var(--deep)}
+.rx ul{margin:0;padding:0 0 0 12px}
+.rx li{font-size:7.2pt;line-height:1.28;margin:0 0 2px}
+.rx li b{color:var(--deep)}
+.notes{margin-top:0.1in;border:1px solid #CCD3D8;border-radius:8px;padding:0.07in 0.14in 0.09in;background:#F6F7F8}
+.notes b{font-size:8.6pt;color:#4B565C;font-weight:600}
+.notes .ln{height:0.24in;border-bottom:1px solid #9FA9AF}
+.recby{display:flex;gap:8px;align-items:flex-end;font-size:7pt;color:#4B565C;margin-top:0.08in}
+.recby .ln2{flex:1;border-bottom:1px solid #9FA9AF;height:0.18in;font:700 9pt Inter,sans-serif;color:#1F2A2E;padding-left:4px}
+.small{font-size:7.2pt;color:#5B666D}
+.tag{display:inline-block;font:800 6.6pt Inter,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#fff;
+  background:var(--c1);border-radius:3px;padding:2px 6px}
+
+.outrow{display:grid;gap:0.1in;margin-top:0.06in}
+.out{background:var(--c1);color:#fff;border-radius:6px;padding:0.07in 0.1in;text-align:center;position:relative}
+.out::before{content:"";position:absolute;left:50%;top:-9px;margin-left:-9px;border:9px solid transparent;border-top:0;border-bottom:9px solid var(--c1)}
+.out b{display:block;font-family:Merriweather,Georgia,serif;font-size:11pt}
+.out span{display:block;font-size:8.4pt;opacity:.95;margin-top:2px}
+.after{margin:0.1in auto 0;max-width:6.4in;text-align:center;font-size:8.6pt;color:#2B3236;background:var(--soft);
+  border-radius:6px;padding:0.06in 0.14in}
+.after b{color:var(--deep)}
+.riskhead{font:900 12pt Merriweather,Georgia,serif;color:var(--c1);text-align:center;margin:0.1in 0 0.06in;letter-spacing:.02em}
+.risk{display:grid;gap:0.08in 0.06in}
+.rf{display:flex;flex-direction:column;align-items:center;text-align:center;color:#59636A}
+.rf .ic{color:#7B7F86}
+.rf span{font-size:8.3pt;line-height:1.2;color:#3A4247;margin-top:2px}
+.twocol{display:grid;grid-template-columns:1.12fr 1fr;gap:0.16in;align-items:start}
+.lst{columns:2;column-gap:0.2in;margin:0.04in 0 0.06in;padding-left:14px;font-size:9pt}
+.lst li{margin:0 0 2px}
+.alarm{border:1.6px solid #C0392B;border-radius:8px;padding:0.06in 0.12in;background:#FDF1EF;margin:0.06in 0}
+.alarm b{color:#A5281E;font-size:8.6pt;letter-spacing:.04em;text-transform:uppercase}
+.alarm p{margin:2px 0 0;font-size:8.6pt}
+.p{font-size:9.1pt;line-height:1.42;margin:0 0 0.07in;color:#2B3236}
+.p b{color:var(--deep)}
+.fn{font-size:6.6pt;color:#5E686F;line-height:1.3;margin-top:auto}
+.bp{width:100%;border-collapse:collapse;font-size:8.4pt}
+.bp th{background:var(--c1);color:#fff;text-align:left;padding:5px 8px;font-size:8pt}
+.bp td{padding:4px 8px;border-bottom:1px solid #EEE3E1}
+.bp tr:nth-child(even) td{background:var(--tint)}
+.bp td.n{text-align:center;font-variant-numeric:tabular-nums;font-weight:700}
+.bp td.c{text-align:center;color:#7A848A;font-size:7.2pt}
+.sd{display:grid;grid-template-columns:1fr;gap:6px}
+.sd div{border-left:4px solid var(--c1);padding-left:8px;font-size:8.2pt}
+.sd b{font-family:Merriweather,Georgia,serif;color:var(--deep);font-size:10pt;display:block}
+.trig{display:grid;grid-template-columns:repeat(7,1fr);background:linear-gradient(90deg,var(--c1),var(--c2));color:#fff;
+  border-radius:4px;margin:0.04in 0 0.06in}
+.trig span{text-align:center;font:800 7.4pt Inter,sans-serif;letter-spacing:.06em;text-transform:uppercase;padding:5px 2px;line-height:1.15}
+.cmp{width:100%;border-collapse:collapse;font-size:8.6pt;margin-top:0.02in}
+.cmp th{font:900 10.5pt Merriweather,Georgia,serif;color:var(--deep);padding:4px 6px;text-align:center}
+.cmp td{padding:5px 8px;border-top:1px solid #DDE7E6;vertical-align:top}
+.cmp td.k{font:800 7.4pt Inter,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--c1);
+  text-align:center;width:1.05in;vertical-align:middle}
+.cmp td.a{text-align:right}
+.chev{display:grid;grid-template-columns:1fr 1fr 1fr;margin:0.04in 0 0.08in}
+.chev div{padding:0.1in 0.22in 0.1in 0.3in;color:#fff;clip-path:polygon(0 0,90% 0,100% 50%,90% 100%,0 100%,8% 50%)}
+.chev div:first-child{clip-path:polygon(0 0,90% 0,100% 50%,90% 100%,0 100%);padding-left:0.16in}
+.chev div:last-child{clip-path:polygon(0 0,100% 0,100% 100%,0 100%,8% 50%)}
+.chev h4{margin:0 0 3px;font:800 8.6pt Inter,sans-serif;letter-spacing:.08em;text-transform:uppercase}
+.chev ul{margin:0;padding:0;list-style:none;font-size:8.4pt;line-height:1.3}
+.stat{display:flex;gap:0.14in;align-items:center;background:var(--soft);border-radius:8px;padding:0.07in 0.14in;margin-top:0.08in}
+.stat>b{font:900 22pt Merriweather,Georgia,serif;color:var(--c1);line-height:1;white-space:nowrap}
+.stat span{font-size:8.8pt;color:#2B3236}
+.ticks{display:grid;grid-template-columns:repeat(3,1fr);gap:0.08in;margin-top:0.06in}
+.tk{background:#FCEFE4;border-radius:8px;padding:0.06in 0.1in;display:flex;gap:8px;align-items:center}
+.tk .ic{color:#5B3A22;flex:none}
+.tk b{display:block;font-size:8.6pt;color:#4A2C80}
+.tk span{font-size:7.8pt;color:#3A4247;line-height:1.25}
+.ring{display:grid;grid-template-columns:repeat(5,1fr);gap:0.08in 0.06in;margin-top:0.04in}
+.rg{display:flex;flex-direction:column;align-items:center;text-align:center}
+.rg .c{width:0.62in;height:0.62in;border-radius:50%;background:#F1E7E2;display:flex;align-items:center;justify-content:center;
+  color:#8A5A52;box-shadow:0 0 0 2px #fff,0 0 0 3px #E8D8D1}
+.rg span{font-size:7.8pt;line-height:1.2;margin-top:3px;color:#3A4247}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:0.12in;margin-top:0.08in}
+.fbox h4{margin:0 0 4px;background:var(--c1);color:#fff;font:800 8.4pt Inter,sans-serif;letter-spacing:.08em;text-transform:uppercase;
+  padding:4px 10px;border-radius:3px}
+.fbox p,.fbox li{font-size:8.6pt;line-height:1.35;margin:0}
+.fbox ul{margin:0;padding-left:14px}
+.sym{display:grid;grid-template-columns:repeat(7,1fr);gap:0.04in;margin:0.02in 0 0.08in}
+.sym div{display:flex;flex-direction:column;align-items:center;text-align:center;color:var(--c1)}
+.sym span{font-size:8pt;color:#3A4247;margin-top:2px;line-height:1.15}
+.steps5{display:flex;flex-direction:column;gap:5px}
+.st5{display:flex;gap:8px;align-items:flex-start}
+.st5 .n{flex:none;width:0.26in;height:0.26in;border-radius:50%;background:var(--c1);color:#fff;font:800 9pt Inter,sans-serif;
+  display:flex;align-items:center;justify-content:center}
+.st5 b{font:800 9.6pt Inter,sans-serif;color:var(--deep);display:block}
+.st5 span{font-size:8.3pt;color:#3A4247;line-height:1.3}
+.note{border-left:4px solid #D9873A;background:#FDF4EC;padding:0.05in 0.12in;font-size:8.5pt;margin-top:0.08in;border-radius:0 6px 6px 0}
+.note b{color:#9A4F12}
+.lymebody svg{max-height:3.25in;width:auto!important;margin:0 auto}
+
+.cc h1{font:900 30pt/1.05 Merriweather,Georgia,serif;color:#14664D;margin:.04in 0 .04in}
+.cc .lead{font-size:10.5pt;color:#2B3236;margin:0 0 .12in}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:.12in}
+.cd{border:1px solid #DCE3E0;border-radius:10px;padding:.12in .14in;background:#FBFCFB}
+.cd h3{font:800 9pt Inter;letter-spacing:.12em;text-transform:uppercase;color:#F15F3F;margin:0 0 4px}
+.cd h4{font:900 13pt Merriweather,Georgia,serif;color:#14664D;margin:0 0 6px}
+.cd p{font-size:9.2pt;line-height:1.4;margin:0 0 6px}
+.vs{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center;background:#fff;border-radius:8px;padding:6px 8px;border:1px dashed #CBD5D1}
+.vs .s{text-align:center;font-size:8.2pt;line-height:1.25}
+.vs .s b{display:block;font:900 15pt Merriweather,Georgia,serif;color:#14664D}
+.vs .s.them b{color:#8B8F94}
+.vs .mid{font:900 10pt Inter;color:#F15F3F}
+.pills{display:flex;gap:3px;justify-content:center;margin:3px 0}
+.pill{width:22px;height:11px;border-radius:6px;background:#E5B94E;border:1px solid #B88A1E}
+.pill.g{background:#7FC3A3;border-color:#2F8A63}
+.perks{margin-top:.12in;display:grid;grid-template-columns:repeat(3,1fr);gap:.1in}
+.pk{background:#14664D;color:#fff;border-radius:10px;padding:.1in .12in;text-align:center}
+.pk b{display:block;font:900 11pt Merriweather,Georgia,serif;margin:4px 0 2px}
+.pk span{font-size:8.4pt;color:#DDEFE7}
+.fill{border-bottom:1.5px solid #fff;display:inline-block;min-width:1.4in}
+.talk{counter-reset:t;display:grid;gap:.08in}
+.tt{display:grid;grid-template-columns:.34in 1fr;gap:10px;align-items:start;border-left:4px solid #14664D;background:#F6F9F8;border-radius:0 8px 8px 0;padding:.08in .12in}
+.tt .n{width:.32in;height:.32in;border-radius:50%;background:#F15F3F;color:#fff;font:900 11pt Inter;display:flex;align-items:center;justify-content:center}
+.tt b{font:800 10pt Inter;color:#14664D;display:block}
+.tt p{margin:2px 0 0;font-size:9pt;line-height:1.38}
+.tt q{font-style:italic;color:#3A4247}
+.never{margin-top:.12in;border:1.6px solid #C0392B;background:#FDF1EF;border-radius:8px;padding:.08in .14in;font-size:9pt}
+.never b{color:#A5281E}
+</style>
+</head><body>
+<div class="toolbar"><b>Counter card + staff talk track</b><div class="btns"><a class="ghost" href="index.html">All sheets</a><a href="warehouse-bottle-counter-card.pdf">Download PDF</a><button onclick="window.print()">Print</button></div></div><div class="stack"><section class="sheet cc" style="--c1:#0E6A7A;--c2:#2C8DB4;--soft:#E3F1F4;--deep:#0A4B57;--tint:#F2F8F9"><div class="inner">
+<div class="headrow"><svg style="height:0.27in;width:auto;color:#14664D;display:block" viewBox="0 0 174 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M142.744 20.1318L137.363 7.54297H133.338L140.764 24.6L137.952 30.9998H141.981L152.289 7.54297H148.264L142.744 20.1318Z" fill="currentColor"/>
+<path d="M47.655 18.633L33.6076 1.4082H30.4453V25.0094H34.1661V8.06555L48.2482 25.0094H51.4105V1.4082H47.655V18.633Z" fill="currentColor"/>
+<path d="M68.4548 15.6051C68.4548 17.7436 68.0041 19.3631 67.0989 20.4674C66.1938 21.5718 64.9419 22.122 63.3435 22.122C62.0916 22.122 61.0902 21.6811 60.3352 20.7991C59.5803 19.9172 59.2067 18.7621 59.2067 17.33V7.53516H55.5898V18.0675C55.5898 20.2762 56.2215 22.0674 57.4849 23.441C58.7483 24.8146 60.4238 25.5014 62.5076 25.5014C65.0113 25.5014 66.9949 24.6195 68.4548 22.8596V25.0097H72.0716V7.53906H68.4548V15.6051Z" fill="currentColor"/>
+<path d="M83.9536 22.0522C83.0716 22.0522 82.3782 21.7751 81.866 21.2249C81.3575 20.6747 81.0995 19.8669 81.0995 18.8132V10.5716H84.1115C84.1115 10.5716 84.1385 10.5716 84.1539 10.5677C85.7023 10.3179 86.8386 9.04965 87.0042 7.54336H81.1033V2.11523H77.4865V7.53945H76.72C76.6738 7.54336 76.6275 7.54726 76.5813 7.55506C75.0445 7.80091 73.9198 9.06916 73.7695 10.5677H77.4865V19.0591C77.4865 21.1741 78.0411 22.7741 79.1543 23.8667C80.2675 24.9594 81.7851 25.5057 83.711 25.5057C85.0783 25.5057 86.5035 25.0609 87.9864 24.1672L86.8733 21.1039C85.9219 21.7361 84.9474 22.0561 83.9536 22.0561V22.0522Z" fill="currentColor"/>
+<path d="M93.361 11.2734V7.53885H89.7441V25.0095H93.361V18.8439C93.361 16.3776 93.9156 14.4459 95.0288 13.0489C96.1419 11.6519 97.7635 10.9534 99.8974 10.9534C100.383 10.9534 100.722 10.9651 100.907 10.9885L101.149 7.4647C100.849 7.37105 100.441 7.32422 99.9321 7.32422C97.128 7.32422 94.9363 8.6393 93.361 11.2695V11.2734Z" fill="currentColor"/>
+<path d="M106.7 25.0097H106.769V11.2931C106.761 11.215 106.754 11.137 106.742 11.059C106.446 9.16243 104.943 7.7693 103.152 7.54297V21.3494C103.16 21.4313 103.168 21.5133 103.179 21.5952C103.468 23.4488 104.943 24.8068 106.696 25.0136L106.7 25.0097Z" fill="currentColor"/>
+<path d="M104.961 0C104.287 0 103.733 0.222432 103.293 0.671198C102.854 1.11606 102.635 1.65848 102.635 2.29066C102.635 2.92283 102.854 3.48867 103.293 3.91012C103.733 4.33157 104.291 4.5462 104.961 4.5462C105.631 4.5462 106.186 4.33547 106.614 3.91012C107.041 3.48867 107.257 2.94625 107.257 2.29066C107.257 1.63507 107.037 1.11606 106.594 0.671198C106.155 0.226334 105.608 0 104.961 0Z" fill="currentColor"/>
+<path d="M128.782 4.70176C126.451 2.50475 123.328 1.4082 119.41 1.4082H111.275V25.0094H119.41C123.328 25.0094 126.451 23.9129 128.782 21.7159C131.112 19.5189 132.275 16.6858 132.275 13.2088C132.275 9.73184 131.112 6.89876 128.782 4.70176ZM126.051 19.2691C124.406 20.8183 122.191 21.5949 119.41 21.5949H114.996V4.82663H119.41C122.191 4.82663 124.406 5.60319 126.051 7.15241C127.695 8.70163 128.52 10.723 128.52 13.2127C128.52 15.7024 127.695 17.7199 126.051 19.273V19.2691Z" fill="currentColor"/>
+<path d="M163.813 7.04297C161.287 7.04297 159.291 7.92489 157.832 9.68484V7.53466H154.215V25.0053H157.832V16.9392C157.832 14.8008 158.29 13.1813 159.207 12.077C160.123 10.9726 161.379 10.4224 162.978 10.4224C164.206 10.4224 165.196 10.8555 165.951 11.7257C166.706 12.596 167.08 13.7471 167.08 15.1793V25.0092H170.731V14.4418C170.731 12.2565 170.096 10.477 168.817 9.10339C167.542 7.72978 165.874 7.04297 163.81 7.04297H163.813Z" fill="currentColor"/>
+<path d="M173.685 23.0622C173.477 22.8554 173.219 22.75 172.914 22.75C172.61 22.75 172.356 22.8554 172.144 23.0622C171.936 23.269 171.828 23.5383 171.828 23.8505C171.828 24.1626 171.932 24.428 172.144 24.6348C172.352 24.8416 172.61 24.947 172.914 24.947C173.219 24.947 173.473 24.8416 173.685 24.6348C173.893 24.428 174.001 24.1665 174.001 23.8505C174.001 23.5344 173.897 23.269 173.685 23.0622ZM173.554 24.506C173.377 24.6816 173.165 24.7675 172.918 24.7675C172.672 24.7675 172.464 24.6816 172.286 24.506C172.113 24.3304 172.025 24.1158 172.025 23.8544C172.025 23.5929 172.113 23.3705 172.286 23.1949C172.464 23.0193 172.668 22.9334 172.918 22.9334C173.169 22.9334 173.38 23.0193 173.554 23.1949C173.731 23.3705 173.816 23.5929 173.816 23.8544C173.816 24.1158 173.727 24.3304 173.554 24.506Z" fill="currentColor"/>
+<path d="M173.115 23.972C173.296 23.9291 173.392 23.8198 173.392 23.6442C173.392 23.5427 173.357 23.4608 173.28 23.4023C173.203 23.3437 173.107 23.3125 172.984 23.3125H172.529V24.3388H172.714V23.9915H172.903L173.219 24.3388H173.446L173.115 23.9759V23.972ZM172.714 23.8237V23.4803H172.984C173.049 23.4803 173.099 23.4959 173.142 23.5271C173.18 23.5583 173.203 23.6013 173.203 23.652C173.203 23.7027 173.184 23.7457 173.142 23.7769C173.103 23.8081 173.049 23.8276 172.984 23.8276H172.714V23.8237Z" fill="currentColor"/>
+<path d="M87.0117 7.47656C87.0117 7.49607 87.0039 7.51949 87.0039 7.539H87.0117V7.47656Z" fill="white"/>
+<path d="M20.6388 9.3623C20.1458 6.20923 17.3147 4.02003 14.2218 4.32051L10.4316 12.8822L10.0387 13.768C10.0272 13.7992 10.0195 13.8344 10.0079 13.8656C9.71519 14.7514 9.62275 15.7153 9.77682 16.7026C10.2698 19.8595 13.1048 22.0487 16.2016 21.7444L20.0071 13.1436L20.3538 12.3593C20.3731 12.3086 20.3923 12.2539 20.4077 12.1993C20.7005 11.3135 20.7929 10.3496 20.6388 9.3623Z" fill="#F15F3F"/>
+<path d="M10.6507 12.3593C10.6699 12.3086 10.6892 12.2539 10.7046 12.1993C10.9973 11.3135 11.0898 10.3496 10.9357 9.3623C10.4427 6.20923 7.61162 4.02003 4.51864 4.32051L0.728499 12.8822L0.335618 13.768C0.324062 13.7992 0.316359 13.8344 0.304804 13.8656C0.0120688 14.7514 -0.0803737 15.7153 0.0736972 16.7026C0.566724 19.8595 3.40163 22.0487 6.49846 21.7444L10.304 13.1436L10.6507 12.3593Z" fill="#F15F3F"/>
+</svg>
+<span class="series" style="color:#14664D">Ask your pharmacist</span></div>
+<h1>Before you grab the<br>warehouse bottle</h1>
+<p class="lead">Big-box and warehouse vitamins can be a fair deal. Four things on the label decide what you are really paying for. Check them, or let us check them with you.</p>
+<div class="cards">
+<div class="cd"><h3>1 &middot; Count the pills</h3><h4>Dose per pill, not per bottle</h4>
+<p>A typical &ldquo;1,000 mg fish oil&rdquo; softgel holds only <b>250 to 300 mg</b> of EPA and DHA, the omega-3s that do the work. Read the panel, not the front.</p>
+<div class="vs"><div class="s them"><b>4 softgels</b><div class="pills"><i class="pill"></i><i class="pill"></i><i class="pill"></i><i class="pill"></i></div>to reach 1,000 mg EPA+DHA</div><div class="mid">VS</div>
+<div class="s"><b>1 softgel</b><div class="pills"><i class="pill g"></i></div>Omega Pure EPA-DHA 1000</div></div></div>
+<div class="cd"><h3>2 &middot; Read the form</h3><h4>Not all magnesium is the same</h4>
+<p>Many low-cost bottles use <b>magnesium oxide</b>: cheap to make, poorly absorbed and the form most likely to upset your stomach. Chelated magnesium (glycinate, malate) is gentler and better used by the body.</p>
+<div class="vs"><div class="s them"><b>Oxide</b>low absorption</div><div class="mid">VS</div><div class="s"><b>Chelated</b>Magnesium Glycinate, 260 mg per 2 capsules</div></div></div>
+<div class="cd"><h3>3 &middot; Look for active forms</h3><h4>Ready-to-use B vitamins</h4>
+<p>Most mass-market multis use <b>folic acid</b> and <b>cyanocobalamin</b>, which your body has to convert. Methylfolate (L-5-MTHF) and methylcobalamin arrive ready to use, which matters for the many people who convert poorly.</p></div>
+<div class="cd"><h3>4 &middot; Check it against your medicines</h3><h4>The one thing an aisle can't do</h4>
+<p>Some supplements and prescriptions need spacing or swapping. Doxycycline must be taken 2 to 3 hours apart from magnesium, calcium, iron and zinc. Acid blockers can drain magnesium and B12. Statins can lower CoQ10. <b>We check your list for free.</b></p></div>
+</div>
+<div class="perks"><div class="pk"><svg class="ic" viewBox="0 0 64 64" style="width:0.42in;height:0.42in;color:#BFE3D4" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 30 32 10l25 20M13 26v29h38V26"/><path d="M32 30c-4 6-7 9-7 13a7 7 0 0 0 14 0c0-4-3-7-7-13z"/></svg><b>Stored right</b><span>Temperature-controlled here, never left in a hot truck or warehouse</span></div>
+<div class="pk"><svg class="ic" viewBox="0 0 64 64" style="width:0.42in;height:0.42in;color:#BFE3D4" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="32" cy="32" r="23"/><path d="M32 17v15l10 6"/></svg><b>In stock today</b><span>No shipping wait, no shipping fee, no running out mid-protocol</span></div>
+<div class="pk"><svg class="ic" viewBox="0 0 64 64" style="width:0.42in;height:0.42in;color:#BFE3D4" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M32 54S10 40 10 24a11 11 0 0 1 22-3 11 11 0 0 1 22 3c0 16-22 30-22 30z"/></svg><b>Rewards</b><span>Ask about our vitamin club: <span class="fill"></span></span></div></div>
+<div class="foot"><span>Practitioner-exclusive formulas, sold through practitioners and pharmacies, not warehouse clubs.</span><span class="code">ND-RX-401 &middot; 11/2026</span></div>
+</div></section><section class="sheet cc" style="--c1:#0E6A7A;--c2:#2C8DB4;--soft:#E3F1F4;--deep:#0A4B57;--tint:#F2F8F9"><div class="inner">
+<div class="headrow"><svg style="height:0.27in;width:auto;color:#14664D;display:block" viewBox="0 0 174 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M142.744 20.1318L137.363 7.54297H133.338L140.764 24.6L137.952 30.9998H141.981L152.289 7.54297H148.264L142.744 20.1318Z" fill="currentColor"/>
+<path d="M47.655 18.633L33.6076 1.4082H30.4453V25.0094H34.1661V8.06555L48.2482 25.0094H51.4105V1.4082H47.655V18.633Z" fill="currentColor"/>
+<path d="M68.4548 15.6051C68.4548 17.7436 68.0041 19.3631 67.0989 20.4674C66.1938 21.5718 64.9419 22.122 63.3435 22.122C62.0916 22.122 61.0902 21.6811 60.3352 20.7991C59.5803 19.9172 59.2067 18.7621 59.2067 17.33V7.53516H55.5898V18.0675C55.5898 20.2762 56.2215 22.0674 57.4849 23.441C58.7483 24.8146 60.4238 25.5014 62.5076 25.5014C65.0113 25.5014 66.9949 24.6195 68.4548 22.8596V25.0097H72.0716V7.53906H68.4548V15.6051Z" fill="currentColor"/>
+<path d="M83.9536 22.0522C83.0716 22.0522 82.3782 21.7751 81.866 21.2249C81.3575 20.6747 81.0995 19.8669 81.0995 18.8132V10.5716H84.1115C84.1115 10.5716 84.1385 10.5716 84.1539 10.5677C85.7023 10.3179 86.8386 9.04965 87.0042 7.54336H81.1033V2.11523H77.4865V7.53945H76.72C76.6738 7.54336 76.6275 7.54726 76.5813 7.55506C75.0445 7.80091 73.9198 9.06916 73.7695 10.5677H77.4865V19.0591C77.4865 21.1741 78.0411 22.7741 79.1543 23.8667C80.2675 24.9594 81.7851 25.5057 83.711 25.5057C85.0783 25.5057 86.5035 25.0609 87.9864 24.1672L86.8733 21.1039C85.9219 21.7361 84.9474 22.0561 83.9536 22.0561V22.0522Z" fill="currentColor"/>
+<path d="M93.361 11.2734V7.53885H89.7441V25.0095H93.361V18.8439C93.361 16.3776 93.9156 14.4459 95.0288 13.0489C96.1419 11.6519 97.7635 10.9534 99.8974 10.9534C100.383 10.9534 100.722 10.9651 100.907 10.9885L101.149 7.4647C100.849 7.37105 100.441 7.32422 99.9321 7.32422C97.128 7.32422 94.9363 8.6393 93.361 11.2695V11.2734Z" fill="currentColor"/>
+<path d="M106.7 25.0097H106.769V11.2931C106.761 11.215 106.754 11.137 106.742 11.059C106.446 9.16243 104.943 7.7693 103.152 7.54297V21.3494C103.16 21.4313 103.168 21.5133 103.179 21.5952C103.468 23.4488 104.943 24.8068 106.696 25.0136L106.7 25.0097Z" fill="currentColor"/>
+<path d="M104.961 0C104.287 0 103.733 0.222432 103.293 0.671198C102.854 1.11606 102.635 1.65848 102.635 2.29066C102.635 2.92283 102.854 3.48867 103.293 3.91012C103.733 4.33157 104.291 4.5462 104.961 4.5462C105.631 4.5462 106.186 4.33547 106.614 3.91012C107.041 3.48867 107.257 2.94625 107.257 2.29066C107.257 1.63507 107.037 1.11606 106.594 0.671198C106.155 0.226334 105.608 0 104.961 0Z" fill="currentColor"/>
+<path d="M128.782 4.70176C126.451 2.50475 123.328 1.4082 119.41 1.4082H111.275V25.0094H119.41C123.328 25.0094 126.451 23.9129 128.782 21.7159C131.112 19.5189 132.275 16.6858 132.275 13.2088C132.275 9.73184 131.112 6.89876 128.782 4.70176ZM126.051 19.2691C124.406 20.8183 122.191 21.5949 119.41 21.5949H114.996V4.82663H119.41C122.191 4.82663 124.406 5.60319 126.051 7.15241C127.695 8.70163 128.52 10.723 128.52 13.2127C128.52 15.7024 127.695 17.7199 126.051 19.273V19.2691Z" fill="currentColor"/>
+<path d="M163.813 7.04297C161.287 7.04297 159.291 7.92489 157.832 9.68484V7.53466H154.215V25.0053H157.832V16.9392C157.832 14.8008 158.29 13.1813 159.207 12.077C160.123 10.9726 161.379 10.4224 162.978 10.4224C164.206 10.4224 165.196 10.8555 165.951 11.7257C166.706 12.596 167.08 13.7471 167.08 15.1793V25.0092H170.731V14.4418C170.731 12.2565 170.096 10.477 168.817 9.10339C167.542 7.72978 165.874 7.04297 163.81 7.04297H163.813Z" fill="currentColor"/>
+<path d="M173.685 23.0622C173.477 22.8554 173.219 22.75 172.914 22.75C172.61 22.75 172.356 22.8554 172.144 23.0622C171.936 23.269 171.828 23.5383 171.828 23.8505C171.828 24.1626 171.932 24.428 172.144 24.6348C172.352 24.8416 172.61 24.947 172.914 24.947C173.219 24.947 173.473 24.8416 173.685 24.6348C173.893 24.428 174.001 24.1665 174.001 23.8505C174.001 23.5344 173.897 23.269 173.685 23.0622ZM173.554 24.506C173.377 24.6816 173.165 24.7675 172.918 24.7675C172.672 24.7675 172.464 24.6816 172.286 24.506C172.113 24.3304 172.025 24.1158 172.025 23.8544C172.025 23.5929 172.113 23.3705 172.286 23.1949C172.464 23.0193 172.668 22.9334 172.918 22.9334C173.169 22.9334 173.38 23.0193 173.554 23.1949C173.731 23.3705 173.816 23.5929 173.816 23.8544C173.816 24.1158 173.727 24.3304 173.554 24.506Z" fill="currentColor"/>
+<path d="M173.115 23.972C173.296 23.9291 173.392 23.8198 173.392 23.6442C173.392 23.5427 173.357 23.4608 173.28 23.4023C173.203 23.3437 173.107 23.3125 172.984 23.3125H172.529V24.3388H172.714V23.9915H172.903L173.219 24.3388H173.446L173.115 23.9759V23.972ZM172.714 23.8237V23.4803H172.984C173.049 23.4803 173.099 23.4959 173.142 23.5271C173.18 23.5583 173.203 23.6013 173.203 23.652C173.203 23.7027 173.184 23.7457 173.142 23.7769C173.103 23.8081 173.049 23.8276 172.984 23.8276H172.714V23.8237Z" fill="currentColor"/>
+<path d="M87.0117 7.47656C87.0117 7.49607 87.0039 7.51949 87.0039 7.539H87.0117V7.47656Z" fill="white"/>
+<path d="M20.6388 9.3623C20.1458 6.20923 17.3147 4.02003 14.2218 4.32051L10.4316 12.8822L10.0387 13.768C10.0272 13.7992 10.0195 13.8344 10.0079 13.8656C9.71519 14.7514 9.62275 15.7153 9.77682 16.7026C10.2698 19.8595 13.1048 22.0487 16.2016 21.7444L20.0071 13.1436L20.3538 12.3593C20.3731 12.3086 20.3923 12.2539 20.4077 12.1993C20.7005 11.3135 20.7929 10.3496 20.6388 9.3623Z" fill="#F15F3F"/>
+<path d="M10.6507 12.3593C10.6699 12.3086 10.6892 12.2539 10.7046 12.1993C10.9973 11.3135 11.0898 10.3496 10.9357 9.3623C10.4427 6.20923 7.61162 4.02003 4.51864 4.32051L0.728499 12.8822L0.335618 13.768C0.324062 13.7992 0.316359 13.8344 0.304804 13.8656C0.0120688 14.7514 -0.0803737 15.7153 0.0736972 16.7026C0.566724 19.8595 3.40163 22.0487 6.49846 21.7444L10.304 13.1436L10.6507 12.3593Z" fill="#F15F3F"/>
+</svg>
+<span class="series" style="color:#F15F3F">Staff only &middot; keep behind the counter</span></div>
+<h1 style="font-size:24pt">&ldquo;I can get it at Costco.&rdquo;<br><span style="font-size:15pt;color:#3A4247">The 60-second answer</span></h1>
+<p class="lead">Six moves, in order. Win on dose, form and the pharmacist, never on knocking the store.</p>
+<div class="talk"><div class="tt"><div class="n">1</div><div><b>Agree first</b><p><q>Costco has great prices, and a lot of their store brand is USP-verified. I'm not going to knock it.</q> Respect earns the next 45 seconds.</p></div></div><div class="tt"><div class="n">2</div><div><b>Count the pills</b><p><q>How many of those do you take to get your dose?</q> Turn the bottle around together. Fish oil is the easy one: four warehouse softgels to match one Omega Pure 1000.</p></div></div><div class="tt"><div class="n">3</div><div><b>Read the form</b><p>Magnesium oxide versus chelated glycinate. Folic acid and cyanocobalamin versus methylfolate and methylcobalamin. Point at the panel, not the price.</p></div></div><div class="tt"><div class="n">4</div><div><b>Check their medicines</b><p>Pull out the drug-induced nutrient depletion form. <q>Which prescriptions are you on?</q> This is the conversation the warehouse can never have.</p></div></div><div class="tt"><div class="n">5</div><div><b>Make it easy</b><p>In stock today, no shipping, stored right, vitamin club credit. <q>If you ever run out, we have it this afternoon.</q></p></div></div><div class="tt"><div class="n">6</div><div><b>Leave the door open</b><p>If they still want the warehouse bottle: <q>Bring it in next time and I'll check it against your meds, free.</q> They come back, and so does the conversation.</p></div></div></div>
+<div class="never"><b>Never say</b> that warehouse vitamins are fake, junk or untested: many carry the USP Verified mark, and a customer who knows that stops trusting everything else you say. <b>Never</b> fight on price per bottle. Fight on price per effective dose.</div>
+<div class="foot"><span>Label facts checked Nov 2026 against Costco's own product listings (Kirkland fish oil 1,000 mg lists 250 mg EPA + DHA per softgel; the daily multi lists folic acid and cyanocobalamin). Recheck a bottle before quoting it.</span><span class="code">ND-RX-401 &middot; staff side</span></div>
+</div></section></div>
+<script>
+// Fit each printable sheet to small screens without horizontal scroll; print is always 1:1.
+(function(){function fit(){var w=Math.min(1,(window.innerWidth-16)/816);
+document.querySelectorAll('.sheet').forEach(function(s){s.style.zoom=w<1?w:'';});}
+window.addEventListener('resize',fit);fit();
+var p=new URLSearchParams(location.search).get('for');
+if(p){document.querySelectorAll('[data-for]').forEach(function(e){e.textContent=p.slice(0,80);});}})();
+</script>
+</body></html>
