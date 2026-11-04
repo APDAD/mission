@@ -70,8 +70,35 @@ SOURCES (each number on the page carries one of these tags in a comment)
               doi:10.1016/s0163-7258(96)00140-4, PMID 9014207 (abstract read 2026-11-04 via PubMed): "S-warfarin is
               metabolized primarily by CYP2C9"; R-warfarin partly "by CYP3A4"; "The efficacy of warfarin is affected
               primarily when metabolism of S-warfarin is altered."  Berberine slowed CYP2C9 and 3A4 in people
-              [GUO12], so the medicines check names warfarin among the drugs those enzymes clear.  (The vitamin K1
-              clause and its NIH ODS source left with Mito Recharge in the swap pass.)
+              [GUO12], so the medicines check names warfarin among the drugs those enzymes clear.  (Mito Recharge's
+              vitamin K1 clause and its NIH ODS source left in the swap pass; the vitamin-K-type concern did not, since
+              Cellular Energy's CoQ10 is chemically similar to vitamin K: see [COQ10].)
+  [COQ10]     CoQ10 and warfarin (polish round 2b, PubMed records read 2026-11-04).  Landbo C, Almdal TP. Ugeskr Laeger
+              1998;160(22):3226-7, PMID 9621803 (case report: a woman on warfarin responded less to it while taking
+              CoQ10, and as before once it was stopped; "Coenzyme Q10 is chemically similar to K-vitamins, which may
+              explain the interaction with warfarin").  Shalansky S et al. Pharmacotherapy 2007;27(9):1237-47,
+              doi:10.1592/phco.27.9.1237, PMID 17723077 (prospective cohort, 171 adults on warfarin: CoQ10 independently
+              tied to self-reported bleeding, OR 3.69, 95% CI 1.88-7.24).  Engelsen J, Nielsen JD, Winther K. Thromb
+              Haemost 2002;87(6):1075-6, PMID 12083489 (randomised, double-blind, placebo crossover in stable long-term
+              warfarin outpatients: no change in warfarin's effect at CoQ10 100 mg a day for 4 weeks; PubMed has no
+              abstract, the dose is from the Danish abstract as a web search shows it).  Mixed in direction and size,
+              hence "may change how warfarin works".  Cellular Energy gives 200 mg CoQ10 per 2 capsules [ND325].  NCCIH's
+              CoQ10 page (nccih.nih.gov/health/coenzyme-q10) flags a possible interaction with warfarin in a web-search
+              excerpt, but nccih.nih.gov is not reachable from this session: re-check the page before print.
+  [ALA]       Alpha-lipoic acid, CoQ10 and diabetes medicines (polish round 2b, PubMed records read 2026-11-04).  ALA
+              lowers blood sugar a little: fasting glucose -5.28 mg/dL pooled over 63 RCTs (Mohammadi S et al. Nutr Metab
+              Cardiovasc Dis 36(2):104370, e-published 2025-09-27, doi:10.1016/j.numecd.2025.104370, PMID 41077538; also
+              Akbari M et al. Metabolism 2018;87:56-69, doi:10.1016/j.metabol.2018.07.002, PMID 29990473).  Berberine's
+              pooled drop is about three times that, -0.82 mmol/L (about -15 mg/dL) over 37 RCTs in type 2 diabetes (Xie W
+              et al. Front Pharmacol 2022;13:1015045, doi:10.3389/fphar.2022.1015045, PMID 36467075; different trial
+              groups, so a rough comparison), and Cellular Energy's 150 mg a day is below the usual trial doses, hence
+              "more mildly".  Interaction checkers rate ALA with insulin and oral diabetes medicines minor: drugs.com's
+              alpha-lipoic acid page lists 30 interacting drugs, all minor, and DDInter calls it a theoretical boost to
+              the glucose lowering of insulin and oral antidiabetic agents (web-search excerpts, 2026-11-04; drugs.com and
+              medlineplus.gov are not reachable from this session).  CoQ10's effect is of the same small size: fasting
+              glucose -5.22 mg/dL over 40 RCTs, largest at 100-200 mg a day (Liang Y et al. EClinicalMedicine
+              2022;52:101602, doi:10.1016/j.eclinm.2022.101602, PMID 35958521), and NCCIH's CoQ10 page flags insulin in
+              the same excerpt as warfarin; the page names ALA only (see the RX notes for why).
   [USP20]     Oketch-Rabah HA et al. USP comprehensive review of the hepatotoxicity of green tea extracts.
               Toxicol Rep 2020;7:386-402. doi:10.1016/j.toxrep.2020.02.008, PMC7044683 (fasting bolus doses
               raise EGCG exposure; case reports at 140 to about 1000 mg/day EGCG; the review supports a caution
@@ -202,8 +229,10 @@ Swap pass (2026-11-04, the reviewer's residual list: one major defect), no redes
     claims [ND325].  The GLC 2026 list [CSO26] names Mito Recharge, so Asher can reverse the swap (products.d
     fl_cellular_energy "src" says where Mito Recharge's facts are); the fl_mito entry left products.d.
   - Gone with it: the green tea check in both editions, the rhythm-note gate (back["rhythm_note"], its marker spans, the
-    .flv-gpr/.flv-gph CSS and the marker assert) and the vitamin K1 sentence in the medicines check.  The medicines
-    check now names warfarin among the drugs the slowed enzymes clear [KAMINSKY97] and keeps the INR recheck.  The plan
+    .flv-gpr/.flv-gph CSS and the marker assert) and Mito Recharge's vitamin K1 sentence in the medicines check.  The
+    medicines check now names warfarin among the drugs the slowed enzymes clear [KAMINSKY97] and keeps the INR recheck.
+    (Corrected in polish round 2b: the vitamin-K-type warfarin concern did not leave with Mito Recharge, since Cellular
+    Energy's 200 mg CoQ10 is chemically similar to vitamin K, so the medicines check now names it [COQ10].)  The plan
     line is the kit's own again, recounted by the kit: 13 pills a day (was 14).  These items in the earlier notes above
     are history only.  Still open for NutriDyn: Milk Thistle Complex's total silymarin (products.d fl_milk_thistle).
   - The notes box is the kit's own again, three writing lines 0.24 in apart: the two-line squeeze existed only to make
@@ -1057,7 +1086,6 @@ CSS = r"""
 .flv-h::after{content:"";flex:1;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--soft),rgba(246,228,225,0))}
 .flv-art+.flv-h{margin-top:0.08in}
 .flv-risk{display:grid;grid-template-columns:repeat(8,1fr);gap:0 0.04in}
-.flv-risk .x{display:none}
 .flv-rf{display:flex;flex-direction:column;align-items:center;text-align:center}
 .flv-disc{width:0.52in;height:0.52in;border-radius:50%;background:var(--soft);color:var(--c1);display:flex;
   align-items:center;justify-content:center;box-shadow:inset 0 0 0 1.5px rgba(138,27,34,.10)}
@@ -1087,10 +1115,10 @@ CSS = r"""
    which would only say "nothing to take", is hidden and the two meal boxes share the rhythm panel.  The notes box is
    the kit's own again (three writing lines 0.24 in apart): the two-line squeeze that made room for a fifth check
    left in the swap pass with the green tea check.  Each column's serving block sits at the bottom of its card, so
-   three of the four "In each serving" rules line up (Lipo-Flow's panel is one line longer and starts one line
-   higher; a 4-line minimum on the bullets would align all four but costs 12 px the page does not have once the
-   notes box is whole) and the dose bars stay level.  Measured in the build's Chromium, print media: see the swap
-   pass note in the module docstring. */
+   all four "In each serving" rules line up as long as every serving line sets in four lines (polish round 2b: the
+   two-unit servings read "2 tablets:" / "2 capsules:" instead of "Per 2 ...:", which brings Lipo-Flow's panel from
+   five lines to four) and the dose bars stay level.  Measured in the build's Chromium, print media: see the polish
+   round 2b note in the module docstring. */
 .sheet.back:has(.flv-back) .col .what{display:flex;flex-direction:column}
 .sheet.back:has(.flv-back) .col .key{margin-top:auto}
 .sheet.back:has(.flv-back) .life .disc2{width:0.68in;height:0.68in}
@@ -1189,8 +1217,10 @@ COLS = [
     # list's Mito Recharge [CSO26] sat here until the swap pass (2026-11-04): its 100 mg EGCG from green tea extract
     # meets USP's "Do not use if you have a liver problem" [USP20].  Both bullets are ND325's own claims ("Supports
     # energy production"; "Provides antioxidant support throughout the body", trimmed for space) and start with a
-    # verb, so build.py ties each to the FDA line with the diamond.  The header keeps the cell-energy idea.
-    {"p": "fl_cellular_energy", "need": "Help cells make energy", "needsub": "alpha lipoic acid, CoQ10, NAC",
+    # verb, so build.py ties each to the FDA line with the diamond.  The header keeps the cell-energy idea.  The sub
+    # spells alpha-lipoic acid as the serving line and ND325 do; the no-break hyphen becomes a plain hyphen inside a
+    # nowrap span (kit.print_safe), and the sub still sets on one line (measured, polish round 2b).
+    {"p": "fl_cellular_energy", "need": "Help cells make energy", "needsub": "alpha&#8209;lipoic acid, CoQ10, NAC",
      "bullets": ["Supports energy production", "Provides antioxidant support"],
      "dose": "dose_from_db"},
 ]
@@ -1209,16 +1239,25 @@ assert all(slot != "bed" for c in COLS for slot, _n, _u in c.get("sched", _OWN[c
 # swap pass (2026-11-04): the green tea extract check, its written-yes gate and the rhythm note that repeated the
 # gate left with Mito Recharge (Cellular Energy has no green tea [ND325]).
 #  - berberine lowers blood sugar [ZHANG08]: a plain caution ("may lower blood sugar along with them"), never a
-#    claim that the product boosts the drug.
+#    claim that the product boosts the drug.  Cellular Energy's 150 mg alpha-lipoic acid lowers it too, but less
+#    [ALA], hence "(and, more mildly, the alpha-lipoic acid in Cellular Energy)" (polish round 2b).  Its CoQ10 has a
+#    similar small effect [ALA]; "and CoQ10" ran the practitioner bullet to four lines and closed the gap above the
+#    footer (measured), and both editions already send the reader to the prescriber before starting either product.
 #  - berberine slowed CYP2D6, 2C9 and 3A4 in people (300 mg three times daily for 2 weeks) [GUO12]; "can slow"
 #    because Berberine Pro gives 300 mg dihydroberberine a day, not the study's form and dose.  Warfarin is cleared
 #    mainly by CYP2C9 (S-warfarin) and partly by CYP3A4 [KAMINSKY97], so the list names warfarin next to the statins
-#    and both editions keep the INR (a clotting test) recheck.  The vitamin K1 sentence left with Mito Recharge, its
-#    only source on this page.  CYP450 is never called "liver enzymes" on this sheet: here that phrase means the
-#    ALT/AST blood test, as on the front.
+#    and both editions keep the INR (a clotting test) recheck.  Mito Recharge's vitamin K1 sentence left with it in
+#    the swap pass, but the vitamin-K-type warfarin concern did not: Cellular Energy's 200 mg CoQ10 is chemically
+#    similar to vitamin K, and CoQ10 has been tied to a weaker warfarin response and to more bleeding on warfarin
+#    [COQ10], so the same bullet says "the CoQ10 in Cellular Energy may change how warfarin works" (polish round 2b).
+#    CYP450 is never called "liver enzymes" on this sheet: here that phrase means the ALT/AST blood test, as on the
+#    front.
 #  - statins: simvastatin, lovastatin and atorvastatin are cleared by CYP3A4 [STATINS], which berberine can slow
-#    [GUO12]; statins are first-line for blood fats in NAFLD [AASLD23].  (A CoQ10 line was cut in polish round 1: it
-#    had no action and read as a product making up for the drug.)
+#    [GUO12]; statins are first-line for blood fats in NAFLD [AASLD23].  (Polish round 1 cut a line about statins and
+#    CoQ10: it had no action and read as a product making up for the drug.  The CoQ10 clause now in the medicines
+#    check is the warfarin caution above, a different thing.)
+#  - practitioner edition: both drug lines say "tell the doctor who prescribes them / who manages your warfarin before
+#    you start" (polish round 2b), because that doctor can only adjust doses or recheck the INR if told.
 #  - pregnancy: all four labels say "If you are pregnant, nursing, or taking medication, consult your healthcare
 #    practitioner before use" [LABELS] (Cellular Energy too [ND325]); Berberine Pro is singled out to skip; PCOS is on
 #    the front's risk list.
@@ -1232,18 +1271,27 @@ assert all(slot != "bed" for c in COLS for slot, _n, _u in c.get("sched", _OWN[c
 #    high-gallstone group and is told to lose weight.  The guidance wants a doctor first with gallstones and a DC,
 #    ND or pharmacist does not manage them, so both editions add "or your doctor", as the mold sheet's Lipo-Flow line
 #    does.  Two lines in both editions (measured); "or allergic to ragweed or daisies" ran the pharmacy line to three.
+# Fit since polish round 2b, measured in the build's Chromium (print media), both editions: the checks set in 3, 5, 2
+# and 2 lines, no bullet ends on one word, and the page-2 footer keeps 12.2 px clear (13.5 before the two longer lines).
 RX = {
     "pharmacy": [
-        # &nbsp; joins keep each bullet from ending on a single word (checked in both editions)
-        "<b>Diabetes medicines:</b> Berberine Pro may lower blood sugar along with them. Ask your doctor before you "
-        "start, and check your blood sugar more&nbsp;often.",
+        # &nbsp; joins keep each bullet from ending on a single word (checked in both editions).  [ZHANG08] [ALA]
+        # "Cellular&nbsp;Energy" keeps the product name on one line here; the practitioner bullet cannot take that join
+        # (it runs to four lines and closes the gap above the footer, measured).  alpha&#8209;lipoic: the kit turns the
+        # no-break hyphen into a plain hyphen inside a nowrap span, so the word never splits at its hyphen.
+        "<b>Diabetes medicines:</b> Berberine Pro (and, more mildly, the alpha&#8209;lipoic acid in Cellular&nbsp;Energy) "
+        "may lower blood sugar along with them. Ask your doctor before you start, and check your blood sugar "
+        "more&nbsp;often.",
         # One bullet for every enzyme interaction, statins first in the bold lead-in so a statin user finds it: a
         # separate "Statins:" bullet repeated "Berberine Pro can slow the enzyme" and pushed the footer off the page
-        # (measured then: 6 lines for the two bullets against 5 for this one; 4 lines since the swap pass, both
-        # editions).  [GUO12] [STATINS] [KAMINSKY97]
+        # (measured then: 6 lines for the two bullets against 5 for this one).  Polish round 2b adds Cellular Energy's
+        # CoQ10, which may weaken warfarin or go with more bleeding on it [COQ10], so a warfarin user who takes Cellular
+        # Energy without Berberine Pro is warned too: five lines in both editions.  "(a&nbsp;clotting" keeps "(a" off
+        # the end of line four.  [GUO12] [STATINS] [KAMINSKY97] [COQ10]
         "<b>Statins, warfarin and other medicines:</b> Berberine Pro can slow the enzymes that clear some drugs "
-        "(CYP2D6, 2C9, 3A4), including warfarin, simvastatin, lovastatin and atorvastatin. Show {who} your full "
-        "medicine list; your doctor may recheck your INR (a clotting test) after you&nbsp;start.",
+        "(CYP2D6, 2C9, 3A4), including warfarin, simvastatin, lovastatin and atorvastatin, and the CoQ10 in Cellular "
+        "Energy may change how warfarin works. Show {who} your full medicine list; your doctor may recheck your INR "
+        "(a&nbsp;clotting test) after you&nbsp;start.",
         "<b>Pregnant, planning to be, or nursing?</b> Ask {who} before taking any of these, and skip Berberine Pro "
         "unless your doctor says&nbsp;otherwise.",
         # [ND606] [SILVA25] [GILLESSEN20]: see the gallstone note above the RX
@@ -1251,13 +1299,17 @@ RX = {
         "Lipo-Flow (it&nbsp;boosts bile flow) and Milk Thistle Complex.",
     ],
     "practitioner": [
-        "<b>Diabetes medicines:</b> Berberine Pro may lower blood sugar along with them; the prescribing doctor may "
-        "check your blood sugar more often and adjust&nbsp;doses.",
-        # [GUO12] [STATINS] [KAMINSKY97]
+        # A DC or ND handing out this edition does not manage diabetes medicines or warfarin, and the doctor who does
+        # can only act if told, so both lines tell the reader to tell that doctor first (polish round 2b).  [ZHANG08]
+        # [ALA]
+        "<b>Diabetes medicines:</b> Berberine Pro (and, more mildly, the alpha&#8209;lipoic acid in Cellular Energy) "
+        "may lower blood sugar along with them. Tell the doctor who prescribes them before you start; they may check "
+        "your blood sugar more often and adjust&nbsp;doses.",
+        # [GUO12] [STATINS] [KAMINSKY97] [COQ10]
         "<b>Statins, warfarin and other medicines:</b> Berberine Pro can slow the enzymes that clear some drugs "
-        "(CYP2D6, 2C9, 3A4), including warfarin, simvastatin, lovastatin and atorvastatin. Show {who} your full "
-        "medicine list; the doctor who manages your warfarin may recheck your INR (a clotting test) after "
-        "you&nbsp;start.",
+        "(CYP2D6, 2C9, 3A4), including warfarin, simvastatin, lovastatin and atorvastatin, and the CoQ10 in Cellular "
+        "Energy may change how warfarin works. Show {who} your full medicine list, and tell the doctor who manages "
+        "your warfarin before you start; they may recheck your INR (a clotting&nbsp;test).",
         "<b>Pregnant, planning to be, or nursing?</b> Ask {who} before taking any of these, and skip Berberine Pro "
         "unless they say&nbsp;otherwise.",
         # [ND606] [SILVA25] [GILLESSEN20]: see the gallstone note above the RX
