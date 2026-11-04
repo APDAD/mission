@@ -1,8 +1,3 @@
-# TEMPORARY while the sheet agents iterate: generated outputs are rebuilt from build/ and
-# committed once, at integration, so work-in-progress PDFs do not bloat the public history.
-practitioner/
-pharmacy/
-img/thumb-*
 build/_tmp/
 
 # Python bytecode from the builder
