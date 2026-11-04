@@ -244,6 +244,30 @@ Swap pass (2026-11-04, the reviewer's residual list: one major defect), no redes
   - Photo: only Cellular Energy's 89x160 web thumbnail is in reach; the page prints the central stopgap step's smooth
     4x copy of it (img-src/R145.png, 356x640, marked SOFT, so the build lists it under SOFT PRODUCT PHOTOS).  The print
     master is Dropbox /NutriDyn/Product Images/Product Images (1)/R145_Web, which this session cannot download.
+Polish round 2b (2026-11-04, the reviewer's list after the swap pass), no redesign beyond it:
+  - Check panel, both editions: the medicines check adds "and the CoQ10 in Cellular Energy may change how warfarin works"
+    [COQ10], so a warfarin user who takes Cellular Energy without Berberine Pro is warned too; the diabetes check names
+    "(and, more mildly, the alpha-lipoic acid in Cellular Energy)" [ALA].  Practitioner edition: both drug lines tell the
+    reader to tell the doctor who prescribes them / manages the warfarin before starting (they were passive).  The
+    swap-pass notes that said the vitamin-K-type concern left with Mito Recharge are corrected (see [KAMINSKY97]).
+  - Serving lines: "2 tablets:" (Lipo-Flow, also "tangerine" for the peel extract and no "and" before methionine) and
+    "2 capsules:" (Cellular Energy) instead of "Per 2 ...:"; the one-capsule servings keep "Per capsule:".  Lipo-Flow's
+    line drops from five lines to four, so all four "In each serving" rules line up (with "Per", every wording tried set
+    in five; dropping "Per" on all four instead took Berberine Pro's line to three, which misaligned column 1).
+  - Column 4's header sub spells "alpha-lipoic acid" like its serving line and ND325 (one line, nowrap).
+  - Close-ups 2 to 4: squeezed nuclei, big droplets and the small side droplets stay inside their own cells, off the dark
+    walls (FAT_NUC_D, FAT_BIG, FAT_OFF, FAT_SMALL_D, FAT_SMALL; 6.5 in close-up 4), each checked by an assert.  Same rnd
+    calls, so the same cells hold fat, and the immune cells did not move (compared with the old numbers).  Measured gap to
+    the inner edge of the wall stroke, worst case: nuclei +0.48 (was -0.72), big droplets +0.55 (was -0.85, one reaching
+    the next cell), small droplets +0.33 (was -0.48), close-up 4 nuclei +0.39 (was -0.49).
+  - Dead CSS: ".flv-risk .x{display:none}" is gone (it matched nothing since the risk strip drew its own soda glyph).
+  - Measured, both editions, print media: no overflow on either page, 12.2 px clear above the page-2 footer (13.5
+    before), checks at 3, 5, 2 and 2 lines, no bullet ending on one word, all four "In each serving" rules level at 527.6
+    px and the dose bars at 596.1 px, all four header subs on one line; page 1 keeps 0.201 in above its footer, no
+    text overlaps in the diagram, 7.4 pt smallest text.
+  - Not fixable here: the Berberine Pro photo (img-src/R2125.png, shared with the insulin-resistance and PCOS sheets) has
+    21 px of clear padding at the top and 26 px at the bottom, so the Start-here bottle prints 0.87 in tall against 0.98
+    in for the others; trimming it belongs to the central photo-staging step, not this module's CSS.
 """
 import json
 import math
@@ -473,6 +497,37 @@ IMM_FOCI = [(-4, -34), (2, -23), (8, -33),        # top
             (21, 30), (28, 20), (33, 31)]         # lower right
 
 
+# Inside a fat-filled cell (polish round 2b).  A cell of circumradius 12 has its flat sides 10.39 from its centre, and
+# its 1.6 wall stroke has its inner edge at 9.59.  The squeezed nucleus sits 7.4 out (radial half-height 1.7, so its
+# outer edge is at 9.1), a big droplet has radius 6.6 to 8.4 and sits at most 0.4 off centre on each axis (9.45 at most,
+# its own stroke included), and a small droplet sits 6.0 out with radius 2.2 to 2.9 (9.4 at most).  Each shape stays
+# inside its own cell and off the dark wall, so the nuclei read as pressed inside the cell rather than as pink flecks
+# on the walls.  (They sat at 8.6, droplets up to 9.4 + 1.0 per axis, small droplets 6.4 out up to 3.4.)  The ranges
+# changed, the rnd calls did not, so the layout keeps its place.  _wall_gap re-checks every shape at build time.
+FAT_NUC_D = 7.4
+FAT_BIG, FAT_OFF = (6.6, 8.4), 0.4
+FAT_SMALL_D, FAT_SMALL = 6.0, (2.2, 2.9)
+
+
+def _wall_gap(px, py, cr, wall, reach, rot=0.0):
+    """Gap from a shape to the inner edge of its own hexagon's wall stroke (negative: it covers the wall).  The hexagon
+    is _hex(px, py, cr, rot), so its flat sides face 0 + rot, 60 + rot ... degrees; reach(nx, ny) is the shape's
+    farthest point along that unit normal."""
+    h = cr * math.cos(math.radians(30)) - wall / 2
+    return min(h - (reach(math.cos(t), math.sin(t)) - (px * math.cos(t) + py * math.sin(t)))
+               for t in (math.radians(60 * k + rot) for k in range(6)))
+
+
+def _circle_reach(x, y, r):
+    return lambda nx, ny: x * nx + y * ny + r
+
+
+def _ellipse_reach(x, y, rx, ry, deg):
+    """An ellipse whose rx axis points along deg (SVG rotate)."""
+    c, s = math.cos(math.radians(deg)), math.sin(math.radians(deg))
+    return lambda nx, ny: x * nx + y * ny + math.hypot(rx * (c * nx + s * ny), ry * (-s * nx + c * ny))
+
+
 def _immune_foci(cx, cy, r, drops, nucs):
     out, placed = [], []
     for ix, iy in IMM_FOCI:
@@ -503,27 +558,32 @@ def tissue(cx, cy, r, stage):
                 cells.append((px, py))
     p_fat = {0: 0, 1: 0.66, 2: 0.5}[stage]
     drops, nucs = [], []
+    wall = 1.6
     for px, py in cells:
-        out.append(f'<polygon points="{_hex(px, py, cr)}" fill="{CELL}" stroke="{CELL_EDGE}" stroke-width="1.6"/>')
+        out.append(f'<polygon points="{_hex(px, py, cr)}" fill="{CELL}" stroke="{CELL_EDGE}" stroke-width="{wall}"/>')
         if rnd.random() < p_fat:
-            big = rnd.uniform(6.6, 9.4)
-            fx, fy = px + rnd.uniform(-1, 1), py + rnd.uniform(-1, 1)
+            big = rnd.uniform(*FAT_BIG)
+            fx, fy = px + rnd.uniform(-FAT_OFF, FAT_OFF), py + rnd.uniform(-FAT_OFF, FAT_OFF)
             out.append(sw_fat(big, fx, fy))
             drops.append((fx, fy, big))
-            a = rnd.uniform(0, 2 * math.pi)       # the nucleus is squeezed to the cell's edge
-            nx, ny = px + 8.6 * math.cos(a), py + 8.6 * math.sin(a)
+            a = rnd.uniform(0, 2 * math.pi)       # the big droplet squeezes the nucleus toward the cell's edge
+            nx, ny = px + FAT_NUC_D * math.cos(a), py + FAT_NUC_D * math.sin(a)
+            deg = round(math.degrees(a) + 90)
             out.append(f'<ellipse cx="{nx:.1f}" cy="{ny:.1f}" rx="2.7" ry="1.7" fill="{NUC}" '
-                       f'transform="rotate({math.degrees(a) + 90:.0f} {nx:.1f} {ny:.1f})"/>')
+                       f'transform="rotate({deg} {nx:.1f} {ny:.1f})"/>')
             nucs.append((nx, ny, 2.7))
+            assert _wall_gap(px, py, cr, wall, _circle_reach(fx, fy, big + 0.5)) >= 0.1, "fat droplet on a cell wall"
+            assert _wall_gap(px, py, cr, wall, _ellipse_reach(nx, ny, 2.7, 1.7, deg)) >= 0.1, "nucleus on a cell wall"
         else:
             out.append(f'<circle cx="{px:.1f}" cy="{py:.1f}" r="3.6" fill="{NUC}"/>')
             nucs.append((px, py, 3.6))
             if stage in (1, 2) and rnd.random() < 0.55:   # a few small droplets beside the nucleus
                 a = rnd.uniform(0, 2 * math.pi)
-                rs = rnd.uniform(2.4, 3.4)
-                sx, sy = px + 6.4 * math.cos(a), py + 6.4 * math.sin(a)
+                rs = rnd.uniform(*FAT_SMALL)
+                sx, sy = px + FAT_SMALL_D * math.cos(a), py + FAT_SMALL_D * math.sin(a)
                 out.append(sw_fat(rs, sx, sy))
                 drops.append((sx, sy, rs))
+                assert _wall_gap(px, py, cr, wall, _circle_reach(sx, sy, rs + 0.5)) >= 0.1, "fat droplet on a cell wall"
     if stage == 2:
         out.append(_immune_foci(cx, cy, r, drops, nucs))
     out.append("</g>")
@@ -691,10 +751,17 @@ def _tissue_scarred(cx, cy, r):
                     if inside and edge >= big + 1.5:      # fat only where the whole droplet fits in the nodule
                         out.append(sw_fat(big, fx, fy))
                         drops.append((fx, fy, big))
-                        nx, ny = px + 7.4 * math.cos(a), py + 7.4 * math.sin(a)
+                        # 6.5 out of a 10.5 cell (outer edge 8.0, wall-stroke inner edge 8.34), the same share of the
+                        # cell as close-ups 2 and 3 (polish round 2b; it sat at 7.4 and covered the wall by up to 0.5)
+                        nx, ny = px + 6.5 * math.cos(a), py + 6.5 * math.sin(a)
+                        deg = round(math.degrees(a) + 90)
                         out.append(f'<ellipse cx="{nx:.1f}" cy="{ny:.1f}" rx="2.4" ry="1.5" fill="{NUC}" '
-                                   f'transform="rotate({math.degrees(a) + 90:.0f} {nx:.1f} {ny:.1f})"/>')
+                                   f'transform="rotate({deg} {nx:.1f} {ny:.1f})"/>')
                         nucs.append((nx, ny, 2.4))
+                        assert _wall_gap(px, py, SCAR_CR, 1.5, _ellipse_reach(nx, ny, 2.4, 1.5, deg), rot) >= 0.1, \
+                            "nucleus on a cell wall"
+                        assert _wall_gap(px, py, SCAR_CR, 1.5, _circle_reach(fx, fy, big + 0.5), rot) >= 0.1, \
+                            "fat droplet on a cell wall"
                         continue
                 out.append(f'<circle cx="{px:.1f}" cy="{py:.1f}" r="3.2" fill="{NUC}"/>')
                 if inside:                            # a centre outside the nodule is clipped away
