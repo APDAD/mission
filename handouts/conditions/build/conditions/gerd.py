@@ -27,7 +27,7 @@ Zinc-Carnosine", and back["rhythm_note"] says {who} may make the swap.  Zinc a d
 sheets: Zinc-Carnosine 17 + Licorice DGL Pro 5 (3 tablets, ND1337) + the multi 15 (3 capsules,
 ND475) = about 37 mg (36 with the scoop in place of the capsule).  With about 10 mg from food that
 is above the 40 mg adult upper limit [ODS-ZN], and the check panel says so plainly.  Two doses sit
-below the bottle on purpose (the check line "Doses on purpose" says so): Zinc-Carnosine 1 a day
+below the bottle on purpose (the plan line under the daily rhythm says so): Zinc-Carnosine 1 a day
 (bottle 1 twice daily, protocol 2 twice daily) and Licorice DGL Pro 3 a day (bottle 3 after each
 meal); GI Integrity is 1 scoop (the label's 1 scoop; protocol 1 twice daily).
 
@@ -35,6 +35,17 @@ Polish round 1 (2026-11-03): column 5 and the either/or plan above; honest zinc 
 stomach-acid check in both editions; an iron check line; column 5 names no nutrient from the
 front's PPI coin strip; "Calm after dinner"; the coin strip says "absorption"; the zoom's three
 hidden fold-line stubs are gone.
+
+Polish round 2 (2026-11-04, independent review): the plan line names no symptom (no "if reflux keeps coming
+back") and puts the GI Integrity scoop between meals, away from the multi's iron; a blood-thinner line in both
+check panels (the multi's vitamin K, GI Integrity's glucosamine); cipro spacing is the label's 2 h before or 6 h
+after; column headers name structures ("Strengthen the lining", "Mucus layer support", "Coat the food tube")
+instead of relief verbs; GI Integrity's first bullet is its claim; glucosamine HCl on its serving line; serving
+counts on every size line; no-break spaces in two product names; the weight tile no longer promises a valve
+eased by "a few pounds"; the HCl tailed l carries a real, invisible l for the PDF text layer.  Layout: the
+"doses on purpose" line moved from the check panel into the plan line, so the two panels of the duo now end
+level (the rhythm box had sat 0.3-0.45 in short); the alarm list is spaced like the list beside it, so its box
+fills; the back page's two one-line headings take tighter line boxes, so the pharmacy footer keeps a gap.
 
 Front review fixes (2026-11-03, front_rechecks_A): zoom left wall now runs down like the
 lesser curvature; refluxed acid is a jet that narrows through the valve with lining
@@ -93,6 +104,26 @@ Back-page sources:
            blocks or a wedge; extra pillows do not help.
   [LT4]    Levothyroxine prescribing information: take it 4 hours apart from
            calcium, iron and magnesium products.
+  [CIPRO]  Cipro (ciprofloxacin) prescribing information, FDA label NDA 019537 (2016 revision), section
+           2.4 and the drug-interaction table: take CIPRO at least 2 hours before or 6 hours after
+           multivalent-cation products, including "other products containing calcium, iron or zinc"
+           (multivitamins included).  Read 2026-11-04 through a web-search copy of the label text:
+           accessdata.fda.gov and drugs.com are blocked from this session.
+  [ODS-K]  NIH Office of Dietary Supplements, Vitamin K fact sheet for health professionals: vitamin K
+           can work against warfarin; people on warfarin keep their vitamin K intake steady (also cited
+           by the fatty-liver sheet; not re-opened here, ods.od.nih.gov is blocked).
+  [KS08]   Knudsen JF, Sokol GH. Pharmacotherapy 2008;28:540-8, PMID 18363538,
+           doi:10.1592/phco.28.4.540 (glucosamine with warfarin: raised INR in a case report, 20 FDA
+           MedWatch and 21 WHO reports).
+  [JAC06]  Jacobson BC et al. N Engl J Med 2006;354:2340-8, PMID 16738270, doi:10.1056/NEJMoa054391
+           (Nurses' Health Study: reflux rises with BMI; a BMI drop of more than 3.5 went with fewer
+           frequent symptoms).
+  [NJ13]   Ness-Jensen E et al. Am J Gastroenterol 2013;108:376-82, PMID 23358462,
+           doi:10.1038/ajg.2012.466 (HUNT study: weight loss cut reflux symptoms dose by dose; the clear
+           gain came with a BMI drop of more than 3.5).
+  [PAN06]  Pandolfino JE et al. Gastroenterology 2006;130:639-49, PMID 16530504,
+           doi:10.1053/j.gastro.2005.12.016 (BMI and waist size raise the pressure inside the stomach and
+           across the valve).
   [HCL]    Asher's GERD protocol email, 2019-12-12 ("GERD, Low HCl, HCl Challenge"): many
            reflux patients run low on stomach acid; the practitioner runs the HCl challenge,
            never with gastritis or a recent ulcer (and his 2019-09-05 email: no HCl into an
@@ -768,9 +799,11 @@ CSS = r"""
 .gxf .gx-alarm{border:1.6px solid #C0392B;border-radius:8px;background:#FDF1EF;padding:0.05in 0.12in 0.06in}
 .gxf .gx-alarm .gx-h{color:#A5281E}
 .gxf .gx-alarm ul{margin:0;padding:0;list-style:none;font-size:8.3pt;line-height:1.3;color:#2B3236}
-.gxf .gx-alarm li{margin:0;position:relative;padding-left:12px}
+/* the alarm list spaced like the "How it can feel" list beside it (2px under each line), so the box it shares a
+   row with fills to its bottom instead of leaving 0.19 in empty under the last line */
+.gxf .gx-alarm li{margin:0 0 2px;position:relative;padding-left:12px}
 .gxf .gx-alarm li::before{content:"";position:absolute;left:0;top:4px;width:6px;height:6px;border-radius:50%;background:#C0392B}
-.gxf .gx-alarm p{margin:3px 0 0;padding-top:3px;border-top:1px dashed #E7B3AC;font-size:8.3pt;line-height:1.3;color:#2B3236}
+.gxf .gx-alarm p{margin:5px 0 0;padding-top:5px;border-top:1px dashed #E7B3AC;font-size:8.3pt;line-height:1.3;color:#2B3236}
 .gxf .gx-alarm p b{color:#8E3110}
 .gxf .gx-trow{display:grid;grid-template-columns:repeat(10,1fr);gap:0 0.04in}
 .gxf .gx-tr{display:flex;flex-direction:column;align-items:center;text-align:center}
@@ -792,13 +825,18 @@ CSS = r"""
 .gxf .gx-lc{text-transform:none}
 .gxf .gx-ask{font-size:7.6pt;color:#3F4A50;text-align:center;margin-top:3px}
 .gxf .gx-fn{margin:0;font-size:7pt;color:#5E686F;line-height:1.3}
-/* back page, scoped by the marker span in the lifestyle title.  Room for the four- and five-line check
-   panels and the three-sentence plan line: a slightly shorter band, smaller margins */
+/* back page, scoped by the marker span in the lifestyle title.  Room for the four- and five-item check
+   panels and the four-sentence plan line: a slightly shorter band, smaller margins */
 .sheet.back:has(.gxb) .band{padding-bottom:0.13in}
-.sheet.back:has(.gxb) .band h2{margin-bottom:0.08in}
+/* polish round 2: room for the blood-thinner line, which the pharmacy edition had no height for (the
+   Recommended-by row ended 1.4 px above the footer).  Both one-line headings get a tighter line box; the
+   type itself stays the same size */
+.sheet.back:has(.gxb) .band h2{margin-bottom:0.08in;line-height:1.15}
 .sheet.back:has(.gxb) .life.hex .disc2{width:0.94in;height:0.82in}
+/* 1.35fr is the best split (checked 2026-11-04): no check line is near a wrap point, so a wider check panel
+   saves no line, and a narrower rhythm box squeezes its Morning slot until it is the taller panel */
 .sheet.back:has(.gxb) .duo{grid-template-columns:1fr 1.35fr;margin-top:0.08in}
-.sheet.back:has(.gxb) .ns-title{margin-top:0.08in}
+.sheet.back:has(.gxb) .ns-title{margin-top:0.08in;line-height:1.12}
 .sheet.back:has(.gxb) .cols{margin-top:0.07in}
 .sheet.back:has(.gxb) .notes{margin-top:0.06in}
 .sheet.back:has(.gxb) .recby{margin-top:0.06in}
@@ -840,8 +878,13 @@ SHEET = {
                  ("bed", "Raise the head", "Blocks or a wedge, 6 to 8 inches. Not pillows."),
                  ("plate", "Smaller meals", "Eat slowly, with plenty of plants."),             # protocol: no heavy meals; [ZAL17]
                  ("walk", "Stay upright", "No bending or hard exercise after meals."),         # protocol: bending, jarring exercise
-                 ("scale", "A healthy weight", "A few pounds lighter eases the valve."),       # [ACG22] weight loss, strong
-                 ("smoke", "Stop smoking", "Smoking loosens the valve.")],                     # [ACG22] tobacco; lowers LES pressure
+                 # [ACG22] weight loss; [JAC06] [NJ13]: the reflux benefit came with real weight loss (a BMI drop of
+                 # more than 3.5), so no "a few pounds"; [PAN06]: belly weight raises the pressure in the stomach that
+                 # pushes acid up through the valve, so the tile names the pressure, not the valve "easing".  (The
+                 # review's "Losing extra weight takes pressure off the valve." runs to 3 lines in a 1.2 in tile and
+                 # grows the whole band; this says the same in 2.)
+                 ("scale", "A healthy weight", "Lose extra weight: less pressure on the valve."),
+                 ("smoke", "Stop smoking", "Smoking loosens the&nbsp;valve.")],                # [ACG22] tobacco; lowers LES pressure
         # Column wording is structure/function only and names no drug: a column that pairs a product with
         # an acid blocker's side effect reads as mitigating a drug's adverse event, a disease claim under
         # 21 CFR 101.93(g)(2)(ix).  The PPI facts stay on the front as education.
@@ -850,27 +893,34 @@ SHEET = {
             # sufficient" (2019-12-12).  Label: 1 capsule twice daily between meals (ND414).  One a day here, to
             # limit zinc (17 mg a capsule), and it is the only product in the Start-here week.  GI Integrity's
             # scoop (78 mg zinc carnosine, ND431) can take its place: either/or, never both (DECISION above).
-            {"p": "gerd_zinc_carnosine", "need": "Shield the lining", "needsub": "zinc carnosine", "start": True,
-             "bullets": ["Supports the stomach&rsquo;s own protective lining",
+            # Header and bullet (polish round 2): no "shield", which echoed the intro's "the stomach has a coat that
+            # shields it from acid" and, next to the food tube, would read as shielding it from reflux.  The bullet
+            # names the food tube because the bottle's own claim is "for GI Support and Integrity" (ND414 label,
+            # R154 photo), and the GI tract starts at the food tube.
+            {"p": "gerd_zinc_carnosine", "need": "Strengthen the lining", "needsub": "zinc carnosine", "start": True,
+             "bullets": ["Supports the lining of your stomach and food&nbsp;tube",
                          "Try it on its own for the first week"],
              "dose": "1 capsule daily", "dosesub": "at bedtime, empty stomach", "sched": [("bed", 1, "capsule")]},
             # Protocol: "Chew three tablets as needed ... or 1-3 tablets before each meal"; label: 3 after each meal.
-            # Once a day here limits zinc (5 mg per 3 tablets); the header says "after dinner" so it cannot invite
-            # the label's 9 a day.  After dinner: the rhythm box files it under the evening meal, and night-time
-            # reflux is the focus.  DGL: most, not all, of the glycyrrhizin is removed (NutriDyn's protocol copy:
-            # "does not contain substantial parts of glycyrrhizin").
-            {"p": "gerd_dgl_pro", "need": "Calm after dinner", "needsub": "chewable DGL licorice",
+            # Once a day here limits zinc (5 mg per 3 tablets); the dose bar says "after dinner" so it cannot
+            # invite the label's 9 a day.  After dinner: the rhythm box files it under the evening meal, and
+            # night-time reflux is the focus.  DGL: most, not all, of the glycyrrhizin is removed (NutriDyn's
+            # protocol copy: "does not contain substantial parts of glycyrrhizin").  Header: a structure (the mucus
+            # layer), not a relief verb; the old "Calm after dinner" read as calming heartburn after meals.
+            {"p": "gerd_dgl_pro", "need": "Mucus layer support", "needsub": "chewable DGL licorice",
              "bullets": ["Supports the stomach&rsquo;s soothing mucus layer",
                          "Most of the licorice part that can raise blood pressure is removed"],
              "dose": "Chew 3 tablets", "dosesub": "after dinner", "sched": [("pm", 3, "tablets")]},
             # Protocol: chronic reflux, GI Integrity "Features 78 mg of zinc-carnosine" (the reason it is here; the
-            # protocol's own rat study found glutamine worsened reflux lesions, so the header leads with zinc
+            # protocol's own rat study found glutamine worsened reflux lesions, so the header sub leads with zinc
             # carnosine, not glutamine).  Either/or with Zinc-Carnosine, so no slot in the daily rhythm (sched []):
             # the plan line names the swap.  Directions (products DB R327): "Mix one scoop with 6-8 ounces of
             # water"; warning (ND431): "Do not use if pregnant or nursing".  The owner notes keep "sip it slowly".
-            {"p": "gerd_gi_integrity", "need": "Coat and soothe", "needsub": "zinc carnosine, aloe, DGL",
-             "bullets": ["Mix with 6 to 8 oz water and sip it slowly, so it coats your food tube",
-                         "Skip it if pregnant or nursing"],
+            # Header "Coat the food tube" is what the demulcents (aloe, slippery elm, marshmallow, okra) do, not a
+            # relief verb; bullet 1 is the column's claim, so the kit's diamond lands on it, not on a direction.
+            {"p": "gerd_gi_integrity", "need": "Coat the food tube", "needsub": "zinc carnosine, aloe, DGL",
+             "bullets": ["Supports the lining from food tube to gut",
+                         "Sip it slowly in 6 to 8 oz water; skip it if pregnant or nursing"],
              "dose": "1 scoop daily", "dosesub": "in place of Zinc-Carnosine", "sched": []},
             # Protocol (pantoprazole patient, Asher's PPI-support email 2019-09-05): "Spore Probio" while on the PPI;
             # follow-up 2019-09-06: rotate probiotics, or "stick with the Spore Probio".  XOS 300 mg: label (ND1135).
@@ -888,38 +938,57 @@ SHEET = {
              "dose": "3 capsules daily", "dosesub": "with breakfast", "sched": [("am", 3, "capsules")]},
         ],
         # The rhythm box lists four products (GI Integrity is the swap), so the plan line says how the swap works.
-        "rhythm_note": ("The full plan is <b>{plan} a day</b>. Start with the <b>Start here</b> pick, then add one "
-                        "a week. If reflux keeps coming back, {who} may swap the Zinc-Carnosine capsule for 1 scoop "
-                        "of GI Integrity in the morning."),
+        # Polish round 2: no symptom trigger ("if reflux keeps coming back" tied the product to the disease, an
+        # implied claim under 21 CFR 101.93(g)(2)), and the scoop goes "between meals" (the Zinc-Carnosine label's
+        # timing, ND414), never at breakfast beside the multi's 18 mg iron and 15 mg zinc.  The "doses on purpose"
+        # line moved here from the check panel: it is about the plan, and the check panel was the tall one while
+        # this box sat half empty.  Bottle vs sheet: Zinc-Carnosine 2 a day vs 1, Licorice DGL Pro 9 a day vs 3.
+        "rhythm_note": ("The full plan is <b>{plan} a day</b>. Some doses are lower than the bottle says <b>on "
+                        "purpose</b>, to limit zinc: follow this plan unless {who} changes it. Start with the "
+                        "<b>Start here</b> pick, then add one a week. {Who} may swap the Zinc-Carnosine capsule "
+                        "for 1&nbsp;scoop of GI Integrity between meals, never both."),
         "rx": None,  # the check panels, below
     },
 }
 
 
 # ------------------------------------------------------------------ check panels
-# Bottle vs sheet: Zinc-Carnosine 2 a day vs 1, Licorice DGL Pro 9 a day vs 3.
-DOSES = ("<b>Doses on purpose.</b> Some doses here are lower than the bottle says, to limit zinc. Follow this "
-         "plan unless {who} changes it.")
+# (The "doses on purpose" line now lives in the plan line under the daily rhythm: back["rhythm_note"].)
 # [ODS-ZN] zinc a day: Zinc-Carnosine 17 mg (ND414) + Licorice DGL Pro 5 mg (ND1337) + the multi 15 mg (ND475)
 # = 37 mg (36 with GI Integrity's 16.1 mg, ND431, in place of the capsule); with about 10 mg from food, about
 # 47 mg against the 40 mg adult limit.  {gate} is who may okay more zinc: {who} here, the prescriber at a pharmacy.
 ZINC = ("<b>Zinc adds up.</b> The plan gives about 37 mg of zinc a day. With the zinc in food (about 10 mg), that "
         "is above the 40 mg adult upper limit, so use it only as long as {who} advises: long use can lower copper. "
-        "Add no other zinc, including another multi, unless {gate} says so. Doses are for adults.")
+        "Take no other zinc or multi unless {gate} says so. Doses are for adults.")
 # [ODS-MVM]; 18 mg iron per 3 capsules (ND475).
 IRON = ("<b>Iron check.</b> The multi has 18 mg of iron. Men and women past menopause usually need no extra iron "
         "unless a test shows it: ask {who}.")
-# [ODS-ZN] antibiotic spacing (iron binds the same antibiotics, per their prescribing information); [LT4] thyroid.
-SPACE = ("<b>Space the minerals.</b> Take antibiotics like cipro or doxycycline 2 hours before or 4 to 6 hours "
-         "after the zinc and iron here, and thyroid pills 4 hours apart.")
+# [CIPRO] the stricter label wins: cipro at least 2 h before or 6 h after products with calcium, iron or zinc, and
+# the multi carries iron, zinc and magnesium (ND475); [ODS-ZN] 2 h before or 4-6 h after zinc covers the
+# tetracyclines (doxycycline) too; [LT4] thyroid 4 h.
+SPACE = ("<b>Space the minerals.</b> Take antibiotics like cipro or doxycycline 2&nbsp;hours before or 6&nbsp;hours "
+         "after the zinc and iron here, and thyroid pills 4&nbsp;hours apart.")
+# [ODS-K] vitamin K works against warfarin: the multi has 120 mcg vitamin K1 per 3 capsules (ND475; products DB
+# R717).  [KS08] glucosamine (1 g glucosamine HCl per scoop, ND431; DB R327) has raised INR in people on warfarin.
+# Many PPI users also take a blood thinner (PPIs are often prescribed to protect the stomach alongside one), so the
+# line asks everyone on a thinner, and names warfarin as the one both can change.
+BLOOD = ("<b>On a blood thinner?</b> The multi&rsquo;s vitamin K and GI Integrity&rsquo;s glucosamine can change "
+         "how warfarin works: ask {who} and whoever manages it first.")
 # Inter's plain l looks like a capital I ("HCI"), and the shipped font subset has no tailed-l alternate (cv05
 # changes nothing, checked 2026-11-03), so the l of HCl is drawn: Inter's own t tail on an l stem, measured from
-# the 400-weight font (stem 0.0875 em, height 0.7275 em) and sized in em so it follows the text.
-_TAILED_L = ('<svg viewBox="0 0 128 294" width="0.32em" height="0.735em" role="img" aria-label="l" '
-             'style="display:inline-block;width:0.32em;height:0.735em;vertical-align:-0.0075em;margin:0;'
-             'overflow:visible"><path d="M31,0 H66 V244 C66,252.3 72.3,259.5 80,259.5 H108.5 C112.5,262 114.5,266 '
+# the 400-weight font (stem 0.0875 em, height 0.7275 em) and sized in em so it follows the text (400 units = 1 em).
+# A real Inter "l" sits under the drawing, in transparent ink, so the PDF text layer reads "HCl" for copy, search
+# and screen readers: the drawing is pulled back over it by exactly the l's advance (496/2048 em), so the layout
+# is the same as before.  It is HTML text, not SVG text, on purpose (checked 2026-11-04): an SVG <text> l comes
+# out a hair smaller after the em-to-pixel rounding of the svg box, and pdftotext then splits "HC l"; the HTML l
+# matches the letters beside it exactly and reads "HCl" (and "HCl,") at 7, 7.2 and 8.3 pt.  opacity:0 would drop
+# it from the PDF; transparent ink keeps it.  Inter's l is in the Latin set, so no Type 3 font.
+_TAILED_L = ('<svg viewBox="0 0 128 294" width="0.32em" height="0.735em" aria-hidden="true" '
+             'style="display:inline-block;width:0.32em;height:0.735em;vertical-align:-0.0075em;'
+             'margin:0 0 0 -0.2421875em;overflow:visible">'
+             '<path d="M31,0 H66 V244 C66,252.3 72.3,259.5 80,259.5 H108.5 C112.5,262 114.5,266 '
              '115,272 V286 C114.5,290 112,293 108,294 H76 C55,294 31,276 31,244 Z" fill="currentColor"/></svg>')
-HCL = f'<span class="nw">HC{_TAILED_L}</span>'
+HCL = f'<span class="nw">HC<span style="color:transparent">l</span>{_TAILED_L}</span>'
 
 
 def _acid(who):
@@ -932,9 +1001,8 @@ def _acid(who):
 
 SHEET["back"]["rx"] = {
     # the spacing times live in the pharmacy edition; here a pointer to them
-    "practitioner": [DOSES,
-                     ZINC.replace("{gate}", "{who}") + " Ask {who} how to space antibiotics and thyroid pills from "
+    "practitioner": [ZINC.replace("{gate}", "{who}") + " Ask {who} how to space antibiotics and thyroid pills from "
                      "the zinc and iron.",
-                     IRON, _acid("{Who}")],
-    "pharmacy": [DOSES, ZINC.replace("{gate}", "your prescriber"), IRON, SPACE, _acid("Your practitioner")],
+                     IRON, BLOOD, _acid("{Who}")],
+    "pharmacy": [ZINC.replace("{gate}", "your prescriber"), IRON, SPACE, BLOOD, _acid("Your practitioner")],
 }

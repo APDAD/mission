@@ -68,6 +68,17 @@ Polish round 1 2026-11-03 (residual review):
     feet get their own dot and label (no leaders cross); B. miyamotoi is named as CDC now names it,
     hard tick relapsing fever.
 
+Polish round 2 2026-11-04 (residual review):
+  * BACK: Mito Recharge stays at bedtime (the only slot 2 to 3 hours from twice-daily doxycycline) but
+    is taken with a snack, and both check panels add "Green tea in Mito Recharge: take with food. Liver
+    problem? Ask your doctor (pharmacy) / provider (practitioner) first" (USP's green tea extract caution,
+    as on the fatty-liver sheet); the five "In each serving" headings start on one line; serving lines
+    print label figures (75 mg alpha-lipoic + 45 mg R-lipoic acid; CFU "when made") and never split a
+    number from its unit; Liposomal Glutathione's size line says it contains alcohol; claim lines and
+    other ingredients are quoted from ND1054, ND812, ND460 and ND971 in products.d/lyme.json.
+  * BOTH PAGES: curly apostrophes; FRONT: the spread's step labels are all actions (WAITS, CLIMBS ON,
+    BITES).
+
 Every SVG is drawn at 1:1 with its printed CSS size (viewBox width = rendered
 width in CSS px), so an SVG font-size of 9.6 (the smallest used) prints at 7.2 pt.
 Sources (each number below carries a short comment): CDC Lyme disease pages
@@ -506,8 +517,12 @@ def art_spread(t):
                '</g>'
                f'<rect x="{px0}" y="{py0}" width="{px1 - px0}" height="{py1 - py0}" rx="7" fill="none" stroke="#C4B38A" stroke-width=".9"/>')
     out.append(tick_top("deer", 85, 126.5, 0.84, 0, "lyb"))
-    out.append(T(86, 179.5, "TICK", 11, 800, INK, "middle", ls=1))
-    out.append(T(86, 192.5, ["Climbs on", "as you pass"], 10, 600, SOFT_INK, "middle", lh=1.15))
+    # polish round 2: every step label is what the tick does (WAITS, CLIMBS ON, BITES), so the strip
+    # reads as one sentence; the caption finishes this one.  Centred under the pant leg (x = 86).
+    # Two caption lines: on one line it ended 10 px from the BITES caption on the same baseline and
+    # could be read as one run-on line.
+    out.append(T(86, 179.5, "CLIMBS ON", 11, 800, INK, "middle", ls=1))
+    out.append(T(86, 192.5, ["as you", "brush past"], 10, 600, SOFT_INK, "middle", lh=1.15))
     # 3. bites and feeds: skin cut away to show the mouthparts in it
     out.append(arrow("M130,140 H150", SLATE))
     sx0, sx1, sy0, sy1 = 158, 272, 128, 166
@@ -524,7 +539,7 @@ def art_spread(t):
     out.append(T(sx1 - 8, sy0 + 18, "SKIN", 9.6, 800, "#5A2616", "end", ls=1))
     out.append(T(sx1 - 8, sy1 - 6, "blood vessel", 9.6, 600, "#6B241C", "end"))
     out.append(tick_feeding(210, sy0 - 0.6, "lyfeed"))
-    out.append(T(215, 179.5, "BITE", 11, 800, INK, "middle", ls=1))
+    out.append(T(215, 179.5, "BITES", 11, 800, INK, "middle", ls=1))
     # CDC "How Lyme Disease Spreads" (current page): "In most cases, a tick must be attached
     # for more than 24 hours before the Lyme disease bacterium can be transmitted" (older CDC
     # pages said 36 to 48 hours).  Faster germs: Powassan virus can pass "as quickly as
@@ -717,7 +732,7 @@ def art_symptoms(t):
     early = [(["Fever, chills, headache", "and tiredness"], 50, at(-7, 15)),
              (["Swollen lymph nodes"], 84, at(-7.5, 42)),
              (["Muscle and joint aches"], 114, at(-33, 63)),
-             (["Expanding rash, sometimes", "like a bull's-eye"], 156, (rash[0] - 11.2, rash[1] + 1.5))]
+             (["Expanding rash, sometimes", "like a bull’s-eye"], 156, (rash[0] - 11.2, rash[1] + 1.5))]
     # CDC lists "nerve pain" and "shooting pains, numbness, or tingling in the hands or feet" among the
     # later signs.  Hands and feet each get a dot, and each dot its own label: one label cannot reach the
     # hand (above the knee) and the foot (below it) without its leader crossing the knee's.  So "more
@@ -757,7 +772,7 @@ def art_symptoms(t):
     # reaction, not EM (same case definition).
     out.append(rash_patch(kx + 16, ky + 77, 7, 5.6, "lyrpk", rot=0) + bullseye(kx + 33.5, ky + 77, 6.4))
     out.append(T(kx + 46, ky + 68, "Rash at the bite:", 10.4, 600, INK))
-    out.append(T(kx + 46, ky + 80, ["plain red or bull's-eye;", "grows to 2 inches or more"], 9.6, 600, SOFT_INK, lh=1.2))
+    out.append(T(kx + 46, ky + 80, ["plain red or bull’s-eye;", "grows to 2 inches or more"], 9.6, 600, SOFT_INK, lh=1.2))
     return svg(W, H, "".join(out), "Early and later signs of Lyme disease on the body, with a key")
 
 
@@ -808,12 +823,18 @@ CSS = r"""
 .ly-front .ly-tk span{display:block;font-size:7.8pt;color:#3A4247;line-height:1.28;margin-top:1px}
 /* BACK PAGE.  Every rule is scoped by the empty .ly-back marker in life_title, so it touches
    only this sheet's back, in its own file and in the all-sheets bundle. */
-/* life icons at 0.54 in (kit 0.6 in) in a shorter box, and a tighter band: the back needs the room */
-.sheet.back:has(.ly-back) .icons5 .life .disc2{height:0.56in}
+/* life icons at 0.54 in (kit 0.6 in) in a box of the same height, and a tighter band: the back needs
+   the room.  ROOM BUDGET, polish round 2 (measured in the build's Chromium, both editions): the aligned
+   serving headings add 11.4 px to the product row and the green tea check line 14.2 px to the duo,
+   against 15.6 px of slack.  The 13.4 px it lacked came from six gaps, each set to a value other
+   sheets in the series already use: icon box 0.56 -> 0.54 in, band bottom 0.11 -> 0.09 in, section
+   gaps above "Nutrient Solutions", the duo and the notes box 0.1 -> 0.08 in, writing lines 0.24 ->
+   0.22 in apart. */
+.sheet.back:has(.ly-back) .icons5 .life .disc2{height:0.54in}
 .sheet.back:has(.ly-back) .icons5 .life .disc2 svg{width:0.54in!important;height:0.54in!important}
-.sheet.back:has(.ly-back) .band{padding-bottom:0.11in}
+.sheet.back:has(.ly-back) .band{padding-bottom:0.09in}
 .sheet.back:has(.ly-back) .band h2{margin-bottom:0.07in}
-.sheet.back:has(.ly-back) .ns-title{margin-top:0.1in}
+.sheet.back:has(.ly-back) .ns-title{margin-top:0.08in}
 /* products section: say the frame out loud.  The kit's generic subtitle is not rendered
    (display:none, so it is not in the PDF either) and the sheet's own line takes its place:
    general wellness support, NOT a treatment for any infection, antibiotics first.  ("Recovery
@@ -822,13 +843,21 @@ CSS = r"""
 .sheet.back:has(.ly-back) .ns-title span{display:none}
 .sheet.back:has(.ly-back) .ns-title::after{content:"General wellness support, not a treatment for any infection. Antibiotics come first.";
   font:700 8pt Inter,sans-serif;color:var(--deep);letter-spacing:.02em}
-/* the check panel carries six safety lines, so it gets the wider share of the row (kit: 1.35fr 1fr,
+/* "In each serving" starts on one line in all five columns (polish round 2, the HBP pattern): every
+   product name gets a two-line box and every bullet list the height of four bullet lines (4 x 1.28em,
+   plus the one 2 px gap between two bullets), so names of 1 or 2 lines and lists of 3 or 4 lines no
+   longer stagger the facts blocks (they started at four heights, 38 px apart). */
+.sheet.back:has(.ly-back) .col .pick .nm{min-height:2.3em}
+.sheet.back:has(.ly-back) .col .what ul{min-height:calc(4 * 1.28em + 2px)}
+/* the check panel carries seven safety lines, so it gets the wider share of the row (kit: 1.35fr 1fr,
    rhythm first); measured 2026-11-03: rhythm 175 px, check 180 px, versus 163 / 254 at the kit split */
-.sheet.back:has(.ly-back) .duo{grid-template-columns:1fr 1.35fr}
+.sheet.back:has(.ly-back) .duo{grid-template-columns:1fr 1.35fr;margin-top:0.08in}
 /* narrower rhythm slots: 2 px less gap and padding keeps "Evening meal" on one line */
 .sheet.back:has(.ly-back) .rhythm{gap:4px}
 .sheet.back:has(.ly-back) .slot{padding:5px 4px}
 /* two writing lines instead of three: the third went to the check panel (reviewer's allowance) */
+.sheet.back:has(.ly-back) .notes{margin-top:0.08in}
+.sheet.back:has(.ly-back) .notes .ln{height:0.22in}
 .sheet.back:has(.ly-back) .notes .ln:nth-of-type(3){display:none}
 """
 
@@ -847,7 +876,7 @@ def front(t, ed):
         # session), and CDC's Emerg Infect Dis 2025;31(9) links later diagnosis in non-White patients
         # to "difficulty seeing and recognizing erythema migrans rash on darker skin".
         '<div class="ly-nt"><b>Not everyone sees the tick.</b> Nymphs, poppy-seed small, spread most Lyme. '
-        'Up to 3 in 10 people never get a rash. Many rashes are plain red, not a bull\'s-eye, and on darker '
+        'Up to 3 in 10 people never get a rash. Many rashes are plain red, not a bull&rsquo;s-eye, and on darker '
         'skin a rash can be hard to see. Early Lyme can pass for the flu.'
         f'{art_actual_size()}</div>'
         # CDC (Chronic Symptoms and Lyme Disease): some people have pain, fatigue or difficulty
@@ -865,7 +894,7 @@ def front(t, ed):
     ticks = [("deer", "Blacklegged (deer) tick",
               "Black legs and shield, red-orange body. Eastern U.S., Georgia included. The main Lyme carrier."),
              ("lonestar", "Lone star tick",
-              "White dot on the female's back. Spreads ehrlichiosis and can trigger alpha-gal (red-meat) allergy."),
+              "White dot on the female&rsquo;s back. Spreads ehrlichiosis and can trigger alpha-gal (red-meat) allergy."),
              ("dog", "American dog tick",
               "White-marked shield. Spreads Rocky Mountain spotted fever: fever after a bite needs a "
               "clinician fast.")]
@@ -965,12 +994,36 @@ SHEET = {
     #   hypromellose, labels.json R2178).  CDC "Products That May Contain Alpha-gal": milk and milk
     #   products typically contain alpha-gal (some people with alpha-gal syndrome react to dairy) and cow's
     #   milk is a major food allergen.  The front page says the lone star tick, the tick Georgians meet
-    #   most, can trigger alpha-gal syndrome.  Inflam-Eze Plus is hypromellose with vegetable magnesium
-    #   stearate (labels.json R856), so only Immune PRP Pro is named.  Doxycycline with milk or colostrum: overall
-    #   absorption not significantly affected (doxycycline labelling, via PDR).  Mito Recharge at
-    #   bedtime: twice-daily doxycycline is taken with breakfast and the evening meal and not right
-    #   before lying down (esophagus warning on its label), so bedtime keeps the 75 mg magnesium
-    #   2 to 3 hours from both doses.  "Doses are for adults": CDC surveillance shows Lyme peaking at
+    #   most, can trigger alpha-gal syndrome.  The other four carry no milk, gelatin or other mammal
+    #   ingredient, by their own other-ingredients lines (each quoted in products.d/lyme.json "src"):
+    #   Inflam-Eze Plus hypromellose, microcrystalline cellulose, vegetable magnesium stearate, silica
+    #   (labels.json R856, ND516); Mito Recharge (ND812, R167) and UltraBiotic Daily Multi-Strain (ND460,
+    #   R829) hypromellose, vegetable magnesium stearate, silica, both marked dairy-free and vegetarian;
+    #   Liposomal Glutathione (ND971, R2188) water, vegetable glycerin, flavor, sunflower lecithin, stevia,
+    #   cane alcohol, marked dairy-free and vegetarian.  So only Immune PRP Pro is named.  Doxycycline with
+    #   milk or colostrum: overall absorption not significantly affected (doxycycline labelling, via PDR).
+    #   Mito Recharge at bedtime WITH A SNACK (polish round 2): twice-daily doxycycline is taken with
+    #   breakfast and the evening meal and not right before lying down (esophagus warning on its label), so
+    #   bedtime is the only kit slot that keeps the 75 mg magnesium 2 to 3 hours from both doses; the snack
+    #   is for its green tea extract (next note).
+    #   Green tea in Mito Recharge (polish round 2): 100 mg EGCG "from green tea extract; leaf" (ND812).
+    #   USP's Powdered Decaffeinated Green Tea Extract monograph label caution: "Do not take on an empty
+    #   stomach. Take with food. Do not use if you have a liver problem and discontinue use and consult a
+    #   healthcare practitioner if you develop symptoms of liver trouble"; Oketch-Rabah HA et al., Toxicol
+    #   Rep 2020;7:386-402, doi:10.1016/j.toxrep.2020.02.008 (USP's review: fasting doses raise EGCG
+    #   exposure).  Full wording and provenance: the [USP20] note in conditions/fatty_liver.py, whose sheet
+    #   gives the same bottle with food and with a liver-problem gate, so the series gives one direction for
+    #   one bottle.  On this sheet the liver gate matters too: CDC lists "mild to moderate elevations in
+    #   hepatic transaminases" among anaplasmosis findings (Clinical Signs and Symptoms of Anaplasmosis) and
+    #   "elevated levels of liver enzymes" among babesiosis findings (Clinical Overview of Babesiosis), both
+    #   named on the front (CDC wording from search results; cdc.gov is not reachable from the build
+    #   session); 40% of people with the Lyme rash had at least one abnormal liver test, mild and mostly
+    #   resolving after antibiotics (Horowitz HW, Hepatology 1996;23(6):1412-7, PMID 8675158); doxycycline is
+    #   a rare cause of liver injury (NIH LiverTox, Doxycycline, NBK548353, likelihood score B).  "Ask your
+    #   doctor first" in the pharmacy edition, as on the fatty-liver sheet (the doctor manages the liver);
+    #   "{who}" (your provider) in the practitioner edition.  One line in both editions (measured); "take with
+    #   food" is USP's own "Take with food" and keeps "provider" on the line.
+    #   "Doses are for adults": CDC surveillance shows Lyme peaking at
     #   ages 5 to 9, every label here says to consult if pregnant or nursing, and willow bark and
     #   devil's claw are avoided in pregnancy (MSKCC).
     "back": {
@@ -993,17 +1046,23 @@ SHEET = {
         "cols": [
             {"p": "ly_ultrabiotic_dms", "need": "Gut support", "needsub": "with <em>S.&nbsp;boulardii</em>", "start": True,
              # only the yeast (5 of the 30 billion CFU) is antibiotic-proof; the six bacterial strains are
-             # why the dose band says 2 hours from antibiotics
+             # why the dose band says 2 hours from antibiotics.  Bullet 1 is ND460's own claim ("Support a
+             # healthy gut microbiome").  Bullet 2 is two lines (polish round 2): S. boulardii is named in
+             # the header and the serving line, and the freed line carries the label's "when made".
              "bullets": ["Supports a healthy gut microbiome",
-                         "Antibiotics spare its yeast, <i>S.&nbsp;boulardii</i>, but can kill its six bacteria"]},
+                         "Antibiotics spare its yeast, not its bacteria"]},
+            # ND1054's list: "Promotes healthy immune function" (word for word) and "Supports gastrointestinal
+            # tract integrity", put plainly with its own text ("bolstering the gut lining")
             {"p": "ly_immune_prp", "need": "Immune support", "needsub": "colostrum immunoglobulins",
              "bullets": ["Promotes healthy immune function", "Supports the gut lining"]},
             {"p": "ly_inflam_eze", "need": "Inflammatory balance", "needsub": "ginger, curcumin, boswellia",
              "bullets": ["Promotes healthy inflammatory markers", "Supports overall health and well-being"]},
             {"p": "ly_glutathione", "need": "Detox support", "needsub": "liposomal glutathione",
              "bullets": ["Supports healthy glutathione levels", "Provides antioxidant and detox support"]},
+            # ND812: the tagline "Promotes Healthy Cellular Energy Production" ("Mito Recharge supports energy
+            # production in the mitochondria"), and its list's "Promote healthy antioxidant status"
             {"p": "ly_mito", "need": "Cellular energy", "needsub": "mitochondrial support",
-             "bullets": ["Supports your cells' energy production", "Promotes healthy antioxidant status"]},
+             "bullets": ["Supports your cells&rsquo; energy production", "Promotes healthy antioxidant status"]},
         ],
         # Pharmacists check interactions and depletions; providers order labs, refer and adjust.
         # Both editions carry the same safety facts; only the wording around {who} differs.
@@ -1015,26 +1074,30 @@ SHEET = {
                 "iron, zinc and antacids, which block it.",
                 f"<b>Blood thinners:</b> {_NB('Inflam-Eze Plus')} (ginger, curcumin, willow bark) can add to bleeding "
                 "risk with warfarin, apixaban, aspirin or clopidogrel. Doxycycline can make warfarin stronger; "
-                "Mito Recharge's vitamin K1 can make it weaker.",
+                "Mito Recharge&rsquo;s vitamin K1 can make it weaker.",
                 f"<b>Aspirin-like willow bark:</b> {_NB('Inflam-Eze Plus')} is not for children, teens or "
                 "aspirin allergy.",
+                # USP green tea extract caution; see the check-panel sources above the back dict
+                "<b>Green tea in Mito Recharge:</b> take with food. Liver problem? Ask your doctor first.",
                 "<b>Probiotic:</b> take UltraBiotic at least 2 hours apart from each antibiotic dose. "
                 "Its <i>S.&nbsp;boulardii</i> is not for people with a central IV line or a weakened immune system.",
                 "<b>Hives, swelling or trouble breathing</b> mean an allergy, not die-off: get help now. "
-                "<b>Alpha-gal (red-meat) or milk allergy?</b> Skip Immune PRP Pro (cow's colostrum).",
+                "<b>Alpha-gal (red-meat) or milk allergy?</b> Skip Immune PRP Pro (cow&rsquo;s colostrum).",
                 "<b>Doses are for adults.</b> Pregnant, nursing or under 18? Ask {who} first."],
             "practitioner": [
                 "<b>Doxycycline:</b> take it 2 to 3 hours apart from calcium, magnesium (Mito Recharge has some), "
                 "iron, zinc and antacids, which block it.",
                 f"<b>On a blood thinner, daily aspirin or clopidogrel?</b> {_NB('Inflam-Eze Plus')} (ginger, curcumin, "
-                "willow bark) can add to bleeding risk. Doxycycline can make warfarin stronger; Mito Recharge's "
+                "willow bark) can add to bleeding risk. Doxycycline can make warfarin stronger; Mito Recharge&rsquo;s "
                 "vitamin K1 can make it weaker: ask about an INR (clotting) test.",
                 f"<b>Aspirin-like willow bark:</b> {_NB('Inflam-Eze Plus')} is not for children, teens or "
                 "aspirin allergy.",
+                # USP green tea extract caution; see the check-panel sources above the back dict
+                "<b>Green tea in Mito Recharge:</b> take with food. Liver problem? Ask {who} first.",
                 "<b>Probiotic:</b> take UltraBiotic at least 2 hours apart from each antibiotic dose. "
                 "Its <i>S.&nbsp;boulardii</i> is not for people with a central IV line or a weakened immune system.",
                 "<b>Hives, swelling or trouble breathing</b> mean an allergy, not die-off: get help now. "
-                "<b>Alpha-gal (red-meat) or milk allergy?</b> Skip Immune PRP Pro (cow's colostrum).",
+                "<b>Alpha-gal (red-meat) or milk allergy?</b> Skip Immune PRP Pro (cow&rsquo;s colostrum).",
                 "<b>Doses are for adults.</b> Pregnant, nursing or under 18? Ask {who} first."],
         },
     },

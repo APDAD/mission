@@ -5,15 +5,16 @@ here (no legacy sheets.py / art.py imports).  Front, top to bottom:
   intro -> nitric-oxide pathway (4 numbered steps) beside a tight-vs-relaxed artery (cut ends,
   inner lining that makes NO, NO molecules in the relaxed wall) with its KEY -> risk-factor
   icons -> "reading your numbers" + "measure it right" beside the AHA/ACC category table.
-Back (2026-11-03 back-page pass, polish round 1 the same day): six lifestyle tiles aligned with
-the NutriDyn protocols (nitrate foods and no antiseptic mouthwash from the NutriDyn GLC 2025
-endothelial-dysfunction protocol, sodium, weight, movement with isometric holds, sleep, smoking
-and alcohol); five NutriDyn formulas from Asher's Hypertension protocol email and the NutriDyn
-GLC 2019 / 2025 / 2026 protocols (Cardio Essentials BP Support = Start here, Nitric Boost,
-Magnesium Glycinate, Omega Pure EPA-DHA 1000, CoQ10 100 mg; label facts and sources in
-products.d/high-blood-pressure.json); a 10-pill daily rhythm; five medicine-and-nutrient notes,
-one list for both editions via {who}.  The back never uses the abbreviation NO: nitric oxide is
-spelled out there, since NO is defined only on the front.
+Back (2026-11-03 back-page pass, polish round 1 the same day, polish round 2 on 2026-11-04): six
+lifestyle tiles aligned with the NutriDyn protocols (nitrate foods, fruit and no antiseptic mouthwash
+from the NutriDyn GLC 2025 endothelial-dysfunction protocol, sodium, weight, walking with isometric
+holds below a blood-pressure limit, sleep with daily slow breathing, smoking and alcohol); five
+NutriDyn formulas from Asher's Hypertension protocol email and the NutriDyn GLC 2019 / 2025 / 2026
+protocols (Cardio Essentials BP Support = Start here, Nitric Boost, Magnesium Glycinate, Omega Pure
+EPA-DHA 1000, CoQ10 100 mg; label facts and sources in products.d/high-blood-pressure.json); a
+10-pill daily rhythm; six medicine-and-nutrient notes, one list for both editions via {who}.  The
+back never uses the abbreviation NO: nitric oxide is spelled out there, since NO is defined only on
+the front.
 
 Every number stated on the sheet carries a source comment next to it.
 Edition wording: "{who}" / "{Who}" become "your provider" or "your pharmacist" (build.ed_text).
@@ -69,6 +70,13 @@ IC_SOFA = ('<path d="M14 31v-7a6 6 0 0 1 6-6h24a6 6 0 0 1 6 6v7"/>'
 IC_SMOKE = ('<rect x="6" y="40" width="46" height="10" rx="2.5"/><path d="M18 40v10"/>'
             '<path d="M45.5 36c-4-4-4-8 0-12s4-8 0-12"/>'                 # smooth smoke waves, 24 and 20 units tall
             '<path d="M54 34c-3.5-3.5-3.5-6.5 0-10s3.5-6.5 0-10"/>')
+# Back-page tile 6 ("Quit, cut back"): the same cigarette with an avoid slash, a no-smoking sign.  The kit's
+# "smoke" (a flat bar, two straight bars and a slash) read as a crossed-out battery at print size.  The
+# slash runs top left to bottom right, clear of the smoke curls (x 41.5 to 57.5, y 12 to 36); the kit's
+# own slash (M10 56 54 10) would cut through them.  The lifestyle discs take kit icon names only, so the
+# glyph is registered under a key no other sheet uses (fatty_liver.py and ibd.py register theirs the
+# same way).
+ICONS["hbp-smoke-x"] = IC_SMOKE + '<path class="x" d="M10 10 54 54"/>'
 # Birth control pills: a blister card with a 2 x 3 grid of pills.
 IC_PILLS = ('<rect x="13" y="9" width="38" height="46" rx="6"/>'
             + "".join(f'<circle cx="{x}" cy="{y}" r="4.3"/>' for y in (21, 32, 43) for x in (25, 39)))
@@ -357,15 +365,19 @@ def art_bp(t):
 # Hypertension 2025;82:e212-e316, hypertension in pregnancy; AHA "Know Your Risk Factors", preeclampsia).
 # Pregnancy itself is not the risk.  The breaks are set by hand: every clear wording needs 3 lines in a
 # 1.24 in tile at 8.2 pt (measured: "Birth control pills," 90 px, "or high BP in a" 83, "past pregnancy" 75).
+# Diabetes uses the kit's glucose meter, as the fatty-liver and neuropathy sheets do: the kit's "bloodsugar"
+# glyph (a drop with a pulse trace) is the usual sign for blood pressure or a blood test, which confuses on
+# a blood-pressure sheet.
 RISKS = [
     ("scale", "Extra weight"), ("salt", "High-sodium,<br>processed food"), ("sofa", "Sitting most<br>of the day"),
     ("glass", "Too much<br>alcohol"), ("smoke", "Smoking"), ("headache", "Chronic stress"),
-    ("moon", "Poor sleep or<br>sleep apnea"), ("bloodsugar", "Diabetes"), ("kidney", "Kidney<br>disease"),
+    ("moon", "Poor sleep or<br>sleep apnea"), ("meter", "Diabetes"), ("kidney", "Kidney<br>disease"),
     ("pills", "Birth control pills,<br>or high BP in a<br>past pregnancy"), ("dna", "Family<br>history"),
     ("age", "Increasing age")]
 # Icons drawn here rather than straight from the kit: no "avoid" slash on the salt and glass (this row
 # lists risks, not rules), a full cigarette with smoke, separated kidney beans, a birth control blister
-# card.  The slashed kit versions stay on the back's lifestyle band.
+# card.  The back's lifestyle band keeps the slashed kit salt; its tile 6 uses this cigarette with a slash
+# (hbp-smoke-x).
 RISK_ICONS = {"sofa": IC_SOFA, "salt": _noslash("salt"), "glass": _noslash("glass"), "smoke": IC_SMOKE,
               "kidney": _kidneys(), "pills": IC_PILLS}
 
@@ -473,26 +485,32 @@ CSS = r"""
    twelve label ingredients in six lines, so under a four-line list it would add two lines to the row and push
    the footer off the page. */
 .sheet.back:has(.hbp-back) .col:not(:nth-child(2)) .what ul{min-height:calc(4 * 1.28em + 2px)}
-/* one header height for all five columns: the two three-line headers measure 0.521 in */
+/* one header height for all five columns: the three-line header (column 4, Omega Pure) measures 0.521 in; column 1's
+   sub-line is one line since polish round 2, so its centred title sits clear of the START HERE badge */
 .sheet.back:has(.hbp-back) .col .need{min-height:0.525in}
 .sheet.back:has(.hbp-back) .col .pick .nm{min-height:2.3em}
-/* The check panel gets the wider share (1.3 to 1): its five notes then take 11 lines (2+3+2+2+2) in both
-   editions, where the old 1.1 to 1 split needed 15.  The rhythm keeps its five-line Evening slot: Morning
+/* The check panel gets the wider share (1.3 to 1): its six notes then take 12 lines (2+3+2+1+2+2) in both
+   editions, where the old 1.1 to 1 split needed 15 for five.  The rhythm keeps its five-line Evening slot: Morning
    and Bedtime sit at their narrowest (65 and 55 px, measured), so Evening gets 116 px, just enough for
    "BP Support 3 capsules" and "EPA-DHA 1000 1 softgel" on one line each (at 1 to 1.35 it drops to 109 px
    and wraps to six lines).  The rhythm panel is a column, so its slot boxes stretch to the check panel's
    height instead of leaving a blank strip under the plan line. */
-.sheet.back:has(.hbp-back) .duo{grid-template-columns:1fr 1.3fr;margin-top:0.08in}
+.sheet.back:has(.hbp-back) .duo{grid-template-columns:1fr 1.3fr;margin-top:0.06in}
 .sheet.back:has(.hbp-back) .duo .panel:not(.rx){display:flex;flex-direction:column}
 .sheet.back:has(.hbp-back) .rhythm{grid-template-columns:.66fr 1.3fr .58fr;flex:1}
 /* The 11-line panel is 1.86 in tall, 0.15 in more than the old four-note panel.  It is paid back from block
    spacing only, never from type size or line spacing: band top padding 0.25 to 0.22 in and bottom 0.18 to
    0.16 in, the band title gap 0.1 to 0.08 in, the gap above Nutrient Solutions 0.1 to 0.08 in, and the
-   column header box 0.56 to 0.525 in. */
+   column header box 0.56 to 0.525 in.  Polish round 2 adds a one-line sixth note (diabetes medicine), 14.3 px
+   with its gap, paid back the same way: note gap 2 to 1 px, panel padding 0.08 to 0.06 in, the gap above the
+   panels 0.08 to 0.06 in and the notes box padding 0.07 / 0.09 to 0.06 / 0.08 in (measured in print media:
+   1.4 px to spare above the footer in both editions). */
 .sheet.back:has(.hbp-back) .band{padding-top:0.22in!important;padding-bottom:0.16in}
 .sheet.back:has(.hbp-back) .band h2{margin-bottom:0.08in}
 .sheet.back:has(.hbp-back) .ns-title{margin-top:0.08in}
-.sheet.back:has(.hbp-back) .notes{margin-top:0.08in}
+.sheet.back:has(.hbp-back) .notes{margin-top:0.08in;padding:0.06in 0.14in 0.08in}
+.sheet.back:has(.hbp-back) .duo .panel{padding-top:0.06in;padding-bottom:0.06in}
+.sheet.back:has(.hbp-back) .rx li{margin-bottom:1px}
 .sheet.back:has(.hbp-back) .slot li{margin:1px 0 3px}
 .sheet.back:has(.hbp-back) .slot li em{display:inline-block;white-space:nowrap;background:#EEF1F3;color:#4A555B;
   border-radius:3px;padding:0 3px;line-height:1.3}
@@ -518,7 +536,8 @@ SHEET = {
         # Six tiles, titles short enough that every title sits on one line at 9.6 pt, all six bodies start on
         # the same line, and the gutter between neighbouring titles is 0.2 in or more (Merriweather 700 measured
         # in the browser; the tightest pair, "Lighten the load" / "Move, then hold", is 0.204 in).  The lifestyle
-        # band is not run through the edition tokens, so it names "your doctor", which is right in both editions.
+        # band is not run through the edition tokens, so it never uses {who}; "your dentist" in tile 1 is right
+        # in both editions.
         "life": [
             # NutriDyn GLC 2025 endothelial-dysfunction protocol, slide 12 (HBP Supplement Recommendations):
             # nitrate-rich foods daily (beets, lettuce, spinach); avoid antiseptic mouthwash (it blunts the
@@ -528,8 +547,16 @@ SHEET = {
             # and a patient should not drop it on this sheet's word.  The front's steps 1 and 2 give the why.
             # Title spelled out (NO is defined only on the front); "Make nitric oxide" keeps a 0.204 in gutter
             # to "Cut the sodium" ("Boost nitric oxide" measured 0.195 in).
-            ("beet", "Make nitric oxide", "Eat greens and beets daily. Skip antiseptic mouthwash unless your dentist "
-                                           "prescribed it."),
+            # Fruit (polish round 2): potassium-rich, DASH-style eating goes with cutting sodium.  2017 ACC/AHA
+            # guideline (Hypertension 2018;71:e13-e115), Table 15: a DASH diet rich in fruits and vegetables, and
+            # more dietary potassium (3,500 to 5,000 mg a day, preferably from food, unless kidney disease or a
+            # potassium-raising drug rules it out); the 2025 AHA/ACC guideline keeps the heart-healthy, DASH-style
+            # pattern.  The NutriDyn GLC 2025 protocol's eating plan names deep-coloured vegetables and fruit
+            # (berries, pomegranates) beside the nitrate foods.  The tile prints no potassium number; the check
+            # panel's kidney and potassium note covers who must hold back.  Measured: four lines in both editions
+            # ("Eat greens, beets and fruit daily." takes five and pushes the footer down).
+            ("beet", "Make nitric oxide", "Greens, beets and fruit daily. Skip antiseptic mouthwash unless your "
+                                           "dentist prescribed it."),
             # AHA "How much sodium should I eat per day?": no more than 2,300 mg a day, an ideal limit of 1,500 mg
             # for most adults, especially with high blood pressure; more than 70% comes from packaged, prepared and
             # restaurant food.  2025 AHA/ACC guideline (Hypertension 2025;82:e212-e316): under 1,500 mg optimal.
@@ -540,27 +567,46 @@ SHEET = {
             # pressure.  2017 ACC/AHA guideline Table 15: about 1 mm Hg lower for every 1 kg lost.
             # ("Trim extra weight" measured two lines at 9.6 pt; this title fits one.)
             ("scale", "Lighten the load", "Losing even 5 to 10 pounds can help lower your numbers."),
-            # AHA physical activity advice: 150 minutes a week of moderate activity (30 minutes, 5 days).
-            # 2017 ACC/AHA Table 15: isometric resistance (hand grip, 4 x 2 minutes) 3 sessions a week.
+            # AHA physical activity advice: 150 minutes a week of moderate activity (30 minutes on most days, 5 a
+            # week).  2017 ACC/AHA Table 15: isometric resistance (hand grip, 4 x 2 minutes) 3 sessions a week.
             # Edwards JJ et al., Br J Sports Med 2023;57:1317-26 (PMID 37491419): isometric work (wall squats, hand grips) gave the
             # largest resting blood pressure drop of any exercise type.  NutriDyn GLC 2025 endothelial-dysfunction
             # protocol: 20 to 30 minutes, 5 times a week, plus resistance training; NutriDyn GLC 2026 cardiovascular
             # protocol: 30 minutes 5 times a week plus resistance 2 to 3 times.
             # Safety: an isometric hold raises blood pressure while it lasts, and holding the breath while straining
             # (the Valsalva manoeuvre) raises it further, so the tile says to breathe normally: AHA scientific
-            # statement on resistance exercise, Williams MA et al., Circulation 2007;116:572-84 (PMID 17638929):
-            # avoid breath-holding and straining.  Measured: four lines, like the tiles beside it.
-            ("dumbbell", "Move, then hold", "Brisk walks: 30 minutes, 5 days a week. Wall sits or hand grips "
-                                            "3 times a week; breathe normally."),
+            # statement on resistance exercise, Williams MA et al., Circulation 2007;116:572-84 (PMID 17638929,
+            # doi 10.1161/CIRCULATIONAHA.107.185214): avoid breath-holding and straining.  Its contraindication
+            # table (polish round 2): uncontrolled hypertension above 160/100 mm Hg is a relative contraindication
+            # to resistance training (see a physician first), above 180/110 mm Hg an absolute one.  The front's own
+            # table puts many readers in Stage 2 or Severe, so the holds come after "Under 160/100?".  The
+            # thresholds are as the round-2 review cited them; the statement's full text is outside this build
+            # session's network.  "3 times a week" left the tile to keep it at four lines (with it the tile takes
+            # five and the footer drops 0.115 in).
+            ("dumbbell", "Move, then hold", "Walk 30 minutes most days. Under 160/100? Add wall sits or hand grips; "
+                                            "breathe normally."),
             # AHA Life's Essential 8: 7 to 9 hours of sleep a night for adults; AHA: obstructive sleep apnea
-            # raises blood pressure, and loud snoring is a common sign.
-            ("moon", "Sleep well", "Sleep 7 to 9 hours. Loud snoring? Ask your doctor about a&nbsp;sleep&nbsp;test."),
+            # raises blood pressure, and loud snoring is a common sign (the tile asks about any snoring, a wider
+            # net, to stay at four lines).
+            # Slow breathing (polish round 2, the stress step: the front's intro names stress and its risk row has
+            # "Chronic stress"): NutriDyn GLC 2025 endothelial-dysfunction protocol, daily stress management (deep
+            # nasal breathing, humming, meditation, yoga); AHA scientific statement, Brook RD et al., Hypertension
+            # 2013;61:1360-83 (PMID 23608661): device-guided slow breathing is Class IIa, Level of Evidence B, the
+            # best supported of the stress approaches it graded (other relaxation therapies Class III).  Neither
+            # source gives a number of minutes this sheet could print, so the tile says "a few minutes".  The title
+            # names both steps in the band's comma style ("Move, then hold", "Quit, cut back"); "Sleep and relax"
+            # would point at the relaxation therapies that statement did not support.  Measured: four lines; title
+            # gutters 0.278 and 0.366 in.  Keeping "Loud" before "Snoring" as well takes five lines and pushes the
+            # footer down.
+            ("moon", "Sleep, breathe", "Sleep 7 to 9 hours; breathe slowly a few minutes a day. Snoring? Ask about "
+                                       "a&nbsp;sleep&nbsp;test."),
             # AHA: each cigarette raises blood pressure for a while and smoking damages the vessel lining.
             # 2025 AHA/ACC guideline: drink less alcohol, and none is best; NutriDyn GLC 2019 HBP protocol
             # (Taming the Silent Killer): under 1 drink a day.
             # (three lines; the last reads "alcohol; none is best.", no word left alone on a line)
-            ("smoke", "Quit, cut back", "Quit smoking: it tightens vessels. Drink less alcohol; "
-                                        "none&nbsp;is&nbsp;best."),
+            # Icon: the front's cigarette with an avoid slash (hbp-smoke-x, registered above).
+            ("hbp-smoke-x", "Quit, cut back", "Quit smoking: it tightens vessels. Drink less alcohol; "
+                                              "none&nbsp;is&nbsp;best."),
         ],
         # Products: Asher's Hypertension protocol email, 2021-03-11 (Cardio Essentials BP Support is "the
         # formula"); the NutriDyn GLC 2025 endothelial-dysfunction protocol, slide 12 (HBP Supplement
@@ -584,26 +630,37 @@ SHEET = {
             # support"; ND681 compliance line and its nitric oxide mechanism (Benolea, MegaNatural-BP promote
             # nitric oxide production).  "Helps make nitric oxide" fits one line ("Helps vessels make nitric
             # oxide" took two and grew the row).
-            {"p": "hbp_bp_support", "need": "Healthy pressure", "needsub": "olive leaf, black garlic, celery and grape seed",
+            # The sub-line names the four extracts on one line (polish round 2): on two lines ("olive leaf, black
+            # garlic, celery and grape seed") the centred three-line header pushed the title up under the START
+            # HERE badge, 1 px of clear space at 300 dpi.  One line lowers the title about 5.6 px (measured in the
+            # DOM, halo to title box: -1.9 to +3.7 px); the serving line still names each extract in full.  The
+            # header box keeps its 0.525 in for column 4's three lines, so the photos stay level.
+            {"p": "hbp_bp_support", "need": "Healthy pressure", "needsub": "olive leaf, garlic, celery, grape",
              "start": True, "dose": "dose_from_db",
              "bullets": ["Supports healthy blood pressure already in the normal range",
                          "Helps make nitric oxide"]},
             # ND1255 Rev. 6/25, its own structure/function wording: "supports healthy nitric oxide production and
-            # optimal blood flow", "supports healthy blood flow".  Both bullets are claims in the label's words;
-            # neither points back to the front's pressure steps, so nothing reads as "this capsule lowers high
-            # blood pressure".  Spelled out (the abbreviation could read as "no production"); "Supports nitric
-            # oxide production" wraps to two lines in this column, so the shorter label phrase is used.
+            # optimal blood flow", "supports healthy blood flow".  Both bullets say the function in the label's
+            # sense; neither points back to the front's pressure steps, so nothing reads as "this capsule lowers
+            # high blood pressure".  Spelled out (the abbreviation could read as "no production").  Polish round 2:
+            # "Supports nitric oxide" named the molecule but not the function; "Helps make nitric oxide" says it
+            # in one line ("Supports nitric oxide production" wraps to two lines and grows the row by 11 px).
             {"p": "hbp_nitric_boost", "need": "Boost nitric oxide", "needsub": "beet root and potassium nitrate",
              "dose": "dose_from_db",
-             "bullets": ["Supports nitric oxide", "Supports healthy blood flow"]},
-            # Structure/function only: "healthy vessel tone" (magnesium is needed for normal muscle and nerve
-            # function, NIH ODS Magnesium fact sheet), not "relax vessel walls", which echoed front step 4 and read
-            # as "this capsule lowers blood pressure".  The second bullet is an instruction, not a claim, so it
-            # carries no diamond: Asher's magnesium blast (2026-10-12, Hypertension 2025 meta-analysis of 38 RCTs)
-            # found the benefit tracked the starting state.  The serving line says why the plan uses less than the
-            # label (products.d hbp_mag_glycinate).
-            {"p": "hbp_mag_glycinate", "need": "Healthy vessel tone", "needsub": "magnesium", "dose": "dose_from_db",
-             "bullets": ["Supports healthy vascular tone", "Get a magnesium blood test first"]},
+             "bullets": ["Helps make nitric oxide", "Supports healthy blood flow"]},
+            # Structure/function only, in plain words (polish round 2: "healthy vascular tone" was jargon with no
+            # gloss): magnesium is a cofactor in the enzyme systems behind muscle and nerve function and blood
+            # pressure regulation (NIH ODS Magnesium fact sheet for health professionals), hence "Supports healthy
+            # blood vessels", not "relax vessel walls", which echoed front step 4 and read as "this capsule lowers
+            # blood pressure".  The second bullet is an instruction, not a claim, so it carries no diamond: Asher's
+            # magnesium blast (2026-10-12, Hypertension 2025 meta-analysis of 38 RCTs) found the benefit tracked
+            # the starting state.  It asks about the level instead of sending everyone for a blood test: the
+            # routine serum test correlates poorly with the body's magnesium stores (NIH ODS: less than 1% of body
+            # magnesium is in serum), so a normal result does not rule magnesium out.  Bullets are not run through
+            # {who}, so the token is not used here.  The serving line says why the plan uses less than the label
+            # (products.d hbp_mag_glycinate).  Measured: header and bullets keep their line counts.
+            {"p": "hbp_mag_glycinate", "need": "Healthy vessels", "needsub": "magnesium", "dose": "dose_from_db",
+             "bullets": ["Supports healthy blood vessels", "Ask about your magnesium level"]},
             # the no-break hyphen keeps "omega-3s" whole, so the header wraps "EPA and DHA / omega-3s"
             {"p": "hbp_omega_1000", "need": "Flexible vessels", "needsub": "EPA and DHA omega&#8209;3s", "dose": "dose_from_db",
              "bullets": ["Supports heart and vessel health", "Supports healthy triglyceride levels"]},
@@ -612,12 +669,20 @@ SHEET = {
             {"p": "hbp_coq10", "need": "Power the heart", "needsub": "coenzyme Q10", "dose": "dose_from_db",
              "bullets": ["Statins can lower your CoQ10", "Fuel for heart cells"]},
         ],
-        # Five medicine-and-nutrient notes, one list for both editions via {who} ("your pharmacist" or "your
-        # provider"), so the pharmacy edition carries every caution the provider edition does: depletions,
-        # potassium, blood pressure medicines (with the never-stop rule and the prescriber, who is the one who
-        # can change a dose: a DC or ND handing out the sheet often cannot), blood thinners, mineral spacing and
-        # pregnancy.  None says a formula lowers blood pressure; they say "show this sheet, doses may need a
-        # check".  Drug classes carry a drug name patients know (lisinopril, losartan), and INR is glossed.
+        # Six medicine-and-nutrient notes, one list for both editions via {who} ("your pharmacist" or "your
+        # provider"), so the pharmacy edition carries every caution the provider edition does: depletions and the
+        # fish allergen, potassium, blood pressure medicines (with the never-stop rule and the prescriber, who is
+        # the one who can change a dose: a DC or ND handing out the sheet often cannot), diabetes medicines, blood
+        # thinners, mineral spacing and pregnancy.  None says a formula lowers blood pressure; they say "show this
+        # sheet, doses may need a check".  Drug classes carry a drug name patients know (lisinopril, losartan),
+        # and INR is glossed.
+        # Fish allergy (polish round 2): Omega Pure EPA-DHA 1000 is fish oil; NutriDyn sell sheet ND416 Rev. 4/25
+        # prints "Contains: Fish (Anchovy, Sardine, and Mackerel)." (products.d hbp_omega_1000).
+        # Diabetes medicine (polish round 2; diabetes is on the front's risk row): BP Support gives 750 mg olive
+        # leaf extract a day (ND681); 500 mg a day lowered HbA1c and fasting insulin against placebo in adults
+        # with type 2 diabetes (Wainstein J et al., J Med Food 2012;15:605-10, PMID 22512698, doi
+        # 10.1089/jmf.2011.0243), so with insulin or diabetes pills sugar can run lower: the note asks for more
+        # checks and leaves any dose change to the prescriber (note 3 already says to show the sheet).
         # Sources: NIH ODS Magnesium fact sheet (loop and thiazide diuretics raise urinary magnesium loss;
         # spironolactone lowers it; impaired kidneys raise the risk of too much magnesium); NIH ODS Potassium
         # fact sheet (ACE inhibitors, ARBs and potassium-sparing diuretics can raise potassium); 2025 AHA/ACC
@@ -630,6 +695,10 @@ SHEET = {
         # and French maritime pine bark (Pycnogenol 50 mg, ND1255) may slow blood clotting, so taking them with
         # anticoagulant or antiplatelet drugs may raise bruising and bleeding risk (Natural Medicines monographs
         # Grape and Pycnogenol, as carried by MedlinePlus Herbs and Supplements; platelet-aggregation data).
+        # Pomegranate (polish round 2): Nitric Boost has 200 mg Pomanox pomegranate extract (ND1255 Rev. 6/25),
+        # and pomegranate has a case report of a changed INR on warfarin: the INR fell below
+        # range when the patient stopped pomegranate juice and the warfarin dose had to rise (Komperda KE,
+        # Pharmacotherapy 2009;29:1002-6, PMID 19637955, doi 10.1592/phco.29.8.1002).
         # The note says "ask {who}" for every thinner, because only warfarin has an INR to check: apixaban,
         # rivaroxaban, dabigatran, clopidogrel and aspirin do not.  INR is glossed as a clotting test.
         # CoQ10 and warfarin point both ways, so the note asks for an INR check
@@ -647,25 +716,32 @@ SHEET = {
         # 4 to 6 hours after a magnesium supplement.  NIH ODS Zinc fact sheet: the same antibiotics 2 hours before
         # or 4 to 6 hours after zinc.  Levothyroxine prescribing information (Synthroid, sections 2.1 and 7.1): at
         # least 4 hours from products that cut its absorption, magnesium-containing antacids among them.
-        # "4 hours apart" meets all three.  It matters here because Nitric Boost is a breakfast dose and
-        # levothyroxine is usually a morning dose.  "Bone (alendronate)" glosses the drug for a patient; the note
-        # says "antibiotic pills" although only tetracyclines and quinolones bind these minerals, a harmless
-        # over-caution that keeps it plain (and on two lines in both editions).
-        # Measured in the rendered panel at 7.2 pt with the 1 to 1.3 split: 2 + 3 + 2 + 2 + 2 = 11 lines in both
-        # editions; "BP pills" is the only head short enough to keep note 3 on two lines ("High BP" is already
-        # on the front).
+        # "4 hours apart" covers the thyroid and bone pills only.  It is too short for some antibiotics:
+        # ciprofloxacin goes at least 2 hours before or 6 hours after magnesium antacids and zinc-containing
+        # products (Cipro prescribing information), moxifloxacin 4 hours before or 8 hours after products with
+        # magnesium or zinc (Avelox prescribing information), and NIH ODS gives 4 to 6 hours after.  So the note
+        # says "antibiotics: ask {who}" and leaves the gap to the pharmacist for the drug in hand (polish round 2;
+        # round 1 wrongly said 4 hours met all three).  The spacing matters here because Nitric Boost is a
+        # breakfast dose and levothyroxine is usually a morning dose.  "Bone (alendronate)" glosses the drug for
+        # a patient.
+        # Measured in the rendered panel at 7.2 pt with the 1 to 1.3 split: 2 + 3 + 2 + 1 + 2 + 2 = 12 lines in
+        # both editions (CSS above pays for the twelfth); "BP pills" is the only head short enough to keep note 3
+        # on two lines ("High BP" is already on the front).  The fish, pomegranate and antibiotic wording keeps
+        # notes 1, 5 and 6 at two lines each; the diabetes note takes one.  A no-break space keeps "Nitric Boost"
+        # whole in note 6 (it split across the line break).
         "rx": [
             "<b>Water pills</b> (HCTZ, furosemide) can drain magnesium and potassium; <b>statins</b> lower CoQ10. "
-            "Ask about a blood test.",
+            "Ask about a blood test. <b>Fish allergy?</b> Skip Omega Pure.",
             "<b>Kidney disease, an ACE inhibitor (like lisinopril), ARB (like losartan) or spironolactone?</b> "
             "Potassium can build up: skip salt substitutes, and ask {who} before magnesium or Nitric Boost "
             "(150&nbsp;mg potassium).",
             "<b>BP pills, nitroglycerin or ED pills?</b> Show {who} and your prescriber this sheet first: doses may "
             "need a check. Never stop a medicine on your own.",
-            "<b>Blood thinner?</b> Garlic, fish oil, grape seed, pine bark, vitamin E and CoQ10 can change how it "
-            "works: ask {who} (on warfarin, get an INR clotting test).",
-            "<b>Thyroid, bone (alendronate) or antibiotic pills?</b> Take them 4 hours apart from magnesium and "
-            "Nitric Boost. <b>Pregnant or nursing?</b> Ask {who} first.",
+            "<b>Diabetes medicine?</b> Olive leaf can lower blood sugar; check it more often.",
+            "<b>Blood thinner?</b> Garlic, fish oil, grape seed, pine bark, pomegranate, vitamin E and CoQ10 can "
+            "change it: ask {who} (on warfarin, get an INR clotting test).",
+            "<b>Thyroid or bone (alendronate) pills?</b> 4 hours apart from magnesium and Nitric&nbsp;Boost; "
+            "<b>antibiotics:</b> ask {who}. <b>Pregnant or nursing?</b> Ask first.",
         ],
     },
 }

@@ -36,6 +36,13 @@ says days 1 to 10 run the first four products together and GI Restore takes over
 facts and sources: build/products.d/intestinal-permeability.json.  Back-page CSS is scoped with
 .sheet.back:has(.ipx-back) (a marker span in the lifestyle title).
 
+Polish round 2 (2026-11-04): every label fact re-read from the current sell sheets (Digestive Complete ND566
+Rev. 8/24, GI Integrity ND431 Rev. 12/24, GI Defend ND850 Rev. 12/24, UltraBiotic Daily Multi-Strain ND460
+Rev. 7/24, GI Restore ND529 Rev. 10/26).  The check panels print the label warnings as the labels give them (an
+ulcer now or ever: skip Digestive Complete; pregnant or nursing: skip GI Integrity) and gained a blood-thinner and
+alpha-gal line (BLOOD_ALPHA); GI Defend's bullets are ND850's own claims; the probiotic's antibiotic spacing is in
+its column; GI Restore's serving line names its quercetin and turmeric; the plan line's totals are written by hand.
+
 Condition facts (sources; every citation resolved on PubMed 2026-11-03):
   - One cell layer sealed by tight junctions; NSAIDs, endurance exercise and dietary emulsifiers
     raise permeability: Camilleri M. Gut 2019;68:1516-26 (PMID 31076401).
@@ -1121,7 +1128,7 @@ def front(t, ed):
     return (f'<div class="art {U}-art">{art_barrier(t)}</div>{caps}{key_html()}'
             f'<div class="{U}-oh">When the barrier leaks, you may notice</div><div class="{U}-out">{outs}</div>'
             f'<p class="{U}-after">Researchers are also studying how a leaky barrier connects to <b>autoimmune conditions</b> '
-            f"such as Hashimoto's thyroiditis, rheumatoid arthritis and lupus. If you live with one, tell {tell} about any "
+            f"such as Hashimoto&rsquo;s thyroiditis, rheumatoid arthritis and lupus. If you live with one, tell {tell} about any "
             'gut symptoms.</p>')
 
 
@@ -1133,7 +1140,9 @@ CSS = r"""
 .ipx-cap .ipx-ok b{background:var(--deep)}
 .ipx-cap .ipx-bad b{background:#B93A2B}
 .ipx-cap span{font-size:8.4pt;line-height:1.3;color:#2B3236}
-.ipx-key{position:relative;border:1.2px solid #CBD7DB;border-radius:8px;padding:7px 8px 4px;margin-top:14px}
+/* polish round 2: margin-top 14px -> 10px.  At 14px page 1 kept 0.1 px above the footer (its auto margin computed to
+   0.08 px), so one more word or a font-metric shift would have pushed the footer off the page; 10px leaves about 4 px. */
+.ipx-key{position:relative;border:1.2px solid #CBD7DB;border-radius:8px;padding:7px 8px 4px;margin-top:10px}
 .ipx-kt{position:absolute;top:-7px;left:12px;background:#fff;padding:0 6px;font:800 7.2pt Inter,sans-serif;
   letter-spacing:.16em;text-transform:uppercase;color:var(--deep)}
 .ipx-kt em{font:700 7.2pt Inter,sans-serif;font-style:normal;letter-spacing:0;text-transform:none;color:#3D474D;
@@ -1163,22 +1172,45 @@ CSS = r"""
   background:#fff;color:var(--deep);border-radius:3px;padding:0 4px;margin-right:2px}
 /* the one-line scope statement under the band title */
 .sheet.back:has(.ipx-back) .band h2 small{font:600 8.6pt Inter,sans-serif;letter-spacing:0;color:#FFE6D4;margin-top:3px}
-/* the duo keeps the kit's 1.35fr | 1fr split; inside the rhythm, morning and evening hold four products each and
-   bedtime one, so bedtime gets the narrow slot (its one line wraps to four, still no taller than morning's five) */
+/* polish round 2: the duo is 1.28fr | 1fr (kit 1.35fr | 1fr), so the check panel's text runs 281 px instead of 272
+   and the blood-thinner and alpha-gal line takes two lines, not three (measured 2026-11-04: both panels print ten
+   lines; the rhythm's slots stay one line per product and its plan line two, so the rhythm stays shorter).
+   Inside the rhythm, morning and evening hold four products each and bedtime one, so bedtime gets the narrow slot
+   (its one line wraps to four, no taller than morning's four). */
+.sheet.back:has(.ipx-back) .duo{grid-template-columns:1.28fr 1fr}
 .sheet.back:has(.ipx-back) .rhythm{grid-template-columns:1.3fr 1.3fr .6fr}
-/* every header keeps a little band for the START HERE badge, so it never touches the title under it: the kit's
-   .startb straddles the column's top edge, and at the kit's 0.07in padding its white rim touches the cap height of
-   "Nourish the lining" (checked at 4x, 2026-11-03); 10px leaves about 3px clear.  Not a .startt override. */
-.sheet.back:has(.ipx-back) .col .need{padding-top:10px}
 /* slightly tighter gaps between the back page's blocks, so the footer and the FDA line keep their room */
 .sheet.back:has(.ipx-back) .band{padding-top:0.24in!important;padding-bottom:0.14in}
 .sheet.back:has(.ipx-back) .ns-title{margin-top:0.1in}
 .sheet.back:has(.ipx-back) .cols{margin-top:0.07in}
 .sheet.back:has(.ipx-back) .duo{margin-top:0.08in}
 .sheet.back:has(.ipx-back) .notes{margin-top:0.08in}
-/* three write-in rules at 0.2 in (kit 0.24 in) give the footer and the full FDA notice their room */
-.sheet.back:has(.ipx-back) .notes .ln{height:0.2in}
+/* three write-in rules at 0.17 in (kit 0.24 in) give the footer and the full FDA notice their room; polish round 2
+   took them from 0.2 in to make room for the blood-thinner and alpha-gal line in both check panels */
+.sheet.back:has(.ipx-back) .notes .ln{height:0.17in}
 """
+
+
+# ----------------------------------------------------------------------------- the shared safety note
+# Polish round 2: printed word for word in both check panels.
+# Blood thinners: GI Integrity gives 2 g a day of glucosamine HCl on days 1 to 10 (1 g a scoop, ND431 Rev. 12/24) and
+# GI Restore 600 mg a day of turmeric root extract on days 11 to 24 (300 mg a scoop, ND529 Rev. 10/26); both are on
+# their serving lines.  Knudsen JF, Sokol GH. Pharmacotherapy 2008;28:540-8, PMID 18363538, doi:10.1592/phco.28.4.540
+# (INR rose on warfarin with glucosamine; 20 FDA MedWatch and 21 WHO reports of altered coagulation or a raised INR);
+# Daveluy A et al. Therapie 2014;69:519-20, PMID 25230280, doi:10.2515/therapie/2014062 (INR rose on a vitamin K
+# antagonist with turmeric); Hatfield J et al. Proc (Bayl Univ Med Cent) 2022;35:802-7, PMID 36304597,
+# doi:10.1080/08998280.2022.2121575 (on anticoagulants, chondroitin-glucosamine, turmeric and chamomile are associated
+# with bleeding; GI Integrity also has 100 mg chamomile).  All three checked in PubMed 2026-11-04.
+# Alpha-gal: Digestive Complete is a porcine enzyme blend with ox bile in a gelatin capsule (ND566 Rev. 8/24) and GI
+# Defend is a bovine serum immunoglobulin isolate ("Contains less than 0.05% fractionated bovine blood", ND850
+# Rev. 12/24).  Alpha-gal syndrome reactions include mammalian meat, gelatin and other products from non-primate
+# mammals (Wilson JM et al. Allergy 2024;79:1440-54, PMID 38193233, doi:10.1111/all.16003; Mullins RJ et al. J Allergy
+# Clin Immunol 2012;129:1334-42, PMID 22480538, doi:10.1016/j.jaci.2012.02.038; both checked in PubMed 2026-11-04);
+# lone star tick bites spread it and most cases are in the South (CDC alpha-gal syndrome pages, as cited on the IBD
+# and Joint Pain sheets), Georgia included.  The serving lines alone left it to the patient to spot "pork" and "beef".
+# The no-break hyphen keeps "Alpha-gal" whole (a trial wrap split it).
+BLOOD_ALPHA = ("<b>Blood thinner?</b> Ask first (glucosamine, turmeric). <b>Alpha&#8209;gal?</b> Skip Digestive "
+               "Complete and GI Defend (pork, beef).")
 
 
 # ----------------------------------------------------------------------------- the sheet
@@ -1218,15 +1250,19 @@ SHEET = {
             # [ND584] step 2: "REPLACE eliminated foods with fresh fruits and vegetables, high-quality protein, and
             # healthy fats.  Add fermented foods (sauerkraut, kimchi, kombucha)"; Step 1 list: "at least 5 servings of
             # fruits and vegetables per day, including at least 1 dark green leafy vegetable".  Dairy-free ferments
-            # only (recheck 2026-11-03: kefir and yogurt sat beside "take out dairy").
-            ("Eat to rebuild the lining",
+            # only (recheck 2026-11-03: kefir and yogurt sat beside "take out dairy").  Polish round 2: "feed", not
+            # "rebuild", the same decision as the intro (Camilleri 2019: repair of a leaky barrier still needs
+            # confirmation), so the box claims only that food nourishes a lining that renews itself.
+            ("Eat to feed the lining",
              ["5 or more fruits and vegetables a day, 1 leafy green", "Good-quality protein and healthy fats",
               "1 fermented food a day: sauerkraut, kimchi or kombucha"]),
             # [ND584] Step 2 (days 11-24): "Begin reintroducing 1 serving daily of a single food category for 3 days.
             # Do this for each food category (wheat/gluten, dairy, sugar).  If you have a reaction, stop consuming
-            # this food category immediately and notify your healthcare practitioner."
+            # this food category immediately and notify your healthcare practitioner."  Food Reintroduction Tips:
+            # "Continue to avoid alcohol, spicy food, and coffee."; step 5 (days 11-24): "Continue to eliminate dietary
+            # triggers".  Polish round 2: the second line says so, or day 11 read as the end of the alcohol break.
             ("Days 11 to 24: bring foods back one at a time",
-             ["One group at a time: gluten, dairy, sugar", "1 serving a day for 3 days",
+             ["Gluten, then dairy, then sugar: 1 serving a day for 3 days", "Keep alcohol, coffee and spicy food out",
               "A reaction? Stop that food and tell your care team"]),
             # NSAIDs raise permeability (Bjarnason 1993; Camilleri 2019, module docstring).  [ND584] Clean Eating Tips:
             # "Avoid eating under stress ... within 2 hours of bedtime.  Eat slowly"; "30 minutes of cardiovascular
@@ -1253,14 +1289,25 @@ SHEET = {
              "needsub": f'<span class="{U}-r">Repair</span> L-glutamine, zinc carnosine, DGL, aloe',
              "bullets": ["Nourishes the cells that line your gut", "Soothes and coats the lining"],
              "dose": "dose_from_db"},
+            # Polish round 2: both bullets are ND850 Rev. 12/24's own claims ("GI Defend helps support a healthy mucosal
+            # immune system", "Supports healthy gut barrier function").  The old "Helps bind microbial toxins" was not
+            # NutriDyn's wording (ND850: the toxins "naturally occur in the gut during the breakdown and turnover of
+            # food"), and beside the front's microbes it read as acting on a disease agent (21 CFR 101.93(g)(2)).
             {"p": "ip_gi_defend", "need": "Bind and protect",
              "needsub": f'<span class="{U}-r">Repair</span> serum-derived bovine immunoglobulins',
-             "bullets": ["Helps bind microbial toxins in the gut", "Supports gut barrier and immune balance"],
+             "bullets": ["Supports a healthy gut immune system", "Supports healthy gut barrier function"],
              "dose": "dose_from_db"},
-            # "microbes", not "bacteria": one of the seven strains, S. boulardii, is a yeast.
+            # "microbes", not "bacteria": one of the seven strains, S. boulardii, is a yeast.  Polish round 2: the second
+            # bullet is a direction, not a claim (so no diamond).  The old "S. boulardii is a yeast: antibiotics spare
+            # it" held for 5 of the 30 billion CFU only: the other six strains, about 25.8 billion (ND460 Rev. 7/24), are
+            # bacteria that antibiotics kill, and in the practitioner edition nothing else on the page spaced the two.
+            # Two hours: the series' spacing (IBD sheet's probiotic column), as in Asher's zonulin case study,
+            # 2026-04-24 ("taken at least 2 hours away from any antimicrobial support").  The short form is the only
+            # one that fits one line in this column (measured 118 of 124 px; "Take it 2 hours from antibiotics" wraps),
+            # and one line is what lines this column's serving block up with the other four (its name takes two).
             {"p": "ip_ultrabiotic_dms", "need": "Add friendly microbes",
              "needsub": f'<span class="{U}-r">Reinoculate</span> 7 strains with S.&nbsp;boulardii',
-             "bullets": ["Supports a balanced gut microbiome", "S.&nbsp;boulardii is a yeast: antibiotics spare it"],
+             "bullets": ["Supports a balanced gut microbiome", "2 hours from antibiotics"],
              "dose": "dose_from_db"},
             {"p": "ip_gi_restore", "need": "Keep the gains",
              "needsub": f'<span class="{U}-r">Retain</span> gut-support shake for days 11 to 24',
@@ -1270,41 +1317,57 @@ SHEET = {
         # The plan line replaces the kit's "add one product a week", which ND584 rules out: "The first 4 R's last
         # 10 days and all four steps should be done at the same time.  The final R is from day 11 to day 24."
         # "The first four products", not ND584's "all four steps": the band names four steps here, Retain included.
-        # {plan} = the kit's pill and scoop total (GI Restore's "serving" lines are left out of it, so it is the
-        # days 1 to 10 peak: 7 pills and 4 scoops).
-        "rhythm_note": ("Days 1 to 10: <b>{plan} a day</b>, the first four products together. "
-                        "Days 11 to 24: switch to GI Restore, 1 scoop twice a day."),
-        # Four medicine-and-nutrient notes per edition, nine printed lines each (the most the panel holds without
+        # Polish round 2: the totals are written by hand, not the kit's {plan}, because GI Restore's two scoops are
+        # now "scoop" lines (the kit would add them to the days 1 to 10 scoops and print 6).  Days 1 to 10:
+        # Digestive Complete 2 capsules x 3 meals + UltraBiotic 1 capsule = 7 pills; GI Integrity 2 + GI Defend 2 =
+        # 4 scoops (products.d).  Days 11 to 24: GI Restore 1 scoop twice daily [ND584, ND529].  The kit has no
+        # midday slot, so the line says Digestive Complete goes with all three meals (its breakfast and evening-meal
+        # doses are in the slots; the round-1 Morning slot carried the lunch dose too).  "with all three meals", not
+        # "goes with all three meals": the longer form left "day." alone on a third line (measured 2026-11-04).
+        # Change the totals here if a dose in products.d changes.
+        "rhythm_note": ("Days 1 to 10: <b>7 pills and 4 scoops a day</b>, the first four products together; "
+                        "Digestive Complete with all three meals. "
+                        "Days 11 to 24: only GI Restore, 1 scoop twice a day."),
+        # Five medicine-and-nutrient notes per edition, ten printed lines each (the most the panel holds without
         # pushing the footer off the page): the pharmacist checks interactions and depletions, the provider orders
-        # labs, refers and adjusts.  Both editions now carry the probiotic's central-line / weak-immunity caution,
-        # the pregnancy line and the test-before-gluten-free point.  The animal sources (pork enzymes and ox bile in
-        # Digestive Complete, beef serum in GI Defend) are named on the two serving lines; a separate allergy line
-        # would need two more lines than either panel has.
+        # labs, refers and adjusts.  Both editions print the label warnings with the labels' own force (Digestive
+        # Complete: ulcer "now or ever", ND566 Rev. 8/24; GI Integrity: pregnant or nursing, ND431 Rev. 12/24), the
+        # probiotic's central-line / weak-immunity caution, the pregnancy line, and (polish round 2) the
+        # blood-thinner and alpha-gal line.  The probiotic's 2-hour antibiotic spacing moved into its column, which
+        # both editions print.
         "rx": {
             "pharmacy": [
-                # Betaine HCl raises gastric acidity; not with peptic ulcer or gastritis (Asher's ulcer and HCl email,
-                # 2019-09-05) and a standard caution beside NSAIDs, corticosteroids and acid suppressants.
-                "<b>Betaine HCl</b> (Digestive Complete) adds acid: not with ulcers or gastritis; ask first with acid "
-                "blockers, NSAIDs or steroids.",
-                # NIH ODS Zinc fact sheet: UL 40 mg/day from age 19 (34 mg at 14-18, 12 and 23 mg at 4-8 and 9-13),
-                # hence "adult limit"; quinolones and tetracyclines: take the antibiotic at least 2 h before or
-                # 4-6 h after zinc.  Two scoops: GI Integrity 2 x 16.1 = 32.2 mg; GI Restore
-                # 2 x 18.75 = 37.5 mg (products.d).
-                "<b>Zinc</b> from two scoops (32 to 38&nbsp;mg a day, near the 40&nbsp;mg adult limit) binds quinolone and "
-                "tetracycline antibiotics: take them 2 hours before or 4 to 6 after.",
-                # Probiotic 2 h from antibiotics; S. boulardii is a yeast that antifungals inactivate; fungemia risk
-                # with central venous catheters or weak immunity (Enache-Angoulvant A, Hennequin C. Clin Infect Dis
-                # 2005;41:1559-68, PMID 16267727).
-                "<b>Probiotic:</b> 2 hours from antibiotics; antifungals stop its S.&nbsp;boulardii; not with a central "
-                "IV line or weak immunity.",
-                # Pregnancy: the NutriDyn practice kit's GI Integrity handout, "Check first. Do not use if pregnant or
-                # nursing." (repo handouts/nutridyn-practice-kit.pdf); "ask before the others": the UltraBiotic
-                # (ND460) and GI Restore (ND529) sell sheets, "If you are pregnant, nursing, or taking medication,
-                # consult your healthcare practitioner before use" (products.d).  Celiac serology (tTG-IgA) needs a
-                # gluten-containing diet (Rubio-Tapia A et al. ACG guideline, Am J Gastroenterol 2023;118:59-76,
-                # PMID 36602836), and the checklist's first box takes gluten out on day 1.
+                # ND566 Rev. 8/24 caution: "Do not use if you have a prior history of or a current peptic or duodenal
+                # ulcer", hence "now or ever" and "Skip".  Betaine HCl (600 mg per 2 capsules) raises gastric acidity,
+                # hence "ask first" with gastritis (Asher's ulcer and HCl email, 2019-09-05) and the standard caution
+                # beside NSAIDs, corticosteroids and acid suppressants.
+                "<b>Ulcer, now or ever?</b> Skip Digestive Complete. Ask first with gastritis, acid blockers, NSAIDs or "
+                "steroids.",
+                # The shakes carry the cations that bind quinolones and tetracyclines in the gut: GI Integrity zinc
+                # 16.1 mg and iron 0.49 mg a scoop (ND431 Rev. 12/24); GI Restore zinc 18.75 mg, iron 5.7 mg, calcium
+                # 254 mg and magnesium 35 mg a scoop (ND529 Rev. 10/26).  CIPRO (ciprofloxacin) US prescribing
+                # information: at least 2 hours before or 6 hours after products containing calcium, iron or zinc;
+                # levofloxacin 2 hours either side; doxycycline absorption impaired by calcium, magnesium and iron
+                # (the US labels, as cited on the IBD sheet); NIH ODS zinc fact sheet: the antibiotic at least 2 hours
+                # before or 4 to 6 hours after zinc.  Ciprofloxacin's window is the widest of these, so the line prints
+                # it, as the IBD sheet does.  Moxifloxacin's label asks for 4 hours before or 8 after; "or as their label
+                # says" would take a third line, and the panel has none to spare (measured 2026-11-04), so the
+                # pharmacist's own check covers it.  The round-1 "near the 40 mg adult limit" is gone: the zinc upper
+                # limit counts food zinc too, so the line understated it.
+                "<b>Zinc, iron and calcium</b> in the shakes bind quinolone and tetracycline antibiotics: take those "
+                "2&nbsp;hours before or 6 after.",
+                # S. boulardii is a yeast that antifungals inactivate; fungemia risk with central venous catheters or
+                # weak immunity (Enache-Angoulvant A, Hennequin C. Clin Infect Dis 2005;41:1559-68, PMID 16267727).  The
+                # 2-hour spacing from antibiotics is printed in the UltraBiotic column.
+                "<b>Probiotic:</b> antifungals stop its S.&nbsp;boulardii; not with a central IV line or weak immunity.",
+                # Pregnancy: ND431 Rev. 12/24, "Warning: Do not use if pregnant or nursing."; "ask before the others":
+                # ND566 Rev. 8/24, ND850 Rev. 12/24, ND460 Rev. 7/24 and ND529 Rev. 10/26 all say "If you are pregnant,
+                # nursing, or taking medication, consult your healthcare practitioner before use".  Celiac serology
+                # (tTG-IgA) needs a gluten-containing diet (Rubio-Tapia A et al. ACG guideline, Am J Gastroenterol
+                # 2023;118:59-76, PMID 36602836), and the checklist's first box takes gluten out on day 1.
                 "<b>Pregnant or nursing?</b> Skip GI Integrity; ask before the others. <b>Celiac test?</b> Do it before "
                 "you stop gluten.",
+                BLOOD_ALPHA,
             ],
             "practitioner": [
                 # Celiac serology (tTG-IgA) must be done on a gluten-containing diet (Rubio-Tapia 2023, above).  Stool
@@ -1313,19 +1376,22 @@ SHEET = {
                 # & Beyond: meet with practitioner; continue monitoring"), so the sheet names none.
                 "<b>Tests:</b> {Who} may order a celiac blood test (tTG-IgA) before you stop gluten, and stool tests "
                 "before and after.",
-                # Same betaine HCl caution as the pharmacy edition, worded as the provider's adjustment.
-                "<b>Ulcer or gastritis, or on an acid blocker, a steroid or a daily NSAID?</b> {Who} may leave out "
-                "Digestive Complete: its betaine HCl adds acid.",
-                # Pregnancy: the practice kit's GI Integrity handout and the two sell sheets (pharmacy edition, above).
-                # [ND584] "If the patient exhibits significant GI inflammation, replace the Dynamic GI Integrity with
-                # Dynamic Inflam-Eze for improving inflammatory markers."  The swap has its own lead-in, so it never
-                # reads as the pregnancy alternative (Inflam-Eze, products DB R266: turmeric root extract 400 mg,
-                # quercetin 500 mg, ginger extract 200 mg, green tea extract 100 mg, none established as safe in
-                # pregnancy).
-                "<b>Pregnant or nursing?</b> Skip GI Integrity unless {who} says so, and ask before the others. "
-                "<b>Marked gut inflammation?</b> The 5R swaps GI Integrity for Inflam-Eze.",
+                # The label's own caution (ND566 Rev. 8/24, pharmacy edition above): an ulcer, now or in the past, means
+                # skip it; gastritis, acid blockers, steroids and daily NSAIDs mean ask first (betaine HCl adds acid).
+                "<b>Ulcer, now or ever?</b> Skip Digestive Complete. <b>Gastritis, acid blocker, steroid or daily "
+                "NSAID?</b> Ask first.",
+                # Pregnancy: ND431 Rev. 12/24 "Warning: Do not use if pregnant or nursing." (round 1 printed "unless your
+                # provider says so", softer than the label); the other four labels: consult before use (pharmacy
+                # edition, above).  [ND584] "If the patient exhibits significant GI inflammation, replace the Dynamic
+                # GI Integrity with Dynamic Inflam-Eze for improving inflammatory markers."  The swap has its own
+                # lead-in, so it never reads as the pregnancy alternative (Inflam-Eze, products DB R266: turmeric root
+                # extract 400 mg, quercetin 500 mg, ginger extract 200 mg, green tea extract 100 mg, none established
+                # as safe in pregnancy).
+                "<b>Pregnant or nursing?</b> Skip GI Integrity; ask about the others. <b>Marked gut inflammation?</b> "
+                "The 5R swaps GI Integrity for Inflam&#8209;Eze.",
                 # S. boulardii fungemia with central venous catheters or weak immunity (Enache-Angoulvant 2005, above).
                 "<b>Central IV line or weak immunity?</b> Skip UltraBiotic.",
+                BLOOD_ALPHA,
             ],
         },
     },

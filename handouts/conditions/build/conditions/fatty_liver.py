@@ -13,7 +13,7 @@ Art-director pass (front only): immune cells never stack, scar is drawn edges-th
 and T-bar stops clear of the white ring, the band holds the arcs and their labels, the livers sit
 bottom-aligned 4 units above the band, all three check cards end in two sourced dots, and the pharmacy
 edition says the doctor orders the checks.
-Front recheck pass (2026-11-03, front_rechecks_BC.json), no redesign beyond the listed items:
+Front recheck pass (2026-11-03, the reviewer's front recheck list), no redesign beyond the listed items:
   - ALT dots read as upper limits, the FIB-4 dot names the FibroScan, the specialist dot is red.
   - The zoom tag says "Close-up", the same word as the key.  Every key swatch sits on a dark tissue
     chip like the art, the scar swatch is a straight piece of septum, the key names the pink nucleus.

@@ -12,13 +12,15 @@ INSULIN RESISTANCE, share one picture grammar:
      small closed bilayers built from the same lipid unit, doors seated in the wall.
      NORMAL: the signal lifts a bubble of doors to the surface, beside an open door that glucose goes
      through (the strip says only what is drawn: the bubble arrives, a door is open).
-     RESISTANCE: the signal dies out and the bubbles stay inside, so glucose piles up outside.
+     RESISTANCE: the signal dies out, so most bubbles stay inside and glucose piles up outside; one door at the
+     far left reached the surface (resistance slows the doors' trip, it does not stop it), with one glucose in its
+     pore and one just inside.
   -> inside the cell.
 The step text sits in its own strip under each panel; the art carries only numbered markers (same
 style as the strip bullets) and a few names in clear space.  One KEY names every symbol, the storage
 bubble included (seven pairs), each pair fenced by hairlines so no swatch can be read with its
 neighbour's label; the NORMAL strip names the moving marks (gold dashes, purple arrows, green arrow) and
-the RESISTANCE strip the grey dashes and the X.  All art labels are upright: the kit ships no Inter italic,
+the RESISTANCE strip the gray dashes and the X.  All art labels are upright: the kit ships no Inter italic,
 so an italic label would print as a machine-slanted upright face.  Below the art: what drives it / clues /
 where it leads, the CDC stat (only "1 in 3" is big) and a "Know your numbers" panel (ADA glucose and A1c
 ranges, a fasting-insulin write-in, NHLBI/AHA metabolic syndrome check).
@@ -30,13 +32,17 @@ products.d/insulin-resistance.json): Gluco IR (Start here), Berberine Pro, colum
 Column 3 is Alpha-Lipoic Acid R270 (the GLC 2026 insulin-resistance protocol's pick) as soon as build.py has
 staged a print-ready photo of the real NutriDyn R270 bottle, and UltraBiotic Akkermansia Plus until then: see
 the OPEN ITEM above SHEET.  A daily rhythm keeps Berberine Pro's three before-meal doses and prints each dose
-on its own line under the product name.  Check panels (four notes, three in the practitioner edition with
-Alpha-Lipoic Acid): pharmacy: the dihydroberberine overlap with pregnancy and liver enzymes, insulin and
-sulfonylureas plus metformin's B12, thyroid medicine (Gluco IR's chromium) plus biotin and lab tests, then
-live bacteria (Akkermansia) or the alpha-lipoic acid total (ALA); practitioner: labs, the prescriber for
-blood-sugar medicine plus thyroid timing, the dihydroberberine overlap (plus the alpha-lipoic acid total with
-ALA), live bacteria (Akkermansia only).  The back-page CSS is scoped with .sheet.back:has(.ir-back), a marker
-span in the lifestyle title, so it cannot leak into other sheets in the all-sheets bundle.
+on its own line under the product name.  Check panels (five notes, four in the practitioner edition with
+Alpha-Lipoic Acid; polish round 2 added the blood-thinner, thyroid-timing and allergy lines): pharmacy: both
+products have dihydroberberine (pregnancy, the drug-clearing enzymes with warfarin and cyclosporine named, fish
+oil and fenugreek on a blood thinner), insulin and sulfonylureas plus metformin's B12, thyroid medicine (Gluco
+IR's chromium: with a morning thyroid pill Gluco IR moves to lunch and dinner) plus biotin and lab tests, then
+live bacteria (Akkermansia) or the alpha-lipoic acid total (ALA), then fish, peanut and chickpea allergies;
+practitioner: labs, the prescriber for blood-sugar medicine plus the same thyroid timing, the dihydroberberine
+overlap with the same cautions (plus the alpha-lipoic acid total with ALA), live bacteria (Akkermansia only),
+allergies.  Product names sit on a two-line baseline so the photo panels and serving headings line up.  The
+back-page CSS is scoped with .sheet.back:has(.ir-back), a marker span in the lifestyle title, so it cannot leak
+into other sheets in the all-sheets bundle.
 """
 import math
 import random
@@ -87,6 +93,12 @@ NB, NB_DOORS = (216, 220.7), (-30, 210)
 # units, outlines incl. doors): 4.7 to the caption and to the strip rule, 6.3 to the X, 9.4 between the bubbles.
 # Doors stay within 50 degrees of level, so no door tip sticks up into the caption or down into the strip.
 RB = [((243, 240), (-35, 160)), ((299, 240), (-10, 135))]
+# resistance: ONE open door at the far left of the membrane (polish round 2).  Insulin resistance slows the doors'
+# trip to the surface, it does not stop it, so the panel no longer shows a total block.  Centre 46 (spans x 20.9 to
+# 71.2, 27.5 clear of the receptor's left lobe at 98.7): with it in lipid_xs the two membrane segments beside it
+# take 1 and 4 head gaps at 9.45 and 9.49, as even as the rest of the bilayer (8.9 to 9.2).  One glucose sits in
+# its pore and one just inside the cell, the trickle that still gets in.
+RG4_X = 46
 # Resistance caption: 5.3 below the membrane's heads.  Centred at 267, 4 left of the bubbles' midpoint, because
 # the 193-wide line must keep 8 clear of the frame on the right and the bubbles 6 clear of the X on the left.
 CAP_X, CAP_Y = 267, CY + 33.5
@@ -373,7 +385,8 @@ def panel(x0, normal):
              f'marker-end="url(#irAy)" fill="none"/>')
 
     # membrane, then the proteins in it
-    blocks = [(REC_X - REC_HW, REC_X + REC_HW)] + ([(G4_X - G4_HW, G4_X + G4_HW)] if normal else [])
+    door_x = G4_X if normal else RG4_X
+    blocks = [(REC_X - REC_HW, REC_X + REC_HW), (door_x - G4_HW, door_x + G4_HW)]
     o.append(membrane(lipid_xs(1.2, PW - 1.2, blocks), CY))
     o.append(receptor(REC_X, CY, bound=True))
 
@@ -400,7 +413,10 @@ def panel(x0, normal):
                  'stroke-width="2.8" fill="none" marker-end="url(#irAg)" stroke-linecap="round"/>')
         o.append(marker(*M1, 1, col) + marker(*M2, 2, col) + marker(*M3N, 3, col))
     else:
-        # no door at the surface: glucose piles up on the membrane (2 loose rows), more drifts above it
+        # one door made it to the surface (RG4_X): one glucose in its pore, one just inside the cell
+        o.append(glut4(RG4_X, CY, True))
+        o.append(glucose(RG4_X, CY - 2) + glucose(RG4_X + 6, CY + 44))
+        # the rest of the sugar piles up on the membrane (2 loose rows), more drifts above it
         floor = CY - HEAD_DY - HEAD_R - 0.3 - 0.866 * GLU_R - 0.5 - 0.3
         pile = placed_all(settle(random.Random(PILE_SEED), 13, 166, 368, floor), 13, "pile glucose")
         top = min(y for _, y, _ in pile) - 0.866 * GLU_R
@@ -419,7 +435,7 @@ def panel(x0, normal):
         o.append(marker(*M1, 1, col) + marker(*M2, 2, col) + marker(*M3R, 3, col))
 
     # step strip: the art's moving marks are named here (gold dashes = insulin's path to the receptor, purple
-    # arrows = glucose's path, dashed to the door and solid into the cell, green arrow, grey dashes and the X), the
+    # arrows = glucose's path, dashed to the door and solid into the cell, green arrow, gray dashes and the X), the
     # shapes in the KEY.  Resistance step 3 says why that vessel holds twice the insulin (NIDDK: the pancreas makes
     # more insulin to keep blood glucose in a healthy range).  Normal step 2 says only what is drawn (polish round
     # 1): the signal lifts a bubble of doors to the surface; step 3 sends glucose through the open door beside it.
@@ -430,7 +446,7 @@ def panel(x0, normal):
               "The signal (green arrow) lifts a bubble of doors to the surface.",
               "Glucose (purple arrows) goes in through an open door."] if normal else
              ["Insulin still fits its receptor, but the cell barely listens.",
-              "The signal (grey dashes) dies at the X. Doors stay in bubbles.",
+              "The signal (gray dashes) dies at the X. Most doors stay inside.",
               "Glucose stays in the blood. The pancreas makes more insulin."])
     o.append(f'<path d="M0,{IN1} H{PW}" stroke="#E4E0DA" stroke-width="1"/>')
     for i, s in enumerate(steps):
@@ -492,8 +508,9 @@ def art_insulin():
     return svg(760, PH + 10 + KEY_H, "".join(body),
                "Two panels. Normal: insulin from the blood binds its receptor in the cell membrane, the signal brings a "
                "storage bubble of GLUT4 glucose doors up to the surface, the door opens and glucose moves into the cell. "
-               "Insulin resistance: insulin binds but the signal is weak, the glucose doors stay inside the cell in "
-               "storage bubbles and glucose piles up outside and stays in the blood.")
+               "Insulin resistance: insulin binds but the signal is weak, so only one glucose door is at the surface "
+               "while most stay inside the cell in storage bubbles, and glucose piles up outside and stays in the "
+               "blood.")
 
 
 # ------------------------------------------------------------------ front page
@@ -591,8 +608,8 @@ def numbers():
             'with {who}.</span>'
             '<span class="ir-fi"><b>Fasting insulin</b><i></i>&micro;IU/mL<em>Lab range</em><i></i></span></div>'
             f'<div class="ir-scales">{scales}</div>'
-            '<div class="ir-msh"><b>Metabolic syndrome check</b><span>Tick each sign you have. If you take medicine for '
-            'one, tick it. <em>Any 3 of these 5</em> means metabolic syndrome.</span></div>'
+            '<div class="ir-msh"><b>Metabolic syndrome check</b><span>Check each sign you have. If you take medicine for '
+            'one, check it. <em>Any 3 of these 5</em> means metabolic syndrome.</span></div>'
             f'<div class="ir-ms">{tiles}</div>'
             '<p class="ir-src">Sources: American Diabetes Association (a diabetes result is confirmed with a repeat test); '
             'NHLBI and American Heart Association. Cell drawing not to scale.</p></div>')
@@ -660,14 +677,14 @@ BACK_CSS = r"""
 /* a little less red above and below the lifestyle cards (shared 0.3 in / 0.18 in) so the footer stays on the page */
 .sheet.back:has(.ir-back) .band{padding-top:0.22in!important;padding-bottom:0.14in}
 .sheet.back:has(.ir-back) .band h2{margin-bottom:0.07in}
-/* the rx panel (13 lines) sets the row's height: the rhythm slots grow to match it instead of leaving a gap
+/* the taller panel sets the row's height: the rhythm slots grow to match the check panel instead of leaving a gap
    under the pill total */
 .sheet.back:has(.ir-back) .duo>.panel:first-child{display:flex;flex-direction:column}
 .sheet.back:has(.ir-back) .duo>.panel:first-child .rhythm{flex:1}
-/* each dose on its own grey line under the product name (polish round 1): run in after the name, the Evening
+/* each dose on its own gray line under the product name (polish round 1): run in after the name, the Evening
    box read "Omega Pure EPA-DHA 1000 1 softgel" as one run of numbers.  A dash separator was tried and wraps
    badly: an en dash is a break-after character, so lines ended on it or started with a stray space. */
-.sheet.back:has(.ir-back) .rhythm li em{display:block}
+.sheet.back:has(.ir-back) .rhythm li em{display:block;text-wrap:balance}
 /* lifestyle discs a little smaller so each bullet line holds about 28 characters */
 .sheet.back:has(.ir-back) .life.l3 .disc2{width:0.68in;height:0.68in}
 /* polish round 2: every product name takes two lines' height (8.6 pt x 1.15 x 2 = 2.3em) with its text on the
@@ -676,8 +693,21 @@ BACK_CSS = r"""
    the block keeps the name one inline run: as a flex column, "Omega Pure <span class=nw>EPA-DHA</span> 1000" would
    become three stacked flex items, one per line. */
 .sheet.back:has(.ir-back) .col .pick .nm{min-height:2.3em;align-content:end}
-/* write-in lines 0.2 in apart (shared 0.24 in), as on the GERD sheet: room for the round-2 notes */
+/* polish round 2: room for the blood-thinner, thyroid-timing and allergy notes (both editions, both lineups).
+   Write-in lines 0.2 in apart (shared 0.24 in) and the gaps between blocks as on the GERD sheet; the check panel
+   takes the wider share of the row (the shelf's usual side: 1fr 1.3fr on HBP, 1fr 1.4fr on fatty liver), so its
+   notes run 14 or 15 lines instead of 18 or 19.  Slot headers stay on one line ("Evening meal" wrapped below about
+   94 px), and dose lines wrap balanced ("3 capsules / with breakfast", "nothing / to take"; same line count).
+   Measured in print media (2026-11-04): Akkermansia lineup 15 lines (practitioner, 2.1 px above the footer) and
+   14 (pharmacy, the rhythm panel is the taller, 2.3 px); ALA lineup 15 (3.1 px) and 14 (12.9 px). */
 .sheet.back:has(.ir-back) .notes .ln{height:0.2in}
+.sheet.back:has(.ir-back) .ns-title{margin-top:0.1in}
+.sheet.back:has(.ir-back) .duo{grid-template-columns:1fr 1.15fr;margin-top:0.08in}
+.sheet.back:has(.ir-back) .notes{margin-top:0.08in}
+.sheet.back:has(.ir-back) .recby{margin-top:0.06in}
+.sheet.back:has(.ir-back) .rx li{margin-bottom:1px}
+.sheet.back:has(.ir-back) .rx li:last-child{margin-bottom:0}
+.sheet.back:has(.ir-back) .slot .when{white-space:nowrap}
 """
 
 
@@ -874,22 +904,30 @@ RX_ALA_LINEUP = {"practitioner": [RX_LABS, RX_MEDS, RX_SHARED_PR, RX_ALLERGY],
 # folder's 420 px web renders (which pass the 300 px rule); the Dropbox content host is blocked from these
 # sessions, so central photo staging (or Asher) must fetch it and check by eye that it is the 100-capsule NutriDyn
 # bottle.  Never stage scratchpad products/img/R270.png: it shows the Progressive Professional P872 bottle (60
-# capsules), another brand.  Both lineups are built and measured: with ALA, column 3 is COL_ALA, the live-bacteria
-# notes go, the overlap notes add Gluco IR's 300 mg of alpha-lipoic acid (500 mg a day in total), the pharmacy
-# edition gets RX_ALA_PH and the empty Bedtime slot narrows (RHYTHM_CSS).  If Asher would rather keep Akkermansia,
-# set ALA = False above and write his reason here instead of the photo reason.
+# capsules), another brand.  Both lineups are built and measured (COLS_ALA / RX_ALA_LINEUP / RHYTHM_CSS_ALA against
+# COLS_AKK / RX_AKK_LINEUP / RHYTHM_CSS_AKK; polish round 2 measured the ALA lineup by rendering those constants, see
+# BACK_CSS): with ALA, column 3 is COL_ALA, the live-bacteria notes go, the overlap notes add Gluco IR's 300 mg of
+# alpha-lipoic acid (500 mg a day in total), the pharmacy edition gets RX_ALA_PH and the empty Bedtime slot narrows.
+# If Asher would rather keep Akkermansia, set ALA = False above and write his reason here instead of the photo reason.
 SHEET = {
     "slug": "insulin-resistance", "code": "ND-CM-203", "theme": "metab", "series": "Metabolic Health Series",
     "order": 5,
     "title": "Understanding Insulin Resistance", "sub": None,
     # NIDDK, Insulin Resistance & Prediabetes: insulin resistance is when cells in your muscles, fat and liver do
-    # not respond well to insulin and cannot easily take up glucose from the blood (so "cells in your muscles, fat
-    # and liver", not every cell: brain and red blood cells take in sugar without insulin); the pancreas makes more
-    # insulin to keep blood glucose in a healthy range; over time it cannot keep up and glucose rises into
-    # prediabetes and type 2 diabetes.  Still 4 lines (measured: the last line is unchanged, 653 of 735 px).
-    "intro": ("Insulin is a hormone your pancreas releases, especially after you eat. It tells cells in your "
-              "muscles, fat and liver to open their <b>glucose doors</b>, so sugar (glucose) can leave your blood "
-              "and go into the cells for fuel. With <b>insulin resistance</b>, the cells stop listening well. Sugar "
+    # not respond well to insulin and cannot easily take up glucose from the blood (brain and red blood cells take
+    # in sugar without insulin); the pancreas makes more insulin to keep blood glucose in a healthy range; over time
+    # it cannot keep up and glucose rises into prediabetes and type 2 diabetes.  Sentence 2 (polish round 2): the
+    # doors insulin moves to the surface (GLUT4, the door the art and its KEY draw) are in muscle and fat cells;
+    # liver cells take glucose in through GLUT2, which insulin does not move, and there insulin makes the cell store
+    # sugar (as glycogen) and stop releasing it (Petersen MC, Shulman GI, Physiol Rev 2018;98:2133-2223, PMID
+    # 30067154, doi:10.1152/physrev.00063.2017, the review of insulin action in muscle, liver and fat), so the
+    # sentence gives the liver its own verb.  NIDDK's lay wording ("enter cells in your muscles, fat, and liver")
+    # names no doors.  The review's wording, with the gloss moved onto the first "sugar" so the sentence does not
+    # say "store sugar, so sugar": the literal version also pushed "normal." onto line 4 (730 of 735 px, one
+    # browser's rounding from a fifth line).  Still 4 lines, measured in print media: the last line is 682 of 735 px.
+    "intro": ("Insulin is a hormone your pancreas releases, especially after you eat. It tells your muscle and fat "
+              "cells to open their <b>glucose doors</b> and your liver to store sugar (glucose), so it leaves your "
+              "blood and fuels your body. With <b>insulin resistance</b>, the cells stop listening well. Sugar "
               "starts to back up, so the pancreas pushes out more and more insulin to keep blood sugar normal. This "
               "can go on quietly for years before blood sugar climbs high enough to be called prediabetes or type 2 "
               "diabetes."),

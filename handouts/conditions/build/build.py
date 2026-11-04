@@ -43,6 +43,8 @@ DISCLAIMER = (f"<span class='mark'>{kit.DIAMOND}</span> These statements have no
 
 BACK_CSS = r"""
 .col{position:relative}
+.panel.rx h3{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:nowrap;white-space:nowrap}
+.panel.rx h3 .rxkeep{font:700 7pt Inter,sans-serif;letter-spacing:0;text-transform:none;color:var(--deep);white-space:nowrap}
 .col.st{border-color:#F15F3F;box-shadow:0 0 0 1px #F15F3F,0 2px 6px rgba(20,30,40,.10)}
 .startb{position:absolute;top:-8px;right:6px;z-index:3;background:#F15F3F;color:#fff;font:800 7pt/1 Inter,sans-serif;
   letter-spacing:.08em;padding:3px 6px 2px;border-radius:3px;text-transform:uppercase;box-shadow:0 0 0 1.5px #fff;white-space:nowrap}
@@ -185,7 +187,7 @@ def back_page(s, ed, edkey):
             '<div class="ns-title">Nutrient Solutions<span>What your body needs, and the NutriDyn formula that delivers it</span></div>'
             f'<div class="cols" style="grid-template-columns:repeat({len(b["cols"])},1fr)">{cols}</div>'
             f'<div class="duo"><div class="panel"><h3>Your daily rhythm</h3>{rhythm_block(b["cols"], b.get("rhythm_note"), ed)}</div>'
-            f'<div class="panel rx"><h3>{ed["rx_title"]}</h3><ul>{rx}</ul></div></div>'
+            f'<div class="panel rx"><h3>{ed["rx_title"]}<span class="rxkeep">Keep taking your medicines.</span></h3><ul>{rx}</ul></div></div>'
             f'<div class="notes"><b>Special considerations for you:</b>{lines}</div>'
             '<div class="recby"><span>Recommended by</span><span class="ln2" data-for></span><span>Phone</span>'
             '<span class="ln2" style="flex:0 0 1.5in"></span></div>'

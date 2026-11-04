@@ -69,6 +69,18 @@ label's larch arabinogalactan; every dose bar keeps its sub-line to one line, so
 panels gained the gelatin softgel in the alpha-gal line [ND382G] [MUL12] [WIL24], the antibiotic spacing for both
 shakes' minerals [CATION] [CIPRO] [LEVO] [DOXY], the magnesium upper limit [ODSMG] and the pregnancy line as its own
 bullet for every product; the Pharmacist check names who checks the vitamin D level.
+
+Polish round 2 (2026-11-04), answered without redesigning the page: both check panels warn smokers and ex-smokers about
+GI Restore's beta-carotene (SMOKER: [ND529] [ODSA] [ATBC94] [CARET96] [AREDS2] [USPSTF22]); the magnesium caution is its
+own bullet with a bold question (MAGNESIUM), not the tail of the labs or vitamin D bullet; the Provider check says 5,800 IU
+is over the 4,000 IU upper limit and that the provider sets the dose and how long, and the Pharmacist check names the
+product to keep short term (D3 5000 with K2) [LABELS] [ODSD]; the lifestyle band gained "Smoke-free (Crohn's)" [ACGCD]
+[BEA01], with "Move gently" folded into "Lower stress"; GI Defend is "Gut immune support" (ND850) and says cow serum in
+its header and its serving line; GI Restore's size line gives its 14 servings [ND529]; "GI Restore" no longer splits
+across the plan line, which is balanced; the Crohn's terminal ileum bows like a loop of bowel instead of running
+ruler-straight; and the red colon stretches end flat instead of in round caps (patch_mask(): the Crohn's patches fade in
+and out over PATCH_FADE units, the UC start is a crisp edge, as its sharp margin is).  To make room for the two new
+bullets, the checks run at line-height 1.2 and the single-line headings lose their spare leading (CSS).
 Sources for the back:
   [ND584]  NutriDyn 5R GI Restoration Program guide ND584 Rev. 1/22: REPAIR (days 1-10,
            with the IBD note "If the patient exhibits significant GI inflammation, replace
@@ -148,6 +160,31 @@ Sources for the back:
            supplements and medications (not food) is 350 mg a day; too much causes diarrhea, nausea and cramps
            (Institute of Medicine DRIs, 1997).  ods.od.nih.gov could not be opened from the build machine; the
            limit and its wording were confirmed from the ODS pages in a web search 2026-11-04.
+  [ND529]  GI Restore sell sheet ND529 Rev. 10/26, Vanilla panel, re-read with the Dropbox fetch tool 2026-11-04:
+           "Vitamin A (as 7,170 mcg beta carotene and 330 mcg retinyl acetate) 7,500 mcg RAE" (833% DV) per scoop, so the
+           two parts are RAE; "Serving Size: About 1 Scoop (35.78 g)", "Servings Per Container: 14"; "Available in
+           vanilla and chocolate".  Inflam-Eze's vitamin A is retinyl palmitate only (ND498), so only GI Restore carries
+           beta-carotene.
+  [ODSA]   NIH Office of Dietary Supplements, Vitamin A and Carotenoids fact sheet (after the Institute of Medicine DRIs,
+           2001): 1 mcg RAE = 1 mcg retinol = 2 mcg supplemental beta-carotene = 12 mcg dietary beta-carotene.  So 7,170 mcg
+           RAE is about 14.3 mg of beta-carotene a scoop, 28.7 mg a day at GI Restore's 2 scoops (14.3 mg a day even if the
+           7,170 mcg were read as weight).
+  [ATBC94] Alpha-Tocopherol, Beta Carotene Cancer Prevention Study Group. N Engl J Med 1994;330:1029-35. PMID 8127329,
+           doi:10.1056/NEJM199404143301501 (29,133 male smokers; beta-carotene 20 mg a day; lung cancer incidence +18%, 95%
+           CI 3 to 36%).  Checked in PubMed 2026-11-04.
+  [CARET96] Omenn GS et al. N Engl J Med 1996;334:1150-5. PMID 8602180, doi:10.1056/NEJM199605023341802 (18,314 smokers,
+           former smokers and asbestos-exposed workers; 30 mg beta-carotene plus 25,000 IU retinyl palmitate a day; lung
+           cancer RR 1.28, 95% CI 1.04 to 1.57).  Checked in PubMed.
+  [AREDS2] AREDS2 Research Group. JAMA 2013;309:2005-15. PMID 23644932, doi:10.1001/jama.2013.4997 (more lung cancers with
+           the AREDS formula's beta-carotene than without it, 2.0% vs 0.9%, nominal P = .04, "mostly in former smokers"):
+           why the line asks ex-smokers too.  Checked in PubMed.
+  [USPSTF22] US Preventive Services Task Force. JAMA 2022;327:2326-33. PMID 35727271, doi:10.1001/jama.2022.8970 (recommends
+           against beta-carotene supplements to prevent cardiovascular disease or cancer, grade D; harms outweigh
+           benefits).  Checked in PubMed.
+  [BEA01]  Beaugerie L et al. Impact of cessation of smoking on the course of ulcerative colitis. Am J Gastroenterol
+           2001;96:2113-6. PMID 11467641, doi:10.1111/j.1572-0241.2001.03944.x (after UC patients stopped smoking, years
+           with active disease, hospital stays and major medical therapy all rose): why the quit tile keeps its "(Crohn's)"
+           tag and leaves UC smokers to their gastroenterologist.  Checked in PubMed.
   Label facts and product sources: build/products.d/ibd.json.
 
 Sources for every number and claim on the front (also tagged inline):
@@ -465,9 +502,15 @@ SI_PTS = [(5.2, 170.5), (5.5, 172.8), (5.8, 175.0), (6.0, 177.2), (5.9, 179.4), 
           (-14.0, 206.4), (-16.2, 206.7), (-18.1, 205.8), (-19.1, 203.8), (-19.9, 201.8), (-21.6, 200.5), (-23.7, 200.5),
           (-25.4, 201.7), (-25.9, 203.8), (-25.9, 206.0), (-25.6, 208.2), (-25.1, 210.4), (-24.6, 212.5), (-23.7, 214.5),
           (-21.9, 215.7), (-19.7, 215.8), (-17.5, 215.5), (-15.5, 214.7), (-13.5, 213.7), (-11.5, 212.8), (-9.4, 212.3),
-          (-7.4, 213.1), (-5.9, 214.6), (-5.2, 216.7), (-5.6, 218.9), (-7.1, 220.6), (-9.2, 221.5), (-11.5, 221.8),
-          (-13.8, 222.0), (-16.2, 222.2), (-18.7, 222.5), (-20.9, 222.6), (-23.1, 222.8), (-25.3, 222.9), (-27.5, 223.1),
-          (-29.6, 223.4), (-31.8, 223.7), (-34.0, 224.0)]
+          (-7.4, 213.1), (-5.9, 214.6), (-5.2, 216.7), (-5.6, 218.9), (-7.1, 220.6), (-9.2, 222.1), (-11.5, 223.0),
+          (-13.8, 223.8), (-16.2, 224.4), (-18.7, 224.9), (-20.9, 225.1), (-23.1, 225.2), (-25.3, 225.0), (-27.5, 224.8),
+          (-29.6, 224.6), (-31.8, 224.3), (-34.0, 224.0)]
+# Polish round 2: the terminal ileum's last run (from (-7.1, 220.6) into the cecum's medial wall at (-34.0, 224.0)) used
+# to fall only 3.4 units over 27, so at 300 dpi the swollen red ileum read as a ruler-straight stick laid across the lower
+# belly.  It now bows gently: each point between the two ends drops by 2.5 * sin(pi * t) (t = 0 at the bend, 1 at the
+# cecum), a 2.8-unit sag below the old chord at x -20.9 whose lowest point sits near x -23, so the ileum dips and rises
+# into the cecum like a loop of bowel.  Both ends are unchanged, the turn out of the bend is gentler, and the run lies
+# 9.0 units from the coil above it (it was 6.8).
 SI = _cr(SI_PTS)
 W_SI = 5.8
 SI_LOOP = 23.0          # the coil is drawn as separate loops about this long, each on top of the one before
@@ -475,6 +518,7 @@ SI_LOOP = 23.0          # the coil is drawn as separate loops about this long, e
 # Where the red goes (arc-length fractions of each centre line).
 UC_COLON = (0.47, 1.0)          # mid-transverse colon -> splenic flexure -> descending -> sigmoid
 CD_COLON = [(0.12, 0.25), (0.40, 0.49), (0.62, 0.69)]   # ascending; transverse; descending (splenic flexure healthy)
+PATCH_FADE = 3.0    # polish round 2: each Crohn's colon patch fades in and out over this many units (patch_mask())
 # Terminal ileum (Crohn's): its last 28 units, into the cecum.  Polish round 1: it used to start 36 units from the end,
 # at the top of the bend, and its round red cap hooked up over the healthy loop above it, so at 300 dpi it read as a
 # separate red worm lying on the coil.  It now starts where the ileum leaves the coil (28 units from the end, heading
@@ -484,7 +528,10 @@ CD_COLON = [(0.12, 0.25), (0.40, 0.49), (0.62, 0.69)]   # ascending; transverse;
 CD_SI = (frac_at(SI, -28.0), 1.0)
 TI_FADE = 4.0
 W_TI = W_SI + 1.4      # an inflamed ileum is swollen, so it is drawn a little thicker
-TI_DOT = nearest(SI, (-16.0, 222.0))   # where both "End of the small intestine" leaders land (18 units from the end: red)
+# Where both "End of the small intestine" leaders land: 14 units from the end, red, at the bottom of the bow and near the
+# middle of the visible red ileum (polish round 2: 18 units from the end, the bowed ileum ran inside the Crohn's leader's
+# red-clearance band 11 units before its dot; here check_leaders() passes with 0.8 units to spare beyond its halo).
+TI_DOT = nearest(SI, (-20.0, 225.1))
 
 
 # ----------------------------------------------------------------------------- drawing
@@ -521,19 +568,47 @@ def ti_mask(cid):
     return "".join(out) + "</mask>"
 
 
-def tube(segs, w, pal, kind="si", cap="round"):
+def patch_mask(cid, segs, w, fade_in, fade_out):
+    """The mask that ends one red colon stretch flat instead of in round caps (polish round 2: the round caps overhung
+    the pink colon, so the stretches read as red capsules laid on the bowel, not as inflamed stretches of it).  Built
+    like ti_mask(): flat-ended pieces of the centre line, as wide as the red halo plus a margin, each ramp piece a step
+    brighter than the one before and overlapping the next (no seam), the white middle drawn last with flat ends so it
+    never brightens a ramp.  fade_in / fade_out: units over which the red fades in from, or out to, the healthy pink at
+    the stretch's start / end; 0 cuts it with a crisp flat edge; None leaves that end open (its own round end kept)."""
+    total = length(segs)
+    mw, n, ov = w + 6.5 + 1.5, 10, 0.25 / total
+    a, b = (fade_in or 0.0) / total, 1.0 - (fade_out or 0.0) / total
+    shade = lambda i: "#{0:02X}{0:02X}{0:02X}".format(round(255 * _smooth01((i + 0.5) / n)))
+    out = [f'<mask id="{cid}" maskUnits="userSpaceOnUse" x="-80" y="-10" width="160" height="320">']
+    if fade_in:            # from the start toward the middle, dimmest first
+        out += [_stroke(_d(sub(segs, a * i / n, min(1.0, a * (i + 1) / n + ov))), shade(i), mw, "", "butt") for i in range(n)]
+    if fade_out:           # from the end back toward the middle, dimmest first
+        out += [_stroke(_d(sub(segs, max(0.0, 1 - (1 - b) * (i + 1) / n - ov), 1 - (1 - b) * i / n)), shade(i), mw, "", "butt")
+                for i in range(n)]
+    out.append(_stroke(_d(sub(segs, a, b)), "#FFFFFF", mw, "", "butt"))
+    for open_end, p in ((fade_in is None, segs[0][0]), (fade_out is None, segs[-1][3])):
+        if open_end:
+            out.append(f'<circle cx="{p[0]:.2f}" cy="{p[1]:.2f}" r="{mw / 2:.2f}" fill="#FFFFFF"/>')
+    return "".join(out) + "</mask>"
+
+
+def tube(segs, w, pal, kind="si", cap="round", phase=0.0):
     """A tube along a centre line.  kind: si (smooth), colon (haustra), plain.  cap: the line caps of
-    the smooth kind (the Crohn's ileum has flat ends, faded in by ti_mask())."""
+    the smooth kind (the Crohn's ileum has flat ends, faded in by ti_mask()).  phase: for a stretch of the
+    colon, how far along the whole colon it starts (arc length), so its haustral bulges and folds fall exactly
+    on the healthy colon's under it (polish round 2: out of step, pink bulges peeked out along the red outline
+    and the bulge rhythm broke where the red began)."""
     d = _d(segs)
     out = []
     if kind == "colon":
         p = 6.0
-        out.append(_stroke(d, pal["edge"], w + 2.5, f' stroke-dasharray="0 {p}"'))
+        off = f' stroke-dashoffset="{phase % p:.2f}"' if phase else ""
+        out.append(_stroke(d, pal["edge"], w + 2.5, f' stroke-dasharray="0 {p}"{off}'))
         out.append(_stroke(d, pal["edge"], w + 1.3))
-        out.append(_stroke(d, pal["body"], w + 0.1, f' stroke-dasharray="0 {p}"'))
+        out.append(_stroke(d, pal["body"], w + 0.1, f' stroke-dasharray="0 {p}"{off}'))
         out.append(_stroke(d, pal["body"], w - 1.6))
         out.append(f'<path d="{d}" fill="none" stroke="{pal["band"]}" stroke-width="{w - 2.2:.2f}" '
-                   f'stroke-dasharray="0.9 {p - 0.9:.2f}" stroke-dashoffset="{-p / 2 + 0.45:.2f}" opacity=".75"/>')
+                   f'stroke-dasharray="0.9 {p - 0.9:.2f}" stroke-dashoffset="{-p / 2 + 0.45 + phase % p:.2f}" opacity=".75"/>')
         out.append(f'<g transform="translate(-0.7,-0.9)">{_stroke(d, pal["hi"], w * 0.26, " opacity=.85")}</g>')
     else:
         out.append(_stroke(d, pal["edge"], w + 2.0, "", cap))
@@ -677,11 +752,22 @@ def cavity_d():
     return "M" + " L".join(f"{x:.2f},{y:.2f}" for x, y in pts) + " Z"
 
 
+def red_colon(mode):
+    """[(centre line, start fraction on COLON, fade in, fade out)] of the red colon stretches in one figure (polish round
+    2).  The Crohn's patches fade in and out over PATCH_FADE units, like the ileum's faded start.  The UC stretch starts
+    with a crisp flat edge, as UC's sharp margin does, and its end is left open: it runs on into the rectum, which is
+    drawn over it."""
+    if mode == "uc":
+        return [(sub(COLON, *UC_COLON), UC_COLON[0], 0.0, None)]
+    return [(sub(COLON, a, b), a, PATCH_FADE, PATCH_FADE) for a, b in CD_COLON]
+
+
 def red_parts(mode):
     """[(centre line, tube width)] of every inflamed stretch in one figure."""
+    colon = [(segs, W_COLON) for segs, *_ in red_colon(mode)]
     if mode == "uc":
-        return [(sub(COLON, *UC_COLON), W_COLON), (RECTUM, W_RECT)]
-    return [(sub(COLON, a, b), W_COLON) for a, b in CD_COLON] + [(sub(SI, *CD_SI), W_TI)]
+        return colon + [(RECTUM, W_RECT)]
+    return colon + [(sub(SI, *CD_SI), W_TI)]
 
 
 def figure(mode, x, y, s=1.0):
@@ -706,12 +792,14 @@ def figure(mode, x, y, s=1.0):
          f'<g clip-path="url(#{k}-clip)">']
     g.append(f'<g mask="url(#{U}-esofade)">{tube(ESO, W_ESO, {"edge": GI["edge"], "body": GI["st_top"], "hi": GI["hi"]})}</g>')
     g.append(f'<path d="{cavity_d()}" fill="{GI["cavity"]}" opacity=".55"/>')
-    reds = red_parts(mode)
-    for segs, w in reds:
-        if w == W_TI:      # the Crohn's ileum: flat ends, faded in from the pink by its mask (polish round 1)
-            g.append(ti_mask(f"{k}-timask") + f'<g mask="url(#{k}-timask)">{glow(segs, w, "butt")}</g>')
-        else:
-            g.append(glow(segs, w))
+    colon_reds = red_colon(mode)
+    for i, (segs, _, fade_in, fade_out) in enumerate(colon_reds):    # red colon halos, ended flat or faded by their masks
+        g.append(patch_mask(f"{k}-pm{i}", segs, W_COLON, fade_in, fade_out)
+                 + f'<g mask="url(#{k}-pm{i})">{glow(segs, W_COLON)}</g>')
+    if mode == "uc":
+        g.append(glow(RECTUM, W_RECT))
+    else:              # the Crohn's ileum: flat ends, faded in from the pink by its mask (polish round 1)
+        g.append(ti_mask(f"{k}-timask") + f'<g mask="url(#{k}-timask)">{glow(sub(SI, *CD_SI), W_TI, "butt")}</g>')
     g.append(duodenum())          # after the red halos (never tinted by them), before the coil (which lies on it)
     g.append(si_coil(SI))
     if mode == "cd":   # the swollen ileum, drawn over the coil, fading in where it leaves the bend
@@ -720,9 +808,9 @@ def figure(mode, x, y, s=1.0):
     for segs, w in ((COLON, W_COLON), (RECTUM, W_RECT)):
         g.append(_stroke(_d(segs), GI["shadow"], w + 4.6, ' opacity=".09"') + _stroke(_d(segs), GI["shadow"], w + 2.8, ' opacity=".11"'))
     g.append(tube(COLON, W_COLON, GI, "colon"))
-    for segs, w in reds:
-        if w == W_COLON:
-            g.append(tube(segs, W_COLON, RED, "colon"))
+    colon_len = length(COLON)
+    for i, (segs, start, _, _) in enumerate(colon_reds):   # in step with the colon's haustra, ends cut by the same masks
+        g.append(f'<g mask="url(#{k}-pm{i})">{tube(segs, W_COLON, RED, "colon", phase=start * colon_len)}</g>')
     g.append(rectum_tube(RED if mode == "uc" else GI, f"{k}-rclip"))     # after the colon: covers its end cap
     g.append(cecum(mode))
     g.append(stomach())
@@ -1139,28 +1227,43 @@ CSS = r"""
 /* the hex captions run three lines; balanced, so no word sits alone on the last line ("flares.", round 3) */
 .sheet.back:has(.ibx-back) .life p{text-wrap:balance}
 /* a little less air above the band title and the Nutrient Solutions title, so the footer keeps its margin
-   (the same two tweaks as the Intestinal Permeability sheet, a touch tighter for round 3's longer checks) */
-.sheet.back:has(.ibx-back) .band{padding-top:0.21in!important}
-.sheet.back:has(.ibx-back) .ns-title{margin-top:0.08in}
+   (the same two tweaks as the Intestinal Permeability sheet, a touch tighter for round 3's longer checks).  Polish round 2
+   made room for its two new check notes (about 25 px) without cutting a word: the one-line headings lose their spare
+   leading (band title, Nutrient Solutions, the hex titles), and the band, the rows and the panels each give up 1 to 3 px
+   of padding.  Measured after: the Pharmacist check page keeps 13 px between "Recommended by" and the footer, the Provider
+   check page 25 px (they were 11 and 24 px before the new notes) */
+.sheet.back:has(.ibx-back) .band{padding-top:0.19in!important;padding-bottom:0.15in}
+.sheet.back:has(.ibx-back) .band h2{line-height:1.12}
+.sheet.back:has(.ibx-back) .life b{line-height:1.15}
+.sheet.back:has(.ibx-back) .ns-title{margin-top:0.06in;line-height:1.12}
+.sheet.back:has(.ibx-back) .panel{padding-top:0.07in;padding-bottom:0.06in}
+.sheet.back:has(.ibx-back) .panel h3{margin-bottom:3px}
 /* the medicine check (seven or eight safety notes per edition since polish round 1) takes the wider share of the row:
    at 1fr 1.5fr the daily rhythm sits at its narrowest (306 px: each slot as wide as its longest unbreakable dose,
    "1 scoop from day 11", 86 of 86 px), and the check gets 420 px; every dose in the daily rhythm drops to its own grey
    line under its product, so the four entries of a slot read evenly; morning and evening hold three and four
    products, bedtime one */
-.sheet.back:has(.ibx-back) .duo{grid-template-columns:1fr 1.5fr;margin-top:0.08in}
+.sheet.back:has(.ibx-back) .duo{grid-template-columns:1fr 1.5fr;margin-top:0.06in}
 .sheet.back:has(.ibx-back) .rhythm{grid-template-columns:1fr 1.1fr .9fr}
+/* the check is the taller panel (nine or ten notes since polish round 2), so the three slots stretch down to meet the plan
+   line instead of leaving a blank strip under it: the schedule fills its panel, and the plan line sits at the bottom */
+.sheet.back:has(.ibx-back) .duo>.panel:first-child{display:flex;flex-direction:column}
+.sheet.back:has(.ibx-back) .duo>.panel:first-child .rhythm{flex:1}
 .sheet.back:has(.ibx-back) .slot li em{display:block}
 .sheet.back:has(.ibx-back) .slot li{line-height:1.2}
 /* the checks at the 7 pt fine-print size, a touch tighter (polish round 1: the gelatin, antibiotic, magnesium and
-   pregnancy notes added five lines to the Pharmacist check) */
-.sheet.back:has(.ibx-back) .rx li{font-size:7pt;line-height:1.25;margin-bottom:1.5px}
+   pregnancy notes added five lines to the Pharmacist check; polish round 2: the magnesium note became its own bullet
+   and the smoker note joined, three more lines, so 1.2 leading and 1 px between notes) */
+.sheet.back:has(.ibx-back) .rx li{font-size:7pt;line-height:1.2;margin-bottom:1px}
+/* the hand-written plan line: balanced, so its last line never holds one or two words (polish round 2) */
+.sheet.back:has(.ibx-back) .total{text-wrap:balance}
 /* two writing lines in the notes box (the kit's third is hidden), slightly tighter, as on the Thyroid sheet; since
    polish round 1 the label sits on the first line, form style, so both writing lines stay while the box loses a row */
-.sheet.back:has(.ibx-back) .notes{display:grid;grid-template-columns:auto 1fr;column-gap:8px;align-items:end;margin-top:0.08in}
+.sheet.back:has(.ibx-back) .notes{display:grid;grid-template-columns:auto 1fr;column-gap:8px;align-items:end;margin-top:0.06in}
 .sheet.back:has(.ibx-back) .notes .ln{height:0.22in}
 .sheet.back:has(.ibx-back) .notes .ln:nth-of-type(2){grid-column:1 / -1}
 .sheet.back:has(.ibx-back) .notes .ln:nth-of-type(3){display:none}
-.sheet.back:has(.ibx-back) .recby{margin-top:0.06in}
+.sheet.back:has(.ibx-back) .recby{margin-top:0.05in}
 """
 
 
@@ -1184,8 +1287,8 @@ _qa()
 # label's own instruction (skip it); [ODSK] vitamin K can blunt warfarin; [DRUGS-C] curcumin with warfarin, moderate
 # (bleeding); both shakes carry turmeric root extract (Inflam-Eze 400 mg, GI Restore 300 mg a scoop, [LABELS]).
 # Polish round 1: "(its label says so)" was cut to make room for the antibiotic note; the label is cited here.
-BLOOD_THINNER = ("<b>On warfarin or another blood thinner?</b> Skip D3 5000 with K2, and ask {who} before the shakes: "
-                 "both have turmeric.")
+BLOOD_THINNER = ("<b>On warfarin or another blood thinner?</b> Skip D3&nbsp;5000&nbsp;with&nbsp;K2, and ask {who} before the "
+                 "shakes: both have turmeric.")
 # [CATION]: a scoop of either shake carries calcium, magnesium, zinc and iron, which bind quinolone and tetracycline
 # antibiotics in the gut; [CIPRO] ciprofloxacin at least 2 hours before or 6 hours after products with calcium, iron or
 # zinc; [LEVO] levofloxacin 2 hours either side; [DOXY] doxycycline absorption impaired by calcium, magnesium and iron;
@@ -1206,13 +1309,24 @@ PREGNANT = "<b>Pregnant or nursing?</b> Ask {who} before you start any of these.
 # Polish round 1: the D3 5000 with K2 softgel shell is gelatin [ND382G], and mammalian gelatin carries alpha-gal
 # ([MUL12] most red-meat-allergic patients were gelatin-sensitized, a subset clinically allergic; [WIL24]), so skipping
 # only GI Defend would have implied the rest of the plan is safe for them.
-ALPHA_GAL = ("<b>Beef or red-meat (alpha-gal) allergy?</b> Skip GI Defend, and ask {who} before D3 5000 with K2: its "
-             "softgel shell is gelatin.")
-# Polish round 1, the same sentence in both editions' first notes: Inflam-Eze 260 mg magnesium a scoop [CATION] x 2 =
-# 520 mg a day on days 1 to 10, over the 350 mg adult upper limit for magnesium from supplements, whose critical effect
-# is diarrhea [ODSMG] (GI Restore's 35 mg a scoop keeps day 11 onward far under it).
-MAGNESIUM = ("On days 1 to 10, Inflam&#8209;Eze’s 520&nbsp;mg of magnesium (supplement limit 350&nbsp;mg) can loosen "
-             "stools.")
+ALPHA_GAL = ("<b>Beef or red-meat (alpha-gal) allergy?</b> Skip GI Defend, and ask {who} before D3&nbsp;5000&nbsp;with&nbsp;K2: "
+             "its softgel shell is gelatin.")
+# Inflam-Eze 260 mg magnesium a scoop, as citrate and glycinate [CATION] x 2 = 520 mg a day on days 1 to 10, over the
+# 350 mg adult upper limit for magnesium from supplements, whose critical effect is diarrhea [ODSMG]; GI Restore's 35 mg a
+# scoop keeps day 11 onward far under it.  Polish round 2: its own note with a bold question, in both editions (in round 1
+# it was the unlabelled last sentence of the labs and vitamin D notes, so a reader scanning the bold lines missed the
+# caution most likely to matter in week one), and it says why it matters here: in a disease whose main symptom is
+# diarrhea, loose stools from the shake can be taken for a flare.
+MAGNESIUM = ("<b>Looser stools on days 1 to 10?</b> Inflam&#8209;Eze gives 520&nbsp;mg of magnesium a day (supplement "
+             "limit 350&nbsp;mg): tell {who} before you count it as a flare.")
+# Polish round 2.  [ND529] GI Restore's vitamin A is 7,500 mcg RAE a scoop, 7,170 mcg RAE of it as beta-carotene; [ODSA]
+# 2 mcg of supplemental beta-carotene per mcg RAE, so about 14.3 mg a scoop and 28.7 mg a day at its 2 scoops (14.3 mg a
+# day even read as weight): the range that raised lung cancer in smokers, [ATBC94] 20 mg a day (+18%) and [CARET96] 30 mg
+# a day with retinyl palmitate (RR 1.28); [AREDS2] found the excess mostly in former smokers, so the question asks
+# ex-smokers too; [USPSTF22] recommends against beta-carotene supplements (grade D).  The front lists smoking as a
+# Crohn's flare trigger, so smokers are expected readers.  Inflam-Eze has no beta-carotene (ND498: retinyl palmitate).
+SMOKER = ("<b>Smoker or ex&#8209;smoker?</b> Ask {who} before GI&nbsp;Restore: it is high in beta&#8209;carotene, which "
+          "raised lung cancer risk in smokers.")
 # [TW55] [ACGUC]: fever with heavy bleeding marks a severe attack, which is treated in hospital, so the patient goes
 # straight to the gastroenterologist or the emergency room (an urgent-care clinic would send them on), never back
 # through whoever handed out the sheet.
@@ -1267,10 +1381,16 @@ SHEET = {
             # fiber sensitive" and "3 small meals and 2 ... snacks"; [ESPEN17] protein needs rise in some patients.
             ("plate", "Flare days", "Small meals with protein. Cook or blend produce if raw hurts."),
             # [ND584] "Stress causes digestive issues"; "Block out just 10 minutes daily to focus on relaxation
-            # techniques."  [CCF] stress is a common flare trigger.  Worded so no word sits alone on a line.
-            ("breath", "Lower stress", "Take 10 calm minutes daily. Stress can stir up flares."),
-            # [ND584] 30 minutes of cardio 5 days a week and daily light stretching; "most days" keeps it gentle.
-            ("walk", "Move gently", "Walk, swim or stretch most days."),
+            # techniques."  [CCF] stress is a common flare trigger.  Polish round 2: the old "Move gently" tile ([ND584]
+            # 30 minutes of cardio 5 days a week and daily light stretching) is folded in as the gentle daily walk, to
+            # make room for the smoke-free tile.
+            ("breath", "Lower stress", "10 calm minutes and a gentle walk daily. Stress can stir up flares."),
+            # Polish round 2: the front lists "Smoking (Crohn's)" as a flare trigger, and stopping is the best-supported
+            # lifestyle change in Crohn's ([ACGCD]: smoking worsens Crohn's).  The tag stays because stopping can stir up
+            # UC ([BEA01]), and the kit's crossed-out cigarette suits a quit tile (the front's flare band draws its own,
+            # uncrossed one, MY_ICONS).  The title takes two lines, so the caption is kept to two ("Ask for help to quit"
+            # made three and grew the band by 13 px).
+            ("smoke", "Smoke&#8209;free (Crohn’s)", "Smoking makes Crohn’s worse. Get help to quit."),
             # [CCF] NSAIDs (ibuprofen, naproxen) can trigger flares.  Antibiotics are on the front's flare band.  Two plain
             # tablets (TABLETS), not the Rx bottle, so "Skip" never reads as "skip your prescriptions".
             ("ibx-tablets", "Skip NSAIDs", "Ibuprofen and naproxen can trigger flares. Ask what to take instead."),
@@ -1286,8 +1406,10 @@ SHEET = {
             # mucosal immune system and digestive function"); the old "Helps bind microbial toxins in the gut" pointed at
             # germs beside the front's "Gut infections" trigger, which read as an anti-infection claim, while ND850 says
             # it binds toxins that "naturally occur in the gut during the breakdown and turnover of food".  The second is
-            # ND850's "Supports healthy gut barrier function".
-            {"p": "ibd_gi_defend", "need": "Gut barrier support", "needsub": "antibodies from cow serum",
+            # ND850's "Supports healthy gut barrier function".  Polish round 2: the header is "Gut immune support" (its
+            # first bullet and ND850's "healthy mucosal immune system"): beside GI Restore's "Gut lining support", the
+            # old "Gut barrier support" meant the same thing in plain words, so a reader could not tell why both are needed.
+            {"p": "ibd_gi_defend", "need": "Gut immune support", "needsub": "antibodies from cow serum",
              "bullets": ["Supports a healthy gut immune system", "Supports gut barrier function"],
              "dose": "dose_from_db"},
             # one line (121 of 126 px), so every header is one height; "from day 11" is in the dose bar right below
@@ -1305,13 +1427,15 @@ SHEET = {
         # week") would start GI Defend about day 8 and GI Restore about day 15, and its scoop total is only true for days
         # 1 to 10 (review round 3).  Totals (products.d/ibd.json): UltraBiotic Defense 1 capsule + D3 5000 with K2 1
         # softgel = 2 pills; days 1 to 10, Inflam-Eze 2 scoops + GI Defend 2 scoops = 4 scoops; from day 11, GI Restore's
-        # 2 scoops take their place.
-        "rhythm_note": ("Days 1 to 10: <b>2 pills and 4 scoops a day</b>. From day 11, GI Restore is the only shake: "
-                        "<b>2 pills and 2 scoops</b>. Overwhelmed? Start with the <b>Start here</b> shake; ask {who} "
-                        "when to add the rest."),
+        # 2 scoops take their place.  Polish round 2: "GI&nbsp;Restore" and every number with its unit never split across
+        # two lines, and the CSS balances the lines, so "the rest." no longer sits alone on the last one.
+        "rhythm_note": ("Days 1 to&nbsp;10: <b>2&nbsp;pills and 4&nbsp;scoops a day</b>. From day&nbsp;11, GI&nbsp;Restore is "
+                        "the only shake: <b>2&nbsp;pills and 2&nbsp;scoops</b>. Overwhelmed? Start with the <b>Start here</b> "
+                        "shake; ask {who} when to add the rest."),
         # Medicine-and-nutrient notes per edition: the pharmacist checks interactions and depletions, the provider
         # orders labs, refers and adjusts.  The safety notes after them are word for word the same in both editions
-        # (module constants above SHEET): the two medicine interactions, the three "ask first" notes, the red flag.
+        # (module constants above SHEET): the magnesium note, the two medicine interactions, the four "ask first" notes
+        # (live yeast, pregnancy, alpha-gal, smoking) and the red flag, which stays last.
         "rx": {
             "pharmacy": [
                 # Glucocorticoids cut intestinal calcium absorption and thin bone; calcium + vitamin D for long-term
@@ -1324,21 +1448,24 @@ SHEET = {
                 # 5,800 IU a day in both phases; [ODSD] adult upper limit 4,000 IU; ND382: "Use should be short-term
                 # and include regular monitoring" of vitamin D levels.  Polish round 1: the note names who checks the
                 # level (a pharmacist rarely orders the test; the front sends pharmacy readers to "your pharmacist or
-                # doctor") and adds the magnesium upper limit (MAGNESIUM); worded to stay three lines.
-                "<b>Vitamin&nbsp;D and magnesium:</b> with the shakes, vitamin&nbsp;D is 5,800&nbsp;IU a day (upper "
-                "limit 4,000&nbsp;IU): use it short term and ask your doctor to check your level. " + MAGNESIUM,
-                BLOOD_THINNER, ANTIBIOTIC, LIVE_YEAST, PREGNANT, ALPHA_GAL, RED_FLAG,
+                # doctor").  Polish round 2: it names what to keep short term (D3 5000 with K2; "use it short term"
+                # read as the shakes), and the magnesium note is its own bullet (MAGNESIUM).
+                "<b>Vitamin&nbsp;D:</b> with the shakes, vitamin&nbsp;D is 5,800&nbsp;IU a day (upper limit "
+                "4,000&nbsp;IU): keep D3&nbsp;5000&nbsp;with&nbsp;K2 short term and ask your doctor to check your level.",
+                MAGNESIUM, BLOOD_THINNER, ANTIBIOTIC, LIVE_YEAST, PREGNANT, ALPHA_GAL, SMOKER, RED_FLAG,
             ],
             "practitioner": [
                 # [AGA24] BPA 10: monitor every IBD patient for vitamin D and iron deficiency, and B12 with ileal
                 # disease or resection; [HWA12] folate; [ACR17] [SKV11] bones, calcium and vitamin D on steroids;
                 # [AUTO23] know the vitamin D level; [LABELS] [ODSD] 5,800 IU a day, over the 4,000 IU limit.  The
-                # labs and steroid notes share one bullet to make room for the safety notes (round 3).  Polish round 1
-                # adds the magnesium upper limit, in the Pharmacist check's words (MAGNESIUM).
+                # labs and steroid notes share one bullet to make room for the safety notes (round 3).  Polish round 2:
+                # the note says the plan is over the upper limit and passes on the D3 label's "Use should be short-term
+                # and include regular monitoring" (ND382) as "how long to take it"; the magnesium note is its own
+                # bullet (MAGNESIUM), as in the Pharmacist check.
                 "<b>Labs first.</b> {Who} may check vitamin&nbsp;D, iron, B12 and folate, and your bones if you take "
-                "steroids. With the shakes this plan gives 5,800&nbsp;IU of vitamin&nbsp;D a day: {who} sets the dose "
-                "to your level. " + MAGNESIUM,
-                BLOOD_THINNER, ANTIBIOTIC, LIVE_YEAST, PREGNANT, ALPHA_GAL, RED_FLAG,
+                "steroids. With the shakes this plan gives 5,800&nbsp;IU of vitamin&nbsp;D a day, over the "
+                "4,000&nbsp;IU upper limit: {who} sets the dose and how long to take it.",
+                MAGNESIUM, BLOOD_THINNER, ANTIBIOTIC, LIVE_YEAST, PREGNANT, ALPHA_GAL, SMOKER, RED_FLAG,
             ],
         },
     },
