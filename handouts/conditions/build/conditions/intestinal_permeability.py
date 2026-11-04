@@ -1211,6 +1211,10 @@ CSS = r"""
 # The no-break hyphen keeps "Alpha-gal" whole (a trial wrap split it).
 BLOOD_ALPHA = ("<b>Blood thinner?</b> Ask first (glucosamine, turmeric). <b>Alpha&#8209;gal?</b> Skip Digestive "
                "Complete and GI Defend (pork, beef).")
+# GI Restore (ND529 Rev. 10/26): 7,170 mcg beta-carotene + 330 mcg retinyl acetate per scoop, 7,500 mcg RAE; at 1 scoop
+# twice daily that is about 28.7 mg beta-carotene a day, above the 20 mg/day that raised lung cancer in smokers
+# (ATBC 1994, CARET 1996), the same caution the IBD sheet prints.
+SMOKER_IP = "<b>Smoker or ex&#8209;smoker?</b> Ask before GI&nbsp;Restore (high in beta&#8209;carotene)."
 
 
 # ----------------------------------------------------------------------------- the sheet
@@ -1367,7 +1371,7 @@ SHEET = {
                 # 2023;118:59-76, PMID 36602836), and the checklist's first box takes gluten out on day 1.
                 "<b>Pregnant or nursing?</b> Skip GI Integrity; ask before the others. <b>Celiac test?</b> Do it before "
                 "you stop gluten.",
-                BLOOD_ALPHA,
+                BLOOD_ALPHA + " " + SMOKER_IP,
             ],
             "practitioner": [
                 # Celiac serology (tTG-IgA) must be done on a gluten-containing diet (Rubio-Tapia 2023, above).  Stool
@@ -1387,8 +1391,9 @@ SHEET = {
                 # lead-in, so it never reads as the pregnancy alternative (Inflam-Eze, products DB R266: turmeric root
                 # extract 400 mg, quercetin 500 mg, ginger extract 200 mg, green tea extract 100 mg, none established
                 # as safe in pregnancy).
-                "<b>Pregnant or nursing?</b> Skip GI Integrity; ask about the others. <b>Marked gut inflammation?</b> "
-                "The 5R swaps GI Integrity for Inflam&#8209;Eze.",
+                # The 5R's GI Integrity-to-Inflam-Eze swap stays with the provider (ND584): on a patient sheet it read
+                # as a disease use (21 CFR 101.93(g)(2)) and named a sixth product with no serving line.
+                "<b>Pregnant or nursing?</b> Skip GI Integrity; ask about the others. " + SMOKER_IP,
                 # S. boulardii fungemia with central venous catheters or weak immunity (Enache-Angoulvant 2005, above).
                 "<b>Central IV line or weak immunity?</b> Skip UltraBiotic.",
                 BLOOD_ALPHA,

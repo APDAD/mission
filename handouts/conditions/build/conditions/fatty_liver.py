@@ -212,9 +212,9 @@ Swap pass (2026-11-04, the reviewer's residual list: one major defect), no redes
     before), checks at 2, 4, 2 and 2 lines, no bullet ending on one word or on a lone diamond, all four header bars on
     one line, the "In each serving" rules of columns 1, 3 and 4 level at 527.6 px (Lipo-Flow 515.7 px, as before) and
     the dose bars level at 596.1 px.
-  - Photo: only Cellular Energy's 89x160 web thumbnail is in reach (the build lists it under LOW-RES until the central
-    stopgap step makes its smooth 4x SOFT copy); the print master is Dropbox /NutriDyn/Product Images/Product Images
-    (1)/R145_Web, which this session cannot download.
+  - Photo: only Cellular Energy's 89x160 web thumbnail is in reach; the page prints the central stopgap step's smooth
+    4x copy of it (img-src/R145.png, 356x640, marked SOFT, so the build lists it under SOFT PRODUCT PHOTOS).  The print
+    master is Dropbox /NutriDyn/Product Images/Product Images (1)/R145_Web, which this session cannot download.
 """
 import json
 import math
