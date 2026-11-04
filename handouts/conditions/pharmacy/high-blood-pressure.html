@@ -1,0 +1,1588 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>High Blood Pressure · NutriDyn</title>
+<style>@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:block;src:url('../fonts/inter-latin-400-normal.woff2') format('woff2')}@font-face{font-family:'Inter';font-style:normal;font-weight:500;font-display:block;src:url('../fonts/inter-latin-500-normal.woff2') format('woff2')}@font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:block;src:url('../fonts/inter-latin-600-normal.woff2') format('woff2')}@font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:block;src:url('../fonts/inter-latin-700-normal.woff2') format('woff2')}@font-face{font-family:'Inter';font-style:normal;font-weight:800;font-display:block;src:url('../fonts/inter-latin-800-normal.woff2') format('woff2')}@font-face{font-family:'Merriweather';font-style:normal;font-weight:700;font-display:block;src:url('../fonts/merriweather-latin-700-normal.woff2') format('woff2')}@font-face{font-family:'Merriweather';font-style:normal;font-weight:900;font-display:block;src:url('../fonts/merriweather-latin-900-normal.woff2') format('woff2')}:root{--c1:#8A1B22;--c2:#C2392E;--soft:#F6E4E1;--deep:#62121A;--tint:#FBF3F2;--c1t:#8A1B22;--c2t:#C2392E}
+@page { size: 8.5in 11in; margin: 0; }
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:#E8E5DE;color:#1F2A2E;font-family:Inter,"Helvetica Neue",Arial,sans-serif;
+  -webkit-print-color-adjust:exact;print-color-adjust:exact;font-size:9pt;line-height:1.32}
+.toolbar{position:sticky;top:0;z-index:5;display:flex;gap:10px;flex-wrap:wrap;align-items:center;
+  justify-content:space-between;padding:10px 16px;background:rgba(247,245,240,.96);border-bottom:1px solid #D9D4C8;
+  font-size:14px}
+.toolbar b{font-family:Merriweather,Georgia,serif;font-size:15px;color:#14664D}
+.toolbar .btns{display:flex;gap:8px;flex-wrap:wrap}
+.toolbar a,.toolbar button{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:99px;
+  background:#14664D;color:#fff;text-decoration:none;font:600 14px Inter,sans-serif;border:0;cursor:pointer}
+.toolbar a.ghost{background:transparent;color:#14664D;border:1.5px solid #14664D}
+.stack{padding:18px 0 40px}
+.sheet{width:8.5in;height:11in;margin:0 auto 22px;background:#fff;position:relative;overflow:hidden;
+  box-shadow:0 6px 24px rgba(30,30,20,.14);break-after:page;page-break-after:always}
+.sheet:last-child{break-after:auto;page-break-after:auto}
+@media print{body{background:#fff}.toolbar{display:none}.stack{padding:0}.sheet{margin:0;box-shadow:none;zoom:1!important}}
+.inner{position:absolute;inset:0.38in 0.42in 0.36in 0.42in;display:flex;flex-direction:column}
+.rule-top{position:absolute;left:0;right:0;top:0;height:0.13in;background:linear-gradient(90deg,var(--c1),var(--c2))}
+.rule-top::after{content:"";position:absolute;left:0.42in;right:0.42in;top:0.2in;height:2px;background:var(--c2);opacity:.55}
+.rule-bot{position:absolute;left:0;right:0;bottom:0;height:0.13in;background:linear-gradient(90deg,var(--c2),var(--c1))}
+h1,h2,h3{margin:0}
+.serif{font-family:Merriweather,Georgia,serif}
+.headrow{display:flex;justify-content:space-between;align-items:center;margin-top:0.06in}
+.series{font:700 7pt Inter,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--deep)}
+.fields{display:grid;grid-template-columns:auto 1fr auto 1.25in;gap:6px 10px;align-items:center;margin:0.16in 0 0.1in;
+  font:700 8.5pt Inter,sans-serif;color:#2B3236}
+.fields span.box{height:0.27in;border-radius:6px;background:#E9ECEE;border:1px solid #D6DBDF}
+.title{font-family:Merriweather,Georgia,serif;font-weight:900;color:var(--c1);font-size:30pt;line-height:1.05;
+  letter-spacing:-.01em;margin:0.02in 0 0.05in}
+.title small{font-size:15pt;font-weight:700;color:var(--deep)}
+.intro{font-size:9.4pt;line-height:1.42;color:#2B3236;margin:0 0 0.08in}
+.intro b{color:var(--deep)}
+.art{display:block;width:100%}
+.art svg{display:block;width:100%;height:auto}
+.foot{margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end;gap:12px;padding-top:6px;
+  font-size:7pt;color:#6A747B}
+.foot .code{font:600 7pt Inter,sans-serif;letter-spacing:.06em;color:#5B666D;text-align:right;white-space:nowrap}
+.disc{font-size:7pt;font-weight:700;color:#36424A;line-height:1.28;max-width:5.4in;border:0.6pt solid #7D878D;border-radius:2px;padding:2px 5px}
+.disc sup,.mark{color:var(--c1);font-weight:700}
+.nw{white-space:nowrap}
+
+/* back page */
+.band{margin:0 -0.42in;padding:0.16in 0.42in 0.18in;background:linear-gradient(120deg,var(--c1t),var(--c2t));color:#fff;
+  position:relative}
+.band h2{font-family:Merriweather,Georgia,serif;font-weight:700;font-size:21pt;text-align:center;margin:0 0 0.1in;color:#fff}
+.band h2 small{display:block;font-size:10pt;font-weight:700;color:#FFE6D4;margin-top:2px}
+.lifes{display:grid;gap:0.1in;align-items:start}
+.life{display:flex;flex-direction:column;align-items:center;text-align:center}
+.life .disc2{width:0.86in;height:0.86in;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 0 rgba(0,0,0,.08) inset,0 0 0 3px rgba(255,255,255,.35);color:var(--c1)}
+.life.hex .disc2{border-radius:0;clip-path:polygon(25% 3%,75% 3%,100% 50%,75% 97%,25% 97%,0 50%);width:0.98in;height:0.86in}
+.life b{display:block;font-family:Merriweather,Georgia,serif;font-size:9.6pt;margin:0.06in 0 0.03in;color:#fff}
+.life p{margin:0;font-size:7.5pt;line-height:1.3;color:#F5F7F8}
+.checks{display:grid;grid-template-columns:1fr 1fr;gap:0.06in 0.3in;background:#fff;border-radius:10px;padding:0.14in 0.2in;color:#1F2A2E}
+.chk{display:flex;gap:8px;align-items:flex-start}
+.chk .bx{flex:none;width:0.15in;height:0.15in;border:1.6px solid var(--deep);border-radius:2px;margin-top:2px}
+.chk b{font-size:9pt;color:var(--deep)}
+.chk ul{margin:2px 0 0;padding:0;list-style:none}
+.chk li{font-size:8pt;margin:1px 0;padding-left:15px;position:relative}
+.chk li::before{content:"";position:absolute;left:0;top:4px;width:8px;height:8px;border:1.4px solid var(--c2);border-radius:50%}
+.ns-title{font-family:Merriweather,Georgia,serif;font-weight:900;color:var(--c1);font-size:19pt;margin:0.14in 0 0.02in;
+  display:flex;align-items:baseline;gap:10px}
+.ns-title span{font:600 8pt Inter,sans-serif;color:#56626A;letter-spacing:.02em}
+.cols{display:grid;gap:0.08in;margin-top:0.09in}
+.col{display:flex;flex-direction:column;background:#fff;border-radius:6px;overflow:visible;
+  box-shadow:0 1px 0 #E3E7EA,0 2px 6px rgba(20,30,40,.10);border:1px solid #E1E5E8}
+.col .need{background:linear-gradient(160deg,var(--c1t),var(--c2t));color:#fff;padding:0.07in 0.07in 0.06in;text-align:center;border-radius:5px 5px 0 0;
+  min-height:0.5in;display:flex;flex-direction:column;justify-content:center}
+.col .need b{font-size:8.2pt;line-height:1.2;display:block}
+.col .need i{font-style:normal;font-size:7pt;opacity:.92;display:block;margin-top:2px;line-height:1.2}
+.col .pick{display:flex;flex-direction:column;align-items:center;padding:0.06in 0.07in 0.04in;background:var(--tint)}
+.col .pick img{height:0.98in;width:auto;max-width:100%;object-fit:contain;display:block;filter:drop-shadow(0 2px 2px rgba(0,0,0,.12))}
+.col .pick .nm{font:800 8.6pt Inter,sans-serif;color:#1A2226;margin-top:0.04in;text-align:center;line-height:1.15}
+.col .pick .sz{font-size:7pt;color:#5E696F;text-align:center}
+.col .what{padding:0.06in 0.08in 0.05in;flex:1;font-size:7.3pt;line-height:1.28;color:#283035}
+.col .what ul{margin:0;padding:0;list-style:none}
+.col .what li{position:relative;padding-left:9px;margin:0 0 2px}
+.col .what li::before{content:"";position:absolute;left:0;top:4px;width:4px;height:4px;border-radius:50%;background:var(--c2)}
+.col .key{border-top:1px dashed #D3DADF;margin-top:4px;padding-top:3px;font-size:7pt;color:#3F4A50}
+.col .key b{color:var(--deep);font-size:7pt;letter-spacing:.06em;text-transform:uppercase}
+.col .dose{background:var(--deep);color:#fff;text-align:center;font:700 7.6pt Inter,sans-serif;padding:0.06in 0.05in;line-height:1.2;border-radius:0 0 5px 5px}
+.col .dose small{display:block;font-weight:500;font-size:7pt;opacity:.9}
+.duo{display:grid;grid-template-columns:1.35fr 1fr;gap:0.1in;margin-top:0.1in}
+.panel{border:1px solid #DCE2E6;border-radius:8px;padding:0.08in 0.12in;background:#FBFCFC}
+.panel h3{font:800 7.4pt Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--c1);margin:0 0 4px}
+.rhythm{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.slot{background:#fff;border:1px solid #E2E6E9;border-radius:6px;padding:5px 6px}
+.slot .when{font:800 7pt Inter,sans-serif;color:var(--deep);display:flex;align-items:center;gap:4px}
+.slot .when svg{width:13px;height:13px}
+.slot ul{margin:3px 0 0;padding:0;list-style:none}
+.slot li{font-size:7pt;line-height:1.25;margin:1px 0}
+.slot li em{font-style:normal;color:#5E696F}
+.total{font-size:7pt;color:#3F4A50;margin-top:4px}
+.total b{color:var(--deep)}
+.rx ul{margin:0;padding:0 0 0 12px}
+.rx li{font-size:7.2pt;line-height:1.28;margin:0 0 2px}
+.rx li b{color:var(--deep)}
+.notes{margin-top:0.1in;border:1px solid #CCD3D8;border-radius:8px;padding:0.07in 0.14in 0.09in;background:#F6F7F8}
+.notes b{font-size:8.6pt;color:#4B565C;font-weight:600}
+.notes .ln{height:0.24in;border-bottom:1px solid #9FA9AF}
+.recby{display:flex;gap:8px;align-items:flex-end;font-size:7pt;color:#4B565C;margin-top:0.08in}
+.recby .ln2{flex:1;border-bottom:1px solid #9FA9AF;height:0.18in;font:700 9pt Inter,sans-serif;color:#1F2A2E;padding-left:4px}
+.small{font-size:7.2pt;color:#5B666D}
+.tag{display:inline-block;font:800 7pt Inter,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#fff;
+  background:var(--c1);border-radius:3px;padding:2px 6px}
+
+.outrow{display:grid;gap:0.1in;margin-top:0.06in}
+.out{background:var(--c1);color:#fff;border-radius:6px;padding:0.07in 0.1in;text-align:center;position:relative}
+.out::before{content:"";position:absolute;left:50%;top:-9px;margin-left:-9px;border:9px solid transparent;border-top:0;border-bottom:9px solid var(--c1)}
+.out b{display:block;font-family:Merriweather,Georgia,serif;font-size:11pt}
+.out span{display:block;font-size:8.4pt;opacity:.95;margin-top:2px}
+.after{margin:0.1in auto 0;max-width:6.4in;text-align:center;font-size:8.6pt;color:#2B3236;background:var(--soft);
+  border-radius:6px;padding:0.06in 0.14in}
+.after b{color:var(--deep)}
+.riskhead{font:900 12pt Merriweather,Georgia,serif;color:var(--c1);text-align:center;margin:0.1in 0 0.06in;letter-spacing:.02em}
+.risk{display:grid;gap:0.08in 0.06in}
+.rf{display:flex;flex-direction:column;align-items:center;text-align:center;color:#59636A}
+.rf .ic{color:#7B7F86}
+.rf span{font-size:8.3pt;line-height:1.2;color:#3A4247;margin-top:2px}
+.twocol{display:grid;grid-template-columns:1.12fr 1fr;gap:0.16in;align-items:start}
+.lst{columns:2;column-gap:0.2in;margin:0.04in 0 0.06in;padding-left:14px;font-size:9pt}
+.lst li{margin:0 0 2px}
+.alarm{border:1.6px solid #C0392B;border-radius:8px;padding:0.06in 0.12in;background:#FDF1EF;margin:0.06in 0}
+.alarm b{color:#A5281E;font-size:8.6pt;letter-spacing:.04em;text-transform:uppercase}
+.alarm p{margin:2px 0 0;font-size:8.6pt}
+.p{font-size:9.1pt;line-height:1.42;margin:0 0 0.07in;color:#2B3236}
+.p b{color:var(--deep)}
+.fn{font-size:7pt;color:#5E686F;line-height:1.3;margin-top:auto}
+.bp{width:100%;border-collapse:collapse;font-size:8.4pt}
+.bp th{background:var(--c1);color:#fff;text-align:left;padding:5px 8px;font-size:8pt}
+.bp td{padding:4px 8px;border-bottom:1px solid #EEE3E1}
+.bp tr:nth-child(even) td{background:var(--tint)}
+.bp td.n{text-align:center;font-variant-numeric:tabular-nums;font-weight:700}
+.bp td.c{text-align:center;color:#7A848A;font-size:7.2pt}
+.sd{display:grid;grid-template-columns:1fr;gap:6px}
+.sd div{border-left:4px solid var(--c1);padding-left:8px;font-size:8.2pt}
+.sd b{font-family:Merriweather,Georgia,serif;color:var(--deep);font-size:10pt;display:block}
+.trig{display:grid;grid-template-columns:repeat(7,1fr);background:linear-gradient(90deg,var(--c1),var(--c2));color:#fff;
+  border-radius:4px;margin:0.04in 0 0.06in}
+.trig span{text-align:center;font:800 7.4pt Inter,sans-serif;letter-spacing:.06em;text-transform:uppercase;padding:5px 2px;line-height:1.15}
+.cmp{width:100%;border-collapse:collapse;font-size:8.6pt;margin-top:0.02in}
+.cmp th{font:900 10.5pt Merriweather,Georgia,serif;color:var(--deep);padding:4px 6px;text-align:center}
+.cmp td{padding:5px 8px;border-top:1px solid #DDE7E6;vertical-align:top}
+.cmp td.k{font:800 7.4pt Inter,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--c1);
+  text-align:center;width:1.05in;vertical-align:middle}
+.cmp td.a{text-align:right}
+.chev{display:grid;grid-template-columns:1fr 1fr 1fr;margin:0.04in 0 0.08in}
+.chev div{padding:0.1in 0.22in 0.1in 0.3in;color:#fff;clip-path:polygon(0 0,90% 0,100% 50%,90% 100%,0 100%,8% 50%)}
+.chev div:first-child{clip-path:polygon(0 0,90% 0,100% 50%,90% 100%,0 100%);padding-left:0.16in}
+.chev div:last-child{clip-path:polygon(0 0,100% 0,100% 100%,0 100%,8% 50%)}
+.chev h4{margin:0 0 3px;font:800 8.6pt Inter,sans-serif;letter-spacing:.08em;text-transform:uppercase}
+.chev ul{margin:0;padding:0;list-style:none;font-size:8.4pt;line-height:1.3}
+.stat{display:flex;gap:0.14in;align-items:center;background:var(--soft);border-radius:8px;padding:0.07in 0.14in;margin-top:0.08in}
+.stat>b{font:900 22pt Merriweather,Georgia,serif;color:var(--c1);line-height:1;white-space:nowrap}
+.stat span{font-size:8.8pt;color:#2B3236}
+.ticks{display:grid;grid-template-columns:repeat(3,1fr);gap:0.08in;margin-top:0.06in}
+.tk{background:#FCEFE4;border-radius:8px;padding:0.06in 0.1in;display:flex;gap:8px;align-items:center}
+.tk .ic{color:#5B3A22;flex:none}
+.tk b{display:block;font-size:8.6pt;color:#4A2C80}
+.tk span{font-size:7.8pt;color:#3A4247;line-height:1.25}
+.ring{display:grid;grid-template-columns:repeat(5,1fr);gap:0.08in 0.06in;margin-top:0.04in}
+.rg{display:flex;flex-direction:column;align-items:center;text-align:center}
+.rg .c{width:0.62in;height:0.62in;border-radius:50%;background:#F1E7E2;display:flex;align-items:center;justify-content:center;
+  color:#8A5A52;box-shadow:0 0 0 2px #fff,0 0 0 3px #E8D8D1}
+.rg span{font-size:7.8pt;line-height:1.2;margin-top:3px;color:#3A4247}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:0.12in;margin-top:0.08in}
+.fbox h4{margin:0 0 4px;background:var(--c1);color:#fff;font:800 8.4pt Inter,sans-serif;letter-spacing:.08em;text-transform:uppercase;
+  padding:4px 10px;border-radius:3px}
+.fbox p,.fbox li{font-size:8.6pt;line-height:1.35;margin:0}
+.fbox ul{margin:0;padding-left:14px}
+.sym{display:grid;grid-template-columns:repeat(7,1fr);gap:0.04in;margin:0.02in 0 0.08in}
+.sym div{display:flex;flex-direction:column;align-items:center;text-align:center;color:var(--c1)}
+.sym span{font-size:8pt;color:#3A4247;margin-top:2px;line-height:1.15}
+.steps5{display:flex;flex-direction:column;gap:5px}
+.st5{display:flex;gap:8px;align-items:flex-start}
+.st5 .n{flex:none;width:0.26in;height:0.26in;border-radius:50%;background:var(--c1);color:#fff;font:800 9pt Inter,sans-serif;
+  display:flex;align-items:center;justify-content:center}
+.st5 b{font:800 9.6pt Inter,sans-serif;color:var(--deep);display:block}
+.st5 span{font-size:8.3pt;color:#3A4247;line-height:1.3}
+.note{border-left:4px solid #D9873A;background:#FDF4EC;padding:0.05in 0.12in;font-size:8.5pt;margin-top:0.08in;border-radius:0 6px 6px 0}
+.note b{color:#9A4F12}
+.lymebody svg{max-height:3.25in;width:auto!important;margin:0 auto}
+
+.col{position:relative}
+.panel.rx h3{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:nowrap;white-space:nowrap}
+.panel.rx h3 .rxkeep{font:700 7pt Inter,sans-serif;letter-spacing:0;text-transform:none;color:var(--deep);white-space:nowrap}
+.col.st{border-color:#F15F3F;box-shadow:0 0 0 1px #F15F3F,0 2px 6px rgba(20,30,40,.10)}
+.startb{position:absolute;top:-8px;right:6px;z-index:3;background:#F15F3F;color:#fff;font:800 7pt/1 Inter,sans-serif;
+  letter-spacing:.08em;padding:3px 6px 2px;border-radius:3px;text-transform:uppercase;box-shadow:0 0 0 1.5px #fff;white-space:nowrap}
+.lifes.c3{grid-template-columns:repeat(3,1fr);gap:0.18in}
+.lifes.c4{grid-template-columns:repeat(4,1fr)}
+.lifes.c5{grid-template-columns:repeat(5,1fr)}
+.lifes.c6{grid-template-columns:repeat(6,1fr)}
+.life.l3{align-items:stretch;text-align:left;flex-direction:row;gap:10px}
+.life.l3 .disc2{flex:none;width:0.8in;height:0.8in}
+.life.l3 ul{margin:2px 0 0;padding-left:13px;font-size:7.8pt;line-height:1.32;color:#F5F7F8}
+.life.l3 b{margin-top:0}
+.icons5 .life .disc2{background:transparent;box-shadow:none;color:#FFD9BF}
+.icons5 .life .disc2 svg{width:0.6in!important;height:0.6in!important}
+a.plink{color:inherit;text-decoration:none;display:flex;flex-direction:column;align-items:center}
+a.plink:hover .nm{text-decoration:underline}
+.keyrow{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:center;font-size:7.8pt;color:#2B3236;margin:4px 0 0}
+.keyrow b{font:800 7pt Inter,sans-serif;letter-spacing:.12em;color:var(--deep)}
+.keyrow span{display:inline-flex;align-items:center;gap:5px}
+.keyrow i{display:inline-block;width:11px;height:11px;border-radius:50%}
+
+.ipx-cap{display:grid;grid-template-columns:40fr 60fr;margin-top:5px;text-align:center}
+.ipx-cap>div{padding:0 0.06in;display:flex;flex-direction:column;align-items:center;gap:2px}
+.ipx-cap b{display:inline-block;font:800 8.2pt Inter,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#fff;
+  border-radius:99px;padding:1.5px 12px}
+.ipx-cap .ipx-ok b{background:var(--deep)}
+.ipx-cap .ipx-bad b{background:#B93A2B}
+.ipx-cap span{font-size:8.4pt;line-height:1.3;color:#2B3236}
+/* polish round 2: margin-top 14px -> 10px.  At 14px page 1 kept 0.1 px above the footer (its auto margin computed to
+   0.08 px), so one more word or a font-metric shift would have pushed the footer off the page; 10px leaves about 4 px. */
+.ipx-key{position:relative;border:1.2px solid #CBD7DB;border-radius:8px;padding:7px 8px 4px;margin-top:10px}
+.ipx-kt{position:absolute;top:-7px;left:12px;background:#fff;padding:0 6px;font:800 7.2pt Inter,sans-serif;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--deep)}
+.ipx-kt em{font:700 7.2pt Inter,sans-serif;font-style:normal;letter-spacing:0;text-transform:none;color:#3D474D;
+  margin-left:9px}
+.ipx-kn{display:flex;align-items:center;justify-content:space-between;gap:2px 6px;padding:0 4px 2px;margin:0 0 4px;
+  border-bottom:1px dashed #D3DCE0;font-size:7pt;line-height:1.2;color:#3D474D}
+.ipx-kn b{font-size:7.6pt;color:#1F2A2E;white-space:nowrap}
+.ipx-kn span{display:inline-flex;align-items:center;gap:3px;white-space:nowrap}
+.ipx-kn svg{flex:none;width:0.22in;height:0.22in;overflow:visible}
+.ipx-kg{display:grid;grid-template-columns:repeat(6,auto);justify-content:space-between;gap:4px 6px}
+.ipx-kg>div{display:flex;align-items:center;gap:4px;min-width:0}
+.ipx-kg svg{flex:none;width:0.25in;height:0.25in;overflow:visible}
+.ipx-kg p{margin:0;font-size:7pt;line-height:1.2;color:#3D474D;white-space:nowrap}
+.ipx-kg b{display:block;font-size:7.6pt;color:#1F2A2E}
+.ipx-oh{font:900 11pt Merriweather,Georgia,serif;color:var(--c1);text-align:center;margin:0.09in 0 0.05in}
+.ipx-out{display:grid;grid-template-columns:repeat(3,1fr);gap:0.1in}
+.ipx-out>div{display:flex;align-items:center;gap:8px;background:var(--c1);color:#fff;border-radius:7px;padding:0.07in 0.1in}
+.ipx-out .ic{flex:none}
+.ipx-out p{margin:0;font-size:8.4pt;line-height:1.3}
+.ipx-out b{display:block;font-family:Merriweather,Georgia,serif;font-size:10.6pt;margin-bottom:1px}
+.ipx-after{margin:0.09in 0 0;text-align:center;font-size:8.6pt;line-height:1.38;color:#2B3236;
+  background:var(--soft);border-radius:6px;padding:0.06in 0.16in}
+.ipx-after b{color:var(--deep)}
+/* ---- this sheet's back page only (the page holding the .ipx-back marker in the lifestyle title) */
+/* the 5R step tag at the start of each column's sub-line: a white chip on the teal header */
+.ipx-r{display:inline-block;font:800 7pt/1.25 Inter,sans-serif;letter-spacing:.05em;text-transform:uppercase;
+  background:#fff;color:var(--deep);border-radius:3px;padding:0 4px;margin-right:2px}
+/* the one-line scope statement under the band title */
+.sheet.back:has(.ipx-back) .band h2 small{font:600 8.6pt Inter,sans-serif;letter-spacing:0;color:#FFE6D4;margin-top:3px}
+/* polish round 2: the duo is 1.28fr | 1fr (kit 1.35fr | 1fr), so the check panel's text runs 281 px instead of 272
+   and the blood-thinner and alpha-gal line takes two lines, not three (measured 2026-11-04: both panels print ten
+   lines; the rhythm's slots stay one line per product and its plan line two, so the rhythm stays shorter).
+   Inside the rhythm, morning and evening hold four products each and bedtime one, so bedtime gets the narrow slot
+   (its one line wraps to four, no taller than morning's four). */
+.sheet.back:has(.ipx-back) .duo{grid-template-columns:1.28fr 1fr}
+.sheet.back:has(.ipx-back) .rhythm{grid-template-columns:1.3fr 1.3fr .6fr}
+/* slightly tighter gaps between the back page's blocks, so the footer and the FDA line keep their room */
+.sheet.back:has(.ipx-back) .band{padding-top:0.24in!important;padding-bottom:0.14in}
+.sheet.back:has(.ipx-back) .ns-title{margin-top:0.1in}
+.sheet.back:has(.ipx-back) .cols{margin-top:0.07in}
+.sheet.back:has(.ipx-back) .duo{margin-top:0.08in}
+.sheet.back:has(.ipx-back) .notes{margin-top:0.08in}
+/* three write-in rules at 0.17 in (kit 0.24 in) give the footer and the full FDA notice their room; polish round 2
+   took them from 0.2 in to make room for the blood-thinner and alpha-gal line in both check panels */
+.sheet.back:has(.ipx-back) .notes .ln{height:0.17in}
+
+.gxf{display:flex;flex-direction:column;gap:0.065in}
+.gxf .gx-art>svg{display:block;width:100%;height:auto}
+.gxf .gx-key{display:flex;align-items:center;justify-content:center;gap:0 10px;flex-wrap:nowrap;margin:10px auto 0;
+  padding:3px 14px 3px 12px;border:1px solid #EAD9CF;border-radius:99px;background:#FFFBF8;width:max-content;max-width:100%}
+.gxf .gx-key em,.gxf .gx-key i{white-space:nowrap}
+.gxf .gx-lin em{display:flex;align-items:center;gap:4px}
+.gxf .gx-key>b{font:800 7pt Inter,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--deep)}
+.gxf .gx-ki{display:inline-flex;align-items:center;gap:5px}
+.gxf .gx-ki>span{display:flex;flex-direction:column;line-height:1.14}
+.gxf .gx-key em{font-style:normal;font-weight:700;font-size:8pt;color:#2B3236}
+.gxf .gx-key i{font-style:normal;font-size:7.4pt;color:#56626A}
+.gxf .gx-key svg{display:block;flex:none}
+.gxf .gx-h{font:800 7.4pt Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--c1);margin:0 0 3px}
+.gxf .gx-h i{font:500 7.6pt Inter,sans-serif;font-style:normal;letter-spacing:0;text-transform:none;color:#56626A;margin-left:6px}
+.gxf .gx-row{display:grid;grid-template-columns:1.3fr 1fr;gap:0.14in;align-items:stretch}
+.gxf .gx-feel{padding-top:0.06in}
+.gxf .gx-feel ul{margin:0;padding:0;list-style:none;columns:2;column-gap:0.14in}
+.gxf .gx-feel li{position:relative;padding-left:12px;font-size:8.4pt;line-height:1.3;margin:0 0 2px;break-inside:avoid;color:#2B3236}
+.gxf .gx-feel li::before{content:"";position:absolute;left:0;top:4px;width:6px;height:6px;border-radius:50%;background:var(--c2)}
+.gxf .gx-why{margin:3px 0 0;font-size:8.4pt;line-height:1.32;color:#2B3236}
+.gxf .gx-why b{color:var(--deep)}
+.gxf .gx-alarm{border:1.6px solid #C0392B;border-radius:8px;background:#FDF1EF;padding:0.05in 0.12in 0.06in}
+.gxf .gx-alarm .gx-h{color:#A5281E}
+.gxf .gx-alarm ul{margin:0;padding:0;list-style:none;font-size:8.3pt;line-height:1.3;color:#2B3236}
+/* the alarm list spaced like the "How it can feel" list beside it (2px under each line), so the box it shares a
+   row with fills to its bottom instead of leaving 0.19 in empty under the last line */
+.gxf .gx-alarm li{margin:0 0 2px;position:relative;padding-left:12px}
+.gxf .gx-alarm li::before{content:"";position:absolute;left:0;top:4px;width:6px;height:6px;border-radius:50%;background:#C0392B}
+.gxf .gx-alarm p{margin:5px 0 0;padding-top:5px;border-top:1px dashed #E7B3AC;font-size:8.3pt;line-height:1.3;color:#2B3236}
+.gxf .gx-alarm p b{color:#8E3110}
+.gxf .gx-trow{display:grid;grid-template-columns:repeat(10,1fr);gap:0 0.04in}
+.gxf .gx-tr{display:flex;flex-direction:column;align-items:center;text-align:center}
+.gxf .gx-badge{width:0.5in;height:0.5in;border-radius:50%;background:var(--soft);display:flex;align-items:center;justify-content:center;
+  box-shadow:inset 0 0 0 1.5px #F3D3BC}
+.gxf .gx-tr>span:last-child{font-size:7.5pt;line-height:1.18;color:#2B3236;margin-top:3px;font-weight:600}
+.gxf .gx-strip{display:grid;grid-template-columns:1.42fr 1fr;gap:0.14in;align-items:center;background:var(--soft);border-radius:10px;
+  padding:0.07in 0.12in 0.07in 0.14in}
+.gxf .gx-meds p{margin:0;font-size:8.2pt;line-height:1.34;color:#2B3236}
+.gxf .gx-meds p b{color:var(--deep)}
+.gxf .gx-meds sup{color:var(--c1);font-weight:700;font-size:7.2pt;line-height:0}
+.gxf .gx-dep{background:#fff;border-radius:8px;padding:0.05in 0.09in 0.05in}
+.gxf .gx-dephead{font:800 7.4pt Inter,sans-serif;letter-spacing:.08em;white-space:nowrap;text-transform:uppercase;color:var(--deep);text-align:center;margin:0 0 5px}
+.gxf .gx-coins{display:grid;grid-template-columns:repeat(5,1fr);justify-items:center;gap:0}
+.gxf .gx-coin{display:flex;flex-direction:column;align-items:center;min-width:0}
+.gxf .gx-coin b{width:0.4in;height:0.4in;border-radius:50%;background:var(--c1);color:#fff;display:flex;align-items:center;justify-content:center;
+  font:800 10pt Inter,sans-serif;box-shadow:0 0 0 2px #fff,0 0 0 3.2px #F0B89A}
+.gxf .gx-coin span{font-size:7pt;font-weight:700;color:#2B3236;margin-top:3px;text-align:center;line-height:1.1;white-space:nowrap}
+.gxf .gx-lc{text-transform:none}
+.gxf .gx-ask{font-size:7.6pt;color:#3F4A50;text-align:center;margin-top:3px}
+.gxf .gx-fn{margin:0;font-size:7pt;color:#5E686F;line-height:1.3}
+/* back page, scoped by the marker span in the lifestyle title.  Room for the four- and five-item check
+   panels and the four-sentence plan line: a slightly shorter band, smaller margins */
+.sheet.back:has(.gxb) .band{padding-bottom:0.13in}
+/* polish round 2: room for the blood-thinner line, which the pharmacy edition had no height for (the
+   Recommended-by row ended 1.4 px above the footer).  Both one-line headings get a tighter line box; the
+   type itself stays the same size */
+.sheet.back:has(.gxb) .band h2{margin-bottom:0.08in;line-height:1.15}
+.sheet.back:has(.gxb) .life.hex .disc2{width:0.94in;height:0.82in}
+/* 1.35fr is the best split (checked 2026-11-04): no check line is near a wrap point, so a wider check panel
+   saves no line, and a narrower rhythm box squeezes its Morning slot until it is the taller panel */
+.sheet.back:has(.gxb) .duo{grid-template-columns:1fr 1.35fr;margin-top:0.08in}
+.sheet.back:has(.gxb) .ns-title{margin-top:0.08in;line-height:1.12}
+.sheet.back:has(.gxb) .cols{margin-top:0.07in}
+.sheet.back:has(.gxb) .notes{margin-top:0.06in}
+.sheet.back:has(.gxb) .recby{margin-top:0.06in}
+/* room for the pharmacy edition's five check lines: tighter list spacing and margins, all three writing lines kept */
+.sheet.back:has(.gxb) .rx li{margin-bottom:1px}
+.sheet.back:has(.gxb) .rx li:last-child{margin-bottom:0}
+.sheet.back:has(.gxb) .notes .ln{height:0.2in}
+/* the narrower rhythm panel: keep each slot heading ("Evening meal") on one line */
+.sheet.back:has(.gxb) .rhythm{gap:5px}
+.sheet.back:has(.gxb) .slot{padding:5px 5px}
+.sheet.back:has(.gxb) .slot .when{white-space:nowrap}
+/* one subgrid row per part (header, photo, bullets, In each serving, dose), so every column's parts line up */
+.sheet.back:has(.gxb) .cols{row-gap:0;grid-template-rows:repeat(5,auto)}
+.sheet.back:has(.gxb) .col{display:grid;grid-row:span 5;grid-template-rows:subgrid}
+.sheet.back:has(.gxb) .col .what{display:contents}
+.sheet.back:has(.gxb) .col .what>ul{padding:0.06in 0.08in 0}
+.sheet.back:has(.gxb) .col .key{margin:4px 0.08in 0;padding-bottom:0.05in}
+.sheet.back:has(.gxb) .col .dose{display:flex;flex-direction:column;justify-content:center}
+
+.ibx-f{display:flex;flex-direction:column}
+.ibx-art svg{display:block;width:100%;height:auto}
+.ibx-heads,.ibx-caps{display:grid;grid-template-columns:1fr 1fr;text-align:center}
+/* room between each heading's teal bar and the head crown under it (it sat on the head like a hat) */
+.ibx-heads{margin-bottom:0.05in}
+.ibx-heads b{font:900 13.5pt Merriweather,Georgia,serif;color:var(--deep);letter-spacing:-.005em}
+.ibx-heads div{display:flex;flex-direction:column;align-items:center}
+.ibx-heads div::after{content:"";width:0.42in;height:3px;border-radius:2px;background:var(--c1);margin-top:3px}
+.ibx-caps p{margin:1px auto 0;max-width:3.0in;font-size:8.6pt;line-height:1.25;color:#2B3236;text-wrap:balance}
+.ibx-cmp{margin-top:0.06in}
+.ibx-chips{display:grid;grid-template-columns:1fr 1fr;justify-items:center;padding-bottom:2px;border-bottom:1px solid #D5E4E2}
+.ibx-chips span{font:800 7.4pt Inter,sans-serif;color:var(--deep);background:var(--soft);border-radius:99px;padding:1.5px 10px 1.5px}
+.ibx-row{position:relative;display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid #D5E4E2}
+.ibx-row:nth-child(odd){background:var(--tint)}
+.ibx-row>div{padding:1.5px 0.54in;text-align:center;font-size:8.4pt;line-height:1.22;color:#2B3236;
+  display:flex;align-items:center;justify-content:center;min-height:0.19in;text-wrap:balance}
+.ibx-row>span{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:0.9in;text-align:center;
+  font:800 7.1pt Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:var(--c1);
+  border-radius:99px;padding:1.6px 0}
+.ibx-h{font:800 7.5pt Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--deep);
+  text-align:center;margin:0.065in 0 0.032in}
+.ibx-kick{margin:0 0 0.03in}
+/* deep to c1: white 7.2 pt caps keep 4.6:1 or better across the band (c1 to c2 fell to 3.0:1 at the light end) */
+.ibx-trig{display:grid;grid-template-columns:repeat(8,1fr);background:linear-gradient(90deg,var(--deep),var(--c1));
+  border-radius:6px;padding:0.035in 0.04in}
+.ibx-trig>div{display:flex;flex-direction:column;align-items:center;text-align:center;color:#fff;padding:0 2px}
+.ibx-trig span{font:800 7.2pt Inter,sans-serif;letter-spacing:.05em;text-transform:uppercase;line-height:1.15;margin-top:2px}
+.ibx-nut{display:grid;grid-template-columns:1.62in 1fr;gap:0.12in;align-items:center;
+  background:var(--soft);border-radius:10px;padding:0.05in 0.1in 0.05in 0.14in}
+.ibx-stat b{display:block;font:900 15pt/1.05 Merriweather,Georgia,serif;color:var(--c1)}
+.ibx-stat p{margin:3px 0 0;font-size:8pt;line-height:1.3;color:#2B3236}
+.ibx-dep{background:#fff;border-radius:8px;padding:0.045in 0.05in 0.035in}
+.ibx-coins{display:grid;grid-template-columns:repeat(5,1fr);gap:0.05in}
+.ibx-ask{text-align:center;font-size:7.6pt;color:#3F4A50;margin-top:2px}
+.ibx-coins>div{display:flex;flex-direction:column;align-items:center;text-align:center}
+.ibx-coins b{width:0.32in;height:0.32in;border-radius:50%;background:var(--c1);color:#fff;display:flex;align-items:center;
+  justify-content:center;font:800 9.4pt Inter,sans-serif;box-shadow:0 0 0 2px #fff,0 0 0 3.2px #9FD0CB}
+.ibx-coins em{font-style:normal;font:800 7.7pt Inter,sans-serif;color:#1F2A2E;margin-top:3px}
+.ibx-coins span{font-size:7.1pt;line-height:1.15;color:#3F4A50}
+.ibx-scope{margin:0.065in auto 0;text-align:center;font-size:8.4pt;line-height:1.3;color:#2B3236;background:var(--soft);
+  border-radius:6px;padding:0.04in 0.16in;width:100%}
+.ibx-scope b{color:var(--deep)}
+/* ---- this sheet's back page only (the page holding the .ibx-back marker in the lifestyle title) */
+/* the medicine line under the band title: one quiet line, not a second heading.  White: the kit's #FFE6D4 measured
+   3.78 to 3.88:1 on this band (c2t #2E7F9D to c1t #13827C) at 8.6 pt; white measures 4.53 to 4.65:1 (round 3) */
+.sheet.back:has(.ibx-back) .band h2 small{font:600 8.6pt Inter,sans-serif;letter-spacing:0;color:#FFFFFF;margin-top:3px}
+/* every sub-line is one line (the longest, GI Restore's, measures 121 of 126 px), so all five headers are one height
+   and the photos and names start on one line; a sub-line that ever wraps breaks evenly, never leaving one word alone.
+   Polish round 1: the old 10 px top padding for the START HERE badge is gone (the kit's .startb straddles the column's
+   top edge).  The headers are 0.41 in tall, not the kit's 0.5 in, so the footer stays on the page; at that height the
+   centred title came within 2 px of the badge, so the text sits 0.02 in lower (0.09 in over, 0.04 in under), which
+   keeps about 4.7 px between the badge's white rim and the title's capitals */
+.sheet.back:has(.ibx-back) .col .need{min-height:0.41in;padding-top:0.09in;padding-bottom:0.04in}
+.sheet.back:has(.ibx-back) .col .need i{text-wrap:balance}
+/* the hex captions run three lines; balanced, so no word sits alone on the last line ("flares.", round 3) */
+.sheet.back:has(.ibx-back) .life p{text-wrap:balance}
+/* a little less air above the band title and the Nutrient Solutions title, so the footer keeps its margin
+   (the same two tweaks as the Intestinal Permeability sheet, a touch tighter for round 3's longer checks).  Polish round 2
+   made room for its two new check notes (about 25 px) without cutting a word: the one-line headings lose their spare
+   leading (band title, Nutrient Solutions, the hex titles), and the band, the rows and the panels each give up 1 to 3 px
+   of padding.  Measured after: the Pharmacist check page keeps 13 px between "Recommended by" and the footer, the Provider
+   check page 25 px (they were 11 and 24 px before the new notes) */
+.sheet.back:has(.ibx-back) .band{padding-top:0.19in!important;padding-bottom:0.15in}
+.sheet.back:has(.ibx-back) .band h2{line-height:1.12}
+.sheet.back:has(.ibx-back) .life b{line-height:1.15}
+.sheet.back:has(.ibx-back) .ns-title{margin-top:0.06in;line-height:1.12}
+.sheet.back:has(.ibx-back) .panel{padding-top:0.07in;padding-bottom:0.06in}
+.sheet.back:has(.ibx-back) .panel h3{margin-bottom:3px}
+/* the medicine check (seven or eight safety notes per edition since polish round 1) takes the wider share of the row:
+   at 1fr 1.5fr the daily rhythm sits at its narrowest (306 px: each slot as wide as its longest unbreakable dose,
+   "1 scoop from day 11", 86 of 86 px), and the check gets 420 px; every dose in the daily rhythm drops to its own grey
+   line under its product, so the four entries of a slot read evenly; morning and evening hold three and four
+   products, bedtime one */
+.sheet.back:has(.ibx-back) .duo{grid-template-columns:1fr 1.5fr;margin-top:0.06in}
+.sheet.back:has(.ibx-back) .rhythm{grid-template-columns:1fr 1.1fr .9fr}
+/* the check is the taller panel (nine or ten notes since polish round 2), so the three slots stretch down to meet the plan
+   line instead of leaving a blank strip under it: the schedule fills its panel, and the plan line sits at the bottom */
+.sheet.back:has(.ibx-back) .duo>.panel:first-child{display:flex;flex-direction:column}
+.sheet.back:has(.ibx-back) .duo>.panel:first-child .rhythm{flex:1}
+.sheet.back:has(.ibx-back) .slot li em{display:block}
+.sheet.back:has(.ibx-back) .slot li{line-height:1.2}
+/* the checks at the 7 pt fine-print size, a touch tighter (polish round 1: the gelatin, antibiotic, magnesium and
+   pregnancy notes added five lines to the Pharmacist check; polish round 2: the magnesium note became its own bullet
+   and the smoker note joined, three more lines, so 1.2 leading and 1 px between notes) */
+.sheet.back:has(.ibx-back) .rx li{font-size:7pt;line-height:1.2;margin-bottom:1px}
+/* the hand-written plan line: balanced, so its last line never holds one or two words (polish round 2) */
+.sheet.back:has(.ibx-back) .total{text-wrap:balance}
+/* two writing lines in the notes box (the kit's third is hidden), slightly tighter, as on the Thyroid sheet; since
+   polish round 1 the label sits on the first line, form style, so both writing lines stay while the box loses a row */
+.sheet.back:has(.ibx-back) .notes{display:grid;grid-template-columns:auto 1fr;column-gap:8px;align-items:end;margin-top:0.06in}
+.sheet.back:has(.ibx-back) .notes .ln{height:0.22in}
+.sheet.back:has(.ibx-back) .notes .ln:nth-of-type(2){grid-column:1 / -1}
+.sheet.back:has(.ibx-back) .notes .ln:nth-of-type(3){display:none}
+.sheet.back:has(.ibx-back) .recby{margin-top:0.05in}
+
+.flv-h{display:flex;align-items:center;gap:0.1in;font:900 11pt/1.2 Merriweather,Georgia,serif;color:var(--c1);
+  letter-spacing:.04em;text-transform:uppercase;margin:0.02in 0 0.06in}
+.flv-h::after{content:"";flex:1;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--soft),rgba(246,228,225,0))}
+.flv-art+.flv-h{margin-top:0.08in}
+.flv-risk{display:grid;grid-template-columns:repeat(8,1fr);gap:0 0.04in}
+.flv-rf{display:flex;flex-direction:column;align-items:center;text-align:center}
+.flv-disc{width:0.52in;height:0.52in;border-radius:50%;background:var(--soft);color:var(--c1);display:flex;
+  align-items:center;justify-content:center;box-shadow:inset 0 0 0 1.5px rgba(138,27,34,.10)}
+.flv-rl{display:block;font-size:7.8pt;font-weight:600;line-height:1.22;color:#2F373C;margin-top:0.03in}
+.flv-ask{margin-top:0.11in;background:var(--tint);border:1px solid #EBD3CE;border-radius:10px;padding:0.08in 0.12in 0.07in}
+.flv-askhd{display:flex;align-items:baseline;gap:0.12in;margin:0 0 0.06in}
+.flv-askhd b{flex:none;font:900 11pt/1.2 Merriweather,Georgia,serif;color:var(--c1);letter-spacing:.04em;text-transform:uppercase}
+.flv-askhd span{font-size:8.4pt;line-height:1.3;color:#2B3236}
+.flv-steps{display:grid;grid-template-columns:1fr 16px 1fr 16px 1fr;align-items:stretch}
+.flv-step{background:#fff;border:1px solid #EDDDD9;border-radius:8px;padding:0.06in 0.08in 0.07in;box-shadow:0 1px 2px rgba(80,20,20,.06)}
+.flv-sh{display:flex;align-items:center;gap:6px;margin:0 0 4px}
+.flv-n{flex:none;width:17px;height:17px;border-radius:50%;background:var(--c1);color:#fff;font:800 8pt/1 Inter,sans-serif;
+  display:flex;align-items:center;justify-content:center}
+.flv-sh svg{flex:none;color:var(--c1)}
+.flv-sh b{font:800 8.8pt/1.15 Inter,sans-serif;color:var(--deep)}
+.flv-step p{margin:0;font-size:7.8pt;line-height:1.32;color:#2B3236}
+.flv-dots{list-style:none;margin:4px 0 0;padding:0}
+.flv-dots li{display:flex;align-items:center;gap:5px;font-size:7.6pt;font-weight:700;line-height:1.3;color:#2B3236;margin:1px 0}
+.flv-dots i{flex:none;width:8px;height:8px;border-radius:50%}
+.flv-arr{display:flex;align-items:center;justify-content:center;color:var(--c2)}
+.flv-foot{display:flex;justify-content:space-between;align-items:baseline;gap:0.2in;margin-top:0.06in;font-size:7.4pt;color:#3F4A50}
+.flv-foot b{color:var(--deep)}
+.flv-foot small{font-size:7.2pt;color:#6A747B;white-space:nowrap}
+/* back page, scoped by the marker span in the lifestyle title.  The check panel holds four checks (diabetes
+   medicines; statins, warfarin and other medicines; pregnancy; gallstones and daisy-family allergy) and takes the
+   wider part of the duo.  Nothing on this plan is taken at bedtime (asserted after COLS), so the kit's Bedtime box,
+   which would only say "nothing to take", is hidden and the two meal boxes share the rhythm panel.  The notes box is
+   the kit's own again (three writing lines 0.24 in apart): the two-line squeeze that made room for a fifth check
+   left in the swap pass with the green tea check.  Each column's serving block sits at the bottom of its card, so
+   all four "In each serving" rules line up as long as every serving line sets in four lines (polish round 2b: the
+   two-unit servings read "2 tablets:" / "2 capsules:" instead of "Per 2 ...:", which brings Lipo-Flow's panel from
+   five lines to four) and the dose bars stay level.  Measured in the build's Chromium, print media: see the polish
+   round 2b note in the module docstring. */
+.sheet.back:has(.flv-back) .col .what{display:flex;flex-direction:column}
+.sheet.back:has(.flv-back) .col .key{margin-top:auto}
+.sheet.back:has(.flv-back) .life .disc2{width:0.68in;height:0.68in}
+.sheet.back:has(.flv-back) .life .disc2 svg{width:0.41in!important;height:0.41in!important}
+.sheet.back:has(.flv-back) .band h2{margin-bottom:0.07in}
+.sheet.back:has(.flv-back) .ns-title{margin-top:0.1in}
+.sheet.back:has(.flv-back) .duo{grid-template-columns:1fr 1.4fr}
+.sheet.back:has(.flv-back) .rhythm{grid-template-columns:1.2fr .8fr}
+.sheet.back:has(.flv-back) .rhythm .slot:nth-child(3){display:none}
+/* The kit's first box is "Morning", but on this plan it also holds the lunch doses (Berberine Pro and Lipo-Flow are
+   taken 3 times a day and the kit has no midday box), so on this sheet only it reads "Breakfast and lunch": a patient
+   filling a pill organizer by slot must not put the lunch pills in the morning.  font-size:0 hides the kit's text
+   node; the sun icon keeps its CSS size.  The first box holds more lines (and says which meal for every product), so
+   it gets the wider share of the panel; the shorter evening box still ends above it (measured). */
+.flv-nw{white-space:nowrap}
+.sheet.back:has(.flv-back) .rhythm .slot:nth-child(1) .when{font-size:0}
+.sheet.back:has(.flv-back) .rhythm .slot:nth-child(1) .when::after{content:"Breakfast and lunch";font:800 7pt Inter,sans-serif}
+
+.irf .ir-art svg{display:block;width:100%;height:auto}
+.irf .ir-chev{display:grid;grid-template-columns:1fr 1fr 1fr;margin:0.07in 0 0}
+.irf .ir-chev>div{padding:0.06in 0.2in 0.07in 0.3in;color:#fff;clip-path:polygon(0 0,91% 0,100% 50%,91% 100%,0 100%,7% 50%)}
+.irf .ir-chev>div:first-child{clip-path:polygon(0 0,91% 0,100% 50%,91% 100%,0 100%);padding-left:0.14in}
+.irf .ir-chev>div:last-child{clip-path:polygon(0 0,100% 0,100% 100%,0 100%,7% 50%)}
+.irf .ir-chev h4{margin:0 0 2px;font:800 8.2pt Inter,sans-serif;letter-spacing:.08em;text-transform:uppercase}
+.irf .ir-chev ul{margin:0;padding:0;list-style:none;font-size:8.1pt;line-height:1.27}
+.irf .ir-stat{display:flex;gap:0.16in;align-items:center;background:var(--soft);border-radius:8px;padding:0.05in 0.16in;margin-top:0.07in}
+.irf .ir-stat .n{display:flex;flex-direction:column;align-items:center;flex:none}
+.irf .ir-stat .n small{font:800 7pt Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--deep)}
+.irf .ir-stat .n b{font:900 23pt/1 Merriweather,Georgia,serif;color:var(--c1);white-space:nowrap}
+.irf .ir-stat p{margin:0;font-size:8.6pt;line-height:1.36;color:#2B3236}
+.irf .ir-stat p b{font-weight:700;color:var(--deep)}
+.irf .ir-nums{margin-top:0.07in;border:1px solid #E6D5D1;border-radius:10px;padding:0.07in 0.14in 0.07in;background:#FFFFFF}
+.irf .ir-nh{display:flex;align-items:baseline;gap:8px;margin:0 0 5px}
+.irf .ir-nh>b{flex:none;font:900 12.5pt Merriweather,Georgia,serif;color:var(--c1);white-space:nowrap}
+.irf .ir-nh .ir-sub{flex:none;font-size:7.8pt;color:#56626A;white-space:nowrap}
+.irf .ir-nh .ir-fi{flex:1 1 auto;min-width:0;display:flex;justify-content:flex-end;align-items:baseline;gap:3px;
+  white-space:nowrap;font-size:7.8pt;color:#2B3236}
+.irf .ir-fi b,.irf .ir-fi em{flex:none;font:800 7.8pt Inter,sans-serif;font-style:normal;color:#2B3236}
+.irf .ir-fi em{margin-left:7px}
+.irf .ir-fi i{flex:0 1 0.78in;min-width:0.62in;height:0.16in;align-self:center;border:1.3px dashed #9AA5AC;
+  border-radius:4px;background:#fff}
+.irf .ir-scales{display:grid;grid-template-columns:1fr 1fr;gap:0.18in}
+.irf .ir-sc h4{margin:0 0 3px;font:800 8.4pt Inter,sans-serif;color:#2B3236;white-space:nowrap}
+.irf .ir-sc h4 span{font-weight:500;font-size:7.3pt;color:#5E686F}
+.irf .ir-tl{display:grid;grid-template-columns:1fr 1fr 1fr 0.56in;gap:4px}
+.irf .ir-t{border-radius:5px;padding:2px 3px 4px;text-align:center;border-top:3px solid}
+.irf .ir-t i{display:block;font:800 7pt Inter,sans-serif;letter-spacing:.07em;text-transform:uppercase;font-style:normal}
+.irf .ir-t b{display:block;font:800 10pt/1.15 Inter,sans-serif;margin-top:1px;white-space:nowrap}
+.irf .ir-t.ok{background:#E4F2EA;color:#1F6B47;border-color:#2F8A5E}
+.irf .ir-t.pre{background:#FCEFD4;color:#7E5300;border-color:#D99A1E}
+.irf .ir-t.dm{background:#F8E1DD;color:#9A2620;border-color:#C2392E}
+.irf .ir-mine{border:1.3px dashed #9AA5AC;border-radius:5px;display:flex;align-items:flex-start;justify-content:center}
+.irf .ir-mine span{font:700 7pt Inter,sans-serif;color:#6A747B;margin-top:2px}
+.irf .ir-msh{display:flex;align-items:baseline;gap:8px;margin:7px 0 3px;border-top:1px solid #EFE4E1;padding-top:5px}
+.irf .ir-msh b{font:800 8.4pt Inter,sans-serif;color:#2B3236;white-space:nowrap}
+.irf .ir-msh span{font-size:7.6pt;color:#4A555C}
+.irf .ir-msh em{font-style:normal;font-weight:800;color:var(--c1)}
+.irf .ir-ms{display:grid;grid-template-columns:1.22fr .9fr 1.1fr .88fr .9fr;gap:5px}
+.irf .ir-m{display:flex;flex-direction:column;background:var(--tint);border:1px solid #EEDDD9;border-radius:6px;padding:3px 6px 4px}
+.irf .ir-mtop{display:flex;justify-content:space-between;align-items:center}
+.irf .ir-m .ic{flex:none;color:var(--c1)}
+.irf .ir-bx{flex:none;width:0.13in;height:0.13in;border:1.6px solid var(--deep);border-radius:2px;background:#fff}
+.irf .ir-m b{font-size:7.6pt;line-height:1.2;color:#2B3236;margin-top:1px}
+.irf .ir-m>span{font-size:7.2pt;line-height:1.22;color:#4A555C}
+.irf .ir-src{margin:4px 0 0;font-size:7pt;color:#5E686F;line-height:1.3}
+
+/* Gluco IR's label line (eleven ingredients) is the longest */
+.sheet.back:has(.ir-back) .cols{grid-template-columns:1.34fr 1fr 1fr 1fr!important}
+/* a little less red above and below the lifestyle cards (shared 0.3 in / 0.18 in) so the footer stays on the page */
+.sheet.back:has(.ir-back) .band{padding-top:0.22in!important;padding-bottom:0.14in}
+.sheet.back:has(.ir-back) .band h2{margin-bottom:0.07in}
+/* the taller panel sets the row's height: the rhythm slots grow to match the check panel instead of leaving a gap
+   under the pill total */
+.sheet.back:has(.ir-back) .duo>.panel:first-child{display:flex;flex-direction:column}
+.sheet.back:has(.ir-back) .duo>.panel:first-child .rhythm{flex:1}
+/* each dose on its own gray line under the product name (polish round 1): run in after the name, the Evening
+   box read "Omega Pure EPA-DHA 1000 1 softgel" as one run of numbers.  A dash separator was tried and wraps
+   badly: an en dash is a break-after character, so lines ended on it or started with a stray space. */
+.sheet.back:has(.ir-back) .rhythm li em{display:block;text-wrap:balance}
+/* lifestyle discs a little smaller so each bullet line holds about 28 characters */
+.sheet.back:has(.ir-back) .life.l3 .disc2{width:0.68in;height:0.68in}
+/* polish round 2: every product name takes two lines' height (8.6 pt x 1.15 x 2 = 2.3em) with its text on the
+   bottom line, so the one-line names (Gluco IR, Berberine Pro) sit level with the second line of the two-line ones
+   and all four photo panels, first bullets and IN EACH SERVING headings line up across the row.  align-content on
+   the block keeps the name one inline run: as a flex column, "Omega Pure <span class=nw>EPA-DHA</span> 1000" would
+   become three stacked flex items, one per line. */
+.sheet.back:has(.ir-back) .col .pick .nm{min-height:2.3em;align-content:end}
+/* polish round 2: room for the blood-thinner, thyroid-timing and allergy notes (both editions, both lineups).
+   Write-in lines 0.2 in apart (shared 0.24 in) and the gaps between blocks as on the GERD sheet; the check panel
+   takes the wider share of the row (the shelf's usual side: 1fr 1.3fr on HBP, 1fr 1.4fr on fatty liver), so its
+   notes run 14 or 15 lines instead of 18 or 19.  Slot headers stay on one line ("Evening meal" wrapped below about
+   94 px), and dose lines wrap balanced ("3 capsules / with breakfast", "nothing / to take"; same line count).
+   Measured in print media (2026-11-04): Akkermansia lineup 15 lines (practitioner, 2.1 px above the footer) and
+   14 (pharmacy, the rhythm panel is the taller, 2.3 px); ALA lineup 15 (3.1 px) and 14 (12.9 px). */
+.sheet.back:has(.ir-back) .notes .ln{height:0.2in}
+.sheet.back:has(.ir-back) .ns-title{margin-top:0.1in}
+.sheet.back:has(.ir-back) .duo{grid-template-columns:1fr 1.15fr;margin-top:0.08in}
+.sheet.back:has(.ir-back) .notes{margin-top:0.08in}
+.sheet.back:has(.ir-back) .recby{margin-top:0.06in}
+.sheet.back:has(.ir-back) .rx li{margin-bottom:1px}
+.sheet.back:has(.ir-back) .rx li:last-child{margin-bottom:0}
+.sheet.back:has(.ir-back) .slot .when{white-space:nowrap}
+.sheet.back:has(.ir-back) .rhythm{grid-template-columns:1.4fr 1.1fr .8fr}.sheet.back:has(.ir-back) .pick img[alt*="Akkermansia"]{height:0.892in;margin:0.044in 0}
+.pcf .pc-art svg{display:block;width:100%;height:auto}
+.pcf .pc-steps{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.12in;margin:0.04in 0 0}
+.pcf .pc-steps>div{display:flex;gap:6px;align-items:flex-start}
+.pcf .pc-n{flex:none;width:0.2in;height:0.2in;border-radius:50%;background:var(--c1);color:#fff;font:800 8pt Inter,sans-serif;
+  display:flex;align-items:center;justify-content:center;margin-top:1px}
+.pcf .pc-steps p{margin:0;font-size:8.2pt;line-height:1.3;color:#2B3236}
+.pcf .pc-steps b{color:var(--deep)}
+.pcf .pc-key{display:grid;grid-template-rows:auto auto;grid-auto-flow:column;justify-content:space-between;align-items:center;
+  gap:3px 8px;margin-top:0.07in;padding:5px 10px 5px 12px;border:1px solid #D9DEE2;border-radius:8px;background:#FFFFFF;font-size:7.4pt;
+  line-height:1.2;color:#3A4247}
+.pcf .pc-key em{grid-row:span 2;font:800 7.4pt Inter,sans-serif;letter-spacing:.14em;color:#2B3236;font-style:normal}
+.pcf .pc-key span{display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
+.pcf .pc-key svg{flex:none;display:block}
+.pcf .pc-key b{color:#1F2A2E;font-weight:800}
+.pcf .pc-head{font:900 12pt Merriweather,Georgia,serif;color:var(--c1);text-align:center;margin:0.08in 0 0.05in;letter-spacing:.02em}
+.pcf .pc-ring{display:grid;grid-template-columns:repeat(5,1fr);gap:0.06in 0.06in}
+.pcf .pc-rg{display:flex;flex-direction:column;align-items:center;text-align:center}
+.pcf .pc-c{width:0.53in;height:0.53in;border-radius:50%;background:#F1E7E2;display:flex;align-items:center;justify-content:center;
+  color:#8A5A52;box-shadow:0 0 0 2px #fff,0 0 0 3px #E8D8D1}
+.pcf .pc-rg span{font-size:7.8pt;line-height:1.2;margin-top:3px;color:#3A4247}
+.pcf .pc-facts{display:grid;grid-template-columns:1.62fr 1fr;gap:0.14in;margin-top:0.08in}
+.pcf .pc-fbox h4{margin:0 0 4px;background:var(--c1);color:#fff;font:800 8.2pt Inter,sans-serif;letter-spacing:.08em;
+  text-transform:uppercase;padding:3px 10px;border-radius:3px}
+.pcf .pc-fbox p,.pcf .pc-fbox li{font-size:8.2pt;line-height:1.33;margin:0;color:#2B3236}
+.pcf .pc-fbox ul{margin:0;padding-left:13px}
+.pcf .pc-fbox li{margin-bottom:1px}
+.pcf .pc-fbox b{color:var(--deep)}
+/* "Why it matters" spans both fact boxes, on a pale band with the theme rule on its left */
+.pcf p.pc-why{font-size:8.2pt;line-height:1.33;margin:6px 0 0;color:#2B3236;background:var(--tint);
+  border-left:3px solid var(--c1);border-radius:0 4px 4px 0;padding:3px 9px 4px}
+.pcf p.pc-why b{color:var(--deep)}
+/* Back page, this sheet only.  Nothing is taken at bedtime, so the empty Bedtime box of "Your daily rhythm"
+   is hidden (the kit draws Morning, Evening meal, Bedtime in that order) and the two meal boxes share the
+   panel.  The check panel holds five notes, so it takes 60 percent of the row: 0.8 is the narrowest the rhythm
+   panel can go before Berberine Pro's morning line wraps a fourth time (measured 2026-11-03).  To make room the
+   notes box keeps two writing lines at 0.22 in, as on the IBD, Lyme and menopause sheets: both editions then
+   measure a 204.8 px duo with 5 px to spare above the footer. */
+.sheet.back:has(.pc-back) .duo{grid-template-columns:0.8fr 1.2fr}
+.sheet.back:has(.pc-back) .notes .ln{height:0.22in}
+.sheet.back:has(.pc-back) .notes .ln:nth-of-type(3){display:none}
+.sheet.back:has(.pc-back) .rhythm{grid-template-columns:1fr 1fr}
+.sheet.back:has(.pc-back) .rhythm .slot:nth-child(3){display:none}
+/* Two name lines in every column (two names wrap), so the bullets, serving lines and dose bars start at the
+   same height across the row: the photo link is as tall as the photo, its 0.04 in gap and two 8.6 pt name
+   lines, and the name sits at its bottom, next to the size line.  (The name itself stays a block: making it
+   a flex box would split names that carry no-break spans.) */
+.sheet.back:has(.pc-back) .col a.plink{min-height:calc(1.02in + 19.78pt)}
+.sheet.back:has(.pc-back) .col .pick .nm{margin-top:auto}
+/* Myo-Inositol Complex's serving line (five ingredients) is the longest and sets the row's height, so the
+   START HERE column is a little wider (the kit's inline style is repeat(5,1fr)).  1.04 is the widest it
+   can go before "Blood sugar and insulin" wraps in the narrower columns (measured). */
+.sheet.back:has(.pc-back) .cols{grid-template-columns:1.04fr 1fr 1fr 1fr 1fr!important}
+/* The five-note check panel sets the duo's height; the room comes from a little less red above and below
+   the lifestyle cards (shared 0.3 in / 0.18 in, as on the insulin-resistance sheet), a smaller gap over
+   "Nutrient Solutions", and slightly tighter leading in the check panel. */
+.sheet.back:has(.pc-back) .band{padding-top:0.22in!important;padding-bottom:0.13in}
+.sheet.back:has(.pc-back) .band h2{margin-bottom:0.07in}
+.sheet.back:has(.pc-back) .life .disc2{width:0.8in;height:0.8in}
+.sheet.back:has(.pc-back) .ns-title{margin-top:0.11in}
+.sheet.back:has(.pc-back) .cols{margin-top:0.07in}
+.sheet.back:has(.pc-back) .duo{margin-top:0.08in}
+.sheet.back:has(.pc-back) .rx li{line-height:1.24;margin-bottom:1px}
+.sheet.back:has(.pc-back) .notes{margin-top:0.08in;padding-bottom:0.07in}
+.sheet.back:has(.pc-back) .recby{margin-top:0.07in}
+
+.hbp .hbp-h{font:900 12pt Merriweather,Georgia,serif;color:var(--c1);text-align:center;margin:0.09in 0 0.04in;letter-spacing:.02em}
+.hbp .hbp-risk{display:grid;grid-template-columns:repeat(6,1fr);gap:0.05in 0.04in}
+.hbp .hbp-rf{display:flex;flex-direction:column;align-items:center;text-align:center}
+.hbp .hbp-rf .ic{color:#5F676E}
+.hbp .hbp-rf span{font-size:8.2pt;line-height:1.18;color:#2F373C;margin-top:2px}
+.hbp .hbp-low{display:grid;grid-template-columns:2.85in 1fr;gap:0.2in;margin-top:0.1in;align-items:start}
+.hbp .hbp-sh{font:800 7.4pt Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--c1);margin:0 0 3px}
+.hbp .hbp-sh2{margin-top:0.07in}
+.hbp .hbp-frac{display:grid;grid-template-columns:0.58in 1fr;column-gap:0.1in;align-items:center}
+.hbp .hbp-frac .n{font:900 18pt/1.05 Merriweather,Georgia,serif;color:var(--c1);text-align:center;padding:1px 0 2px}
+.hbp .hbp-frac .n.top{border-bottom:2.5px solid var(--c1)}
+.hbp .hbp-frac .d{font-size:8.1pt;line-height:1.28;color:#2B3236}
+.hbp .hbp-frac .d b{font-family:Merriweather,Georgia,serif;color:var(--deep);font-size:9pt}
+.hbp .hbp-ok{list-style:none;margin:0;padding:0}
+.hbp .hbp-ok li{position:relative;padding-left:15px;font-size:8.1pt;line-height:1.28;margin:0 0 2px;color:#2B3236}
+.hbp .hbp-ok li::before{content:"";position:absolute;left:1px;top:3px;width:8px;height:4px;border-left:2px solid var(--c1);
+  border-bottom:2px solid var(--c1);transform:rotate(-45deg)}
+.hbp .hbp-log{display:flex;align-items:center;gap:4px;margin-top:0.07in;font-size:8pt;color:#2B3236}
+.hbp .hbp-log b{font-weight:700;white-space:nowrap}
+.hbp .hbp-log b.g{margin-left:6px}
+.hbp .hbp-log i{display:block;width:0.42in;height:0.24in;border-radius:5px;background:#E9ECEE;border:1px solid #D6DBDF}
+.hbp .hbp-log em{font-style:normal;color:#69737A;font-weight:600}
+.hbp .hbp-bp{width:100%;border-collapse:collapse;font-size:8.4pt}
+.hbp .hbp-bp th{background:var(--c1);color:#fff;padding:4px 8px;font-size:7.8pt;line-height:1.15;text-align:center}
+.hbp .hbp-bp th:first-child{text-align:left}
+.hbp .hbp-bp td{padding:2px 8px;border-bottom:1px solid #EEE3E1}
+.hbp .hbp-bp tr:nth-child(even) td{background:var(--tint)}
+.hbp .hbp-bp td.n{text-align:center;font-variant-numeric:tabular-nums;font-weight:700}
+.hbp .hbp-bp td.c{text-align:center;color:#69737A;font-size:7.4pt}
+.hbp .hbp-bp td i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:-1px}
+.hbp .hbp-alarm{border:1.5px solid #C0392B;background:#FDF1EF;border-radius:7px;padding:2px 9px;margin-top:4px;
+  font-size:8pt;line-height:1.3;color:#2B3236}
+.hbp .hbp-alarm b{color:#A5281E}
+.hbp .hbp-note{border-left:4px solid var(--c2);background:var(--tint);border-radius:0 6px 6px 0;padding:2px 9px;margin-top:4px;
+  font-size:8pt;line-height:1.3;color:#2B3236}
+.hbp .hbp-note b{color:var(--deep)}
+.hbp .hbp-fn{font-size:7pt;color:#5E686F;line-height:1.3;margin:3px 0 0}
+/* back page, scoped: only this sheet's back carries the .hbp-back marker.
+   The two formula columns carry the longest label facts, so they get the extra width (Nitric Boost most:
+   its serving line names all twelve label ingredients); one header height for all five columns lines the
+   photos up, and every product name gets a two-line box, so the sizes share one line and all five bullet
+   lists start on one line (a flex box would split the no-break "EPA-DHA" span onto a line of its own).
+   In the daily rhythm each count is a small grey pill after the product name, so a name that ends in a
+   number never runs into it ("EPA-DHA 1000" then "1 softgel") and a count never splits from its unit; the
+   slot widths fit the longest names (measured, Inter 7 pt: "Omega Pure EPA-DHA 1000" 123 px, "Cardio
+   Essentials BP Support" 128 px) so each slot stays at five lines or fewer. */
+.sheet.back:has(.hbp-back) .cols{grid-template-columns:1.09fr 1.27fr .86fr .86fr .92fr!important}
+/* "In each serving" starts on one line in four columns: every bullet list but Nitric Boost's gets the height of
+   four bullet lines (4 x 1.28em, plus the one 2 px gap between two bullets; the last bullet's margin collapses).
+   The CoQ10 column is 0.92fr (1.35 in) so its serving line fits four lines under the taller list; BP Support at
+   1.09fr keeps its line counts (measured).  Nitric Boost is left out on purpose: its serving line names all
+   twelve label ingredients in six lines, so under a four-line list it would add two lines to the row and push
+   the footer off the page. */
+.sheet.back:has(.hbp-back) .col:not(:nth-child(2)) .what ul{min-height:calc(4 * 1.28em + 2px)}
+/* one header height for all five columns: the three-line header (column 4, Omega Pure) measures 0.521 in; column 1's
+   sub-line is one line since polish round 2, so its centred title sits clear of the START HERE badge */
+.sheet.back:has(.hbp-back) .col .need{min-height:0.525in}
+.sheet.back:has(.hbp-back) .col .pick .nm{min-height:2.3em}
+/* The check panel gets the wider share (1.3 to 1): its six notes then take 12 lines (2+3+2+1+2+2) in both
+   editions, where the old 1.1 to 1 split needed 15 for five.  The rhythm keeps its five-line Evening slot: Morning
+   and Bedtime sit at their narrowest (65 and 55 px, measured), so Evening gets 116 px, just enough for
+   "BP Support 3 capsules" and "EPA-DHA 1000 1 softgel" on one line each (at 1 to 1.35 it drops to 109 px
+   and wraps to six lines).  The rhythm panel is a column, so its slot boxes stretch to the check panel's
+   height instead of leaving a blank strip under the plan line. */
+.sheet.back:has(.hbp-back) .duo{grid-template-columns:1fr 1.3fr;margin-top:0.06in}
+.sheet.back:has(.hbp-back) .duo .panel:not(.rx){display:flex;flex-direction:column}
+.sheet.back:has(.hbp-back) .rhythm{grid-template-columns:.66fr 1.3fr .58fr;flex:1}
+/* The 11-line panel is 1.86 in tall, 0.15 in more than the old four-note panel.  It is paid back from block
+   spacing only, never from type size or line spacing: band top padding 0.25 to 0.22 in and bottom 0.18 to
+   0.16 in, the band title gap 0.1 to 0.08 in, the gap above Nutrient Solutions 0.1 to 0.08 in, and the
+   column header box 0.56 to 0.525 in.  Polish round 2 adds a one-line sixth note (diabetes medicine), 14.3 px
+   with its gap, paid back the same way: note gap 2 to 1 px, panel padding 0.08 to 0.06 in, the gap above the
+   panels 0.08 to 0.06 in and the notes box padding 0.07 / 0.09 to 0.06 / 0.08 in (measured in print media:
+   1.4 px to spare above the footer in both editions). */
+.sheet.back:has(.hbp-back) .band{padding-top:0.22in!important;padding-bottom:0.16in}
+.sheet.back:has(.hbp-back) .band h2{margin-bottom:0.08in}
+.sheet.back:has(.hbp-back) .ns-title{margin-top:0.08in}
+.sheet.back:has(.hbp-back) .notes{margin-top:0.08in;padding:0.06in 0.14in 0.08in}
+.sheet.back:has(.hbp-back) .duo .panel{padding-top:0.06in;padding-bottom:0.06in}
+.sheet.back:has(.hbp-back) .rx li{margin-bottom:1px}
+.sheet.back:has(.hbp-back) .slot li{margin:1px 0 3px}
+.sheet.back:has(.hbp-back) .slot li em{display:inline-block;white-space:nowrap;background:#EEF1F3;color:#4A555B;
+  border-radius:3px;padding:0 3px;line-height:1.3}
+
+.ly-front{display:flex;flex-direction:column}
+.ly-front .ly-h{font:900 12pt Merriweather,Georgia,serif;color:var(--c1);letter-spacing:.02em;margin:0.03in 0 0.02in}
+.ly-front .ly-art svg{display:block;width:100%;height:auto}
+.ly-front .ly-grid{display:grid;grid-template-columns:4.625in 1fr;gap:0.14in;align-items:stretch}
+.ly-front .ly-notes{display:flex;flex-direction:column;justify-content:space-between;gap:0.07in}
+.ly-front .ly-nt{border-left:4px solid #5D6B74;background:#F2F4F5;padding:0.06in 0.11in 0.07in;font-size:9pt;line-height:1.4;
+  border-radius:0 6px 6px 0;color:#2B3236}
+.ly-front .ly-nt b{color:#1F2A2E}
+.ly-front .ly-nt svg{display:block;width:2.5833in;height:auto;margin:0.05in 0 0}
+.ly-front .ly-tks{display:grid;grid-template-columns:repeat(3,1fr);gap:0.1in}
+.ly-front .ly-tk{background:#F2F4F5;border-radius:8px;padding:0.03in 0.1in 0.03in 0.02in;display:flex;gap:4px;align-items:center}
+.ly-front .ly-tk svg{flex:none;width:0.7917in;height:auto}
+.ly-front .ly-tk b{display:block;font-size:8.8pt;color:#1F2A2E;line-height:1.2}
+.ly-front .ly-tk span{display:block;font-size:7.8pt;color:#3A4247;line-height:1.28;margin-top:1px}
+/* BACK PAGE.  Every rule is scoped by the empty .ly-back marker in life_title, so it touches
+   only this sheet's back, in its own file and in the all-sheets bundle. */
+/* life icons at 0.54 in (kit 0.6 in) in a box of the same height, and a tighter band: the back needs
+   the room.  ROOM BUDGET, polish round 2 (measured in the build's Chromium, both editions): the aligned
+   serving headings add 11.4 px to the product row and the green tea check line 14.2 px to the duo,
+   against 15.6 px of slack.  The 13.4 px it lacked came from six gaps, each set to a value other
+   sheets in the series already use: icon box 0.56 -> 0.54 in, band bottom 0.11 -> 0.09 in, section
+   gaps above "Nutrient Solutions", the duo and the notes box 0.1 -> 0.08 in, writing lines 0.24 ->
+   0.22 in apart. */
+.sheet.back:has(.ly-back) .icons5 .life .disc2{height:0.54in}
+.sheet.back:has(.ly-back) .icons5 .life .disc2 svg{width:0.54in!important;height:0.54in!important}
+.sheet.back:has(.ly-back) .band{padding-bottom:0.09in}
+.sheet.back:has(.ly-back) .band h2{margin-bottom:0.07in}
+.sheet.back:has(.ly-back) .ns-title{margin-top:0.08in}
+/* products section: say the frame out loud.  The kit's generic subtitle is not rendered
+   (display:none, so it is not in the PDF either) and the sheet's own line takes its place:
+   general wellness support, NOT a treatment for any infection, antibiotics first.  ("Recovery
+   support" was dropped: on a Lyme sheet it implies help recovering from the disease.)  Same line in
+   both editions; measured to stay on one line beside the heading. */
+.sheet.back:has(.ly-back) .ns-title span{display:none}
+.sheet.back:has(.ly-back) .ns-title::after{content:"General wellness support, not a treatment for any infection. Antibiotics come first.";
+  font:700 8pt Inter,sans-serif;color:var(--deep);letter-spacing:.02em}
+/* "In each serving" starts on one line in all five columns (polish round 2, the HBP pattern): every
+   product name gets a two-line box and every bullet list the height of four bullet lines (4 x 1.28em,
+   plus the one 2 px gap between two bullets), so names of 1 or 2 lines and lists of 3 or 4 lines no
+   longer stagger the facts blocks (they started at four heights, 38 px apart). */
+.sheet.back:has(.ly-back) .col .pick .nm{min-height:2.3em}
+.sheet.back:has(.ly-back) .col .what ul{min-height:calc(4 * 1.28em + 2px)}
+/* the check panel carries seven safety lines, so it gets the wider share of the row (kit: 1.35fr 1fr,
+   rhythm first); measured 2026-11-03: rhythm 175 px, check 180 px, versus 163 / 254 at the kit split */
+.sheet.back:has(.ly-back) .duo{grid-template-columns:1fr 1.35fr;margin-top:0.08in}
+/* narrower rhythm slots: 2 px less gap and padding keeps "Evening meal" on one line */
+.sheet.back:has(.ly-back) .rhythm{gap:4px}
+.sheet.back:has(.ly-back) .slot{padding:5px 4px}
+/* two writing lines instead of three: the third went to the check panel (reviewer's allowance) */
+.sheet.back:has(.ly-back) .notes{margin-top:0.08in}
+.sheet.back:has(.ly-back) .notes .ln{height:0.22in}
+.sheet.back:has(.ly-back) .notes .ln:nth-of-type(3){display:none}
+
+.mo-front{display:flex;flex-direction:column}
+.mo-front .mo-h{font:900 12pt Merriweather,Georgia,serif;color:var(--c1);letter-spacing:.02em;margin:0 0 0.04in}
+.mo-front .mo-art svg{display:block;width:100%;height:auto}
+.mo-front .mo-signs{display:grid;grid-template-columns:1fr 1fr;gap:0.12in;margin:0 0 0.08in}
+.mo-front .mo-grp{background:var(--tint);border:1px solid #E4DCEF;border-radius:8px;padding:4px 6px 5px}
+.mo-front .mo-grp h4{margin:0 0 3px;text-align:center;font:800 7.4pt Inter,sans-serif;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--c1)}
+.mo-front .mo-ics{display:grid;grid-template-columns:repeat(4,1fr)}
+.mo-front .mo-ics div{display:flex;flex-direction:column;align-items:center;text-align:center;color:var(--c1)}
+.mo-front .mo-ics span{font-size:8pt;color:#3A4247;line-height:1.15;margin-top:2px}
+.mo-front .mo-two{display:grid;grid-template-columns:1fr 400px;gap:15px;align-items:stretch;margin-bottom:0.08in}
+.mo-front .mo-col{display:flex;flex-direction:column}
+.mo-front .mo-steps{display:flex;flex-direction:column;gap:6px}
+.mo-front .mo-step{display:flex;gap:8px;align-items:flex-start}
+.mo-front .mo-step .n{flex:none;width:0.26in;height:0.26in;border-radius:50%;background:var(--c1);color:#fff;
+  font:800 9pt Inter,sans-serif;display:flex;align-items:center;justify-content:center}
+.mo-front .mo-step b{font:800 9.4pt Inter,sans-serif;color:var(--deep);display:block}
+.mo-front .mo-step span{display:block;font-size:8.3pt;color:#3A4247;line-height:1.3}
+.mo-front .mo-stat{display:flex;gap:10px;align-items:center;background:var(--soft);border-radius:8px;padding:6px 10px;margin-top:auto}
+.mo-front .mo-steps{margin-bottom:8px}
+.mo-front .mo-stat b{font:900 19pt Merriweather,Georgia,serif;color:var(--c1);line-height:1;white-space:nowrap}
+.mo-front .mo-stat span{font-size:8.3pt;line-height:1.3;color:#2B3236}
+/* BACK PAGE (back-page pass 2026-11-03).  Reached through the marker span in the lifestyle title,
+   so the rules touch only this sheet's back, in its own file and in the all-sheets bundle.
+     - lifestyle cells keep the kit's 0.1in gap (closer, the long lines of two cells read across as
+       one) and the grid reaches 0.1in into the band's side padding, so every title sets on one line;
+     - every dose bar is one height with its text centred, so the bars form one row.
+   Review round 2026-11-03 (measured on the rendered page, both editions):
+     - the check panel holds four lines now, so the duo gives it more width (1.25fr : 1, panel lines
+       286 px) and the notes lines sit 0.21in apart (kit 0.24in; 0.19in since polish round 2); the
+       page then ends 9.6 px above its footer in both editions, against 12.5 px before;
+     - the daily rhythm's lists are flex columns, so Binder Pro's morning dose (its sched unit
+       carries the empty <i class="mo-late"> marker) is listed LAST in the Morning box: before
+       breakfast, breakfast, then 2 hours after breakfast.  The same entry is contain:inline-size,
+       so it adds no width to the box: the Morning box takes its longest other line ("GI Defend
+       1 scoop before breakfast", 170 px with padding), never wraps those lines, and wraps only
+       Binder Pro's into two; flex gap 1px and the ul margins keep the kit's 3/1/1 px spacing;
+     - Evening meal gets a little more width than Bedtime, so "Lipo-Flow 2 tablets" stays on
+       one line (Bedtime's one entry wraps inside its box either way).
+   Polish round 2, 2026-11-04 (measured on the rendered page, both editions):
+     - the five "In each serving" headings sit on one line (538.6 px): every bullet list is as tall
+       as the four-line list (4 lines of 7.3pt at line-height 1.28, plus the two 2px item margins; no
+       list runs past four lines once GI Defend's second bullet is two), so the facts blocks start
+       level and end where their text does.  Pinned to the dose bars (until this round) they started
+       at three heights, 24 px apart.  The .what box stays a flex column, so each list keeps its last
+       item margin inside itself and the min-height lines the headings up exactly; that 2px item
+       margin is the gap above each dashed rule (the kit's 4px .key margin is zeroed, as the auto
+       margin was in the tallest columns), so the dose bars stay at 631 px;
+     - the check panel's fifth line (pregnancy and alpha-gal) is paid for by two shorter lines and
+       notes lines 0.19in apart (0.21in before): the page ends 2.0 px above its footer, and the
+       footer stays at 1021.5 px. */
+.sheet.back:has(.mo-back) .lifes{gap:0.1in;margin:0 -0.1in}
+.sheet.back:has(.mo-back) .col .what{display:flex;flex-direction:column}
+.sheet.back:has(.mo-back) .col .what ul{min-height:calc(4 * 1.28 * 7.3pt + 4px)}
+.sheet.back:has(.mo-back) .col .what .key{margin-top:0}
+.sheet.back:has(.mo-back) .col .dose{min-height:0.35in;display:flex;flex-direction:column;justify-content:center}
+.sheet.back:has(.mo-back) .col .pick{padding-left:0.05in;padding-right:0.05in}
+.sheet.back:has(.mo-back) .duo{grid-template-columns:1.25fr 1fr}
+.sheet.back:has(.mo-back) .rhythm{grid-template-columns:max-content 1.05fr .95fr}
+.sheet.back:has(.mo-back) .slot ul{display:flex;flex-direction:column;gap:1px;margin:3px 0 1px}
+.sheet.back:has(.mo-back) .slot li{margin:0}
+.sheet.back:has(.mo-back) .slot li:has(.mo-late){order:1;contain:inline-size}
+.sheet.back:has(.mo-back) .notes .ln{height:0.19in}
+
+.mnp .mnp-art svg{display:block;width:100%;height:auto}
+.mnp .mnp-art2{margin-top:0.04in}
+.mnp .mnp-low{display:grid;grid-template-columns:1.5fr 1fr;gap:0.1in;margin-top:0.06in;align-items:stretch}
+.mnp .mnp-track{border:1px solid #E7D3DC;border-radius:9px;background:var(--tint);padding:0.05in 0.1in 0.05in;
+  display:flex;flex-direction:column}
+.mnp .mnp-th{display:flex;flex-direction:column;margin-bottom:2px}
+.mnp .mnp-th1{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+.mnp .mnp-th b{font:900 10.2pt Merriweather,Georgia,serif;color:var(--c1);white-space:nowrap}
+.mnp .mnp-th span{font-size:7.6pt;line-height:1.25;color:#3F4A50;white-space:nowrap}
+.mnp .mnp-th .mnp-pen{font-weight:600;color:var(--deep)}
+.mnp .mnp-th strong{color:var(--deep)}
+.mnp .mnp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0 12px;flex:1;align-content:space-between}
+.mnp .mnp-it{display:flex;align-items:center;justify-content:space-between;gap:4px;border-bottom:1px dotted #E2C9D4;
+  padding:3.4px 0;min-height:0.27in}
+.mnp .mnp-it span{font-size:7.6pt;line-height:1.06;color:#2B3236;white-space:nowrap}
+.mnp .mnp-it em{display:flex;gap:2px;font-style:normal;flex:none}
+.mnp .mnp-it i{display:inline-flex;align-items:center;justify-content:center;width:0.14in;height:0.14in;border-radius:50%;
+  border:1.1px solid var(--c2);font:700 7pt/1 Inter,sans-serif;font-style:normal;color:var(--deep);background:#fff}
+.mnp .mnp-tot{display:flex;align-items:center;gap:5px;margin-top:auto;padding-top:4px;font-size:7.6pt;color:#3F4A50}
+.mnp .mnp-tot span{flex:1}
+.mnp .mnp-tot b{font:800 7.6pt Inter,sans-serif;color:var(--deep);white-space:nowrap}
+.mnp .mnp-tot i{display:block;width:0.34in;height:0.19in;border-radius:5px;background:#fff;border:1px solid #D6C3CC}
+.mnp .mnp-tot small{font-size:7.4pt;color:#5E686F;margin-right:4px}
+.mnp .mnp-best{border:1px solid #E7D3DC;border-left:4px solid var(--c1);border-radius:0 9px 9px 0;background:#fff;
+  padding:0.05in 0.1in 0.04in;display:flex;flex-direction:column}
+.mnp .mnp-best h4{margin:0 0 2px;font:900 10.2pt Merriweather,Georgia,serif;color:var(--c1)}
+.mnp .mnp-best ol{margin:0;padding-left:13px;font-size:7.4pt;line-height:1.24;color:#2B3236}
+.mnp .mnp-best li{margin:0 0 1px}
+.mnp .mnp-best li b{color:var(--deep)}
+.mnp .mnp-best small{margin-top:1px;font-size:7pt;color:#6A747B}
+/* back page: scoped with :has() to the marker span in this sheet's lifestyle title */
+.sheet.back:has(.mnp-back) .col .need{height:0.5in;min-height:0.5in;justify-content:flex-start}
+.sheet.back:has(.mnp-back) .col .pick .sz{white-space:nowrap}
+/* START column: {who} ticks Menopause Support or PeriMenopause Support (boxes are drawn, not glyphs) */
+.sheet.back:has(.mnp-back) .col .what li:has(.mnp-pk){padding-left:0}
+.sheet.back:has(.mnp-back) .col .what li:has(.mnp-pk)::before{display:none}
+.sheet.back:has(.mnp-back) .mnp-pk{display:block;position:relative;padding-left:12px;margin:2px 0 0;font-size:7pt}
+.sheet.back:has(.mnp-back) .col .key .mnp-kk{font-style:normal;font-weight:700;color:var(--deep)}
+.sheet.back:has(.mnp-back) .mnp-pk a{color:inherit;text-decoration:none}
+.sheet.back:has(.mnp-back) .mnp-pk i{position:absolute;left:0;top:2.4px;width:7.2px;height:7.2px;box-sizing:border-box;
+  border:1.3px solid var(--deep);border-radius:1.5px;background:#fff}
+.sheet.back:has(.mnp-back) .rhythm .mnp-or{color:#283035}
+/* the rhythm slots in the narrower rhythm panel: Morning cannot go under "PeriMenopause" (83 px), the evening
+   slot needs 93.3 px for "Evening meal" on one line and the bedtime slot 77 px for "Mag Calm Pro"; a 4 px gap
+   (kit: 6 px) is what lets all three hold at 1.5fr (measured, polish round 2) */
+.sheet.back:has(.mnp-back) .rhythm{grid-template-columns:1fr 1.22fr 1fr;gap:4px}
+/* the START column holds two formulas, so it gets a little more width (the others still fit their text) */
+.sheet.back:has(.mnp-back) .cols{grid-template-columns:1.25fr 1fr 1fr 1fr 1fr!important}
+/* the safety panel carries the same five warnings in both editions, so it gets the wider part.  At 1.5fr
+   four of the five checks hold two lines (the liver line needs 396 of its 398 px); the rhythm panel beside
+   it was 0.17 in shorter than the safety panel anyway, so it only gets taller inside spare room. */
+.sheet.back:has(.mnp-back) .duo{grid-template-columns:1fr 1.5fr}
+/* 1 px between checks (kit: 2 px) buys back the room the fifth check's third line takes */
+.sheet.back:has(.mnp-back) .rx li{margin-bottom:1px}
+/* two writing lines, 0.22in apart (the five-line safety check needs the third line's room) */
+.sheet.back:has(.mnp-back) .notes .ln{height:0.22in}
+.sheet.back:has(.mnp-back) .notes .ln:last-child{display:none}
+
+.gov .gov-art svg{display:block;width:96.6%;height:auto;margin:0 auto}   /* a hair under full width: the room pays for the
+   5R ribbon's height, the KEY gap and the gas boxes */
+.gov-key{position:relative;border:1.2px solid #C9D6DA;border-radius:8px;padding:7px 8px 4px;margin-top:10px}
+.gov-kt{position:absolute;top:-7px;left:12px;background:#fff;padding:0 6px;font:800 7.2pt Inter,sans-serif;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--deep)}
+.gov-kg{display:grid;grid-template-columns:repeat(4,auto);justify-content:space-between;align-items:center;gap:2px 8px}
+.gov-kg>div{display:flex;align-items:center;gap:4px;min-width:0}
+.gov-kg svg{flex:none;width:0.22in;height:0.22in;overflow:visible}
+.gov-kg svg.gov-kw{width:0.33in}
+.gov-kg b{font-size:7.4pt;line-height:1.2;color:#1F2A2E;white-space:nowrap}
+.gov-sh{display:flex;align-items:baseline;gap:0.12in;font:900 10.6pt/1.2 Merriweather,Georgia,serif;color:var(--c1);
+  margin:0.08in 0 0.05in}
+.gov-sh span{font:500 8.2pt Inter,sans-serif;color:#3B464C}
+.gov-kinds{display:grid;grid-template-columns:repeat(3,1fr);gap:0.09in}
+.gov-kc{display:flex;flex-direction:column;background:var(--tint);border:1px solid #D5E4E8;border-radius:8px;padding:0.05in 0.09in 0.06in}
+.gov-kl.gov-kt2{margin-top:auto}
+.gov-kh{display:flex;align-items:center;gap:7px;margin-bottom:3px}
+.gov-mi{flex:none;width:0.36in;height:0.36in;background:#fff;border-radius:50%;box-shadow:0 0 0 1.3px #CFE0E4}
+.gov-kh b{display:block;font:900 10.4pt/1.1 Merriweather,Georgia,serif;color:var(--deep)}
+.gov-kh span{display:block;font-size:7.3pt;line-height:1.2;color:#4A555C}
+.gov-kl{display:grid;grid-template-columns:0.5in 1fr;gap:4px;border-top:1px dashed #C9DADF;padding-top:2px;margin-top:2px}
+.gov-kl i{font-style:normal;font:800 7pt/1.2 Inter,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--c1);padding-top:1px}
+.gov-kl.gov-kf i{color:#9C2C22}
+.gov-kl ul{margin:0;padding:0;list-style:none}
+.gov-kl li{position:relative;padding-left:8px;font-size:7.6pt;line-height:1.26;color:#2B3236}
+.gov-kl li::before{content:"";position:absolute;left:0;top:4px;width:4px;height:4px;border-radius:50%;background:var(--c2)}
+.gov-kl.gov-kf li::before{background:#C9574B}
+.gov-kl p{margin:0;font-size:7.6pt;line-height:1.26;font-weight:700;color:var(--deep)}
+.gov-nums{display:grid;grid-template-columns:1fr 1.42in 1.42in 1in;gap:5px;margin-top:0.08in;align-items:stretch;
+  border:1px solid #E8D9B6;background:#FFFCF4;border-radius:8px;padding:5px 6px}
+.gov-nl{display:flex;align-items:center;gap:7px}
+.gov-nl .ic{flex:none;color:var(--c1)}
+.gov-nl b{display:block;font:900 9.6pt/1.2 Merriweather,Georgia,serif;color:var(--c1)}
+.gov-nl span{display:block;font-size:7.5pt;line-height:1.28;color:#2B3236}
+.gov-n{border-radius:5px;background:#F7EDD7;border-top:3px solid #D99A1E;padding:2px 6px 3px;color:#6E4A00}
+.gov-n i{display:block;font:800 7pt Inter,sans-serif;letter-spacing:.07em;text-transform:uppercase;font-style:normal}
+.gov-n b{display:block;font:800 8.6pt/1.15 Inter,sans-serif;color:#5B3C00}
+.gov-n span{display:block;font-size:7.2pt;line-height:1.2;color:#6E5320}
+.gov-mine{border:1.3px dashed #9AA5AC;border-radius:5px;background:#fff;display:flex;flex-direction:column;
+  justify-content:space-between;padding:2px 6px 4px}
+.gov-mine b{font:700 7pt/1.15 Inter,sans-serif;color:#6A747B;text-align:center}
+.gov-mine div{display:flex;align-items:flex-end;gap:3px}
+.gov-mine span{font:600 7pt/1 Inter,sans-serif;color:#56606A}
+.gov-mine i{flex:1;height:14px;border-bottom:1px solid #9AA5AC}
+.gov-alarm{display:flex;align-items:center;gap:7px;border:1.4px solid #C0392B;background:#FDF1EF;border-radius:7px;
+  padding:2px 9px;margin-top:0.06in}
+.gov-alarm .ic{flex:none;color:#B3362B}
+.gov-alarm p{margin:0;font-size:7.7pt;line-height:1.3;color:#2B3236}
+.gov-alarm b{color:#A5281E}
+.gov-5r{display:grid;grid-template-columns:1.42in 1fr;gap:0.1in;align-items:center;margin-top:0.08in}
+.gov-5rh b{display:block;font:900 10.6pt/1.15 Merriweather,Georgia,serif;color:var(--c1)}
+.gov-5rh span{display:block;font-size:7.4pt;line-height:1.25;color:#4A555C;margin-top:1px}
+.gov-5rh em{font-style:normal;font-weight:700;color:var(--deep)}
+.gov-5rr{display:grid;grid-template-columns:repeat(5,1fr)}
+/* min-height keeps the ribbon at the height it had with a two-line Remove sub: the one-line sub now leaves the Remove
+   arrow (title, sub and THIS SHEET tag) clear room above and below, like its neighbours */
+.gov-5rr>div{position:relative;background:var(--soft);color:var(--deep);padding:3px 14px 3px 18px;min-height:0.568in;
+  display:flex;flex-direction:column;justify-content:center;
+  clip-path:polygon(0 0,calc(100% - 10px) 0,100% 50%,calc(100% - 10px) 100%,0 100%,10px 50%)}
+.gov-5rr>div:first-child{clip-path:polygon(0 0,calc(100% - 10px) 0,100% 50%,calc(100% - 10px) 100%,0 100%);padding-left:9px}
+.gov-5rr>div:nth-child(even){background:#D3E9EE}
+.gov-5rr b{display:flex;align-items:center;gap:4px;font:800 8.2pt Inter,sans-serif;text-transform:uppercase;letter-spacing:.04em}
+.gov-5rr b i{font-style:normal;display:inline-flex;align-items:center;justify-content:center;width:13px;height:13px;
+  border-radius:50%;background:var(--c1);color:#fff;font:800 7pt/1 Inter,sans-serif}
+.gov-5rr span{font-size:7pt;line-height:1.12;color:#3B464C}
+.gov-5rr>div:first-child span{white-space:nowrap}   /* "unwanted microbes" fits the arrow with 5 px to spare: never wrap it */
+.gov-5rr em{font-style:normal;font:800 7pt/1.15 Inter,sans-serif;letter-spacing:.04em;color:#B3362B;margin-top:1px}
+.gov-5rr>div.gov-on{background:var(--c1);color:#fff}
+.gov-5rr>div.gov-on b i{background:#fff;color:var(--c1)}
+.gov-5rr>div.gov-on span{color:#E3F1F4}
+.gov-5rr>div.gov-on em{color:#fff;background:#F15F3F;border-radius:3px;padding:1px 5px;align-self:flex-start;text-transform:uppercase}
+/* ---- this sheet's back page only (the page holding the .gov-back marker in the lifestyle title).  The shared
+   kit sets all fine print at 7 pt and draws the START HERE badge (.startb) on the column's top edge. */
+/* the Paradex photo is a flat RGB image: blend its white ground into the column tint (this image only) */
+.sheet.back:has(.gov-back) .col .pick img[alt="NutriDyn Paradex bottle"]{mix-blend-mode:multiply;filter:none}
+/* Nutricidin's label lists 12 lines: its column is wider so the full list fits */
+.sheet.back:has(.gov-back) .cols{grid-template-columns:1fr 1.4fr 1.06fr 1fr .96fr!important}
+/* rows line up across the five columns.  Every header keeps a top band for the START HERE badge, so the badge
+   never touches the first column's title, and all five titles sit at the same height (each needsub is one
+   line); every name is one line ("S. boulardii", with UltraBiotic on the size line) and every column's two
+   bullets take four lines, so the bullets and the "In each serving" lines start level in all five. */
+.sheet.back:has(.gov-back) .col .need{padding-top:13px}
+/* the check list gets half the row; the bedtime box holds one product */
+.sheet.back:has(.gov-back) .duo{grid-template-columns:1fr 1fr}
+.sheet.back:has(.gov-back) .rhythm{grid-template-columns:1.2fr 1.2fr .6fr}
+.sheet.back:has(.gov-back) .life .disc2{width:0.76in;height:0.76in}
+/* the two safety panels need the room: slightly tighter gaps between the back page's blocks */
+.sheet.back:has(.gov-back) .band{padding-bottom:0.12in}
+.sheet.back:has(.gov-back) .ns-title{margin-top:0.1in}
+.sheet.back:has(.gov-back) .cols{margin-top:0.06in}
+.sheet.back:has(.gov-back) .duo{margin-top:0.06in}
+.sheet.back:has(.gov-back) .notes{margin-top:0.06in}
+/* the Pharmacist check's Spectrum BR line needs a fourth line (CYP2C9 and warfarin, low blood sugar, licorice and
+   its three drug classes): in the pharmacy edition only, 1 px between the check bullets and none after the last
+   pays for it, with the gaps above.  The provider edition has room and keeps the kit's 2 px. */
+.sheet.back:has(.gov-edh) .rx li{margin-bottom:1px}
+.sheet.back:has(.gov-edh) .rx li:last-child{margin-bottom:0}
+/* The plan line is set through SHEET["back"]["rhythm_note"] (the kit's "add one product a week" would stretch a
+   Remove step with a set length, ND584: 10 days, to five weeks). */
+/* The kit's rhythm has no between-meals slot.  The second box holds the evening-meal pills and S. boulardii's
+   mid-afternoon capsule (2 hours from the herbs, apart from dinner), so on this sheet it is labelled
+   "Afternoon + dinner" (the same font-size:0 + ::after trick; gap 0 so the hidden label adds no second gap). */
+.sheet.back:has(.gov-back) .slot:nth-child(2) .when{font-size:0;gap:0}
+.sheet.back:has(.gov-back) .slot:nth-child(2) .when svg{margin-right:4px}
+.sheet.back:has(.gov-back) .slot:nth-child(2) .when::after{content:"Afternoon + dinner";font-size:7pt}
+
+.ihl .ihl-art svg{display:block;width:100%;height:auto}
+.ihl-h{display:flex;align-items:center;gap:0.1in;font:900 11pt/1.2 Merriweather,Georgia,serif;color:var(--c1);
+  letter-spacing:.04em;text-transform:uppercase;margin:0.02in 0 0.06in}
+.ihl-h::after{content:"";flex:1;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--soft),rgba(227,238,246,0))}
+.ihl .ihl-h2{margin-top:0.11in}
+.ihl-slow{display:grid;grid-template-columns:repeat(8,1fr);gap:0 0.04in}
+.ihl-sf{display:flex;flex-direction:column;align-items:center;text-align:center}
+.ihl-disc{width:0.54in;height:0.54in;border-radius:50%;background:var(--soft);color:var(--c1);display:flex;
+  align-items:center;justify-content:center;box-shadow:inset 0 0 0 1.5px rgba(31,94,140,.12)}
+.ihl-sl{display:block;font-size:7.8pt;font-weight:600;line-height:1.22;color:#2F373C;margin-top:0.03in}
+.ihl-care{margin-top:0.11in;border:1.5px solid #E3B7B2;border-radius:10px;background:#FFFFFF;overflow:hidden}
+.ihl-ch{display:flex;align-items:baseline;gap:0.14in;padding:0.06in 0.12in 0.04in}
+.ihl-ch b{flex:none;font:900 11pt/1.2 Merriweather,Georgia,serif;color:#A5281E;letter-spacing:.04em;text-transform:uppercase}
+.ihl-ch span{font-size:8.2pt;color:#2B3236}
+.ihl-cc{display:grid;grid-template-columns:1.14fr .86fr;gap:0.1in;padding:0 0.1in 0.08in}
+.ihl-cc>div{border-radius:7px;padding:0.05in 0.1in 0.06in}
+.ihl-now{background:#FDF0EE;border-left:4px solid #C0392B}
+.ihl-today{background:#FEF6E7;border-left:4px solid #D99A1C}
+.ihl-cc h4{margin:0 0 2px;font:800 7.6pt Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase}
+.ihl-now h4{color:#A5281E}
+.ihl-today h4{color:#8C5F05}
+.ihl-cc ul{margin:0;padding:0 0 0 11px}
+.ihl-cc li{font-size:7.9pt;line-height:1.3;color:#2B3236;margin:0 0 1px}
+.ihl-cc li b{color:#1F2A2E}
+.ihl-nw{white-space:nowrap}
+/* back page: scoped with :has() to the marker span in this sheet's lifestyle title (the 7 pt fine print and
+   the Start here badge come from the shared kit).  Equal-height need headers, with 0.02in more room on top
+   so the start column's title clears the badge that straddles the column edge (same inner height, so every
+   title stays on one line across the five columns); the "In each serving" rows start on one line. */
+.sheet.back:has(.ihl-back) .col .need{height:0.55in;min-height:0.55in;padding-top:0.09in}
+.sheet.back:has(.ihl-back) .col .what ul{min-height:4.2em}
+.sheet.back:has(.ihl-back) .slot li em{white-space:nowrap}
+/* back layout: the same blocks as every sheet, re-placed with a grid so the six-line check panel can run
+   full width in two columns; the daily rhythm and the notes box share the row under it. */
+.sheet.back:has(.ihl-back) .inner{display:grid;grid-template-columns:1.6fr 1fr;column-gap:0.1in;
+  grid-template-rows:auto auto auto auto auto auto 1fr auto}
+.sheet.back:has(.ihl-back) .inner>*{grid-column:1/-1}
+.sheet.back:has(.ihl-back) .band{grid-row:1}
+.sheet.back:has(.ihl-back) .ns-title{grid-row:2}
+.sheet.back:has(.ihl-back) .cols{grid-row:3}
+.sheet.back:has(.ihl-back) .duo{display:contents}
+.sheet.back:has(.ihl-back) .duo>.panel,.sheet.back:has(.ihl-back) .notes{margin-top:0.08in}
+.sheet.back:has(.ihl-back) .ns-title{margin-top:0.1in}
+.sheet.back:has(.ihl-back) .duo>.panel.rx{grid-row:4;grid-column:1/-1}
+.sheet.back:has(.ihl-back) .duo>.panel:not(.rx){grid-row:5;grid-column:1}
+.sheet.back:has(.ihl-back) .notes{grid-row:5;grid-column:2}
+.sheet.back:has(.ihl-back) .recby{grid-row:6}
+.sheet.back:has(.ihl-back) .foot{grid-row:8}
+.sheet.back:has(.ihl-back) .panel.rx ul{columns:2;column-gap:0.26in}
+.sheet.back:has(.ihl-back) .panel.rx li{break-inside:avoid}
+/* the notes box is as tall as the rhythm panel beside it: share that height among the three write-in lines */
+.sheet.back:has(.ihl-back) .notes{display:flex;flex-direction:column}
+.sheet.back:has(.ihl-back) .notes .ln{flex:1 1 0;height:auto;min-height:0.24in}
+
+.jpn .jpn-art{margin-top:0.02in}
+.jpn .jpn-sh{font:800 7.6pt Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--c1);margin:0 0 3px}
+.jpn .jpn-sh2{margin-top:0.1in}
+.jpn .jpn-row{display:grid;grid-template-columns:1fr 3.3in;gap:0.18in;margin-top:0.09in;align-items:start}
+.jpn .jpn-dots{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr;gap:1px 0}
+.jpn .jpn-dots li{position:relative;padding-left:12px;font-size:8.2pt;line-height:1.27;color:#2B3236}
+.jpn .jpn-dots li::before{content:"";position:absolute;left:0;top:4px;width:6px;height:6px;border-radius:50%;background:var(--c2)}
+.jpn .jpn-alert{border:1.5px solid #C0392B;background:#FDF1EF;border-radius:8px;padding:3px 10px 3px}
+.jpn .jpn-ah{font:800 7.6pt Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#A5281E;margin:0 0 2px}
+.jpn .jpn-alert ul{margin:0;padding:0 0 0 12px}
+.jpn .jpn-alert li{font-size:8pt;line-height:1.23;color:#2B3236;margin:0 0 1px}
+.jpn .jpn-alert li::marker{color:#C0392B}
+.jpn .jpn-alert b{color:#8E2219}
+.jpn .jpn-risk{display:grid;grid-template-columns:repeat(7,1fr);gap:0 0.05in}
+.jpn .jpn-rf{display:flex;flex-direction:column;align-items:center;text-align:center}
+.jpn .jpn-disc{width:0.46in;height:0.46in;border-radius:50%;background:var(--soft);color:var(--c1);display:flex;
+  align-items:center;justify-content:center;box-shadow:inset 0 0 0 1.5px rgba(31,94,140,.12)}
+.jpn .jpn-rl{display:block;font-size:7.9pt;font-weight:600;line-height:1.2;color:#2F373C;margin-top:0.03in}
+.jpn .jpn-nums{display:grid;grid-template-columns:1fr 1fr 1fr 1.32fr;gap:0.08in}
+.jpn .jpn-n{background:var(--tint);border:1px solid #D9E6F0;border-top:3px solid var(--c2);border-radius:7px;
+  padding:4px 8px 5px;display:flex;flex-direction:column;gap:1px}
+.jpn .jpn-big{font:900 14pt/1.1 Merriweather,Georgia,serif;color:var(--c1);white-space:nowrap}
+.jpn .jpn-arr{display:inline-block;width:0.8em;height:0.4em;margin:0 0.08em;vertical-align:0.2em;color:var(--c2)}
+.jpn .jpn-where{flex-direction:row;align-items:center;gap:6px}
+.jpn .jpn-where>div{display:flex;flex-direction:column;gap:1px}
+.jpn .jpn-where>div>b{font:800 8.4pt Inter,sans-serif;color:var(--deep)}
+.jpn .jpn-fig{flex:none;height:0.76in;width:0.353in}
+.jpn .jpn-n.jpn-where{padding:2px 6px 2px;gap:5px}
+.jpn .jpn-n span{font-size:7.8pt;line-height:1.26;color:#2B3236}
+.jpn .jpn-n span b{color:var(--deep)}
+.jpn .jpn-me>b{font:800 8.4pt Inter,sans-serif;color:var(--deep)}
+.jpn .jpn-pain{display:grid;grid-template-columns:repeat(11,1fr);gap:2px;margin-top:2px}
+.jpn .jpn-pain span{display:flex;align-items:center;justify-content:center;height:0.2in;border-radius:3px;
+  font:800 7.6pt Inter,sans-serif}
+.jpn .jpn-pl{display:flex;justify-content:space-between;font-size:7pt;color:#5E686F;margin-top:1px}
+.jpn .jpn-me>span{font-size:7.4pt;color:#4A555C}
+
+/* ---- this sheet's back page, reached through the empty .jpn-bk marker in the lifestyle title (the back page has
+   no sheet class).  Fine print, the START HERE badge and the diamonds all come from the kit; these rules only make
+   room for the six-point check list. ---- */
+/* all five need bands stay one height (the kit's 0.5in) with column 2's two-line subtitle, so the photos line up */
+.sheet.back:has(.jpn-bk) .col .need{padding:0.06in 0.06in 0.048in}
+.sheet.back:has(.jpn-bk) .life .disc2{width:0.74in;height:0.74in}
+.sheet.back:has(.jpn-bk) .life .disc2 svg{width:0.46in!important;height:0.46in!important}
+.sheet.back:has(.jpn-bk) .band{padding-bottom:0.13in}
+.sheet.back:has(.jpn-bk) .ns-title{margin-top:0.11in}
+/* every product name gets a two-line band (one-line names sit centred in it), so the photos, names, sizes and
+   bullet lists line up across all five columns; column 2's "Chondro-Relief Intensive Care" needs both lines */
+.sheet.back:has(.jpn-bk) .col .pick .nm{min-height:2.1em;line-height:1.05;display:flex;align-items:center;
+  justify-content:center}
+/* room for that band and the two-line alpha-gal check: the same small trims other sheets use (measured: 3.4px
+   left above the footer in both editions) */
+.sheet.back:has(.jpn-bk) .duo{margin-top:0.07in}
+.sheet.back:has(.jpn-bk) .notes{margin-top:0.07in}
+.sheet.back:has(.jpn-bk) .notes .ln{height:0.22in}
+.sheet.back:has(.jpn-bk) .rhythm{grid-template-columns:1fr 1fr}.sheet.back:has(.jpn-bk) .rhythm .slot:nth-child(3){display:none}.sheet.back:has(.jpn-bk) .duo{grid-template-columns:1fr 1.7fr}
+.tsp .tsp-art svg{display:block;width:100%;height:auto}
+.tsp .tsp-h{display:flex;align-items:center;gap:0.1in;margin:0.1in 0 0.05in;font:900 10.5pt/1.2 Merriweather,Georgia,serif;
+  color:var(--c1);letter-spacing:.04em;text-transform:uppercase}
+.tsp .tsp-h::after{content:"";flex:1;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--soft),rgba(227,238,246,0));order:1}
+.tsp .tsp-h em{order:2;font:italic 600 7.6pt Inter,sans-serif;letter-spacing:0;text-transform:none;color:#4A555C;
+  display:inline-flex;align-items:center;gap:5px}
+.tsp .tsp-dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#F15F3F;box-shadow:0 0 0 3px rgba(241,95,63,.22)}
+.tsp .tsp-sites{display:grid;grid-template-columns:repeat(3,1fr);gap:0.09in}
+.tsp .tsp-site{display:flex;gap:0.08in;align-items:center;background:var(--tint);border:1px solid #D9E5EE;border-radius:9px;
+  padding:0.06in 0.08in 0.06in 0.06in}
+.tsp .tsp-sic{flex:none;width:0.6in;height:0.6in;border-radius:50%;background:#fff;color:var(--c1);display:flex;align-items:center;
+  justify-content:center;box-shadow:inset 0 0 0 1.5px rgba(31,94,140,.14)}
+.tsp .tsp-site p{margin:0 0 2px;line-height:1.15}
+.tsp .tsp-site b{font:800 9.4pt/1.15 Inter,sans-serif;color:var(--deep)}
+.tsp .tsp-site i{font:italic 600 7.6pt/1.15 Inter,sans-serif;color:#4A555C;margin-left:3px;white-space:nowrap}
+.tsp .tsp-site ul{margin:0;padding:0;list-style:none}
+.tsp .tsp-site li{position:relative;padding-left:9px;font-size:7.9pt;line-height:1.28;color:#2B3236;margin:0 0 1px}
+.tsp .tsp-site li::before{content:"";position:absolute;left:0;top:4.5px;width:4px;height:4px;border-radius:50%;background:var(--c2)}
+.tsp .tsp-risk{display:grid;grid-template-columns:repeat(8,1fr);gap:0 0.04in}
+.tsp .tsp-rf{display:flex;flex-direction:column;align-items:center;text-align:center}
+.tsp .tsp-disc{width:0.46in;height:0.46in;border-radius:50%;background:var(--soft);color:var(--c1);display:flex;align-items:center;
+  justify-content:center;box-shadow:inset 0 0 0 1.5px rgba(31,94,140,.10)}
+.tsp .tsp-rl{display:block;font-size:7.7pt;font-weight:600;line-height:1.2;color:#2F373C;margin-top:0.03in}
+.tsp .tsp-pain{display:grid;grid-template-columns:1fr 1.95in;gap:0.14in;align-items:center;margin-top:0.11in;border:1px solid #D9E5EE;
+  border-radius:9px;padding:0.06in 0.1in 0.07in;background:#fff}
+.tsp .tsp-bh{font:900 9.6pt/1.2 Merriweather,Georgia,serif;color:var(--c1);letter-spacing:.03em;text-transform:uppercase;margin:0 0 0.05in}
+.tsp .tsp-bh span{font:italic 600 7.4pt Inter,sans-serif;letter-spacing:0;text-transform:none;color:#4A555C;margin-left:6px}
+.tsp .tsp-scale{display:grid;grid-template-columns:repeat(11,1fr);gap:2px}
+.tsp .tsp-c{display:flex;align-items:center;justify-content:center;height:0.2in;font:800 8pt Inter,sans-serif;color:#fff;border-radius:3px}
+/* amber #9A6508: white 8 pt bold numbers on it measure about 4.9:1 (the old #B67A0B was about 3.6:1) */
+.tsp .tsp-c.g{background:#2F8A5E}.tsp .tsp-c.a{background:#9A6508}.tsp .tsp-c.r{background:#C2392E}
+.tsp .tsp-zones{display:grid;grid-template-columns:3fr 3fr 5fr;gap:2px;margin-top:3px}
+.tsp .tsp-zones div{font-size:7.5pt;line-height:1.25;color:#2B3236;padding:2px 4px 0;border-top:3px solid}
+.tsp .tsp-zones b{display:block;font-size:7.7pt}
+.tsp .tsp-zones .g{border-color:#2F8A5E}.tsp .tsp-zones .g b{color:#1F6B47}
+.tsp .tsp-zones .a{border-color:#9A6508}.tsp .tsp-zones .a b{color:#7E5300}
+.tsp .tsp-zones .r{border-color:#C2392E}.tsp .tsp-zones .r b{color:#9A2620}
+.tsp .tsp-weeks{display:flex;align-items:center;gap:0.08in;background:var(--soft);border-radius:8px;padding:0.06in 0.1in;align-self:stretch}
+.tsp .tsp-weeks b{font:900 26pt/1 Merriweather,Georgia,serif;color:var(--c1)}
+.tsp .tsp-weeks span{font-size:7.9pt;line-height:1.3;color:#2B3236}
+.tsp .tsp-weeks strong{color:var(--deep);font-size:8.6pt}
+.tsp .tsp-flag{display:flex;gap:0.08in;align-items:center;margin-top:0.1in;border:1.5px solid #C0392B;background:#FDF1EF;
+  border-radius:8px;padding:0.05in 0.1in}
+.tsp .tsp-flag .ic{flex:none;color:#B23A30}
+.tsp .tsp-flag p{margin:0;font-size:7.9pt;line-height:1.33;color:#2B3236}
+.tsp .tsp-flag b{color:#A5281E}
+/* the rhythm keeps a count with its unit ("1 softgel"): an inline-block moves to the next line whole */
+.sheet.back:has(.tsp-bk) .slot li em{display:inline-block}
+/* The five columns share four rows (a subgrid: header, photo and name, bullets and serving, dose), so the bullets,
+   the IN EACH SERVING heads and the dose bars line up across the row although "Omega Pure / EPA-DHA 1000" needs two
+   lines and the Collagen Renew dose needs three.  A one-line name sits on the row's bottom line, just above its
+   size; the dose text is centred in its bar. */
+.sheet.back:has(.tsp-bk) .cols{grid-template-rows:repeat(4,auto);row-gap:0}
+.sheet.back:has(.tsp-bk) .col{display:grid;grid-row:1/span 4;grid-template-rows:subgrid;row-gap:0}
+.sheet.back:has(.tsp-bk) .col .pick a.plink{flex:1}
+.sheet.back:has(.tsp-bk) .col .pick .nm{margin-top:auto;padding-top:0.04in}
+.sheet.back:has(.tsp-bk) .col .dose{display:flex;flex-direction:column;justify-content:center}
+/* two write-in lines instead of three pay for the aligned name row and the safety lines */
+.sheet.back:has(.tsp-bk) .notes .ln:last-child{display:none}
+/* The eleven-line check panel is paid for with the spacing its Pain and Movement siblings already use (joint_pain,
+   gut_overgrowth, intestinal_permeability, insulin_resistance, lyme, neuropathy, stress_cortisol, thyroid): a 0.14 in
+   band foot, 0.07 to 0.11 in heading gaps, 0.08 in panel gaps, 0.22 in write-in lines and the notes padding of
+   neuropathy; the check panel's leading is 1.25 (neuropathy's is 1.26).  Measured in print media, page 2 keeps
+   about 5 px above its footer in both editions. */
+.sheet.back:has(.tsp-bk) .band{padding-bottom:0.14in}
+.sheet.back:has(.tsp-bk) .band h2{margin-bottom:0.07in}
+.sheet.back:has(.tsp-bk) .ns-title{margin-top:0.11in}
+.sheet.back:has(.tsp-bk) .cols{margin-top:0.07in}
+.sheet.back:has(.tsp-bk) .duo{margin-top:0.08in}
+.sheet.back:has(.tsp-bk) .notes{margin-top:0.08in;padding-top:0.05in;padding-bottom:0.055in}
+.sheet.back:has(.tsp-bk) .notes .ln{height:0.22in}
+.sheet.back:has(.tsp-bk) .rx li{line-height:1.25}
+.sheet.back:has(.tsp-bk) .rhythm{grid-template-columns:1fr 1fr}.sheet.back:has(.tsp-bk) .rhythm .slot:nth-child(3){display:none}.sheet.back:has(.tsp-bk) .duo{grid-template-columns:1fr 1.38fr}
+.mcr .mcr-art svg{display:block;width:100%;height:auto}
+.mcr .mcr-steps{display:grid;grid-template-columns:1fr 1.22fr 1fr 0.86fr;gap:0.08in;margin-top:0.06in}
+.mcr .mcr-st{display:flex;gap:6px;align-items:flex-start}
+.mcr .mcr-n{flex:none;width:17px;height:17px;border-radius:50%;background:#fff;border:1.6px solid #23292D;color:#23292D;
+  font:800 8pt/1 Inter,sans-serif;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.mcr .mcr-n.r{border-color:#B42B24;color:#B42B24}
+.mcr .mcr-st p{margin:0;font-size:7.8pt;line-height:1.3;color:#2B3236}
+.mcr .mcr-st b{color:var(--deep)}
+.mcr .mcr-h{display:flex;align-items:center;gap:0.1in;font:900 10.5pt/1.2 Merriweather,Georgia,serif;color:var(--c1);
+  letter-spacing:.04em;text-transform:uppercase;margin:0.07in 0 0.05in}
+.mcr .mcr-h::after{content:"";flex:1;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--soft),rgba(227,238,246,0))}
+.mcr .mcr-risk{display:grid;grid-template-columns:repeat(9,1fr);gap:0 0.03in}
+.mcr .mcr-rf{display:flex;flex-direction:column;align-items:center;text-align:center}
+.mcr .mcr-disc{width:0.46in;height:0.46in;border-radius:50%;background:var(--soft);color:var(--c1);display:flex;
+  align-items:center;justify-content:center;box-shadow:inset 0 0 0 1.5px rgba(31,94,140,.12)}
+.mcr .mcr-rl{display:block;font-size:7.2pt;font-weight:600;line-height:1.2;color:#2F373C;margin-top:0.03in}
+.mcr .mcr-low{display:grid;grid-template-columns:1.95fr 1fr;gap:0.12in;margin-top:0.07in;align-items:stretch}
+.mcr .mcr-ph{font:800 7.6pt Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--c1);margin:0 0 4px}
+.mcr .mcr-ph.r{color:#A5281E}
+.mcr .mcr-res{background:var(--tint);border:1px solid #D9E5EE;border-radius:9px;padding:0.07in 0.11in 0.06in}
+.mcr .mcr-rr{display:grid;grid-template-columns:0.64in 1fr;gap:0.07in;align-items:start;margin:0 0 4px}
+.mcr .mcr-tag{display:block;text-align:center;font:800 7pt/1.15 Inter,sans-serif;letter-spacing:.06em;text-transform:uppercase;
+  color:#fff;border-radius:4px;padding:3px 2px;margin-top:1px}
+.mcr .mcr-tag small{display:block;font:600 7pt/1.15 Inter,sans-serif;letter-spacing:.02em;text-transform:none;opacity:.95}
+.mcr .mcr-tag.ok{background:#2E7D4F}
+.mcr .mcr-tag.ea{background:#56687A}
+.mcr .mcr-tag.np{background:#8A4F47}
+.mcr .mcr-tag.mx{background:#756640}
+.mcr .mcr-rr p{margin:0;font-size:7.7pt;line-height:1.3;color:#2B3236}
+.mcr .mcr-rr b{color:var(--deep)}
+.mcr .mcr-src{margin:2px 0 0;font-size:7pt;line-height:1.3;color:#5E686F}
+.mcr .mcr-flag{border:1.5px solid #C0392B;background:#FDF3F1;border-radius:9px;padding:0.07in 0.12in 0.06in}
+.mcr .mcr-flag ul{list-style:none;margin:0;padding:0}
+.mcr .mcr-flag li{position:relative;padding-left:12px;font-size:7.8pt;line-height:1.3;color:#2B3236;margin:0 0 4px}
+.mcr .mcr-flag li::before{content:"";position:absolute;left:0;top:4px;width:6px;height:6px;border-radius:50%;background:#C0392B}
+.mcr .mcr-flag li b{color:#A5281E}
+.mcr .mcr-flag li em{font-style:normal;font-weight:700;color:#2B3236}
+.mcr .mcr-q{margin:2px 0 0;font-size:7.2pt;color:#5E686F;line-height:1.3}
+
+/* product columns: every need box is as tall as the tallest (a one-line need over a two-line list), so the photos,
+   names and dark dose bars line up across the row; size lines and dose notes sit a little tighter */
+.sheet.front:has(.mcr) + .sheet.back .col .need{min-height:0.53in}
+.sheet.front:has(.mcr) + .sheet.back .col .pick .sz{line-height:1.2}
+.sheet.front:has(.mcr) + .sheet.back .col .dose small{line-height:1.25}
+/* only Muscle Eze and Vitamin K2 are in the daily plan, while the medicine check is long: a narrow rhythm panel with
+   the times of day stacked (an empty slot is hidden, see _rhythm_css), beside a wide check panel */
+.sheet.front:has(.mcr) + .sheet.back .duo{grid-template-columns:1.9in 1fr}
+.sheet.front:has(.mcr) + .sheet.back .rhythm{grid-template-columns:1fr;gap:4px}
+.sheet.front:has(.mcr) + .sheet.back .slot{display:flex;align-items:center;gap:6px;padding:4px 6px}
+.sheet.front:has(.mcr) + .sheet.back .ns-title{margin-top:0.1in}
+.sheet.front:has(.mcr) + .sheet.back .notes .ln{height:0.22in}
+.sheet.front:has(.mcr) + .sheet.back .slot .when{flex:none;width:0.84in}
+.sheet.front:has(.mcr) + .sheet.back .slot ul{margin:0}
+/* the two Progressive Professional thumbnails come on an opaque white box: let the pale panel show through and
+   drop the shadow that would outline the box.  Matched on the alt text build.py writes ("NutriDyn <name> bottle"),
+   not the pooled file name, which changes if another sheet adds the same bottle under a shorter key. */
+.sheet.front:has(.mcr) + .sheet.back .pick img[alt="NutriDyn Vitamin K2 bottle"],.sheet.front:has(.mcr) + .sheet.back .pick img[alt="NutriDyn Mag-K bottle"]{mix-blend-mode:multiply;filter:none}
+.sheet.front:has(.mcr) + .sheet.back .rhythm .slot:nth-child(1){display:none}
+.nrp .nrp-art svg{display:block;width:100%;height:auto}
+.nrp .nrp-two{display:grid;grid-template-columns:1fr 1.22fr;gap:0.12in;margin-top:0.08in}
+.nrp .nrp-card{border:1px solid #D6DCE4;border-radius:9px;background:#fff;padding:0.055in 0.11in 0.07in}
+.nrp .nrp-card h3{font:800 7.6pt Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--c1);margin:0 0 4px}
+.nrp .nrp-list{display:grid;grid-template-columns:1fr 1fr;gap:3px 10px;margin:0;padding:0;list-style:none}
+.nrp .nrp-list li{display:flex;align-items:center;gap:6px;font-size:8pt;line-height:1.2;color:#2B3236}
+.nrp .nrp-list .ic{flex:none;color:var(--c2)}
+.nrp .nrp-list b{color:var(--deep)}
+.nrp .nrp-list li.nrp-top .ic{color:#A5281E}
+.nrp .nrp-list em{display:inline-block;margin-left:5px;font:800 7pt Inter,sans-serif;font-style:normal;letter-spacing:.05em;
+  text-transform:uppercase;color:#fff;background:#A5281E;border-radius:3px;padding:1px 4px;vertical-align:1px}
+.nrp .nrp-checks{margin-top:0.08in;border:1px solid #D6DCE4;border-radius:10px;background:var(--tint);padding:0.06in 0.12in 0.07in}
+.nrp .nrp-ch{display:flex;align-items:baseline;gap:10px;margin:0 0 5px}
+.nrp .nrp-ch b{flex:none;font:900 11pt Merriweather,Georgia,serif;color:var(--c1)}
+.nrp .nrp-ch span{font-size:8pt;line-height:1.3;color:#2B3236}
+.nrp .nrp-tiles{display:grid;grid-template-columns:1.5fr 1.2fr .8fr 1fr;gap:6px}
+.nrp .nrp-tile{background:#fff;border:1px solid #DDE3EA;border-radius:8px;padding:5px 7px 6px;display:flex;flex-direction:column}
+.nrp .nrp-tile h4{margin:0;font:800 8.6pt Inter,sans-serif;color:var(--deep);display:flex;align-items:center;gap:5px}
+.nrp .nrp-tile h4 .ic{flex:none;color:var(--c2)}
+.nrp .nrp-tile h4 small{font-weight:700;color:#5E686F;font-size:7.4pt;margin-left:-1px}
+.nrp .nrp-tile p{margin:3px 0 0;font-size:7.6pt;line-height:1.28;color:#2B3236}
+.nrp .nrp-tile p b{color:var(--deep)}
+.nrp .nrp-a1c{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin-top:4px}
+.nrp .nrp-a1c div{border-radius:4px;border-top:3px solid;padding:1px 2px 3px;text-align:center}
+.nrp .nrp-a1c i{display:block;font:800 7pt Inter,sans-serif;font-style:normal;letter-spacing:.02em;text-transform:uppercase}
+.nrp .nrp-a1c b{display:block;font:800 8.6pt/1.15 Inter,sans-serif;white-space:nowrap}
+.nrp .nrp-a1c .ok{background:#E4F2EA;color:#1F6B47;border-color:#2F8A5E}
+.nrp .nrp-a1c .pre{background:#FCEFD4;color:#7E5300;border-color:#D99A1E}
+.nrp .nrp-a1c .dm{background:#F8E1DD;color:#9A2620;border-color:#C2392E}
+.nrp .nrp-mine{margin-top:auto;display:flex;align-items:center;gap:6px;padding-top:5px;font:700 7pt Inter,sans-serif;color:#5E686F}
+.nrp .nrp-mine span{white-space:nowrap}
+.nrp .nrp-mine i{flex:1;height:0.2in;border-radius:4px;background:#E9ECEE;border:1px solid #D6DBDF}
+.nrp .nrp-more{margin:5px 0 0;font-size:7.5pt;line-height:1.3;color:#3F4A50;display:flex;justify-content:space-between;gap:12px}
+.nrp .nrp-more small{font-size:7pt;color:#6A747B;white-space:nowrap}
+.nrp .nrp-alarm{margin-top:0.07in;border:1.5px solid #C0392B;background:#FDF1EF;border-radius:8px;padding:4px 10px 5px;
+  display:flex;gap:8px;align-items:center}
+.nrp .nrp-alarm .ic{flex:none}
+.nrp .nrp-alarm p{margin:0;font-size:8pt;line-height:1.3;color:#2B3236}
+.nrp .nrp-alarm b{color:#A5281E}
+/* ---- this sheet's back page. It has no sheet class, so it is scoped through the empty .nrp-bk marker in the
+   lifestyle subtitle. The kit sets all shared fine print to 7 pt (footers, column subtitles, bottle sizes, the
+   "In each serving" head, dose notes, the disclaimer) and draws the START HERE badge (.startb); the rules below only
+   lift a few sizes above that (the label facts here, the daily rhythm and the checks further down). ---- */
+.sheet.back:has(.nrp-bk) .col .key{font-size:7.2pt}
+/* FDA disclaimer (21 CFR 101.93): bold, boxed, and linked by the diamond that ends every product statement */
+.sheet.back:has(.nrp-bk) .disc{font-weight:700;color:#36424A;border:1px solid #8D99A1;border-radius:4px;
+  padding:3px 7px 4px;max-width:5.5in}
+.nrp-dia{color:var(--c1);font-size:7pt;font-weight:700;margin-left:3px;white-space:nowrap}
+/* one more label fact under "In each serving" in the three short columns (products.d/neuropathy.json), in the space
+   the longer Gluco IR and Methyl Complete lists leave above the dose bar */
+.nrp-fact{display:block;margin-top:3px}
+.nrp-fact strong{font-weight:700;color:var(--deep)}
+/* "Nutrient Support", not the kit's "Nutrient Solutions": beside a disease title "solutions" reads as a cure */
+.sheet.back:has(.nrp-bk) .ns-title{font-size:0;gap:0;visibility:hidden}
+.sheet.back:has(.nrp-bk) .ns-title::before{content:"Nutrient Support";font-size:19pt;margin-right:10px;visibility:visible}
+.sheet.back:has(.nrp-bk) .ns-title span{visibility:visible}
+/* daily rhythm: the count never splits from its unit and sits in brackets after the product name, so when a long
+   name wraps, the next line starts with "(" and still reads as part of the same item */
+.sheet.back:has(.nrp-bk) .slot li em{white-space:nowrap}
+.sheet.back:has(.nrp-bk) .slot li em::before{content:"("}
+.sheet.back:has(.nrp-bk) .slot li em::after{content:")"}
+/* a two-line name slot in every column, so all five columns start their bullets on the same line. Centred as a
+   block (align-content), not with flex: flex would split "Omega Pure", the kit's unbreakable "EPA-DHA" span and
+   "1000" into separate side-by-side boxes. */
+.sheet.back:has(.nrp-bk) .col .pick .nm{min-height:2.1em;line-height:1.05;display:block;align-content:center}
+/* ...and a five-line bullet block in every column (the tallest has five), so all five "In each serving" heads
+   share one line too */
+.sheet.back:has(.nrp-bk) .col .what ul{min-height:calc(5 * 1.28em + 2px)}
+.nrp-nw{white-space:nowrap}
+/* five safety checks need room: smaller lifestyle discs, tighter band and spacing, a wider check panel,
+   two write-in lines instead of three */
+.sheet.back:has(.nrp-bk) .band{padding-top:.24in!important;padding-bottom:.12in}
+.sheet.back:has(.nrp-bk) .band h2{margin-bottom:.06in}
+.sheet.back:has(.nrp-bk) .life .disc2{width:.68in;height:.68in}
+.sheet.back:has(.nrp-bk) .life .disc2 svg{width:.4in!important;height:.4in!important}
+.sheet.back:has(.nrp-bk) .life b{margin-top:.05in}
+.sheet.back:has(.nrp-bk) .ns-title{margin-top:.08in}
+.sheet.back:has(.nrp-bk) .cols{margin-top:.05in}
+/* the patient's working instructions (daily rhythm, checks) at 7.6 pt for older eyes. The space comes from the
+   nearly empty Bedtime slot (narrowest), the panels' side padding and the write-in box padding. The rhythm panel is
+   just wide enough for one-line morning items ("Nerve Eze (1 capsule)", "Gluco IR (3 capsules)": the brackets need
+   a hair more than the old dot, so Morning takes 2fr from Bedtime; "Evening meal" keeps its one-line header and
+   "(1 capsule)" still fits Bedtime with 4.6 px to spare), the check panel for two-line checks. */
+.sheet.back:has(.nrp-bk) .duo{grid-template-columns:3.1in 1fr;margin-top:.07in}
+.sheet.back:has(.nrp-bk) .duo .panel{padding-left:.08in;padding-right:.08in}
+.sheet.back:has(.nrp-bk) .rhythm{grid-template-columns:116fr 90fr 65fr;gap:5px}
+.sheet.back:has(.nrp-bk) .slot{padding:5px 4px}
+.sheet.back:has(.nrp-bk) .slot li{font-size:7.6pt;line-height:1.15;margin:0 0 1px}
+.sheet.back:has(.nrp-bk) .total{font-size:7.6pt}
+.sheet.back:has(.nrp-bk) .rx li{font-size:7.6pt;line-height:1.26}
+.sheet.back:has(.nrp-bk) .notes{margin-top:.07in;padding-top:.05in;padding-bottom:.055in}
+.sheet.back:has(.nrp-bk) .notes .ln:last-child{display:none}
+
+.slp .slp-art svg{display:block;width:100%;height:auto}
+.slp .slp-art2{margin-top:0.07in}
+.slp .slp-h{display:flex;align-items:center;gap:0.1in;font:900 10.5pt/1.2 Merriweather,Georgia,serif;color:var(--c1);
+  letter-spacing:.04em;text-transform:uppercase;margin:0.08in 0 0.05in}
+.slp .slp-h::after{content:"";flex:1;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--soft),rgba(230,234,242,0))}
+.slp .slp-risk{display:grid;grid-template-columns:repeat(8,1fr);gap:0 0.04in}
+.slp .slp-rf{display:flex;flex-direction:column;align-items:center;text-align:center}
+.slp .slp-disc{width:0.48in;height:0.48in;border-radius:50%;background:var(--soft);color:var(--c1);display:flex;
+  align-items:center;justify-content:center;box-shadow:inset 0 0 0 1.5px rgba(61,78,107,.12)}
+.slp .slp-rl{display:block;font-size:7.6pt;font-weight:600;line-height:1.2;color:#2F373C;margin-top:0.03in}
+.slp .slp-know{margin-top:0.06in;border:1px solid #D9DFE8;border-radius:10px;padding:0.06in 0.12in 0.05in;background:#FFFFFF}
+.slp .slp-kh{display:flex;align-items:baseline;gap:10px;margin:0 0 3px}
+.slp .slp-kh b{font:900 11.5pt Merriweather,Georgia,serif;color:var(--c1)}
+.slp .slp-kh span{font-size:7.8pt;color:#56626A}
+/* The age column only needs about 1.25 in; the spare width goes to the STOP-Bang list, whose long items
+   (O, B, N) sit in its left half, so B's "ask ..." gloss and the apnea line each stay on one line. */
+.slp .slp-kg{display:grid;grid-template-columns:1.3in 2.3in 1fr;gap:0.14in;align-items:start}
+.slp .slp-kg h4{margin:0 0 3px;font:800 8.1pt Inter,sans-serif;color:#2B3236;white-space:nowrap}
+.slp .slp-kg h4 span{font-weight:600;color:#5E686F}
+.slp .slp-age{display:flex;justify-content:space-between;align-items:baseline;gap:4px;background:var(--tint);
+  border-left:3px solid var(--c2);border-radius:0 5px 5px 0;padding:1.5px 5px;margin:0 0 3px}
+.slp .slp-age i{font-style:normal;font-size:7.3pt;color:#4A555C;white-space:nowrap}
+.slp .slp-age b{font:800 7.8pt Inter,sans-serif;color:var(--deep);white-space:nowrap}
+.slp .slp-mine{display:flex;align-items:center;gap:5px;font:700 7.3pt Inter,sans-serif;color:#4A555C;margin-top:4px}
+.slp .slp-mine i{display:block;width:0.4in;height:0.21in;border-radius:5px;background:#E9ECEE;border:1px solid #D6DBDF}
+.slp .slp-ul,.slp .slp-sb{list-style:none;margin:0;padding:0}
+.slp .slp-ul li,.slp .slp-sb li{display:flex;align-items:flex-start;gap:5px;font-size:7.4pt;line-height:1.22;color:#2B3236;margin:0 0 2.5px}
+.slp .slp-sb{display:grid;grid-template-columns:1.185fr .815fr;gap:0 0.08in}
+.slp .slp-sb em{flex:none;font:800 7.4pt/1.22 Inter,sans-serif;font-style:normal;color:var(--c1);width:8px}
+.slp .slp-sb li{gap:4.5px}
+.slp .slp-bx{flex:none;width:0.115in;height:0.115in;border:1.5px solid var(--deep);border-radius:2px;background:#fff;margin-top:.5px}
+.slp .slp-act{margin:2px 0 0;font-size:7.4pt;line-height:1.25;color:#2B3236;background:var(--soft);border-radius:5px;padding:2px 7px}
+.slp .slp-act b{color:var(--deep)}
+.slp .slp-src{margin:3px 0 0;font-size:7pt;color:#5E686F;line-height:1.3}
+/* Back-page rules are scoped by the empty <i class="slp-bk"> in the band title (no other sheet carries it).
+   The shared kit already sets all fine print to 7 pt, so this sheet no longer overrides it.
+   Smaller habit discs give the bullets room, so the band does not grow. */
+.sheet.back:has(.slp-bk) .life.l3 .disc2{width:0.64in;height:0.64in}
+.sheet.back:has(.slp-bk) .life.l3 .disc2 svg{width:0.42in!important;height:0.42in!important}
+/* the medicine check carries four notes, so it gets the wider part of the duo row: at 1.25 the pharmacy
+   check is 11 lines and each rhythm slot is still wide enough for "Evening meal" on one line */
+.sheet.back:has(.slp-bk) .duo{grid-template-columns:1fr 1.25fr}
+/* the need headers hold two short lines, so they do not need the kit's 0.5 in minimum */
+.sheet.back:has(.slp-bk) .col .need{min-height:0.44in}
+
+.scx .scx-h{display:flex;align-items:baseline;gap:10px;margin:0.04in 0 0.02in;font:900 11pt Merriweather,Georgia,serif;
+  color:var(--c1);letter-spacing:.02em;text-transform:uppercase}
+.scx .scx-h::after{content:"";flex:1;height:1.5px;background:var(--c2);opacity:.45;align-self:center}
+.scx .scx-h i{order:2;font:italic 600 7.8pt Inter,sans-serif;color:#5E686F;letter-spacing:0;text-transform:none}
+.scx .scx-h span{order:1}
+.scx .scx-h::after{order:3}
+.scx .scx-art svg{display:block;width:100%;height:auto}
+.scx .scx-signs{display:grid;grid-template-columns:repeat(8,1fr);gap:0.05in}
+.scx .scx-sg{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;background:var(--tint);
+  border:1px solid #EFDFC3;border-radius:7px;padding:4px 3px 4px}
+.scx .scx-sg .ic{color:var(--c1)}
+.scx .scx-sl{font-size:7.8pt;line-height:1.2;color:#2B3236;margin-top:2px}
+.scx .scx-bx{position:absolute;top:4px;right:4px;width:0.12in;height:0.12in;border:1.5px solid var(--deep);border-radius:2px;background:#fff}
+.scx .scx-low{display:grid;grid-template-columns:2.55in 1fr;gap:0.1in;margin-top:0.07in;align-items:stretch}
+.scx .scx-myth{background:var(--soft);border-radius:8px;padding:0.06in 0.12in 0.07in}
+.scx .scx-myth h4,.scx .scx-flag h4{margin:0 0 2px;font:900 10pt Merriweather,Georgia,serif;color:var(--deep)}
+.scx .scx-myth p{margin:0;font-size:8pt;line-height:1.32;color:#2B3236}
+.scx .scx-myth b{color:var(--deep)}
+.scx .scx-flag{border:1.5px solid #C0392B;background:#FDF3F1;border-radius:8px;padding:0.06in 0.12in 0.06in}
+.scx .scx-flag h4{color:#A5281E}
+/* the "too much" list carries the longest line ("A rounder, redder face with fast belly weight gain"), so it gets
+   the wider share; every item in both lists stays on one line */
+.scx .scx-cols{display:grid;grid-template-columns:1fr 1.36fr;gap:0.12in}
+.scx .scx-cols b{display:block;font:800 7.6pt Inter,sans-serif;color:#7A2219;letter-spacing:.02em}
+.scx .scx-cols em{font-style:normal;text-decoration:underline;text-underline-offset:1.5px}
+.scx .scx-cols ul{margin:1px 0 0;padding:0;list-style:none}
+.scx .scx-cols li{position:relative;padding-left:9px;font-size:7.8pt;line-height:1.27;color:#2B3236}
+.scx .scx-cols li::before{content:"";position:absolute;left:0;top:4.5px;width:4px;height:4px;border-radius:50%;background:#C0392B}
+.scx .scx-foot{margin:4px 0 0;padding-top:3px;border-top:1px solid #EBC9C3;font-size:7.8pt;line-height:1.3;color:#2B3236}
+.scx .scx-foot b{color:#A5281E}
+.scx .scx-src{margin:4px 0 0;font-size:7pt;color:#5E686F;line-height:1.3}
+/* ---- footers and the back page.  The kit gives the back page no sheet class, so the band title carries an empty
+   <i class="scx-bk"> marker and every back rule is scoped by .sheet.back:has(.scx-bk); the front is found by its
+   .scx body.  No other sheet carries either class. ---- */
+/* Standard 3 (7 pt floor): the shared kit sets all fine print (footers, badge, header sub-lines, sizes, dose
+   sub-lines, rhythm) to 7 pt, so nothing is pinned here; the label facts, the most-read small text, get 7.2 pt. */
+.sheet.back:has(.scx-bk) .col .key{font-size:7.2pt;line-height:1.3}
+/* FDA disclaimer [CFR93]: bold, boxed, and linked by the diamond that ends every product statement.  8 pt, not
+   7: Inter Bold's lowercase o is 0.564 em, so 8 pt gives a 4.5 pt (1/16 in) o, which meets the rule even read the
+   strict way (lowercase o, as in 21 CFR 101.2(c)); 7 pt passes only on capital height.  The sheet code wraps onto
+   two lines so the box is wide enough to stay three lines tall. */
+.sheet.back:has(.scx-bk) .foot .disc{font-size:8pt;font-weight:700;color:#36424A;line-height:1.28;
+  border:1px solid #8D99A1;border-radius:4px;padding:3px 7px 4px;max-width:5.88in}
+.sheet.back:has(.scx-bk) .foot>div:last-child{flex:none;width:1.62in}
+.sheet.back:has(.scx-bk) .foot .code{white-space:normal;line-height:1.3}
+.scx-dia{color:var(--c1);margin-left:2px}
+.scx-nw{white-space:nowrap}
+/* hex band: a deeper amber, so the habit lines read at 4.5:1 or better from one end of the band to the other */
+.sheet.back:has(.scx-bk) .band{background:linear-gradient(120deg,#8C510B,#A65F0E)}
+.sheet.back:has(.scx-bk) .band h2 small{color:#FFF6EE}
+.sheet.back:has(.scx-bk) .life p{color:#FFFFFF}
+/* product headers: the same deeper amber, so the white titles and 7 pt sub-lines clear 4.5:1 everywhere on the
+   gradient (white on #A65F0E about 4.9:1, on #7A480A about 7.6:1); the theme's gold measured 2.5-3.3:1 on paper.
+   Sub-lines at full opacity, not the kit's .92. */
+.sheet.back:has(.scx-bk) .col .need{background:linear-gradient(160deg,#7A480A,#A65F0E)}
+.sheet.back:has(.scx-bk) .col .need i{opacity:1}
+/* room for the full label lines and the longer check: smaller hexes, tighter gaps, two write-in lines */
+.sheet.back:has(.scx-bk) .band{padding-bottom:.13in}
+.sheet.back:has(.scx-bk) .band h2{margin-bottom:.07in}
+.sheet.back:has(.scx-bk) .life.hex .disc2{width:.76in;height:.66in}
+.sheet.back:has(.scx-bk) .life .disc2 svg{width:.42in!important;height:.42in!important}
+.sheet.back:has(.scx-bk) .life b{margin:.05in 0 .02in}
+.sheet.back:has(.scx-bk) .ns-title{margin-top:.1in}
+.sheet.back:has(.scx-bk) .notes{margin-top:.08in}
+.sheet.back:has(.scx-bk) .notes .ln:last-child{display:none}
+.sheet.back:has(.scx-bk) .notes .ln{height:.22in}
+.sheet.back:has(.scx-bk) .recby{margin-top:.06in}
+/* need headers: every title and every sub-line is one line here, so one short height lines them all up */
+.sheet.back:has(.scx-bk) .col .need{min-height:.42in;padding-left:.05in;padding-right:.05in}
+/* column widths follow the content: Calm's label is two lines (plus its old name), Adrenal Renew's is ten
+   ingredients long, so Calm gives up a little width (its name, photo and dose still fit) and Adrenal Renew takes it */
+.sheet.back:has(.scx-bk) .cols{grid-template-columns:1fr 1fr .84fr 1fr 1.16fr!important}
+/* every column has three name-and-size lines; one line height for both keeps the bullets level */
+.sheet.back:has(.scx-bk) .col .pick .nm,.sheet.back:has(.scx-bk) .col .pick .sz{line-height:9.9pt}
+/* daily rhythm: a count never splits from its unit.  Morning holds two products (one wraps), so it gets a
+   full-height left slot and Evening sits over Bedtime on the right.  The medicine check gets 1.5 parts of the row:
+   its five lines need the width, and the rhythm, with four products, still ends above it */
+.sheet.back:has(.scx-bk) .slot li em{white-space:nowrap}
+.sheet.back:has(.scx-bk) .rhythm{grid-template-columns:1.2fr 1fr;grid-auto-rows:auto}
+.sheet.back:has(.scx-bk) .rhythm .slot:first-child{grid-row:span 2}
+.sheet.back:has(.scx-bk) .duo{grid-template-columns:1fr 1.5fr}
+
+.thy .thy-art svg{display:block;width:100%;height:auto}
+.sheet.front:has(.thy) .intro{margin-bottom:0.065in}
+.thy .thy-art2{margin-top:0.045in}
+.thy .thy-signs{margin-top:0.045in}
+.thy .thy-sh{display:flex;align-items:baseline;gap:0.12in;margin:0 0 0.035in}
+.thy .thy-sh b{flex:none;font:900 10.4pt Merriweather,Georgia,serif;color:var(--c1)}
+.thy .thy-sh span{font-size:7.8pt;color:#4A555C}
+.thy .thy-sgrow{display:grid;grid-template-columns:repeat(8,1fr);gap:0 0.04in}
+.thy .thy-sg{display:flex;flex-direction:column;align-items:center;text-align:center}
+.thy .thy-disc{flex:none;width:0.36in;height:0.36in;border-radius:50%;background:var(--soft);color:var(--c1);display:flex;
+  align-items:center;justify-content:center;box-shadow:inset 0 0 0 1.5px rgba(155,63,104,.12)}
+.thy .thy-sg>span:last-child{font-size:7.4pt;font-weight:600;line-height:1.18;color:#2F373C;margin-top:0.025in}
+.thy .thy-risk{margin:0.045in 0 0;font-size:7.6pt;line-height:1.3;color:#2F373C;background:var(--tint);border-radius:6px;
+  padding:0.03in 0.1in;border-left:3px solid var(--c2)}
+.thy .thy-risk b{color:var(--deep)}
+.thy .thy-nums{margin-top:0.045in;border:1px solid #E7D3DC;border-radius:10px;padding:0.04in 0.11in 0.035in;background:#fff}
+.thy .thy-nh{display:flex;align-items:baseline;gap:10px;margin:0 0 2px}
+.thy .thy-nh b{font:900 11pt Merriweather,Georgia,serif;color:var(--c1)}
+.thy .thy-nh span{font-size:7.8pt;color:#56626A}
+.thy .thy-ngrid{display:grid;grid-template-columns:1.9fr 1fr;gap:5px 0.12in;align-items:stretch}
+.thy .thy-tsh h4{margin:0 0 3px;font:800 8.4pt Inter,sans-serif;color:#2B3236;white-space:nowrap}
+.thy .thy-tsh h4 span{font-weight:500;font-size:7.2pt;color:#5E686F}
+.thy .thy-tl{display:grid;grid-template-columns:1fr 1fr 1fr 0.56in;gap:4px}
+.thy .thy-t{border-radius:5px;padding:2px 3px 3px;text-align:center;border-top:3px solid}
+.thy .thy-t i{display:block;font:800 8.2pt/1.2 Inter,sans-serif;font-style:normal;white-space:nowrap}
+.thy .thy-t em{display:block;font-style:normal;font-size:7pt;line-height:1.18;margin-top:1px}
+.thy .thy-t.ok{background:#E4F2EA;color:#1F6B47;border-color:#2F8A5E}
+.thy .thy-t.lo{background:#E6EEF8;color:#22508A;border-color:#3A78C2}
+.thy .thy-t.hi{background:#F8E1DD;color:#9A2620;border-color:#C2392E}
+.thy .thy-mine{border:1.3px dashed #9AA5AC;border-radius:5px;display:flex;align-items:flex-start;justify-content:center}
+.thy .thy-mine span{font:700 7pt Inter,sans-serif;color:#6A747B;margin-top:2px;text-align:center}
+.thy .thy-bxs{grid-column:1/-1;display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
+.thy .thy-bx{display:flex;align-items:center;justify-content:space-between;gap:4px;background:var(--tint);
+  border:1px solid #EEDDE5;border-radius:6px;padding:2px 4px 2px 6px}
+.thy .thy-bx b{display:block;font:800 7.6pt/1.15 Inter,sans-serif;color:#2B3236;white-space:nowrap}
+.thy .thy-bx span{display:block;font-size:7pt;line-height:1.15;color:#4A555C}
+.thy .thy-bx span.thy-low{font-weight:700;color:var(--deep)}
+.thy .thy-bx i{flex:none;width:0.5in;height:0.28in;border-radius:4px;background:#fff;border:1.2px dashed #9AA5AC}
+.thy .thy-bio{background:#F6ECD6;border:1px solid #E3C88C;border-radius:7px;padding:3px 7px 4px;color:#5A3B00}
+.thy .thy-bio b{display:block;font:800 7.2pt/1.2 Inter,sans-serif;color:#814800;text-transform:uppercase;letter-spacing:.05em}
+.thy .thy-bio span{display:block;font-size:7.4pt;line-height:1.26;margin-top:1px}
+.thy .thy-bio strong{color:#814800}
+.thy .thy-src{margin:3px 0 0;font-size:7pt;color:#5E686F;line-height:1.3}
+/* back page: scoped with :has() to the marker span in this sheet's lifestyle title.  (The kit now sets
+   every back-page text run, footer and disclaimer at 7 pt or more, so no size overrides are needed.) */
+/* every need and needsub is one line, so the headers are 0.42in (their content needs about 0.40in) */
+.sheet.back:has(.thy-back) .col .need{height:0.42in;min-height:0.42in}
+.sheet.back:has(.thy-back) .life b{font-size:9.2pt}
+/* the medicine check (this sheet's longest text: timing, biotin, the D3 limit, vitamin K and blood
+   thinners, pregnancy) takes the wider share of the row; the daily rhythm has room to grow taller.
+   Two writing lines in the notes box (the kit's third is hidden) and slightly tighter lines keep the
+   back on one page with the footer visible in both editions. */
+.sheet.back:has(.thy-back) .duo{grid-template-columns:1fr 1.15fr}
+/* the evening slot carries three products (the others one each), so it takes the wider share and
+   "D3 5000 with K2" and "1 softgel, if D is low" each keep one line.  No slot width can hold "Omega
+   Pure EPA-DHA 1000" on one line (92 pt at 7 pt Inter against about 81 pt inside the slot, and the
+   Morning and Bedtime slots, about 55 pt inside, have nothing to give), so instead every dose drops
+   to its own grey line under its product: the name's last word ("1000") never shares a line with
+   the dose ("1000 1 softgel").  The extra line uses dead space under the rhythm; the medicine check
+   still sets the row height.  (Do not make the product name unbreakable: build.py and products.py
+   use the name for the photo alt text, the index count and photo pooling.) */
+.sheet.back:has(.thy-back) .rhythm{grid-template-columns:0.9fr 1.25fr 0.9fr}
+.sheet.back:has(.thy-back) .slot li em{display:block}
+.sheet.back:has(.thy-back) .notes .ln{height:0.22in}
+.sheet.back:has(.thy-back) .notes .ln:nth-of-type(3){display:none}
+/* the kit has no rule for class="x": draw this sheet's "avoid" slash in NutriDyn coral */
+.sheet.back:has(.thy-back) .life svg .x{stroke:#F15F3F}
+</style>
+</head><body>
+<div class="toolbar"><b>High Blood Pressure · Pharmacy edition</b><div class="btns"><a class="ghost" href="../index.html">All sheets</a><a href="high-blood-pressure.pdf">Download PDF</a><button onclick="window.print()">Print</button></div></div><div class="stack"><section class="sheet front" style="--c1:#8A1B22;--c2:#C2392E;--soft:#F6E4E1;--deep:#62121A;--tint:#FBF3F2;--c1t:#8A1B22;--c2t:#C2392E"><div class="rule-top"></div><div class="inner"><div class="headrow"><svg style="height:0.27in;width:auto;color:#14664D;display:block" viewBox="0 0 174 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M142.744 20.1318L137.363 7.54297H133.338L140.764 24.6L137.952 30.9998H141.981L152.289 7.54297H148.264L142.744 20.1318Z" fill="currentColor"/>
+<path d="M47.655 18.633L33.6076 1.4082H30.4453V25.0094H34.1661V8.06555L48.2482 25.0094H51.4105V1.4082H47.655V18.633Z" fill="currentColor"/>
+<path d="M68.4548 15.6051C68.4548 17.7436 68.0041 19.3631 67.0989 20.4674C66.1938 21.5718 64.9419 22.122 63.3435 22.122C62.0916 22.122 61.0902 21.6811 60.3352 20.7991C59.5803 19.9172 59.2067 18.7621 59.2067 17.33V7.53516H55.5898V18.0675C55.5898 20.2762 56.2215 22.0674 57.4849 23.441C58.7483 24.8146 60.4238 25.5014 62.5076 25.5014C65.0113 25.5014 66.9949 24.6195 68.4548 22.8596V25.0097H72.0716V7.53906H68.4548V15.6051Z" fill="currentColor"/>
+<path d="M83.9536 22.0522C83.0716 22.0522 82.3782 21.7751 81.866 21.2249C81.3575 20.6747 81.0995 19.8669 81.0995 18.8132V10.5716H84.1115C84.1115 10.5716 84.1385 10.5716 84.1539 10.5677C85.7023 10.3179 86.8386 9.04965 87.0042 7.54336H81.1033V2.11523H77.4865V7.53945H76.72C76.6738 7.54336 76.6275 7.54726 76.5813 7.55506C75.0445 7.80091 73.9198 9.06916 73.7695 10.5677H77.4865V19.0591C77.4865 21.1741 78.0411 22.7741 79.1543 23.8667C80.2675 24.9594 81.7851 25.5057 83.711 25.5057C85.0783 25.5057 86.5035 25.0609 87.9864 24.1672L86.8733 21.1039C85.9219 21.7361 84.9474 22.0561 83.9536 22.0561V22.0522Z" fill="currentColor"/>
+<path d="M93.361 11.2734V7.53885H89.7441V25.0095H93.361V18.8439C93.361 16.3776 93.9156 14.4459 95.0288 13.0489C96.1419 11.6519 97.7635 10.9534 99.8974 10.9534C100.383 10.9534 100.722 10.9651 100.907 10.9885L101.149 7.4647C100.849 7.37105 100.441 7.32422 99.9321 7.32422C97.128 7.32422 94.9363 8.6393 93.361 11.2695V11.2734Z" fill="currentColor"/>
+<path d="M106.7 25.0097H106.769V11.2931C106.761 11.215 106.754 11.137 106.742 11.059C106.446 9.16243 104.943 7.7693 103.152 7.54297V21.3494C103.16 21.4313 103.168 21.5133 103.179 21.5952C103.468 23.4488 104.943 24.8068 106.696 25.0136L106.7 25.0097Z" fill="currentColor"/>
+<path d="M104.961 0C104.287 0 103.733 0.222432 103.293 0.671198C102.854 1.11606 102.635 1.65848 102.635 2.29066C102.635 2.92283 102.854 3.48867 103.293 3.91012C103.733 4.33157 104.291 4.5462 104.961 4.5462C105.631 4.5462 106.186 4.33547 106.614 3.91012C107.041 3.48867 107.257 2.94625 107.257 2.29066C107.257 1.63507 107.037 1.11606 106.594 0.671198C106.155 0.226334 105.608 0 104.961 0Z" fill="currentColor"/>
+<path d="M128.782 4.70176C126.451 2.50475 123.328 1.4082 119.41 1.4082H111.275V25.0094H119.41C123.328 25.0094 126.451 23.9129 128.782 21.7159C131.112 19.5189 132.275 16.6858 132.275 13.2088C132.275 9.73184 131.112 6.89876 128.782 4.70176ZM126.051 19.2691C124.406 20.8183 122.191 21.5949 119.41 21.5949H114.996V4.82663H119.41C122.191 4.82663 124.406 5.60319 126.051 7.15241C127.695 8.70163 128.52 10.723 128.52 13.2127C128.52 15.7024 127.695 17.7199 126.051 19.273V19.2691Z" fill="currentColor"/>
+<path d="M163.813 7.04297C161.287 7.04297 159.291 7.92489 157.832 9.68484V7.53466H154.215V25.0053H157.832V16.9392C157.832 14.8008 158.29 13.1813 159.207 12.077C160.123 10.9726 161.379 10.4224 162.978 10.4224C164.206 10.4224 165.196 10.8555 165.951 11.7257C166.706 12.596 167.08 13.7471 167.08 15.1793V25.0092H170.731V14.4418C170.731 12.2565 170.096 10.477 168.817 9.10339C167.542 7.72978 165.874 7.04297 163.81 7.04297H163.813Z" fill="currentColor"/>
+<path d="M173.685 23.0622C173.477 22.8554 173.219 22.75 172.914 22.75C172.61 22.75 172.356 22.8554 172.144 23.0622C171.936 23.269 171.828 23.5383 171.828 23.8505C171.828 24.1626 171.932 24.428 172.144 24.6348C172.352 24.8416 172.61 24.947 172.914 24.947C173.219 24.947 173.473 24.8416 173.685 24.6348C173.893 24.428 174.001 24.1665 174.001 23.8505C174.001 23.5344 173.897 23.269 173.685 23.0622ZM173.554 24.506C173.377 24.6816 173.165 24.7675 172.918 24.7675C172.672 24.7675 172.464 24.6816 172.286 24.506C172.113 24.3304 172.025 24.1158 172.025 23.8544C172.025 23.5929 172.113 23.3705 172.286 23.1949C172.464 23.0193 172.668 22.9334 172.918 22.9334C173.169 22.9334 173.38 23.0193 173.554 23.1949C173.731 23.3705 173.816 23.5929 173.816 23.8544C173.816 24.1158 173.727 24.3304 173.554 24.506Z" fill="currentColor"/>
+<path d="M173.115 23.972C173.296 23.9291 173.392 23.8198 173.392 23.6442C173.392 23.5427 173.357 23.4608 173.28 23.4023C173.203 23.3437 173.107 23.3125 172.984 23.3125H172.529V24.3388H172.714V23.9915H172.903L173.219 24.3388H173.446L173.115 23.9759V23.972ZM172.714 23.8237V23.4803H172.984C173.049 23.4803 173.099 23.4959 173.142 23.5271C173.18 23.5583 173.203 23.6013 173.203 23.652C173.203 23.7027 173.184 23.7457 173.142 23.7769C173.103 23.8081 173.049 23.8276 172.984 23.8276H172.714V23.8237Z" fill="currentColor"/>
+<path d="M87.0117 7.47656C87.0117 7.49607 87.0039 7.51949 87.0039 7.539H87.0117V7.47656Z" fill="white"/>
+<path d="M20.6388 9.3623C20.1458 6.20923 17.3147 4.02003 14.2218 4.32051L10.4316 12.8822L10.0387 13.768C10.0272 13.7992 10.0195 13.8344 10.0079 13.8656C9.71519 14.7514 9.62275 15.7153 9.77682 16.7026C10.2698 19.8595 13.1048 22.0487 16.2016 21.7444L20.0071 13.1436L20.3538 12.3593C20.3731 12.3086 20.3923 12.2539 20.4077 12.1993C20.7005 11.3135 20.7929 10.3496 20.6388 9.3623Z" fill="#F15F3F"/>
+<path d="M10.6507 12.3593C10.6699 12.3086 10.6892 12.2539 10.7046 12.1993C10.9973 11.3135 11.0898 10.3496 10.9357 9.3623C10.4427 6.20923 7.61162 4.02003 4.51864 4.32051L0.728499 12.8822L0.335618 13.768C0.324062 13.7992 0.316359 13.8344 0.304804 13.8656C0.0120688 14.7514 -0.0803737 15.7153 0.0736972 16.7026C0.566724 19.8595 3.40163 22.0487 6.49846 21.7444L10.304 13.1436L10.6507 12.3593Z" fill="#F15F3F"/>
+</svg>
+<span class="series">Metabolic Health Series</span></div><div class="fields"><span>Patient name</span><span class="box"></span><span>Date</span><span class="box"></span></div><h1 class="title">High Blood Pressure<br><small>No symptoms, real risk</small></h1><p class="intro">Nearly <b>half of U.S. adults</b> have high blood pressure, and about <b>4 in 10</b> of them do not know it, because it rarely causes symptoms. Over the years, the extra force strains the heart, kidneys, brain and eyes and raises the risk of heart attack and stroke. One signal you can influence is <b>nitric oxide (NO)</b>, which tells blood-vessel walls to relax. What you eat, how you move, how you sleep and how you handle stress all change how much of it your body makes.</p><div class="hbp"><div class="art hbp-art"><svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="How nitric oxide relaxes a blood vessel: a tight artery under high pressure beside a relaxed one, whose inner lining makes nitric oxide"><rect x="6" y="6.0" width="236" height="59.5" rx="11" fill="#F6E4E1" stroke="#C2392E" stroke-width="1.5"/><circle cx="41" cy="35.75" r="22" fill="#fff" stroke="#8A1B22" stroke-width="2"/><g transform="translate(24.5,19.25) scale(.515625)" fill="none" stroke="#8A1B22" stroke-width="4.8" stroke-linecap="round" stroke-linejoin="round"><path d="M32 23c10 0 17 7 17 16S40 56 32 58c-8-2-17-10-17-19s7-16 17-16z"/><path d="M32 23c-2-6-8-11-15-11 0 7 7 11 15 11zM32 23c2-6 8-11 15-11 0 7-7 11-15 11zM32 23V8"/></g><circle cx="24" cy="18.5" r="7" fill="#8A1B22" stroke="#fff" stroke-width="2"/><text x="24" y="22.1" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10" font-weight="800" fill="#fff" text-anchor="middle"><tspan x="24" dy="0.0">1</tspan></text><text x="72" y="24.0" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="800" fill="#62121A" text-anchor="start"><tspan x="72" dy="0.0">Eat greens and beets</tspan></text><text x="72" y="40.0" font-family="Inter, Helvetica, Arial, sans-serif" font-size="11" font-weight="500" fill="#33404A" text-anchor="start"><tspan x="72" dy="0.0">They are rich in nitrate,</tspan><tspan x="72" dy="13.6">a building block for NO.</tspan></text><path d="M124.0,67.0 V73.5" stroke="#8A1B22" stroke-width="3" stroke-linecap="round"/><path d="M117.5,73.0 L124.0,81.0 L130.5,73.0 Z" fill="#8A1B22"/><rect x="6" y="83.5" width="236" height="59.5" rx="11" fill="#F6E4E1" stroke="#C2392E" stroke-width="1.5"/><circle cx="41" cy="113.25" r="22" fill="#fff" stroke="#8A1B22" stroke-width="2"/><g transform="translate(24.5,96.75) scale(.515625)" fill="none" stroke="#8A1B22" stroke-width="4.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 25c5-6 11-9 16-8 3 .6 6 2.4 9 2.4s6-1.8 9-2.4c5-1 11 2 16 8"/><path d="M7 25c14 4 36 4 50 0"/><path d="M7 25c4 11 13 17 25 17s21-6 25-17"/><path d="M20 28v9c0 9 5.5 15 12 15s12-6 12-15v-9" fill="#F6C9C1"/><g fill="#2E7D5B" stroke="none"><rect x="-2.6" y="-1.2" width="5.2" height="2.4" rx="1.2" transform="translate(28.2 39.1) rotate(32)"/><rect x="-2.6" y="-1.2" width="5.2" height="2.4" rx="1.2" transform="translate(35.8 39.8) rotate(16)"/><rect x="-2.6" y="-1.2" width="5.2" height="2.4" rx="1.2" transform="translate(32.5 34.6) rotate(-10)"/><rect x="-2.6" y="-1.2" width="5.2" height="2.4" rx="1.2" transform="translate(32.2 45.0) rotate(-26)"/></g></g><circle cx="24" cy="96.0" r="7" fill="#8A1B22" stroke="#fff" stroke-width="2"/><text x="24" y="99.6" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10" font-weight="800" fill="#fff" text-anchor="middle"><tspan x="24" dy="0.0">2</tspan></text><text x="72" y="101.5" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="800" fill="#62121A" text-anchor="start"><tspan x="72" dy="0.0">Mouth bacteria help</tspan></text><text x="72" y="117.5" font-family="Inter, Helvetica, Arial, sans-serif" font-size="11" font-weight="500" fill="#33404A" text-anchor="start"><tspan x="72" dy="0.0">Friendly tongue bacteria</tspan><tspan x="72" dy="13.6">turn nitrate into nitrite.</tspan></text><path d="M124.0,144.5 V151.0" stroke="#8A1B22" stroke-width="3" stroke-linecap="round"/><path d="M117.5,150.5 L124.0,158.5 L130.5,150.5 Z" fill="#8A1B22"/><rect x="6" y="161.0" width="236" height="59.5" rx="11" fill="#F6E4E1" stroke="#C2392E" stroke-width="1.5"/><circle cx="41" cy="190.75" r="22" fill="#fff" stroke="#8A1B22" stroke-width="2"/><g transform="translate(24.5,174.25) scale(.515625)" fill="none" stroke="#8A1B22" stroke-width="4.8" stroke-linecap="round" stroke-linejoin="round"><path d="M26 27h12M26 37h12" stroke="#8A1B22" stroke-width="3.8"/><circle cx="14.5" cy="32" r="11.5" fill="#8A1B22" stroke="none"/><circle cx="49.5" cy="32" r="11.5" fill="#C2392E" stroke="none"/><g stroke="none"><text x="14.5" y="39.1" font-family="Inter, Helvetica, Arial, sans-serif" font-size="19.5" font-weight="800" fill="#fff" text-anchor="middle"><tspan x="14.5" dy="0.0">N</tspan></text><text x="49.5" y="39.1" font-family="Inter, Helvetica, Arial, sans-serif" font-size="19.5" font-weight="800" fill="#fff" text-anchor="middle"><tspan x="49.5" dy="0.0">O</tspan></text></g></g><circle cx="24" cy="173.5" r="7" fill="#8A1B22" stroke="#fff" stroke-width="2"/><text x="24" y="177.1" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10" font-weight="800" fill="#fff" text-anchor="middle"><tspan x="24" dy="0.0">3</tspan></text><text x="72" y="179.0" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="800" fill="#62121A" text-anchor="start"><tspan x="72" dy="0.0">Your body makes NO</tspan></text><text x="72" y="195.0" font-family="Inter, Helvetica, Arial, sans-serif" font-size="11" font-weight="500" fill="#33404A" text-anchor="start"><tspan x="72" dy="0.0">Nitrite becomes nitric oxide</tspan><tspan x="72" dy="13.6">in your blood and tissues.</tspan></text><path d="M124.0,222.0 V228.5" stroke="#8A1B22" stroke-width="3" stroke-linecap="round"/><path d="M117.5,228.0 L124.0,236.0 L130.5,228.0 Z" fill="#8A1B22"/><rect x="6" y="238.5" width="236" height="59.5" rx="11" fill="#F6E4E1" stroke="#C2392E" stroke-width="1.5"/><circle cx="41" cy="268.25" r="22" fill="#fff" stroke="#8A1B22" stroke-width="2"/><g transform="translate(24.5,251.75) scale(.515625)" fill="none" stroke="#8A1B22" stroke-width="4.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 25c14 0 22-8 54-11"/><path d="M5 39c14 0 22 8 54 11"/><path d="M13 32h30"/><path d="M37 25.5l7 6.5-7 6.5"/></g><circle cx="24" cy="251.0" r="7" fill="#8A1B22" stroke="#fff" stroke-width="2"/><text x="24" y="254.6" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10" font-weight="800" fill="#fff" text-anchor="middle"><tspan x="24" dy="0.0">4</tspan></text><text x="72" y="256.5" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="800" fill="#62121A" text-anchor="start"><tspan x="72" dy="0.0">NO relaxes vessel walls</tspan></text><text x="72" y="272.5" font-family="Inter, Helvetica, Arial, sans-serif" font-size="11" font-weight="500" fill="#33404A" text-anchor="start"><tspan x="72" dy="0.0">Vessels widen and blood</tspan><tspan x="72" dy="13.6">flows with less pressure.</tspan></text><clipPath id="hbp-cl"><rect x="272" y="54" width="232.0" height="168"/></clipPath><rect x="272" y="54" width="232.0" height="168" fill="#EDD3AE" stroke="#D2B286" stroke-width="1"/><g clip-path="url(#hbp-cl)"><rect x="270" y="64" width="236.0" height="148" fill="#9A2924"/><path d="M258.8,65.5 L264.5,103.2 M266.3,65.5 L272.0,103.2 M273.8,65.5 L279.5,103.2 M281.3,65.5 L287.0,103.2 M288.8,65.5 L294.5,103.2 M296.3,65.5 L302.0,103.2 M303.8,65.5 L309.5,103.2 M311.3,65.5 L317.0,103.2 M318.8,65.5 L324.5,103.2 M326.3,65.5 L332.0,103.2 M333.8,65.5 L339.5,103.2 M341.3,65.5 L347.0,103.2 M348.8,65.5 L354.5,103.2 M356.3,65.5 L362.0,103.2 M363.8,65.5 L369.5,103.2 M371.3,65.5 L377.0,103.2 M378.8,65.5 L384.5,103.2 M386.3,65.5 L392.0,103.2 M393.8,65.5 L399.5,103.2 M401.3,65.5 L407.0,103.2 M408.8,65.5 L414.5,103.2 M416.3,65.5 L422.0,103.2 M423.8,65.5 L429.5,103.2 M431.3,65.5 L437.0,103.2 M438.8,65.5 L444.5,103.2 M446.3,65.5 L452.0,103.2 M453.8,65.5 L459.5,103.2 M461.3,65.5 L467.0,103.2 M468.8,65.5 L474.5,103.2 M476.3,65.5 L482.0,103.2 M483.8,65.5 L489.5,103.2 M491.3,65.5 L497.0,103.2 M498.8,65.5 L504.5,103.2 M506.3,65.5 L512.0,103.2" stroke="#741A16" stroke-width="1.7" stroke-linecap="round" opacity=".6"/><path d="M258.8,210.5 L264.5,172.8 M266.3,210.5 L272.0,172.8 M273.8,210.5 L279.5,172.8 M281.3,210.5 L287.0,172.8 M288.8,210.5 L294.5,172.8 M296.3,210.5 L302.0,172.8 M303.8,210.5 L309.5,172.8 M311.3,210.5 L317.0,172.8 M318.8,210.5 L324.5,172.8 M326.3,210.5 L332.0,172.8 M333.8,210.5 L339.5,172.8 M341.3,210.5 L347.0,172.8 M348.8,210.5 L354.5,172.8 M356.3,210.5 L362.0,172.8 M363.8,210.5 L369.5,172.8 M371.3,210.5 L377.0,172.8 M378.8,210.5 L384.5,172.8 M386.3,210.5 L392.0,172.8 M393.8,210.5 L399.5,172.8 M401.3,210.5 L407.0,172.8 M408.8,210.5 L414.5,172.8 M416.3,210.5 L422.0,172.8 M423.8,210.5 L429.5,172.8 M431.3,210.5 L437.0,172.8 M438.8,210.5 L444.5,172.8 M446.3,210.5 L452.0,172.8 M453.8,210.5 L459.5,172.8 M461.3,210.5 L467.0,172.8 M468.8,210.5 L474.5,172.8 M476.3,210.5 L482.0,172.8 M483.8,210.5 L489.5,172.8 M491.3,210.5 L497.0,172.8 M498.8,210.5 L504.5,172.8 M506.3,210.5 L512.0,172.8" stroke="#741A16" stroke-width="1.7" stroke-linecap="round" opacity=".6"/><rect x="270" y="104.4" width="236.0" height="3.6" fill="#FFF3DA"/><rect x="270" y="168" width="236.0" height="3.6" fill="#FFF3DA"/><ellipse cx="278.5" cy="106.40" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="291.5" cy="106.40" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="304.5" cy="106.40" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="317.5" cy="106.40" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="330.5" cy="106.40" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="343.5" cy="106.40" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="356.5" cy="106.40" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="369.5" cy="106.40" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="382.5" cy="106.40" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="395.5" cy="106.40" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="408.5" cy="106.40" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="421.5" cy="106.40" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="434.5" cy="106.40" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="447.5" cy="106.40" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="460.5" cy="106.40" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="473.5" cy="106.40" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="486.5" cy="106.40" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="499.5" cy="106.40" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="285.0" cy="169.60" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="298.0" cy="169.60" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="311.0" cy="169.60" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="324.0" cy="169.60" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="337.0" cy="169.60" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="350.0" cy="169.60" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="363.0" cy="169.60" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="376.0" cy="169.60" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="389.0" cy="169.60" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="402.0" cy="169.60" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="415.0" cy="169.60" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="428.0" cy="169.60" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="441.0" cy="169.60" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="454.0" cy="169.60" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="467.0" cy="169.60" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="480.0" cy="169.60" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="493.0" cy="169.60" rx="2.5" ry="1" fill="#9A6B86"/><rect x="270" y="108" width="236.0" height="60" fill="#F9E1DA"/><path d="M270,104.4 H506.0 M270,171.6 H506.0" stroke="#741A16" stroke-width="1" opacity=".55"/><path d="M270,108 H506.0 M270,168 H506.0" stroke="#D7B98E" stroke-width=".9"/></g><ellipse cx="272" cy="138.0" rx="10.00" ry="84.00" fill="#EDD3AE" stroke="#D2B286" stroke-width="1"/><ellipse cx="272" cy="138.0" rx="8.81" ry="74.00" fill="#9A2924" stroke="none" stroke-width="0"/><ellipse cx="272" cy="138.0" rx="5.60" ry="47.07" fill="none" stroke="#741A16" stroke-width="0.9" opacity="0.5"/><ellipse cx="272" cy="138.0" rx="7.21" ry="60.53" fill="none" stroke="#741A16" stroke-width="0.9" opacity="0.5"/><ellipse cx="272" cy="138.0" rx="4.00" ry="33.60" fill="#FFF3DA" stroke="none" stroke-width="0"/><ellipse cx="272" cy="138.0" rx="3.57" ry="30.00" fill="#EDBFB4" stroke="#D7B98E" stroke-width="0.9"/><clipPath id="hbp-cr"><rect x="514.0" y="46" width="232.0" height="184"/></clipPath><rect x="514.0" y="46" width="232.0" height="184" fill="#EDD3AE" stroke="#D2B286" stroke-width="1"/><g clip-path="url(#hbp-cr)"><rect x="512.0" y="56" width="236.0" height="164" fill="#D27A6C"/><path d="M495.9,57.5 L499.0,75.2 M510.9,57.5 L514.0,75.2 M525.9,57.5 L529.0,75.2 M540.9,57.5 L544.0,75.2 M555.9,57.5 L559.0,75.2 M570.9,57.5 L574.0,75.2 M585.9,57.5 L589.0,75.2 M600.9,57.5 L604.0,75.2 M615.9,57.5 L619.0,75.2 M630.9,57.5 L634.0,75.2 M645.9,57.5 L649.0,75.2 M660.9,57.5 L664.0,75.2 M675.9,57.5 L679.0,75.2 M690.9,57.5 L694.0,75.2 M705.9,57.5 L709.0,75.2 M720.9,57.5 L724.0,75.2 M735.9,57.5 L739.0,75.2 M750.9,57.5 L754.0,75.2" stroke="#B85A4D" stroke-width="1.6" stroke-linecap="round" opacity=".6"/><path d="M495.9,218.5 L499.0,200.8 M510.9,218.5 L514.0,200.8 M525.9,218.5 L529.0,200.8 M540.9,218.5 L544.0,200.8 M555.9,218.5 L559.0,200.8 M570.9,218.5 L574.0,200.8 M585.9,218.5 L589.0,200.8 M600.9,218.5 L604.0,200.8 M615.9,218.5 L619.0,200.8 M630.9,218.5 L634.0,200.8 M645.9,218.5 L649.0,200.8 M660.9,218.5 L664.0,200.8 M675.9,218.5 L679.0,200.8 M690.9,218.5 L694.0,200.8 M705.9,218.5 L709.0,200.8 M720.9,218.5 L724.0,200.8 M735.9,218.5 L739.0,200.8 M750.9,218.5 L754.0,200.8" stroke="#B85A4D" stroke-width="1.6" stroke-linecap="round" opacity=".6"/><rect x="512.0" y="76.4" width="236.0" height="3.6" fill="#FFF3DA"/><rect x="512.0" y="196" width="236.0" height="3.6" fill="#FFF3DA"/><ellipse cx="520.5" cy="78.40" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="533.5" cy="78.40" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="546.5" cy="78.40" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="559.5" cy="78.40" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="572.5" cy="78.40" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="585.5" cy="78.40" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="598.5" cy="78.40" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="611.5" cy="78.40" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="624.5" cy="78.40" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="637.5" cy="78.40" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="650.5" cy="78.40" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="663.5" cy="78.40" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="676.5" cy="78.40" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="689.5" cy="78.40" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="702.5" cy="78.40" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="715.5" cy="78.40" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="728.5" cy="78.40" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="741.5" cy="78.40" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="527.0" cy="197.60" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="540.0" cy="197.60" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="553.0" cy="197.60" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="566.0" cy="197.60" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="579.0" cy="197.60" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="592.0" cy="197.60" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="605.0" cy="197.60" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="618.0" cy="197.60" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="631.0" cy="197.60" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="644.0" cy="197.60" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="657.0" cy="197.60" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="670.0" cy="197.60" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="683.0" cy="197.60" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="696.0" cy="197.60" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="709.0" cy="197.60" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="722.0" cy="197.60" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="735.0" cy="197.60" rx="2.5" ry="1" fill="#9A6B86"/><rect x="512.0" y="80" width="236.0" height="116" fill="#F9E1DA"/><path d="M512.0,76.4 H748 M512.0,199.6 H748" stroke="#B85A4D" stroke-width="1" opacity=".55"/><path d="M512.0,80 H748 M512.0,196 H748" stroke="#D7B98E" stroke-width=".9"/></g><ellipse cx="746" cy="138.0" rx="10.00" ry="92.00" fill="#EDD3AE" stroke="#D2B286" stroke-width="1"/><ellipse cx="746" cy="138.0" rx="8.91" ry="82.00" fill="#D27A6C" stroke="none" stroke-width="0"/><ellipse cx="746" cy="138.0" rx="7.80" ry="71.80" fill="none" stroke="#B85A4D" stroke-width="0.9" opacity="0.5"/><ellipse cx="746" cy="138.0" rx="6.70" ry="61.60" fill="#FFF3DA" stroke="none" stroke-width="0"/><ellipse cx="746" cy="138.0" rx="6.30" ry="58.00" fill="#EDBFB4" stroke="#D7B98E" stroke-width="0.9"/><path d="M509.0,43 V233" stroke="#AEB5BA" stroke-width="2" stroke-dasharray="5 4"/><text x="383.0" y="20" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" font-weight="800" fill="#2B3236" text-anchor="middle" letter-spacing="0.8"><tspan x="383.0" dy="0.0">UNHEALTHY</tspan></text><text x="383.0" y="35.5" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.5" font-weight="600" fill="#5A646B" text-anchor="middle" font-style="italic"><tspan x="383.0" dy="0.0">vessel tightened</tspan></text><text x="635.0" y="20" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" font-weight="800" fill="#2B3236" text-anchor="middle" letter-spacing="0.8"><tspan x="635.0" dy="0.0">HEALTHY</tspan></text><text x="635.0" y="35.5" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.5" font-weight="600" fill="#5A646B" text-anchor="middle" font-style="italic"><tspan x="635.0" dy="0.0">vessel relaxed</tspan></text><text x="509.0" y="20.5" font-family="Inter, Helvetica, Arial, sans-serif" font-size="11" font-weight="800" fill="#8A1B22" text-anchor="middle"><tspan x="509.0" dy="0.0">nitric oxide</tspan></text><path d="M463.0,30.5 H549.0" stroke="#8A1B22" stroke-width="2.4" stroke-linecap="round"/><path d="M547.0,25 L557.0,30.5 L547.0,36 Z" fill="#8A1B22"/><path d="M318,122.5 V116.5" stroke="#3A1411" stroke-width="3.2" stroke-linecap="round"/><path d="M312.5,117.0 L318,108 L323.5,117.0 Z" fill="#3A1411"/><path d="M318,153.5 V159.5" stroke="#3A1411" stroke-width="3.2" stroke-linecap="round"/><path d="M312.5,159.0 L318,168 L323.5,159.0 Z" fill="#3A1411"/><path d="M348,122.5 V116.5" stroke="#3A1411" stroke-width="3.2" stroke-linecap="round"/><path d="M342.5,117.0 L348,108 L353.5,117.0 Z" fill="#3A1411"/><path d="M348,153.5 V159.5" stroke="#3A1411" stroke-width="3.2" stroke-linecap="round"/><path d="M342.5,159.0 L348,168 L353.5,159.0 Z" fill="#3A1411"/><path d="M378,122.5 V116.5" stroke="#3A1411" stroke-width="3.2" stroke-linecap="round"/><path d="M372.5,117.0 L378,108 L383.5,117.0 Z" fill="#3A1411"/><path d="M378,153.5 V159.5" stroke="#3A1411" stroke-width="3.2" stroke-linecap="round"/><path d="M372.5,159.0 L378,168 L383.5,159.0 Z" fill="#3A1411"/><path d="M408,122.5 V116.5" stroke="#3A1411" stroke-width="3.2" stroke-linecap="round"/><path d="M402.5,117.0 L408,108 L413.5,117.0 Z" fill="#3A1411"/><path d="M408,153.5 V159.5" stroke="#3A1411" stroke-width="3.2" stroke-linecap="round"/><path d="M402.5,159.0 L408,168 L413.5,159.0 Z" fill="#3A1411"/><path d="M438,122.5 V116.5" stroke="#3A1411" stroke-width="3.2" stroke-linecap="round"/><path d="M432.5,117.0 L438,108 L443.5,117.0 Z" fill="#3A1411"/><path d="M438,153.5 V159.5" stroke="#3A1411" stroke-width="3.2" stroke-linecap="round"/><path d="M432.5,159.0 L438,168 L443.5,159.0 Z" fill="#3A1411"/><path d="M468,122.5 V116.5" stroke="#3A1411" stroke-width="3.2" stroke-linecap="round"/><path d="M462.5,117.0 L468,108 L473.5,117.0 Z" fill="#3A1411"/><path d="M468,153.5 V159.5" stroke="#3A1411" stroke-width="3.2" stroke-linecap="round"/><path d="M462.5,159.0 L468,168 L473.5,159.0 Z" fill="#3A1411"/><path d="M539.0,93 V86.0" stroke="#3A1411" stroke-width="2.2" stroke-linecap="round"/><path d="M535.0,86.5 L539.0,80 L543.0,86.5 Z" fill="#3A1411"/><path d="M539.0,183 V190.0" stroke="#3A1411" stroke-width="2.2" stroke-linecap="round"/><path d="M535.0,189.5 L539.0,196 L543.0,189.5 Z" fill="#3A1411"/><path d="M584.0,93 V86.0" stroke="#3A1411" stroke-width="2.2" stroke-linecap="round"/><path d="M580.0,86.5 L584.0,80 L588.0,86.5 Z" fill="#3A1411"/><path d="M584.0,183 V190.0" stroke="#3A1411" stroke-width="2.2" stroke-linecap="round"/><path d="M580.0,189.5 L584.0,196 L588.0,189.5 Z" fill="#3A1411"/><path d="M629.0,93 V86.0" stroke="#3A1411" stroke-width="2.2" stroke-linecap="round"/><path d="M625.0,86.5 L629.0,80 L633.0,86.5 Z" fill="#3A1411"/><path d="M629.0,183 V190.0" stroke="#3A1411" stroke-width="2.2" stroke-linecap="round"/><path d="M625.0,189.5 L629.0,196 L633.0,189.5 Z" fill="#3A1411"/><path d="M674.0,93 V86.0" stroke="#3A1411" stroke-width="2.2" stroke-linecap="round"/><path d="M670.0,86.5 L674.0,80 L678.0,86.5 Z" fill="#3A1411"/><path d="M674.0,183 V190.0" stroke="#3A1411" stroke-width="2.2" stroke-linecap="round"/><path d="M670.0,189.5 L674.0,196 L678.0,189.5 Z" fill="#3A1411"/><path d="M719.0,93 V86.0" stroke="#3A1411" stroke-width="2.2" stroke-linecap="round"/><path d="M715.0,86.5 L719.0,80 L723.0,86.5 Z" fill="#3A1411"/><path d="M719.0,183 V190.0" stroke="#3A1411" stroke-width="2.2" stroke-linecap="round"/><path d="M715.0,189.5 L719.0,196 L723.0,189.5 Z" fill="#3A1411"/><g transform="translate(561.5,71.2) rotate(-18)"><circle cx="-3.6" r="4.4" fill="#fff"/><circle cx="3.6" r="4.4" fill="#fff"/><circle cx="-3.6" r="3.2" fill="#8A1B22"/><circle cx="3.6" r="3.2" fill="#C2392E"/></g><g transform="translate(563.0,212.0) rotate(16)"><circle cx="-3.6" r="4.4" fill="#fff"/><circle cx="3.6" r="4.4" fill="#fff"/><circle cx="-3.6" r="3.2" fill="#8A1B22"/><circle cx="3.6" r="3.2" fill="#C2392E"/></g><g transform="translate(606.5,64.0) rotate(14)"><circle cx="-3.6" r="4.4" fill="#fff"/><circle cx="3.6" r="4.4" fill="#fff"/><circle cx="-3.6" r="3.2" fill="#8A1B22"/><circle cx="3.6" r="3.2" fill="#C2392E"/></g><g transform="translate(608.0,204.79999999999998) rotate(-12)"><circle cx="-3.6" r="4.4" fill="#fff"/><circle cx="3.6" r="4.4" fill="#fff"/><circle cx="-3.6" r="3.2" fill="#8A1B22"/><circle cx="3.6" r="3.2" fill="#C2392E"/></g><g transform="translate(651.5,71.2) rotate(-9)"><circle cx="-3.6" r="4.4" fill="#fff"/><circle cx="3.6" r="4.4" fill="#fff"/><circle cx="-3.6" r="3.2" fill="#8A1B22"/><circle cx="3.6" r="3.2" fill="#C2392E"/></g><g transform="translate(653.0,212.0) rotate(9)"><circle cx="-3.6" r="4.4" fill="#fff"/><circle cx="3.6" r="4.4" fill="#fff"/><circle cx="-3.6" r="3.2" fill="#8A1B22"/><circle cx="3.6" r="3.2" fill="#C2392E"/></g><g transform="translate(696.5,64.0) rotate(22)"><circle cx="-3.6" r="4.4" fill="#fff"/><circle cx="3.6" r="4.4" fill="#fff"/><circle cx="-3.6" r="3.2" fill="#8A1B22"/><circle cx="3.6" r="3.2" fill="#C2392E"/></g><g transform="translate(698.0,204.79999999999998) rotate(-20)"><circle cx="-3.6" r="4.4" fill="#fff"/><circle cx="3.6" r="4.4" fill="#fff"/><circle cx="-3.6" r="3.2" fill="#8A1B22"/><circle cx="3.6" r="3.2" fill="#C2392E"/></g><g transform="translate(297,139.0) rotate(8) scale(0.9)"><ellipse rx="15" ry="8.6" fill="#C9323B" stroke="#8E1C24" stroke-width="1.1"/><ellipse rx="8.2" ry="3.9" fill="#A6242C"/><path d="M-10,-4.6 Q0,-8.6 10,-4.6" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" opacity=".42"/></g><g transform="translate(487.0,137.0) rotate(-10) scale(0.9)"><ellipse rx="15" ry="8.6" fill="#C9323B" stroke="#8E1C24" stroke-width="1.1"/><ellipse rx="8.2" ry="3.9" fill="#A6242C"/><path d="M-10,-4.6 Q0,-8.6 10,-4.6" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" opacity=".42"/></g><g transform="translate(550.0,111.0) rotate(12) scale(0.9)"><ellipse rx="15" ry="8.6" fill="#C9323B" stroke="#8E1C24" stroke-width="1.1"/><ellipse rx="8.2" ry="3.9" fill="#A6242C"/><path d="M-10,-4.6 Q0,-8.6 10,-4.6" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" opacity=".42"/></g><g transform="translate(636.0,106.0) rotate(-8) scale(0.9)"><ellipse rx="15" ry="8.6" fill="#C9323B" stroke="#8E1C24" stroke-width="1.1"/><ellipse rx="8.2" ry="3.9" fill="#A6242C"/><path d="M-10,-4.6 Q0,-8.6 10,-4.6" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" opacity=".42"/></g><g transform="translate(714.0,113.0) rotate(16) scale(0.9)"><ellipse rx="15" ry="8.6" fill="#C9323B" stroke="#8E1C24" stroke-width="1.1"/><ellipse rx="8.2" ry="3.9" fill="#A6242C"/><path d="M-10,-4.6 Q0,-8.6 10,-4.6" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" opacity=".42"/></g><g transform="translate(584.0,166.0) rotate(-14) scale(0.9)"><ellipse rx="15" ry="8.6" fill="#C9323B" stroke="#8E1C24" stroke-width="1.1"/><ellipse rx="8.2" ry="3.9" fill="#A6242C"/><path d="M-10,-4.6 Q0,-8.6 10,-4.6" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" opacity=".42"/></g><g transform="translate(670.0,171.0) rotate(6) scale(0.9)"><ellipse rx="15" ry="8.6" fill="#C9323B" stroke="#8E1C24" stroke-width="1.1"/><ellipse rx="8.2" ry="3.9" fill="#A6242C"/><path d="M-10,-4.6 Q0,-8.6 10,-4.6" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" opacity=".42"/></g><g transform="translate(718.0,164.0) rotate(-6) scale(0.9)"><ellipse rx="15" ry="8.6" fill="#C9323B" stroke="#8E1C24" stroke-width="1.1"/><ellipse rx="8.2" ry="3.9" fill="#A6242C"/><path d="M-10,-4.6 Q0,-8.6 10,-4.6" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" opacity=".42"/></g><path d="M328.5,127.5 H455.0 L468.0,138.0 L455.0,148.5 H328.5 A10.5,10.5 0 0 1 328.5,127.5 Z" fill="#000" opacity=".10" transform="translate(0,1.6)"/><path d="M328.5,127.5 H455.0 L468.0,138.0 L455.0,148.5 H328.5 A10.5,10.5 0 0 1 328.5,127.5 Z" fill="#fff"/><text x="390.165" y="141.96" font-family="Inter, Helvetica, Arial, sans-serif" font-size="11" font-weight="800" fill="#2B1412" text-anchor="middle"><tspan x="390.165" dy="0.0">Flow: high pressure</tspan></text><path d="M565.0,127.5 H702.5 L715.5,138.0 L702.5,148.5 H565.0 A10.5,10.5 0 0 1 565.0,127.5 Z" fill="#000" opacity=".10" transform="translate(0,1.6)"/><path d="M565.0,127.5 H702.5 L715.5,138.0 L702.5,148.5 H565.0 A10.5,10.5 0 0 1 565.0,127.5 Z" fill="#fff"/><text x="632.165" y="141.96" font-family="Inter, Helvetica, Arial, sans-serif" font-size="11" font-weight="800" fill="#2B1412" text-anchor="middle"><tspan x="632.165" dy="0.0">Flow: normal pressure</tspan></text><rect x="262" y="240" width="494" height="58" rx="8" fill="#fff" stroke="#CFD6DA" stroke-width="1.4"/><text x="276" y="272.8" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.5" font-weight="800" fill="#2B3236" text-anchor="start" letter-spacing="1.2"><tspan x="276" dy="0.0">KEY</tspan></text><path d="M312,249 V289" stroke="#DDE2E5" stroke-width="1.2"/><g transform="translate(336,253)"><g transform="translate(0,0) rotate(0) scale(0.72)"><ellipse rx="15" ry="8.6" fill="#C9323B" stroke="#8E1C24" stroke-width="1.1"/><ellipse rx="8.2" ry="3.9" fill="#A6242C"/><path d="M-10,-4.6 Q0,-8.6 10,-4.6" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" opacity=".42"/></g></g><text x="354" y="256.9" font-family="Inter, Helvetica, Arial, sans-serif" font-size="11" font-weight="600" fill="#2B3236" text-anchor="start"><tspan x="354" dy="0.0">Red blood cell</tspan></text><g transform="translate(336,269)"><rect x="-13" y="-6.5" width="26" height="13" rx="3" fill="#F9E1DA" stroke="#E3B4A8" stroke-width="1"/><path d="M-8,-3 H3 L8,0 L3,3 H-8 Z" fill="#fff" stroke="#C9B3AD" stroke-width=".8"/></g><text x="354" y="272.9" font-family="Inter, Helvetica, Arial, sans-serif" font-size="11" font-weight="600" fill="#2B3236" text-anchor="start"><tspan x="354" dy="0.0">Blood flow</tspan></text><g transform="translate(336,285)"><path d="M-5,7 V0.0" stroke="#3A1411" stroke-width="2.8" stroke-linecap="round"/><path d="M-9.5,0.5 L-5,-7 L-0.5,0.5 Z" fill="#3A1411"/><path d="M7,7 V2.5" stroke="#3A1411" stroke-width="2" stroke-linecap="round"/><path d="M3.8,3.0 L7,-2.5 L10.2,3.0 Z" fill="#3A1411"/></g><text x="354" y="288.9" font-family="Inter, Helvetica, Arial, sans-serif" font-size="11" font-weight="600" fill="#2B3236" text-anchor="start"><tspan x="354" dy="0.0">Pressure (big = high)</tspan></text><g transform="translate(492,253)"><rect x="-12" y="-4.5" width="24" height="9" rx="2" fill="#FFF3DA" stroke="#D7B98E" stroke-width="1"/><ellipse cx="-6.5" cy="0" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="0" cy="0" rx="2.5" ry="1" fill="#9A6B86"/><ellipse cx="6.5" cy="0" rx="2.5" ry="1" fill="#9A6B86"/></g><text x="510" y="256.9" font-family="Inter, Helvetica, Arial, sans-serif" font-size="11" font-weight="600" fill="#2B3236" text-anchor="start"><tspan x="510" dy="0.0">Inner lining (makes NO)</tspan></text><g transform="translate(492,269)"><rect x="-12" y="-6.5" width="24" height="13" rx="2" fill="#9A2924"/><path d="M-8.0,-5 l1.4,10" stroke="#741A16" stroke-width="1.5" opacity=".7"/><path d="M-2.7,-5 l1.4,10" stroke="#741A16" stroke-width="1.5" opacity=".7"/><path d="M2.7,-5 l1.4,10" stroke="#741A16" stroke-width="1.5" opacity=".7"/><path d="M8.0,-5 l1.4,10" stroke="#741A16" stroke-width="1.5" opacity=".7"/></g><text x="510" y="272.9" font-family="Inter, Helvetica, Arial, sans-serif" font-size="11" font-weight="600" fill="#2B3236" text-anchor="start"><tspan x="510" dy="0.0">Tight muscle wall</tspan></text><g transform="translate(492,285)"><rect x="-12" y="-6.5" width="24" height="13" rx="2" fill="#D27A6C"/><path d="M-8.0,-5 l1.4,10" stroke="#B85A4D" stroke-width="1.5" opacity=".7"/><path d="M8.0,-5 l1.4,10" stroke="#B85A4D" stroke-width="1.5" opacity=".7"/></g><text x="510" y="288.9" font-family="Inter, Helvetica, Arial, sans-serif" font-size="11" font-weight="600" fill="#2B3236" text-anchor="start"><tspan x="510" dy="0.0">Relaxed muscle wall</tspan></text><g transform="translate(662,253)"><g transform="translate(0,0) rotate(0)"><circle cx="-3.6" r="4.4" fill="#fff"/><circle cx="3.6" r="4.4" fill="#fff"/><circle cx="-3.6" r="3.2" fill="#8A1B22"/><circle cx="3.6" r="3.2" fill="#C2392E"/></g></g><text x="680" y="256.9" font-family="Inter, Helvetica, Arial, sans-serif" font-size="11" font-weight="600" fill="#2B3236" text-anchor="start"><tspan x="680" dy="0.0">Nitric oxide</tspan></text><g transform="translate(662,269)"><rect x="-12" y="-6.5" width="24" height="13" rx="2" fill="#EDD3AE" stroke="#D2B286" stroke-width="1"/></g><text x="680" y="272.9" font-family="Inter, Helvetica, Arial, sans-serif" font-size="11" font-weight="600" fill="#2B3236" text-anchor="start"><tspan x="680" dy="0.0">Outer layer</tspan></text><g transform="translate(662,285)"><ellipse rx="3.9" ry="7" fill="#EDD3AE" stroke="#D2B286" stroke-width="0.9"/><ellipse rx="3.15" ry="5.65" fill="#D27A6C" stroke="none" stroke-width="0"/><ellipse rx="2.75" ry="4.9" fill="none" stroke="#B85A4D" stroke-width="0.6"/><ellipse rx="2.3" ry="4.1" fill="#FFF3DA" stroke="none" stroke-width="0"/><ellipse rx="1.85" ry="3.3" fill="#EDBFB4" stroke="#D7B98E" stroke-width="0.7"/></g><text x="680" y="288.9" font-family="Inter, Helvetica, Arial, sans-serif" font-size="11" font-weight="600" fill="#2B3236" text-anchor="start"><tspan x="680" dy="0.0">Cut end</tspan></text></svg></div><div class="hbp-h">RISK FACTORS</div><div class="hbp-risk"><div class="hbp-rf"><svg class="ic" viewBox="0 0 64 64" style="width:0.36in;height:0.36in;color:currentColor" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="10" y="10" width="44" height="44" rx="10"/><path d="M21 25a13 13 0 0 1 22 0"/><path d="M32 25l5-7"/><path d="M24 44h16"/></svg><span>Extra weight</span></div><div class="hbp-rf"><svg class="ic" viewBox="0 0 64 64" style="width:0.36in;height:0.36in;color:currentColor" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 26h22l-3 30H24z"/><path d="M21 26c0-9 5-15 11-15s11 6 11 15"/><path d="M28 18h1M35 18h1M31.5 15h1"/></svg><span>High-sodium,<br>processed food</span></div><div class="hbp-rf"><svg class="ic" viewBox="0 0 64 64" style="width:0.36in;height:0.36in;color:currentColor" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 31v-7a6 6 0 0 1 6-6h24a6 6 0 0 1 6 6v7"/><path d="M8 36a5 5 0 0 1 10 0v4h28v-4a5 5 0 0 1 10 0v11H8z"/><path d="M12 47v6M52 47v6"/></svg><span>Sitting most<br>of the day</span></div><div class="hbp-rf"><svg class="ic" viewBox="0 0 64 64" style="width:0.36in;height:0.36in;color:currentColor" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8h22c0 13-5 21-11 21S21 21 21 8zM32 29v20M23 55h18"/></svg><span>Too much<br>alcohol</span></div><div class="hbp-rf"><svg class="ic" viewBox="0 0 64 64" style="width:0.36in;height:0.36in;color:currentColor" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="40" width="46" height="10" rx="2.5"/><path d="M18 40v10"/><path d="M45.5 36c-4-4-4-8 0-12s4-8 0-12"/><path d="M54 34c-3.5-3.5-3.5-6.5 0-10s3.5-6.5 0-10"/></svg><span>Smoking</span></div><div class="hbp-rf"><svg class="ic" viewBox="0 0 64 64" style="width:0.36in;height:0.36in;color:currentColor" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M38 57V47h6l2-10-4-4c0-14-8-23-20-23S8 19 8 31c0 8 4 12 8 16v10"/><path d="M50 7l-5 9h7l-5 9"/></svg><span>Chronic stress</span></div><div class="hbp-rf"><svg class="ic" viewBox="0 0 64 64" style="width:0.36in;height:0.36in;color:currentColor" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M45 41A20 20 0 0 1 25 14a21 21 0 1 0 20 27z"/><path d="M40 11h9l-9 9h9M51 25h6l-6 6h6"/></svg><span>Poor sleep or<br>sleep apnea</span></div><div class="hbp-rf"><svg class="ic" viewBox="0 0 64 64" style="width:0.36in;height:0.36in;color:currentColor" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="16" y="6" width="32" height="52" rx="6"/><rect x="22" y="12" width="20" height="14" rx="2"/><path d="M32 33c-3 5-5 8-5 11a5 5 0 0 0 10 0c0-3-2-6-5-11z"/></svg><span>Diabetes</span></div><div class="hbp-rf"><svg class="ic" viewBox="0 0 64 64" style="width:0.36in;height:0.36in;color:currentColor" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g transform="translate(-2.8 0) translate(21.4 32) scale(.9) translate(-21.4 -32)" stroke-width="3.111"><path d="M26 10c-10 0-16 10-16 22s6 22 16 22c6 0 8-6 6-12-2-4-6-6-6-10s4-6 6-10c2-6 0-12-6-12z"/></g><g transform="translate(2.8 0) translate(42.6 32) scale(.9) translate(-42.6 -32)" stroke-width="3.111"><path d="M38 10c10 0 16 10 16 22s-6 22-16 22c-6 0-8-6-6-12 2-4 6-6 6-10s-4-6-6-10c-2-6 0-12 6-12z"/></g></svg><span>Kidney<br>disease</span></div><div class="hbp-rf"><svg class="ic" viewBox="0 0 64 64" style="width:0.36in;height:0.36in;color:currentColor" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="13" y="9" width="38" height="46" rx="6"/><circle cx="25" cy="21" r="4.3"/><circle cx="39" cy="21" r="4.3"/><circle cx="25" cy="32" r="4.3"/><circle cx="39" cy="32" r="4.3"/><circle cx="25" cy="43" r="4.3"/><circle cx="39" cy="43" r="4.3"/></svg><span>Birth control pills,<br>or high BP in a<br>past pregnancy</span></div><div class="hbp-rf"><svg class="ic" viewBox="0 0 64 64" style="width:0.36in;height:0.36in;color:currentColor" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 6c0 14 20 18 20 32s-20 14-20 20M42 6c0 14-20 18-20 32s20 14 20 20M25 14h14M25 50h14M27 22h10M27 42h10"/></svg><span>Family<br>history</span></div><div class="hbp-rf"><svg class="ic" viewBox="0 0 64 64" style="width:0.36in;height:0.36in;color:currentColor" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="27" cy="9" r="5"/><path d="M27 16c-4 10-4 18 2 24l-4 17M29 40l6 17M26 24l12 8"/><path d="M42 32v25M42 32c0-3 4-3 4 0"/></svg><span>Increasing age</span></div></div><div class="hbp-low"><div class="hbp-nums"><div class="hbp-sh">Reading your numbers</div><div class="hbp-frac"><div class="n top">118</div><div class="d"><b>Systolic</b> (top number): the push on artery walls when your heart beats.</div><div class="n">76</div><div class="d"><b>Diastolic</b> (bottom number): the push between beats, while your heart rests.</div></div><div class="hbp-sh hbp-sh2">Measure it right</div><ul class="hbp-ok"><li>No caffeine, smoking or exercise for 30 minutes. Rest 5 minutes first.</li><li>Sit back supported, feet flat, legs uncrossed, arm at heart level.</li><li>Cuff on bare skin. Take 2 readings, 1 minute apart. Write them down.</li><li>Ask your pharmacist to check your cuff size.</li></ul><div class="hbp-log"><b>Reading</b><i></i><em>/</em><i></i><b class="g">Goal</b><i></i><em>/</em><i></i></div></div><div><div class="hbp-sh">What the numbers mean</div><table class="hbp-bp"><tr><th>Category</th><th>Top number</th><th></th><th>Bottom number</th></tr><tr><td><i style="background:#3E8E5B"></i>Normal</td><td class="n">under 120</td><td class="c">and</td><td class="n">under 80</td></tr><tr><td><i style="background:#E3B23C"></i>Elevated</td><td class="n">120 to 129</td><td class="c">and</td><td class="n">under 80</td></tr><tr><td><i style="background:#E27A2F"></i>Stage 1 high</td><td class="n">130 to 139</td><td class="c">or</td><td class="n">80 to 89</td></tr><tr><td><i style="background:#C2392E"></i>Stage 2 high</td><td class="n">140 or more</td><td class="c">or</td><td class="n">90 or more</td></tr><tr><td><i style="background:#6E1016"></i><b>Severe</b></td><td class="n">over 180</td><td class="c">and/or</td><td class="n">over 120</td></tr></table><div class="hbp-alarm"><b>Over 180/120</b> with chest or back pain, shortness of breath, numbness, weakness, or trouble seeing or speaking? <b>Call 911 now.</b> No symptoms? Wait 5 minutes and check again. Still that high: call your doctor right away.</div><div class="hbp-note"><b>Some medicines raise blood pressure,</b> like decongestants in cold remedies and pain relievers such as ibuprofen and naproxen. Ask your pharmacist first.</div><p class="hbp-fn">Categories in mm Hg: 2025 AHA/ACC high blood pressure guideline (same cutoffs as 2017).</p></div></div></div><div class="foot"><span>NutriDyn &middot; Practitioner Exclusive &middot; nutridyn.com</span><span class="code">ND-CM-202 &middot; Page 1 of 2</span></div></div><div class="rule-bot"></div></section><section class="sheet back" style="--c1:#8A1B22;--c2:#C2392E;--soft:#F6E4E1;--deep:#62121A;--tint:#FBF3F2;--c1t:#8A1B22;--c2t:#C2392E"><div class="inner" style="top:0"><div class="band" style="padding-top:0.3in"><h2>Lifestyle Recommendations<span class="hbp-back"></span></h2><div class="lifes c6"><div class="life "><div class="disc2"><svg class="ic" viewBox="0 0 64 64" style="width:0.5in;height:0.5in;color:currentColor" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M32 23c10 0 17 7 17 16S40 56 32 58c-8-2-17-10-17-19s7-16 17-16z"/><path d="M32 23c-2-6-8-11-15-11 0 7 7 11 15 11zM32 23c2-6 8-11 15-11 0 7-7 11-15 11zM32 23V8"/></svg></div><b>Make nitric oxide</b><p>Greens, beets and fruit daily. Skip antiseptic mouthwash unless your dentist prescribed it.</p></div><div class="life "><div class="disc2"><svg class="ic" viewBox="0 0 64 64" style="width:0.5in;height:0.5in;color:currentColor" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 26h22l-3 30H24z"/><path d="M21 26c0-9 5-15 11-15s11 6 11 15"/><path d="M28 18h1M35 18h1M31.5 15h1"/><path class="x" d="M9 56 55 10"/></svg></div><b>Cut the sodium</b><p>Under 2,300 mg a day; 1,500 is better. Most comes from packaged and restaurant food.</p></div><div class="life "><div class="disc2"><svg class="ic" viewBox="0 0 64 64" style="width:0.5in;height:0.5in;color:currentColor" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="10" y="10" width="44" height="44" rx="10"/><path d="M21 25a13 13 0 0 1 22 0"/><path d="M32 25l5-7"/><path d="M24 44h16"/></svg></div><b>Lighten the load</b><p>Losing even 5 to 10 pounds can help lower your numbers.</p></div><div class="life "><div class="disc2"><svg class="ic" viewBox="0 0 64 64" style="width:0.5in;height:0.5in;color:currentColor" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 26v12M16 19v26M48 19v26M55 26v12M16 32h32"/></svg></div><b>Move, then hold</b><p>Walk 30 minutes most days. Under 160/100? Add wall sits or hand grips; breathe normally.</p></div><div class="life "><div class="disc2"><svg class="ic" viewBox="0 0 64 64" style="width:0.5in;height:0.5in;color:currentColor" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M45 41A20 20 0 0 1 25 14a21 21 0 1 0 20 27z"/><path d="M40 11h9l-9 9h9M51 25h6l-6 6h6"/></svg></div><b>Sleep, breathe</b><p>Sleep 7 to 9 hours; breathe slowly a few minutes a day. Snoring? Ask about a&nbsp;sleep&nbsp;test.</p></div><div class="life "><div class="disc2"><svg class="ic" viewBox="0 0 64 64" style="width:0.5in;height:0.5in;color:currentColor" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="40" width="46" height="10" rx="2.5"/><path d="M18 40v10"/><path d="M45.5 36c-4-4-4-8 0-12s4-8 0-12"/><path d="M54 34c-3.5-3.5-3.5-6.5 0-10s3.5-6.5 0-10"/><path class="x" d="M10 10 54 54"/></svg></div><b>Quit, cut back</b><p>Quit smoking: it tightens vessels. Drink less alcohol; none&nbsp;is&nbsp;best.</p></div></div></div><div class="ns-title">Nutrient Solutions<span>What your body needs, and the NutriDyn formula that delivers it</span></div><div class="cols" style="grid-template-columns:repeat(5,1fr)"><div class="col st"><span class="startb">Start here</span><div class="need"><b>Healthy pressure</b><i>olive leaf, garlic, celery, grape</i></div><div class="pick"><a class="plink" href="https://nutridyn.com/cardio-essentials-bp-support-r182"><img src="../img/nd-hbp-bp-support.png" alt="NutriDyn Cardio Essentials BP Support bottle"><div class="nm">Cardio Essentials BP Support</div></a><div class="sz">90 capsules &middot; 30 servings</div></div><div class="what"><ul><li>Supports healthy blood pressure already in the normal range&nbsp;<span class="mark"><svg class="sym" viewBox="0 0 10 10" width="0.62em" height="0.62em" aria-hidden="true" style="display:inline-block;width:0.62em;height:0.62em;vertical-align:0;margin:0;overflow:visible"><path d="M5 0 10 5 5 10 0 5z" fill="currentColor"/></svg></span></li><li>Helps make nitric oxide&nbsp;<span class="mark"><svg class="sym" viewBox="0 0 10 10" width="0.62em" height="0.62em" aria-hidden="true" style="display:inline-block;width:0.62em;height:0.62em;vertical-align:0;margin:0;overflow:visible"><path d="M5 0 10 5 5 10 0 5z" fill="currentColor"/></svg></span></li></ul><div class="key"><b>In each serving</b><br>Per 3 capsules: 750&nbsp;mg olive leaf, 750&nbsp;mg black garlic, 300&nbsp;mg celery seed, 200&nbsp;mg grape seed (all extracts)</div></div><div class="dose">3 capsules daily<small>with your evening meal</small></div></div><div class="col"><div class="need"><b>Boost nitric oxide</b><i>beet root and potassium nitrate</i></div><div class="pick"><a class="plink" href="https://nutridyn.com/nitric-boost-r257"><img src="../img/nd-hbp-nitric-boost.png" alt="NutriDyn Nitric Boost bottle"><div class="nm">Nitric Boost</div></a><div class="sz">90 capsules &middot; 30 servings</div></div><div class="what"><ul><li>Helps make nitric oxide&nbsp;<span class="mark"><svg class="sym" viewBox="0 0 10 10" width="0.62em" height="0.62em" aria-hidden="true" style="display:inline-block;width:0.62em;height:0.62em;vertical-align:0;margin:0;overflow:visible"><path d="M5 0 10 5 5 10 0 5z" fill="currentColor"/></svg></span></li><li>Supports healthy blood flow&nbsp;<span class="mark"><svg class="sym" viewBox="0 0 10 10" width="0.62em" height="0.62em" aria-hidden="true" style="display:inline-block;width:0.62em;height:0.62em;vertical-align:0;margin:0;overflow:visible"><path d="M5 0 10 5 5 10 0 5z" fill="currentColor"/></svg></span></li></ul><div class="key"><b>In each serving</b><br>Per 3 capsules: 375&nbsp;mg beet root extract, potassium nitrate (150&nbsp;mg potassium), 120&nbsp;mg magnesium, 300&nbsp;mg vitamin&nbsp;C, 100&nbsp;mg B1, plus D3, B12, zinc, pomegranate, tart cherry, pine bark and grape seed</div></div><div class="dose">3 capsules daily<small>with breakfast</small></div></div><div class="col"><div class="need"><b>Healthy vessels</b><i>magnesium</i></div><div class="pick"><a class="plink" href="https://nutridyn.com/magnesium-glycinate"><img src="../img/nd-mag-glycinate.png" alt="NutriDyn Magnesium Glycinate bottle"><div class="nm">Magnesium Glycinate</div></a><div class="sz">60 to 320 capsules</div></div><div class="what"><ul><li>Supports healthy blood vessels&nbsp;<span class="mark"><svg class="sym" viewBox="0 0 10 10" width="0.62em" height="0.62em" aria-hidden="true" style="display:inline-block;width:0.62em;height:0.62em;vertical-align:0;margin:0;overflow:visible"><path d="M5 0 10 5 5 10 0 5z" fill="currentColor"/></svg></span></li><li>Ask about your magnesium level</li></ul><div class="key"><b>In each serving</b><br>Per 2 capsules: 260&nbsp;mg magnesium. Nitric Boost adds 120&nbsp;mg, so take just 1.</div></div><div class="dose">1 capsule at bedtime<small>2 if you skip Nitric Boost</small></div></div><div class="col"><div class="need"><b>Heart-healthy fats</b><i>EPA and DHA <span class="nw">omega-3s</span></i></div><div class="pick"><a class="plink" href="https://nutridyn.com/omega-pure-epa-dha-1000"><img src="../img/nd-ir-omega.png" alt="NutriDyn Omega Pure EPA-DHA 1000 bottle"><div class="nm">Omega Pure <span class="nw">EPA-DHA</span> 1000</div></a><div class="sz">120 softgels</div></div><div class="what"><ul><li>Supports heart and vessel health&nbsp;<span class="mark"><svg class="sym" viewBox="0 0 10 10" width="0.62em" height="0.62em" aria-hidden="true" style="display:inline-block;width:0.62em;height:0.62em;vertical-align:0;margin:0;overflow:visible"><path d="M5 0 10 5 5 10 0 5z" fill="currentColor"/></svg></span></li><li>Supports healthy cell membranes&nbsp;<span class="mark"><svg class="sym" viewBox="0 0 10 10" width="0.62em" height="0.62em" aria-hidden="true" style="display:inline-block;width:0.62em;height:0.62em;vertical-align:0;margin:0;overflow:visible"><path d="M5 0 10 5 5 10 0 5z" fill="currentColor"/></svg></span></li></ul><div class="key"><b>In each serving</b><br>Per softgel: 1,000&nbsp;mg EPA + DHA (730&nbsp;mg EPA, 270&nbsp;mg DHA)</div></div><div class="dose">1 softgel twice daily<small>at breakfast and dinner</small></div></div><div class="col"><div class="need"><b>Power the heart</b><i>coenzyme Q10</i></div><div class="pick"><a class="plink" href="https://nutridyn.com/coq10-100-mg"><img src="../img/nd-hbp-coq10.png" alt="NutriDyn CoQ10 100 mg bottle"><div class="nm">CoQ10 100 mg</div></a><div class="sz">60 softgels</div></div><div class="what"><ul><li>Statins can lower your CoQ10</li><li>Fuel for heart cells&nbsp;<span class="mark"><svg class="sym" viewBox="0 0 10 10" width="0.62em" height="0.62em" aria-hidden="true" style="display:inline-block;width:0.62em;height:0.62em;vertical-align:0;margin:0;overflow:visible"><path d="M5 0 10 5 5 10 0 5z" fill="currentColor"/></svg></span></li></ul><div class="key"><b>In each serving</b><br>Per softgel: 100&nbsp;mg CoQ10, 67&nbsp;mg vitamin&nbsp;E, 698&nbsp;mcg RAE vitamin&nbsp;A (as beta-carotene)</div></div><div class="dose">1 softgel daily<small>with your evening meal</small></div></div></div><div class="duo"><div class="panel"><h3>Your daily rhythm</h3><div class="rhythm"><div class="slot"><div class="when"><svg class="ic" viewBox="0 0 64 64" style="width:13px;height:13px;color:currentColor" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="32" cy="32" r="10"/><path d="M32 5v8M32 51v8M5 32h8M51 32h8M13 13l6 6M45 45l6 6M13 51l6-6M45 19l6-6"/></svg>Morning</div><ul><li>Nitric Boost <em>3&nbsp;capsules</em></li><li>Omega Pure <span class="nw">EPA-DHA</span> 1000 <em>1&nbsp;softgel</em></li></ul></div><div class="slot"><div class="when"><svg class="ic" viewBox="0 0 64 64" style="width:13px;height:13px;color:currentColor" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="34" cy="34" r="19"/><circle cx="34" cy="34" r="11"/><path d="M9 12v11a3.5 3.5 0 0 0 7 0V12M12.5 23v29"/><path d="M58 12c-4 3-5 9-5 14h5v26"/></svg>Evening meal</div><ul><li>Cardio Essentials BP Support <em>3&nbsp;capsules</em></li><li>Omega Pure <span class="nw">EPA-DHA</span> 1000 <em>1&nbsp;softgel</em></li><li>CoQ10 100 mg <em>1&nbsp;softgel</em></li></ul></div><div class="slot"><div class="when"><svg class="ic" viewBox="0 0 64 64" style="width:13px;height:13px;color:currentColor" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M45 41A20 20 0 0 1 25 14a21 21 0 1 0 20 27z"/><path d="M40 11h9l-9 9h9M51 25h6l-6 6h6"/></svg>Bedtime</div><ul><li>Magnesium Glycinate <em>1&nbsp;capsule</em></li></ul></div></div><div class="total">The full plan is <b>10 pills a day</b>. Overwhelmed? Start with the <b>Start here</b> pick, then add one product a week.</div></div><div class="panel rx"><h3>Pharmacist check<span class="rxkeep">Keep taking your medicines.</span></h3><ul><li><b>Water pills</b> (HCTZ, furosemide) can drain magnesium and potassium; <b>statins</b> lower CoQ10. Ask about a blood test. <b>Fish allergy?</b> Skip Omega Pure.</li><li><b>Kidney disease, an ACE inhibitor (like lisinopril), ARB (like losartan) or spironolactone?</b> Potassium can build up: skip salt substitutes, and ask your pharmacist before magnesium or Nitric Boost (150&nbsp;mg potassium).</li><li><b>BP pills, nitroglycerin or ED pills?</b> Show your pharmacist and your prescriber this sheet first: doses may need a check. Never stop a medicine on your own.</li><li><b>Diabetes medicine?</b> Olive leaf can lower blood sugar; check it more often.</li><li><b>Blood thinner?</b> Garlic, fish oil, grape seed, pine bark, pomegranate, vitamin E and CoQ10 can change it: ask your pharmacist (on warfarin, get an INR clotting test).</li><li><b>Thyroid or bone (alendronate) pills?</b> 4 hours apart from magnesium and Nitric&nbsp;Boost; <b>antibiotics:</b> ask your pharmacist. <b>Pregnant or nursing?</b> Ask first.</li></ul></div></div><div class="notes"><b>Special considerations for you:</b><div class="ln"></div><div class="ln"></div><div class="ln"></div></div><div class="recby"><span>Recommended by</span><span class="ln2" data-for></span><span>Phone</span><span class="ln2" style="flex:0 0 1.5in"></span></div><div class="foot"><div class="disc"><span class='mark'><svg class="sym" viewBox="0 0 10 10" width="0.62em" height="0.62em" aria-hidden="true" style="display:inline-block;width:0.62em;height:0.62em;vertical-align:0;margin:0;overflow:visible"><path d="M5 0 10 5 5 10 0 5z" fill="currentColor"/></svg></span> These statements have not been evaluated by the Food and Drug Administration. These products are not intended to diagnose, treat, cure, or prevent any disease.</div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px"><svg style="height:0.22in;width:auto;color:#14664D;display:block" viewBox="0 0 174 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M142.744 20.1318L137.363 7.54297H133.338L140.764 24.6L137.952 30.9998H141.981L152.289 7.54297H148.264L142.744 20.1318Z" fill="currentColor"/>
+<path d="M47.655 18.633L33.6076 1.4082H30.4453V25.0094H34.1661V8.06555L48.2482 25.0094H51.4105V1.4082H47.655V18.633Z" fill="currentColor"/>
+<path d="M68.4548 15.6051C68.4548 17.7436 68.0041 19.3631 67.0989 20.4674C66.1938 21.5718 64.9419 22.122 63.3435 22.122C62.0916 22.122 61.0902 21.6811 60.3352 20.7991C59.5803 19.9172 59.2067 18.7621 59.2067 17.33V7.53516H55.5898V18.0675C55.5898 20.2762 56.2215 22.0674 57.4849 23.441C58.7483 24.8146 60.4238 25.5014 62.5076 25.5014C65.0113 25.5014 66.9949 24.6195 68.4548 22.8596V25.0097H72.0716V7.53906H68.4548V15.6051Z" fill="currentColor"/>
+<path d="M83.9536 22.0522C83.0716 22.0522 82.3782 21.7751 81.866 21.2249C81.3575 20.6747 81.0995 19.8669 81.0995 18.8132V10.5716H84.1115C84.1115 10.5716 84.1385 10.5716 84.1539 10.5677C85.7023 10.3179 86.8386 9.04965 87.0042 7.54336H81.1033V2.11523H77.4865V7.53945H76.72C76.6738 7.54336 76.6275 7.54726 76.5813 7.55506C75.0445 7.80091 73.9198 9.06916 73.7695 10.5677H77.4865V19.0591C77.4865 21.1741 78.0411 22.7741 79.1543 23.8667C80.2675 24.9594 81.7851 25.5057 83.711 25.5057C85.0783 25.5057 86.5035 25.0609 87.9864 24.1672L86.8733 21.1039C85.9219 21.7361 84.9474 22.0561 83.9536 22.0561V22.0522Z" fill="currentColor"/>
+<path d="M93.361 11.2734V7.53885H89.7441V25.0095H93.361V18.8439C93.361 16.3776 93.9156 14.4459 95.0288 13.0489C96.1419 11.6519 97.7635 10.9534 99.8974 10.9534C100.383 10.9534 100.722 10.9651 100.907 10.9885L101.149 7.4647C100.849 7.37105 100.441 7.32422 99.9321 7.32422C97.128 7.32422 94.9363 8.6393 93.361 11.2695V11.2734Z" fill="currentColor"/>
+<path d="M106.7 25.0097H106.769V11.2931C106.761 11.215 106.754 11.137 106.742 11.059C106.446 9.16243 104.943 7.7693 103.152 7.54297V21.3494C103.16 21.4313 103.168 21.5133 103.179 21.5952C103.468 23.4488 104.943 24.8068 106.696 25.0136L106.7 25.0097Z" fill="currentColor"/>
+<path d="M104.961 0C104.287 0 103.733 0.222432 103.293 0.671198C102.854 1.11606 102.635 1.65848 102.635 2.29066C102.635 2.92283 102.854 3.48867 103.293 3.91012C103.733 4.33157 104.291 4.5462 104.961 4.5462C105.631 4.5462 106.186 4.33547 106.614 3.91012C107.041 3.48867 107.257 2.94625 107.257 2.29066C107.257 1.63507 107.037 1.11606 106.594 0.671198C106.155 0.226334 105.608 0 104.961 0Z" fill="currentColor"/>
+<path d="M128.782 4.70176C126.451 2.50475 123.328 1.4082 119.41 1.4082H111.275V25.0094H119.41C123.328 25.0094 126.451 23.9129 128.782 21.7159C131.112 19.5189 132.275 16.6858 132.275 13.2088C132.275 9.73184 131.112 6.89876 128.782 4.70176ZM126.051 19.2691C124.406 20.8183 122.191 21.5949 119.41 21.5949H114.996V4.82663H119.41C122.191 4.82663 124.406 5.60319 126.051 7.15241C127.695 8.70163 128.52 10.723 128.52 13.2127C128.52 15.7024 127.695 17.7199 126.051 19.273V19.2691Z" fill="currentColor"/>
+<path d="M163.813 7.04297C161.287 7.04297 159.291 7.92489 157.832 9.68484V7.53466H154.215V25.0053H157.832V16.9392C157.832 14.8008 158.29 13.1813 159.207 12.077C160.123 10.9726 161.379 10.4224 162.978 10.4224C164.206 10.4224 165.196 10.8555 165.951 11.7257C166.706 12.596 167.08 13.7471 167.08 15.1793V25.0092H170.731V14.4418C170.731 12.2565 170.096 10.477 168.817 9.10339C167.542 7.72978 165.874 7.04297 163.81 7.04297H163.813Z" fill="currentColor"/>
+<path d="M173.685 23.0622C173.477 22.8554 173.219 22.75 172.914 22.75C172.61 22.75 172.356 22.8554 172.144 23.0622C171.936 23.269 171.828 23.5383 171.828 23.8505C171.828 24.1626 171.932 24.428 172.144 24.6348C172.352 24.8416 172.61 24.947 172.914 24.947C173.219 24.947 173.473 24.8416 173.685 24.6348C173.893 24.428 174.001 24.1665 174.001 23.8505C174.001 23.5344 173.897 23.269 173.685 23.0622ZM173.554 24.506C173.377 24.6816 173.165 24.7675 172.918 24.7675C172.672 24.7675 172.464 24.6816 172.286 24.506C172.113 24.3304 172.025 24.1158 172.025 23.8544C172.025 23.5929 172.113 23.3705 172.286 23.1949C172.464 23.0193 172.668 22.9334 172.918 22.9334C173.169 22.9334 173.38 23.0193 173.554 23.1949C173.731 23.3705 173.816 23.5929 173.816 23.8544C173.816 24.1158 173.727 24.3304 173.554 24.506Z" fill="currentColor"/>
+<path d="M173.115 23.972C173.296 23.9291 173.392 23.8198 173.392 23.6442C173.392 23.5427 173.357 23.4608 173.28 23.4023C173.203 23.3437 173.107 23.3125 172.984 23.3125H172.529V24.3388H172.714V23.9915H172.903L173.219 24.3388H173.446L173.115 23.9759V23.972ZM172.714 23.8237V23.4803H172.984C173.049 23.4803 173.099 23.4959 173.142 23.5271C173.18 23.5583 173.203 23.6013 173.203 23.652C173.203 23.7027 173.184 23.7457 173.142 23.7769C173.103 23.8081 173.049 23.8276 172.984 23.8276H172.714V23.8237Z" fill="currentColor"/>
+<path d="M87.0117 7.47656C87.0117 7.49607 87.0039 7.51949 87.0039 7.539H87.0117V7.47656Z" fill="white"/>
+<path d="M20.6388 9.3623C20.1458 6.20923 17.3147 4.02003 14.2218 4.32051L10.4316 12.8822L10.0387 13.768C10.0272 13.7992 10.0195 13.8344 10.0079 13.8656C9.71519 14.7514 9.62275 15.7153 9.77682 16.7026C10.2698 19.8595 13.1048 22.0487 16.2016 21.7444L20.0071 13.1436L20.3538 12.3593C20.3731 12.3086 20.3923 12.2539 20.4077 12.1993C20.7005 11.3135 20.7929 10.3496 20.6388 9.3623Z" fill="#F15F3F"/>
+<path d="M10.6507 12.3593C10.6699 12.3086 10.6892 12.2539 10.7046 12.1993C10.9973 11.3135 11.0898 10.3496 10.9357 9.3623C10.4427 6.20923 7.61162 4.02003 4.51864 4.32051L0.728499 12.8822L0.335618 13.768C0.324062 13.7992 0.316359 13.8344 0.304804 13.8656C0.0120688 14.7514 -0.0803737 15.7153 0.0736972 16.7026C0.566724 19.8595 3.40163 22.0487 6.49846 21.7444L10.304 13.1436L10.6507 12.3593Z" fill="#F15F3F"/>
+</svg>
+<span class="code">ND-CM-202 &middot; Page 2 of 2 &middot; Pharmacy edition &middot; 11/2026</span></div></div></div><div class="rule-bot"></div></section></div>
+<script>
+// Fit each printable sheet to small screens without horizontal scroll; print is always 1:1.
+(function(){function fit(){var w=Math.min(1,(window.innerWidth-16)/816);
+document.querySelectorAll('.sheet').forEach(function(s){s.style.zoom=w<1?w:'';});}
+window.addEventListener('resize',fit);fit();
+var p=new URLSearchParams(location.search).get('for');
+if(p){document.querySelectorAll('[data-for]').forEach(function(e){e.textContent=p.slice(0,80);});}})();
+</script>
+</body></html>
