@@ -39,7 +39,7 @@ hidden fold-line stubs are gone.
 Polish round 2 (2026-11-04, independent review): the plan line names no symptom (no "if reflux keeps coming
 back") and puts the GI Integrity scoop between meals, away from the multi's iron; a blood-thinner line in both
 check panels (the multi's vitamin K, GI Integrity's glucosamine); cipro spacing is the label's 2 h before or 6 h
-after; column headers name structures ("Strengthen the lining", "Mucus layer support", "Coat the food tube")
+after; column headers name structures ("Strengthen the lining", "Mucus layer support", "Lining blend")
 instead of relief verbs; GI Integrity's first bullet is its claim; glucosamine HCl on its serving line; serving
 counts on every size line; no-break spaces in two product names; the weight tile no longer promises a valve
 eased by "a few pounds"; the HCl tailed l carries a real, invisible l for the PDF text layer.  Layout: the
@@ -916,9 +916,11 @@ SHEET = {
             # carnosine, not glutamine).  Either/or with Zinc-Carnosine, so no slot in the daily rhythm (sched []):
             # the plan line names the swap.  Directions (products DB R327): "Mix one scoop with 6-8 ounces of
             # water"; warning (ND431): "Do not use if pregnant or nursing".  The owner notes keep "sip it slowly".
-            # Header "Coat the food tube" is what the demulcents (aloe, slippery elm, marshmallow, okra) do, not a
+            # Header was "Coat the food tube" (what the demulcents do); renamed "Lining blend" in the 2026-11-04
+            # review because, read with the intro, "coat" implied a heartburn claim (21 CFR 101.93(g)(2)).
+            # The old note: it is what the demulcents (aloe, slippery elm, marshmallow, okra) do, not a
             # relief verb; bullet 1 is the column's claim, so the kit's diamond lands on it, not on a direction.
-            {"p": "gerd_gi_integrity", "need": "Coat the food tube", "needsub": "zinc carnosine, aloe, DGL",
+            {"p": "gerd_gi_integrity", "need": "Lining blend", "needsub": "zinc carnosine, aloe, DGL",
              "bullets": ["Supports the lining from food tube to gut",
                          "Sip it slowly in 6 to 8 oz water; skip it if pregnant or nursing"],
              "dose": "1 scoop daily", "dosesub": "in place of Zinc-Carnosine", "sched": []},

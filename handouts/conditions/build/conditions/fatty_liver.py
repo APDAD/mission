@@ -26,14 +26,19 @@ Front recheck pass (2026-11-03, the reviewer's front recheck list), no redesign 
   - The gut caption and the gut risk label are hedged ("may add to it", "being studied").
   - The sugar icon is a soda cup with a straw; PCOS is a uterus-and-ovaries glyph in the kit's style.
   - The severity row, the band and the key share one 8-unit margin on both sides.
-Back (products pass, same day): four columns, the competitor's count, matching its four nutrient
-categories (berberine; bergamot + artichoke; aged black garlic; alpha lipoic acid) with NutriDyn's own
-protocol products.  Berberine Pro, Milk Thistle Complex and Mito Recharge are on the NutriDyn CSO's GLC 2026
+Back (products pass, same day; column 4 swapped 2026-11-04): four columns, the competitor's count, matching its
+four nutrient categories (berberine; bergamot + artichoke; aged black garlic; alpha lipoic acid) with NutriDyn's
+own protocol products where they fit.  Berberine Pro and Milk Thistle Complex are on the NutriDyn CSO's GLC 2026
 "Metabolic Fatty Liver (MAFLD, MASLD, MASH)" list [CSO26]; Lipo-Flow is the NutriDyn science-team
 lipotropic (400 mg artichoke + tangerine peel: the citrus-and-artichoke match) Asher sends "to promote healthy
 liver function".  Milk Thistle Complex stands in for aged black garlic (both are antioxidant liver-cell
-support; NutriDyn has no liver protocol with garlic).  Label facts: products.d/fatty-liver.json (fl_* keys, so
-no other sheet's override reaches this page), each with its sell-sheet source.
+support; NutriDyn has no liver protocol with garlic).  Column 4 is Cellular Energy (R145; 150 mg alpha-lipoic
+acid, the ALA match) [ND325].  The GLC 2026 list names Mito Recharge for that slot and earlier rounds printed it,
+but Mito Recharge carries 100 mg EGCG from green tea extract and USP's caution for green tea extract says "Do not
+use if you have a liver problem" [USP20], which covers every reader of this sheet; Cellular Energy has no green
+tea.  Asher can reverse the swap (see products.d fl_cellular_energy "src").  Label facts:
+products.d/fatty-liver.json (fl_* keys, so no other sheet's override reaches this page), each with its sell-sheet
+source.
 Shared helpers come only from svgkit / kit.  Every SVG id starts with "fl-" and every
 CSS class with "flv-", so nothing collides with other sheets in the all-sheets bundle.
 
@@ -61,8 +66,12 @@ SOURCES (each number on the page carries one of these tags in a comment)
               berberine. J Clin Endocrinol Metab 2008;93:2559-2565 (cited on Berberine Pro SS ND1130)
   [GUO12]     Guo Y et al. Repeated administration of berberine inhibits cytochromes P450 in humans.
               Eur J Clin Pharmacol 2012;68:213-217. doi:10.1007/s00228-011-1108-2 (CYP2D6, 2C9, 3A4)
-  [ODSK]      NIH Office of Dietary Supplements, Vitamin K fact sheet for health professionals
-              (vitamin K works against warfarin; people on warfarin keep vitamin K intake consistent)
+  [KAMINSKY97] Kaminsky LS, Zhang ZY. Human P450 metabolism of warfarin. Pharmacol Ther 1997;73(1):67-74.
+              doi:10.1016/s0163-7258(96)00140-4, PMID 9014207 (abstract read 2026-11-04 via PubMed): "S-warfarin is
+              metabolized primarily by CYP2C9"; R-warfarin partly "by CYP3A4"; "The efficacy of warfarin is affected
+              primarily when metabolism of S-warfarin is altered."  Berberine slowed CYP2C9 and 3A4 in people
+              [GUO12], so the medicines check names warfarin among the drugs those enzymes clear.  (The vitamin K1
+              clause and its NIH ODS source left with Mito Recharge in the swap pass.)
   [USP20]     Oketch-Rabah HA et al. USP comprehensive review of the hepatotoxicity of green tea extracts.
               Toxicol Rep 2020;7:386-402. doi:10.1016/j.toxrep.2020.02.008, PMC7044683 (fasting bolus doses
               raise EGCG exposure; case reports at 140 to about 1000 mg/day EGCG; the review supports a caution
@@ -78,8 +87,9 @@ SOURCES (each number on the page carries one of these tags in a comment)
               statement; its opening and closing words were read earlier, and the middle clause ("Do not use if you
               have a liver problem", then stop and consult at liver-trouble signs) is as library-catalog copies of
               the abstract print it (web search 2026-11-03; USP's own site is not reachable from this session).
-              Re-check the wording against the monograph before print.  This is why the check panel gates Mito
-              Recharge on the provider's (pharmacy edition: the doctor's) say-so for anyone with fatty liver.
+              This caution is why column 4 is Cellular Energy (no green tea) and not the GLC 2026 list's Mito
+              Recharge (100 mg EGCG from green tea extract, sell sheet ND812 Rev. 2/25): the swap pass of
+              2026-11-04.  Re-check the wording against the monograph if Mito Recharge is ever put back.
   [EASL24X]   The same EASL-EASD-EASO guideline, executive summary (PMC11519095, read 2026-11-03): "In adults with
               MASLD and overweight, dietary and behavioural therapy-induced weight loss should aim at a sustained
               reduction of >=5% to reduce liver fat, 7-10% to improve liver inflammation and >=10% to improve
@@ -99,10 +109,15 @@ SOURCES (each number on the page carries one of these tags in a comment)
               an Akkermansia booster.  Asher's Direct Mail blast "NutriDyn New Formula: Akkermansia Plus"
               (2024-05-09) ties Akkermansia to "colon and liver health".
   [LABELS]    NutriDyn sell sheets read 2026-11-03 (Dropbox NutriDyn Marketing Materials): Berberine Pro
-              ND1130 Rev. 11/25, Lipo-Flow ND606 Rev. 4/26, Milk Thistle Complex ND764 Rev. 2/25,
-              Mito Recharge ND812 Rev. 2/25.  Amounts are in products.d/fatty-liver.json.  Berberine Pro's
-              caution reads "If you are pregnant, nursing, or taking medication, consult your healthcare
-              practitioner before use" (the source of the check panel's pregnancy line).
+              ND1130 Rev. 11/25, Lipo-Flow ND606 Rev. 4/26, Milk Thistle Complex ND764 Rev. 2/25; Cellular
+              Energy ND325 Rev. 8/24 read 2026-11-04 [ND325].  Amounts are in products.d/fatty-liver.json.
+              Berberine Pro's caution reads "If you are pregnant, nursing, or taking medication, consult your
+              healthcare practitioner before use" (the source of the check panel's pregnancy line); Cellular
+              Energy's caution is the same sentence.
+  [ND325]     Cellular Energy sell sheet ND325 Rev. 8/24, read 2026-11-04: per 2 capsules, acetyl L-carnitine HCl
+              300 mg, N-acetyl L-cysteine 300 mg, coenzyme Q10 200 mg, alpha-lipoic acid 150 mg, grape seed extract
+              150 mg, magnesium 35 mg, manganese 2 mg; "Take two capsules daily"; vegetarian, no green tea.  Claims
+              on the page are the sheet's own: "Supports energy production", "Provides antioxidant support".
   [ND606]     Lipo-Flow sell sheet ND606 Rev. 4/26, re-read 2026-11-04: "Lipo-Flow provides choleretic and cholagogue
               gastrointestinal agents. Choleretic agents increase the volume of bile produced by the liver ...
               Cholagogue agents promote the healthy flow of bile from the liver and gall bladder into the
@@ -179,6 +194,27 @@ Polish round 2 (2026-11-04, residual reviewer list), no redesign beyond the list
     the fit notes above and in the CSS.
   - Measured, both editions, print media: 12.5 px clear above the footer (was 10.2), no overflow on either page, no
     bullet ending on one word, every check at two or three lines except the five-line medicines check.
+Swap pass (2026-11-04, the reviewer's residual list: one major defect), no redesign beyond it:
+  - Column 4 is Cellular Energy (R145) in place of Mito Recharge.  Mito Recharge carries 100 mg EGCG from green tea
+    extract (ND812) and USP's caution for green tea extract says "Do not use if you have a liver problem" [USP20], so
+    the sheet told a reader with fatty liver not to take a product it also counted in the plan.  Cellular Energy has no
+    green tea; its 150 mg alpha-lipoic acid keeps the competitor's ALA match, and both bullets are its sell sheet's own
+    claims [ND325].  The GLC 2026 list [CSO26] names Mito Recharge, so Asher can reverse the swap (products.d
+    fl_cellular_energy "src" says where Mito Recharge's facts are); the fl_mito entry left products.d.
+  - Gone with it: the green tea check in both editions, the rhythm-note gate (back["rhythm_note"], its marker spans, the
+    .flv-gpr/.flv-gph CSS and the marker assert) and the vitamin K1 sentence in the medicines check.  The medicines
+    check now names warfarin among the drugs the slowed enzymes clear [KAMINSKY97] and keeps the INR recheck.  The plan
+    line is the kit's own again, recounted by the kit: 13 pills a day (was 14).  These items in the earlier notes above
+    are history only.  Still open for NutriDyn: Milk Thistle Complex's total silymarin (products.d fl_milk_thistle).
+  - The notes box is the kit's own again, three writing lines 0.24 in apart: the two-line squeeze existed only to make
+    room for a fifth check.
+  - Measured, both editions, print media: no overflow on either page, 13.5 px clear above the page-2 footer (12.5
+    before), checks at 2, 4, 2 and 2 lines, no bullet ending on one word or on a lone diamond, all four header bars on
+    one line, the "In each serving" rules of columns 1, 3 and 4 level at 527.6 px (Lipo-Flow 515.7 px, as before) and
+    the dose bars level at 596.1 px.
+  - Photo: only Cellular Energy's 89x160 web thumbnail is in reach (the build lists it under LOW-RES until the central
+    stopgap step makes its smooth 4x SOFT copy); the print master is Dropbox /NutriDyn/Product Images/Product Images
+    (1)/R145_Web, which this session cannot download.
 """
 import json
 import math
@@ -1045,23 +1081,18 @@ CSS = r"""
 .flv-foot{display:flex;justify-content:space-between;align-items:baseline;gap:0.2in;margin-top:0.06in;font-size:7.4pt;color:#3F4A50}
 .flv-foot b{color:var(--deep)}
 .flv-foot small{font-size:7.2pt;color:#6A747B;white-space:nowrap}
-/* back page, scoped by the marker span in the lifestyle title.  The check panel holds five checks (green tea
-   extract; diabetes medicines; statins, warfarin and other medicines; pregnancy; gallstones and daisy-family
-   allergy), so it takes the wider part of the duo.  Nothing on this plan is taken at bedtime (asserted after COLS),
-   so the kit's Bedtime box, which would only say "nothing to take", is hidden and the two meal boxes share the
-   rhythm panel.  The fifth check costs two lines, so the notes box keeps two writing lines 0.22 in apart (the kit
-   draws three at 0.24 in).  Each column's serving block sits at the bottom of its card, so three of the four
-   "In each serving" rules line up (Lipo-Flow's panel is one line longer and starts one line higher; a 4-line
-   minimum on the bullets would align all four but costs the 12 px this page no longer has) and the dose bars stay
-   level.  Measured in the build's Chromium, print media (polish round 2): both editions keep 12.5 px of clear
-   space above the footer, no bullet ends on one word or on a lone diamond, and all four header bars stay one line. */
-.sheet.back:has(.flv-back) .notes .ln{height:0.22in}
-.sheet.back:has(.flv-back) .notes .ln:last-child{display:none}
+/* back page, scoped by the marker span in the lifestyle title.  The check panel holds four checks (diabetes
+   medicines; statins, warfarin and other medicines; pregnancy; gallstones and daisy-family allergy) and takes the
+   wider part of the duo.  Nothing on this plan is taken at bedtime (asserted after COLS), so the kit's Bedtime box,
+   which would only say "nothing to take", is hidden and the two meal boxes share the rhythm panel.  The notes box is
+   the kit's own again (three writing lines 0.24 in apart): the two-line squeeze that made room for a fifth check
+   left in the swap pass with the green tea check.  Each column's serving block sits at the bottom of its card, so
+   three of the four "In each serving" rules line up (Lipo-Flow's panel is one line longer and starts one line
+   higher; a 4-line minimum on the bullets would align all four but costs 12 px the page does not have once the
+   notes box is whole) and the dose bars stay level.  Measured in the build's Chromium, print media: see the swap
+   pass note in the module docstring. */
 .sheet.back:has(.flv-back) .col .what{display:flex;flex-direction:column}
 .sheet.back:has(.flv-back) .col .key{margin-top:auto}
-/* The rhythm note is one string for both editions; each edition's first check carries a marker span, and the
-   other edition's gate words are hidden (RHYTHM_NOTE, asserted after RX). */
-.sheet.back:has(.flv-edph) .total .flv-gpr,.sheet.back:has(.flv-edpr) .total .flv-gph{display:none}
 .sheet.back:has(.flv-back) .life .disc2{width:0.68in;height:0.68in}
 .sheet.back:has(.flv-back) .life .disc2 svg{width:0.41in!important;height:0.41in!important}
 .sheet.back:has(.flv-back) .band h2{margin-bottom:0.07in}
@@ -1154,9 +1185,13 @@ COLS = [
     {"p": "fl_milk_thistle", "need": "Antioxidant liver support", "needsub": "milk thistle (silymarin), NAC",
      "bullets": ["Promotes healthy liver function", "Supports the liver&rsquo;s natural detox&nbsp;processes"],
      "dose": "dose_from_db"},
-    # [CSO26]; alpha lipoic acid (75 mg + 45 mg R-lipoic) = the competitor's ALA
-    {"p": "fl_mito", "need": "Help cells make energy", "needsub": "alpha lipoic acid, CoQ10, NAC",
-     "bullets": ["Supports energy production in&nbsp;cells", "Promotes healthy antioxidant&nbsp;status"],
+    # Cellular Energy (R145): 150 mg alpha-lipoic acid per 2 capsules = the competitor's ALA [ND325].  The GLC 2026
+    # list's Mito Recharge [CSO26] sat here until the swap pass (2026-11-04): its 100 mg EGCG from green tea extract
+    # meets USP's "Do not use if you have a liver problem" [USP20].  Both bullets are ND325's own claims ("Supports
+    # energy production"; "Provides antioxidant support throughout the body", trimmed for space) and start with a
+    # verb, so build.py ties each to the FDA line with the diamond.  The header keeps the cell-energy idea.
+    {"p": "fl_cellular_energy", "need": "Help cells make energy", "needsub": "alpha lipoic acid, CoQ10, NAC",
+     "bullets": ["Supports energy production", "Provides antioxidant support"],
      "dose": "dose_from_db"},
 ]
 
@@ -1170,26 +1205,23 @@ assert all(slot != "bed" for c in COLS for slot, _n, _u in c.get("sched", _OWN[c
 
 # Medicine-and-nutrient checks for this page's own products.  Pharmacists check interactions and depletions;
 # the doctor who prescribes a medicine is the one who adjusts it (a DC or ND handing out the practitioner edition
-# usually does not manage diabetes medicines or warfarin, and a pharmacist does not either).
-#  - Green tea extract first: it applies to everyone on Mito Recharge.  Mito Recharge has 100 mg EGCG from green
-#    tea extract [LABELS ND812].  The USP caution says "Do not use if you have a liver problem", always take it
-#    with food, and stop at signs of liver trouble [USP20]; fatty liver is a liver problem, so the bullet says so
-#    in words and gates the product on a written yes from the provider in the Special considerations box
-#    (pharmacy edition: the doctor's yes, since the doctor manages the liver).  The rhythm note repeats the gate
-#    where the reader builds the plan (RHYTHM_NOTE).  "Liver enzymes" here means the ALT/AST blood test, as on the
-#    front.
+# usually does not manage diabetes medicines or warfarin, and a pharmacist does not either).  Four checks since the
+# swap pass (2026-11-04): the green tea extract check, its written-yes gate and the rhythm note that repeated the
+# gate left with Mito Recharge (Cellular Energy has no green tea [ND325]).
 #  - berberine lowers blood sugar [ZHANG08]: a plain caution ("may lower blood sugar along with them"), never a
 #    claim that the product boosts the drug.
 #  - berberine slowed CYP2D6, 2C9 and 3A4 in people (300 mg three times daily for 2 weeks) [GUO12]; "can slow"
-#    because Berberine Pro gives 300 mg dihydroberberine a day, not the study's form and dose.  Slowing CYP2C9
-#    can raise warfarin levels while vitamin K1 works against warfarin (250 mcg per 3 capsules [LABELS ND812];
-#    [ODSK]), so the plan can move warfarin either way: one bullet, the full medicine list, an INR (a clotting
-#    test) recheck in both editions.  CYP450 is never called "liver enzymes" on this sheet.
+#    because Berberine Pro gives 300 mg dihydroberberine a day, not the study's form and dose.  Warfarin is cleared
+#    mainly by CYP2C9 (S-warfarin) and partly by CYP3A4 [KAMINSKY97], so the list names warfarin next to the statins
+#    and both editions keep the INR (a clotting test) recheck.  The vitamin K1 sentence left with Mito Recharge, its
+#    only source on this page.  CYP450 is never called "liver enzymes" on this sheet: here that phrase means the
+#    ALT/AST blood test, as on the front.
 #  - statins: simvastatin, lovastatin and atorvastatin are cleared by CYP3A4 [STATINS], which berberine can slow
-#    [GUO12]; statins are first-line for blood fats in NAFLD [AASLD23].  The old CoQ10 line is gone: it had no
-#    action and read as Mito Recharge making up for the drug.
+#    [GUO12]; statins are first-line for blood fats in NAFLD [AASLD23].  (A CoQ10 line was cut in polish round 1: it
+#    had no action and read as a product making up for the drug.)
 #  - pregnancy: all four labels say "If you are pregnant, nursing, or taking medication, consult your healthcare
-#    practitioner before use" [LABELS]; Berberine Pro is singled out to skip; PCOS is on the front's risk list.
+#    practitioner before use" [LABELS] (Cellular Energy too [ND325]); Berberine Pro is singled out to skip; PCOS is on
+#    the front's risk list.
 #  - gallstones, a blocked bile duct, or a daisy-family allergy (polish round 2): Lipo-Flow "provides choleretic and
 #    cholagogue gastrointestinal agents", and "Cholagogue agents promote the healthy flow of bile from the liver and
 #    gall bladder" [ND606]; "artichoke products should not be used by individuals with bile duct obstruction,
@@ -1200,23 +1232,18 @@ assert all(slot != "bed" for c in COLS for slot, _n, _u in c.get("sched", _OWN[c
 #    high-gallstone group and is told to lose weight.  The guidance wants a doctor first with gallstones and a DC,
 #    ND or pharmacist does not manage them, so both editions add "or your doctor", as the mold sheet's Lipo-Flow line
 #    does.  Two lines in both editions (measured); "or allergic to ragweed or daisies" ran the pharmacy line to three.
-#  - each edition's first bullet opens with an empty marker span (flv-edpr / flv-edph): the rhythm note is one
-#    string for both editions, and the CSS uses the marker to show that edition's gate words (asserted below).
 RX = {
     "pharmacy": [
         # &nbsp; joins keep each bullet from ending on a single word (checked in both editions)
-        '<span class="flv-edph"></span><b>Green tea extract:</b> Mito Recharge has 100 mg EGCG. With fatty liver '
-        "or any liver problem, take it only if your doctor says so, and always with food. Dark urine, belly pain, or "
-        "yellow skin or eyes? Stop it and call&nbsp;your&nbsp;doctor.",
         "<b>Diabetes medicines:</b> Berberine Pro may lower blood sugar along with them. Ask your doctor before you "
         "start, and check your blood sugar more&nbsp;often.",
         # One bullet for every enzyme interaction, statins first in the bold lead-in so a statin user finds it: a
         # separate "Statins:" bullet repeated "Berberine Pro can slow the enzyme" and pushed the footer off the page
-        # (measured: 6 lines for the two bullets against 5 for this one).
+        # (measured then: 6 lines for the two bullets against 5 for this one; 4 lines since the swap pass, both
+        # editions).  [GUO12] [STATINS] [KAMINSKY97]
         "<b>Statins, warfarin and other medicines:</b> Berberine Pro can slow the enzymes that clear some drugs "
-        "(CYP2D6, 2C9, 3A4), including simvastatin, lovastatin and atorvastatin. Mito Recharge&rsquo;s 250 mcg "
-        "vitamin K1 works against warfarin. Show {who} your full medicine list; your doctor may recheck your INR "
-        "(a clotting test) after you&nbsp;start.",
+        "(CYP2D6, 2C9, 3A4), including warfarin, simvastatin, lovastatin and atorvastatin. Show {who} your full "
+        "medicine list; your doctor may recheck your INR (a clotting test) after you&nbsp;start.",
         "<b>Pregnant, planning to be, or nursing?</b> Ask {who} before taking any of these, and skip Berberine Pro "
         "unless your doctor says&nbsp;otherwise.",
         # [ND606] [SILVA25] [GILLESSEN20]: see the gallstone note above the RX
@@ -1224,20 +1251,13 @@ RX = {
         "Lipo-Flow (it&nbsp;boosts bile flow) and Milk Thistle Complex.",
     ],
     "practitioner": [
-        # The reviewer's own wording for this bullet; the old "{Who} may recheck your liver enzymes" sentence made
-        # the panel one line too tall for the page once the liver-problem clause went in.  Polish round 2: "says so"
-        # was a gate the sheet met by itself (the provider handing it over is the one who "says"), so the yes must be
-        # written in the Special considerations box under this panel.  "writes it in under Special considerations"
-        # ran the bullet to four lines and left 0.3 px above the footer (measured); "the box below" keeps three.
-        '<span class="flv-edpr"></span><b>Green tea extract:</b> Mito Recharge has 100 mg EGCG. With fatty liver '
-        "or any liver problem, take it only if {who} writes it in the box below, and always with food. Dark urine, "
-        "belly pain, or yellow skin or eyes? Stop it and call&nbsp;{who}.",
         "<b>Diabetes medicines:</b> Berberine Pro may lower blood sugar along with them; the prescribing doctor may "
         "check your blood sugar more often and adjust&nbsp;doses.",
+        # [GUO12] [STATINS] [KAMINSKY97]
         "<b>Statins, warfarin and other medicines:</b> Berberine Pro can slow the enzymes that clear some drugs "
-        "(CYP2D6, 2C9, 3A4), including simvastatin, lovastatin and atorvastatin. Mito Recharge&rsquo;s 250 mcg "
-        "vitamin K1 works against warfarin. Show {who} your full medicine list; the doctor who manages your warfarin "
-        "may recheck your INR (a clotting test) after you&nbsp;start.",
+        "(CYP2D6, 2C9, 3A4), including warfarin, simvastatin, lovastatin and atorvastatin. Show {who} your full "
+        "medicine list; the doctor who manages your warfarin may recheck your INR (a clotting test) after "
+        "you&nbsp;start.",
         "<b>Pregnant, planning to be, or nursing?</b> Ask {who} before taking any of these, and skip Berberine Pro "
         "unless they say&nbsp;otherwise.",
         # [ND606] [SILVA25] [GILLESSEN20]: see the gallstone note above the RX
@@ -1245,17 +1265,6 @@ RX = {
         "Lipo-Flow (it&nbsp;boosts bile flow) and Milk Thistle Complex.",
     ],
 }
-# The rhythm note shows one edition's gate words by the marker in that edition's first check; without it the note
-# would print both versions side by side.
-assert RX["practitioner"][0].startswith('<span class="flv-edpr"></span>') and \
-    RX["pharmacy"][0].startswith('<span class="flv-edph"></span>'), "fatty-liver: an RX edition lost its marker span"
-
-# The gate where the reader builds the plan (polish round 2, while the CSO's keep-or-swap call on Mito Recharge is
-# open; see products.d fl_mito "src").  The practitioner edition needs a written yes from the provider, the pharmacy
-# edition the doctor's yes, matching each edition's green tea check; the CSS hides the other edition's words.
-RHYTHM_NOTE = ("The full plan is <b>{plan} a day</b>. Start with the <b>Start here</b> pick and add one product a "
-               'week; add Mito Recharge last, only once <span class="flv-gpr">{who} writes it in the box '
-               'below</span><span class="flv-gph">your doctor says yes</span>.')
 
 SHEET = {
     "slug": "fatty-liver", "code": "ND-CM-201", "theme": "metab", "series": "Metabolic Health Series",
@@ -1282,6 +1291,5 @@ SHEET = {
         "life": LIFE,
         "cols": COLS,
         "rx": RX,
-        "rhythm_note": RHYTHM_NOTE,
     },
 }

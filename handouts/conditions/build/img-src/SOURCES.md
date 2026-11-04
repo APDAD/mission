@@ -124,3 +124,8 @@ Print sources for the condition sheets. "AI upscale" = text-safe 4x upscale of t
 | R158.png | 344x640 | interpolated stopgap (Lanczos 4x from a 86x160 chart thumbnail) |
 | R987.png | 360x640 | interpolated stopgap (Lanczos 4x from a 90x160 chart thumbnail) |
 | R196.png | 348x640 | interpolated stopgap (Lanczos 4x from a 87x160 chart thumbnail) |
+
+| file | px | kind |
+|---|---|---|
+| R145.png | 356x640 | interpolated stopgap (Lanczos 4x from a 89x160 chart thumbnail) |
+| R717.png | 348x640 | interpolated stopgap (Lanczos 4x from a 87x160 chart thumbnail) |
