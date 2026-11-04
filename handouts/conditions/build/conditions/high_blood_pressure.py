@@ -5,14 +5,15 @@ here (no legacy sheets.py / art.py imports).  Front, top to bottom:
   intro -> nitric-oxide pathway (4 numbered steps) beside a tight-vs-relaxed artery (cut ends,
   inner lining that makes NO, NO molecules in the relaxed wall) with its KEY -> risk-factor
   icons -> "reading your numbers" + "measure it right" beside the AHA/ACC category table.
-Back (2026-11-03 back-page pass): six lifestyle tiles aligned with the NutriDyn protocols
-(nitrate foods and no antiseptic mouthwash from the NutriDyn GLC 2025 endothelial-dysfunction
-protocol, sodium, weight, movement with isometric holds, sleep, smoking and alcohol); five
-NutriDyn formulas from Asher's Hypertension protocol email and the NutriDyn GLC 2019 / 2025 /
-2026 protocols (Cardio Essentials BP Support = Start here, Nitric Boost, Magnesium Glycinate,
-Omega Pure EPA-DHA 1000, CoQ10 100 mg; label facts and sources in
-products.d/high-blood-pressure.json); an 11-pill daily rhythm; three medicine-and-nutrient
-notes worded per edition.
+Back (2026-11-03 back-page pass, polish round 1 the same day): six lifestyle tiles aligned with
+the NutriDyn protocols (nitrate foods and no antiseptic mouthwash from the NutriDyn GLC 2025
+endothelial-dysfunction protocol, sodium, weight, movement with isometric holds, sleep, smoking
+and alcohol); five NutriDyn formulas from Asher's Hypertension protocol email and the NutriDyn
+GLC 2019 / 2025 / 2026 protocols (Cardio Essentials BP Support = Start here, Nitric Boost,
+Magnesium Glycinate, Omega Pure EPA-DHA 1000, CoQ10 100 mg; label facts and sources in
+products.d/high-blood-pressure.json); a 10-pill daily rhythm; five medicine-and-nutrient notes,
+one list for both editions via {who}.  The back never uses the abbreviation NO: nitric oxide is
+spelled out there, since NO is defined only on the front.
 
 Every number stated on the sheet carries a source comment next to it.
 Edition wording: "{who}" / "{Who}" become "your provider" or "your pharmacist" (build.ed_text).
@@ -37,6 +38,7 @@ NUC = "#9A6B86"        # the lining cells' nuclei: small mauve dashes, as on a s
 LUMEN = "#F9E1DA"      # blood inside the vessel (shown in the "Blood flow" swatch)
 LUMEN_LN = "#E3B4A8"   # outline of the pale "Blood flow" swatch, so it shows on the white KEY
 HOLE = "#EDBFB4"       # the channel seen end-on in a cut face: a shade darker than LUMEN, so it reads as an opening
+                       # (named in the KEY as "Cut end", with a mini cut face)
 PUSH = "#3A1411"       # arrows: blood pushing on the vessel wall (pressure)
 INK = "#2B3236"
 LIN = 3.6              # lining thickness in units: the inner edge of each muscle band is drawn as lining
@@ -300,9 +302,10 @@ def art_bp(t):
     out.append(_tag(rc - 80.5, vy, 161, 21, "Flow: normal pressure", 11))
 
     # ---- KEY: names every symbol and colour in the vessel.  Three rows, three columns: what is in the
-    # blood | the wall from the inside out | nitric oxide and the outer layer.  Column starts give a 15-unit
-    # gap after each column's longest label (Inter 600, 11 units: "Pressure (big = high)" 111.1,
-    # "Inner lining (makes NO)" 124.6, measured in the browser) and a 15-unit right pad.
+    # blood | the wall from the inside out | nitric oxide, the outer layer and the cut end (the darker
+    # HOLE pink inside the end faces).  Column starts give a 15-unit gap after each column's longest label
+    # (Inter 600, 11 units: "Pressure (big = high)" 111.1, "Inner lining (makes NO)" 124.6, measured in
+    # the browser) and a 15-unit right pad.
     KY, KH = 240, 58
     out.append(f'<rect x="{X0}" y="{KY}" width="{X1 - X0}" height="{KH}" rx="8" fill="#fff" stroke="#CFD6DA" stroke-width="1.4"/>')
     out.append(T(X0 + 14, KY + KH / 2 + 3.8, "KEY", 10.5, 800, INK, ls=1.2))
@@ -332,6 +335,14 @@ def art_bp(t):
     out.append(item(c_3, r1, _no_dot(0, 0, 0, c1, c2), "Nitric oxide"))
     out.append(item(c_3, r2, f'<rect x="-12" y="-6.5" width="24" height="13" rx="2" fill="{OUTER}" stroke="{OUTER_LN}" stroke-width="1"/>',
                     "Outer layer"))
+    # a mini cut face, the same rings as the art's end faces (outer layer, relaxed muscle, lining, then
+    # the darker HOLE channel), 7.8 x 14 units: wider than the art's 0.11 aspect so the rings read at
+    # swatch size, and 2.5 units clear of the row-2 swatch above it
+    def ring(rx, ry, fill, stroke="none", sw_=0):
+        return f'<ellipse rx="{rx}" ry="{ry}" fill="{fill}" stroke="{stroke}" stroke-width="{sw_}"/>'
+    face_sw = (ring(3.9, 7, OUTER, OUTER_LN, 0.9) + ring(3.15, 5.65, RELAX)
+               + ring(2.75, 4.9, "none", RELAX_LN, 0.6) + ring(2.3, 4.1, LINING) + ring(1.85, 3.3, HOLE, LINING_LN, 0.7))
+    out.append(item(c_3, r3, face_sw, "Cut end"))
     return svg(W, H, "".join(out), "How nitric oxide relaxes a blood vessel: a tight artery under high pressure beside a "
                                    "relaxed one, whose inner lining makes nitric oxide")
 
@@ -454,17 +465,34 @@ CSS = r"""
    number never runs into it ("EPA-DHA 1000" then "1 softgel") and a count never splits from its unit; the
    slot widths fit the longest names (measured, Inter 7 pt: "Omega Pure EPA-DHA 1000" 123 px, "Cardio
    Essentials BP Support" 128 px) so each slot stays at five lines or fewer. */
-.sheet.back:has(.hbp-back) .cols{grid-template-columns:1.15fr 1.27fr .86fr .86fr .86fr!important}
-.sheet.back:has(.hbp-back) .col .need{min-height:0.56in}
+.sheet.back:has(.hbp-back) .cols{grid-template-columns:1.09fr 1.27fr .86fr .86fr .92fr!important}
+/* "In each serving" starts on one line in four columns: every bullet list but Nitric Boost's gets the height of
+   four bullet lines (4 x 1.28em, plus the one 2 px gap between two bullets; the last bullet's margin collapses).
+   The CoQ10 column is 0.92fr (1.35 in) so its serving line fits four lines under the taller list; BP Support at
+   1.09fr keeps its line counts (measured).  Nitric Boost is left out on purpose: its serving line names all
+   twelve label ingredients in six lines, so under a four-line list it would add two lines to the row and push
+   the footer off the page. */
+.sheet.back:has(.hbp-back) .col:not(:nth-child(2)) .what ul{min-height:calc(4 * 1.28em + 2px)}
+/* one header height for all five columns: the two three-line headers measure 0.521 in */
+.sheet.back:has(.hbp-back) .col .need{min-height:0.525in}
 .sheet.back:has(.hbp-back) .col .pick .nm{min-height:2.3em}
-.sheet.back:has(.hbp-back) .duo{grid-template-columns:1.1fr 1fr;margin-top:0.08in}
-/* the four-note check panel is 1.71 in tall, 0.15 in more than three notes; it is paid back from block
-   spacing only (band top padding 0.30 to 0.25 in, the gaps above Nutrient Solutions, the duo and the
-   notes box), never from type size or line spacing */
-.sheet.back:has(.hbp-back) .band{padding-top:0.25in!important}
-.sheet.back:has(.hbp-back) .ns-title{margin-top:0.1in}
+/* The check panel gets the wider share (1.3 to 1): its five notes then take 11 lines (2+3+2+2+2) in both
+   editions, where the old 1.1 to 1 split needed 15.  The rhythm keeps its five-line Evening slot: Morning
+   and Bedtime sit at their narrowest (65 and 55 px, measured), so Evening gets 116 px, just enough for
+   "BP Support 3 capsules" and "EPA-DHA 1000 1 softgel" on one line each (at 1 to 1.35 it drops to 109 px
+   and wraps to six lines).  The rhythm panel is a column, so its slot boxes stretch to the check panel's
+   height instead of leaving a blank strip under the plan line. */
+.sheet.back:has(.hbp-back) .duo{grid-template-columns:1fr 1.3fr;margin-top:0.08in}
+.sheet.back:has(.hbp-back) .duo .panel:not(.rx){display:flex;flex-direction:column}
+.sheet.back:has(.hbp-back) .rhythm{grid-template-columns:.66fr 1.3fr .58fr;flex:1}
+/* The 11-line panel is 1.86 in tall, 0.15 in more than the old four-note panel.  It is paid back from block
+   spacing only, never from type size or line spacing: band top padding 0.25 to 0.22 in and bottom 0.18 to
+   0.16 in, the band title gap 0.1 to 0.08 in, the gap above Nutrient Solutions 0.1 to 0.08 in, and the
+   column header box 0.56 to 0.525 in. */
+.sheet.back:has(.hbp-back) .band{padding-top:0.22in!important;padding-bottom:0.16in}
+.sheet.back:has(.hbp-back) .band h2{margin-bottom:0.08in}
+.sheet.back:has(.hbp-back) .ns-title{margin-top:0.08in}
 .sheet.back:has(.hbp-back) .notes{margin-top:0.08in}
-.sheet.back:has(.hbp-back) .rhythm{grid-template-columns:1fr 1.094fr .586fr}
 .sheet.back:has(.hbp-back) .slot li{margin:1px 0 3px}
 .sheet.back:has(.hbp-back) .slot li em{display:inline-block;white-space:nowrap;background:#EEF1F3;color:#4A555B;
   border-radius:3px;padding:0 3px;line-height:1.3}
@@ -498,8 +526,10 @@ SHEET = {
             # antiseptic (chlorhexidine) mouthwash cut oral nitrite and raised systolic pressure 2 to 3.5 mm Hg.
             # The exception matters: dentists prescribe chlorhexidine rinse after gum and periodontal treatment,
             # and a patient should not drop it on this sheet's word.  The front's steps 1 and 2 give the why.
-            ("beet", "Boost your NO", "Eat greens and beets daily. Skip antiseptic mouthwash unless your dentist "
-                                       "prescribed it."),
+            # Title spelled out (NO is defined only on the front); "Make nitric oxide" keeps a 0.204 in gutter
+            # to "Cut the sodium" ("Boost nitric oxide" measured 0.195 in).
+            ("beet", "Make nitric oxide", "Eat greens and beets daily. Skip antiseptic mouthwash unless your dentist "
+                                           "prescribed it."),
             # AHA "How much sodium should I eat per day?": no more than 2,300 mg a day, an ideal limit of 1,500 mg
             # for most adults, especially with high blood pressure; more than 70% comes from packaged, prepared and
             # restaurant food.  2025 AHA/ACC guideline (Hypertension 2025;82:e212-e316): under 1,500 mg optimal.
@@ -516,15 +546,20 @@ SHEET = {
             # largest resting blood pressure drop of any exercise type.  NutriDyn GLC 2025 endothelial-dysfunction
             # protocol: 20 to 30 minutes, 5 times a week, plus resistance training; NutriDyn GLC 2026 cardiovascular
             # protocol: 30 minutes 5 times a week plus resistance 2 to 3 times.
-            ("dumbbell", "Move, then hold", "Walk briskly 30 minutes, 5 days a week. Add wall sits or hand grips "
-                                            "3 times a week."),
+            # Safety: an isometric hold raises blood pressure while it lasts, and holding the breath while straining
+            # (the Valsalva manoeuvre) raises it further, so the tile says to breathe normally: AHA scientific
+            # statement on resistance exercise, Williams MA et al., Circulation 2007;116:572-84 (PMID 17638929):
+            # avoid breath-holding and straining.  Measured: four lines, like the tiles beside it.
+            ("dumbbell", "Move, then hold", "Brisk walks: 30 minutes, 5 days a week. Wall sits or hand grips "
+                                            "3 times a week; breathe normally."),
             # AHA Life's Essential 8: 7 to 9 hours of sleep a night for adults; AHA: obstructive sleep apnea
             # raises blood pressure, and loud snoring is a common sign.
             ("moon", "Sleep well", "Sleep 7 to 9 hours. Loud snoring? Ask your doctor about a&nbsp;sleep&nbsp;test."),
             # AHA: each cigarette raises blood pressure for a while and smoking damages the vessel lining.
             # 2025 AHA/ACC guideline: drink less alcohol, and none is best; NutriDyn GLC 2019 HBP protocol
             # (Taming the Silent Killer): under 1 drink a day.
-            ("smoke", "Quit, cut back", "Quit smoking: it tightens your vessels. Cut back on alcohol; "
+            # (three lines; the last reads "alcohol; none is best.", no word left alone on a line)
+            ("smoke", "Quit, cut back", "Quit smoking: it tightens vessels. Drink less alcohol; "
                                         "none&nbsp;is&nbsp;best."),
         ],
         # Products: Asher's Hypertension protocol email, 2021-03-11 (Cardio Essentials BP Support is "the
@@ -536,40 +571,53 @@ SHEET = {
         # Nitric Boost; magnesium -> Magnesium Glycinate; omega-3 -> Omega Pure; fucoidan (no NutriDyn
         # equivalent) -> CoQ10, from the protocols.  Label facts, sizes, URLs and photo status for every
         # product: products.d/high-blood-pressure.json.
-        # Daily rhythm: morning Nitric Boost 3 + Omega 1 + CoQ10 1; evening meal BP Support 3 + Omega 1 +
-        # CoQ10 1; bedtime Magnesium 1 = 11 pills.  Supplemental magnesium: Nitric Boost 120 mg + 1 Magnesium
-        # Glycinate 130 mg = 250 mg a day, under the NIH ODS upper limit of 350 mg a day from supplements.
+        # Daily rhythm: morning Nitric Boost 3 + Omega 1; evening meal BP Support 3 + Omega 1 + CoQ10 1;
+        # bedtime Magnesium 1 = 10 pills.  Supplemental magnesium: Nitric Boost 120 mg + 1 Magnesium Glycinate
+        # 130 mg = 250 mg a day, under the NIH ODS upper limit of 350 mg a day from supplements.
+        # Every bullet below was measured in its column so no bullet list or serving line grows the row.  The
+        # "In each serving" blocks start on one line in four columns (CSS: a four-line bullet-list height, CoQ10
+        # widened so its serving line fits four lines).  Nitric Boost's starts higher: its two bullets take two
+        # lines and its serving line six (twelve label ingredients), so aligning it would grow the row by two
+        # lines (about 0.25 in) and push the footer off the page; measured 2026-11-03.
         "cols": [
             # Start here: Asher's named HBP formula and his rule "BP Support if looking purely for blood pressure
-            # support"; ND681 compliance line and its nitric oxide mechanism (Benolea, MegaNatural-BP)
+            # support"; ND681 compliance line and its nitric oxide mechanism (Benolea, MegaNatural-BP promote
+            # nitric oxide production).  "Helps make nitric oxide" fits one line ("Helps vessels make nitric
+            # oxide" took two and grew the row).
             {"p": "hbp_bp_support", "need": "Healthy pressure", "needsub": "olive leaf, black garlic, celery and grape seed",
              "start": True, "dose": "dose_from_db",
              "bullets": ["Supports healthy blood pressure already in the normal range",
-                         "Helps vessels make NO"]},
+                         "Helps make nitric oxide"]},
             # ND1255 Rev. 6/25, its own structure/function wording: "supports healthy nitric oxide production and
             # optimal blood flow", "supports healthy blood flow".  Both bullets are claims in the label's words;
             # neither points back to the front's pressure steps, so nothing reads as "this capsule lowers high
-            # blood pressure".
+            # blood pressure".  Spelled out (the abbreviation could read as "no production"); "Supports nitric
+            # oxide production" wraps to two lines in this column, so the shorter label phrase is used.
             {"p": "hbp_nitric_boost", "need": "Boost nitric oxide", "needsub": "beet root and potassium nitrate",
              "dose": "dose_from_db",
-             "bullets": ["Supports NO production", "Supports healthy blood flow"]},
-            # Asher's magnesium blast (2026-10-12, Hypertension 2025 meta-analysis of 38 RCTs): the benefit
-            # tracked the starting state, so test first
-            {"p": "hbp_mag_glycinate", "need": "Relax vessel walls", "needsub": "magnesium", "dose": "dose_from_db",
-             "bullets": ["Supports relaxed vessel walls", "Helps most if you run low"]},
+             "bullets": ["Supports nitric oxide", "Supports healthy blood flow"]},
+            # Structure/function only: "healthy vessel tone" (magnesium is needed for normal muscle and nerve
+            # function, NIH ODS Magnesium fact sheet), not "relax vessel walls", which echoed front step 4 and read
+            # as "this capsule lowers blood pressure".  The second bullet is an instruction, not a claim, so it
+            # carries no diamond: Asher's magnesium blast (2026-10-12, Hypertension 2025 meta-analysis of 38 RCTs)
+            # found the benefit tracked the starting state.  The serving line says why the plan uses less than the
+            # label (products.d hbp_mag_glycinate).
+            {"p": "hbp_mag_glycinate", "need": "Healthy vessel tone", "needsub": "magnesium", "dose": "dose_from_db",
+             "bullets": ["Supports healthy vascular tone", "Get a magnesium blood test first"]},
             # the no-break hyphen keeps "omega-3s" whole, so the header wraps "EPA and DHA / omega-3s"
             {"p": "hbp_omega_1000", "need": "Flexible vessels", "needsub": "EPA and DHA omega&#8209;3s", "dose": "dose_from_db",
              "bullets": ["Supports heart and vessel health", "Supports healthy triglyceride levels"]},
             # Statins lower CoQ10 (NIH NCCIH, Coenzyme Q10); ND270: "Supports blood flow and nitric oxide
-            # production", "Supports energy production"
+            # production", "Supports energy production".  Dose: the label's 1 softgel daily (products.d hbp_coq10).
             {"p": "hbp_coq10", "need": "Power the heart", "needsub": "coenzyme Q10", "dose": "dose_from_db",
              "bullets": ["Statins can lower your CoQ10", "Fuel for heart cells"]},
         ],
-        # Four medicine-and-nutrient notes per edition, worded for who checks them: pharmacists check
-        # interactions and depletions; providers (MDs, DCs, NDs) order labs and adjust doses.  Both editions
-        # carry every caution: depletions, potassium, blood pressure medicines (with the never-stop rule),
-        # blood thinners and pregnancy.  None says a formula lowers blood pressure; they say "show this sheet,
-        # doses may need a check".
+        # Five medicine-and-nutrient notes, one list for both editions via {who} ("your pharmacist" or "your
+        # provider"), so the pharmacy edition carries every caution the provider edition does: depletions,
+        # potassium, blood pressure medicines (with the never-stop rule and the prescriber, who is the one who
+        # can change a dose: a DC or ND handing out the sheet often cannot), blood thinners, mineral spacing and
+        # pregnancy.  None says a formula lowers blood pressure; they say "show this sheet, doses may need a
+        # check".  Drug classes carry a drug name patients know (lisinopril, losartan), and INR is glossed.
         # Sources: NIH ODS Magnesium fact sheet (loop and thiazide diuretics raise urinary magnesium loss;
         # spironolactone lowers it; impaired kidneys raise the risk of too much magnesium); NIH ODS Potassium
         # fact sheet (ACE inhibitors, ARBs and potassium-sparing diuretics can raise potassium); 2025 AHA/ACC
@@ -578,7 +626,13 @@ SHEET = {
         # out); nitrate and nitric-oxide formulas can add to the blood-pressure drop from blood pressure
         # medicines, nitroglycerin and PDE5 inhibitors (sildenafil, tadalafil), as can magnesium, fish oil and
         # the BP Support botanicals.  Blood thinners: NIH NCCIH Garlic and NIH ODS Omega-3 and Vitamin E fact
-        # sheets (may add to bleeding); CoQ10 and warfarin point both ways, so the note asks for an INR check
+        # sheets (may add to bleeding); grape seed (200 mg in BP Support, ND681; 50 mg in Nitric Boost, ND1255)
+        # and French maritime pine bark (Pycnogenol 50 mg, ND1255) may slow blood clotting, so taking them with
+        # anticoagulant or antiplatelet drugs may raise bruising and bleeding risk (Natural Medicines monographs
+        # Grape and Pycnogenol, as carried by MedlinePlus Herbs and Supplements; platelet-aggregation data).
+        # The note says "ask {who}" for every thinner, because only warfarin has an INR to check: apixaban,
+        # rivaroxaban, dabigatran, clopidogrel and aspirin do not.  INR is glossed as a clotting test.
+        # CoQ10 and warfarin point both ways, so the note asks for an INR check
         # rather than naming a direction: reduced warfarin effect (Spigset O, Lancet 1994;344:1372-3, PMID
         # 7968059, doi 10.1016/s0140-6736(94)90736-6), more self-reported bleeding on warfarin, OR 3.69
         # (Shalansky S et al., Pharmacotherapy 2007;27:1237-47, PMID 17723077, doi 10.1592/phco.27.9.1237),
@@ -587,19 +641,31 @@ SHEET = {
         # "If you are pregnant, nursing, or taking medication, consult your healthcare practitioner", and
         # celery seed is traditionally avoided in pregnancy.  Nitric Boost: 150 mg potassium per 3 capsules
         # (ND1255).
-        # One list for both editions (the {who} token names the pharmacist or the provider), so the pharmacy
-        # edition carries every caution the provider edition does.  Measured in the rendered panel at 7.2 pt:
-        # 2 + 3 + 2 + 3 = 10 lines; "BP pills" is the only head short enough to keep note 3 on two lines in
-        # the pharmacy edition ("High BP" is already on the front).
+        # Mineral spacing: magnesium (Magnesium Glycinate; 120 mg in Nitric Boost) and zinc (7 mg in Nitric Boost,
+        # ND1255) bind some medicines in the gut.  NIH ODS Magnesium fact sheet: oral bisphosphonates such as
+        # alendronate at least 2 hours apart; tetracycline and quinolone antibiotics at least 2 hours before or
+        # 4 to 6 hours after a magnesium supplement.  NIH ODS Zinc fact sheet: the same antibiotics 2 hours before
+        # or 4 to 6 hours after zinc.  Levothyroxine prescribing information (Synthroid, sections 2.1 and 7.1): at
+        # least 4 hours from products that cut its absorption, magnesium-containing antacids among them.
+        # "4 hours apart" meets all three.  It matters here because Nitric Boost is a breakfast dose and
+        # levothyroxine is usually a morning dose.  "Bone (alendronate)" glosses the drug for a patient; the note
+        # says "antibiotic pills" although only tetracyclines and quinolones bind these minerals, a harmless
+        # over-caution that keeps it plain (and on two lines in both editions).
+        # Measured in the rendered panel at 7.2 pt with the 1 to 1.3 split: 2 + 3 + 2 + 2 + 2 = 11 lines in both
+        # editions; "BP pills" is the only head short enough to keep note 3 on two lines ("High BP" is already
+        # on the front).
         "rx": [
             "<b>Water pills</b> (HCTZ, furosemide) can drain magnesium and potassium; <b>statins</b> lower CoQ10. "
             "Ask about a blood test.",
-            "<b>Kidney disease, ACE inhibitor, ARB or spironolactone?</b> Potassium can build up: skip salt "
-            "substitutes, and ask {who} before magnesium or Nitric Boost (150 mg potassium).",
-            "<b>BP pills, nitroglycerin or ED pills?</b> Show {who} this sheet first: doses may need a check. "
-            "Never stop a medicine on your own.",
-            "<b>Warfarin or another blood thinner?</b> Garlic, fish oil, vitamin E and CoQ10 can change how it "
-            "works: get your INR checked when you start or stop them. <b>Pregnant or nursing?</b> Ask {who} first.",
+            "<b>Kidney disease, an ACE inhibitor (like lisinopril), ARB (like losartan) or spironolactone?</b> "
+            "Potassium can build up: skip salt substitutes, and ask {who} before magnesium or Nitric Boost "
+            "(150&nbsp;mg potassium).",
+            "<b>BP pills, nitroglycerin or ED pills?</b> Show {who} and your prescriber this sheet first: doses may "
+            "need a check. Never stop a medicine on your own.",
+            "<b>Blood thinner?</b> Garlic, fish oil, grape seed, pine bark, vitamin E and CoQ10 can change how it "
+            "works: ask {who} (on warfarin, get an INR clotting test).",
+            "<b>Thyroid, bone (alendronate) or antibiotic pills?</b> Take them 4 hours apart from magnesium and "
+            "Nitric Boost. <b>Pregnant or nursing?</b> Ask {who} first.",
         ],
     },
 }

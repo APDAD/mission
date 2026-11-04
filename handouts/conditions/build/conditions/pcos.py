@@ -16,7 +16,8 @@ Art-director pass (2026-11-03, second round):
   - Vessel: centrelines are straight runs + true arcs; each branch and its arrowhead are ONE
     outline (head 1.6 x the vessel width, aimed along the vessel's last direction, tip ray-cast
     to the ovary outline), and the pale inside tapers into the head.
-  - Close-up circle: 10 sugars, 8 insulin, 3 red cells, all placed (the build asserts it).
+  - Close-up circle: 10 sugars, 8 insulin, 3 red cells, all placed (the build asserts it; 7 and 11 since
+    polish round 1).
   - "small intestine" sits under the duodenal C-loop, clear of the zoom caption.
   - Fallopian tubes: funnel end with nine tapered fimbriae of different lengths draping over the
     ovary; the tube is in the KEY.  The KEY's pancreas is the drawing's own outline in miniature.
@@ -60,6 +61,18 @@ Independent review fixes (2026-11-03, fourth round):
     action; product names get two lines in every column so the rows line up.
   - PRINT HOLD: the Myo-Inositol Complex photo is a soft stopgap (see products.d/pcos.json), so the
     sheet is web-only until the real bottle is staged.
+Polish round 1 (2026-11-03, independent reviewer; the approved layout is unchanged):
+  - Art: insulin outnumbers sugar (16 to 12 in the bloodstream, 11 to 7 in the close-up, which now takes the
+    most evenly mixed of 60 placements), since in most women with PCOS the extra insulin keeps blood sugar near
+    normal; step 2 says "extra insulin".  The dashed release arrows are named in the art ("insulin / released",
+    measured clear of the zoom leader).  The funnel overlay of each Fallopian tube reuses the full curve's edges,
+    so the small step on the inner edge is gone.  The KEY's pancreas has a thicker body and tail (head to body
+    about 2:1).  The acne face has eight plain spots of mixed size, no halo rings.
+  - Back: the berberine drug-enzyme caution sits under "Keep any prescribed medicine" in both editions, with an
+    action; the blood-thinner note leads with the ND382 label's "not recommended" and names fish oil and
+    fenugreek as bleeding risks; the pharmacy medicine note names the two products; both editions carry a fish,
+    peanut and chickpea allergy note.  Room: the check panel takes 60 percent of the row and the notes box keeps
+    two writing lines.
 Glucose (purple hexagon) and insulin (gold dot) use the same symbols as the insulin-resistance
 sheet, so the Metabolic Health Series reads as one system.
 Every SVG id starts with "pc" and every CSS class with "pc-" (all under .pcf), so nothing
@@ -117,8 +130,8 @@ SOURCES (tags appear in comments next to each number on the page)
   [PALM13]   Palmery M et al. Eur Rev Med Pharmacol Sci 2013;17:1804-13, PMID 23852908 (oral
              contraceptives deplete folic acid, B2, B6, B12, C, E, magnesium, selenium and zinc).
   [GRANT10]  Grant P. Phytother Res 2010;24:186-8. doi:10.1002/ptr.2900 (spearmint tea twice a day,
-             42 women, 30 days: free and total testosterone fell; the NutriDyn GLC 2026 PMOS protocol,
-            , uses it: "Spearmint: tea or extract twice daily").
+             42 women, 30 days: free and total testosterone fell).  The NutriDyn GLC 2026 PMOS protocol
+             uses it: "Spearmint: tea or extract twice daily".
   [OUZIR16]  Ouzir M et al. Food Chem Toxicol 2016;96:145-54, PMID 27498339, doi:10.1016/j.fct.2016.08.003
              (review: teratogenic, anti-fertility, anti-implantation and abortifacient findings, so
              fenugreek "is not recommended for use during pregnancy"; read on PubMed 2026-11-03).
@@ -131,9 +144,8 @@ SOURCES (tags appear in comments next to each number on the page)
   details and claim wording per product in build/products.d/pcos.json.
 
 BACK (product pass, 2026-11-03): five products, the competitor's count, all from NutriDyn's own PCOS
-protocols (NutriDyn GLC 2023 PCOS protocol; NutriDyn GLC 2026 PMOS
-protocol; Asher's PCOS handout and his Myo-Inositol Complex email to a
-practitioner, 2026-09-25).  Competitor categories: vitamin D -> D3 5000 with K2, omega-3 -> Omega
+protocols (NutriDyn GLC 2023 PCOS protocol; NutriDyn GLC 2026 PMOS protocol; Asher's PCOS handout and his
+Myo-Inositol Complex email to a practitioner, 2026-09-25).  Competitor categories: vitamin D -> D3 5000 with K2, omega-3 -> Omega
 Pure EPA-DHA 1000, berberine -> Berberine Pro; melatonin and turmeric have no place in these protocols,
 so Myo-Inositol Complex and UltraBiotic Daily Multi-Strain (both protocol picks) take those columns.
 Berberine Pro, not Gluco IR: it is the competitor's own category, it is on both PCOS protocols, it has
@@ -599,11 +611,15 @@ def tube_shape():
         f.append(f'<path d="{frond(p0, d, ln, bw, bend, wav)}" fill="{"#E3929A" if k % 2 else U_BASE}" '
                  f'stroke="{U_EDGE}" stroke-width=".95" stroke-linejoin="round"/>')
     # the funnel end of the tube again, on top of the frond roots: fill, plus its two side edges only,
-    # so it continues the tube with no line across it
+    # so it continues the tube with no line across it.  The edges are cut from the FULL curve's edges: re-solving
+    # them on the slice gave its first point a one-sided tangent, 0.19 units off the tube's own edge, and the
+    # round cap there printed as a small square step (polish round 1).  The two edge strokes also start one point
+    # before the fill, so their round start caps lie on the tube's own stroke (same line, same colour) instead of
+    # bulging at the join; the rim corners keep their round caps.
     k0 = next(k for k, s in enumerate(cum) if s >= cum[-1] - 13)
-    L, R = sides(c[k0:], w[k0:])
-    f.append(f'<path d="{poly_d(L + R[::-1])}" fill="{U_BASE}"/>')
-    for side in (L, R):
+    L, R = sides(c, w)
+    f.append(f'<path d="{poly_d(L[k0:] + R[k0:][::-1])}" fill="{U_BASE}"/>')
+    for side in (L[k0 - 1:], R[k0 - 1:]):
         f.append(f'<path d="{poly_d(side, closed=False)}" fill="none" stroke="{U_EDGE}" stroke-width="1.5" '
                  'stroke-linecap="round" stroke-linejoin="round"/>')
     # the opening (ostium), a soft curve just inside the rim
@@ -787,7 +803,9 @@ def art_pcos(t):
         assert math.dist((px, py), (BX, yi)) + (7.6 if kind == "r" else r) < R_IND - 1, "indicator symbol leaves its circle"
         assert abs(py - yi) + reach < (TW - 2 * WALL) / 2 - 1.0, "indicator symbol leaves the bloodstream"
     placed = [(px, py, r, kind) for px, py, r, kind in ind]
-    kinds = ["g"] * 16 + ["i"] * 12 + ["r"] * 9
+    # More insulin than sugar (polish round 1): in most women with PCOS the extra insulin keeps blood sugar near
+    # normal for years ([STEPTO13]; the facts box's diabetes risk comes later), so insulin is the crowd here.
+    kinds = ["g"] * 12 + ["i"] * 16 + ["r"] * 9
     rng.shuffle(kinds)
     idx = list(range(12, len(tc) - 12))
     for kind in kinds:
@@ -832,21 +850,50 @@ def art_pcos(t):
         a1 = (BX + sx * r_ind * nx_, TY + r_ind * ny_)
         a2 = (BX + sx * BR * nx_, BY + BR * ny_)
         o.append(f'<path d="M{a1[0]:.1f},{a1[1]:.1f} L{a2[0]:.1f},{a2[1]:.1f}" stroke="#7B868D" stroke-width="1.3"/>')
+    # The dashed arrows (insulin released into the blood) are named in the art, since the KEY is full (640 of
+    # 657 px): "insulin / released", left-aligned just right of the right-hand arrow's dots (x 211, r 3.4) and
+    # clear of the zoom circle's left leader.  Each line is measured with tw() at its baseline, where the
+    # slanting leader comes closest; the dark gold reaches 5.6:1 on white.
+    la1 = (BX - r_ind * nx_, TY + r_ind * ny_)
+    la2 = (BX - BR * nx_, BY + BR * ny_)
+    lead_x = lambda y: la1[0] + (y - la1[1]) * (la2[0] - la1[0]) / (la2[1] - la1[1])   # noqa: E731
+    cap_x, cap_y, cap_lh = 211 + 3.4 + 4.6, 74.0, 1.15
+    for k, line in enumerate(("insulin", "released")):
+        base = cap_y + k * 10 * cap_lh
+        assert cap_x + tw(line, 10, 600) < lead_x(base) - 0.65 - 3, f"'{line}' runs into the zoom circle's leader"
+    assert cap_y + 10 * cap_lh + 3 < PY + 6 * PS - 4, "release caption runs into the pancreas tail"
+    o.append(T(cap_x, cap_y, ["insulin", "released"], 10, 600, "#85600C", "start", lh=cap_lh))
     o.append(f'<circle cx="{BX}" cy="{TY}" r="{r_ind}" fill="none" stroke="#4F5A61" stroke-width="1.8"/>')
     o.append(f'<clipPath id="pcZoom"><circle cx="{BX}" cy="{BY}" r="{BR}"/></clipPath>')
     o.append(f'<circle cx="{BX}" cy="{BY}" r="{BR + 2}" fill="#FFFFFF"/>')
     z = [f'<g clip-path="url(#pcZoom)"><rect x="{BX - BR}" y="{BY - BR}" width="{2 * BR}" height="{2 * BR}" fill="url(#pcLu)"/>']
-    # The close-up magnifies the vessel's mix: more sugar than insulin, both crowded, a few red cells
-    # (the vessel carries 16 sugars, 12 insulin, 6 red cells).  Every symbol asked for must be drawn.
-    kinds = ["r"] * 3 + ["g"] * 10 + ["i"] * 8
+    # The close-up magnifies the vessel's mix: more insulin than sugar, both crowded, a few red cells (the
+    # vessel carries 16 insulin, 12 sugars, 9 red cells).  Every symbol asked for must be drawn.
+    kinds = ["r"] * 3 + ["g"] * 7 + ["i"] * 11
     size = {"r": 9.2, "g": 6.3, "i": 6.0}
     items = [size[k] for k in kinds]
+    zbox = (BX - BR + 2, BY - BR + 2, BX + BR - 2, BY + BR - 2)
+    zok = lambda x, y, r: math.dist((x, y), (BX, BY)) < BR - r - 2.5    # noqa: E731
+
+    def mix(zp):
+        """How evenly the mix reads: sugars far apart from each other, and the sugar and insulin crowds each
+        centred in the circle (a seed that piles the sugars into one side reads as a sugar clump)."""
+        g = [(x, y) for (x, y, _), k in zip(zp, kinds) if k == "g"]
+        i = [(x, y) for (x, y, _), k in zip(zp, kinds) if k == "i"]
+        cen = lambda pts: math.dist((sum(p[0] for p in pts) / len(pts), sum(p[1] for p in pts) / len(pts)), (BX, BY))  # noqa: E731
+        return min(math.dist(a, b) for n, a in enumerate(g) for b in g[n + 1:]) - cen(g) - 0.5 * cen(i)
+    best, good = None, 0
     for seed in range(29, 400):
-        zr = random.Random(seed)
-        zp = scatter(zr, items, (BX - BR + 2, BY - BR + 2, BX + BR - 2, BY + BR - 2),
-                     lambda x, y, r: math.dist((x, y), (BX, BY)) < BR - r - 2.5, pad=2.0)
+        zp = scatter(random.Random(seed), items, zbox, zok, pad=2.0)
         if len(zp) == len(items):
-            break
+            good += 1
+            if best is None or mix(zp) > best[0]:
+                best = (mix(zp), seed)
+            if good == 60:
+                break
+    assert best, "close-up: no seed places every symbol"
+    zr = random.Random(best[1])
+    zp = scatter(zr, items, zbox, zok, pad=2.0)
     assert len(zp) == len(items), f"close-up: placed {len(zp)} of {len(items)} symbols"
     for (x, y, r), k in zip(zp, kinds):
         if k == "r":
@@ -879,9 +926,9 @@ def art_pcos(t):
     o.append(T(UX, UY + 134 * US + 15, "Uterus", 11, 800, "#8A2F3A", "middle"))
     o.append(marker(120, 78, 1, c1) + marker(BX, 72, 2, c1) + marker(UX, 60, 3, c1))
     return svg(W_ART, H_ART, "".join(o),
-               "The pancreas makes insulin. The bloodstream carries sugar and insulin from the pancreas all over the body; "
-               "a branch to each ovary ends in an arrow touching it. A zoom circle shows extra sugar and extra insulin "
-               "in the blood. The ovaries hold many small follicles and release extra androgens.")
+               "The pancreas makes insulin and releases it into the bloodstream, which carries insulin and sugar all over "
+               "the body; a branch to each ovary ends in an arrow touching it. A zoom circle shows extra insulin in the "
+               "blood. The ovaries hold many small follicles and release extra androgens.")
 
 
 # ================================================================== HTML blocks under the art
@@ -889,13 +936,51 @@ def sw(markup, w=18, h=16, vb="-9 -8 18 16"):
     return f'<svg width="{w}" height="{h}" viewBox="{vb}" aria-hidden="true">{markup}</svg>'
 
 
+def _edge_y(edge, x):
+    """Height of a polyline edge (points sorted by x) at x, by straight-line interpolation."""
+    for (x1, y1), (x2, y2) in zip(edge, edge[1:]):
+        if x1 <= x <= x2:
+            return y1 + (y2 - y1) * (x - x1) / ((x2 - x1) or 1.0)
+    return edge[0][1] if x < edge[0][0] else edge[-1][1]
+
+
+def pan_mini_outline():
+    """The KEY's pancreas: the drawing's own outline (P_OUT) with the body and tail thickened about their own
+    centre line (the head, neck and uncinate process are untouched) and the whole shape 1.3 x taller, then
+    centred in the 24 x 16 swatch.  At 0.25 in the plain miniature read as a spoon or a matchstick (bulbous head,
+    hairline body); this one keeps the drawing's lobulated head and tapering tail with a head-to-body ratio of
+    about 2:1 instead of 3:1 (polish round 1).  Returns the outline points in swatch units."""
+    up = sorted(P_OUT[3:10])                       # body and tail, upper edge (neck to tail tip)
+    lo = sorted(P_OUT[9:16])                       # body and tail, lower edge (tail tip to the uncinate notch)
+
+    def grow(x):                                   # 1 over the head and neck, 1.45 over the body, easing at the tip
+        if x <= 118:
+            return 1.0
+        if x <= 150:
+            return 1.0 + 0.45 * (x - 118) / 32
+        if x <= 200:
+            return 1.45
+        return 1.45 - 0.3 * min(1.0, (x - 200) / 55)
+    pts = []
+    for k, (x, y) in enumerate(P_OUT):
+        if 3 <= k <= 15 and x > 118:
+            c = (_edge_y(up, x) + _edge_y(lo, x)) / 2
+            y = c + (y - c) * grow(x)
+        pts.append((x, y))
+    s, sy = 0.088, 0.088 * 1.3
+    xs, ys = [p[0] for p in pts], [p[1] for p in pts]
+    cx, cy = (min(xs) + max(xs)) / 2, (min(ys) + max(ys)) / 2
+    out = [((x - cx) * s, (y - cy) * sy) for x, y in pts]
+    assert all(abs(x) + .45 < 12 and abs(y) + .45 < 8 for x, y in out), "KEY pancreas leaves its 24 x 16 swatch"
+    return out
+
+
 def pan_mini():
-    """The drawing's own pancreas outline (P_OUT) at key size: tan septa fill, lighter lobules, same edge."""
-    s, cx, cy = 0.088, 139, 61
-    out = [((x - cx) * s, (y - cy) * s) for x, y in P_OUT]
+    """The KEY's pancreas at key size (pan_mini_outline): tan septa fill, lighter lobules, same edge as the art."""
+    out = pan_mini_outline()
     smooth = crs(out, closed=True, per=10)
     dots = []
-    for j in range(-3, 4):
+    for j in range(-4, 5):                         # the taller outline needs nine rows of lobules
         for i in range(-8, 9):
             x, y = i * 2.15 + (1.07 if j % 2 else 0), j * 1.9
             if inside((x, y), smooth) and min(math.dist((x, y), q) for q in smooth) > 1.05:
@@ -942,7 +1027,7 @@ def steps():
     # [STEPTO13] insulin resistance = cells respond poorly; the extra insulin keeps blood sugar near
     # normal for years, which is why the risk of diabetes comes later (facts box).
     st = [("The pancreas makes insulin.", "Insulin moves sugar out of the blood and into your cells for fuel."),
-          ("Cells answer insulin poorly.", "So the pancreas pumps out more to keep sugar in check."),
+          ("Cells answer insulin poorly.", "So the pancreas pumps out extra insulin to keep sugar in check."),
           ("Extra insulin reaches the ovaries.", "The ovaries make extra androgens, and eggs get stuck in "
                                                  "follicles (the &ldquo;cysts&rdquo;).")]
     return '<div class="pc-steps">' + "".join(
@@ -993,14 +1078,17 @@ DARK_PATCH = ('<path d="M33.2 41.6c2.6-1.4 5.6-1.6 8.8-1.2v12.8c-2.2 1.2-4.8.6-6
               '<path d="M42 57v-9c5-3 8-8 8-15 0-11-8-19-18-19-8.5 0-14.5 5.5-16 13l-3.5 8.5 4 1.2v4.3c0 3 2.2 5 5 5h3.5v11"/>'
               '<path d="M24.5 15.5c5-3 13-3.5 19 1.5"/><circle cx="48" cy="15.5" r="5.5"/>'
               '<path d="M36.6 27.6c2.6-1.4 5.4.4 5.2 3.4-.2 2.6-2.4 3.6-4.4 3.4" stroke-width="2.4"/>')
-# Acne: a face from the front with raised spots on the cheeks, chin and forehead (the two biggest
-# carry a faint red-ring halo).
+# Acne: a face from the front with eight raised spots of mixed size clustered on both cheeks (below the eyes),
+# the chin and the forehead, so it reads as spotty skin at print size.  No halo rings: at cheek height, next to
+# the eyes, ringed spots read as blush circles or a second pair of eyes (polish round 1).
 ACNE = ('<path d="M32 9c-10.4 0-17 8.6-17 20.4C15 42 22.6 55 32 55s17-13 17-25.6C49 17.6 42.4 9 32 9z"/>'
         '<path d="M15.4 25c3.2-7.6 9.4-11.6 16.6-11.6S45.4 17.4 48.6 25" stroke-width="2.2"/>'
         '<path d="M24.4 30.6h3.4M36.2 30.6h3.4M28.8 44.2c2 1.2 4.4 1.2 6.4 0" stroke-width="2.4"/>'
-        '<g fill="currentColor" stroke="none"><circle cx="22.4" cy="38.6" r="2.4"/><circle cx="41.8" cy="37.6" r="2.7"/>'
-        '<circle cx="45" cy="43.4" r="1.9"/><circle cx="37.4" cy="50" r="2"/><circle cx="35.6" cy="21.4" r="1.9"/></g>'
-        '<g fill="none" stroke-width="1.2" opacity=".55"><circle cx="22.4" cy="38.6" r="4.4"/><circle cx="41.8" cy="37.6" r="4.8"/></g>')
+        '<g fill="currentColor" stroke="none">'
+        '<circle cx="22.4" cy="38.4" r="2.3"/><circle cx="26.4" cy="42" r="1.3"/>'            # left cheek
+        '<circle cx="41.6" cy="37.8" r="2"/><circle cx="43.6" cy="42.4" r="1.4"/>'            # right cheek
+        '<circle cx="34.6" cy="50.2" r="1.8"/><circle cx="29.6" cy="49.6" r="1.2"/>'          # chin
+        '<circle cx="36.4" cy="20.4" r="1.7"/><circle cx="27.6" cy="22.6" r="1.2"/></g>')      # forehead
 # Weight gain at the waist: a torso whose sides bulge outward at the middle, with a tape measure
 # around the widest part.
 WAIST = ('<path d="M22.6 6.6c-1.2 7-4.4 11.4-7.4 16.4-3 5-4.2 9.6-3.2 15 1 5.6 4.6 10.6 5.6 19.4"/>'
@@ -1155,8 +1243,13 @@ CSS = r"""
 .pcf p.pc-why b{color:var(--deep)}
 /* Back page, this sheet only.  Nothing is taken at bedtime, so the empty Bedtime box of "Your daily rhythm"
    is hidden (the kit draws Morning, Evening meal, Bedtime in that order) and the two meal boxes share the
-   panel; the check panel holds four notes, so it takes half the row. */
-.sheet.back:has(.pc-back) .duo{grid-template-columns:1fr 1fr}
+   panel.  The check panel holds five notes, so it takes 60 percent of the row: 0.8 is the narrowest the rhythm
+   panel can go before Berberine Pro's morning line wraps a fourth time (measured 2026-11-03).  To make room the
+   notes box keeps two writing lines at 0.22 in, as on the IBD, Lyme and menopause sheets: both editions then
+   measure a 204.8 px duo with 5 px to spare above the footer. */
+.sheet.back:has(.pc-back) .duo{grid-template-columns:0.8fr 1.2fr}
+.sheet.back:has(.pc-back) .notes .ln{height:0.22in}
+.sheet.back:has(.pc-back) .notes .ln:nth-of-type(3){display:none}
 .sheet.back:has(.pc-back) .rhythm{grid-template-columns:1fr 1fr}
 .sheet.back:has(.pc-back) .rhythm .slot:nth-child(3){display:none}
 /* Two name lines in every column (two names wrap), so the bullets, serving lines and dose bars start at the
@@ -1169,7 +1262,7 @@ CSS = r"""
    START HERE column is a little wider (the kit's inline style is repeat(5,1fr)).  1.04 is the widest it
    can go before "Blood sugar and insulin" wraps in the narrower columns (measured). */
 .sheet.back:has(.pc-back) .cols{grid-template-columns:1.04fr 1fr 1fr 1fr 1fr!important}
-/* The four-note check panel sets the duo's height; the room comes from a little less red above and below
+/* The five-note check panel sets the duo's height; the room comes from a little less red above and below
    the lifestyle cards (shared 0.3 in / 0.18 in, as on the insulin-resistance sheet), a smaller gap over
    "Nutrient Solutions", and slightly tighter leading in the check panel. */
 .sheet.back:has(.pc-back) .band{padding-top:0.22in!important;padding-bottom:0.13in}
@@ -1219,11 +1312,11 @@ SHEET = {
             ("leaf", "Spearmint tea", "Two cups a day. In a small 30-day study, testosterone came down."),
         ],
         # Five products (the competitor sheet's count), all from NutriDyn PCOS protocols: the NutriDyn GLC 2023
-        # PCOS protocol: Myo-Inositol Complex 3 BID, Berberine Pro TID, Vit D3
-        # 5000 IU, fish oils 2 BID), the NutriDyn GLC 2026 PMOS protocol:
-        # Myo-Inositol Complex, Berberine Pro 1 cap TID, Omega Pure EPA-DHA 1000 "for the triglycerides"), both
-        # re-opened 2026-11-03, and Asher's own PCOS handout and blast (UltraBiotic Daily Multi-Strain, give it 12
-        # weeks).  Label facts, doses and claim sources per product: products.d/pcos.json (the five sell sheets).
+        # PCOS protocol (Myo-Inositol Complex 3 BID, Berberine Pro TID, Vit D3 5000 IU, fish oils 2 BID) and the
+        # NutriDyn GLC 2026 PMOS protocol (Myo-Inositol Complex, Berberine Pro 1 cap TID, Omega Pure EPA-DHA 1000
+        # "for the triglycerides"), both re-opened 2026-11-03, plus Asher's own PCOS handout and blast (UltraBiotic
+        # Daily Multi-Strain, give it 12 weeks).  Label facts, doses and claim sources per product:
+        # products.d/pcos.json (the five sell sheets).
         # Start here: Myo-Inositol Complex, the one formula made for this condition ("Support for Healthy Ovarian
         # Function"), the product Asher offers by name for PCOS patients, and the one the NutriDyn GLC 2026 PMOS
         # protocol calls "the best-supported supplement here"; [GUIDE23H] 4.7.1 notes inositol's limited harm.
@@ -1258,7 +1351,7 @@ SHEET = {
              "dose": "dose_from_db",
              "bullets": [claim("Supports a healthy gut&nbsp;microbiome"), claim("Promotes healthy hormone function")]},
         ],
-        # Four notes per edition (2026-11-03 review).  Pharmacists check interactions, pregnancy and depletions;
+        # Five notes per edition (polish round 1, 2026-11-03).  Pharmacists check interactions, pregnancy and depletions;
         # providers order labs, and a change to a blood-sugar medicine goes to the doctor who prescribes it (a DC or
         # ND handing out the practitioner edition usually cannot adjust insulin or a sulfonylurea).  The medicine
         # notes are cautions, never "adds to the drug's effect": wording that a product augments a drug action reads
@@ -1278,7 +1371,8 @@ SHEET = {
         # activity, a result for plain berberine, not for this product, hence "can slow"; in both editions, as on the
         # fatty-liver sheet.  Vitamin K: D3 5000 has 60 mcg K2 and 15 mcg K1 (ND382); vitamin K works against
         # warfarin (a vitamin K antagonist), and the ND382 label says K2 "is not recommended for patients on
-        # blood-thinning medications", so the note names warfarin and covers any blood thinner.
+        # blood-thinning medications", so the note leads with "not recommended" and covers any blood thinner
+        # (full quote and the bleeding-risk sources under "Polish round 1" below).
         # B12: [AROD16] and [ADA-S9] (periodic B12 checks on metformin).  [PALM13] the pill and B6, B12, folate,
         # magnesium and zinc.  Vitamin D: the D3 5000 label (ND382) says it exceeds the adult upper intake level
         # (4,000 IU, NIH Office of Dietary Supplements) and that "use should be short-term and include regular
@@ -1287,15 +1381,38 @@ SHEET = {
         # triglycerides at months 1 to 3.
         # "Keep any prescribed medicine" leads the medicine note in both editions (Asher's PCOS handout: "If you
         # are on medication for PCOS, keep taking it exactly as prescribed").
+        # Polish round 1 (2026-11-03): the berberine drug-enzyme caution sits under "Keep any prescribed medicine" in
+        # BOTH editions (it bears on antidepressants, statins and the pill, so it must not hide under a blood-thinner
+        # heading), with an action ("ask {who} to check your list") and a gloss ("the liver enzymes").  [GUO12]'s
+        # CYP2C9 result also bears on warfarin (CYP2C9 clears S-warfarin); the list check covers it.
+        # Blood thinners: the bullet leads with the label's own position.  ND382 (Rev. 6/24) prints: "Vitamin K2 may
+        # counteract the effects of anticoagulation therapy and is not recommended for patients on blood-thinning
+        # medications."  The softgel also has 15 mcg K1, hence "(K1 and K2)"; vitamin K works against warfarin, a
+        # vitamin K antagonist.  The other products, phrased as a risk, never as an effect on the drug: fish oil,
+        # Buckley MS et al. Ann Pharmacother 2004;38:50-2, PMID 14742793, doi:10.1345/aph.1D007 (case report: INR 2.8
+        # to 4.3 in a month after fish oil went from 1,000 to 2,000 mg a day; this sheet's dose is 2 softgels, 2.2 g
+        # omega-3 a day, ND416); fenugreek, Lambert JP, Cormier J. Pharmacotherapy 2001;21:509-12, PMID 11310527,
+        # doi:10.1592/phco.21.5.509.34492 (INR rose on boldo with fenugreek and again on rechallenge, a probable
+        # interaction by the Naranjo scale), and Hatfield J et al. Proc (Bayl Univ Med Cent) 2022;35:802-7, PMID
+        # 36304597, doi:10.1080/08998280.2022.2121575 (review: fenugreek is among the supplements tied to bleeding risk
+        # in people on anticoagulants; it found fish oil itself not tied to bleeding, so the fish-oil half rests on the
+        # Buckley case report, hence "can", never "will").  All read on PubMed 2026-11-03.
+        # Allergies: ND416 prints "Contains: Fish (Anchovy, Sardine, and Mackerel)"; [OUZIR16]: fenugreek "should be
+        # avoided for persons having peanut and chickpeas allergy because of possible cross-reactivity" (read on
+        # PubMed 2026-11-03).  "Cross-react" is said in plain words ("can trigger it").  The practitioner panel also
+        # carries the labs note, so its allergy note gets one line and names the two ingredients; bullet 1 already
+        # says Myo-Inositol Complex has fenugreek, and Omega Pure's column says fish oil.
         "rx": {
             "practitioner": [
                 "<b>Trying to get pregnant, pregnant or nursing?</b> Do not take Berberine&nbsp;Pro. Myo&#8209;Inositol&nbsp;"
                 "Complex has fenugreek, which is not advised in pregnancy: ask {who} before taking it or the rest.",
                 "<b>Keep any prescribed medicine.</b> On a blood-sugar medicine? Before you start Berberine&nbsp;Pro or "
-                "Myo&#8209;Inositol&nbsp;Complex, tell the doctor who prescribes it: the dose may need a change.",
-                "<b>On warfarin or another blood thinner?</b> The vitamin K (K1 and K2) in D3&nbsp;5000 can weaken "
-                "warfarin, and berberine can slow the enzymes (CYP3A4, 2D6, 2C9) that clear many drugs: ask {who} "
-                "first.",
+                "Myo&#8209;Inositol&nbsp;Complex, tell the doctor who prescribes it: the dose may need a change. Berberine "
+                "can also slow the liver enzymes (CYP3A4, 2D6, 2C9) that clear many drugs: ask {who} to check your list.",
+                "<b>On a blood thinner?</b> The label says D3&nbsp;5000 with K2 is not recommended: its vitamin K (K1 and "
+                "K2) works against warfarin. Fish oil and fenugreek can also add to bleeding risk. Ask {who} about a "
+                "vitamin D without&nbsp;K.",
+                "<b>Allergic to fish, peanuts or chickpeas?</b> Ask first: fish oil and fenugreek can trigger&nbsp;it.",
                 "<b>Labs now and at 3 months:</b> blood sugar (glucose tolerance or A1c), lipids, testosterone, "
                 "vitamin D (5,000&nbsp;IU is above the 4,000&nbsp;IU upper limit, so use it short-term and recheck), "
                 "plus B12 if you take metformin.",
@@ -1303,11 +1420,15 @@ SHEET = {
             "pharmacy": [
                 "<b>Trying to get pregnant, pregnant or nursing?</b> Do not take Berberine&nbsp;Pro. Myo&#8209;Inositol&nbsp;"
                 "Complex has fenugreek, which is not advised in pregnancy: ask {who} before taking it or the rest.",
-                "<b>Keep any prescribed medicine.</b> Insulin or a sulfonylurea (such as glipizide)? Ask the "
-                "prescriber first and watch for low blood sugar. Berberine can slow CYP3A4, 2D6 and 2C9, which "
-                "clear many drugs.",
-                "<b>On warfarin?</b> The vitamin K (K1 and K2) in D3&nbsp;5000 can weaken it. On&nbsp;any blood thinner, "
-                "ask first.",
+                "<b>Keep any prescribed medicine.</b> On insulin or a sulfonylurea (such as glipizide)? Ask the prescriber "
+                "before you start Berberine&nbsp;Pro or Myo&#8209;Inositol&nbsp;Complex, and watch for low blood sugar. "
+                "Berberine can also slow the liver enzymes (CYP3A4, 2D6, 2C9) that clear many drugs: ask {who} to check "
+                "your list.",
+                "<b>On a blood thinner?</b> The label says D3&nbsp;5000 with K2 is not recommended: its vitamin K (K1 and "
+                "K2) works against warfarin. Fish oil and fenugreek can also add to bleeding risk. Ask {who} about a "
+                "vitamin D without&nbsp;K.",
+                "<b>Allergic to fish, peanuts or chickpeas?</b> Omega&nbsp;Pure is fish oil, and the fenugreek in "
+                "Myo&#8209;Inositol&nbsp;Complex, a legume like peanuts, can trigger it too: ask&nbsp;first.",
                 "<b>The pill</b> can lower B6, B12, folate, magnesium and zinc, and <b>metformin</b> can lower B12 "
                 "over time: ask about a check.",
             ],

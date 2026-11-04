@@ -10,29 +10,38 @@ INSULIN RESISTANCE, share one picture grammar:
      pocket, two beta subunits cross the membrane and end in signalling domains) and
      the GLUT4 glucose door (a channel).  Spare doors wait inside the cell in STORAGE BUBBLES:
      small closed bilayers built from the same lipid unit, doors seated in the wall.
-     NORMAL: the signal brings a bubble up to the surface and the door opens there.
+     NORMAL: the signal lifts a bubble of doors to the surface, beside an open door that glucose goes
+     through (the strip says only what is drawn: the bubble arrives, a door is open).
      RESISTANCE: the signal dies out and the bubbles stay inside, so glucose piles up outside.
   -> inside the cell.
 The step text sits in its own strip under each panel; the art carries only numbered markers (same
 style as the strip bullets) and a few names in clear space.  One KEY names every symbol, the storage
 bubble included (seven pairs), each pair fenced by hairlines so no swatch can be read with its
-neighbour's label.  Below the art: what drives it / clues / where it leads, the CDC stat (only "1 in 3"
-is big) and a "Know your numbers" panel (ADA glucose and A1c ranges, a fasting-insulin write-in,
-NHLBI/AHA metabolic syndrome check).
+neighbour's label; the NORMAL strip names the moving marks (gold dashes, purple arrows, green arrow) and
+the RESISTANCE strip the grey dashes and the X.  All art labels are upright: the kit ships no Inter italic,
+so an italic label would print as a machine-slanted upright face.  Below the art: what drives it / clues /
+where it leads, the CDC stat (only "1 in 3" is big) and a "Know your numbers" panel (ADA glucose and A1c
+ranges, a fasting-insulin write-in, NHLBI/AHA metabolic syndrome check).
 
-BACK (product pass, 2026-11-03; reviewer fixes the same day): lifestyle band from Asher's blood-sugar
-handout (10-hour eating window, slow-sugar plate) plus ADA movement and sleep; four NutriDyn protocol
-products, each "In each serving" line copied from its NutriDyn sell sheet (sources in
-products.d/insulin-resistance.json): Gluco IR (Start here), Berberine Pro, UltraBiotic Akkermansia Plus,
-Omega Pure EPA-DHA 1000; a daily rhythm that keeps Berberine Pro's three before-meal doses; four notes per
-edition (pharmacy: interactions, pregnancy, depletions, live bacteria; practitioner: labs, the prescriber
-for blood-sugar medicine, the dihydroberberine overlap with pregnancy, live bacteria).  The back-page CSS
-is scoped with .sheet.back:has(.ir-back), a marker span in the lifestyle title, so it cannot leak into
-other sheets in the all-sheets bundle.
+BACK (product pass, 2026-11-03; reviewer fixes the same day and in polish round 1): lifestyle band from
+Asher's blood-sugar handout (10-hour eating window, slow-sugar plate) plus ADA movement and sleep; four
+NutriDyn protocol products, each "In each serving" line copied from its NutriDyn sell sheet (sources in
+products.d/insulin-resistance.json): Gluco IR (Start here), Berberine Pro, column 3, Omega Pure EPA-DHA 1000.
+Column 3 is Alpha-Lipoic Acid R270 (the GLC 2026 insulin-resistance protocol's pick) as soon as build.py has
+staged a print-ready photo of the real NutriDyn R270 bottle, and UltraBiotic Akkermansia Plus until then: see
+the OPEN ITEM above SHEET.  A daily rhythm keeps Berberine Pro's three before-meal doses and prints each dose
+on its own line under the product name.  Check panels (four notes, three in the practitioner edition with
+Alpha-Lipoic Acid): pharmacy: the dihydroberberine overlap with pregnancy and liver enzymes, insulin and
+sulfonylureas plus metformin's B12, thyroid medicine (Gluco IR's chromium) plus biotin and lab tests, then
+live bacteria (Akkermansia) or the alpha-lipoic acid total (ALA); practitioner: labs, the prescriber for
+blood-sugar medicine plus thyroid timing, the dihydroberberine overlap (plus the alpha-lipoic acid total with
+ALA), live bacteria (Akkermansia only).  The back-page CSS is scoped with .sheet.back:has(.ir-back), a marker
+span in the lifestyle title, so it cannot leak into other sheets in the all-sheets bundle.
 """
 import math
 import random
 
+import products
 from kit import ICONS
 from svgkit import T, defs, svg, label_bg
 
@@ -331,8 +340,10 @@ def panel(x0, normal):
     # header
     o.append(f'<rect width="{PW}" height="{HDR}" fill="{col}"/>')
     o.append(T(14, 18, "NORMAL" if normal else "INSULIN RESISTANCE", 13, 900, "#FFFFFF", ls=0.8))
+    # upright (polish round 1): the kit ships no Inter italic, so italic=True printed a machine-slanted face;
+    # the lighter weight and smaller size already set these labels apart from the panel name
     o.append(T(PW - 14, 17.6, "cells answer insulin" if normal else "cells barely answer", 10.5, 600, "#FFFFFF",
-               "end", italic=True))
+               "end"))
 
     # blood vessel: wall, lumen, endothelial nuclei, red blood cells, glucose and insulin
     o.append(f'<rect y="{V0}" width="{PW}" height="{V1 - V0}" fill="url(#irVw)"/>')
@@ -353,9 +364,9 @@ def panel(x0, normal):
         o.append(insulin(x, y) if r == INS_R else glucose(x, y))
     o.append(label_bg(8, VM - 9, 81, 18, "#FFFFFF", 0.92, 5) + T(48.5, VM + 3.8, "Blood vessel", 10.5, 800, "#8E1F28", "middle"))
 
-    # zone names
-    o.append(T(10, V1 + 19, "Outside the cell", 10, 600, "#4C6070", italic=True))
-    o.append(T(10, IN1 - 8, "Inside the cell", 10, 600, "#7A4A3C", italic=True))
+    # zone names (upright, like every label in the art: no Inter italic ships with the kit)
+    o.append(T(10, V1 + 19, "Outside the cell", 10, 600, "#4C6070"))
+    o.append(T(10, IN1 - 8, "Inside the cell", 10, 600, "#7A4A3C"))
 
     # insulin leaves the blood and lands in the receptor pocket (both panels: insulin still binds)
     o.append(f'<path d="M{REC_X},{V1 + 1} V{CY - 86}" stroke="{INS_EDGE}" stroke-width="1.8" stroke-dasharray="3 3" '
@@ -404,16 +415,20 @@ def panel(x0, normal):
         o.append(f'<path d="M{xx - 5.5},{xy - 5.5} l11,11 M{xx + 5.5},{xy - 5.5} l-11,11" stroke="#C0392B" stroke-width="3" stroke-linecap="round"/>')
         for c, doors in RB:
             o.append(bubble(*c, doors))
-        o.append(T(CAP_X, CAP_Y, "Glucose doors stuck in storage bubbles", 10, 700, "#7A4A3C", "middle", italic=True))
+        o.append(T(CAP_X, CAP_Y, "Glucose doors stuck in storage bubbles", 10, 700, "#7A4A3C", "middle"))
         o.append(marker(*M1, 1, col) + marker(*M2, 2, col) + marker(*M3R, 3, col))
 
-    # step strip: the art's symbols are named here too (green arrow, grey dashes and the X, the storage bubbles),
-    # and resistance step 3 says why that vessel holds twice the insulin (NIDDK: the pancreas makes more insulin
-    # to keep blood glucose in a healthy range).  Every line measured at 11 Inter SemiBold: 324 to 328 units
-    # against the 330 between x 32 and the frame margin.
-    steps = (["Insulin from the blood fits into its receptor.",
-              "The signal (green arrow) raises a bubble of doors. One opens.",
-              "Glucose moves into the cell for fuel."] if normal else
+    # step strip: the art's moving marks are named here (gold dashes = insulin's path to the receptor, purple
+    # arrows = glucose's path, dashed to the door and solid into the cell, green arrow, grey dashes and the X), the
+    # shapes in the KEY.  Resistance step 3 says why that vessel holds twice the insulin (NIDDK: the pancreas makes
+    # more insulin to keep blood glucose in a healthy range).  Normal step 2 says only what is drawn (polish round
+    # 1): the signal lifts a bubble of doors to the surface; step 3 sends glucose through the open door beside it.
+    # It no longer says the bubble's own door opens, which the art does not show.  Widths at 11 Inter SemiBold
+    # (getComputedTextLength in the rendered sheet), against the 330 units between x 32 and the frame margin:
+    # normal 299.5 / 327.6 / 289.4, resistance 280.7 / 323.6 / 327.0.
+    steps = (["Insulin from the blood (gold dashes) fits into its receptor.",
+              "The signal (green arrow) lifts a bubble of doors to the surface.",
+              "Glucose (purple arrows) goes in through an open door."] if normal else
              ["Insulin still fits its receptor, but the cell barely listens.",
               "The signal (grey dashes) dies at the X. Doors stay in bubbles.",
               "Glucose stays in the blood. The pancreas makes more insulin."])
@@ -645,29 +660,242 @@ BACK_CSS = r"""
 /* a little less red above and below the lifestyle cards (shared 0.3 in / 0.18 in) so the footer stays on the page */
 .sheet.back:has(.ir-back) .band{padding-top:0.22in!important;padding-bottom:0.14in}
 .sheet.back:has(.ir-back) .band h2{margin-bottom:0.07in}
-/* the morning list is the longest, bedtime holds one capsule */
-.sheet.back:has(.ir-back) .rhythm{grid-template-columns:1.4fr 1.1fr .8fr}
-/* the rx panel (four notes, 12 lines) sets the row's height: the rhythm slots grow to match it instead of
-   leaving a gap under the pill total */
+/* the rx panel (13 lines) sets the row's height: the rhythm slots grow to match it instead of leaving a gap
+   under the pill total */
 .sheet.back:has(.ir-back) .duo>.panel:first-child{display:flex;flex-direction:column}
 .sheet.back:has(.ir-back) .duo>.panel:first-child .rhythm{flex:1}
+/* each dose on its own grey line under the product name (polish round 1): run in after the name, the Evening
+   box read "Omega Pure EPA-DHA 1000 1 softgel" as one run of numbers.  A dash separator was tried and wraps
+   badly: an en dash is a break-after character, so lines ended on it or started with a stray space. */
+.sheet.back:has(.ir-back) .rhythm li em{display:block}
 /* lifestyle discs a little smaller so each bullet line holds about 28 characters */
 .sheet.back:has(.ir-back) .life.l3 .disc2{width:0.68in;height:0.68in}
+/* polish round 2: every product name takes two lines' height (8.6 pt x 1.15 x 2 = 2.3em) with its text on the
+   bottom line, so the one-line names (Gluco IR, Berberine Pro) sit level with the second line of the two-line ones
+   and all four photo panels, first bullets and IN EACH SERVING headings line up across the row.  align-content on
+   the block keeps the name one inline run: as a flex column, "Omega Pure <span class=nw>EPA-DHA</span> 1000" would
+   become three stacked flex items, one per line. */
+.sheet.back:has(.ir-back) .col .pick .nm{min-height:2.3em;align-content:end}
+/* write-in lines 0.2 in apart (shared 0.24 in), as on the GERD sheet: room for the round-2 notes */
+.sheet.back:has(.ir-back) .notes .ln{height:0.2in}
 """
 
+
+def _print_ready(key):
+    """True when build.py has staged a print-ready photo for this product key: an original at least
+    products.MIN_PRINT_PX (300 px) tall, never a SOFT 4x stopgap.  build.py stages every photo before it loads
+    the sheet modules, so the answer is known when this module runs; outside a build it is False."""
+    p = products.P.get(key, {})
+    return p.get("img_px", 0) >= products.MIN_PRINT_PX and not p.get("img_soft")
+
+
+# Column 3 (see the OPEN ITEM above SHEET): Alpha-Lipoic Acid R270 once its real NutriDyn bottle photo is staged,
+# UltraBiotic Akkermansia Plus until then.  Set ALA = False (with Asher's reason) to keep Akkermansia for good.
+ALA = _print_ready("ir_ala")
+
+# UltraBiotic Akkermansia Plus photo scale (polish round 1).  The only photo staged for it is the SOFT 4x stopgap
+# of the 160 px product-DB thumbnail (img-src/R196.png, 348x640), which is cropped to the bottle: it fills 1.00 of
+# its frame where NutriDyn's own 420 px renders on this row fill 0.91 (Gluco IR, Omega; Berberine Pro 0.89; alpha
+# channel measured 2026-11-03), so at the shared 0.98 in photo height it printed about 10% taller and wider than
+# the 150-capsule Gluco IR bottle.  While that stopgap is the photo, draw it at 0.91 of the height, centred
+# (0.892 in + 0.044 in above and below = the shared 0.98 in), so the row keeps one scale and the names stay level.
+# The rule switches itself off when a print-ready photo replaces the stopgap.
+AKK_FIT_CSS = ('.sheet.back:has(.ir-back) .pick img[alt*="Akkermansia"]{height:0.892in;margin:0.044in 0}'
+               if products.P.get("ir_akk", {}).get("img_soft") else "")
+
+# Rhythm slot widths: the morning list is the longest; Bedtime holds the Akkermansia capsule, or nothing at all
+# with Alpha-Lipoic Acid (its one capsule goes before breakfast), when the empty slot narrows.
+RHYTHM_CSS_ALA = ".sheet.back:has(.ir-back) .rhythm{grid-template-columns:1.75fr 1.2fr .55fr}"
+RHYTHM_CSS_AKK = ".sheet.back:has(.ir-back) .rhythm{grid-template-columns:1.4fr 1.1fr .8fr}"
+RHYTHM_CSS = RHYTHM_CSS_ALA if ALA else RHYTHM_CSS_AKK
+
+# ------------------------------------------------------------------ back-page columns
+# Products (4, the competitor sheet's count), all from NutriDyn protocols: Asher's blood-sugar handout and "Own
+# Every Protocol" HbA1c path (Gluco IR + Berberine Pro); the NutriDyn GLC 2026 insulin-resistance protocol PDF
+# (Berberine Pro, Alpha-Lipoic Acid 200 mg, Omega Pure EPA-DHA 1000 where triglycerides are raised); the NutriDyn
+# GLC 2024 metabolic-syndrome protocol PDF (UltraBiotic Akkermansia Plus).  Competitor categories: chromium AND
+# alpha lipoic acid -> Gluco IR (600 mcg chromium picolinate, 300 mg alpha lipoic acid) and Alpha-Lipoic Acid R270,
+# berberine -> Berberine Pro; vanadyl sulfate has no NutriDyn equivalent (scratchpad products/needs.md).
+# Label facts, doses and sources: products.d/insulin-resistance.json.  Card claims are the NutriDyn sell sheets' own
+# structure/function wording (ND506, ND1130, ND1194, ND283, ND416), all read 2026-11-03; ND1130, ND1194 and ND416
+# re-opened for the review.
+# Start here: Gluco IR, Asher's lead insulin-resistance formula ("IR = Insulin Resistance"), which carries the
+# chromium, alpha-lipoic acid and dihydroberberine in one bottle.
+COL_GLUCO = {
+    # needsub spells out alpha-lipoic acid (203 px of the 206 px line); cinnamon is in the label line
+    "p": "ir_gluco_ir", "need": "All-in-one glucose support",
+    "needsub": "dihydroberberine, chromium, alpha-lipoic acid", "start": True, "dose": "dose_from_db",
+    # both bullets open with the claim verb, so build.py ties each to the FDA disclaimer diamond
+    "bullets": ["Promotes healthy blood glucose levels already in the normal range",
+                "Supports the normal action of insulin (chromium)"]}
+# ND1130: dihydroberberine "works primarily through the activation of AMPK, a central regulator of cellular energy
+# balance" -> "Cell energy switch"
+COL_BERBERINE = {
+    "p": "ir_berberine", "need": "Cell energy switch", "needsub": "dihydroberberine + cinnamon", "dose": "dose_from_db",
+    "bullets": ["Promotes healthy glucose metabolism", "Supports heart health and healthy lipid balance"]}
+# ND1194: "Support healthy glucose metabolism", "Promote effective weight management", "Promote healthy gut barrier
+# function"
+COL_AKK = {
+    "p": "ir_akk", "need": "Friendly gut bacteria", "needsub": "Akkermansia + 4 probiotic strains", "dose": "dose_from_db",
+    "bullets": ["Supports healthy glucose metabolism", "Supports healthy weight and a healthy gut lining"]}
+# ND283 Rev. 8/24 (re-checked by the 2026-11-03 reviewer): 200 mg per capsule, "Adults take one capsule daily";
+# claims "Supports healthy blood sugar balance" and alpha-lipoic acid "supporting antioxidant activity in the body
+# and energy production from carbohydrates" (bullet 2 and the need line).
+COL_ALA = {
+    "p": "ir_ala", "need": "Antioxidant energy support", "needsub": "alpha-lipoic acid 200 mg", "dose": "dose_from_db",
+    "bullets": ["Supports healthy blood sugar balance", "Supports energy production from carbs"]}
+# The GLC 2026 protocol uses it "where triglycerides are raised", but ND416 (Rev. 4/25, re-opened) makes no
+# triglyceride claim, so neither does the card: bullet 1 is ND416's "Healthy cardiovascular function"; bullet 2 is
+# ND416's EPA and DHA as "integral components of membrane phospholipids", found "especially in cell membranes" (the
+# membrane the front page draws).  The need names the nutrient (ND416: omega-3s are "essential" because the body
+# does not make them) instead of the old "Healthy blood fats", which implied the triglyceride claim.  "in the body"
+# keeps "membranes" off a line of its own.
+COL_OMEGA = {
+    "p": "ir_omega", "need": "Essential omega-3 fats", "needsub": "EPA + DHA from fish oil", "dose": "dose_from_db",
+    "bullets": ["Supports healthy cardiovascular function", "Supports healthy cell membranes in the body"]}
+
+# ------------------------------------------------------------------ check panels
+# Pharmacists check interactions, pregnancy and depletions; providers order labs, and a change to a blood-sugar
+# medicine goes to the doctor who prescribes it (most DCs and NDs cannot adjust insulin or a sulfonylurea).  The
+# medicine notes are cautions only ("tell the doctor who prescribes it", "check your sugar as they direct", "watch
+# for low blood sugar"), never "the dose may need a change" or "adds to the drug's effect": wording that a product
+# changes how much drug is needed reads as an implied disease claim (21 CFR 101.93(g)(2)).  Product names carry
+# no-break spaces so "Gluco / IR" cannot split.
+# Sources: dihydroberberine 100 mg per 5 Gluco IR capsules (ND506) + 100 mg per Berberine Pro capsule x 3 (ND1130)
+# = 400 mg a day.  Alpha-lipoic acid (ALA lineup): 300 mg per 5 Gluco IR capsules (ND506) + 200 mg per R270 capsule,
+# one a day (ND283) = 500 mg a day.  Guo Y et al., Eur J Clin Pharmacol 2012;68:213-217, PMID 21870106,
+# doi:10.1007/s00228-011-1108-2 (berberine 300 mg three times daily for 2 weeks lowered CYP2D6, 2C9 and 3A4
+# activity: everyday drugs, not just cyclosporine, hence "some drugs (warfarin and cyclosporine, for two)" and "your
+# full medicine list"; a plain-berberine result, so the sheet says "can slow" / "can change"); Wu X et al., Eur J Clin
+# Pharmacol 2005;61:567-572, PMID 16133554, doi:10.1007/s00228-005-0952-3 (berberine 0.2 g three times daily raised
+# cyclosporine levels in kidney-transplant patients).  Low-sugar risk on insulin and sulfonylureas: ADA Standards of
+# Care 2025, Sections 6 and 9; NIH ODS chromium fact sheet; MedlinePlus alpha-lipoic acid, gymnema and berberine
+# monographs (all in Gluco IR; berberine also in Berberine Pro).
+# Thyroid medicine: chromium picolinate taken with levothyroxine significantly lowered thyroxine absorption, and
+# the authors advise separating the two by several hours (John-Kalarickal J, Pearlman G, Carlson HE, Thyroid
+# 2007;17:763-765, PMID 17725434, doi:10.1089/thy.2007.0060, read on PubMed 2026-11-03).  Gluco IR's 600 mcg
+# chromium is chromium picolinate (ND506).
+# Pregnancy and breastfeeding: berberine displaces bilirubin from albumin about tenfold more than phenylbutazone and
+# is "best avoided in jaundiced neonates and pregnant women" (Chan E, Biol Neonate 1993;63:201-208, PMID 8513024,
+# doi:10.1159/000243932, read on PubMed 2026-11-03); MedlinePlus Berberine (Natural Medicines) rates it likely
+# unsafe in pregnancy and breastfeeding (newborn kernicterus), per the 2026-11-03 review (medlineplus.gov is outside
+# this session's network, not re-opened).  The ND506 and ND1130 labels say only "If you are pregnant, nursing ...
+# consult".  Same caution as gut_overgrowth's "Pregnant or nursing?" line for its berberine products.
+# Live bacteria (Akkermansia lineup only): Akkermansia Plus is 80% pasteurized and 20% live A. muciniphila (100
+# million CFU live) plus live B. animalis HN019 and B420, L. rhamnosus GG and C. butyricum (ND1194, re-opened
+# 2026-11-03).  Probiotics carry more risk with a weak immune system (NCCIH, "Probiotics: What You Need To Know",
+# per the review, not re-opened; Doron S, Snydman DR, Clin Infect Dis 2015;60 Suppl 2:S129-34, PMID 25922398,
+# systemic infections in susceptible people; Yelin I et al., Nat Med 2019;25:1728-1732, PMID 31700189, bacteremia
+# traced to the capsule's strain in ICU patients).  Cyclosporine users are immune-suppressed.
+# Metformin and B12: ADA Standards of Care 2025, Section 9 ("consider periodic measurement of vitamin B12").
+# Biotin: FDA Safety Communication 2017, updated 2019 (biotin can cause incorrect results in some lab tests);
+# Gluco IR has 2,000 mcg (ND506).  Recheck at about 3 months: A1c reflects about 3 months (front).
+# Polish round 2 (2026-11-04), from the second review:
+# Blood thinners.  The plan stacks three things that matter on one: 400 mg a day of dihydroberberine, 2,000 mg EPA +
+# DHA a day from two Omega Pure softgels (ND416) and 500 mg fenugreek in Gluco IR (ND506).  Guo 2012 (above) lowered
+# CYP2C9, the enzyme that clears S-warfarin (Kaminsky LS, Zhang ZY, Pharmacol Ther 1997;73:67-74, PMID 9014207,
+# doi:10.1016/s0163-7258(96)00140-4: "S-warfarin is metabolized primarily by CYP2C9", and warfarin's effect changes
+# mainly when S-warfarin's metabolism does), so warfarin is named beside cyclosporine.  Fish oil: Buckley MS et al.,
+# Ann Pharmacother 2004;38:50-52, PMID 14742793, doi:10.1345/aph.1D007 (case report: INR 2.8 to 4.3 within a month
+# after fish oil went from 1,000 to 2,000 mg a day on warfarin).  Fenugreek: Lambert JP, Cormier J, Pharmacotherapy
+# 2001;21:509-512, PMID 11310527, doi:10.1592/phco.21.5.509.34492 (INR rose on boldo with fenugreek, and again on
+# rechallenge); Hatfield J et al., Proc (Bayl Univ Med Cent) 2022;35:802-807, PMID 36304597,
+# doi:10.1080/08998280.2022.2121575 (fenugreek is among the supplements tied to bleeding in people on
+# anticoagulants; it found fish oil itself not tied to bleeding, so the fish-oil half rests on the case report,
+# hence "can", never "will").  Same warning and sources as the PCOS sheet, which carries the same fish oil and
+# fenugreek.  "The enzymes", not "the liver enzymes": on a sheet that names fatty liver, "liver enzymes" reads as the
+# ALT/AST blood test (the fatty-liver sheet avoids the phrase for the same reason).
+# Heading: Gluco IR and Berberine Pro share dihydroberberine AND Ceylon cinnamon (500 mg powder, ND506; 84 mg bark
+# extract, ND1130; Berberine Pro has only those two ingredients), so "Two products, one ingredient" was wrong; the
+# notes now name the ingredient that matters ("Both have dihydroberberine").  The ALA lineup's "Shared ingredients"
+# was already right.
+# Thyroid timing: levothyroxine is taken on an empty stomach, one-half to one hour before breakfast (levothyroxine
+# prescribing information), so the printed rhythm (3 Gluco IR capsules with breakfast) would put the chromium within
+# an hour of a morning thyroid pill.  John-Kalarickal 2007 (above): separate them "by several hours".  Both editions
+# now say what to do: with a morning thyroid pill, Gluco IR goes to lunch and dinner (about 4 to 5 hours later).
+# Allergies: Omega Pure "Contains: Fish (Anchovy, Sardine, and Mackerel)" (ND416).  Fenugreek is a legume:
+# Faeste CK et al., J Allergy Clin Immunol 2009;123:187-194, PMID 18930518, doi:10.1016/j.jaci.2008.09.012 (most
+# peanut-allergic sera also bound fenugreek, "a high rate of cross-reactivity to peanut"); Patil SP et al., Ann
+# Allergy Asthma Immunol 1997;78:297-300, PMID 9087156, doi:10.1016/S1081-1206(10)63185-7 (fenugreek allergy with
+# chickpea sensitivity); Ouzir M et al., Food Chem Toxicol 2016;96:145-154, PMID 27498339,
+# doi:10.1016/j.fct.2016.08.003 (fenugreek "should be avoided for persons having peanut and chickpeas allergy because
+# of possible cross-reactivity").  All read on PubMed 2026-11-04.  The NIH NCCIH fenugreek page the review cites is
+# outside this session's network and was not re-opened.  "Cross-react" is said in plain words ("can trigger it
+# too"), as on the PCOS sheet.
+# Fit, measured in the rendered sheet (print media): see BACK_CSS.  No note ends on a one-word line.
+G, B = "Gluco&nbsp;IR", "Berberine&nbsp;Pro"
+RX_LABS = (f"<b>Labs now and in about 3 months:</b> fasting glucose, A1c, fasting insulin and lipids, plus B12 if you "
+           f"take metformin. {G}&rsquo;s biotin can throw off some tests: tell the lab.")
+# "On blood sugar medicine?" (the lifestyle band's words) keeps the note to 2 lines before the thyroid line
+RX_MEDS = ("<b>On blood sugar medicine?</b> Tell the doctor who prescribes it before you start, and check your sugar "
+           f"as they direct. <b>Thyroid medicine?</b> Keep {G} several hours away from it: with a morning thyroid "
+           "pill, take the 5 capsules with lunch and dinner.")
+RX_TWO_PR = (f"<b>Both have dihydroberberine.</b> {G} and {B} give 400&nbsp;mg a day together: avoid both if "
+             "pregnant or breastfeeding. It can change how some drugs clear (warfarin and cyclosporine, for two). "
+             "Fish oil and fenugreek can add to bleeding on a blood thinner: show {who} your full medicine list.")
+RX_SHARED_PR = (f"<b>Shared ingredients.</b> {G} and {B} both have dihydroberberine, 400&nbsp;mg a day together: "
+                "avoid both if pregnant or breastfeeding. It can change how some drugs clear (warfarin and "
+                "cyclosporine, for two). Fish oil and fenugreek can add to bleeding on a blood thinner: show "
+                f"{{who}} your full medicine list. {G} also has 300&nbsp;mg alpha-lipoic acid, so with the "
+                "200&nbsp;mg capsule it is 500&nbsp;mg a day in total.")
+RX_TWO_PH = (f"<b>Both have dihydroberberine.</b> {G} and {B} give 400&nbsp;mg a day together: avoid both if "
+             "pregnant or breastfeeding. It can slow the enzymes (CYP3A4, 2D6, 2C9) that clear drugs such as warfarin "
+             "and cyclosporine. Fish oil and fenugreek can add to bleeding on a blood thinner: bring your full list.")
+RX_ALA_PH = (f"<b>Alpha-lipoic acid:</b> {G} already gives 300&nbsp;mg, so with the 200&nbsp;mg capsule it is "
+             "500&nbsp;mg a day in total.")
+RX_SU_PH = ("<b>Insulin or a sulfonylurea</b> (such as glipizide)? Ask your prescriber before you start, and watch for "
+            "low blood sugar. <b>Metformin</b> can lower B12 over time: ask for a check.")
+RX_THYROID_PH = (f"<b>Thyroid medicine?</b> Take it several hours apart from {G} (with a morning thyroid pill, move "
+                 f"{G} to lunch and dinner): its chromium can lower how much you absorb. {G}&rsquo;s biotin can "
+                 "throw off some lab tests: tell the lab.")
+RX_LIVE = "<b>Weak immune system</b> or on cyclosporine? Ask {who} before Akkermansia&nbsp;Plus: it has live bacteria."
+RX_ALLERGY = ("<b>Allergic to fish, peanuts or chickpeas?</b> Ask {who} first: Omega&nbsp;Pure is fish oil, and the "
+              f"fenugreek in {G} can trigger it too.")
+
+# The two lineups (OPEN ITEM below): Akkermansia in column 3 until the R270 photo is staged, then Alpha-Lipoic Acid.
+# The allergy note comes last in every list: it is the lowest priority of the round-2 fixes.
+COLS_AKK = [COL_GLUCO, COL_BERBERINE, COL_AKK, COL_OMEGA]
+COLS_ALA = [COL_GLUCO, COL_BERBERINE, COL_ALA, COL_OMEGA]
+RX_AKK_LINEUP = {"practitioner": [RX_LABS, RX_MEDS, RX_TWO_PR, RX_LIVE, RX_ALLERGY],
+                 "pharmacy": [RX_TWO_PH, RX_SU_PH, RX_THYROID_PH, RX_LIVE, RX_ALLERGY]}
+RX_ALA_LINEUP = {"practitioner": [RX_LABS, RX_MEDS, RX_SHARED_PR, RX_ALLERGY],
+                 "pharmacy": [RX_TWO_PH, RX_ALA_PH, RX_SU_PH, RX_THYROID_PH, RX_ALLERGY]}
+
+# OPEN ITEM, ALPHA-LIPOIC ACID (2026-11-03 review; polish round 1).  The protocol brief's lineup is Gluco IR,
+# Berberine Pro, Alpha-Lipoic Acid R270 (200 mg) and then Omega Pure 1000 or Akkermansia.  The NutriDyn GLC 2026
+# insulin-resistance protocol PDF lists Berberine Pro, Cardio-Metabolic, Omega Pure 1000 (where triglycerides are
+# raised) and Alpha-Lipoic Acid 200 mg; Akkermansia comes from the GLC 2024 metabolic-syndrome protocol.  So column 3
+# should be R270, and the sheet switches to it by itself: ALA (above) turns True once build.py has staged a
+# print-ready photo for ir_ala, an original at least 300 px tall (products.MIN_PRINT_PX; the old 600 px bar is
+# retired), never a SOFT stopgap.  Until then column 3 stays Akkermansia: its photo is SOFT but it is the right
+# bottle, while no NutriDyn R270 photo exists here at all, and a sheet must never print a missing or wrong bottle.
+# What it needs: the real NutriDyn R270 bottle (100 capsules) saved as build/img-src/ir_ala.png.  Dropbox
+# /NutriDyn/Product Images/Product Images (1)/ holds it as R270R.png and R270_Web, byte sizes in the range of that
+# folder's 420 px web renders (which pass the 300 px rule); the Dropbox content host is blocked from these
+# sessions, so central photo staging (or Asher) must fetch it and check by eye that it is the 100-capsule NutriDyn
+# bottle.  Never stage scratchpad products/img/R270.png: it shows the Progressive Professional P872 bottle (60
+# capsules), another brand.  Both lineups are built and measured: with ALA, column 3 is COL_ALA, the live-bacteria
+# notes go, the overlap notes add Gluco IR's 300 mg of alpha-lipoic acid (500 mg a day in total), the pharmacy
+# edition gets RX_ALA_PH and the empty Bedtime slot narrows (RHYTHM_CSS).  If Asher would rather keep Akkermansia,
+# set ALA = False above and write his reason here instead of the photo reason.
 SHEET = {
     "slug": "insulin-resistance", "code": "ND-CM-203", "theme": "metab", "series": "Metabolic Health Series",
     "order": 5,
     "title": "Understanding Insulin Resistance", "sub": None,
-    # NIDDK, Insulin Resistance & Prediabetes: the pancreas makes more insulin to keep blood glucose in a healthy
-    # range; over time it cannot keep up and glucose rises into prediabetes and type 2 diabetes.
-    "intro": ("Insulin is a hormone your pancreas releases, especially after you eat. It is a messenger: it tells your "
-              "cells to open their <b>glucose doors</b>, so sugar (glucose) can leave your blood and go into the cells "
-              "for fuel. With <b>insulin resistance</b>, the cells stop listening well. Sugar starts to back up, so the "
-              "pancreas pushes out more and more insulin to keep blood sugar normal. This can go on quietly for years "
-              "before blood sugar climbs high enough to be called prediabetes or type 2 diabetes."),
+    # NIDDK, Insulin Resistance & Prediabetes: insulin resistance is when cells in your muscles, fat and liver do
+    # not respond well to insulin and cannot easily take up glucose from the blood (so "cells in your muscles, fat
+    # and liver", not every cell: brain and red blood cells take in sugar without insulin); the pancreas makes more
+    # insulin to keep blood glucose in a healthy range; over time it cannot keep up and glucose rises into
+    # prediabetes and type 2 diabetes.  Still 4 lines (measured: the last line is unchanged, 653 of 735 px).
+    "intro": ("Insulin is a hormone your pancreas releases, especially after you eat. It tells cells in your "
+              "muscles, fat and liver to open their <b>glucose doors</b>, so sugar (glucose) can leave your blood "
+              "and go into the cells for fuel. With <b>insulin resistance</b>, the cells stop listening well. Sugar "
+              "starts to back up, so the pancreas pushes out more and more insulin to keep blood sugar normal. This "
+              "can go on quietly for years before blood sugar climbs high enough to be called prediabetes or type 2 "
+              "diabetes."),
+
     "front": front,
-    "css": CSS + BACK_CSS,
+    "css": CSS + BACK_CSS + RHYTHM_CSS + AKK_FIT_CSS,
     "back": {
         # the span marks this sheet's back page for the scoped CSS (.sheet.back:has(.ir-back))
         "life_title": 'Lifestyle-Based Medicine<span class="ir-back"></span>',
@@ -705,117 +933,9 @@ SHEET = {
              ["Walk 10 minutes after meals", "Strength training 2 to 3 days a week",
               "Stand up every 30 minutes", "Sleep 7 to 9 hours a night"]),
         ],
-        # Products (4, the competitor sheet's count), all from NutriDyn protocols: Asher's blood-sugar handout and
-        # "Own Every Protocol" HbA1c path (Gluco IR + Berberine Pro), the NutriDyn GLC 2026 insulin-resistance
-        # protocol PDF: Berberine Pro, Alpha-Lipoic Acid 200 mg, Omega Pure
-        # EPA-DHA 1000 where triglycerides are raised) and the NutriDyn GLC 2024 metabolic-syndrome protocol PDF
-        #: UltraBiotic Akkermansia Plus).
-        # Competitor categories: chromium AND alpha lipoic acid -> Gluco IR (600 mcg chromium picolinate, 300 mg
-        # alpha lipoic acid), berberine -> Berberine Pro; vanadyl sulfate has no NutriDyn equivalent (scratchpad
-        # products/needs.md).
-        # OPEN ITEM, ALPHA-LIPOIC ACID (2026-11-03 review): the protocol brief's lineup is Gluco IR, Berberine Pro,
-        # Alpha-Lipoic Acid R270 and Omega OR Akkermansia.  R270 (200 mg, label facts in products.d as ir_ala) is
-        # held back only for its photo: the one staged R270 image is another brand's bottle (Progressive
-        # Professional P872, 60 capsules) and must not be used.  The R196 Akkermansia photo is a 160 px thumbnail
-        # too, so the swap waits on a print master for either bottle.  Dropbox /NutriDyn/Product Images/Product
-        # Images (1)/ holds R270R.png and R196.png
-        #, but both sit in the byte range of that folder's 420 px web
-        # renders (its _Web files match the repo's 420 px bottles byte for byte), so they are probably web size,
-        # not 600 px print masters; their pixel size is unverified (content host blocked, metadata has none).
-        # When a real R270 master is staged as build/img-src/ir_ala.png: replace the ir_akk column with
-        #   {"p": "ir_ala", "need": "Antioxidant energy support", "needsub": "alpha-lipoic acid 200 mg",
-        #    "dose": "dose_from_db", "bullets": ["Supports healthy blood sugar balance", "Supports energy production"]}
-        # (ND283's own claims), keep Omega as column 4, add "Gluco IR already gives 300 mg alpha-lipoic acid, so
-        # 500 mg a day in total" to the overlap note, drop the live-bacteria note, narrow the now-empty Bedtime slot
-        # in BACK_CSS, and re-render: the Morning box grows by one line.
-        # Label facts, doses and sources: products.d/insulin-resistance.json.  Card claims are the NutriDyn sell
-        # sheets' own structure/function wording (ND506, ND1130, ND1194, ND416), all read 2026-11-03; ND1130, ND1194
-        # and ND416 re-opened for the review.
-        # Start here: Gluco IR, Asher's lead insulin-resistance formula ("IR = Insulin Resistance"), which carries
-        # the chromium, alpha-lipoic acid and dihydroberberine in one bottle.
-        "cols": [
-            # needsub spells out alpha-lipoic acid (203 px of the 206 px line); cinnamon is in the label line
-            {"p": "ir_gluco_ir", "need": "All-in-one glucose support",
-             "needsub": "dihydroberberine, chromium, alpha-lipoic acid", "start": True, "dose": "dose_from_db",
-             # both bullets open with the claim verb, so build.py ties each to the FDA disclaimer diamond
-             "bullets": ["Promotes healthy blood glucose levels already in the normal range",
-                         "Supports the normal action of insulin (chromium)"]},
-            # ND1130: dihydroberberine "works primarily through the activation of AMPK, a central regulator of
-            # cellular energy balance" -> "Cell energy switch"
-            {"p": "ir_berberine", "need": "Cell energy switch", "needsub": "dihydroberberine + cinnamon",
-             "dose": "dose_from_db",
-             "bullets": ["Promotes healthy glucose metabolism", "Supports heart health and healthy lipid balance"]},
-            # ND1194: "Support healthy glucose metabolism", "Promote effective weight management", "Promote
-            # healthy gut barrier function"
-            {"p": "ir_akk", "need": "Friendly gut bacteria", "needsub": "Akkermansia + 4 probiotic strains",
-             "dose": "dose_from_db",
-             "bullets": ["Supports healthy glucose metabolism", "Supports healthy weight and a healthy gut lining"]},
-            # The GLC 2026 protocol uses it "where triglycerides are raised", but ND416 (Rev. 4/25, re-opened) makes no
-            # triglyceride claim, so neither does the card: bullet 1 is ND416's "Healthy cardiovascular function";
-            # bullet 2 is ND416's EPA and DHA as "integral components of membrane phospholipids", found "especially
-            # in cell membranes" (the membrane the front page draws).  The need names the nutrient (ND416: omega-3s
-            # are "essential" because the body does not make them) instead of the old "Healthy blood fats", which
-            # implied the triglyceride claim.  "in the body" keeps "membranes" off a line of its own.
-            {"p": "ir_omega", "need": "Essential omega-3 fats", "needsub": "EPA + DHA from fish oil",
-             "dose": "dose_from_db",
-             "bullets": ["Supports healthy cardiovascular function",
-                         "Supports healthy cell membranes in the body"]},
-        ],
-        # Four notes per edition (2026-11-03 review).  Pharmacists check interactions, pregnancy and depletions;
-        # providers order labs, and a change to a blood-sugar medicine goes to the doctor who prescribes it (most
-        # DCs and NDs cannot adjust insulin or a sulfonylurea).  The medicine notes are cautions, never "adds to
-        # the drug's effect": wording that a product augments a drug action reads as an implied disease claim
-        # (21 CFR 101.93(g)(2)).  Product names carry no-break spaces so "Gluco / IR" cannot split.
-        # Sources: dihydroberberine 100 mg per 5 Gluco IR capsules (ND506) + 100 mg per Berberine Pro capsule x 3
-        # (ND1130) = 400 mg a day.  Guo Y et al., Eur J Clin Pharmacol 2012;68:213-217, PMID 21870106,
-        # doi:10.1007/s00228-011-1108-2 (berberine 300 mg three times daily for 2 weeks lowered CYP2D6, 2C9 and 3A4
-        # activity: a plain-berberine result, so the sheet says "can slow" / "can change"); Wu X et al., Eur J Clin
-        # Pharmacol 2005;61:567-572, PMID 16133554, doi:10.1007/s00228-005-0952-3 (berberine 0.2 g three times daily
-        # raised cyclosporine levels in kidney-transplant patients).  Low-sugar risk on insulin and sulfonylureas:
-        # ADA Standards of Care 2025, Sections 6 and 9; NIH ODS chromium fact sheet; MedlinePlus alpha-lipoic acid,
-        # gymnema and berberine monographs (all in Gluco IR; berberine also in Berberine Pro).
-        # Pregnancy and breastfeeding: berberine displaces bilirubin from albumin about tenfold more than
-        # phenylbutazone and is "best avoided in jaundiced neonates and pregnant women" (Chan E, Biol Neonate
-        # 1993;63:201-208, PMID 8513024, doi:10.1159/000243932, read on PubMed 2026-11-03); MedlinePlus Berberine
-        # (Natural Medicines) rates it likely unsafe in pregnancy and breastfeeding (newborn kernicterus), per the
-        # 2026-11-03 review (medlineplus.gov is outside this session's network, not re-opened).  The ND506 and
-        # ND1130 labels say only "If you are pregnant, nursing ... consult".  Same caution as gut_overgrowth's
-        # "Pregnant or nursing?" line for its berberine products.
-        # Live bacteria: Akkermansia Plus is 80% pasteurized and 20% live A. muciniphila (100 million CFU live) plus
-        # live B. animalis HN019 and B420, L. rhamnosus GG and C. butyricum (ND1194, re-opened 2026-11-03).
-        # Probiotics carry more risk with a weak immune system (NCCIH, "Probiotics: What You Need To Know", per the
-        # review, not re-opened; Doron S, Snydman DR, Clin Infect Dis 2015;60 Suppl 2:S129-34, PMID 25922398,
-        # systemic infections in susceptible people; Yelin I et al., Nat Med 2019;25:1728-1732, PMID 31700189,
-        # bacteremia traced to the capsule's strain in ICU patients).  Cyclosporine users are immune-suppressed.
-        # Metformin and B12: ADA Standards of Care 2025, Section 9 ("consider periodic measurement of vitamin B12").
-        # Biotin: FDA Safety Communication 2017, updated 2019 (biotin can cause incorrect results in some lab
-        # tests); Gluco IR has 2,000 mcg (ND506).  Recheck at about 3 months: A1c reflects about 3 months (front).
-        # Fit, measured in the rendered PDF: 12 lines per edition (was 11), no one-word last line; the free line
-        # comes from the lifestyle title above.
-        "rx": {
-            "practitioner": [
-                "<b>Labs now and in about 3 months:</b> fasting glucose, A1c, fasting insulin and lipids, plus B12 "
-                "if you take metformin. Gluco&nbsp;IR&rsquo;s biotin can throw off some tests: tell the lab.",
-                "<b>On medicine for blood sugar?</b> Before you start, tell the doctor who prescribes it: the dose "
-                "may need a change. Check your sugar more often at first.",
-                "<b>Two products, one ingredient.</b> Gluco&nbsp;IR and Berberine&nbsp;Pro both have "
-                "dihydroberberine, 400&nbsp;mg a day together. Avoid both if pregnant or breastfeeding. It can "
-                "change how drugs like cyclosporine clear: ask {who} if you need both.",
-                "<b>Weak immune system</b> or on cyclosporine? Ask {who} before Akkermansia&nbsp;Plus: it has "
-                "live bacteria.",
-            ],
-            "pharmacy": [
-                "<b>Two products, one ingredient.</b> Gluco&nbsp;IR and Berberine&nbsp;Pro both contain "
-                "dihydroberberine, 400&nbsp;mg a day together. Avoid both if pregnant or breastfeeding. It can "
-                "slow the liver enzymes (CYP3A4, 2D6, 2C9) that clear drugs such as cyclosporine: bring your "
-                "full list.",
-                "<b>Insulin or a sulfonylurea</b> (such as glipizide)? Ask your prescriber before you start, and "
-                "watch for low blood sugar.",
-                "<b>Metformin</b> can lower B12 over time: ask about a regular check. Gluco&nbsp;IR has "
-                "2,000&nbsp;mcg biotin, which can throw off some lab tests: tell the lab.",
-                "<b>Weak immune system</b> or on cyclosporine? Ask {who} before Akkermansia&nbsp;Plus: it has "
-                "live bacteria.",
-            ],
-        },
+        # column 3: Alpha-Lipoic Acid R270 once its photo is staged, else UltraBiotic Akkermansia Plus (OPEN ITEM)
+        "cols": COLS_ALA if ALA else COLS_AKK,
+        # sources and fit: the check-panel comments above SHEET
+        "rx": RX_ALA_LINEUP if ALA else RX_AKK_LINEUP,
     },
 }

@@ -58,9 +58,10 @@ front review's small fixes are applied):
 Review round 2026-11-03 (independent reviewer; the front's design is unchanged):
   * public repo: no mail-thread, Drive or Dropbox file ids in this module or in
     products.d/mold.json; every note cites its document by title and date;
-  * Binder Pro's two doses are tied to meals ("2 hours after breakfast and supper") on the dose
-    bar and in the daily rhythm, so the Bedtime header cannot mislead; the morning dose is listed
-    last in the Morning box (scoped CSS), after the before-breakfast and breakfast items;
+  * Binder Pro's two doses are tied to meals ("2 hours after breakfast and supper") in the daily
+    rhythm (and, until polish round 1, on the dose bar), so the Bedtime header cannot mislead; the
+    morning dose is listed last in the Morning box (scoped CSS), after the before-breakfast and
+    breakfast items;
   * check panel, both editions: a new line on gallstones, a blocked bile duct or a stomach ulcer
     before Lipo-Flow (German Commission E); practitioner edition: warfarin goes to whoever manages
     it, and tests "add clues" (no validated clinical mycotoxin test: AWMF mold guideline); the
@@ -69,6 +70,37 @@ Review round 2026-11-03 (independent reviewer; the front's design is unchanged):
     (ND850's wording); "Stay regular" draws a large intestine (mo_colon), not the kit's stomach;
     GI Defend's and glutathione's facts lead with the serving, like the other three;
   * the two free binders really are the size of the caught ones (R 13.6).
+
+Polish round 1, 2026-11-03 (independent reviewer; the design is unchanged):
+  * Binder Pro's dose bar names its frequency like the other four: "2 capsules twice daily" over
+    "between meals" (ND1610); the daily rhythm keeps the exact "2 hours after breakfast / supper";
+  * Mito Recharge's facts print the label's own lipoic acid amounts (75 mg alpha-lipoic + 45 mg
+    R-lipoic acid) instead of a 120 mg sum the bottle never shows; taurine is left off for room;
+  * check panel: the pharmacy edition's warfarin line also sends the patient to whoever manages the
+    warfarin, and its Lipo-Flow line adds the doctor; both editions' Lipo-Flow line carries the
+    Commission E artichoke-leaf allergy clause, in plain words "a ragweed allergy";
+  * plain words in the column sub-lines: GI Defend "immune proteins from cows", Lipo-Flow "artichoke,
+    dandelion bitters" (its two largest bitter herbs).
+
+Polish round 2, 2026-11-04 (independent reviewer; the design is unchanged; measured in the DOM, both editions):
+  * check panel, both editions, last line: "Pregnant or nursing? Ask {who} first." (all five labels carry the
+    pregnant-or-nursing caution) and, on its own line, the IBD sheet's "Beef or red-meat (alpha-gal) allergy?
+    Skip GI Defend." (GI Defend is made from beef serum).  Room: the pharmacy binder line drops "{Who} can help
+    you time it.", the practitioner tests line ends "then adjust your plan.", and the notes lines sit 0.19in
+    apart; the panel runs 2/3/2/2/2 lines and the page ends 2.0 px above its footer, which stays at 1021.5 px;
+  * practitioner Lipo-Flow line: "Ask {who} or your doctor" (Commission E wants a physician first with
+    gallstones; this edition also goes to DCs and NDs), as the pharmacy edition already said;
+  * dose bars: Binder Pro "between meals, as directed" (ND1610's 4 a day is twice the ND1141 label's 2) and
+    Lipo-Flow "with meals, as directed" (under the label's 2 tablets three times daily), so neither bar passes a
+    protocol dose off as the bottle's; Mito Recharge's facts name "acetyl-L-carnitine HCl", as ND812 prints it;
+  * the five "In each serving" headings sit on one line (538.6 px): GI Defend's second bullet is two lines
+    ("Helps bind toxins in the gut") and every bullet list takes the four-line list's height, instead of the
+    facts blocks being pinned to the dose bars (three heights, 24 px apart); the dose bars stay at 631 px;
+  * lifestyle band: tile 1 is "Don't wait" (it said "Test home & work"; CDC and EPA advise against routine mold
+    sampling) and "More fiber" draws the kit apple (a wheat ear sat beside the stored-grains warning);
+  * front: step 2 gives an action ("Regular meals with a little healthy fat keep it moving.") instead of
+    repeating the diagram's captions 1 and 2, and the attic AC is an air handler (plain cabinet, duct stub,
+    condensate pipe into the drip pan) instead of an outdoor condenser.
 
 Every SVG is drawn at 1:1 with its printed CSS size (viewBox width = rendered width
 in CSS px), so an SVG font-size of 9.4 prints at 7.05 pt.
@@ -85,11 +117,19 @@ Sources (a short comment sits next to each fact below):
     more than about 10 square feet: use EPA's remediation guide / a professional)
   Kerkadi et al., J Toxicol Environ Health A 1998;53:231-50 (a bile-acid binder raised
     fecal excretion of the mycotoxin ochratoxin A and cut its enterohepatic recirculation)
+  NIH StatPearls, "Physiology, Cholecystokinin" (fat and protein in the small intestine release CCK,
+    which contracts the gallbladder); NIDDK, "Your Digestive System & How It Works" (the gallbladder
+    stores bile between meals and squeezes it into the small intestine when you eat)
   Back page:
   WHO, Mycotoxins fact sheet (aflatoxins in maize, groundnuts, tree nuts, spices; ochratoxin A
     in cereals, coffee, dried vine fruit, wine and grape juice, spices; patulin in apples)
-  EPA, A Brief Guide to Mold, Moisture, and Your Home (indoor humidity ideally 30 to 50 percent);
-    EPA, Guide to Air Cleaners in the Home (HEPA filters capture mold spores)
+  EPA, A Brief Guide to Mold, Moisture, and Your Home (indoor humidity ideally 30 to 50 percent;
+    sampling is usually unnecessary when mold is visible, and no federal limits exist to judge results);
+    EPA, Guide to Air Cleaners in the Home (HEPA filters capture mold spores); CDC mold pages (CDC does
+    not recommend routine sampling for molds).  www.epa.gov and www.cdc.gov are blocked from this
+    machine, so the sampling points were not re-opened in polish round 2
+  CDC alpha-gal syndrome pages ("Products that may contain alpha-gal": products made from mammals;
+    spread by lone star tick bites, most cases in the South), as cited on the IBD and Joint Pain sheets
   Dietary Guidelines for Americans 2020-2025 (fiber 14 g per 1,000 kcal: 22 to 34 g a day for
     adults, so "about 30 g")
   Ohkawa et al., Rinsho Shinkeigaku 1995;35:806-7 (PMID 8777808: chlorella, a vitamin K-rich
@@ -101,7 +141,9 @@ Sources (a short comment sits next to each fact below):
     inhibitors with long interaction lists)
   German Commission E monographs (Blumenthal M, ed., 1998: artichoke leaf and dandelion,
     contraindicated with bile-duct obstruction, gallstones only after consulting a physician;
-    gentian root, contraindicated with gastric and duodenal ulcers)
+    artichoke leaf, also with a known allergy to artichoke or other composites, the daisy family
+    that takes in ragweed; gentian root, contraindicated with gastric and duodenal ulcers); the EU
+    HMPC artichoke-leaf monograph lists the same Asteraceae hypersensitivity
   AWMF mold guideline "Medical clinical diagnostics for indoor mold exposure" (Hurrass J et al.,
     Int J Hyg Environ Health 2017;220:305-28, doi:10.1016/j.ijheh.2016.11.012; 2023 update,
     Allergol Select 2024;8:90-198, doi:10.5414/ALX02444E: no validated mycotoxin test for
@@ -318,17 +360,22 @@ def art_house(t):
     out.append(drop(205, 240.5, 0.8))
     out.append(colony(134, 229.5, 6.5, 11) + colony(266, 229.5, 6, 12))
 
-    # attic interior, collar tie, insulation, AC unit, leak
+    # attic interior, collar tie, insulation, AC air handler, leak
     out.append('<polygon points="118.9,84 200,26.3 281.1,84" fill="#F4ECDD"/>')
     out.append('<rect x="160" y="50" width="80" height="4" fill="#C49A6C"/>')
     ins = "M110,84 V77 " + " ".join(f"q4,-4.5 8,0" for _ in range(22)) + " V84 Z"
     out.append(f'<g clip-path="url(#moAtticClip)"><path d="{ins}" fill="#F1C3B2" stroke="#DFA690" stroke-width=".7"/></g>')
     out.append('<ellipse cx="252" cy="80.5" rx="9" ry="2.3" fill="#8DB6DA" opacity=".8"/>')
+    # the attic AC is an air handler (polish round 2; it was drawn as an outdoor condenser, with a fan guard and
+    # fins): a plain cabinet with one access-panel seam, a short supply-duct stub on top (its open end an
+    # ellipse) and a thin condensate pipe from its side down into the drip pan.  Pan, drop and leader unchanged
     out.append('<rect x="149" y="80" width="36" height="3.2" rx="1" fill="#8C949B"/>'
-               '<rect x="152" y="63" width="30" height="17" rx="2" fill="#CDD2D7" stroke="#8C949B" stroke-width="1"/>'
-               '<circle cx="163" cy="71.5" r="5.2" fill="none" stroke="#8C949B" stroke-width="1"/>'
-               '<path d="M163,66.3 V76.7 M157.8,71.5 H168.2" stroke="#8C949B" stroke-width=".7"/>'
-               '<path d="M172,66 v11 M175,66 v11 M178,66 v11" stroke="#9EA6AD" stroke-width=".8"/>')
+               '<rect x="166" y="58.5" width="11" height="5" fill="#B9C0C6" stroke="#8C949B" stroke-width=".8"/>'
+               '<ellipse cx="171.5" cy="58.5" rx="5.5" ry="1.4" fill="#4F575E" stroke="#8C949B" stroke-width=".6"/>'
+               '<rect x="152" y="63" width="27" height="17" rx="1.5" fill="#CDD2D7" stroke="#8C949B" stroke-width="1"/>'
+               '<path d="M152.5,71.5 H178.5" stroke="#A3ABB2" stroke-width=".7"/>'
+               '<path d="M179,75.5 H182.3 V81.4" stroke="#7E878F" stroke-width="2.3" fill="none" stroke-linejoin="round"/>'
+               '<path d="M179,75.5 H182.3 V81.4" stroke="#F2F4F6" stroke-width="1.1" fill="none" stroke-linejoin="round"/>')
     out.append(drop(189.5, 79.5, 0.72))
     out.append(colony(241, 59, 6.5, 13))
     out.append(drop(251, 70, 0.8))            # one keyed drop falling from the roof leak onto the attic puddle
@@ -657,13 +704,11 @@ CSS = r"""
    so the rules touch only this sheet's back, in its own file and in the all-sheets bundle.
      - lifestyle cells keep the kit's 0.1in gap (closer, the long lines of two cells read across as
        one) and the grid reaches 0.1in into the band's side padding, so every title sets on one line;
-     - each "In each serving" block sits on its dose bar (the .what box is a column with the
-       facts pushed to its foot), so the five facts blocks end on one line;
      - every dose bar is one height with its text centred, so the bars form one row.
    Review round 2026-11-03 (measured on the rendered page, both editions):
      - the check panel holds four lines now, so the duo gives it more width (1.25fr : 1, panel lines
-       286 px) and the notes lines sit 0.21in apart (kit 0.24in); the page then ends 9.6 px above
-       its footer in both editions, against 12.5 px before;
+       286 px) and the notes lines sit 0.21in apart (kit 0.24in; 0.19in since polish round 2); the
+       page then ends 9.6 px above its footer in both editions, against 12.5 px before;
      - the daily rhythm's lists are flex columns, so Binder Pro's morning dose (its sched unit
        carries the empty <i class="mo-late"> marker) is listed LAST in the Morning box: before
        breakfast, breakfast, then 2 hours after breakfast.  The same entry is contain:inline-size,
@@ -671,10 +716,23 @@ CSS = r"""
        1 scoop before breakfast", 170 px with padding), never wraps those lines, and wraps only
        Binder Pro's into two; flex gap 1px and the ul margins keep the kit's 3/1/1 px spacing;
      - Evening meal gets a little more width than Bedtime, so "Lipo-Flow 2 tablets" stays on
-       one line (Bedtime's one entry wraps inside its box either way). */
+       one line (Bedtime's one entry wraps inside its box either way).
+   Polish round 2, 2026-11-04 (measured on the rendered page, both editions):
+     - the five "In each serving" headings sit on one line (538.6 px): every bullet list is as tall
+       as the four-line list (4 lines of 7.3pt at line-height 1.28, plus the two 2px item margins; no
+       list runs past four lines once GI Defend's second bullet is two), so the facts blocks start
+       level and end where their text does.  Pinned to the dose bars (until this round) they started
+       at three heights, 24 px apart.  The .what box stays a flex column, so each list keeps its last
+       item margin inside itself and the min-height lines the headings up exactly; that 2px item
+       margin is the gap above each dashed rule (the kit's 4px .key margin is zeroed, as the auto
+       margin was in the tallest columns), so the dose bars stay at 631 px;
+     - the check panel's fifth line (pregnancy and alpha-gal) is paid for by two shorter lines and
+       notes lines 0.19in apart (0.21in before): the page ends 2.0 px above its footer, and the
+       footer stays at 1021.5 px. */
 .sheet.back:has(.mo-back) .lifes{gap:0.1in;margin:0 -0.1in}
 .sheet.back:has(.mo-back) .col .what{display:flex;flex-direction:column}
-.sheet.back:has(.mo-back) .col .what .key{margin-top:auto}
+.sheet.back:has(.mo-back) .col .what ul{min-height:calc(4 * 1.28 * 7.3pt + 4px)}
+.sheet.back:has(.mo-back) .col .what .key{margin-top:0}
 .sheet.back:has(.mo-back) .col .dose{min-height:0.35in;display:flex;flex-direction:column;justify-content:center}
 .sheet.back:has(.mo-back) .col .pick{padding-left:0.05in;padding-right:0.05in}
 .sheet.back:has(.mo-back) .duo{grid-template-columns:1.25fr 1fr}
@@ -682,7 +740,7 @@ CSS = r"""
 .sheet.back:has(.mo-back) .slot ul{display:flex;flex-direction:column;gap:1px;margin:3px 0 1px}
 .sheet.back:has(.mo-back) .slot li{margin:0}
 .sheet.back:has(.mo-back) .slot li:has(.mo-late){order:1;contain:inline-size}
-.sheet.back:has(.mo-back) .notes .ln{height:0.21in}
+.sheet.back:has(.mo-back) .notes .ln{height:0.19in}
 """
 
 
@@ -701,7 +759,11 @@ def front(t, ed):
         # EPA: dry within 24-48 hours; more than about 10 sq ft, follow EPA's remediation guide (a pro)
         ("Remove the exposure", "Find and fix the water first. Dry any leak within 24 to 48 hours. "
                                 "Mold over 10 square feet? Hire a pro."),
-        ("Keep bile flowing", "Your liver packs toxins into bile. Bile carries them into the gut on their way out."),
+        # an action, not a repeat of the diagram's captions 1 and 2 (polish round 2).  Eating empties the gallbladder:
+        # fat and protein reaching the small intestine release cholecystokinin, which contracts it (NIH StatPearls,
+        # "Physiology, Cholecystokinin"; NIDDK, "Your Digestive System & How It Works": the gallbladder stores bile
+        # between meals and squeezes it into the small intestine when you eat)
+        ("Keep bile flowing", "Bile carries toxins out of the liver. Regular meals with a little healthy fat keep it moving."),
         ("Bind toxins in the gut", "Fiber and binders hold on to toxins so they leave with stool. "
                                    "Aim for an easy bowel movement every day."),
         # sinus care is a clinician's call in both editions (a pharmacist does not examine sinuses)
@@ -722,6 +784,21 @@ def front(t, ed):
             f'<div class="mo-art">{art_binder(t)}</div></div>')
 
 
+# Last line of both check panels (polish round 2).  Pregnancy and nursing: all five labels say "If you are pregnant,
+# nursing, or taking medication, consult your healthcare practitioner before use" (ND1141 and ND606 via labels.json
+# R178 and R863; ND850, ND971 and ND812 opened with the Dropbox fetch tool), and this plan is binders, humic-fulvic
+# acids and bitter herbs.  Alpha-gal: GI Defend is made from beef serum (ND850: bovine immunoglobulin protein
+# isolate, "Contains less than 0.05% fractionated bovine blood"); CDC's alpha-gal syndrome pages ("Products that may
+# contain alpha-gal": products made from mammals; spread by lone star tick bites, most cases in the South).  The
+# second half is the IBD sheet's line word for word, so the shelf gives one message for one product.  Each question
+# starts its own line (measured: 217 and 246 px of the 286 px panel line), so neither question splits across lines,
+# and the hyphens never break ("red-" / "meat" did on the first render).
+# Liver: Mito Recharge has 100 mg EGCG from green tea extract (ND812); USP's green-tea-extract caution
+# (Oketch-Rabah et al., Toxicol Rep 2020;7:386-402): not with a liver problem, stop if liver signs appear.
+PREG_ALPHA_GAL = ("<b>Pregnant, nursing or a liver problem?</b> Ask {who} first (Mito Recharge has green tea "
+                  "extract).<br><b>Beef or red&#8209;meat (alpha&#8209;gal) allergy?</b> Skip GI Defend.")
+
+
 SHEET = {
     "slug": "mold", "code": "ND-IM-302", "order": 9, "theme": "immune", "series": "Immune Health Series",
     "title": "Mold Illness", "sub": "Mycotoxin exposure and recovery",
@@ -739,8 +816,13 @@ SHEET = {
         "life_title": 'Lifestyle Recommendations<span class="mo-back"></span>', "style": "circle",
         "life": [
             # NutriDyn educator: "Mold Care ~ Preparation Plan (While Waiting on Labs and Home/Work
-            # Samples)": support starts while the home and the workplace are checked
-            ("house", "Test home &amp; work", "Start the plan while home and work are checked for mold."),
+            # Samples)": support starts while the home and the workplace are checked.  The title asks for no
+            # testing (polish round 2; it read "Test home & work"): EPA, A Brief Guide to Mold, Moisture, and Your
+            # Home, says sampling is usually unnecessary when mold is visible and no federal limits exist to judge
+            # results against, and CDC does not recommend routine mold sampling (both hosts are blocked from this
+            # machine, so neither page was opened this round); front step 1 says find and fix the water first.
+            # "Check home & work" wraps in the 117.8 px cell, so the title is a one-line "Don't wait"
+            ("house", "Don&rsquo;t wait", "Start the plan while home and work are checked for mold."),
             # EPA, A Brief Guide to Mold, Moisture, and Your Home: indoor humidity ideally 30 to 50 percent
             ("meter", "Dry the air", "Keep indoor humidity at 30 to 50 percent. A dehumidifier helps."),
             # EPA, Guide to Air Cleaners in the Home: HEPA filters capture mold spores; HEPA vacuums in cleanup
@@ -748,8 +830,10 @@ SHEET = {
             # WHO, Mycotoxins fact sheet: maize and groundnuts (aflatoxins), cereals in storage and dried
             # vine fruit (ochratoxin A) are the main sources; spices, coffee and wine are smaller ones
             ("jar", "Limit risky foods", "Peanuts, corn, stored grains and dried fruit can carry mycotoxins."),
-            # Dietary Guidelines 2020-2025: 22 to 34 g fiber a day for adults; front step 3: fiber binds
-            ("wheat", "More fiber", "Fiber holds on to toxins in bile. Aim for about 30&nbsp;g a day."),
+            # Dietary Guidelines 2020-2025: 22 to 34 g fiber a day for adults; front step 3: fiber binds.
+            # Icon: the kit apple (polish round 2), which echoes Binder Pro's apple pectin; a wheat ear here sat
+            # next to the "Limit risky foods" tile's warning that stored grains carry mycotoxins
+            ("apple", "More fiber", "Fiber holds on to toxins in bile. Aim for about 30&nbsp;g a day."),
             # ND1610: binders work by "elimination through the stool"; the educator's preparation plan:
             # "OPTIONAL Cape Aloe/Mag Citrate 1-4 before sleep".  Icon: mo_colon, a large intestine (the kit
             # "gut" icon draws a stomach)
@@ -771,14 +855,20 @@ SHEET = {
              "start": True, "dose": "dose_from_db",
              "bullets": ["Helps carry toxins out with stool", "No charcoal or clay"]},
             # ND850 Rev. 12/24: "Supports healthy gut barrier function"; GI Defend "works by binding,
-            # neutralizing, and removing toxins from the gut" (the second bullet keeps ND850's verbs).  Never
-            # called "a binder": the 2-hour rule names only Binder Pro (ImmunoLin is an immunoglobulin
-            # protein, not a broad adsorbent, and NutriDyn's 60-day protocol gives it before breakfast)
-            {"p": "mo_gi_defend", "need": "Guard the gut lining", "needsub": "bovine immunoglobulins",
+            # neutralizing, and removing toxins from the gut" (the second bullet keeps ND850's binding verb; it
+            # is two lines since polish round 2, so no list runs past four lines and the five "In each serving"
+            # headings line up).  Never called "a binder": the 2-hour rule names only Binder Pro (ImmunoLin is an
+            # immunoglobulin protein, not a broad adsorbent, and NutriDyn's 60-day protocol gives it before
+            # breakfast).  The sub-line says "bovine immunoglobulins" in plain words (immunoglobulins are the
+            # body's immune proteins; ND850: bovine immunoglobulin protein isolate); the facts line keeps the
+            # label name.  Made from beef serum, so the check panels carry the alpha-gal line (see rx below)
+            {"p": "mo_gi_defend", "need": "Guard the gut lining", "needsub": "immune proteins from cows",
              "dose": "dose_from_db",
-             "bullets": ["Supports a healthy gut barrier", "Helps bind and neutralize toxins in the gut"]},
-            # ND606 Rev. 4/26: "Promote healthy bile processes", "Promote healthy liver function"
-            {"p": "mo_lipo_flow", "need": "Keep bile flowing", "needsub": "artichoke, gentian bitters",
+             "bullets": ["Supports a healthy gut barrier", "Helps bind toxins in the gut"]},
+            # ND606 Rev. 4/26: "Promote healthy bile processes", "Promote healthy liver function".  Sub-line:
+            # its two largest bitter herbs (ND606: artichoke 400 mg, dandelion 250 mg); gentian (100 mg) stays in
+            # the facts line, since all three names wrap the header to two lines
+            {"p": "mo_lipo_flow", "need": "Keep bile flowing", "needsub": "artichoke, dandelion bitters",
              "dose": "dose_from_db",
              "bullets": ["Promotes healthy bile flow", "Supports healthy liver function"]},
             # ND971 Rev. 8/24, "Additional benefits": "Supports antioxidant health", "Supports healthy
@@ -800,21 +890,32 @@ SHEET = {
                 # 2026-10-29: GI Detox, the charcoal binder, "must be taken at least 2 hours away from food"),
                 # applied to Binder Pro; ND1141, ND1610 and the educator's grids give no hour figure, and the
                 # grids put the binder between meals, away from the meal-time supplements.  Humic-fulvic acids
-                # and chlorella are chelators (ND1141), pectin a soluble fiber
+                # and chlorella are chelators (ND1141), pectin a soluble fiber.  (Polish round 2 dropped "{Who} can
+                # help you time it." to make room for the pregnancy and alpha-gal line.)
                 "<b>Binders can catch medicines and nutrients too.</b> Keep Binder Pro 2 hours from food, "
-                "other supplements and every medicine. {Who} can help you time it.",
+                "other supplements and every medicine.",
                 # ND812: 250 mcg vitamin K1 per 3 capsules; Ohkawa 1995 (chlorella blunted warfarin);
-                # Rohde 2007 (over 250 mcg a day lowers warfarin sensitivity)
+                # Rohde 2007 (over 250 mcg a day lowers warfarin sensitivity); Sconce 2007 (a steady daily
+                # intake steadies the INR).  The pharmacist checks the interaction, but the INR follow-up
+                # belongs to whoever manages the warfarin (most community pharmacists do not dose it), so the
+                # patient also tells them, as in the practitioner edition
                 "<b>On warfarin?</b> Vitamin K can weaken it: Mito Recharge has 250&nbsp;mcg vitamin K1, and "
-                "Binder Pro&rsquo;s chlorella adds some. Ask {who} first.",
+                "Binder Pro&rsquo;s chlorella adds some. Ask {who} first, and tell whoever manages your warfarin.",
                 # Lipo-Flow's bitters (ND606: artichoke, dandelion, gentian).  German Commission E monographs
                 # (Blumenthal M, ed., 1998): artichoke leaf and dandelion are contraindicated with bile-duct
                 # obstruction and, with gallstones, used only after consulting a physician; gentian root is
-                # contraindicated with gastric and duodenal ulcers.  The Lipo-Flow label caution is generic
-                "<b>Gallstones, a blocked bile duct or a stomach ulcer?</b> Ask {who} before Lipo-Flow.",
+                # contraindicated with gastric and duodenal ulcers; the artichoke-leaf monograph also rules it out
+                # with a known allergy to artichoke or other composites (Asteraceae, the daisy family, which takes
+                # in ragweed and dandelion), and the EU HMPC artichoke-leaf monograph lists the same Asteraceae
+                # hypersensitivity.  A pharmacist does not examine the patient and the monographs want a physician
+                # first with gallstones, so this edition adds the doctor (as front step 4 says "a clinician").
+                # The Lipo-Flow label caution is generic
+                "<b>Gallstones, a blocked bile duct, a stomach ulcer or a ragweed allergy?</b> Ask {who} or your "
+                "doctor before Lipo-Flow.",
                 # FDA labels: azole antifungals are strong CYP3A4 inhibitors with long interaction lists
                 "<b>Prescribed an antifungal?</b> Many interact with other medicines. Show {who} your full list, "
                 "supplements included.",
+                PREG_ALPHA_GAL,
             ],
             "practitioner": [
                 # binder spacing rule.  2 hours: NutriDyn product-support guidance for its binders (email,
@@ -828,16 +929,21 @@ SHEET = {
                 # unglossed jargon on a patient sheet
                 "<b>On warfarin?</b> Vitamin K can weaken it: Mito Recharge has 250&nbsp;mcg vitamin K1, and "
                 "Binder Pro&rsquo;s chlorella adds some. Tell whoever manages your warfarin before you start.",
-                # German Commission E: see the pharmacy edition's line
-                "<b>Gallstones, a blocked bile duct or a stomach ulcer?</b> Ask {who} before Lipo-Flow.",
+                # German Commission E, including the artichoke-leaf allergy clause: see the pharmacy edition's line.
+                # The monographs want a physician first with gallstones, and this edition also goes to DCs and NDs,
+                # so it adds the doctor like the pharmacy edition (polish round 2)
+                "<b>Gallstones, a blocked bile duct, a stomach ulcer or a ragweed allergy?</b> Ask {who} or your "
+                "doctor before Lipo-Flow.",
                 # the educator's "Areas to Further Assess": Mycotoxin Urine Assessment, Mold Antibody Assessment,
                 # Organic Acid Testing (NutriDyn sells the KBMO kits; ND1610 is the KBMO follow-up sheet); Asher
                 # refers CIRS-level cases to CIRS-trained clinicians (Asher's email, 2023-08-30).  Clues, not a
                 # guide: urine mycotoxin tests show exposure, and no mycotoxin test is validated for clinical
                 # diagnosis (AWMF mold guideline: Hurrass J et al., Int J Hyg Environ Health 2017;220:305-28,
-                # doi:10.1016/j.ijheh.2016.11.012; 2023 update, Allergol Select 2024;8:90-198, doi:10.5414/ALX02444E)
+                # doi:10.1016/j.ijheh.2016.11.012; 2023 update, Allergol Select 2024;8:90-198, doi:10.5414/ALX02444E).
+                # Two lines since polish round 2 (it was three), to make room for the pregnancy and alpha-gal line
                 "<b>Tests add clues.</b> {Who} may order a urine mycotoxin, mold antibody or organic acids test, "
-                "read it with your history, then adjust your plan or refer you to a specialist.",
+                "then adjust your plan.",
+                PREG_ALPHA_GAL,
             ],
         },
     },

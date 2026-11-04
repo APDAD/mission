@@ -50,6 +50,24 @@ Reviewer round 2026-11-03 (independent review of the whole sheet):
     bedtime; both check panels add Inflam-Eze bleeding risk, the allergy-is-not-die-off line,
     the S. boulardii caution and "doses are for adults".
 
+Polish round 1 2026-11-03 (residual review):
+  * BACK: die-off is tied to the antibiotic ("Worse on day 1? Antibiotics killing germs can do
+    that. Never stop them on your own."); the check panels say hives or swelling mean an allergy
+    "not die-off" and tell alpha-gal (red-meat) or milk allergy to skip Immune PRP Pro (cow's
+    colostrum); the provider blood-thinner line asks about daily aspirin or clopidogrel and splits
+    the warfarin clause; the probiotic line is one firm sentence in both editions; UltraBiotic says
+    only its yeast is antibiotic-proof and its serving line gives the 5 billion S. boulardii, the
+    per-capsule basis and the genera in full; Mito Recharge's line includes taurine and CoQ10;
+    "L-glutathione" never breaks; the tick check adds belly button and groin; permethrin is "for
+    clothes, never skin"; "General wellness support" replaces "Recovery support"; the band subtitle
+    no longer promises pacing; the tweezers icon shows an attached tick head-down at the skin.
+    Every tile stays at three lines and the page keeps its 16 px of slack (measured).
+  * FRONT: the climbing tick stands on a light pant leg; the feeding tick has short, stout, barbed
+    mouthparts and a shield on its back only, in a thinner epidermis; the arrowheads sit on straight
+    shaft; the coils are deeper and tagged "magnified"; SKIN and blood-vessel labels reach 5:1;
+    feet get their own dot and label (no leaders cross); B. miyamotoi is named as CDC now names it,
+    hard tick relapsing fever.
+
 Every SVG is drawn at 1:1 with its printed CSS size (viewBox width = rendered
 width in CSS px), so an SVG font-size of 9.6 (the smallest used) prints at 7.2 pt.
 Sources (each number below carries a short comment): CDC Lyme disease pages
@@ -66,17 +84,23 @@ import re
 import kit
 from svgkit import FONT, T, defs, svg
 
-# Fine-tipped tweezers (angled, as people hold them) gripping a tick (eight legs) at the skin
-# line, with an arrow for "pull straight up".
+# "Remove it right": an attached tick, head DOWN as in the front-page BITE art, its mouthparts in the
+# skin line and its body above it, leaning back 24 degrees; fine-tipped tweezers come in from the
+# right at 30 degrees and close on the mouthparts AT the skin, as CDC "Removing a Tick" says; an
+# arrow for "pull straight up".  Eight legs in the natural posture (front pairs reaching toward the
+# skin, back pairs out and up); the two right front legs end where they pass behind the near
+# tweezer arm, so no stroke crosses another.  The near arm clears the body by 1.8 units.
 kit.ICONS.setdefault("ly_tweezers",
-    '<path d="M51.5 6.5C55.5 6 58.2 9.6 57.6 13.6"/>'
-    '<path d="M51.5 6.5 26.6 41.6"/><path d="M57.6 13.6 29.4 43.4"/>'
-    '<path d="M40.2 20.4l3.4 2.6M44.6 25.6l3 2.8"/>'
-    '<ellipse cx="25" cy="49.6" rx="4.4" ry="3.6" fill="currentColor" stroke="none"/>'
-    '<circle cx="27.4" cy="45.6" r="1.8" fill="currentColor" stroke="none"/>'
-    '<path d="M21.4 47.4l-4.2-2M20.8 49.4h-4.8M21 51.4l-4.2 2.2M22 53l-2.8 3.2'
-    'M28.6 49.8l4.4-.6M28.8 51.6l4.2 2M27.8 53.2l2.6 3.4M26.4 53.6l.6 3.6" stroke-width="1.6"/>'
-    '<path d="M7 59H57"/><path d="M12 40V20M7.4 24.6 12 20l4.6 4.6"/>')
+    '<path d="M7 57.2H57"/>'
+    '<ellipse cx="17.94" cy="44.28" rx="4.9" ry="7.2" transform="rotate(-24 17.94 44.28)" fill="currentColor" stroke="none"/>'
+    '<circle cx="21.6" cy="52.5" r="2.2" fill="currentColor" stroke="none"/>'
+    '<path d="M21.6 52.5L22.1 55.6" stroke-width="2.2"/>'
+    '<path d="M23.3 47.41L26.49 48.32M23.27 45.06L26.89 44.39L29.77 45.31M22.66 42.96L25.55 40.42L28.18 39.56'
+    'M21.7 41.03L23.1 37.57L24.38 35.26M16.68 50.36L15.11 53.58L14.49 56.06M14.95 48.76L12.03 51.01L10.79 53.77'
+    'M13.8 46.91L9.97 47.35L7.59 48.73M13.01 44.9L9.5 43.62L6.93 43.03" stroke-width="1.6"/>'
+    '<path d="M23.85 53 L52.14 34.01 Q56.99 35.6 55.94 40.59 L25.35 55.6"/>'
+    '<path d="M38.85 40.89L39.8 42.54M42.38 47.02L43.33 48.67M41.67 38.99L42.62 40.64M45.44 45.52L46.39 47.17" stroke-width="1.6"/>'
+    '<path d="M9.5 31V12M5.1 16.4 9.5 12l4.4 4.4"/>')
 # A magnifying glass over a tick (eight legs): "check your skin".
 kit.ICONS.setdefault("ly_check",
     '<circle cx="27" cy="27" r="17"/><path d="M39.5 39.5 55 55"/>'
@@ -336,8 +360,8 @@ def tick_feeding(hx, hy, uid="lyf"):
     for r, kn, tp in near:
         out.append(leg(r, kn, tp, "#17110E", 2.0))
         out.append(f'<circle cx="{_f(kn[0])}" cy="{_f(kn[1])}" r=".7" fill="#6A564A"/>')
-    tip = P(-19, 2.4)
-    out.append(f'<ellipse cx="{_f(tip[0])}" cy="{_f(tip[1] - 1)}" rx="8" ry="5.5" fill="url(#{uid}p)"/>')
+    tip = P(-10.6, 1.3)                   # hypostome tip, in the dermis (see the skin band in art_spread)
+    out.append(f'<ellipse cx="{_f(tip[0])}" cy="{_f(tip[1] - .5)}" rx="7" ry="4.8" fill="url(#{uid}p)"/>')
     # half-fed idiosoma: a flattened oval (back = local -y, belly = +y, toward the skin)
     body = ("M2.5,0 C2.5,-6.6 9,-10 19,-10 C29,-10 35.5,-6.2 35.5,0 C35.5,5.8 29,9 19,9 "
             "C9,9 2.5,6 2.5,0Z")
@@ -345,17 +369,22 @@ def tick_feeding(hx, hy, uid="lyf"):
                f'<linearGradient id="{uid}s" x1="0" y1="0" x2=".35" y2="1"><stop offset="0" stop-color="#4E3D33"/>'
                f'<stop offset=".55" stop-color="#1E1511"/><stop offset="1" stop-color="#120C0A"/></linearGradient></defs>')
     out.append(f'<g transform="translate({_f(hx)},{_f(hy)}) rotate({_f(th)})">'
-               # barbed hypostome into the skin, then the base of the mouthparts
-               '<path d="M-3,-.4 L-19,2.4 L-3,2.6Z" fill="#2A1D17"/>'
-               '<path d="M-8,0.4 l-1.2,1.6 M-12,1.1 l-1.2,1.5 M-16,1.8 l-1.1,1.2" stroke="#2A1D17" stroke-width=".6"/>'
+               # hypostome into the skin: short, stout and barbed, about 7.5 units (under a quarter of the
+               # 33-unit body; tick mouthparts are short and broad, not a mosquito's needle), with
+               # backward-pointing teeth along both edges; then the base of the mouthparts
+               '<path d="M-2.6,-1.3 C-5.4,-1.1 -8.4,-.3 -10.3,.8 C-10.9,1.15 -10.9,1.75 -10.3,2.05 '
+               'C-8.4,3 -5.4,3.6 -2.6,3.7Z" fill="#2A1D17"/>'
+               '<path d="M-5,-1 l.9,-1 M-7.2,-.5 l.8,-.9 M-9.2,.25 l.7,-.8 M-5,3.5 l.9,.95 M-7.2,3.05 l.8,.85 '
+               'M-9.2,2.45 l.7,.75" stroke="#2A1D17" stroke-width=".55" stroke-linecap="round"/>'
                '<rect x="-4.8" y="-3" width="8.4" height="6" rx="1.7" fill="#1A1210"/>'
                f'<path d="{body}" fill="url(#{uid}b)"/>'
                f'<g clip-path="url(#{uid}c)">'
                # marginal groove behind the shield, kept faint
                '<path d="M15.5,-1.4 C21,-3 28,-3 33.5,-.8" stroke="#6A2014" stroke-width=".7" fill="none" opacity=".45"/>'
-               # the shield (scutum): a solid dark cap over the front third of the back, its rear edge
-               # bowed toward the middle of the body like the plate seen from above, not a thin band
-               f'<path d="M-3,6 L2.2,4.6 C9,4.6 15.6,1.6 16.4,-4 C16.8,-7 16.6,-9.6 16.9,-12 L-3,-12Z" fill="url(#{uid}s)"/>'
+               # the shield (scutum): a dark plate on the BACK only (local y < 0), from the front of the
+               # body to a rear edge bowed toward the middle, so the belly side stays body-coloured and
+               # the front does not read as a black head
+               f'<path d="M-3,-.7 L2.4,-.7 C6.4,-.9 11,-1.9 14,-3.6 C15.9,-4.7 16.8,-7.4 16.9,-12 L-3,-12Z" fill="url(#{uid}s)"/>'
                '<path d="M5.2,-4.6 Q8.6,-8.4 13.6,-8.9" stroke="#7A6656" stroke-width=".9" fill="none" '
                'stroke-linecap="round" opacity=".5"/>'
                '</g>'
@@ -455,9 +484,28 @@ def art_spread(t):
     out.append(tick_top("deer", 109, 33, 0.44, 69, "lyq", quest=True, shadow=False))
     out.append(T(146, 31, "WAITS", 11, 800, INK, ls=1))
     out.append(T(146, 44.5, ["on grass and leaves,", "front legs reaching out"], 10, 600, SOFT_INK, lh=1.15))
-    # 2. climbs on
-    out.append(arrow("M30,86 C16,106 18,126 40,140", SLATE))
-    out.append(tick_top("deer", 86, 138, 0.92, 0, "lyb"))
+    # 2. climbs on: the tick on the hem of a light pant leg (light colours make ticks easy to see,
+    # the back page's "Dress for ticks"), head up, climbing.  The cloth stops 7 units above the
+    # caption, so the caption sits on clear white.
+    out.append(arrow("M30,86 C16,106 17,125 37,138", SLATE))
+    px0, px1, py0, py1 = 47, 125, 92, 164
+    twill = " ".join(f"M{_f(px0 - 44 + i * 4.6)},{py1} l44,-76.2" for i in range(28))   # 60-degree ribs
+    out.append('<defs><linearGradient id="lypl" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#D6C7A2"/>'
+               '<stop offset=".45" stop-color="#F0E8D4"/><stop offset="1" stop-color="#D3C39C"/></linearGradient>'
+               f'<clipPath id="lyplc"><rect x="{px0}" y="{py0}" width="{px1 - px0}" height="{py1 - py0}" rx="7"/></clipPath></defs>'
+               f'<rect x="{px0}" y="{py0}" width="{px1 - px0}" height="{py1 - py0}" rx="7" fill="url(#lypl)"/>'
+               f'<g clip-path="url(#lyplc)">'
+               # twill weave: faint diagonal ribs
+               f'<path d="{twill}" stroke="#BFAE84" stroke-width=".7" opacity=".38"/>'
+               # side seam with its stitching, and the folded hem at the bottom with a stitch line
+               f'<path d="M{px1 - 9},{py0} V{py1}" stroke="#C2B088" stroke-width="1.1" opacity=".7"/>'
+               f'<path d="M{px1 - 6.5},{py0 + 2} V{py1 - 12}" stroke="#A8956A" stroke-width=".7" stroke-dasharray="2.2 1.6"/>'
+               f'<rect x="{px0}" y="{py1 - 10}" width="{px1 - px0}" height="10" fill="#CDBC94" opacity=".55"/>'
+               f'<path d="M{px0},{py1 - 10} H{px1}" stroke="#B5A277" stroke-width=".8"/>'
+               f'<path d="M{px0 + 3},{py1 - 7.4} H{px1 - 3}" stroke="#A8956A" stroke-width=".7" stroke-dasharray="2.2 1.6"/>'
+               '</g>'
+               f'<rect x="{px0}" y="{py0}" width="{px1 - px0}" height="{py1 - py0}" rx="7" fill="none" stroke="#C4B38A" stroke-width=".9"/>')
+    out.append(tick_top("deer", 85, 126.5, 0.84, 0, "lyb"))
     out.append(T(86, 179.5, "TICK", 11, 800, INK, "middle", ls=1))
     out.append(T(86, 192.5, ["Climbs on", "as you pass"], 10, 600, SOFT_INK, "middle", lh=1.15))
     # 3. bites and feeds: skin cut away to show the mouthparts in it
@@ -466,13 +514,15 @@ def art_spread(t):
     out.append(f'<defs><linearGradient id="lyskin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EDB596"/>'
                f'<stop offset="1" stop-color="#E29F80"/></linearGradient></defs>'
                f'<rect x="{sx0}" y="{sy0}" width="{sx1 - sx0}" height="{sy1 - sy0}" rx="6" fill="url(#lyskin)"/>'
-               f'<path d="M{sx0},{sy0 + 6} a6,6 0 0 1 6,-6 H{sx1 - 6} a6,6 0 0 1 6,6 V{sy0 + 9} H{sx0}Z" fill="#F7D6C0"/>'
+               # epidermis: a thin top layer (6 of 38 units), so the short hypostome ends in the dermis
+               f'<path d="M{sx0},{sy0 + 6} a6,6 0 0 1 6,-6 H{sx1 - 6} a6,6 0 0 1 6,6 V{sy0 + 6} H{sx0}Z" fill="#F7D6C0"/>'
                f'<path d="M{sx0 + 6},{sy0} H{sx1 - 6}" stroke="#D29B7B" stroke-width="1.2"/>'
                # a small blood vessel in the dermis, labelled where the line ends
                f'<path d="M{sx0 + 4},{sy1 - 7} C{sx0 + 14},{sy1 - 10.5} {sx0 + 26},{sy1 - 5} {sx0 + 38},{sy1 - 8}" '
                f'stroke="#C0564B" stroke-width="2.2" fill="none" stroke-linecap="round" opacity=".8"/>')
-    out.append(T(sx1 - 8, sy0 + 18, "SKIN", 9.6, 800, "#8A4A30", "end", ls=1))
-    out.append(T(sx1 - 8, sy1 - 6, "blood vessel", 9.6, 600, "#9A3D33", "end"))
+    # labels darkened for print: at least 5:1 on the darkest skin tone (#E29F80), was about 3:1
+    out.append(T(sx1 - 8, sy0 + 18, "SKIN", 9.6, 800, "#5A2616", "end", ls=1))
+    out.append(T(sx1 - 8, sy1 - 6, "blood vessel", 9.6, 600, "#6B241C", "end"))
     out.append(tick_feeding(210, sy0 - 0.6, "lyfeed"))
     out.append(T(215, 179.5, "BITE", 11, 800, INK, "middle", ls=1))
     # CDC "How Lyme Disease Spreads" (current page): "In most cases, a tick must be attached
@@ -481,14 +531,17 @@ def art_spread(t):
     # 15 minutes after tick attachment" (CDC MMWR 2017;66(15):408-409, citing Ebel and Kramer 2004).
     out.append(TR(215, 192.5, ["Lyme usually needs 24+ hours;", "some other germs pass faster.",
                                "*Remove ticks right away.*"], 10, 600, SOFT_INK, "middle", lh=1.15, bold=700, bold_fill=INK))
-    # 4. what one bite can pass on
-    out.append(arrow("M278,134 C290,132 292,70 306,66", SLATE))
-    out.append(arrow("M278,146 C291,146 294,171 306,172", SLATE))
-    # Lyme disease card
+    # 4. what one bite can pass on.  Each curve ends in a short straight run that continues its last
+    # control point's direction, so the arrowhead (set by the final segment) sits square on the shaft.
+    out.append(arrow("M278,134 C292,132 286.8,70.5 294,68.8 L306,66", SLATE))
+    out.append(arrow("M278,146 C291,146 286.8,171.5 294,171.7 L306,172", SLATE))
+    # Lyme disease card.  The coils are drawn deeper (amp 3.6) so they read as corkscrews at arm's
+    # length, and a "magnified" tag in the panel's empty corner gives the scale (they are not worms).
     out.append(card(314, 6, 160, 116, "LYME DISEASE", SLATE))
     out.append('<rect x="324" y="36" width="140" height="48" rx="6" fill="#E9EFF7"/>')
-    for sx, sy, ln, rot, wv in ((332, 47, 88, -2, 7), (366, 60, 90, 2, 7), (338, 74, 74, -1.5, 6)):
-        out.append(spirochete(sx, sy, ln, rot, wv, amp=3.0))
+    for sx, sy, ln, rot, wv in ((332, 47, 88, -2, 7), (366, 60, 90, 2, 7), (334, 74, 66, -1.5, 6)):
+        out.append(spirochete(sx, sy, ln, rot, wv, amp=3.6))
+    out.append(T(458, 80, "magnified", 9.6, 700, SLATE_MID, "end", ls=.3))
     out.append(T(394, 101, "Borrelia burgdorferi", 10.4, 700, INK, "middle", italic=True))
     out.append(T(394, 114, "the Lyme bacterium", 9.6, 600, SOFT_INK, "middle"))
     # Georgia card.  "The (lone star tick) is the most common tick in Georgia" (UGA CAES
@@ -506,15 +559,19 @@ def art_spread(t):
                   10.4, 500, "#33404A", lh=1.3, bold=700, bold_fill=INK))
     # other infections card.  CDC "Regions Where Ticks Live", blacklegged (deer) tick: it also
     # spreads anaplasmosis (Anaplasma phagocytophilum, a bacterium), babesiosis (Babesia microti,
-    # a parasite), Borrelia miyamotoi disease (a bacterium) and Powassan virus disease (a virus).
-    # The western blacklegged tick spreads only anaplasmosis and B. miyamotoi besides Lyme, so
-    # the title names deer ticks rather than "the same ticks" (which would take in the western one).
+    # a parasite), Borrelia miyamotoi infection (a bacterium) and Powassan virus disease (a virus).
+    # CDC now calls the B. miyamotoi illness "hard tick relapsing fever" (CDC "About Hard Tick
+    # Relapsing Fever (HTRF)", cdc.gov/relapsing-fever; spread by blacklegged and western blacklegged
+    # ticks), so the card uses that plain name instead of the bare genus abbreviation (measured: 187 of
+    # the 192 units a cell allows).  The western blacklegged tick spreads only anaplasmosis and HTRF
+    # besides Lyme, so the title names deer ticks rather than "the same ticks" (which would take in
+    # the western one).
     ox, oy, ow, oh = 314, 134, 417, 83
     out.append(card(ox, oy, ow, oh, "OTHER INFECTIONS DEER TICKS CAN CARRY", SLATE))
     out.append(f'<path d="M{_f(ox + ow / 2)},{oy + 29} V{oy + oh - 8} M{ox + 14},{_f(oy + 22 + (oh - 22) / 2)} H{ox + ow - 14}" '
                'stroke="#E1E6E9" stroke-width="1"/>')
     items = [("Anaplasmosis", "bacterium"), ("Babesiosis", "parasite"),
-             ('<tspan font-style="italic">B. miyamotoi</tspan> disease', "bacterium"), ("Powassan virus disease", "virus")]
+             ("Hard tick relapsing fever", "bacterium"), ("Powassan virus disease", "virus")]
     for i, (name, kind) in enumerate(items):
         cx = ox + ow / 4 * (1 + 2 * (i % 2))
         by = oy + 22 + (oh - 22) / 4 * (1 + 2 * (i // 2)) + 4
@@ -661,11 +718,16 @@ def art_symptoms(t):
              (["Swollen lymph nodes"], 84, at(-7.5, 42)),
              (["Muscle and joint aches"], 114, at(-33, 63)),
              (["Expanding rash, sometimes", "like a bull's-eye"], 156, (rash[0] - 11.2, rash[1] + 1.5))]
+    # CDC lists "nerve pain" and "shooting pains, numbness, or tingling in the hands or feet" among the
+    # later signs.  Hands and feet each get a dot, and each dot its own label: one label cannot reach the
+    # hand (above the knee) and the foot (below it) without its leader crossing the knee's.  So "more
+    # rashes" moves up to the upper arm, the labels sit about 48 units apart, and no two leaders cross.
     later = [(["Face droop (palsy), bad", "headache, stiff neck"], 50, at(7.5, 24)),
-             (["Pounding or skipped", "heartbeat (Lyme carditis)"], 112, at(10, 88)),
-             (["Nerve pain, numbness or", "tingling in hands or feet"], 190, at(50.5, 180)),
-             (["Arthritis: swollen joints,", "most often the knees"], 244, at(15, 222)),
-             (["More rashes on other", "parts of the body"], 288, at(17, 262))]
+             (["Pounding or skipped", "heartbeat (Lyme carditis)"], 99, at(10, 88)),
+             (["More rashes on other", "parts of the body"], 148, at(38, 100)),
+             (["Nerve pain, numbness or", "tingling in the hands"], 197, at(50.5, 180)),
+             (["Arthritis: swollen joints,", "most often the knees"], 246, at(15, 222)),
+             (["Numbness or tingling", "in the feet"], 295, at(18, 293.5))]
     for lines, by, (px, py) in early:
         ly = by - 3.6
         out.append(f'<path d="M154,{_f(ly)} L{_f(px)},{_f(py)}" stroke="{EARLY}" stroke-width="1.3" fill="none"/>')
@@ -754,9 +816,11 @@ CSS = r"""
 .sheet.back:has(.ly-back) .ns-title{margin-top:0.1in}
 /* products section: say the frame out loud.  The kit's generic subtitle is not rendered
    (display:none, so it is not in the PDF either) and the sheet's own line takes its place:
-   recovery support, NOT a Lyme treatment, antibiotics first.  Same line in both editions. */
+   general wellness support, NOT a treatment for any infection, antibiotics first.  ("Recovery
+   support" was dropped: on a Lyme sheet it implies help recovering from the disease.)  Same line in
+   both editions; measured to stay on one line beside the heading. */
 .sheet.back:has(.ly-back) .ns-title span{display:none}
-.sheet.back:has(.ly-back) .ns-title::after{content:"Recovery support, not a Lyme treatment. Antibiotics from your clinician come first.";
+.sheet.back:has(.ly-back) .ns-title::after{content:"General wellness support, not a treatment for any infection. Antibiotics come first.";
   font:700 8pt Inter,sans-serif;color:var(--deep);letter-spacing:.02em}
 /* the check panel carries six safety lines, so it gets the wider share of the row (kit: 1.35fr 1fr,
    rhythm first); measured 2026-11-03: rhythm 175 px, check 180 px, versus 163 / 254 at the kit split */
@@ -830,9 +894,11 @@ SHEET = {
               "early treatment is the next best."),
     "front": front,
     "css": CSS,
-    # BACK PAGE (back-page pass, 2026-11-03).  Framed as RECOVERY SUPPORT for gut, immune,
-    # inflammatory balance, detox (die-off) and energy, in structure/function words only: no product
-    # here treats Lyme, and "Antibiotics prescribed by your clinician come first" heads the products.
+    # BACK PAGE (back-page pass, 2026-11-03; polish round 1 the same day).  Framed as GENERAL WELLNESS
+    # support for gut, immune, inflammatory balance, detox and energy, in structure/function words only:
+    # no product here treats Lyme or kills germs, and "not a treatment for any infection. Antibiotics come
+    # first." heads the products.  No herx or die-off word sits on or near the Detox support column: the
+    # only die-off words on the page are tied to the antibiotic (life tile) or to an allergy (check panel).
     # Five columns, the competitor's count.  Picks follow NutriDyn's own protocols first:
     #   Immune PRP Pro and Liposomal Glutathione: NutriDyn GLC 2019 protocol sheet "Botanical
     #     Medicines in Complex, Multi-Pathogen Disease" (Dropbox Seminar Notes and Protocols/GLC 2019;
@@ -847,7 +913,9 @@ SHEET = {
     #   Mito Recharge: the competitor's mitochondrial category (NAC, ALC, ALA) in one NutriDyn formula.
     #   UltraBiotic Daily Multi-Strain (START HERE): gut support during the antibiotics that come first;
     #     its S. boulardii is a yeast, which antibacterial antibiotics do not harm (antifungals do;
-    #     sell sheet ND460 cites McFarland 2010).  It stands in for the competitor's herbal
+    #     sell sheet ND460 cites McFarland 2010), but that is 5 of its 30 billion CFU: its six
+    #     bacterial strains can be killed by doxycycline, which is why it goes 2 hours from each dose
+    #     (bullet 2 and the serving line say so).  It stands in for the competitor's herbal
     #     antimicrobial, which on a Lyme sheet would read as treating the infection.  Need header
     #     "Gut support", not "Protect your gut", so it does not read as preventing antibiotic side
     #     effects.  S. boulardii caution (both panels): fungemia has been reported in people with a
@@ -859,22 +927,23 @@ SHEET = {
     #     front lists joint aches and arthritis as Lyme signs.
     # Label facts, sizes and links: products.d/lyme.json (each entry has its "src").
     # Lifestyle sources:
-    #   permethrin on clothing and gear; EPA-registered DEET, picaridin, IR3535 or oil of lemon
-    #   eucalyptus; tumble dry on HIGH for 10 minutes; shower within 2 hours of coming indoors;
-    #   check under the arms, in and around the ears and hair, the waist, behind the knees, and
-    #   pets: CDC "Preventing Tick Bites on People".  Light colours and pants tucked into socks:
+    #   permethrin (0.5%) treats clothing and gear and is not for skin; EPA-registered DEET, picaridin,
+    #   IR3535 or oil of lemon eucalyptus; tumble dry on HIGH for 10 minutes; shower within 2 hours of
+    #   coming indoors; check under the arms, in and around the ears, inside the belly button, behind
+    #   the knees, between the legs (the tile says "groin"), around the waist, in and around the hair,
+    #   and pets: CDC "Preventing Tick Bites on People".  Light colours and pants tucked into socks:
     #   CDC/NIOSH tick-borne disease guidance for outdoor workers.
     #   Fine-tipped tweezers close to the skin, pull upward with steady pressure: CDC "Removing a
     #   Tick"; tell the doctor when and where the bite happened: CDC "Symptoms of Tickborne Illness".
-    #   "Worse at first?": the Jarisch-Herxheimer reaction comes within 24 hours of starting
-    #   antibiotics in 7 to 30% of treated Lyme patients and usually passes within a day (Butler T,
-    #   Am J Trop Med Hyg 2017;96(1):46-52, PMID 28077740; StatPearls NBK557820), hence "day 1 or
-    #   2".  Asher's Herx explainer email, 2020: "feeling worse before feeling better", and "the
-    #   biggest problem ... is that people stop taking the supplement or medication".  So: call the
-    #   clinician before stopping.  Hives, swelling or trouble breathing are an allergic reaction,
-    #   not die-off, so both check panels say to get help right away.  The protocols' "go slow"
-    #   advice (titrate slowly) is the kit's own rhythm line: start with the Start here pick, add
-    #   one product a week.
+    #   "Worse on day 1?": the Jarisch-Herxheimer reaction comes within 24 hours of starting
+    #   antibiotics, as the antibiotic kills the spirochetes, in 7 to 30% of treated Lyme patients and
+    #   usually passes within a day (Butler T, Am J Trop Med Hyg 2017;96(1):46-52, PMID 28077740;
+    #   StatPearls NBK557820).  Asher's Herx explainer email, 2020: "feeling worse before feeling
+    #   better", and "the biggest problem ... is that people stop taking the supplement or medication".
+    #   So the tile names the antibiotic and says never to stop it on your own.  Hives, swelling or
+    #   trouble breathing are an allergic reaction, not die-off, so both check panels say to get help
+    #   now.  The protocols' "go slow" advice (titrate slowly) is the kit's own rhythm line: start with
+    #   the Start here pick, add one product a week.
     # Check-panel sources:
     #   Doxycycline label: "Absorption of tetracyclines is impaired by antacids containing aluminum,
     #   calcium, or magnesium ... and iron-containing preparations"; NHS doxycycline guidance keeps
@@ -888,9 +957,16 @@ SHEET = {
     #   (Reye syndrome), per MSKCC "About Herbs: Willow Bark" and MedlinePlus.  Inflam-Eze Plus also
     #   carries 800 mg ginger, CurQfen curcumin and devil's claw, each listed by MSKCC "About Herbs"
     #   as possibly adding to bleeding risk with anticoagulant or antiplatelet drugs, so the
-    #   bleeding line names warfarin, apixaban, aspirin and clopidogrel.  Probiotic 2 hours from each
-    #   antibiotic dose: common practice with thin evidence (no guideline found), so the pharmacy
-    #   line says the pharmacist "may suggest" it.  Doxycycline with milk or colostrum: overall
+    #   bleeding line names warfarin, apixaban, aspirin and clopidogrel (the provider line asks "daily
+    #   aspirin or clopidogrel?" because people on antiplatelets often do not count them as blood
+    #   thinners).  Probiotic 2 hours from each antibiotic dose: common practice (no guideline found);
+    #   stated once, one way, in both editions, matching the column and the rhythm.
+    #   Alpha-gal or milk allergy: Immune PRP Pro is bovine colostrum ("Contains: Milk", ND1054; capsule
+    #   hypromellose, labels.json R2178).  CDC "Products That May Contain Alpha-gal": milk and milk
+    #   products typically contain alpha-gal (some people with alpha-gal syndrome react to dairy) and cow's
+    #   milk is a major food allergen.  The front page says the lone star tick, the tick Georgians meet
+    #   most, can trigger alpha-gal syndrome.  Inflam-Eze Plus is hypromellose with vegetable magnesium
+    #   stearate (labels.json R856), so only Immune PRP Pro is named.  Doxycycline with milk or colostrum: overall
     #   absorption not significantly affected (doxycycline labelling, via PDR).  Mito Recharge at
     #   bedtime: twice-daily doxycycline is taken with breakfast and the evening meal and not right
     #   before lying down (esophagus warning on its label), so bedtime keeps the 75 mg magnesium
@@ -899,21 +975,27 @@ SHEET = {
     #   devil's claw are avoided in pregnancy (MSKCC).
     "back": {
         "life_title": 'Lifestyle Recommendations<span class="ly-back"></span>',
-        "life_sub": "Avoid the next bite, and pace your recovery",
+        # no tile is about pacing, so the subtitle names what the six tiles do: five avoid bites, the
+        # sixth keeps people on the antibiotic
+        "life_sub": "Avoid the next bite, and stay on your medicine",
         "style": "icons",
-        "life": [("shirt", "Dress for ticks", "Light colors, long sleeves, pants in socks. Permethrin on gear."),
+        # Every tile measured at three lines (2026-11-03, polish round 1): the band, the products and the
+        # check panel share one page with about 16 px to spare.
+        "life": [("shirt", "Dress for ticks", "Light colors, pants in socks. Permethrin is for clothes, never skin."),
                  ("drop", "Repellent", "EPA-registered: DEET, picaridin, IR3535 or oil of lemon eucalyptus."),
                  ("dryer", "Dry, then shower", "Dry clothes on high heat for 10 minutes. Shower within 2 hours."),
-                 ("ly_check", "Check daily", "Scalp, ears, armpits, waist and behind the knees. Pets, too."),
+                 ("ly_check", "Check daily", "Hair, ears, armpits, belly button, waist, groin, behind knees. Pets, too."),
                  ("ly_tweezers", "Remove it right", "Fine-tipped tweezers at the skin, pull straight up. Note the date."),
-                 # "doctor", not "clinician", here: the plain word, and the only one that keeps this tile
-                 # at three lines with "day 1 or 2" unbroken (measured 2026-11-03)
-                 ("thermo", "Worse at first?",
-                  "Can be germs dying off, day&nbsp;1&nbsp;or&nbsp;2. Call your doctor before you stop.")],
+                 # die-off is tied to the ANTIBIOTIC by name, and "stop" has its object: none of the five
+                 # products below kills germs, so nothing here may read as a supplement die-off
+                 ("thermo", "Worse on day 1?",
+                  "Antibiotics killing germs can do that. Never stop them on your own.")],
         "cols": [
             {"p": "ly_ultrabiotic_dms", "need": "Gut support", "needsub": "with <em>S.&nbsp;boulardii</em>", "start": True,
+             # only the yeast (5 of the 30 billion CFU) is antibiotic-proof; the six bacterial strains are
+             # why the dose band says 2 hours from antibiotics
              "bullets": ["Supports a healthy gut microbiome",
-                         "<i>S.&nbsp;boulardii</i>, a yeast, is not harmed by antibacterial antibiotics"]},
+                         "Antibiotics spare its yeast, <i>S.&nbsp;boulardii</i>, but can kill its six bacteria"]},
             {"p": "ly_immune_prp", "need": "Immune support", "needsub": "colostrum immunoglobulins",
              "bullets": ["Promotes healthy immune function", "Supports the gut lining"]},
             {"p": "ly_inflam_eze", "need": "Inflammatory balance", "needsub": "ginger, curcumin, boswellia",
@@ -925,6 +1007,8 @@ SHEET = {
         ],
         # Pharmacists check interactions and depletions; providers order labs, refer and adjust.
         # Both editions carry the same safety facts; only the wording around {who} differs.
+        # The probiotic and allergy lines are the same in both editions: the page says the 2-hour gap
+        # once, one way (column dose band, rhythm and check panel all agree).
         "rx": {
             "pharmacy": [
                 "<b>Doxycycline:</b> take it 2 to 3 hours apart from calcium, magnesium (Mito Recharge has some), "
@@ -934,21 +1018,23 @@ SHEET = {
                 "Mito Recharge's vitamin K1 can make it weaker.",
                 f"<b>Aspirin-like willow bark:</b> {_NB('Inflam-Eze Plus')} is not for children, teens or "
                 "aspirin allergy.",
-                "<b>Probiotic:</b> {who} may suggest UltraBiotic at least 2 hours apart from each antibiotic dose. "
+                "<b>Probiotic:</b> take UltraBiotic at least 2 hours apart from each antibiotic dose. "
                 "Its <i>S.&nbsp;boulardii</i> is not for people with a central IV line or a weakened immune system.",
-                "<b>Hives, swelling or trouble breathing</b> after a dose is not die-off: get help right away.",
+                "<b>Hives, swelling or trouble breathing</b> mean an allergy, not die-off: get help now. "
+                "<b>Alpha-gal (red-meat) or milk allergy?</b> Skip Immune PRP Pro (cow's colostrum).",
                 "<b>Doses are for adults.</b> Pregnant, nursing or under 18? Ask {who} first."],
             "practitioner": [
                 "<b>Doxycycline:</b> take it 2 to 3 hours apart from calcium, magnesium (Mito Recharge has some), "
                 "iron, zinc and antacids, which block it.",
-                f"<b>On a blood thinner?</b> {_NB('Inflam-Eze Plus')} (ginger, curcumin, willow bark) can add to "
-                "bleeding risk. Doxycycline can make warfarin stronger and Mito Recharge's vitamin K1 weaker, so "
-                "whoever manages your warfarin may check your INR (a clotting test).",
+                f"<b>On a blood thinner, daily aspirin or clopidogrel?</b> {_NB('Inflam-Eze Plus')} (ginger, curcumin, "
+                "willow bark) can add to bleeding risk. Doxycycline can make warfarin stronger; Mito Recharge's "
+                "vitamin K1 can make it weaker: ask about an INR (clotting) test.",
                 f"<b>Aspirin-like willow bark:</b> {_NB('Inflam-Eze Plus')} is not for children, teens or "
                 "aspirin allergy.",
                 "<b>Probiotic:</b> take UltraBiotic at least 2 hours apart from each antibiotic dose. "
                 "Its <i>S.&nbsp;boulardii</i> is not for people with a central IV line or a weakened immune system.",
-                "<b>Hives, swelling or trouble breathing</b> after a dose is not die-off: get help right away.",
+                "<b>Hives, swelling or trouble breathing</b> mean an allergy, not die-off: get help now. "
+                "<b>Alpha-gal (red-meat) or milk allergy?</b> Skip Immune PRP Pro (cow's colostrum).",
                 "<b>Doses are for adults.</b> Pregnant, nursing or under 18? Ask {who} first."],
         },
     },
