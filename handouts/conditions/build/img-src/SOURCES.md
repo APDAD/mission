@@ -129,3 +129,6 @@ Print sources for the condition sheets. "AI upscale" = text-safe 4x upscale of t
 |---|---|---|
 | R145.png | 356x640 | interpolated stopgap (Lanczos 4x from a 89x160 chart thumbnail) |
 | R717.png | 348x640 | interpolated stopgap (Lanczos 4x from a 87x160 chart thumbnail) |
+
+| R326V.png | 572x858 | original (NutriDyn GI Restore sell sheet ND529, 2024-10 edition, embedded photo, native pixels with its PDF soft mask) |
+| R326C.png | 487x735 | original (same sell sheet, chocolate) |
