@@ -1074,7 +1074,7 @@ SHEET = {
                 "iron, zinc and antacids, which block it.",
                 f"<b>Blood thinners:</b> {_NB('Inflam-Eze Plus')} (ginger, curcumin, willow bark) can add to bleeding "
                 "risk with warfarin, apixaban, aspirin or clopidogrel. Doxycycline can make warfarin stronger; "
-                "Mito Recharge&rsquo;s vitamin K1 can make it weaker.",
+                "Mito Recharge&rsquo;s vitamin K1 can make it weaker. Ask {who} first.",
                 f"<b>Aspirin-like willow bark:</b> {_NB('Inflam-Eze Plus')} is not for children, teens or "
                 "aspirin allergy.",
                 # USP green tea extract caution; see the check-panel sources above the back dict

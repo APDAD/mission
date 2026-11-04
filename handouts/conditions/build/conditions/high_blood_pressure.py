@@ -662,8 +662,10 @@ SHEET = {
             {"p": "hbp_mag_glycinate", "need": "Healthy vessels", "needsub": "magnesium", "dose": "dose_from_db",
              "bullets": ["Supports healthy blood vessels", "Ask about your magnesium level"]},
             # the no-break hyphen keeps "omega-3s" whole, so the header wraps "EPA and DHA / omega-3s"
-            {"p": "hbp_omega_1000", "need": "Flexible vessels", "needsub": "EPA and DHA omega&#8209;3s", "dose": "dose_from_db",
-             "bullets": ["Supports heart and vessel health", "Supports healthy triglyceride levels"]},
+            # Claims from NutriDyn sell sheet ND416 Rev. 4/25 (Omega Pure EPA-DHA 1000): 'Healthy cardiovascular
+            # function'; EPA and DHA are 'integral components of membrane phospholipids'. No triglyceride claim.
+            {"p": "hbp_omega_1000", "need": "Heart-healthy fats", "needsub": "EPA and DHA omega&#8209;3s", "dose": "dose_from_db",
+             "bullets": ["Supports heart and vessel health", "Supports healthy cell membranes"]},
             # Statins lower CoQ10 (NIH NCCIH, Coenzyme Q10); ND270: "Supports blood flow and nitric oxide
             # production", "Supports energy production".  Dose: the label's 1 softgel daily (products.d hbp_coq10).
             {"p": "hbp_coq10", "need": "Power the heart", "needsub": "coenzyme Q10", "dose": "dose_from_db",
