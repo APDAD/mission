@@ -1,0 +1,52 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NutriDyn Shelf Card</title>
+<meta name="description" content="A printable shelf card that tells shoppers why NutriDyn is on their pharmacy's shelf. Two cards per letter page.">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F1EFE8;--card:#FBFAF6;--ink:#2C2C2A;--muted:#66645E;--line:#E2DED4;--green:#1D9E75;--deep:#14664D;--gold:#EF9F27}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:Inter,-apple-system,sans-serif;padding:24px 16px 48px}
+.bar{max-width:760px;margin:0 auto 18px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.bar p{font-size:13.5px;color:var(--muted);max-width:480px}
+.bar button{min-height:44px;background:var(--green);color:#fff;border:0;border-radius:12px;padding:10px 18px;font:600 15px Inter,sans-serif;cursor:pointer}
+.sheet{max-width:760px;margin:0 auto;display:grid;gap:18px}
+.sc{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:grid;grid-template-columns:1fr}
+.top{background:var(--deep);color:#F4F1E6;padding:22px 24px}
+.top .k{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;font-weight:700;color:#9FD9C1}
+.top h1{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:clamp(28px,6vw,38px);line-height:1.08;margin-top:6px}
+.body{padding:18px 24px 20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.pt b{display:block;font-family:'Cormorant Garamond',Georgia,serif;font-size:30px;line-height:1;color:var(--deep)}
+.pt span{display:block;font-size:13.5px;margin-top:4px;line-height:1.45}
+.foot{border-top:1px dashed var(--line);padding:12px 24px 16px;font-size:14px;display:flex;gap:10px;align-items:center}
+.foot i{flex:none;width:12px;height:12px;border-radius:50%;background:var(--gold)}
+@media print{
+ @page{size:letter;margin:.4in}
+ body{background:#fff;padding:0}
+ .bar{display:none}
+ .sheet{gap:.35in}
+ .sc{break-inside:avoid;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ .body{grid-template-columns:repeat(3,1fr)}
+}
+</style></head><body>
+<div class="bar"><p>Two cards per letter page. Print, cut on the line, and set one in the NutriDyn section and one at the register.</p><button onclick="window.print()">Print the cards</button></div>
+<div class="sheet">
+<section class="sc" aria-label="Shelf card">
+<div class="top"><div class="k">Why it is on our shelf</div><h1>Your pharmacist chose NutriDyn.</h1></div>
+<div class="body">
+<div class="pt"><b>1973</b><span>Sold only through health professionals since 1973. You will not find it in a big-box aisle.</span></div>
+<div class="pt"><b>3</b><span>Generations of one family own and run the company.</span></div>
+<div class="pt"><b>Our rule</b><span>Everything on this shelf meets the quality our doctors trust. If it doesn't, we don't carry it.</span></div>
+</div>
+<div class="foot"><i></i><span><b>Looking for your usual bottle?</b> Ask us. We will show you its match.</span></div>
+</section>
+<section class="sc" aria-label="Shelf card, second copy">
+<div class="top"><div class="k">Why it is on our shelf</div><h1>Your pharmacist chose NutriDyn.</h1></div>
+<div class="body">
+<div class="pt"><b>1973</b><span>Sold only through health professionals since 1973. You will not find it in a big-box aisle.</span></div>
+<div class="pt"><b>3</b><span>Generations of one family own and run the company.</span></div>
+<div class="pt"><b>Our rule</b><span>Everything on this shelf meets the quality our doctors trust. If it doesn't, we don't carry it.</span></div>
+</div>
+<div class="foot"><i></i><span><b>Looking for your usual bottle?</b> Ask us. We will show you its match.</span></div>
+</section>
+</div>
+</body></html>
